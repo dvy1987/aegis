@@ -1,0 +1,52 @@
+# Secrets
+.env
+.env.local
+*.key
+*.pem
+service-account*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.uv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node (for MCP server)
+node_modules/
+package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Build artifacts
+dist/
+build/
+*.egg
+
+# Phoenix local sandbox (if used)
+.phoenix/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Eval / experiment artifacts (kept locally only; promoted versions live in git)
+proposals/*.json
+!proposals/.gitkeep
+proposals/archive/*.json
+!proposals/archive/.gitkeep
