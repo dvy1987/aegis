@@ -2,6 +2,15 @@
 
 This file orients AI agents (Amp, Claude Code, Cursor, etc.) working in this repository.
 
+## User Context
+The user is a product manager with minimal coding experience. This means:
+
+- Explain technical decisions in plain language before making them
+- When facing architecture or design trade-offs, ask the user for input — don't assume
+- At key build stages, proactively collect the user's input on decisions that affect the product
+- Never assume the user understands Docker, GCP, deployment, APIs, or backend concepts — explain simply when relevant then ask for the decision.
+- The user cares deeply about product quality — never cut corners on prompts, evaluation or output
+
 ## What this project is
 
 **Aegis** (codename Reverse v2) is a hackathon submission for the Google Cloud Rapid Agent Hackathon, Arize track. It's a self-improving multi-agent system for US health-insurance appeals built on Google ADK + Gemini 3 + Phoenix MCP. See [README.md](README.md), [docs/prd/PRD.md](docs/prd/PRD.md), and [docs/architecture.md](docs/architecture.md).
