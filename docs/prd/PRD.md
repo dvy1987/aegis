@@ -2,13 +2,15 @@
 
 | | |
 |---|---|
-| **Project** | Aegis — Self-Improving Multi-Agent Swarm for US Health-Insurance Appeals |
+| **Project** | Aegis — A calm, learning agent that helps people draft US health-insurance appeals |
 | **Author** | PM (with Amp orchestration) |
-| **Date** | 2026-05-23 |
-| **Status** | Draft v2 — MVP + Full Plan unified |
+| **Date** | 2026-05-25 |
+| **Status** | Draft v3 — MVP + Full Plan unified; UX promoted to first-class pillar; Next.js frontend; competitive landscape and Arize rubric alignment added |
 | **Submission track** | Google Cloud Rapid Agent Hackathon — Arize partner bucket |
-| **Goal** | Win 1st place ($5,000) in the Arize partner bucket |
+| **Primary goal** | Win 1st place ($5,000) in the Arize partner bucket |
+| **Secondary goal** | A submission whose user experience is good enough that a stressed person filing an appeal at 11pm finds it usable, and that holds up as a portfolio-grade PM artifact |
 | **Build window** | 20 days |
+| **Companion docs** | [Design brief](../design-brief.md) · [Impact stats](../research/impact-stats.md) · [Assumption map](../research/assumption-map.md) · [Open questions](../open-questions.md) · [Architecture](../architecture.md) |
 
 ---
 
@@ -52,27 +54,77 @@ Each part is independently shippable. Build the MVP first; if life lets us, laye
 
 ## 1. Executive Summary (MVP)
 
-**Aegis MVP** is a single AI agent that drafts first-pass internal appeals for denied US commercial health-insurance claims. The agent measurably improves at drafting appeals by introspecting its own Arize Phoenix traces and eval scores via the Phoenix MCP server at runtime.
+**Aegis MVP** is a calm, consumer-grade web tool that helps a person turn a US health-insurance denial letter into a drafted first-level internal appeal in under thirty minutes, written in plain language and grounded in the person's plan documents and public statutory text.
 
-The agent does not claim general US healthcare expertise. It claims (and demonstrates) that it learns *insurer-specific appeal tactics* from observed evaluation outcomes — and gets quantifiably better on a held-out benchmark.
+Behind the interface, a single Google ADK agent does the work — and that agent measurably improves at drafting appeals by introspecting its own Arize Phoenix traces and eval scores via the Phoenix MCP server at runtime. Aegis is not trying to be a generalist US healthcare expert; it learns *insurer-specific appeal tactics* from observed evaluation outcomes, and the improvement is visible on a held-out benchmark.
+
+**The product anchors on three things at once, none of which can be dropped:**
+
+1. **A self-improvement loop where Phoenix is structurally load-bearing** — disabling Phoenix MCP should visibly degrade the agent's quality. (The Arize judging thesis.)
+2. **A consumer experience that a stressed person can actually use** — calm, plain-language, dignified, accessible. Filing an appeal is already a hard day; the product should not add to that. (The Design judging criterion and the PM-portfolio thesis.)
+3. **An impact story grounded in primary research, not grievance** — the problem is real and large, and stated factually with sources, not by riding cultural anger at the insurance industry. (The Potential Impact criterion.)
 
 **The single line that anchors the MVP pitch:**
 > *"Phoenix isn't just monitoring this agent — it's how this agent improves."*
 
+### Why this matters (impact framing, drawn from [docs/research/impact-stats.md](../research/impact-stats.md))
+
+US health insurers deny roughly 19% of in-network claims — about 85 million claims a year on the ACA exchanges alone ([KFF, Mar 2026](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/)). Fewer than 1% of those denials are ever appealed ([KFF](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/)). Of the ones that are, more than a third are overturned. That arithmetic means roughly **99 of every 100 denied patients walk away from money or care that an appeal might have recovered.** The asymmetry is structural: insurers automate denial — 84% use AI in operations ([NAIC, 2024](https://content.naic.org/sites/default/files/inline-files/Health%20Survey%20Report%20-%20FINAL%205.9.25.pdf)) — while patients face a thirty-page policy document and a phone tree.
+
+Aegis exists to close that gap. It does not promise to win the appeal. It promises to make filing one feel possible.
+
 ## 2. Problem Statement
 
-### Real-world background
-~$262B/year in US health insurance is denied annually. ~80% of appealed denials get overturned, but only ~1% of denials are ever appealed because the process is opaque, intimidating, and per-insurer cryptic.
+### Real-world problem (grounded in primary research — full set in [impact-stats.md](../research/impact-stats.md))
+
+Three facts together describe the problem Aegis exists to address:
+
+1. **Denials are common and getting more common.** Roughly 19% of in-network ACA claims were denied in 2024 — about 85 million claims, with insurer-level rates ranging from 3% to 36% ([KFF, Mar 2026](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/)). 33% of insured adults say their insurer denied a doctor-prescribed service in the last two years ([KFF, Jan 2026](https://www.kff.org/public-opinion/kff-health-tracking-poll-prior-authorizations-rank-as-publics-biggest-burden-when-getting-health-care/)). 73% of insured adults call denials and delays a "major problem" ([KFF, 2025](https://www.kff.org/patient-consumer-protections/kff-health-tracking-poll-public-finds-prior-authorization-process-difficult-to-manage/)).
+
+2. **Almost no one appeals.** Fewer than 1% of denied ACA in-network claims are ever appealed (262,982 out of ~85M) ([KFF](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/)). 60% of consumers either don't know or aren't sure they have the right to an external appeal ([KFF Consumer Survey](https://www.kff.org/affordable-care-act/kff-survey-of-consumer-experiences-with-health-insurance/)). The process is opaque, intimidating, and per-insurer cryptic.
+
+3. **When people do appeal, it works often enough that not appealing is a real loss.** Internal appeals overturn the original denial about 34% of the time on average; in some states and categories (e.g. home healthcare in New York) overturn rates exceed 78% ([JAMA, Apr 2026](https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2847657)).
+
+The arithmetic: for every 100 denied claims, roughly 34 would be overturned if appealed — but only fewer than 1 actually is. **Roughly 99 of every 100 denied patients walk away from money or care an appeal could have recovered.**
+
+The asymmetry is structural and AI-mediated. 84% of insurers use AI/ML in operations, including for prior-auth determinations ([NAIC, 2024](https://content.naic.org/sites/default/files/inline-files/Health%20Survey%20Report%20-%20FINAL%205.9.25.pdf)). 61% of physicians say AI is increasing prior-auth denials ([AMA, 2024](https://www.ama-assn.org/)). On the patient side: a thirty-page policy document, a phone tree, and a 180-day deadline.
+
+This is the gap Aegis is built to close — for the individual person filing one appeal, not for the system.
 
 ### Hackathon-relevant problem
-The Arize track judges submissions on:
-1. Technological implementation
-2. Design
-3. Potential impact
-4. **Quality of the agent's self-improvement loop** ← the unique Arize criterion
-5. Bonus: agents that use observability data to improve over time
 
-Most submissions will be generic chatbots with Phoenix tracing bolted on. Aegis exists to occupy the strategic gap by making self-improvement the core mechanic.
+The Arize track judges submissions on four co-equal sub-criteria, plus a bonus:
+
+1. **Technical implementation** — quality of integration with Google Cloud and Arize Phoenix
+2. **Meaningful use of tracing and MCP** — Phoenix is not bolted-on; it does real work in the agent
+3. **Quality of the agent's self-improvement loop** — the unique Arize criterion
+4. **Overall impact** — does the agent meaningfully change something for real people
+5. **Bonus** — agents that use their own observability data to improve over time
+
+Plus four hackathon-wide criteria (Technical Implementation, Design, Potential Impact, Quality of Idea) — see [docs/challenge.md](../challenge.md).
+
+Aegis's strategic bet is that a submission visibly winning on **all** of these — observability/MCP load-bearing, self-improvement demonstrable, real consumer-grade design, real impact narrative grounded in primary research — wins the bucket. See [§18 Arize Rubric Alignment](#18-arize-rubric-alignment) for the explicit mapping.
+
+## 2.1 Competitive Landscape & Differentiation
+
+This is a genuinely emerging space. Aegis is **not** the first patient-side AI appeal tool, and the pitch must acknowledge prior art credibly. Sources: [North Carolina Health News, Nov 2025](https://www.northcarolinahealthnews.org/2025/11/22/ai-vs-ai-patients-deploy-bots-to-battle-health-insurers-that-deny-care/), [Stateline, Nov 2025](https://stateline.org/2025/11/20/patients-deploy-bots-to-battle-health-insurers-that-deny-care/), full table in [impact-stats.md §6](../research/impact-stats.md#6-competitive-landscape--patient-side-ai-for-appeals-critical-for-positioning).
+
+| Player | Type | What they do | Differentiation gap vs Aegis |
+|---|---|---|---|
+| **Counterforce Health** | Nonprofit, free | AI assistant: denial letter + policy + research → drafts appeal letter | Closest direct competitor. Static prompt — no self-improvement loop |
+| **Sheer Health** | For-profit | Connect insurance account, upload bills; freemium with paid full handling | Provider/billing as much as patient; not loop-based |
+| **Cofactor AI Denial Suite** | For-profit | Provider-side appeal generation | Different market (providers, not patients) |
+| **Waystar AltitudeCreate** | Enterprise | Enterprise GenAI for provider appeal workflows | Different market |
+| **OpenHand Health** | For-profit | Parses medical jargon for patients | Adjacent; not appeal-focused |
+
+**Aegis's four-point differentiation thesis (must be explicit in pitch and product):**
+
+1. **Self-improvement from outcomes.** Phoenix-driven loop means Aegis measurably gets better at the job over time, transparently. Counterforce ships a static prompt; Aegis ships a learning system. (This is also the Arize judging hook.)
+2. **UX quality as a first-class pillar.** Calm, human, premium consumer-health design — not a tech demo wrapped in a form. (See [docs/design-brief.md](../design-brief.md).) Most competitor experiences feel like utilities; Aegis aims for a feel comparable to Headspace / One Medical / Maven.
+3. **Transparent autonomy ladder with visible humility.** Apprentice → Journeyman → Master autonomy stages with public competency scores per slice. Trust is earned by showing what the agent does *not* know.
+4. **Open source under Apache 2.0.** Anyone can audit, fork, or self-host. Counterforce is free; Aegis is also auditable and forkable.
+
+**Tone guardrail for any pitch material about competition or the insurance industry:** *We earn trust by being constructive, not by riding cultural anger. The product never invokes acts of violence, vigilantism, or polarizing public events around the insurance industry.* (Mirrored in [AGENTS.md](../../AGENTS.md) and [design-brief.md §8](../design-brief.md#8-what-must-not-be-in-the-product).)
 
 ## 3. MVP Goals & Non-Goals
 
@@ -211,9 +263,9 @@ If we submit at end of Week 1, this is the demo:
 
 > **"We're not submitting an agent. We're submitting the *first self-improving multi-agent organism* — a swarm of 12 specialist agents that collectively learn US health-insurance appeals from outcomes. Phoenix isn't a sidecar. Phoenix is the swarm's nervous system. Watch it get measurably smarter, in production, in front of you."**
 
-## 11. Why Grandiose Wins (for Arize Specifically)
+## 11. Why this aaproach (for Arize Specifically)
 
-Other 6 partner tracks (MongoDB, Elastic, Fivetran, GitLab, Dynatrace) cannot tell a self-improvement story at all. Within Arize, most submissions will be single-agent chatbots with Phoenix bolted on. A 12-agent self-improving swarm where Phoenix is structurally load-bearing isn't just better — it's a *different category of submission*.
+Other 6 partner tracks (MongoDB, Elastic, Fivetran, GitLab, Dynatrace) cannot tell a self-improvement story at all. A 12-agent self-improving swarm where Phoenix is structurally load-bearing isn't just better — it's a *different category of submission*.
 
 Judges will see:
 - Submission 1: "Customer support agent with Phoenix tracing" (most common)
@@ -523,6 +575,6 @@ Two paths exist within this PRD:
 
 In a hackathon with 6 separate $5,000 buckets, "not losing" gets you 3rd place at best. **Winning** requires being the one submission judges talk about after the event. That requires audacity.
 
-You have 20 days. You have unbounded tokens. You have a vibe-coding stack that turns a PM into an effective builder. **Build the Full Plan, with the MVP as your Day 7 safety net.**
+You have 20 days. ou have a vibe-coding stack that turns a PM into an effective builder. **Build the Full Plan, with the MVP as your Day 7 safety net.**
 
 Aegis isn't a hackathon submission. It's a manifesto: *agents should improve from their own observability data, autonomously, with safety gates, in production.* That's the Arize thesis. Be the one team that actually built it.

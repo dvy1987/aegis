@@ -60,6 +60,7 @@ Avoid: *"Learned US healthcare law from scratch"* (too grandiose, judges will sn
 - Every UI output and every demo claim must carry: *"Not legal or medical advice. Draft assistance only."*
 - No invented statutes, case law, or policy text. The agent must cite from a controlled local corpus.
 - No "this will win your appeal" claims, in code, UI, or demo video.
+- **Never invoke acts of violence, vigilantism, or polarizing public events around the insurance industry — in product copy, marketing, README, demo, Devpost, or any agent-produced artifact.** The product earns trust by being constructive, not by riding cultural anger. Stats about denial rates, delays, and patient harm should always be sourced from primary research (KFF, Commonwealth Fund, JAMA, Senate report, etc.) and framed as the problem we are solving — never as grievance.
 
 ### Build discipline
 - One ADK agent + one offline learning job. **Do not build a multi-agent swarm.**

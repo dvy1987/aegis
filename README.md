@@ -224,6 +224,6 @@ This project is a hackathon demo.
 
 ## Acknowledgements
 
-Built by a Product Manager in India who, twenty days before submission, had never read a US insurance denial letter. Aegis didn't either — it learned from outcomes.
+Built by a Product Manager who, twenty days before submission, had never read a US insurance denial letter. Aegis didn't either — it learned from outcomes.
 
 That's the whole point.

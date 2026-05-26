@@ -1,7 +1,7 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-24
-**Phase:** Pre-build planning. **No code exists yet.**
+**Updated:** 2026-05-25 (Session 2)
+**Phase:** Pre-build planning, deep-thinking + strategic refinement underway. **No application code exists yet.**
 
 ---
 
@@ -44,5 +44,27 @@
 | Idea history | [docs/ideas.md](../ideas.md) |
 | Hackathon brief | [docs/challenge.md](../challenge.md) |
 
+## Session 2 progress (2026-05-25)
+
+- ✅ Memory skeleton completed (MEMORY-ROUTING.md + 5 stub files + archived/)
+- ✅ Pre-mortem run on Aegis as a whole — see session-log; surfaced causes A, K, M, D, C as top risks
+- ✅ Arize hackathon rubric re-read and aligned — see [docs/challenge.md](../challenge.md); confirmed two co-equal Arize pillars (tracing+MCP + self-improvement loop)
+- ✅ Strategic shift: **UX is a first-class product pillar** (was: supporting actor) — PM directive
+- ✅ Framework decision: **Next.js + Python ADK backend** (was: Streamlit-only) — see [decision-log.md](decision-log.md)
+- ✅ Design brief produced: [docs/design-brief.md](../design-brief.md) — archetype, tone, copy rules, motion, accessibility floor
+- ✅ Impact research compiled: [docs/research/impact-stats.md](../research/impact-stats.md) — verified primary sources (KFF, Commonwealth Fund, JAMA, Senate report)
+- ✅ Decisions logged: [decision-log.md](decision-log.md) (5 entries)
+- ✅ Assumption mapping complete: [docs/research/assumption-map.md](../research/assumption-map.md) — 20 assumptions surfaced, 5 critical with minimum tests defined (A1 eval signal, A2 Phoenix UI demo viability, A3 case credibility, A4 MCP+ADK integration, A5 Learning Coordinator autonomy)
+- ⏳ **Next:** PRD updates (vision/problem/differentiation/demo/rubric-alignment) + AGENTS.md full rewrite via `project-setup`
+
+## Queued PRD / AGENTS.md updates (do these after assumption-mapping)
+
+1. **PRD §1 Vision + §2 Problem** — fold in impact paragraph from [impact-stats.md §7](../research/impact-stats.md#7-the-aegis-impact-paragraph-drop-into-prd-1-vision-and-devpost-form)
+2. **PRD §5 Differentiation** — add competitive landscape acknowledgment (Counterforce Health, Sheer Health, etc.) and Aegis's 4-point differentiation thesis
+3. **PRD §16 Demo Script** — rewrite so Phoenix Cloud UI is visibly on-screen ≥60s of 180s; compressed pitch line in voiceover
+4. **PRD §17 (new) Arize Rubric Alignment** — map every PRD section to the 4 hackathon-wide + 4 Arize-track criteria + bonus
+5. **AGENTS.md (full rewrite)** — via `project-setup` interview; remove Streamlit lock; add UX-as-pillar rule; add Code-Wall Escalation Protocol; add tone-of-voice rules; preserve all info from current AGENTS.md per PM preservation principle
+
 ## Next recommended action
-**Start next session by reading [docs/memory/agent-handoffs.md](agent-handoffs.md) "TODO — Comprehensive" section and executing Phase 0 item #1 (`retroactive-project-setup` skill).**
+
+Move into **assumption-mapping** on pre-mortem causes A (Phoenix demo framing), K (demonstrable improvement), and D (synthetic case credibility). Then do PRD updates and AGENTS.md rewrite.
