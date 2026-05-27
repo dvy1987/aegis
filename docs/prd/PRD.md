@@ -215,36 +215,52 @@ See docs/design-brief.md. The UI must feel calm, dignified, and trustworthy. No 
 
 | # | Criterion | Target |
 |---|---|---|
-| **SC1** | Composite eval score improvement v1 → v3 on 6 held-out cases | ≥ +20% (e.g., 0.55 → 0.75) |
-| **SC2** | Safety eval score | No regression |
-| **SC3** | Hallucinated-citation rate | 0% |
+| **SC1** | `weighted_quality` summary metric improvement v1 → v3 on 6 held-out cases | ≥ +20% (e.g., 0.55 → 0.75) |
+| **SC2** | Safety hard gate (J1) | 100% PASS across all 12 benchmark cases, all versions |
+| **SC3** | Hallucination & Internal Consistency hard gate (J2) | 100% PASS across all 12 benchmark cases, all versions |
 | **SC4** | Simulator overturn proxy rate | ≥ +50% improvement |
-| **SC5** | Trace completeness | 100% |
+| **SC5** | Trace completeness (Phoenix metadata) | 100% |
 | **SC6** | Submission lands in top 3 of Arize bucket | Devpost result |
 
 ## 8. MVP Evaluation & Testing
 
-### Benchmark
-12 synthetic composite cases (6 calibration + 6 held-out) = 3 insurers × 2 denial types × 2 cases each.
+> **Source of truth:** [docs/evals/2026-05-27-aegis-appeal-rubric.md](../evals/2026-05-27-aegis-appeal-rubric.md) (v2 — AlphaEval 2026 compliant). [docs/evals/2026-05-27-aegis-judges.md](../evals/2026-05-27-aegis-judges.md) defines the 7-judge panel. [docs/evals/2026-05-27-aegis-eval-pipeline.md](../evals/2026-05-27-aegis-eval-pipeline.md) defines the CI + nightly + promotion-gate pipelines. This section summarises; the rubric file is canonical.
 
-### Metrics (LLM-as-Judge via Phoenix)
-| Metric | Weight |
-|---|---|
-| M1 Grounding / citation correctness | 30% |
-| M2 Case specificity | 25% |
-| M3 Evidence completeness | 20% |
-| M4 Insurer tactic alignment | 15% |
-| M5 Safety | 10% |
-| M6 Composite | — |
-| M7 Hallucination rate (binary gate) | — |
+### Benchmark
+12 synthetic composite cases (6 calibration + 6 held-out) = 3 insurers × 2 denial types × 2 cases each. Dataset provenance in `eval/dataset_card.md`. Splits in `eval/cases/{train,holdout}/`.
+
+### Scoring Model (per AlphaEval 2026)
+
+Every appeal letter is scored by a **7-judge LLM panel**, each judge owning exactly one rubric concern. **Safety and Hallucination are binary hard gates — never weighted, never averaged in.** A FAIL on either gate produces `verdict: FAIL` for the whole run regardless of other scores.
+
+**Hard gates (2 — pass/fail):**
+| # | Gate | Verdict |
+|---|---|---|
+| J1 | Safety (PII / disclaimer / no-guarantee claims) | PASS / FAIL |
+| J2 | Hallucination & Internal Consistency (citation fidelity + non-contradiction) | PASS / FAIL |
+
+**Weighted dimensions (5 — independent 1/3/5 scales, sum to 100%):**
+| # | Dimension | Weight |
+|---|---|---|
+| J3 | Grounding / citation correctness | 35% |
+| J4 | Case specificity | 25% |
+| J5 | Evidence completeness | 15% |
+| J6 | Insurer tactic alignment | 15% |
+| J7 | Persuasive coherence | 10% |
+
+The composite `weighted_quality` (each dimension normalised 1→0.2, 3→0.6, 5→1.0) is reported as a **summary metric only** — never as the sole promotion gate. Promotion gating uses per-dimension regression thresholds (see §15.2 and pipeline doc).
 
 ### Test Plan
-- Unit tests for each tool (pytest)
-- Integration test: end-to-end agent run
-- Eval suite: 12 cases × 6 metrics in Phoenix
-- Regression gate: v3 promoted only if held-out composite ≥ v(n-1)
-- Safety gate: no version with safety regression promotes
-- Demo smoke test: full Next.js + Cloud Run flow on hero case
+- **Unit tests** for each tool (pytest, behaviour-preserving refactors fully autonomous).
+- **Integration test:** end-to-end agent run on 1 calibration case.
+- **Eval suite:** 12 cases × 7 judges via Phoenix Experiments; deterministic gates (regex, disclaimer-string, JSON-schema) run first to short-circuit cheaply.
+- **Calibration gate (Day 1–2):** Cohen's κ ≥ 0.6 between each judge and PM-hand-scored anchors before any judge is trusted for promotion gating. Judges below threshold are advisory only.
+- **Pre-merge gate:** all hard gates PASS; no weighted dimension drops > 10% from rolling baseline; latency p95 < 60s.
+- **Regression gate:** new prompt/playbook version v(n) promotes only if (a) both hard gates 100% PASS on held-out, (b) `weighted_quality` ≥ v(n-1), (c) no individual dimension drops > 10%.
+- **Demo smoke test:** full Next.js + Cloud Run flow on hero case end-to-end < 60s.
+
+### Cost Model
+Per-judge call ~$0.014; per letter (7 judges) ~$0.10; MVP benchmark run (12 cases) ~$1.20; 20-day ceiling ~$300. See rubric §4 for full breakdown.
 
 ## 9. MVP Demo Script (Day 7 Backup)
 
@@ -457,9 +473,11 @@ Aetna, Cigna, UnitedHealthcare, Anthem/Elevance, Humana, Kaiser Permanente, Cent
 - All actions logged + visible in Phoenix and UI audit trail
 
 ### 15.2 Safety Gates (Hard — Auto-Promotion Only If All Pass)
-- ✅ Composite score lift on held-out subsample ≥ +3%
-- ✅ Safety score does not regress (no decrease > 0.05)
-- ✅ Hallucination rate stays exactly 0
+Per the v2 rubric, hard gates are binary and never averaged in. Auto-promotion requires **all** of:
+- ✅ J1 Safety hard gate: 100% PASS on held-out subsample (no PII, disclaimer present, no guarantee claims)
+- ✅ J2 Hallucination & Internal Consistency hard gate: 100% PASS on held-out subsample (every citation traces; no contradictions)
+- ✅ `weighted_quality` summary metric on held-out subsample ≥ v(n-1) `weighted_quality` (i.e. no regression in the composite)
+- ✅ No individual weighted dimension drops > 10% from v(n-1) baseline (per-dimension regression check, AlphaEval principle)
 - ✅ Adversarial Reviewer's critique severity score does not regress
 - ✅ Diff is bounded (≤ 200 token change per prompt patch)
 - ✅ Rate limit: ≤ 5 promotions per 24h
@@ -469,7 +487,7 @@ If gates fail → archived with full audit; user can manually override.
 ### 15.3 Rollback
 - Every promoted version is checkpoint-saved (git + Phoenix prompts)
 - One-click rollback in UI
-- Auto-rollback if next 10 production runs show composite score drop > 10%
+- Auto-rollback triggers on **any** of: (a) `weighted_quality` drop > 10% across the next 10 production runs, (b) a single J1 Safety FAIL, (c) a single J2 Hallucination & Internal Consistency FAIL. Hard-gate FAIL is zero-tolerance — one strike triggers rollback.
 
 ### 15.4 The Demo Showcase
 Over 20 days, learning loop runs **~200 iterations**. Demo shows:
