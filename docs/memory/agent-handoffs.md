@@ -149,3 +149,66 @@ Ordered by priority. Items marked 🔴 are BLOCKERS for build start.
 ---
 
 **Estimated time to clear Phase 0 + Phase 1 in next session: 4–6 hours of PM-collaborative work with proper skill invocation. After that, build can start.**
+
+---
+
+## 2026-05-25 — Session 2 Handoff (Amp)
+
+### Done
+
+- Ran `memory-startup`, scaffolded memory layer ([MEMORY-ROUTING.md](MEMORY-ROUTING.md), [decision-log.md](decision-log.md), [session-log.md](session-log.md), [learnings.md](learnings.md), [deferred.md](deferred.md), [open-questions.md](open-questions.md), `archived/`).
+- Ran `deep-thinking` → `pre-mortem` on Aegis as a whole — top causes A, K, M, D, C identified.
+- Re-read [docs/challenge.md](../challenge.md); confirmed Arize rubric has two co-equal pillars (tracing+MCP **and** self-improvement loop) plus design + impact criteria.
+- Strategic shift accepted by PM: **UX is now a first-class pillar**, co-equal with the self-improvement story and the impact narrative.
+- Framework decision: **Next.js + Python ADK backend** replaces Streamlit (overturns old AGENTS.md/PRD lock-in). See [decision-log.md](decision-log.md).
+- Wrote [docs/design-brief.md](../design-brief.md) — archetype (premium consumer health: Headspace / One Medical / Maven), tone rules, copy bans, framer-motion motion principles, accessibility floor, anti-pattern checklist.
+- Compiled [docs/research/impact-stats.md](../research/impact-stats.md) — primary-source verified (KFF, Commonwealth Fund, JAMA, Senate report, NAIC, AHA).
+- Ran `assumption-mapping` → [docs/research/assumption-map.md](../research/assumption-map.md) — 20 assumptions, 5 critical with minimum tests. Logged a decision to run those 5 tests in Days 1–10 before further committing to specific pitch numbers.
+- Repo-wide sweep for controversy/violence/cultural-anger references re US insurance industry — **none found**; added explicit tone guardrail to [AGENTS.md §Safety & disclosure](../../AGENTS.md) and [design-brief.md §8](../design-brief.md).
+- Started PRD v3 rewrite. **Partial** — completed front matter, §1 Executive Summary, §2 Problem Statement, new §2.1 Competitive Landscape & Differentiation. Remaining edits queued (see Next Agent Should Know).
+
+### Debated
+
+- Pre-mortem reordered top risks: A (Phoenix demo framing), K (demonstrable improvement), M (UX feels wrong), D (synthetic case credibility), C (MCP+ADK integration immaturity), O (AI-sounding copy). Resolution: address A/M/O via design brief + UX-pillar promotion; address K/D/C via 5 critical assumption tests in Days 1–10.
+- Streamlit-only vs Next.js+Python split. **Resolved: Next.js + Python ADK backend**; two Cloud Run services. Rationale and tradeoffs in [decision-log.md](decision-log.md).
+
+### Decisions (all in [decision-log.md](decision-log.md))
+
+- Next.js + Tailwind + shadcn/ui + framer-motion + lucide-react frontend; Python FastAPI + Google ADK backend; 2× Cloud Run services.
+- UX as co-equal product pillar with the Arize self-improvement thesis.
+- Use the word "person" not "human" in user-facing copy.
+- 5 critical assumption tests run in Days 1–10 (eval signal, Phoenix UI demo viability, case credibility, MCP+ADK integration, Learning Coordinator autonomy). Each has a false-condition that triggers a pitch update *before* further commitment.
+- Tone guardrail: never invoke acts of violence, vigilantism, or polarizing public events around the insurance industry — in product, copy, demo, or marketing.
+- No unilateral scope cuts. If scope/MVP pressure rises, escalate to PM with options.
+
+### Deferred
+
+- PRD edits §3 onwards (Goals, Scope, FRs, NFRs, MVP demo script, §11, §14 Build Plan, §15 Safety Gates, §16 Full Plan demo, new Arize Rubric Alignment §, §18 Hard Constraints, §21 What Stays vs Changes, §22 References, §25 The Bet, change log). Plan stored mid-session before stop; see "Next Agent Should Know".
+- `product-soul` doc generation.
+- AGENTS.md full rewrite via `project-setup` (must preserve every valid rule from current AGENTS.md per PM preservation principle; remove Streamlit lock; add UX-as-pillar; add Code-Wall Escalation Protocol; add tone-of-voice rules; tone guardrail already in current file).
+- ADR synthesis from observed decisions.
+- `brainstorming` skill run on the riskiest design holes (originally queued for Session 2; not yet executed).
+
+### Next Agent Should Know
+
+- **Repo is mid-PRD-rewrite.** [docs/prd/PRD.md](../prd/PRD.md) is internally consistent but partially in v3 voice (front matter + §1 + §2 + §2.1) and partially v2 (everything from §3 onward). Do not commit/ship the PRD in this state.
+- **Continuation plan for PRD v3 edits** is listed in the assistant's last "Plan" message before stop — covers §3 Goals (add G8 UX), §4 Scope (add Frontend row), §5 FR1 + FR10 (Streamlit → Next.js), §6 NFRs (add UX + accessibility) + new §6.1 UX & Tone Principles, §9 Demo Script (Phoenix UI ≥60s shotlist, soften scores), §11 (fix "aaproach" typo, soften "There is no contest" given Counterforce et al.), §14 Build Plan (fold in 5 critical assumption tests Day 1–10), §15.2 Safety Gates, §16 Full Plan Demo Script (Phoenix UI visible ≥60s, soften 0.31→0.78 and 0.42 numbers to clearly marked design targets), insert new §18 Arize Rubric Alignment (renumber §18–§25 → §19–§26), §18→§19 Hard Constraints (Streamlit → Next.js+Python ADK, add UX pillar), §21→§22 What Stays vs Changes (add UX row, soften +151% claim), §22→§23 References (add impact-stats, assumption-map, design-brief, challenge), §25→§26 fix "ou have" typo, add change log entry.
+- **Preservation discipline (PM directive):** when rewriting any major doc, cross-check against the prior version; build a port-list of facts/rules/constraints that must survive; call out anything dropped with reason. Old PRD is not wrong, just incomplete — do not silently delete.
+- **The 5 critical assumption tests are the build's first 10 days.** [docs/research/assumption-map.md](../research/assumption-map.md) is the source of truth. If any fails, update the pitch downward *before* further commitment — never the other way around.
+- **Tone guardrail is enforced in two places** ([AGENTS.md](../../AGENTS.md) Safety & Disclosure, [design-brief.md §8](../design-brief.md)). Carry it into the AGENTS.md rewrite and any new product/marketing doc.
+- **Frontend decision overturns old AGENTS.md.** Until AGENTS.md is rewritten, there is a known temporary contradiction (AGENTS.md still says "Do not switch to Next.js"). PRD §18 will be updated as part of the queued v3 edits.
+
+### Revisit Triggers
+
+- Any critical assumption test (A1–A5) fails → re-open the pitch claim it supports, escalate to PM with options, do not silently downscope.
+- Phoenix Cloud free tier nears 80% of any quota → upgrade decision needed (~$50 ceiling already approved in spirit).
+- Gemini 3 not available by Day 14 → fallback to Gemini 2.5 (already in mitigation).
+- New competitor surfaces in Arize-track Devpost listings by Day 14 → revisit differentiation thesis.
+
+### Working Tree
+
+Dirty as of session end (post-`ab87718`):
+- Modified: `AGENTS.md`, `README.md`, `docs/memory/current-state.md`, `docs/memory/decision-log.md`, `docs/prd/PRD.md`
+- New (untracked): `docs/design-brief.md`, `docs/feedback.md`, `docs/research/` (contains `impact-stats.md`, `assumption-map.md`)
+
+Recommend the PM commits before Session 3 starts so the next agent has a clean baseline.

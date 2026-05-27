@@ -55,7 +55,9 @@
 - ✅ Impact research compiled: [docs/research/impact-stats.md](../research/impact-stats.md) — verified primary sources (KFF, Commonwealth Fund, JAMA, Senate report)
 - ✅ Decisions logged: [decision-log.md](decision-log.md) (5 entries)
 - ✅ Assumption mapping complete: [docs/research/assumption-map.md](../research/assumption-map.md) — 20 assumptions surfaced, 5 critical with minimum tests defined (A1 eval signal, A2 Phoenix UI demo viability, A3 case credibility, A4 MCP+ADK integration, A5 Learning Coordinator autonomy)
-- ⏳ **Next:** PRD updates (vision/problem/differentiation/demo/rubric-alignment) + AGENTS.md full rewrite via `project-setup`
+- ✅ Tone guardrail added to [AGENTS.md](../../AGENTS.md) and [design-brief.md §8](../design-brief.md) — no violence/vigilantism/polarizing-event references in any artifact
+- 🟡 **PRD v3 rewrite started but PARTIAL** — front matter, §1, §2, new §2.1 updated; §3 onward still in v2 voice. Do not ship in current state. Continuation plan captured in [agent-handoffs.md (Session 2)](agent-handoffs.md#2026-05-25--session-2-handoff-amp)
+- ⏳ **Next session:** Finish PRD v3 edits → product-soul → AGENTS.md full rewrite via `project-setup` → ADR synthesis
 
 ## Queued PRD / AGENTS.md updates (do these after assumption-mapping)
 
