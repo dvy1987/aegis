@@ -1,88 +1,71 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-27 (Session 4)
-**Phase:** Pre-build planning. AGENTS.md rewritten via `project-setup` with full preservation discipline + Session 2 decisions integrated. Tooling decision landed (`google-agents-cli`). Part B 12-agent architecture confirmed as the audacious bet with explicit revisit triggers. PRD and Open Questions updated to reflect latest architectural decisions. **No application code exists yet.**
+**Updated:** 2026-05-27 (Session 5 — close)
+**Phase:** **Planning complete.** All Phase 0 / Phase 1 artifacts (PRD v4, architecture spec, eval rubric v2, eval pipeline, agent prompts v1, Day 1–20 implementation plan + task list) are aligned and committed. **Ready for Phase 0 execution pending PM sign-off on GCP + Phoenix Cloud setup.** No application code exists yet.
 
 ---
 
-## What's done
-- Strategic ideation (15+ ideas explored, 1 chosen)
-- Unified PRD with MVP (Part A) + Full Plan (Part B) — [docs/prd/PRD.md](../prd/PRD.md)
-- Architecture sketch — [docs/architecture.md](../architecture.md)
-- Open questions catalogued — [docs/open-questions.md](../open-questions.md)
-- Project skeleton: AGENTS.md, README.md, LICENSE (Apache 2.0), .gitignore, .env.example
-- Working-with-PM rules captured in AGENTS.md
-- Oracle consulted for strategy + architecture sanity check
-- `product-soul` document generated for strategic grounding
+## What's done (planning + corrections complete)
+
+### Sessions 1–4
+- Strategic ideation, codename Aegis, two-phase nested PRD (Part A MVP / Part B Full Plan)
+- AGENTS.md (root + frontend + backend) via `project-setup` skill
+- Architecture spec via `agent-system-architecture` — `docs/architecture/2026-05-27-aegis-arch.md`
+- 5 ADRs backfilled (ADK choice, Phoenix+MCP load-bearing, Next.js+Python overturn, 12-agent swarm with revisit triggers, agents-cli adoption)
+- Open questions catalogued; product-soul written; design-brief written; impact-stats compiled; assumption map (5 critical: A1–A5) compiled
+- 10 v1 agent role prompts seeded in `backend/src/prompts/`
+
+### Session 5 (corrections)
+- ✅ **Eval rubric v2** at [`docs/evals/2026-05-27-aegis-appeal-rubric.md`](../evals/2026-05-27-aegis-appeal-rubric.md) — AlphaEval-compliant: 2 binary hard gates (J1 Safety, J2 Hallucination & Internal Consistency) + 5 weighted dimensions normalised to 1/3/5 (J3 Grounding 35%, J4 Case Specificity 25%, J5 Evidence Completeness 15%, J6 Insurer Tactic 15%, J7 Persuasive Coherence 10%). Calibration anchors, cost model ($0.014/call, $0.10/letter, $300/20-day ceiling), κ ≥ 0.6 gate, anti-pattern checklist included.
+- ✅ **PRD §7 / §8 / §15.2 / §15.3 reconciled** with rubric v2 (hard-gate PASS rates as SC2/SC3, per-dimension regression gating, zero-tolerance auto-rollback on hard-gate FAIL).
+- ✅ **10 agent prompts rewritten** as full LLM system prompts (persona + domain context + tool-use + CoT + output schema + few-shot + guardrails). Interface contract preserved as docstring section.
+- ✅ **Day 1–20 implementation plan** generated via `implementation-plan` skill — [`docs/plans/2026-05-27-aegis-implementation-plan.md`](../plans/2026-05-27-aegis-implementation-plan.md) + companion flat task list. 4 phases, 67 tasks, 11 risks, full PRD-ID traceability. A1–A5 + Day 10 + Day 14/15 gates explicitly scheduled.
+- ✅ **Memory closed:** Session 5 handoff finalised; decision-log appended with 3 new entries; skill-outputs ledger updated.
 
 ## What's blocked
-- **All build work** — Phase 0 + Phase 1 in TODO must clear first
-- Most artifacts in repo were freehanded by Amp without invoking the matching skills — needs retroactive correction
-- Multiple 🔴 BLOCKER open questions unresolved (deadline, accounts, repo creation, scope confirmations)
+- **Phase 0 execution (GCP + Phoenix + repo + agents-cli setup)** — gated on PM sign-off per Session 5 instruction. No `gcloud` runs, no Phoenix account creation, no remote push without PM confirmation.
 
-## Active decisions
+## Active decisions (top items)
 - Codename: **Aegis**
-- Stack: Google ADK + Gemini 3 + Phoenix Cloud + Phoenix MCP + Next.js + Cloud Run
+- Stack: Google ADK + Gemini 3 + Phoenix Cloud + Phoenix MCP + Next.js + Python FastAPI + Cloud Run + `google-agents-cli`
 - License: Apache 2.0
-- Autonomy model: 3-stage competency ladder (Apprentice → Journeyman → Master) with auto-demotion — thresholds TBD post eval rebuild
-- Phase strategy: MVP Day 7 = safety net; Full Plan Day 20 = win condition
+- Autonomy ladder: 3-stage (Apprentice → Journeyman → Master) — thresholds TBD on Day 5 after judge calibration κ measured
+- 12-agent Part B with 4 hard revisit triggers ([ADR-004](../adr/))
+- Eval: 7-judge panel, 2 hard gates + 5 weighted, κ ≥ 0.6, per-dim regression gating ([rubric v2](../evals/2026-05-27-aegis-appeal-rubric.md))
+- Phase 0 PM-gated; Phase 1 starts Day 1 once PM approves setup
+- MVP Day 7 = safety net; Full Plan Day 20 = win condition
 
-## Active risks
-- Eval design currently violates AlphaEval principles → could undermine entire Arize submission credibility
-- Skills not being used → every artifact is below skill-driven quality
-- No git history yet → no rollback safety
-- Time pressure: 20-day window has not started; planning phase is consuming Day 0
+## Active risks (top)
+- **R-PLAN-1** A4 Phoenix MCP + ADK integration breaks → Day 1–2 spike isolates this; fallback documented
+- **R-PLAN-2** A1 eval signal too noisy → Day 5 gate; fallback = recalibrate or kill loop pitch
+- **R-PLAN-3** A3 cases read as toy → Day 3 reader test; fallback = real anonymised public letters
+- **R-PLAN-5** A5 Coordinator autonomy fails → Day 10 gate; fallback = stay on human-approved loop (MVP-style)
+- Time pressure: 20-day window has not started; Phase 0 must clear quickly
 
 ## Source of truth files
+
 | Artifact | File |
 |---|---|
-| Product spec | [docs/prd/PRD.md](../prd/PRD.md) |
-| Architecture | [docs/architecture/2026-05-27-aegis-arch.md](../architecture/2026-05-27-aegis-arch.md) |
-| Open questions | [docs/open-questions.md](../open-questions.md) |
-| TODO + handoff | [docs/memory/agent-handoffs.md](agent-handoffs.md) |
-| Agent rules | [AGENTS.md](../../AGENTS.md) |
-| Idea history | [docs/ideas.md](../ideas.md) |
-| Hackathon brief | [docs/challenge.md](../challenge.md) |
-| Product Soul | [docs/product-soul.md](../product-soul.md) |
-
-## Session 4 progress (2026-05-27)
-
-- ✅ `README.md` completely refactored to prioritize user-scenario/pain framing, updated the tech stack to Next.js + FastAPI, and corrected the repository tree.
-- ✅ `docs/open-questions.md` body swept and resolved stale items (A2, A3, B1, B2, C1, E1, E2, H1, H2, E4, E6, etc.) shifted to the explicit decided list.
-- ✅ PRD v4 completed (updated §3 onward to reflect Next.js stack, UX as first-class pillar, assumption tests, and Arize Rubric alignment).
-- ✅ `product-soul` doc generated for core strategic alignment.
-- ✅ `create-agent-prompt` completed for the 10 agent roles. Prompts are seeded in `backend/src/prompts/`.
-- ✅ Eval design rebuilt via `eval-output` chain per AlphaEval principles (rubric, judges, pipeline, simulator rules generated).
-
-## Session 3 progress (2026-05-27)
-
-- ✅ `memory-startup` ran; bounded context loaded
-- ✅ Researched `google-agents-cli` (released April 2026) — confirmed it's complementary to ADK, not a replacement; bundles 7 ADK-lifecycle skills via `uvx google-agents-cli setup`
-- ✅ Cross-checked Part B 12-agent topology against Google's official [8-pattern ADK multi-agent guide](https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/) — surfaced 5 architectural critiques; PM made informed call to keep 12 agents as audacious bet with revisit triggers
-- ✅ `project-setup` skill ran: 3 AGENTS.md files written (root 145 lines, frontend 51 lines, backend 78 lines — all under 150-line skill rule)
-- ✅ Preservation discipline applied: every valid rule from old AGENTS.md absorbed; stale rules (Streamlit lock, single-agent-only) explicitly reversed with provenance noted
-- ✅ Multi-file mode with `frontend/` and `backend/` dirs scaffolded (empty for now, AGENTS.md inside each ready for when code lands)
-- ✅ SDD mode on: Orchestration Map includes the full `spec-driven-development` chain + spec-first rule for behaviour changes
-- ✅ Autonomy boundaries codified: strict ask-first on product/architecture/copy; full autonomy on tests, internal refactors, tooling
-- ✅ Two decisions logged in [decision-log.md](decision-log.md): adopt `google-agents-cli` Day 1; keep 12-agent Part B with hard revisit triggers (Day 10 progress gate, A5 fail, demo-coherence test, build-time slippage)
-- ✅ Two new open questions added in [open-questions.md §J](../open-questions.md): agents-cli observability vs Phoenix MCP compatibility (Day 1); agents-cli deploy vs 2-service Cloud Run (Day 6–7)
-- ✅ [open-questions.md §I](../open-questions.md) "Things explicitly NOT open" rewritten to reflect Session 2 + Session 3 decisions (Next.js + Python ADK, 12-agent Part B, agents-cli adoption, UX as pillar, tone guardrail)
-- ✅ Stale-doc cleanup pass 1 complete: `docs/architecture.md` replaced by skill-driven rebuild at [docs/architecture/2026-05-27-aegis-arch.md](../architecture/2026-05-27-aegis-arch.md) via `agent-system-architecture` skill. Old freehanded version retained as pointer. Honest component count documented (14 total: 10 LLM agents + 1 judge panel + 1 simulator + 2 meta). Mermaid wiring + state strategy + HITL + observability all captured.
-- ✅ ADRs backfilled (Session 3) via `architectural-decision-log` skill: ADR-001 (Google ADK), ADR-002 (Phoenix Cloud + MCP load-bearing), ADR-003 (Next.js + Python ADK overturn), ADR-004 (12-agent Part B swarm with revisit triggers), ADR-005 (`google-agents-cli` adoption). ADR-001 and ADR-002 are SYNTHESIS (retrospective from observed Session 1 decisions); ADR-003/004/005 are CONTEMPORANEOUS.
-
-## Session 2 progress (2026-05-25)
-
-- ✅ Memory skeleton completed (MEMORY-ROUTING.md + 5 stub files + archived/)
-- ✅ Pre-mortem run on Aegis as a whole — see session-log; surfaced causes A, K, M, D, C as top risks
-- ✅ Arize hackathon rubric re-read and aligned — see [docs/challenge.md](../challenge.md); confirmed two co-equal Arize pillars (tracing+MCP + self-improvement loop)
-- ✅ Strategic shift: **UX is a first-class product pillar** (was: supporting actor) — PM directive
-- ✅ Framework decision: **Next.js + Python ADK backend** (was: Streamlit-only) — see [decision-log.md](decision-log.md)
-- ✅ Design brief produced: [docs/design-brief.md](../design-brief.md) — archetype, tone, copy rules, motion, accessibility floor
-- ✅ Impact research compiled: [docs/research/impact-stats.md](../research/impact-stats.md) — verified primary sources (KFF, Commonwealth Fund, JAMA, Senate report)
-- ✅ Decisions logged: [decision-log.md](decision-log.md) (5 entries)
-- ✅ Assumption mapping complete: [docs/research/assumption-map.md](../research/assumption-map.md) — 20 assumptions surfaced, 5 critical with minimum tests defined (A1 eval signal, A2 Phoenix UI demo viability, A3 case credibility, A4 MCP+ADK integration, A5 Learning Coordinator autonomy)
-- ✅ Tone guardrail added to [AGENTS.md](../../AGENTS.md) and [design-brief.md §8](../design-brief.md) — no violence/vigilantism/polarizing-event references in any artifact
+| Product spec | [`docs/prd/PRD.md`](../prd/PRD.md) (v4) |
+| Architecture | [`docs/architecture/2026-05-27-aegis-arch.md`](../architecture/2026-05-27-aegis-arch.md) |
+| Eval rubric | [`docs/evals/2026-05-27-aegis-appeal-rubric.md`](../evals/2026-05-27-aegis-appeal-rubric.md) (v2) |
+| Eval pipeline | [`docs/evals/2026-05-27-aegis-eval-pipeline.md`](../evals/2026-05-27-aegis-eval-pipeline.md) |
+| Judges spec | [`docs/evals/2026-05-27-aegis-judges.md`](../evals/2026-05-27-aegis-judges.md) |
+| Agent prompts (v1) | [`backend/src/prompts/*_v1.md`](../../backend/src/prompts/) |
+| Implementation plan | [`docs/plans/2026-05-27-aegis-implementation-plan.md`](../plans/2026-05-27-aegis-implementation-plan.md) |
+| Agent-pickable tasks | [`docs/plans/2026-05-27-aegis-implementation-tasks.md`](../plans/2026-05-27-aegis-implementation-tasks.md) |
+| ADRs | [`docs/adr/ADR-001..005`](../adr/) |
+| Assumption map | [`docs/research/assumption-map.md`](../research/assumption-map.md) |
+| Design brief | [`docs/design-brief.md`](../design-brief.md) |
+| Impact stats | [`docs/research/impact-stats.md`](../research/impact-stats.md) |
+| Product soul | [`docs/product-soul.md`](../product-soul.md) |
+| Open questions | [`docs/open-questions.md`](../open-questions.md) |
+| Agent rules | [`AGENTS.md`](../../AGENTS.md) + `frontend/AGENTS.md` + `backend/AGENTS.md` |
+| Decision log | [`docs/memory/decision-log.md`](decision-log.md) |
+| TODO + handoff | [`docs/memory/agent-handoffs.md`](agent-handoffs.md) |
 
 ## Next recommended action
 
-Move into **agent role prompts** via `create-agent-prompt` skill OR address the **Eval design rebuild** via the `eval-output` chain.
+**Get PM sign-off on Phase 0**, then execute Phase 0 tasks T0.1–T0.6 (open-questions sweep + GCP + Phoenix Cloud + `git push` + `google-agents-cli` setup + pre-commit hook). Once Phase 0 is green, Day 1 starts the parallel work streams: backend scaffold (T1.1), frontend scaffold (T1.2), Phoenix instrumentation (T1.3), Phoenix MCP toy roundtrip (T1.4 — the A4 spike).
+
+Hard gate to watch first: **A4 (Day 2 EOD)** — Phoenix MCP + ADK integration go/no-go. If FAIL, escalate to PM with fallback options before continuing.

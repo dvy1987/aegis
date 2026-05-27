@@ -181,3 +181,50 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 - PRD §1 (Vision) and §2 (Problem) need updating with the impact paragraph and competitive-landscape acknowledgment. **PRD update queued — not yet done.**
 - Demo script (PRD §16) should incorporate the compressed pitch line.
 - Devpost submission form will draw from §7.
+
+---
+
+## 2026-05-27 — Eval rubric v2 (AlphaEval 2026 compliant) + PRD §8 reconciled
+
+**Decision.** Replace the v1 rubric skeleton with v2 in [docs/evals/2026-05-27-aegis-appeal-rubric.md](../evals/2026-05-27-aegis-appeal-rubric.md). All weighted dimensions normalised to 1/3/5; **Safety (J1) and Hallucination & Internal Consistency (J2) are binary hard gates** — never weighted, never averaged in. Weighted dimensions (J3–J7) sum to 100% (Grounding 35%, Case Specificity 25%, Evidence Completeness 15%, Insurer Tactic 15%, Persuasive Coherence 10%). 7-judge panel concretely defined. Calibration anchors per dimension. Cost model: $0.014/judge call, $0.10/letter, $1.20/MVP benchmark, $300/20-day ceiling. Cohen's κ ≥ 0.6 calibration gate before any judge counts for promotion. PRD §7, §8, §15.2, §15.3 reconciled to match (hard-gate FAIL = zero-tolerance auto-rollback; promotion uses per-dimension regression thresholds, not single-composite).
+
+**Rationale.** Session 1 PRD eval section violated AlphaEval 2026 on 6 specific principles (single composite, safety averaged, no chain-of-thought protocol, no per-step gates, etc.). Session 4 generated a skeleton but with inconsistent scales and an undefined panel. Session 5 PM gap-call flagged it. This corrects all of it.
+
+**Status.** Accepted. Source of truth = `docs/evals/2026-05-27-aegis-appeal-rubric.md`.
+
+**Revisit triggers.**
+- If any judge fails κ ≥ 0.6 calibration on Day 5, that judge becomes advisory (not promotion-gating) until re-tuned.
+- If cost model overruns 1.5× at Day 7 MVP benchmark, drop weighted-judge sampling rate on live inferences from 30% → 15%.
+
+**Artifacts produced.** `docs/evals/2026-05-27-aegis-appeal-rubric.md` (v2), updated PRD §7 §8 §15.2 §15.3. Commits `9ee69da`, `d65e13c`.
+
+---
+
+## 2026-05-27 — Agent prompts rewritten as full LLM system prompts (not interface contracts)
+
+**Decision.** All 10 v1 agent prompts in `backend/src/prompts/` are now full LLM system prompts containing: persona + objective, domain context (US health-insurance appeals, insurer-specific tactics, ERISA/ACA/MHPAEA/NSA legal frame, clinical-guideline anchors), tool-use protocol, chain-of-thought scaffold, output JSON schema, ≥1 worked few-shot example, and guardrails (no PHI, no invented citations, no "will win" language). The previous interface-contract format (ROLE/RESPONSIBILITIES/INPUT/OUTPUT/HANDOFF) is retained as the **docstring section** within each prompt — not the whole prompt.
+
+**Rationale.** Session 4 generated prompts that were topology specs, not prompts an LLM would execute well. PM gap-call in Session 5. Drafter, Strategist, Adversarial Reviewer in particular need explicit CoT scaffolding + few-shot anchors to produce judge-passing output.
+
+**Status.** Accepted. All 10 prompts at `backend/src/prompts/*_v1.md`. Commit `17e6c27`.
+
+**Revisit triggers.**
+- After Day 5 A1 eval-signal gate: if v1 prompts can't even hit baseline composite, the prompts are too weak — escalate.
+- On every promoted version, prompts are version-bumped in Phoenix Prompts (immutable history).
+
+---
+
+## 2026-05-27 — Day 1–20 implementation plan produced (skill-driven, gates woven in)
+
+**Decision.** The Day-by-Day build plan is now formalised in [`docs/plans/2026-05-27-aegis-implementation-plan.md`](../plans/2026-05-27-aegis-implementation-plan.md) + companion flat task list. 4 phases (Phase 0 setup + Phase 1 MVP + Phase 2 Swarm + Phase 3 Learning/Polish), 67 tasks, 11 risks, full PRD-ID traceability matrix. Assumption gates A1–A5 + Day 10 progress gate + Day 14/15 demo-coherence gates explicitly scheduled as hard escalation points.
+
+**Rationale.** PRD §14 contained single-bullet days ("Day 3: Build single ADK agent with 7 tools") that were unworkable for execution. Session 5 PM gap-call. Plan now expands each day into 3–6 concrete tasks with DoD, satisfying `implementation-plan` skill output schema.
+
+**Status.** Accepted. **Phase 0 execution (GCP + Phoenix + agents-cli setup) is gated on PM sign-off per session instruction.**
+
+**Revisit triggers.**
+- If any A1–A5 gate fails → plan re-traces accordingly (fallbacks documented inline in plan §5 + tasks gate-index).
+- If Day 10 progress gate fires → ADR-004 fallback (lean topology) updates the plan from Day 11 forward.
+- If a `feature-spec` is later written for a Part B agent, the plan re-traces against that spec (currently traces against PRD FR/NFR/G/SC IDs).
+
+**Artifacts produced.** `docs/plans/2026-05-27-aegis-implementation-plan.md`, `docs/plans/2026-05-27-aegis-implementation-tasks.md`. Commit `079064d`.

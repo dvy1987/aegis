@@ -325,34 +325,54 @@ Recommend PM commit before Session 4 starts so the architecture rebuild is prese
 
 ---
 
-## 2026-05-27 — Session 5 Handoff (Droid) — IN PROGRESS
+## 2026-05-27 — Session 5 Handoff (Droid) — CLOSED
 
-Corrective session. PM identified 5 gaps in Session 4 output. This handoff is being updated live after each TODO so the work is recoverable mid-session.
+Corrective session. PM identified 5 gaps in Session 4 output. All 6 TODOs in the corrective plan are now complete. 5 atomic commits.
 
-### Gaps being corrected (from PM)
-1. Eval rubric was a skeleton — inconsistent scoring scales (Internal Consistency 1/3 not 1/3/5), "7-judge panel" referenced but never defined, no calibration examples, no cost model.
-2. Agent prompts were interface contracts (ROLE/RESPONSIBILITIES/INPUT/OUTPUT/HANDOFF) — not LLM system prompts. Zero domain knowledge, no few-shot, no CoT scaffolding.
-3. PRD §8 contradicts the new eval rubric — Safety is weighted 10% in PRD but a binary hard gate in the rubric; different metric set entirely.
-4. No implementation plan exists — PRD §14 has single-bullet days ("Day 3: Build single ADK agent with 7 tools").
-5. 4 sessions of meaningful work with only 2–5 git commits — no rollback safety per session.
+### Gaps corrected (from PM)
+1. Eval rubric was a skeleton — inconsistent scoring scales, undefined panel, no calibration examples, no cost model.
+2. Agent prompts were interface contracts — zero domain knowledge, no few-shot, no CoT.
+3. PRD §8 contradicted the new rubric (Safety 10% weighted in PRD vs binary hard gate in rubric).
+4. No implementation plan existed.
+5. Sessions accumulating with too few commits — no rollback safety per session.
 
-### Done in Session 5 (so far)
-- ✅ **TODO 1 — Commit Session 4 work as-is for rollback safety.** Commit `6a3ed58` ("Session 4 (as-is): planning artifacts before corrective rewrite"). Pre-commit secret scan clean.
-- ✅ **TODO 2 — Eval rubric v2 corrected.** Replaced `docs/evals/2026-05-27-aegis-appeal-rubric.md` (v1 skeleton) with v2: all dimensions normalized to 1/3/5; 7-judge panel concretely defined as 2 hard-gate judges (Safety, Hallucination+Internal-Consistency) + 5 weighted-dimension judges (Grounding 35%, Case Specificity 25%, Evidence Completeness 15%, Insurer Tactic 15%, Persuasive Coherence 10%); calibration anchors added per weighted dimension (level 5 / 3 / 1 example excerpts); cost model calculated ($0.014/judge call, $0.10/letter, $1.20/MVP benchmark, $10/Part B benchmark, $300/20-day ceiling); output schema + aggregation formula specified; calibration procedure with Cohen's κ ≥ 0.6 threshold added; anti-pattern checklist appended; change log included. Commit `9ee69da`.
-- ✅ **TODO 3 — PRD §8 reconciled with rubric v2.** Replaced the M1–M7 weighted-metric table with: pointer to rubric file as source of truth; explicit hard-gate vs weighted-dimension split; per-dimension regression-threshold gating (not single-composite); calibration κ ≥ 0.6 gate; cost-model summary. Also corrected §7 Success Criteria (SC2/SC3 now phrased as hard-gate PASS rates, not weighted scores), §15.2 Safety Gates (rebuilt as binary hard gates + per-dimension regression), and §15.3 Rollback (zero-tolerance on hard-gate FAIL).
+### Done in Session 5
+- ✅ **TODO 1 — Commit Session 4 work as-is for rollback safety.** Commit `6a3ed58`. Pre-commit secret scan clean.
+- ✅ **TODO 2 — Eval rubric v2.** Replaced rubric with v2 (all dims 1/3/5; 7-judge panel: J1/J2 hard gates + J3–J7 weighted; calibration anchors; $0.014/judge, $0.10/letter, $1.20/MVP, $300/20-day ceiling; κ ≥ 0.6 calibration gate; output schema + aggregation formula; anti-pattern checklist). Commit `9ee69da`.
+- ✅ **TODO 3 — PRD §8 reconciled.** Hard-gate vs weighted split; per-dimension regression-threshold gating; SC2/SC3 phrased as hard-gate PASS rates; §15.2 Safety Gates rebuilt as binary; §15.3 Rollback zero-tolerance on hard-gate FAIL. Commit `d65e13c`.
+- ✅ **TODO 4 — 10 agent prompts rewritten as LLM system prompts.** All include persona + objective, domain context (insurer tactics + ERISA/ACA/MHPAEA/NSA + clinical guidelines), tool-use protocol, CoT scaffold, output JSON schema, worked few-shot, guardrails. Interface-contract format kept as docstring section, not whole prompt. Commit `17e6c27`.
+- ✅ **TODO 5 — Day 1–20 implementation plan generated.** Via `implementation-plan` skill. Output: `docs/plans/2026-05-27-aegis-implementation-plan.md` (4 phases, 67 tasks, 11 risks, full PRD-ID traceability) + companion flat task list `docs/plans/2026-05-27-aegis-implementation-tasks.md`. A1–A5 + Day 10 + Day 14/15 gates explicitly scheduled. **Phase 0 (GCP + Phoenix + agents-cli setup) gated on PM sign-off.** Commit `079064d`.
+- ✅ **TODO 6 — Memory updated.** This handoff closed; current-state refreshed to Session-5 reality; decision-log appended with 3 new Session 5 entries (rubric v2, prompts rewrite, implementation plan); skill-outputs ledger logged in TODO 5 commit. Commit forthcoming.
 
-### Remaining TODO (Session 5)
-4. 🟡 **Rewrite 10 agent prompts as actual LLM system prompts.** Each must include: persona + objective, domain context (US health insurance appeals; insurer-specific tactics; ERISA/ACA/MHPAEA/NSA legal frame; clinical-guideline anchors), tool-use protocol, chain-of-thought scaffold, output JSON schema, 1 worked few-shot example, guardrails (no PHI, no invented citations, no "will win"). The current interface-contract format becomes the *docstring section* of each prompt, not the whole prompt.
-5. 🟡 **Generate Day 1–20 implementation plan.** Via `implementation-plan` skill. Output to `docs/specs/2026-05-27-aegis-implementation-plan.md`. Day-by-day with tasks, deliverables, eval gates, and the 5 assumption tests woven in.
-6. 🟡 **Update memory: current-state + decision-log + skill-outputs.** Reflect Session 5 corrections.
+### Commits this session (5)
+1. `6a3ed58` — Session 4 (as-is) rollback safety
+2. `9ee69da` — Session 5 TODO 2: eval rubric v2
+3. `d65e13c` — Session 5 TODO 3: PRD §8 reconciliation
+4. `17e6c27` — Session 5 TODO 4: agent prompts as LLM system prompts
+5. `079064d` — Session 5 TODO 5: Day 1–20 implementation plan + task list
+6. *(pending)* Session 5 TODO 6: memory close-out
 
-### Commit Discipline
-One atomic commit per TODO so each fix is independently revertable. Current commits this session: 2 (`6a3ed58` Session-4 safety, `9ee69da` rubric v2).
+### Decisions captured (in decision-log)
+- Eval rubric v2 (AlphaEval-compliant; hard gates + weighted dimensions).
+- Agent prompts as full LLM system prompts (not interface contracts).
+- Day 1–20 implementation plan formalised; Phase 0 PM-gated.
+
+### Next Agent Should Know
+
+- **Planning is complete. Project is ready for Phase 0 execution upon PM sign-off.** All planning artifacts (PRD v4, architecture, eval rubric v2, eval pipeline, agent prompts v1, implementation plan, task list) are aligned.
+- **Phase 0 = STOP-AND-ASK gate.** PM explicitly asked to be consulted before any GCP / Phoenix Cloud setup. Do NOT silently run `gcloud` or sign up for accounts without PM confirmation. See plan §4 Phase 0.
+- **The hard gates (A1–A5 + Day 10 + Day 14/15) are the safety nets.** Enforce them. Each carries a documented fallback — see plan §5 + tasks file gate index.
+- **`docs/plans/2026-05-27-aegis-implementation-tasks.md` is the agent-pickable execution surface.** Each task has DoD + traceability ID; pick one task per coding-agent session; commit with task ID in message.
+- **Source-of-truth files:** PRD (`docs/prd/PRD.md`), architecture (`docs/architecture/2026-05-27-aegis-arch.md`), rubric (`docs/evals/2026-05-27-aegis-appeal-rubric.md`), prompts (`backend/src/prompts/*_v1.md`), plan (`docs/plans/`).
+- **No application code yet.** `backend/src/` has only `prompts/`. `frontend/` has only an AGENTS.md. Phase 0 + Phase 1 Day 1 will produce the first running code.
 
 ### Carry-forward Revisit Triggers
-- Day 10 progress gate on Part B specialist agents (ADR-004).
-- A5 Learning Coordinator autonomy go/no-go Day 10.
-- Demo coherence test Day 15.
+- A4 (Phoenix MCP + ADK integration) Day 2 EOD go/no-go.
+- A2 (Phoenix UI demo-viability) Day 2 EOD.
+- A3 (case credibility) Day 3 EOD.
+- A1 (eval signal) Day 5 EOD.
+- Day 10 progress gate + A5 (Learning Coordinator autonomy) Day 10 EOD ([ADR-004](../adr/)).
+- Day 14 demo-coherence pre-check; Day 15 formal check ([ADR-004](../adr/)).
 - Phoenix Cloud free tier > 80% quota.
-- `google-agents-cli` observability conflict with Phoenix MCP — Day 1 spike (J1).
-- `google-agents-cli deploy` for 2-service Cloud Run — Day 6–7 (J2).
+- Open Q J1 (`google-agents-cli` observability vs Phoenix MCP) — Day 1 (task T1.5).
+- Open Q J2 (`google-agents-cli deploy` vs 2-service Cloud Run) — Day 7 (task T7.1).
