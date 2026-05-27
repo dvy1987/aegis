@@ -104,6 +104,67 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 
 ---
 
+## 2026-05-27 — Adopt `google-agents-cli` for backend dev workflow
+
+**Decision.** Install `uvx google-agents-cli setup` on Day 1 of build. Use its `create` / `playground` / `eval` / `deploy` commands and its bundled 7 skills for the full ADK lifecycle (scaffold → develop → evaluate → deploy → observe). Keep ADK as the agent framework — agents-cli is the lifecycle tool around ADK, not a replacement.
+
+**Rationale.** `google-agents-cli` was released April 2026 by Google as the unified ADK development backbone. It compresses Day 1 setup, ships skills that fill gaps our library doesn't cover (ADK Python API, project scaffolding, eval harnesses, Cloud Run deployment, observability), and is officially built on top of ADK. For a non-technical PM working in a 20-day window, the leverage is real.
+
+**Alternatives considered.**
+- Skill-only install (`npx skills add google/agents-cli`) — less leverage, doesn't get the CLI commands.
+- Defer to Day 1 review — rejected; Day 1 time is already precious per the assumption-map test plan.
+- Don't adopt; build scaffolding/deploy manually — rejected; reinvents wheels.
+
+**Status.** Accepted.
+
+**Revisit triggers.**
+- If `google-agents-cli-observability` skill conflicts with our Phoenix MCP instrumentation, fall back to manual workflow for observability — keep Phoenix as primary.
+- If their Cloud Trace dependency complicates the Phoenix setup, isolate it (skip the observability skill).
+- If their `deploy` skill assumes Agent Runtime patterns that conflict with our 2-service Cloud Run topology, drop the deploy skill and write a custom deploy script.
+
+**Implications.**
+- Update tech stack: AGENTS.md + backend/AGENTS.md now reference `google-agents-cli`.
+- Orchestration map gains a new "Backend lifecycle (ADK)" row listing the 7 agents-cli skills.
+- Skill routing rule added in AGENTS.md: ADK-specific work → `google-agents-cli-*` skills; framework-agnostic process work → existing skill library.
+- Open question added to [docs/open-questions.md](../open-questions.md) on Phoenix MCP + agents-cli observability compatibility (must resolve Day 1).
+
+**Sources.**
+- [agents-cli getting started](https://google.github.io/agents-cli/guide/getting-started/)
+- [Google announcement, Apr 2026](https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/)
+- [agents-cli GitHub](https://github.com/google/agents-cli)
+
+---
+
+## 2026-05-27 — Part B architecture stays at 12 agents (NOT compressed to lean composite)
+
+**Decision.** Part B architecture remains as specified in PRD §12 — 12-agent swarm + Learning Coordinator + Pattern Synthesizer. Do not compress to the lean 5-runtime + 1-offline composite that was sketched in this session.
+
+**Rationale.** PM judgment: the audacious-bet framing is the strategic point of Part B. Agent count is part of the differentiation thesis vs every other Arize submission. The risk is accepted explicitly.
+
+**Alternatives considered.**
+- **Lean composite (5 runtime + 1 offline):** the architecture critique surfaced in this session against Google's [official 8-pattern multi-agent guide](https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/) showed several rough edges in the 12-agent design: (1) the "12" count includes evals miscounted as agents (Quality Judge Panel is 7 LLM judges, not 1 agent; Outcome Simulator is a rule engine + 1 LLM call); (2) the 5-agent researcher pool is over-decomposed — they all do "retrieve grounding evidence from corpus X", which is a tool concern, not an agent concern; (3) <1 day per agent for a non-technical PM in Days 8–14 is unrealistic for prompt quality; (4) the demo can only credibly show 3–4 agents in 3 minutes so the cost of 12 doesn't pay off in pitch; (5) the Arize rubric rewards loop quality, not agent count. **REJECTED by PM** — the audacity is the bet.
+- **Defer count entirely until `agent-system-architecture` runs:** REJECTED — PM wants the 12-agent framing committed.
+
+**Status.** Accepted with hard revisit triggers.
+
+**Revisit triggers (CRITICAL — these are the safety nets on the audacious bet).**
+- **Day 10 progress gate:** if <50% of the 9 specialist agents (beyond the single MVP agent) have credible role prompts and pass basic integration tests by EOD Day 10, escalate to PM with options (compress to lean composite, ship 5 agents instead of 12).
+- **Assumption A5 fails:** if Learning Coordinator's autonomous loop fails its Day 10 go/no-go (hit rate < 1-in-10 OR > 30% absurd-edit rate), the 12-agent thesis is hollow — reopen architecture entirely.
+- **Demo coherence test:** by Day 15, if the demo can't credibly walk through ≥3 specialist agents on screen without overwhelming viewers, compress the demo-visible subset to 3–4 of the 12. Keep all 12 in repo, demo 5.
+- **Build-time slippage:** if Day 14 milestone (9-agent swarm shippable) slips by >2 days, escalate per Code-Wall Escalation Protocol — do NOT silently downscope.
+
+**Implications.**
+- PRD §12, §14 build plan, §16 demo script stay as currently specified.
+- AGENTS.md → "Build Discipline" includes the Part B revisit triggers explicitly.
+- Before Day 8 starts, run `agent-system-architecture` skill on the 12-agent topology to formalize roles + interfaces, and `create-agent-prompt` for each of the 12 roles. This is *Phase 4* in the original Session 1 TODO and remains a hard prerequisite for Day 8 work.
+
+**Sources.**
+- PRD §12 — current 12-agent topology
+- [Google's developer guide to multi-agent patterns in ADK, Dec 2025](https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/)
+- Pre-mortem (Cause M — UX feels dev-toolish) and Assumption Map (R6 — 12 agents looks like overkill to judges) both flagged this risk; both stand as "monitor + revisit".
+
+---
+
 ## 2026-05-25 — Impact statistics sourced and documented
 
 **Decision.** Aegis's Potential Impact narrative is now grounded in [docs/research/impact-stats.md](../research/impact-stats.md) — verified primary sources (KFF, CMS, Commonwealth Fund, JAMA, Health Affairs, Senate report, Stanford).

@@ -1,7 +1,7 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-25 (Session 2)
-**Phase:** Pre-build planning, deep-thinking + strategic refinement underway. **No application code exists yet.**
+**Updated:** 2026-05-27 (Session 3)
+**Phase:** Pre-build planning. AGENTS.md rewritten via `project-setup` with full preservation discipline + Session 2 decisions integrated. Tooling decision landed (`google-agents-cli`). Part B 12-agent architecture confirmed as the audacious bet with explicit revisit triggers. **No application code exists yet.**
 
 ---
 
@@ -43,6 +43,27 @@
 | Agent rules | [AGENTS.md](../../AGENTS.md) |
 | Idea history | [docs/ideas.md](../ideas.md) |
 | Hackathon brief | [docs/challenge.md](../challenge.md) |
+
+## Session 3 progress (2026-05-27)
+
+- ✅ `memory-startup` ran; bounded context loaded
+- ✅ Researched `google-agents-cli` (released April 2026) — confirmed it's complementary to ADK, not a replacement; bundles 7 ADK-lifecycle skills via `uvx google-agents-cli setup`
+- ✅ Cross-checked Part B 12-agent topology against Google's official [8-pattern ADK multi-agent guide](https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/) — surfaced 5 architectural critiques; PM made informed call to keep 12 agents as audacious bet with revisit triggers
+- ✅ `project-setup` skill ran: 3 AGENTS.md files written (root 145 lines, frontend 51 lines, backend 78 lines — all under 150-line skill rule)
+- ✅ Preservation discipline applied: every valid rule from old AGENTS.md absorbed; stale rules (Streamlit lock, single-agent-only) explicitly reversed with provenance noted
+- ✅ Multi-file mode with `frontend/` and `backend/` dirs scaffolded (empty for now, AGENTS.md inside each ready for when code lands)
+- ✅ SDD mode on: Orchestration Map includes the full `spec-driven-development` chain + spec-first rule for behaviour changes
+- ✅ Autonomy boundaries codified: strict ask-first on product/architecture/copy; full autonomy on tests, internal refactors, tooling
+- ✅ Two decisions logged in [decision-log.md](decision-log.md): adopt `google-agents-cli` Day 1; keep 12-agent Part B with hard revisit triggers (Day 10 progress gate, A5 fail, demo-coherence test, build-time slippage)
+- ✅ Two new open questions added in [open-questions.md §J](../open-questions.md): agents-cli observability vs Phoenix MCP compatibility (Day 1); agents-cli deploy vs 2-service Cloud Run (Day 6–7)
+- ✅ [open-questions.md §I](../open-questions.md) "Things explicitly NOT open" rewritten to reflect Session 2 + Session 3 decisions (Next.js + Python ADK, 12-agent Part B, agents-cli adoption, UX as pillar, tone guardrail)
+- ✅ Stale-doc cleanup pass 1 complete: `docs/architecture.md` replaced by skill-driven rebuild at [docs/architecture/2026-05-27-aegis-arch.md](../architecture/2026-05-27-aegis-arch.md) via `agent-system-architecture` skill. Old freehanded version retained as pointer. Honest component count documented (14 total: 10 LLM agents + 1 judge panel + 1 simulator + 2 meta). Mermaid wiring + state strategy + HITL + observability all captured.
+- ✅ ADRs backfilled (Session 3) via `architectural-decision-log` skill: ADR-001 (Google ADK), ADR-002 (Phoenix Cloud + MCP load-bearing), ADR-003 (Next.js + Python ADK overturn), ADR-004 (12-agent Part B swarm with revisit triggers), ADR-005 (`google-agents-cli` adoption). ADR-001 and ADR-002 are SYNTHESIS (retrospective from observed Session 1 decisions); ADR-003/004/005 are CONTEMPORANEOUS.
+- 🟡 Stale-doc cleanup deferred to Session 4 (per PM direction): `README.md` (Streamlit refs, "elessar/" tree in repo structure, weak pitch per [feedback.md](../feedback.md)), `docs/open-questions.md` body sweep beyond §I (only §I + §J edited this session).
+- 🟡 PRD edits §3 onward also deferred (still partial v3 / partial v2; Session 2 continuation plan applies).
+- 🟡 Eval design rebuild via `eval-output` chain still pending (Phase 1 of Session 1 TODO).
+- 🟡 `product-soul` doc generation still pending.
+- 🟡 `create-agent-prompt` for the 10 agent roles still pending — must happen before Day 8 build start.
 
 ## Session 2 progress (2026-05-25)
 

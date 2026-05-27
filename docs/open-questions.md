@@ -177,19 +177,37 @@ Or: *"An agent that learns insurer-specific appeal tactics from its own Phoenix 
 
 ---
 
+## J. Tooling & Stack (newly opened — 2026-05-27)
+
+### J1. `google-agents-cli` observability ↔ Phoenix MCP compatibility
+**Question:** `google-agents-cli` bundles a `google-agents-cli-observability` skill that emphasizes Cloud Trace. We rely on Phoenix Cloud + `@arizeai/phoenix-mcp` as our load-bearing observability surface. Do they coexist cleanly, or does adopting agents-cli's observability skill fight our Phoenix instrumentation?
+**When it must resolve:** Day 1 (during the `agents-cli` install + Phoenix-MCP-ADK integration spike — assumption A4 test).
+**Default if not resolved:** Use Phoenix as primary, skip the agents-cli observability skill, document in decision-log.
+**Owner:** PM (during Day 1 setup).
+
+### J2. `google-agents-cli` deploy skill ↔ 2-service Cloud Run topology
+**Question:** Their `deploy` skill assumes Agent Runtime / single-service patterns. We deploy two services (frontend + backend) on Cloud Run. Does their deploy command handle two services cleanly, or do we need a custom deploy script?
+**When it must resolve:** Day 6–7 (before MVP deploy).
+**Default if not resolved:** Use `agents-cli deploy` for the backend only; write a separate Cloud Run deploy script for the Next.js frontend.
+
+---
+
 ## I. Things explicitly NOT open questions (decided)
 
-For clarity, these are **locked** per the oracle's recommendation:
+For clarity, these are **locked**:
 
-- ✅ Single ADK agent + one offline learning job (NOT multi-agent swarm)
-- ✅ Streamlit (NOT Next.js / React)
-- ✅ No vector DB
-- ✅ Internal appeals only (NOT external/IRO)
-- ✅ Commercial plans only (NOT Medicare/Medicaid)
-- ✅ Human approval required for prompt/playbook promotion (NOT autonomous mutation)
-- ✅ Synthetic composite cases (NOT real PHI)
-- ✅ Apache 2.0 license
-- ✅ Narrative is "learns insurer-specific tactics" (NOT "learns US healthcare law")
+- ✅ **Part A:** Single ADK agent + one offline learning job. **Part B:** 12-agent swarm + Learning Coordinator + Pattern Synthesizer (per [decision-log.md 2026-05-27](memory/decision-log.md)).
+- ✅ **Next.js (App Router) frontend + Python ADK backend** — 2 Cloud Run services (per [decision-log.md 2026-05-25](memory/decision-log.md)). Reverses the earlier Streamlit-only lock.
+- ✅ `google-agents-cli` adopted Day 1 for backend lifecycle (scaffold, eval, deploy, observability) — see [decision-log.md 2026-05-27](memory/decision-log.md).
+- ✅ No vector DB.
+- ✅ Internal appeals only (NOT external/IRO in scope; templates only for Part B).
+- ✅ Commercial plans only (NOT Medicare/Medicaid).
+- ✅ **Part A:** human approval required for prompt/playbook promotion. **Part B:** autonomous promotion allowed with hard safety gates + one-click rollback (PRD §15.2).
+- ✅ Synthetic composite cases (NOT real PHI).
+- ✅ Apache 2.0 license.
+- ✅ UX is a co-equal product pillar (per [decision-log.md 2026-05-25](memory/decision-log.md)).
+- ✅ Narrative is "learns insurer-specific tactics from outcomes" (NOT "learns US healthcare law").
+- ✅ Tone guardrail: no violence, vigilantism, or polarizing public events around the insurance industry in any artifact (per [AGENTS.md](../AGENTS.md) and [design-brief.md §8](design-brief.md)).
 
 ---
 

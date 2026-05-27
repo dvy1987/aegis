@@ -212,3 +212,81 @@ Dirty as of session end (post-`ab87718`):
 - New (untracked): `docs/design-brief.md`, `docs/feedback.md`, `docs/research/` (contains `impact-stats.md`, `assumption-map.md`)
 
 Recommend the PM commits before Session 3 starts so the next agent has a clean baseline.
+
+---
+
+## 2026-05-27 — Session 3 Handoff (Droid)
+
+### Done
+
+- Ran `memory-startup`; bounded context loaded.
+- Researched [`google-agents-cli`](https://google.github.io/agents-cli/) (released Apr 2026) — confirmed it is built on top of ADK (not a replacement) and bundles 7 ADK-lifecycle skills via `uvx google-agents-cli setup`.
+- Cross-checked Part B 12-agent topology against [Google's official 8-pattern ADK multi-agent guide](https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/) (Dec 2025) — surfaced 5 architectural critiques (count inflated by miscounting evals as agents; researcher pool over-decomposed; build-time math tight for solo PM; demo coherence; Arize rubric rewards loop not count). PM made informed call to **keep 12 agents** as audacious bet with explicit hard revisit triggers.
+- Ran `project-setup` skill end-to-end: 3 AGENTS.md files (root 145 lines + `frontend/AGENTS.md` 51 lines + `backend/AGENTS.md` 78 lines, all under 150-line skill rule). Multi-file mode, SDD mode on, autonomy boundaries codified (strict on product/architecture/copy; full autonomy on tests, internal refactors, tooling).
+- Preservation discipline applied: every valid rule from old AGENTS.md absorbed into new tree; stale rules (Streamlit lock, single-agent-only) explicitly reversed with provenance noted. Cross-check table presented to PM and approved.
+- Created empty `frontend/` and `backend/` directories with scoped AGENTS.md inside each, ready for when code lands.
+- Ran `agent-system-architecture` skill — produced [docs/architecture/2026-05-27-aegis-arch.md](../architecture/2026-05-27-aegis-arch.md). Replaces freehanded Session-1 `docs/architecture.md` (now a pointer file). Covers Part A (single agent) + Part B (composite swarm). Honest component count: 10 LLM agents + 1 judge panel + 1 mostly-deterministic simulator + 2 meta = 14 components. Mermaid wiring diagram, state/memory strategy, HITL checkpoints, observability strategy, repository layout, deployment.
+- Ran `architectural-decision-log` skill in mixed mode (some SYNTHESIS, some CONTEMPORANEOUS) — produced 5 ADRs:
+  - [ADR-001](../adr/ADR-001-google-adk-agent-framework.md) Google ADK (SYNTHESIS, Session 1)
+  - [ADR-002](../adr/ADR-002-phoenix-mcp-load-bearing.md) Arize Phoenix Cloud + MCP load-bearing (SYNTHESIS, Session 1)
+  - [ADR-003](../adr/ADR-003-nextjs-frontend-python-adk-backend.md) Next.js + Python ADK overturn (CONTEMPORANEOUS, Session 2)
+  - [ADR-004](../adr/ADR-004-twelve-agent-part-b-swarm.md) 12-agent Part B swarm with revisit triggers (CONTEMPORANEOUS, Session 3)
+  - [ADR-005](../adr/ADR-005-google-agents-cli-dev-workflow.md) `google-agents-cli` adoption (CONTEMPORANEOUS, Session 3)
+- Logged 2 decisions in [decision-log.md](decision-log.md) (agents-cli adoption + 12-agent confirmation with hard revisit triggers).
+- Added 2 open questions in [open-questions.md §J](../open-questions.md) — J1 (`agents-cli observability` ↔ Phoenix MCP), J2 (`agents-cli deploy` ↔ 2-service Cloud Run).
+- Updated [open-questions.md §I](../open-questions.md) "Things NOT open" to reflect Session 2 + Session 3 decisions (Next.js + Python ADK, 12-agent Part B, agents-cli adoption, UX as pillar, tone guardrail).
+- Updated [SKILL-OUTPUTS.md ledger](../skill-outputs/SKILL-OUTPUTS.md) and [current-state.md](current-state.md).
+
+### Debated
+
+- **agents-cli adoption depth.** Options were (a) full install + use commands + skills, (b) skill-only, (c) defer. PM picked (a) — Day 1 install, deconflict overlapping skills later.
+- **Part B architecture.** Sketched lean composite (5 runtime + 1 offline = 6 total) as alternative to 12 agents; flagged build-time math + demo-coherence risk. PM picked **keep 12** with hard revisit triggers baked into ADR-004 + AGENTS.md Build Discipline + decision-log.
+- **AGENTS.md file mode.** Options were single root vs multi-file scaffold now vs single permanently. PM picked multi-file scaffold even though dirs are empty.
+- **Architecture rebuild depth.** Options were surgical patch, full skill-driven rebuild, or minimum-viable. PM picked full skill-driven rebuild — became the bulk of Session 3; README + open-questions body cleanup deferred to Session 4.
+
+### Decisions
+
+See [decision-log.md](decision-log.md) — 2 new entries 2026-05-27. Plus 5 ADRs as above.
+
+### Deferred (Session 4 pickup priorities, in order)
+
+1. **`README.md` rewrite** — currently has stale Streamlit references, "elessar/" old codename in tree structure, and the weak pitch per [feedback.md](../feedback.md). Should be rewritten as user-scenario / user-pain framing (per feedback): who is facing this problem, what is the problem, why it's important, what we offer. Don't lose impact-stats grounding; reference the new architecture spec.
+2. **`docs/open-questions.md` body sweep** — only §I and §J were updated this session. Many earlier blockers (A2, A3, B1, B2, C1, E1, E2, H1, H2) may also need refreshing in light of Session 2 + Session 3 decisions. Resolve or close them.
+3. **Finish PRD v3 §3 onward** — continuation plan in Session 2 handoff still applies. Fold in 5 critical assumption tests (Day 1–10), UX pillar, Next.js stack, new §18 Arize Rubric Alignment, softened demo numbers.
+4. **`product-soul` doc generation** — was in Session 2's deferred list.
+5. **`create-agent-prompt` for each of the 10 agent roles** — must happen before Day 8 build start (Phase 4 of Session 1 TODO).
+6. **`eval-output` skill chain** — Phase 1 of Session 1 TODO; eval rebuild via `eval-rubric-design` → `eval-judge` → `eval-pipeline`. Highest-leverage correction still pending.
+7. **More ADRs to backfill** (Session 4 if time): Gemini 3 with 2.5 fallback, Apache 2.0 license, BM25 over local corpus, two-phase nested PRD structure.
+8. **Day 1 spikes (when build window starts):** install `google-agents-cli`, run Phoenix-MCP+ADK integration spike (assumption A4), close open questions J1 and J2.
+
+### Next Agent Should Know
+
+- **Architecture is now skill-driven.** [docs/architecture/2026-05-27-aegis-arch.md](../architecture/2026-05-27-aegis-arch.md) is the canonical blueprint. `docs/architecture.md` is just a pointer file. Update the dated file first when anything changes; add an ADR if non-trivial.
+- **The 12-agent decision is audacious-but-bounded.** ADR-004 documents 4 hard revisit triggers — Day 10 progress gate, A5 fail, demo-coherence test (Day 15), build slippage. The next agent must enforce these gates rigorously. If any fires, escalate to PM with options per the Code-Wall Escalation Protocol.
+- **`google-agents-cli` is the Day 1 install.** PM has approved adoption. Verify J1 (observability skill ↔ Phoenix MCP) and J2 (deploy ↔ 2-service) on Day 1 / Day 6–7 respectively.
+- **The "12" framing is preserved in pitch language, but architectural honesty is documented.** When writing public-facing content (PRD, README, Devpost), say "12-agent swarm" if it's the strategic story; when designing/building, refer to the honest 10+1+1+2 = 14 component breakdown in architecture spec §3.1.
+- **Preservation discipline is the project rule.** When rewriting any major doc, cross-check against the prior version; build a port-list of facts/rules/constraints that must survive; call out anything dropped with reason. Already proven this session for AGENTS.md and architecture.md. Apply to README.md and PRD next.
+- **Tone guardrail and UX-as-pillar are non-negotiable** — already in AGENTS.md (root), frontend/AGENTS.md, and design-brief.md. Carry forward.
+
+### Revisit Triggers
+
+(These apply to the project state going into Session 4 — same as Session 2 plus the new Session 3 ones)
+
+- Any critical assumption test (A1–A5) fails → re-open the pitch claim it supports; escalate to PM with options.
+- Phoenix Cloud free tier nears 80% of any quota → upgrade ($50 ceiling approved in spirit).
+- Gemini 3 not available by Day 14 → fallback to Gemini 2.5 (already in mitigation).
+- New competitor surfaces in Arize-track Devpost listings by Day 14 → revisit differentiation thesis.
+- **Day 10 progress gate** on Part B specialist agents — see [ADR-004](../adr/ADR-004-twelve-agent-part-b-swarm.md).
+- **A5 (Learning Coordinator autonomy)** Day 10 go/no-go — see ADR-004.
+- **Demo coherence test Day 15** — see ADR-004.
+- **`google-agents-cli` observability conflict with Phoenix MCP** — Day 1 spike (open question J1).
+- **`google-agents-cli deploy` for 2-service Cloud Run** — Day 6–7 verification (open question J2).
+
+### Working Tree
+
+Newly created or modified this session:
+- New: `AGENTS.md` (root, overwriting old) · `frontend/AGENTS.md` · `backend/AGENTS.md` · `frontend/` dir · `backend/` dir · `docs/architecture/2026-05-27-aegis-arch.md` · `docs/architecture/` dir · `docs/adr/` dir · `docs/adr/ADR-001..005-*.md` (5 files)
+- Replaced: `docs/architecture.md` (now a thin pointer to the dated spec)
+- Modified: `docs/memory/decision-log.md` · `docs/memory/current-state.md` · `docs/memory/agent-handoffs.md` (this entry) · `docs/open-questions.md` · `docs/skill-outputs/SKILL-OUTPUTS.md`
+
+Recommend PM commit before Session 4 starts so the architecture rebuild is preserved as a clean checkpoint. `git add -A && git commit -m "Session 3: AGENTS.md rebuild + architecture skill-driven rebuild + 5 ADRs"` (or similar).
