@@ -98,7 +98,7 @@ Two-service Cloud Run deployment:
 | T2.1 | **A4 spike — part 2:** Run 20 MCP queries; record p50/p95 latency, structured-output reliability. **EOD go/no-go decision.** | If p95 > 10s or unstructured > 20% → escalate to PM with fallback options | A4 |
 | T2.2 | **A2 Phoenix UI study:** Watch official Phoenix demos, scroll docs, manually use Experiments/Traces/Evals/Datasets/Prompts UI. Storyboard the 3 demo-load-bearing screens. | `docs/demo/phoenix-shotlist.md` drafted (3 surfaces × ≥20s each) | A2, G5 |
 | T2.3 | Build the local corpus seed (~30 docs): public ERISA §503/2719 text, Aetna/Cigna/UHC appeal-instructions, AMA/InterQual/MCG summaries (public), No Surprises Act FAQs, MHPAEA basics | `corpus/authorities/` populated; BM25 returns ≥3 hits for a test query like "medical necessity appeal Cigna" | FR3 |
-| T2.4 | Draft 6 calibration cases (3 insurers × 2 denial types × 1 case) using provenance template; show 2 to outside readers (start A3) | 6 case files in `eval/cases/train/`; `eval/dataset_card.md` initialised | FR8, NFR3, A3 |
+| T2.4 | Draft 2 calibration cases (1 insurer × 2 denial types) using provenance template; show 2 to outside readers (start A3) | 2 case files in `eval/cases/train/`; `eval/dataset_card.md` initialised | FR8, NFR3, A3 |
 
 **Hard gate (EOD Day 2):** A4 PASS → continue. A4 FAIL → PM escalation; fallback is Phoenix SDK direct calls and softening the "Phoenix MCP load-bearing" pitch.
 
@@ -106,7 +106,7 @@ Two-service Cloud Run deployment:
 | Task | Description | DoD | Traces to |
 |---|---|---|---|
 | T3.1 | **A3 Reader test:** show 3 cases to 2 outside readers; if either flags "feels fake / too clean" → re-source with more public denial-letter language | Both readers describe cases as "plausible" / "scary realistic" — yes/no recorded in `eval/dataset_card.md` | A3 |
-| T3.2 | Draft 6 held-out cases (insurer × denial-type matrix, distinct from train) — composite from different public sources | 6 case files in `eval/cases/holdout/`; provenance documented | FR8 |
+| T3.2 | Draft 2 held-out cases (distinct from train) — composite from different public sources | 2 case files in `eval/cases/holdout/`; provenance documented | FR8 |
 | T3.3 | Build single ADK agent in `backend/src/agent/aegis_v1.py` with 7 tools (case_parser, corpus_retrieval, phoenix_mcp_lookup, playbook_loader, drafter, self_check, simulator); deliberately weak v1 prompt | First end-to-end run on 1 calibration case produces a structured `AppealPackage` JSON | FR1, FR2, FR3, FR4, FR6, FR7 |
 | T3.4 | Strict JSON output enforced (`response_mime_type="application/json"`); Pydantic schemas in `backend/src/agent/schemas.py` | Schema validation passes on the Day-3 output | NFR4 |
 
@@ -125,8 +125,8 @@ Two-service Cloud Run deployment:
 |---|---|---|---|
 | T5.1 | Implement Layer 1 deterministic checks per [eval pipeline](../evals/2026-05-27-aegis-eval-pipeline.md): regex PHI, disclaimer string-match, length, tool-call JSON validity | All 4 checks pass on the v1 output; fail-injected outputs are correctly rejected | NFR2, FR7 |
 | T5.2 | Implement 5 of 7 LLM judges as Phoenix Evals: J1 Safety (gate), J2 Hallucination & Internal Consistency (gate), J3 Grounding, J4 Case Specificity, J5 Evidence Completeness — judge model = Claude 4 or GPT-5 (cross-model) | Eval call returns rubric-shaped JSON; Phoenix UI shows the eval run | FR7 |
-| T5.3 | Calibration: hand-score 6 calibration cases on each judge dimension; compute Cohen's κ; reject any judge with κ < 0.6 (advisory only until fixed) | `eval/calibration_log.md` records κ per judge; only κ≥0.6 judges count toward promotion gates | rubric §calibration |
-| T5.4 | **A1 Eval Signal Gate:** run v1 (weak prompt) vs v2 (hand-tuned insurer-specific prompt) on 3 held-out cases. If `weighted_quality` lift < +15% on 3 cases OR judge re-run std-dev > ±0.08 → escalate to PM (kill or recalibrate). | A1 PASS or FAIL recorded in `eval/calibration_log.md` | A1, SC1 |
+| T5.3 | Calibration: hand-score 2 calibration cases on each judge dimension; compute Cohen's κ; reject any judge with κ < 0.6 (advisory only until fixed) | `eval/calibration_log.md` records κ per judge; only κ≥0.6 judges count toward promotion gates | rubric §calibration |
+| T5.4 | **A1 Eval Signal Gate:** run v1 (weak prompt) vs v2 (hand-tuned insurer-specific prompt) on 2 held-out cases. If `weighted_quality` lift < +15% on 2 cases OR judge re-run std-dev > ±0.08 → escalate to PM (kill or recalibrate). | A1 PASS or FAIL recorded in `eval/calibration_log.md` | A1, SC1 |
 
 **Hard gate (EOD Day 5):** A1 PASS → continue MVP build. A1 FAIL → PM call: recalibrate eval, kill learning-loop pitch, or both.
 
@@ -134,7 +134,7 @@ Two-service Cloud Run deployment:
 | Task | Description | DoD | Traces to |
 |---|---|---|---|
 | T6.1 | Implement J6 Insurer Tactic Alignment + J7 Persuasive Coherence judges | All 7 judges run end-to-end on a hero case in <90s | rubric §weighted dims |
-| T6.2 | Next.js MVP workbench page: case selector (12 cases), v1/v3 toggle, side-by-side appeal output, eval score panel, simulator outcome, Phoenix Cloud deep-links | Local demo run with 1 hero case shows all 5 UI regions populated | FR10, G8 |
+| T6.2 | Next.js MVP workbench page: case selector (4 cases), v1/v3 toggle, side-by-side appeal output, eval score panel, simulator outcome, Phoenix Cloud deep-links | Local demo run with 1 hero case shows all 5 UI regions populated | FR10, G8 |
 | T6.3 | Tone + accessibility pass per [design brief](../design-brief.md) §4 + §8: calm copy, no exclamation marks, AA contrast minimum, focus rings, no AI marketing voice, "person" not "human" | Lighthouse a11y score ≥ 90; copy review passes against design-brief checklist | NFR7, G8 |
 | T6.4 | J2-style verification: J1+J2 deterministic gates short-circuit cheap checks before invoking LLM judges | Cost log shows hard-gate FAIL skips the 5 weighted judges | rubric §cost |
 

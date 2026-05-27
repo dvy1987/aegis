@@ -21,7 +21,7 @@ Users facing health insurance denials lack the expertise to draft appeals. Insur
 - **FR-2:** The backend MUST route the input to a single Google ADK agent.
 - **FR-3:** The agent MUST have access to 7 tools (`case_parser`, `corpus_retrieval`, `phoenix_mcp_lookup`, `playbook_loader`, `drafter`, `self_check`, `simulator`).
 - **FR-4:** The UI MUST display the drafted appeal and a confidence/citation panel side-by-side.
-- **FR-5:** The system MUST evaluate the drafted appeal against the 12-case benchmark (6 train, 6 holdout).
+- **FR-5:** The system MUST evaluate the drafted appeal against the 4-case benchmark (2 train, 2 holdout).
 
 ## Non-Functional Requirements
 - **NFR-1:** The UI motion budget MUST respect Constitution C-3.1 (400ms default).
@@ -31,7 +31,7 @@ Users facing health insurance denials lack the expertise to draft appeals. Insur
 ## Acceptance Criteria
 - **AC-FR-1.1:** Given a user is on the workbench, When they paste a synthetic denial letter and click submit, Then the frontend displays a loading state and sends the payload to the backend.
 - **AC-FR-2.1:** Given a backend request, When the ADK agent finishes drafting, Then a structured JSON response containing the draft and citations is returned.
-- **AC-FR-5.1:** Given a run on the 12-case benchmark, When evaluated by the LLM Judges, Then the system MUST pass the J1 and J2 hard safety gates with 100% success on holdout cases.
+- **AC-FR-5.1:** Given a run on the 4-case benchmark, When evaluated by the LLM Judges, Then the system MUST pass the J1 and J2 hard safety gates with 100% success on holdout cases.
 
 ## Edge Cases
 1. The user inputs a denial letter that is completely unrelated to health insurance (e.g., auto insurance).

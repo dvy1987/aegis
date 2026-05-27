@@ -32,11 +32,11 @@
 - [ ] **T2.1** **A4 spike pt.2:** Run 20 MCP queries; record p50/p95 latency + reliability. **DoD:** EOD go/no-go decision recorded; PM escalation if p95 > 10s. **Trace:** A4.
 - [ ] **T2.2** **A2 Phoenix UI study:** demos + docs + manual UI walk; draft `docs/demo/phoenix-shotlist.md` with 3 surfaces × ≥20s each. **DoD:** Shotlist exists with concrete screens. **Trace:** A2, G5.
 - [ ] **T2.3** Build local corpus seed (~30 public docs: ERISA §503/2719, insurer appeal instructions, MCG/InterQual, MHPAEA, NSA). **DoD:** BM25 returns ≥3 hits on a sample query. **Trace:** FR3.
-- [ ] **T2.4** Draft 6 calibration cases (3 insurers × 2 denial types) with provenance template; show 2 to outside readers (start A3). **DoD:** 6 case files in `eval/cases/train/`; dataset_card initialised. **Trace:** FR8, NFR3, A3.
+- [ ] **T2.4** Draft 2 calibration cases (1 insurer × 2 denial types) with provenance template; show 2 to outside readers (start A3). **DoD:** 2 case files in `eval/cases/train/`; dataset_card initialised. **Trace:** FR8, NFR3, A3.
 
 ### Day 3 — A3 reader test + first end-to-end agent
 - [ ] **T3.1** **A3 Reader test:** 2 outside readers rate case realism. **DoD:** Both "plausible/realistic" or escalate to re-source. **Trace:** A3.
-- [ ] **T3.2** Draft 6 held-out cases from distinct public sources. **DoD:** 6 cases in `eval/cases/holdout/` + provenance. **Trace:** FR8.
+- [ ] **T3.2** Draft 2 held-out cases from distinct public sources. **DoD:** 2 cases in `eval/cases/holdout/` + provenance. **Trace:** FR8.
 - [ ] **T3.3** Build single ADK agent (`aegis_v1`) with 7 tools + deliberately-weak v1 prompt. **DoD:** End-to-end run on 1 case → structured `AppealPackage`. **Trace:** FR1, FR2, FR3, FR4, FR6, FR7.
 - [ ] **T3.4** Strict JSON output via `response_mime_type=application/json`; Pydantic schemas in `backend/src/agent/schemas.py`. **DoD:** Schema validation passes on Day-3 run. **Trace:** NFR4.
 
@@ -49,8 +49,8 @@
 ### Day 5 — Judges + **A1 eval-signal gate**
 - [ ] **T5.1** Layer-1 deterministic checks: PHI regex, disclaimer string match, length, JSON validity. **DoD:** 4/4 pass; fail-injected outputs rejected. **Trace:** NFR2, FR7.
 - [ ] **T5.2** Implement J1–J5 LLM judges as Phoenix Evals (cross-model: Claude 4 or GPT-5). **DoD:** Eval call returns rubric-shaped JSON; run visible in Phoenix Evals UI. **Trace:** FR7.
-- [ ] **T5.3** Calibration: hand-score 6 cases; Cohen's κ; reject judges with κ < 0.6. **DoD:** `eval/calibration_log.md` has κ per judge. **Trace:** rubric §calibration.
-- [ ] **T5.4** **A1 GATE:** v1 vs v2 on 3 held-out cases — lift ≥ +15%? judge std-dev ≤ ±0.08? **DoD:** PASS/FAIL recorded; PM escalation if FAIL. **Trace:** A1, SC1.
+- [ ] **T5.3** Calibration: hand-score 2 cases; Cohen's κ; reject judges with κ < 0.6. **DoD:** `eval/calibration_log.md` has κ per judge. **Trace:** rubric §calibration.
+- [ ] **T5.4** **A1 GATE:** v1 vs v2 on 2 held-out cases — lift ≥ +15%? judge std-dev ≤ ±0.08? **DoD:** PASS/FAIL recorded; PM escalation if FAIL. **Trace:** A1, SC1.
 
 ### Day 6 — Frontend workbench + last 2 judges
 - [ ] **T6.1** Implement J6 + J7 judges. **DoD:** All 7 judges run end-to-end in <90s. **Trace:** rubric.
@@ -62,7 +62,7 @@
 - [ ] **T7.1** `agents-cli deploy` backend to Cloud Run (resolves **Open-Q J2**). **DoD:** Cloud Run URL reachable; end-to-end Next.js→backend→Phoenix completes. **Trace:** Open Q J2, G1.
 - [ ] **T7.2** Deploy Next.js as second Cloud Run service; CORS + env vars. **DoD:** Hosted URL serves hero case <60s. **Trace:** G1, NFR6.
 - [ ] **T7.3** Manual learning loop `backend/learn.py`: pull failed traces, propose patch, Phoenix Experiment on held-out 6, human approval in UI, version bump. **DoD:** v1→v2→v3 cycle logged. **Trace:** FR9.
-- [ ] **T7.4** MVP eval run: full 12-case benchmark, v1 vs v3, record `weighted_quality`, hard-gate PASS rates, p95, Phoenix URL. **DoD:** SC1/SC2/SC3/SC5 logged. **Trace:** SC1–SC5.
+- [ ] **T7.4** MVP eval run: full 4-case benchmark, v1 vs v3, record `weighted_quality`, hard-gate PASS rates, p95, Phoenix URL. **DoD:** SC1/SC2/SC3/SC5 logged. **Trace:** SC1–SC5.
 - [ ] **T7.5** Draft MVP Devpost text + 3-min demo script per PRD §9. **DoD:** `docs/demo/mvp-script.md` reviewed by PM. **Trace:** G5, G7.
 
 ---

@@ -30,7 +30,7 @@ Each part is independently shippable. Build the MVP first; if life lets us, laye
 │  ╭─────────────────────╮                                     │
 │  │ Part A — MVP        │  ← Day 7 shippable                  │
 │  │ Days 1–7            │     Single agent + 7 tools          │
-│  │ §1–§9 below          │     12-case benchmark + Phoenix MCP │
+│  │ §1–§9 below          │     4-case benchmark + Phoenix MCP  │
 │  ╰──────────┬──────────╯                                     │
 │             │                                                │
 │             ▼                                                │
@@ -168,7 +168,7 @@ This is a genuinely emerging space. Aegis is **not** the first patient-side AI a
 ## 5. MVP Functional Requirements
 
 ### FR1 — Denial Case Intake
-Next.js UI accepts pasted text or uploaded PDF. User can also pick from 12-case benchmark.
+Next.js UI accepts pasted text or uploaded PDF. User can also pick from 4-case benchmark.
 
 ### FR2 — Structured Case Parsing
 Agent parses input to JSON: insurer, plan_type, denial_type, service_or_procedure (+CPT), diagnosis_summary, state, cited_denial_reason, deadlines_mentioned, missing_facts[].
