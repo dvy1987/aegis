@@ -1,0 +1,14 @@
+{
+  "case_id": "case_06_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 29,
+    "gender": "F",
+    "diagnosis": "Endometriosis, stage IV",
+    "treatment_requested": "Laparoscopic excision surgery by an Out-of-Network specialist"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have received a prior authorization request for a Laparoscopic Excision Surgery with Dr. Jane Doe (Out-of-Network). We are denying coverage for this out-of-network service.\n\nAccording to your plan documents, services performed by an out-of-network provider require a Network Gap Exception / Prior Authorization proving that there is no in-network provider within 30 miles capable of performing the requested service. Our directory indicates there are three (3) in-network OB/GYNs in your area who perform laparoscopic surgery. Because you have not demonstrated that these in-network providers are clinically unable to treat your condition, the request for an out-of-network exception is denied.",
+  "clinical_context": "Patient has severe, deeply infiltrating endometriosis involving the bowel and ureters. The local in-network OB/GYNs only perform simple ablation, which has failed twice before and is contraindicated for deep bowel involvement. The requested out-of-network doctor is an excision specialist.",
+  "synthetic_provenance": "Generated purely via LLM referencing typical Network Adequacy / Gap Exception denial patterns."
+}

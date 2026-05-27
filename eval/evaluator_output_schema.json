@@ -1,0 +1,10 @@
+{
+  "case_id": "the_id_of_the_case_being_evaluated",
+  "evaluator": "Gumloop",
+  "verdict": "APPROVE | REVISE | DISCARD",
+  "reason": "One sentence summary of the decision.",
+  "suggested_revisions": [
+    "List of specific changes needed if verdict is REVISE",
+    "Leave empty if APPROVE or DISCARD"
+  ]
+}

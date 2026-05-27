@@ -544,3 +544,185 @@ Corrective session. PM identified 5 gaps in Session 4 output. All 6 TODOs in the
 ### Working Tree
 - Modified: `.env` (added GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION, GOOGLE_GENAI_USE_VERTEXAI), `backend/app/agent.py` (model swap), `backend/WINDOWS_SETUP.md` (ADC + Vertex AI section), `scripts/dev.sh` (bug fixes + readiness probe), `scripts/dev.ps1` (empty-value fix)
 - Untracked: `scripts/` dir, `backend/WINDOWS_SETUP.md`, `backend/app/`, `test_health.py`, other backend files from prior sessions
+
+---
+
+## 2026-05-27 — Session 9 Handoff (Antigravity)
+
+### Done
+- T1.3 (Phoenix telemetry) marked complete. Traces are actively appearing in Phoenix under project `aegis-hackathon` via `openinference-instrumentation-google-adk`.
+- T1.4 (A4 spike pt.1) marked complete. The MCP query successfully round-tripped and fetched trace data.
+- T1.5 (agents-cli vs Phoenix MCP) marked complete. Already resolved in `decision-log.md` (Phoenix is primary).
+- T2.1 (A4 spike pt.2) completed. Executed 20 MCP queries to `list-traces`. Results: 20/20 successes, p50 latency = 1.24s, p95 latency = 2.52s. Logged GO DECISION for Phoenix MCP as a load-bearing dependency.
+- Updated `docs/plans/2026-05-27-aegis-implementation-tasks.md` to reflect T1.3, T1.4, T1.5, T2.1 as done.
+- Appended A4 go/no-go decision to `docs/memory/decision-log.md`.
+
+### Debated
+- None.
+
+### Decisions
+- Proceed with Phoenix MCP as a core dependency since it passed the latency and reliability thresholds.
+
+### Deferred
+- T2.2: A2 Phoenix UI study (shotlist creation).
+- T2.3: Build local corpus seed.
+- T2.4: Draft 2 calibration cases.
+- Bespoke SVGs (from earlier sessions).
+
+### Next Agent Should Know
+- The A4 assumption (Phoenix MCP + ADK integration) is now solidly validated and can safely hold the demo architecture.
+- We are ready to move deeper into Day 2 tasks (A2 Phoenix UI study, corpus seed).
+
+### Revisit Triggers
+- If MCP performance degrades under higher payload sizes, investigate chunking or native API alternatives.
+- A2 (Phoenix UI demo-viability) Day 2 EOD.
+- A3 (case credibility) Day 3 EOD.
+- A1 (eval signal) Day 5 EOD.
+
+### Working Tree
+- Modified: `docs/plans/2026-05-27-aegis-implementation-tasks.md`, `docs/memory/decision-log.md`, `docs/memory/agent-handoffs.md`.
+- New (untracked): `backend/spike_mcp_latency.py`.
+
+---
+
+## 2026-05-27 — Session 10 Handoff (Droid)
+
+> Pre-emptive handoff written mid-session in case credits run out. Updated at session close — pipeline is built, smoke-tested, and produced its first valid case end-to-end.
+
+### Task
+PM requested: build a **synthetic-case generation swarm** (a drafter pipeline, paired with the existing Gumloop *evaluator* swarm). Cases must be diverse, robust, and land in `eval/cases/drafts/`. Hard constraint: **no suicide cases**. Pipeline must be designed against **AlphaEval 2026** principles (per `docs/evals/2026-05-27-aegis-appeal-rubric.md` and `docs/plans/2026-05-27-alphaeval-alignment-plan.md`).
+
+### Context already gathered
+- Existing case schema (see `eval/cases/drafts/part-a/train/case_01_cigna_mednec.json`):
+  `case_id`, `insurer`, `denial_type`, `patient_profile {age, gender, diagnosis, treatment_requested}`, `denial_letter_text`, `clinical_context`, `synthetic_provenance`.
+- Existing **evaluator swarm** is the Gumloop 7+1 pipeline at `gumloop/`:
+  Clinical · Tone · LLM-Tell (HARD GATE binary) · Financial · Legal · Contradiction-Hunter (HARD GATE binary) · Demographic → Arbiter (DISCARD / REVISE / APPROVE).
+  Already AlphaEval-compliant: 1/3/5 forced anchors, binary hard gates, CoT-before-score, JSON output, independent judges.
+- `eval/dataset_card.md` already promises:
+  - `drafts/part-a/train/` (10 calibration cases) — drafted, on disk.
+  - `drafts/part-a/test/` (10 held-out MVP benchmark cases) — empty, needs filling.
+  - Approved cases later promoted to `eval/cases/approved/...`.
+- MVP scope (PRD Part A): **3 insurers (Aetna, Cigna, UHC) × 2 denial types (medical necessity, prior auth)**. Commercial plans only. No PHI.
+- AGENTS.md: ask PM about every architecture / vendor / scope decision before making it.
+- Backend stack: Python 3.11 + uv + Google ADK + Gemini 3.1-pro-preview via Vertex AI ADC + Phoenix telemetry on project `aegis-hackathon`.
+
+### What was done this session
+- Explored: `eval/`, `eval/cases/drafts/part-a/{train,test}/`, `eval/dataset_card.md`, `eval/simulator_rules.json`, `gumloop/` (architecture + 8 prompts), `docs/evals/` (rubric + judges + pipeline), `docs/plans/2026-05-27-alphaeval-alignment-plan.md`.
+- Drafted clarifying question set for PM (see "Decisions Needed").
+- Wrote this pre-emptive handoff.
+
+### Decisions Needed from PM (must answer before swarm is implemented)
+1. **Generation framework.** ADK multi-agent in Python (lives in `backend/`, reuses Gemini/Vertex/Phoenix) vs Gumloop flow (no-code, same playground as evaluator) vs one-off Python script orchestrating Gemini calls directly.
+2. **Swarm topology + critic-in-loop.** Recommended: ScenarioPlanner → DenialDrafter → ClinicalContextWriter → AdversarialDiversifier → SafetyFilter → SchemaValidator → SelfCritic-loop → write to `drafts/`. Does PM want a critic-in-loop revision pass before the Gumloop evaluator, or one-shot drafter relying solely on Gumloop?
+3. **Volume + target split.** How many new cases? Fill only `drafts/part-a/test/` (10 cases) for Day 5 benchmark, or generate a larger batch (~50) for Part-B headroom? Naming: `case_NN_<insurer>_<denial_type>.json` one file per case?
+4. **Diversity matrix.** Force-cover (every cell of insurer × denial × specialty × demographic × sub-tactic) vs statistical sampling?
+5. **Banned topics.** Confirmed: suicide. Propose also banning: self-harm, child abuse, intimate-partner violence, terminal-illness-with-EOL-decisions, gender-affirming care for minors. Confirm full deny-list.
+6. **Self-improvement loop hook.** Should the drafter swarm itself emit Phoenix traces (own project `aegis-case-gen`) for later evolution by the Learning Coordinator?
+7. **Provenance discipline.** Should `synthetic_provenance` capture generator model, prompt version, seed inputs, banned-topic-filter version (recommended yes)?
+
+### Plan — CORRECTED (PM caught the anti-pattern)
+PM correctly pointed out that AlphaEval mandates **independent critics at every stage**, not one critic-in-loop at the end. My initial proposal was the mega-prompt anti-pattern. Corrected topology:
+
+- Location: `backend/app/case_generator/` — separate ADK app, does NOT touch the drafting agent.
+- Per-stage producers + independent single-dimension critics (each CoT-first, forced 1/3/5 anchor or binary PASS/FAIL):
+
+  1. **ScenarioPlanner** → scenario brief. Critics: `MatrixCoverageCritic` (binary), `ScenarioRealismCritic` (1/3/5).
+  2. **DenialLetterDrafter** → `denial_letter_text`. Critics: `InsurerVoiceCritic` (1/3/5), `DenialLogicCritic` (1/3/5).
+  3. **ClinicalContextWriter** → `clinical_context`. Critics: `ClinicalRealismCritic` (1/3/5), `DiagnosisTreatmentMatchCritic` (binary).
+  4. **AdversarialDiversifier** → perturbed case. Critic: `DiversityDeltaCritic` (1/3/5).
+  5. **SafetyRedactor** — itself a binary HARD GATE critic over the banned-topic list (suicide + self-harm + child abuse + IPV + EOL decisions + gender-affirming minors).
+  6. **SchemaValidator** — deterministic critic (JSON Schema vs existing case schema).
+  7. **FinalAssemblyMiniPanel** → full case. Three independent critics: `ContradictionHunter` (binary HARD GATE), `LLMTellDetector` (binary HARD GATE), `OverallToneCritic` (1/3/5). No merge prompt.
+  8. **Writer** — emits to `eval/cases/drafts/part-a/{train|test}/`.
+- Gumloop swarm is the external grand-jury second opinion. Cases move `drafts/` → `approved/` only on Gumloop `APPROVE`.
+- Critic rules (lifted from `docs/evals/2026-05-27-aegis-appeal-rubric.md`):
+  - CoT BEFORE score (never after — no post-hoc rationalisation).
+  - Forced 1/3/5 anchors, no 2s/4s.
+  - Each critic sees only its own stage's artifact + its own rubric — no upstream visibility (prevents dimension bleed).
+  - Different model family for critic vs drafter where available.
+  - JSON output: `{dimension, reasoning, score|verdict, confidence, evidence_quotes, improvement}`.
+- Failure handling: 1 on weighted-dim critic → up to 2 stage-local revisions, then bubble to ScenarioPlanner. Binary HARD GATE FAIL → stage rewind; 2nd FAIL → discard scenario.
+- Phoenix project `aegis-case-gen` (separate from `aegis-hackathon`).
+- Diversity matrix + banned-topic list externalized to JSON configs (`eval/diversity_matrix.json`, `eval/banned_topics.json`).
+
+### PM's answered decisions (so far)
+1. Framework: **ADK swarm in `backend/app/case_generator`**.
+2. Critic strategy: PM pushed back on my one-end-critic proposal — corrected to **per-stage independent critics** (above).
+3. Volume: **parameterizable count via CLI flag**.
+4. Banned topics: **full list** (suicide, self-harm, child abuse, IPV, EOL decisions, gender-affirming minors).
+5. Diversity strictness: TBD (asked next).
+6. Telemetry: TBD (asked next).
+7. Provenance richness: TBD (asked next).
+
+### Open / Deferred
+- File creation deferred pending PM answers to `Decisions Needed`.
+- Backfill question: pass the existing 10 train cases through the new pipeline + Gumloop arbiter to validate them, or grandfather them?
+- Whether this swarm fills the empty Part-A test split (10 cases) — not confirmed.
+
+### Working Tree (at handoff write-time, unchanged from Session 9)
+- Untracked: `eval/cases/`, `gumloop/`, `backend/corpus/`, `backend/spike_bm25.py`, `backend/spike_mcp_latency.py`, `docs/demo/`, `docs/plans/2026-05-27-alphaeval-alignment-plan.md`.
+- Modified: `backend/app/fast_api_app.py`, `backend/pyproject.toml`, `backend/uv.lock`, `docs/memory/{agent-handoffs.md (this file), decision-log.md}`, `docs/open-questions.md`, `docs/plans/2026-05-27-aegis-implementation-tasks.md`.
+
+### Done at session close
+- Built `backend/app/case_generator/` swarm: 4 producers + 19 per-stage critics (16 LLM, 3 deterministic) + safety + schema validator + writer.
+- Configs externalised: `eval/diversity_matrix.json`, `eval/banned_topics.json`, `eval/case_schema.json`.
+- 21 versioned prompt templates in `backend/app/case_generator/prompts/`, versions tracked in `PROMPT_VERSIONS`.
+- CLI: `uv run python -m app.case_generator.cli --count N --split {train|test} --seed N --start-index N --dry-run -v`.
+- Added `jsonschema>=4.23.0,<5.0.0` to backend `pyproject.toml` deps.
+- `ruff check` + `ruff format` clean on the whole module.
+- Smoke test: 1 successful end-to-end case (`eval/cases/drafts/part-a/test/case_01_aetna_priorauth.json`) — Aetna / Prior Auth / behavioral_health / missing_peer_to_peer / TMS for treatment-resistant OCD. ContradictionHunter correctly hard-gated the first scenario and the planner re-rolled; all 19 critic verdicts captured in `synthetic_provenance.critic_verdicts`.
+- Updated `eval/dataset_card.md` to document the new generator pipeline and naming convention (`case_NN_*.json` for new cases, legacy `test_case_NN_*.json` preserved).
+
+### Critic verdicts captured (sample case)
+- Hard gates: matrix_coverage, diagnosis_treatment_match, safety_redactor, phi_pii, contradiction_hunter, llm_tell_detector, scope_guard — all PASS.
+- Weighted (1/3/5): scenario_realism=5, insurer_voice=5, denial_logic=5, clinical_realism=3 (asked for specific dosages), diversity_delta=5, overall_tone=5, financial_auditor=5, legal_auditor=5, demographic_validator=5, date_sanity=5, citation_traceability=3 (asked for MCG module specificity).
+
+### Cost & timing notes
+- ~20 LLM calls per successful case at Gemini 3.1 Pro Preview latency of 10–35s each. Successful case wall-time: ~6 minutes including one re-roll.
+- Self-grading bias caveat: critic model and producer model are both Gemini today (Vertex constraint). Backend AGENTS.md recommends different-family judges; we should swap critic model to Claude or GPT-5 when those credentials are available. Currently mitigated by lower critic temperature (0.2 vs 0.7–0.9 for producers).
+
+### Next Agent Should Know
+- The case_generator is the **producer**. The Gumloop swarm in `gumloop/` is the **independent second-opinion evaluator** and must remain decoupled. Cases promote `drafts/ → approved/` only on Gumloop `APPROVE`.
+- New cases are named `case_NN_<insurer-lower>_<mednec|priorauth>.json`. Existing legacy test cases (`test_case_NN_*.json`) are kept; the CLI's auto-index logic only counts `case_*.json` files.
+- The PM confirmed: ADK swarm framework, critic-at-every-stage (NOT one big end critic), weighted random sampling, full banned-topic list, full provenance, no Phoenix tracing for this swarm in this iteration.
+- Pre-emptive handoff was written *before* implementation — see PRIOR sections of this entry for what context I had pre-build.
+- To regenerate the test split: `cd backend && uv run python -m app.case_generator.cli --count 10 --split test --seed 1`.
+
+### End-of-session course corrections (PM-driven)
+At session close PM raised three observations that change the next session's priorities:
+1. Drafter and critic both run `gemini-3.1-pro-preview` — same family. AlphaEval and backend AGENTS.md want different families.
+2. The harness has a `Task` tool that can spawn worker subagents — we don't need a custom file-queue backend to use the harness as the LLM.
+3. Phoenix tracing is not needed for offline synthetic case generation. (Earlier I'd listed it as a tradeoff; that was overreach.)
+
+These are written up as a plan: **`docs/plans/2026-05-28-case-generator-harness-claude-plan.md`**. Three goals:
+- **G1 (priority).** Wire **Claude on Vertex AI** (`anthropic[vertex]` SDK, `AnthropicVertex` client, model `claude-opus-4-1` or `claude-sonnet-4-1`) as the critic backend, keep Gemini as the producer backend. Single biggest AlphaEval-rigour upgrade. Claude is available on Vertex AI Model Garden (Anthropic partner models) via ADC — same auth path we already use, no new credentials needed.
+- **G2.** Add a harness-Task orchestrator path: reuse all 21 prompts, swap each LLM call for a `Task` spawn, parallelise the 9-critic final panel. Optional toggle; Vertex-Python remains for unattended batches.
+- **G3.** Keep current Vertex-Python CLI intact as the autonomous batch runner.
+
+Estimated total effort 3–4 hours; full breakdown in the plan doc.
+
+### Revisit Triggers
+- **NEXT SESSION:** execute the G1 piece of `docs/plans/2026-05-28-case-generator-harness-claude-plan.md` first.
+- If Claude-on-Vertex cost per case at Opus is > $0.60 in the smoke run, switch routine batches to Sonnet and reserve Opus for the Day 5 official benchmark.
+- If a generation run produces > 25% discards, tighten ScenarioPlanner prompt or relax overly-strict critics.
+- When the Learning Coordinator is built (Part B), evaluate whether to add Phoenix tracing to the generator under project `aegis-case-gen` — for now, no tracing.
+- When new sub-tactics or specialties become common in real-world denials, extend `eval/diversity_matrix.json` (no code changes needed).
+
+### Next Agent — How to Pick Up
+1. Read `docs/plans/2026-05-28-case-generator-harness-claude-plan.md` top to bottom.
+2. Verify Claude is enabled on this project's Vertex region: `gcloud ai models list --region=us-east5 --filter=anthropic` (accept Model Garden terms if needed in Cloud Console).
+3. Execute G1 (Claude-on-Vertex critic backend). Smoke test with `--count 1 --seed 7` and compare critic_verdicts shape to the existing `eval/cases/drafts/part-a/test/case_01_aetna_priorauth.json`.
+4. Log per-case Opus + Sonnet cost in the next handoff.
+5. Only after G1 ships, optionally tackle G2 (harness-Task path) — it's lower-priority because G1 already gets us AlphaEval-different-family critics on the autonomous path.
+
+### What is left of the original Session 10 plan
+- The Python+Vertex pipeline is built, smoke-tested, and produced one valid case. It will keep working untouched until G1 swaps the critic backend in next session.
+- The 21 prompt templates do NOT need to be rewritten for G1 or G2; they are model-agnostic.
+- `eval/dataset_card.md` describes the current pipeline; will need an update once G1 ships to note Gemini-producer + Claude-critic.
+
+### Working Tree (at session close)
+- New: `backend/app/case_generator/{__init__,config,models,safety,validator,agents,pipeline,cli}.py` + `prompts/{*.txt, __init__.py}`.
+- New: `eval/{diversity_matrix,banned_topics,case_schema}.json`.
+- New: `eval/cases/drafts/part-a/test/case_01_aetna_priorauth.json` (first smoke-test case).
+- Modified: `backend/pyproject.toml` (jsonschema dep), `eval/dataset_card.md`, `docs/memory/agent-handoffs.md` (this file).
+- Unchanged from Session 9 onward: everything else.

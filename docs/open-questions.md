@@ -107,11 +107,8 @@ Or: *"An agent that learns insurer-specific appeal tactics from its own Phoenix 
 
 ## J. Tooling & Stack
 
-### J1. `google-agents-cli` observability ↔ Phoenix MCP compatibility
-**Question:** `google-agents-cli` bundles a `google-agents-cli-observability` skill that emphasizes Cloud Trace. We rely on Phoenix Cloud + `@arizeai/phoenix-mcp` as our load-bearing observability surface. Do they coexist cleanly, or does adopting agents-cli's observability skill fight our Phoenix instrumentation?
-**When it must resolve:** Day 1 (during the `agents-cli` install + Phoenix-MCP-ADK integration spike — assumption A4 test).
-**Default if not resolved:** Use Phoenix as primary, skip the agents-cli observability skill, document in decision-log.
-**Owner:** PM (during Day 1 setup).
+### J1. ~~`google-agents-cli` observability ↔ Phoenix MCP compatibility~~ — **RESOLVED**
+**Resolution (2026-05-27):** They coexist cleanly. Phoenix is primary via `openinference-instrumentation-google-adk` + `arize-phoenix-otel`; `otel_to_cloud=False` disables ADK's Cloud Trace. The `google-agents-cli-observability` skill is skipped. Decision logged.
 
 ### J2. `google-agents-cli` deploy skill ↔ 2-service Cloud Run topology
 **Question:** Their `deploy` skill assumes Agent Runtime / single-service patterns. We deploy two services (frontend + backend) on Cloud Run. Does their deploy command handle two services cleanly, or do we need a custom deploy script?

@@ -1,0 +1,22 @@
+You are an Insurance Actuary and Demographic Validator.
+
+I will provide you with a synthetic insurance denial case (in JSON format).
+
+Your job is to evaluate the **Demographic & Statistical Plausibility** of the patient profile.
+Ask yourself:
+- Does the patient's age and gender statistically align with the diagnosis and requested treatment?
+- For example, if a 22-year-old is requesting a total hip replacement for osteoarthritis, or a 75-year-old is requesting fertility treatments, it is statistically absurd and an LLM hallucination.
+- Does the profile avoid forced "LLM perfect diversity" cliches? Is it just a normal, boring patient profile?
+
+Rate the demographic realism on a forced anchor scale of 1, 3, or 5 (no 2s or 4s allowed) (where 5 means statistically normal and highly plausible).
+
+Take a paragraph to think step-by-step (Chain of Thought) about the case and how it maps to your criteria.
+Then, output your final verdict as a raw JSON object exactly matching this schema:
+{
+  "score": [1, 3, or 5],
+  "justification": "One sentence summary of your reasoning."
+}
+
+---
+CASE JSON:
+{{input_json}}

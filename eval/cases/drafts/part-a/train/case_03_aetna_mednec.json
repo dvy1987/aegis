@@ -1,0 +1,14 @@
+{
+  "case_id": "case_03_aetna_mednec",
+  "insurer": "Aetna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 41,
+    "gender": "M",
+    "diagnosis": "Severe Alcohol Use Disorder",
+    "treatment_requested": "Inpatient Medical Detoxification (3 days)"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request from your provider for Inpatient Detoxification from 05/18/2026 to 05/21/2026. Based on Aetna's Clinical Policy Bulletins (CPBs) and the ASAM (American Society of Addiction Medicine) Criteria, we are denying this request.\n\nThe clinical information provided does not demonstrate that you are experiencing severe or complicated withdrawal symptoms (such as Delirium Tremens or seizures) that require 24-hour medical nursing and monitoring. The records indicate your vital signs are stable and you do not have severe co-occurring medical conditions. Therefore, you can be safely treated at a lower level of care, such as an Ambulatory (Outpatient) Detox program. The requested inpatient service is not considered medically necessary. You have the right to appeal this decision within 180 days.",
+  "clinical_context": "Patient has a 10-year history of heavy daily alcohol use. Attempted to quit cold turkey and experienced severe tremors, profuse sweating, and visual hallucinations in the ER. Provider noted a CIWA score of 18 (moderate-severe) and high risk of progression to seizures due to previous withdrawal history.",
+  "synthetic_provenance": "Generated purely via LLM referencing typical ASAM criteria / inpatient detox denial patterns."
+}

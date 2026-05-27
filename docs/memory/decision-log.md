@@ -247,3 +247,68 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 - If the system is unstable in Master (repeated demotions), we will revert to Option A (keep playbook-only updates, disable system prompt rewriting).
 
 **Artifacts produced.** `docs/specs/2026-05-27-autonomy-ladder-design.md`.
+
+---
+
+## 2026-05-27 — J1: agents-cli observability vs Phoenix MCP — Phoenix is primary, agents-cli observability skipped
+
+**Decision (Updated 2026-05-27).** Use **both** Phoenix Cloud and Google Cloud Trace. Set `otel_to_cloud=True` in the ADK FastAPI app, while keeping `arize-phoenix-otel` enabled. **Phoenix remains the primary load-bearing destination** for the demo and the self-improvement loop. Cloud Trace acts purely as a durable cold-storage backup.
+
+**Rationale.** The PM explicitly requested to keep both on as a backup in case Phoenix free-tier storage limits require aggressively deleting older traces. The minor network overhead is accepted.
+
+**Alternatives considered.**
+- **(A) Dual export (Phoenix primary + Cloud Trace secondary)** — **ACCEPTED.** Both exporters are attached.
+- **(B) Cloud Trace primary, Phoenix secondary** — contradicts the demo requirement; Phoenix UI must be on-screen.
+- **(C) Phoenix solely** — originally chosen, but overturned for backup safety.
+
+**Status.** Accepted. Resolved Open-Q J1.
+
+**Revisit triggers.**
+- If `agents-cli deploy` requires Cloud Trace OTel export to work, revisit with option A.
+- If Phoenix free-tier limits force a secondary sink, add Cloud Trace as fallback.
+
+
+---
+
+## 2026-05-27 — A4 Go/No-Go: Phoenix MCP latency and reliability passed
+
+**Decision.** Proceed with Phoenix MCP as a load-bearing dependency for the Day 7 MVP and Full Plan. The test of 20 queries demonstrated 100% success rate with p50 latency of 1.24s and p95 latency of 2.52s.
+
+**Rationale.** Assumption A4 tested if `@arizeai/phoenix-mcp` is stable and fast enough to be a critical dependency (p95 < 10s and 0 failures). The spike results were 0/20 failures and p95 of 2.52s, firmly inside the threshold. This validates the "agent learns from its own traces via MCP" architectural pattern.
+
+**Status.** Accepted. Resolved A4 Day 2 EOD go/no-go gate.
+
+**Revisit triggers.**
+- If MCP starts taking >10s in the cloud environment once deployed, we may need to investigate network configuration or fall back to native REST SDKs.
+
+**Artifacts produced.** `backend/spike_mcp_latency.py` (one-off test).
+
+---
+
+## 2026-05-27 — Synthetic-case generator: AlphaEval per-stage critics, Vertex Python pipeline (Session 10)
+
+**Decision.** Build the synthetic case generator as a Python swarm at `backend/app/case_generator/` with 4 producers (ScenarioPlanner → DenialDrafter → ClinicalContextWriter → AdversarialDiversifier) and 19 per-stage independent critics (16 LLM + 3 deterministic). All critics follow AlphaEval rules: forced 1/3/5 anchors on weighted dims, binary PASS/FAIL hard gates that short-circuit, CoT-before-score, single-dimension scope. Critics absorb all 7 Gumloop dimensions (clinical, tone, LLM-tell, financial, legal, contradiction, demographic) plus added coverage for PHI, scope guard, date sanity, citation traceability. Configs externalised to `eval/diversity_matrix.json`, `eval/banned_topics.json`, `eval/case_schema.json`. Banned-topic full list (suicide, self-harm, child abuse, IPV, EOL, gender-affirming minors, anti-insurer violence, Medicare/Medicaid). Provenance is per-case structured (model id, run id, matrix cell, all 21 prompt versions, full critic_verdicts panel). Gumloop swarm remains the independent second-opinion evaluator — cases promote `drafts/ → approved/` only on Gumloop `APPROVE`. No Phoenix tracing for the generator (offline tool).
+
+**Rationale.** PM correctly pushed back on my initial proposal of one critic-in-loop at the end — that was the AlphaEval mega-prompt anti-pattern. Per-stage independent critics catch issues at the artifact that produced them and prevent dimension bleed. PM said "operate as if Gumloop/ChatGPT/Perplexity curators do not exist" → swarm must be self-sufficient → absorbed Gumloop's 7 dimensions and added 4 gap-coverage critics. Weighted random sampling (PM choice) over force-cover for the diversity matrix. Full structured provenance for auditability.
+
+**Alternatives considered.**
+- One-shot drafter with no in-loop critic, relying on Gumloop only — rejected; downstream discards would be wasteful.
+- One critic-in-loop at the end (initial proposal) — rejected as AlphaEval mega-prompt anti-pattern.
+- Gumloop-only flow with no code — rejected; PM picked ADK swarm in Python for autonomy + reuse of Vertex/Gemini infra.
+
+**Known weakness.** Drafter and critic are both `gemini-3.1-pro-preview` at session-close time, differentiated only by temperature. AlphaEval and backend AGENTS.md prefer different model families. Mitigation plan filed at `docs/plans/2026-05-28-case-generator-harness-claude-plan.md` — wire Claude (Opus or Sonnet) on Vertex AI Model Garden as the critic backend next session.
+
+**Status.** Accepted. Working pipeline. First successful case at `eval/cases/drafts/part-a/test/case_01_aetna_priorauth.json`.
+
+**Revisit triggers.**
+- After G1 from the next-session plan is shipped (Claude critic on Vertex), update this decision with the new architecture.
+- If discard rate > 25%, tighten ScenarioPlanner prompt or relax overly-strict critics.
+- If new insurers / denial types are added to MVP scope, extend `eval/diversity_matrix.json`.
+
+**Artifacts produced.**
+- `backend/app/case_generator/{__init__,config,models,safety,validator,agents,pipeline,cli}.py`
+- `backend/app/case_generator/prompts/*.txt` (21 templates + envelope)
+- `eval/{diversity_matrix,banned_topics,case_schema}.json`
+- `eval/cases/drafts/part-a/test/case_01_aetna_priorauth.json` (smoke test output)
+- `docs/plans/2026-05-28-case-generator-harness-claude-plan.md` (next-session plan)
+- Updated: `eval/dataset_card.md`, `backend/pyproject.toml` (jsonschema dep)

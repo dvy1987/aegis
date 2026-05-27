@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aegis.local/schemas/case.schema.json",
+  "x-aegis-schema-version": "1.0.0",
+  "title": "Aegis Synthetic Denial Case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "insurer",
+    "denial_type",
+    "patient_profile",
+    "denial_letter_text",
+    "clinical_context",
+    "synthetic_provenance"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^case_[0-9]{2,4}_(aetna|cigna|uhc)_(mednec|priorauth)$",
+      "description": "case_<NN>_<insurer-lower>_<short-denial-type>; mednec = Medical Necessity, priorauth = Prior Authorization."
+    },
+    "insurer": {"type": "string", "enum": ["Aetna", "Cigna", "UHC"]},
+    "denial_type": {
+      "type": "string",
+      "enum": ["Medical Necessity", "Prior Authorization"]
+    },
+    "patient_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["age", "gender", "diagnosis", "treatment_requested"],
+      "properties": {
+        "age": {"type": "integer", "minimum": 18, "maximum": 89},
+        "gender": {"type": "string", "enum": ["M", "F", "nonbinary"]},
+        "diagnosis": {"type": "string", "minLength": 6, "maxLength": 240},
+        "treatment_requested": {"type": "string", "minLength": 6, "maxLength": 240}
+      }
+    },
+    "denial_letter_text": {
+      "type": "string",
+      "minLength": 400,
+      "maxLength": 3500,
+      "description": "Insurer-voice denial letter prose. Must include appeal-window language."
+    },
+    "clinical_context": {
+      "type": "string",
+      "minLength": 150,
+      "maxLength": 1800,
+      "description": "Plain-prose patient/provider narrative explaining why the denial is rebuttable."
+    },
+    "synthetic_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generator_model",
+        "run_id",
+        "generated_at",
+        "matrix_cell",
+        "prompt_versions",
+        "banned_topic_filter_version",
+        "schema_version",
+        "human_summary"
+      ],
+      "properties": {
+        "generator_model": {"type": "string"},
+        "run_id": {"type": "string"},
+        "generated_at": {"type": "string", "format": "date-time"},
+        "matrix_cell": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "insurer",
+            "denial_type",
+            "specialty",
+            "patient_age_band",
+            "patient_gender",
+            "sub_tactic"
+          ],
+          "properties": {
+            "insurer": {"type": "string"},
+            "denial_type": {"type": "string"},
+            "specialty": {"type": "string"},
+            "patient_age_band": {"type": "string"},
+            "patient_gender": {"type": "string"},
+            "sub_tactic": {"type": "string"}
+          }
+        },
+        "prompt_versions": {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        },
+        "banned_topic_filter_version": {"type": "string"},
+        "schema_version": {"type": "string"},
+        "diversity_matrix_version": {"type": "string"},
+        "critic_verdicts": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Per-stage independent critic outputs captured for AlphaEval auditability."
+        },
+        "human_summary": {"type": "string"}
+      }
+    }
+  }
+}

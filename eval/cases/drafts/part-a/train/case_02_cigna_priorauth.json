@@ -1,0 +1,14 @@
+{
+  "case_id": "case_02_cigna_priorauth",
+  "insurer": "Cigna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 52,
+    "gender": "M",
+    "diagnosis": "Cervical Radiculopathy",
+    "treatment_requested": "MRI of Cervical Spine without contrast"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have received a claim for an MRI of the Cervical Spine performed on 04/22/2026. We are denying coverage for this service because prior authorization was not obtained before the procedure was performed.\n\nAccording to your plan documents, advanced imaging (such as MRI, CT, and PET scans) requires prior authorization from Cigna to confirm the service is medically appropriate. Because your provider did not submit a prior authorization request prior to the date of service, the claim is denied. You are responsible for the full cost of the procedure.",
+  "clinical_context": "Patient experienced sudden, severe numbness and weakness in left arm following a minor car accident. The ER doctor ordered the MRI immediately to rule out a spinal cord injury. There was no time to wait for a standard 72-hour prior authorization window.",
+  "synthetic_provenance": "Generated purely via LLM referencing typical retrospective prior-authorization denial patterns for advanced imaging."
+}

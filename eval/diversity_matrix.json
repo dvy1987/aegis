@@ -1,0 +1,64 @@
+{
+  "version": "1.0.0",
+  "description": "Weighted sampling matrix for the Aegis synthetic case generator. PM picked weighted random sampling on 2026-05-27. Weights sum to 1.0 per axis. Edit weights to bias the dataset distribution; the ScenarioPlanner draws one cell per case.",
+  "scope_note": "MVP Part A: commercial plans only, 3 insurers, 2 denial types. Do not add Medicare/Medicaid. Do not add anything in eval/banned_topics.json.",
+  "axes": {
+    "insurer": [
+      {"value": "Aetna", "weight": 0.333},
+      {"value": "Cigna", "weight": 0.334},
+      {"value": "UHC", "weight": 0.333}
+    ],
+    "denial_type": [
+      {"value": "Medical Necessity", "weight": 0.5},
+      {"value": "Prior Authorization", "weight": 0.5}
+    ],
+    "specialty": [
+      {"value": "behavioral_health", "weight": 0.18, "examples": ["MDD", "OCD", "PTSD", "GAD", "bipolar II", "ADHD", "AUD"]},
+      {"value": "endocrine", "weight": 0.10, "examples": ["Type 2 diabetes", "thyroid disorders", "PCOS"]},
+      {"value": "msk", "weight": 0.12, "examples": ["lumbar radiculopathy", "rotator cuff tear", "knee OA", "cervical spondylosis"]},
+      {"value": "oncology", "weight": 0.08, "examples": ["breast cancer adjuvant", "colon cancer surveillance", "lymphoma maintenance"]},
+      {"value": "cardiology", "weight": 0.09, "examples": ["paroxysmal AFib", "HFrEF", "refractory hypertension"]},
+      {"value": "surgical", "weight": 0.09, "examples": ["bariatric surgery", "breast reduction", "septoplasty", "endometriosis excision"]},
+      {"value": "imaging", "weight": 0.08, "examples": ["MRI cervical spine", "MRI lumbar spine", "CT pulmonary angiogram"]},
+      {"value": "infusion_specialty_rx", "weight": 0.10, "examples": ["Humira", "Stelara", "Remicade", "Ocrevus", "Dupixent"]},
+      {"value": "womens_health", "weight": 0.08, "examples": ["endometriosis", "PCOS-related infertility workup", "pelvic floor PT"]},
+      {"value": "neurology", "weight": 0.08, "examples": ["migraine (CGRP)", "MS DMT", "epilepsy refractory"]}
+    ],
+    "patient_age_band": [
+      {"value": "18-25", "weight": 0.15},
+      {"value": "26-40", "weight": 0.30},
+      {"value": "41-55", "weight": 0.30},
+      {"value": "56-70", "weight": 0.20},
+      {"value": "71+", "weight": 0.05, "constraint_note": "Commercial only — patient must not be on Medicare. Mention employer-sponsored coverage explicitly."}
+    ],
+    "patient_gender": [
+      {"value": "F", "weight": 0.50},
+      {"value": "M", "weight": 0.48},
+      {"value": "nonbinary", "weight": 0.02}
+    ],
+    "sub_tactic_medical_necessity": [
+      {"value": "step_therapy_missing", "weight": 0.20, "definition": "Insurer says patient must try cheaper alternative X first."},
+      {"value": "conservative_treatment_required", "weight": 0.18, "definition": "Insurer demands documented conservative treatment (e.g., 6 mo PT, 6 mo diet) first."},
+      {"value": "frequency_excessive", "weight": 0.12, "definition": "Visit cadence requested exceeds insurer's guideline (e.g., PT > 20 visits)."},
+      {"value": "level_of_care_too_high", "weight": 0.15, "definition": "Insurer claims a lower level of care suffices (IOP→outpatient, inpatient→IOP)."},
+      {"value": "not_evidence_based", "weight": 0.10, "definition": "Insurer cites lack of RCT evidence or non-coverage for indication."},
+      {"value": "duration_excessive", "weight": 0.10, "definition": "Treatment course length exceeds guideline cap."},
+      {"value": "guideline_mis_cite", "weight": 0.15, "definition": "Insurer cites the wrong MCG/InterQual/UM criterion or applies it incorrectly."}
+    ],
+    "sub_tactic_prior_authorization": [
+      {"value": "missing_peer_to_peer", "weight": 0.18, "definition": "Auth denied because peer-to-peer review was not requested in window."},
+      {"value": "formulary_tier_dispute", "weight": 0.16, "definition": "Drug placed at non-preferred tier; lower-tier alternative demanded."},
+      {"value": "out_of_network_no_authorization", "weight": 0.14, "definition": "Out-of-network provider used without gap exception."},
+      {"value": "continuation_of_care_lapsed", "weight": 0.14, "definition": "Continuing therapy denied for missing re-auth (e.g., Humira refill)."},
+      {"value": "emergency_retroactive_auth", "weight": 0.10, "definition": "ER service denied because no prior auth (despite emergency exemption)."},
+      {"value": "modality_substitution", "weight": 0.14, "definition": "Insurer demands a cheaper modality (HSAT vs in-lab sleep study; oral vs infusion)."},
+      {"value": "visit_limit_exceeded", "weight": 0.14, "definition": "Annual visit cap (PT, chiro, mental health) exceeded."}
+    ]
+  },
+  "joint_constraints": [
+    "If patient_age_band == 71+, the case MUST include text confirming employer-sponsored commercial plan (e.g., 'still actively employed at <employer-archetype>'). Medicare-eligible-but-on-commercial is the only valid combo.",
+    "If specialty == oncology AND sub_tactic == not_evidence_based, generator MUST NOT invent a drug that does not exist on FDA labels.",
+    "Specialty 'behavioral_health' must remain bounded by docs/safety: no suicide, no self-harm; OCD/anxiety/depression/AUD are acceptable.",
+    "Specialty 'womens_health' must not include gender-affirming care for minors (banned topic)."
+  ]
+}

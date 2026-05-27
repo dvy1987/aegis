@@ -1,0 +1,80 @@
+{
+  "version": "1.0.0",
+  "description": "Hard-banned topics for the Aegis synthetic case generator. The SafetyRedactor stage is a binary hard gate: if any banned topic surfaces in the generated case, the case is discarded and the ScenarioPlanner re-rolls a new matrix cell. Confirmed full list by PM on 2026-05-27.",
+  "policy": "BINARY_HARD_GATE_NEVER_AVERAGED",
+  "banned_topics": [
+    {
+      "topic_id": "suicide",
+      "label": "Suicide and suicidal ideation",
+      "rationale": "PM hard rule. Demo and dataset must not include suicide content.",
+      "deterministic_patterns": [
+        "(?i)\\b(suicid(e|al|ality)|self[- ]?inflicted death|SI ideation|kill (myself|himself|herself|themself|themselves))\\b",
+        "(?i)\\b(suicide attempt|attempted suicide|overdose with intent|overdose to end (his|her|their) life)\\b"
+      ],
+      "llm_check_guidance": "Flag any narrative that frames the patient as having recently attempted to end their life, having active SI, or framing the case around suicidality. Substance use without SI is allowed."
+    },
+    {
+      "topic_id": "self_harm",
+      "label": "Non-suicidal self-injury and self-harm",
+      "rationale": "Distinct from suicide but emotionally charged; not appropriate for a demo dataset.",
+      "deterministic_patterns": [
+        "(?i)\\b(self[- ]?harm|cutting (behavior|self)|NSSI|non[- ]?suicidal self[- ]?injur(y|ies))\\b"
+      ],
+      "llm_check_guidance": "Flag content describing patient deliberately injuring themselves. Mentions of accidental injury are fine."
+    },
+    {
+      "topic_id": "child_abuse",
+      "label": "Child abuse, neglect, or pediatric maltreatment",
+      "rationale": "Sensitive content not appropriate for a public hackathon demo.",
+      "deterministic_patterns": [
+        "(?i)\\b(child abuse|child neglect|child maltreatment|pediatric (sexual )?abuse|CPS report|mandated report|battered child)\\b"
+      ],
+      "llm_check_guidance": "Flag any case that hinges on documentation of abuse or where the appeal context discusses abuse history. Pediatric medical cases without abuse context are fine."
+    },
+    {
+      "topic_id": "intimate_partner_violence",
+      "label": "Intimate partner violence and domestic violence",
+      "rationale": "Sensitive content not appropriate for a public hackathon demo.",
+      "deterministic_patterns": [
+        "(?i)\\b(domestic violence|intimate partner violence|IPV|battered (wife|spouse|partner)|abuser|stalking by ex|spousal abuse)\\b"
+      ],
+      "llm_check_guidance": "Flag any case framed around IPV history or current abuse. Trauma history in general (war, accident, single-event PTSD) is acceptable."
+    },
+    {
+      "topic_id": "end_of_life_decisions",
+      "label": "End-of-life decisions, hospice withdrawal, DNR disputes",
+      "rationale": "Avoid politically and ethically loaded end-of-life narratives in the demo dataset.",
+      "deterministic_patterns": [
+        "(?i)\\b(end[- ]?of[- ]?life|hospice (denial|withdrawal)|DNR (dispute|order)|physician[- ]?assisted|right to die|terminal extubation|withdrawal of life support)\\b"
+      ],
+      "llm_check_guidance": "Flag appeals framed around continuing or withdrawing life-sustaining treatment, or anything involving hospice eligibility / withdrawal. Curative oncology cases that do NOT involve EOL framing are fine."
+    },
+    {
+      "topic_id": "gender_affirming_minor",
+      "label": "Gender-affirming care for minors",
+      "rationale": "Politically charged. Hard exclude from the demo dataset. Adult gender-affirming care is also out of scope for the MVP demo.",
+      "deterministic_patterns": [
+        "(?i)\\b(gender[- ]?affirming|puberty blockers|cross[- ]?sex hormones|gender dysphoria.*(child|adolescent|minor|teen|under 18))\\b"
+      ],
+      "llm_check_guidance": "Flag any case involving gender-affirming care for any patient under 26 OR explicitly framed around gender dysphoria. Other womens-health or endocrine cases without this framing are fine."
+    },
+    {
+      "topic_id": "incite_violence_against_insurers",
+      "label": "Violence, vigilantism, or polarizing public events around insurance",
+      "rationale": "AGENTS.md root rule. No invocations of violence or polarizing public events around the insurance industry in any artifact.",
+      "deterministic_patterns": [
+        "(?i)\\b(murder|assassinat(ion|ed)|kill the (CEO|executive)|burn (it|them) down|shoot (the|that) (CEO|insurer)|United ?Health(care)? CEO|Brian Thompson)\\b"
+      ],
+      "llm_check_guidance": "Flag any narrative that references or alludes to violence against insurance company employees, executives, or polarizing real-world events from the insurance industry. Frustration tone in the patient's narrative is acceptable; calls to harm are not."
+    },
+    {
+      "topic_id": "out_of_scope_program",
+      "label": "Medicare, Medicaid, TRICARE, VA, ACA marketplace subsidies",
+      "rationale": "MVP scope: commercial plans only. Including out-of-scope programs would mislead the model and confuse the demo.",
+      "deterministic_patterns": [
+        "(?i)\\b(Medicare|Medicaid|TRICARE|VA benefits|marketplace subsid(y|ies)|CHIP|dual[- ]?eligible|ACA exchange)\\b"
+      ],
+      "llm_check_guidance": "Flag any case framed around Medicare/Medicaid/TRICARE/VA/marketplace coverage. Only employer-sponsored commercial plans (Aetna, Cigna, UHC) are in scope. The pattern is permissive of the word 'Medicare-eligible' only if the case explicitly states the patient is still on employer commercial coverage; the LLM check confirms."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "case_id": "case_10_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 48,
+    "gender": "M",
+    "diagnosis": "Obstructive Sleep Apnea (OSA)",
+    "treatment_requested": "In-lab Polysomnography (Sleep Study)"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the prior authorization request for an in-lab polysomnography (sleep study). We are denying this request.\n\nUnder UnitedHealthcare's evidence-based guidelines, an in-lab sleep study is not covered as a first-line diagnostic tool for uncomplicated suspected Obstructive Sleep Apnea. Patients must first undergo a Home Sleep Apnea Test (HSAT). An in-lab study is only authorized if the HSAT is inconclusive, or if the patient has significant comorbid conditions (such as severe heart failure or neuromuscular disease) that make a home test unsafe or inaccurate. Because you do not meet these criteria, the requested in-lab study is denied.",
+  "clinical_context": "Patient has suspected sleep apnea, but also has severe COPD which causes nighttime oxygen desaturation. A home sleep study cannot accurately differentiate between apnea events and COPD-related desaturation, necessitating the in-lab monitored study. The provider did not adequately highlight the COPD in the initial submission.",
+  "synthetic_provenance": "Generated purely via LLM referencing typical site-of-service prior authorization denials."
+}

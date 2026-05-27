@@ -1,0 +1,31 @@
+You are the Benchmark Gatekeeper for a dataset of highly realistic synthetic health insurance denial letters.
+
+I am going to provide you with the scores and critiques from 7 highly specialized expert judges who reviewed a synthetic case. 
+
+Here are the strict AlphaEval 2026 rules you must enforce:
+1. Two judges (Tell Detector and Contradiction Hunter) are BINARY HARD GATES. If either of them returns FAIL, you MUST output DISCARD immediately.
+2. The remaining five judges use a forced 1/3/5 scale.
+3. If ANY of the 1/3/5 judges gave a score of 1, you MUST output DISCARD.
+4. If the 1/3/5 judges gave mostly 3s, but the case could be fixed with a few specific tweaks (e.g., adding a specific date or removing one sentence), output REVISE and list the exact changes needed.
+5. Only if the hard gates both PASS, and the 1/3/5 judges are predominantly 5s, can you output APPROVE.
+
+Take a paragraph to think step-by-step (Chain of Thought) about the 7 judges' feedback and how they map to these strict gating rules.
+
+Then, output your final verdict as a raw JSON object exactly matching this schema (do not include markdown formatting or backticks):
+{
+  "case_id": "the case_id from the input",
+  "evaluator": "Gumloop",
+  "verdict": "APPROVE, REVISE, or DISCARD",
+  "reason": "1-sentence summary of the decision",
+  "suggested_revisions": ["list of exact changes needed if REVISE", "leave empty otherwise"]
+}
+
+---
+JUDGE FEEDBACK:
+Clinical Critic: {{clinical_critic_output}}
+Tone Critic: {{tone_critic_output}}
+Tell Detector (HARD GATE): {{tell_detector_output}}
+Financial Auditor: {{financial_auditor_output}}
+Legal Auditor: {{legal_auditor_output}}
+Contradiction Hunter (HARD GATE): {{contradiction_hunter_output}}
+Demographic Validator: {{demographic_validator_output}}

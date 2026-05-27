@@ -1,0 +1,14 @@
+{
+  "case_id": "test_case_08_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 45,
+    "gender": "F",
+    "diagnosis": "Strong family history of breast cancer",
+    "treatment_requested": "BRCA1 and BRCA2 Genetic Testing"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe are denying coverage for the BRCA1 and BRCA2 genetic testing performed on 05/20/2026.\n\nAccording to Aetna policy, all genetic testing requires prior authorization and must be accompanied by genetic counseling from a certified genetic counselor. While your records indicate you have a first-degree relative with breast cancer, your provider did not submit a prior authorization request with documentation of the required pre-test genetic counseling session. Because this requirement was not met before the test was performed, the claim is denied.",
+  "clinical_context": "The patient's mother and sister both died of breast cancer before age 50. Her OB/GYN drew the blood for the BRCA test during her annual exam without realizing Aetna required a separate consultation with a certified genetic counselor first. The test is completely medically necessary, but denied on a procedural prior auth technicality.",
+  "synthetic_provenance": "Generated purely via LLM referencing genetic testing prior authorization procedural denials."
+}

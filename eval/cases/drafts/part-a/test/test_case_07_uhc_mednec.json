@@ -1,0 +1,14 @@
+{
+  "case_id": "test_case_07_uhc_mednec",
+  "insurer": "UHC",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 19,
+    "gender": "F",
+    "diagnosis": "Anorexia Nervosa, restrictive type",
+    "treatment_requested": "Intensive Outpatient Program (IOP) for Eating Disorders"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for an Eating Disorder Intensive Outpatient Program (IOP). Based on UnitedHealthcare's Medical Necessity Guidelines and the APA practice guidelines, we are denying this request.\n\nThe clinical information indicates you are currently at 88% of your ideal body weight (IBW) and your vital signs are stable without severe bradycardia. Our guidelines require a patient to either be below 85% of IBW or exhibit acute medical instability (such as severe electrolyte imbalance) to qualify for an intensive eating disorder program. Because you do not meet these criteria, you can be safely managed in standard weekly outpatient therapy.",
+  "clinical_context": "The patient is medically stable only because her parents force-feed her, causing severe daily panic attacks. While her weight is technically 88% of IBW, she is actively losing 2-3 lbs a week and restricting heavily. Standard weekly therapy is failing to stop the rapid weight loss trajectory.",
+  "synthetic_provenance": "Generated purely via LLM referencing eating disorder level-of-care denials."
+}

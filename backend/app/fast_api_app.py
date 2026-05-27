@@ -18,7 +18,7 @@ app: FastAPI = get_fast_api_app(
     web=True,
     allow_origins=allow_origins,
     session_service_uri=None,
-    otel_to_cloud=False,
+    otel_to_cloud=True,
 )
 app.title = "aegis-backend"
 app.description = "Aegis appeal-letter agent API"

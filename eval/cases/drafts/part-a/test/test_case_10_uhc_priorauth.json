@@ -1,0 +1,14 @@
+{
+  "case_id": "test_case_10_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 78,
+    "gender": "F",
+    "diagnosis": "Post-operative hip replacement, advanced age",
+    "treatment_requested": "Home Health Care (Skilled Nursing and PT, weeks 3-4)"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe received a claim for continued Home Health Care services (nursing and physical therapy) from 05/14/2026 to 05/28/2026. We are denying these services because they were not prior authorized.\n\nYour plan approved an initial two (2) week episode of Home Health Care following your hospital discharge. Any continued care beyond the initial episode requires a new prior authorization request with updated clinical notes demonstrating that you remain 'homebound' and require intermittent skilled care. We did not receive a request to extend these services before they were provided. Therefore, the continued visits are denied.",
+  "clinical_context": "The patient is 78, lives alone, and developed a minor wound infection requiring daily dressing changes by a nurse, preventing her from traveling to an outpatient clinic. The home health agency missed the deadline to file for the 3rd-week extension, but the services were absolutely critical to prevent sepsis and hospital readmission.",
+  "synthetic_provenance": "Generated purely via LLM referencing home health episode-of-care prior authorization denials."
+}

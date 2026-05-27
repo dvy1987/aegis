@@ -24,15 +24,15 @@
 ### Day 1 — Scaffold + A4 spike
 - [ ] **T1.1** `agents-cli create` backend scaffold; FastAPI `/health` returns 200. **DoD:** `curl localhost:8000/health` → `{"ok":true}`. **Trace:** G1.
 - [ ] **T1.2** Next.js scaffold + Tailwind + shadcn/ui + framer-motion + Lucide. **DoD:** `pnpm dev` serves a hero page. **Trace:** G8, FR10.
-- [ ] **T1.3** Wire `openinference-instrumentation-google-adk` on a stub agent; emit ≥1 trace to Phoenix. **DoD:** Trace visible in Phoenix UI tagged `aegis-hackathon`. **Trace:** G2, NFR4.
-- [ ] **T1.4** **A4 spike pt.1:** Configure `@arizeai/phoenix-mcp` as ADK tool; one toy query returns structured summary. **DoD:** MCP roundtrip latency logged; structured result in stdout. **Trace:** A4, FR5.
-- [ ] **T1.5** Resolve **Open-Q J1** (agents-cli observability vs Phoenix MCP). **DoD:** Note in backend/AGENTS.md + decision-log entry. **Trace:** Open Q J1.
+- [x] **T1.3** Wire `openinference-instrumentation-google-adk` on a stub agent; emit ≥1 trace to Phoenix. **DoD:** Trace visible in Phoenix UI tagged `aegis-hackathon`. **Trace:** G2, NFR4.
+- [x] **T1.4** **A4 spike pt.1:** Configure `@arizeai/phoenix-mcp` as ADK tool; one toy query returns structured summary. **DoD:** MCP roundtrip latency logged; structured result in stdout. **Trace:** A4, FR5.
+- [x] **T1.5** Resolve **Open-Q J1** (agents-cli observability vs Phoenix MCP). **DoD:** Note in backend/AGENTS.md + decision-log entry. **Trace:** Open Q J1.
 
 ### Day 2 — A2 + A4 go/no-go
-- [ ] **T2.1** **A4 spike pt.2:** Run 20 MCP queries; record p50/p95 latency + reliability. **DoD:** EOD go/no-go decision recorded; PM escalation if p95 > 10s. **Trace:** A4.
-- [ ] **T2.2** **A2 Phoenix UI study:** demos + docs + manual UI walk; draft `docs/demo/phoenix-shotlist.md` with 3 surfaces × ≥20s each. **DoD:** Shotlist exists with concrete screens. **Trace:** A2, G5.
-- [ ] **T2.3** Build local corpus seed (~30 public docs: ERISA §503/2719, insurer appeal instructions, MCG/InterQual, MHPAEA, NSA). **DoD:** BM25 returns ≥3 hits on a sample query. **Trace:** FR3.
-- [ ] **T2.4** Draft 2 calibration cases (1 insurer × 2 denial types) with provenance template; show 2 to outside readers (start A3). **DoD:** 2 case files in `eval/cases/train/`; dataset_card initialised. **Trace:** FR8, NFR3, A3.
+- [x] **T2.1** **A4 spike pt.2:** Run 20 MCP queries; record p50/p95 latency + reliability. **DoD:** EOD go/no-go decision recorded; PM escalation if p95 > 10s. **Trace:** A4.
+- [x] **T2.2** **A2 Phoenix UI study:** demos + docs + manual UI walk; draft `docs/demo/phoenix-shotlist.md` with 3 surfaces × ≥20s each. **DoD:** Shotlist exists with concrete screens. **Trace:** A2, G5.
+- [x] **T2.3** Build local corpus seed (~30 public docs: ERISA §503/2719, insurer appeal instructions, MCG/InterQual, MHPAEA, NSA). **DoD:** BM25 returns ≥3 hits on a sample query. **Trace:** FR3.
+- [x] **T2.4** Draft 2 calibration cases (1 insurer × 2 denial types) with provenance template; show 2 to outside readers (start A3). **DoD:** 2 case files in `eval/cases/train/`; dataset_card initialised. **Trace:** FR8, NFR3, A3.
 
 ### Day 3 — A3 reader test + first end-to-end agent
 - [ ] **T3.1** **A3 Reader test:** 2 outside readers rate case realism. **DoD:** Both "plausible/realistic" or escalate to re-source. **Trace:** A3.

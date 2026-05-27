@@ -1,0 +1,14 @@
+{
+  "case_id": "case_08_cigna_priorauth",
+  "insurer": "Cigna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 61,
+    "gender": "M",
+    "diagnosis": "Post-operative total knee arthroplasty",
+    "treatment_requested": "Physical Therapy (Visits 21-30)"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have received a claim for Outpatient Physical Therapy services performed on 05/01/2026. We are denying coverage for these services because they exceed the authorized limit and prior authorization for additional visits was not obtained.\n\nYour plan document limits outpatient physical therapy to 20 visits per calendar year without medical necessity review. Our records indicate you have already utilized your 20 authorized visits. Because your provider did not submit a prior authorization request for additional visits demonstrating medical necessity before continuing treatment, these claims are denied. You are responsible for the cost.",
+  "clinical_context": "Patient had a total knee replacement and suffered a minor post-op infection that delayed his rehab progress. The PT clinic assumed the initial authorization covered the entire episode of care and failed to request an extension after visit 20. The patient still has significant mobility deficits.",
+  "synthetic_provenance": "Generated purely via LLM referencing typical hard-cap physical therapy prior authorization denials."
+}
