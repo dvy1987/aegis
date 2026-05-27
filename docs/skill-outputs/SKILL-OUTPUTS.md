@@ -50,3 +50,5 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-05-27 — Session 5 | brainstorming | docs/specs/2026-05-27-autonomy-ladder-design.md | Designed autonomy ladder thresholds and Master-stage privileges |
 | 2026-05-27 — Session 5 | product-soul | docs/product-soul.md | Rewrote product soul doc (v1.1) adding anti-positioning, values hierarchy, and expanded hypotheses |
 | 2026-05-27 — Session 5 | project-constitution | docs/constitution.md | Constitution v1 with 7 core invariants |
+| 2026-05-27 — Session 5 | feature-spec | docs/specs/2026-05-27-aegis-part-a-mvp-feature-spec.md | Spec: Part A MVP (Draft) |
+| 2026-05-27 — Session 5 | feature-spec | docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md | Spec: Part B Swarm (Draft) |

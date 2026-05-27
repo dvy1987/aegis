@@ -20,7 +20,11 @@
 - ✅ **PRD §7 / §8 / §15.2 / §15.3 reconciled** with rubric v2 (hard-gate PASS rates as SC2/SC3, per-dimension regression gating, zero-tolerance auto-rollback on hard-gate FAIL).
 - ✅ **10 agent prompts rewritten** as full LLM system prompts (persona + domain context + tool-use + CoT + output schema + few-shot + guardrails). Interface contract preserved as docstring section.
 - ✅ **Day 1–20 implementation plan** generated via `implementation-plan` skill — [`docs/plans/2026-05-27-aegis-implementation-plan.md`](../plans/2026-05-27-aegis-implementation-plan.md) + companion flat task list. 4 phases, 67 tasks, 11 risks, full PRD-ID traceability. A1–A5 + Day 10 + Day 14/15 gates explicitly scheduled.
-- ✅ **Memory closed:** Session 5 handoff finalised; decision-log appended with 3 new entries; skill-outputs ledger updated.
+- ✅ **Autonomy Ladder thresholds finalized** via `brainstorming` skill (Moderate Scale + Aggressive Master), logged in `decision-log.md`.
+- ✅ **Product Soul rewritten** via `product-soul` skill with anti-positioning, values hierarchy, and specific hypotheses.
+- ✅ **Project Constitution established** via `project-constitution` skill — `docs/constitution.md` (v1) sets 7 non-negotiable engineering invariants (testing, security, performance, etc.).
+- ✅ **Feature Specs written** via `feature-spec` skill for Part A (MVP) and Part B (Swarm). Both are in Draft status pending clarification review.
+- ✅ **Memory closed:** Session 5 handoff finalised; decision-log appended with new entries; skill-outputs ledger updated.
 
 ## What's blocked
 - **Phase 0 execution (GCP + Phoenix + repo + agents-cli setup)** — gated on PM sign-off per Session 5 instruction. No `gcloud` runs, no Phoenix account creation, no remote push without PM confirmation.
@@ -59,6 +63,10 @@
 | Design brief | [`docs/design-brief.md`](../design-brief.md) |
 | Impact stats | [`docs/research/impact-stats.md`](../research/impact-stats.md) |
 | Product soul | [`docs/product-soul.md`](../product-soul.md) |
+| Constitution | [`docs/constitution.md`](../constitution.md) |
+| Feature Spec: Part A | [`docs/specs/2026-05-27-aegis-part-a-mvp-feature-spec.md`](../specs/2026-05-27-aegis-part-a-mvp-feature-spec.md) |
+| Feature Spec: Part B | [`docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md`](../specs/2026-05-27-aegis-part-b-swarm-feature-spec.md) |
+| Autonomy Ladder Design | [`docs/specs/2026-05-27-autonomy-ladder-design.md`](../specs/2026-05-27-autonomy-ladder-design.md) |
 | Open questions | [`docs/open-questions.md`](../open-questions.md) |
 | Agent rules | [`AGENTS.md`](../../AGENTS.md) + `frontend/AGENTS.md` + `backend/AGENTS.md` |
 | Decision log | [`docs/memory/decision-log.md`](decision-log.md) |
