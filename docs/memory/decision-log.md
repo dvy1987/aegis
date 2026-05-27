@@ -228,3 +228,22 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 - If a `feature-spec` is later written for a Part B agent, the plan re-traces against that spec (currently traces against PRD FR/NFR/G/SC IDs).
 
 **Artifacts produced.** `docs/plans/2026-05-27-aegis-implementation-plan.md`, `docs/plans/2026-05-27-aegis-implementation-tasks.md`. Commit `079064d`.
+
+---
+
+## 2026-05-27 — Autonomy Ladder Thresholds & Mechanics
+
+**Decision.** The 3-stage competency ladder (Apprentice → Journeyman → Master) is defined with the "Moderate Scale + Aggressive Master" configuration.
+- **Apprentice:** 0-10 proposals. Every patch requires PM approval. Playbook updates only.
+- **Journeyman:** Unlocks at 10 approved proposals AND composite ≥ 0.60. Fully autonomous, limited to 5/day, hard gates (lift ≥ +3%, no safety regressions). Playbook updates only.
+- **Master:** Unlocks at 25 auto-promotions AND composite ≥ 0.75. Fully autonomous, 20/day, relaxed gates (lift ≥ +1%). **Broader patches permitted:** Can rewrite the Strategist agent's system prompt.
+
+**Rationale.** Balances safety and credibility with the need to demonstrate the autonomous loop in a 100-case hackathon benchmark. Giving the Master stage the ability to rewrite core instructions rapidly (Option C) creates a compelling demo story of an AI that rewrites itself, bounded by a strict circuit breaker.
+
+**Status.** Accepted. Design spec at `docs/specs/2026-05-27-autonomy-ladder-design.md`.
+
+**Revisit triggers.**
+- **CRITICAL:** The Master stage's aggressive privileges (Option C) carry a high risk of reward hacking / overfitting. If the system's overall composite score drops by >10% over any 10-run rolling window, the auto-demotion circuit breaker fires, instantly demoting the system to Journeyman.
+- If the system is unstable in Master (repeated demotions), we will revert to Option A (keep playbook-only updates, disable system prompt rewriting).
+
+**Artifacts produced.** `docs/specs/2026-05-27-autonomy-ladder-design.md`.
