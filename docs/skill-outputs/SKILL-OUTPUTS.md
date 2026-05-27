@@ -48,3 +48,4 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-05-27 — Session 5 | implementation-plan | docs/plans/2026-05-27-aegis-implementation-plan.md | Day 1–20 plan with 4 phases, 67 tasks, 11 risks, full PRD-ID traceability, A1–A5 gates woven in |
 | 2026-05-27 — Session 5 | implementation-plan (tasks mode) | docs/plans/2026-05-27-aegis-implementation-tasks.md | Flat agent-pickable task list + gate index |
 | 2026-05-27 — Session 5 | brainstorming | docs/specs/2026-05-27-autonomy-ladder-design.md | Designed autonomy ladder thresholds and Master-stage privileges |
+| 2026-05-27 — Session 5 | product-soul | docs/product-soul.md | Rewrote product soul doc (v1.1) adding anti-positioning, values hierarchy, and expanded hypotheses |
