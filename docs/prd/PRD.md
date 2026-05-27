@@ -4,8 +4,8 @@
 |---|---|
 | **Project** | Aegis — A calm, learning agent that helps people draft US health-insurance appeals |
 | **Author** | PM (with Amp orchestration) |
-| **Date** | 2026-05-25 |
-| **Status** | Draft v3 — MVP + Full Plan unified; UX promoted to first-class pillar; Next.js frontend; competitive landscape and Arize rubric alignment added |
+| **Date** | 2026-05-27 |
+| **Status** | Draft v4 — UX promoted to first-class pillar; Next.js frontend; competitive landscape and Arize rubric alignment added |
 | **Submission track** | Google Cloud Rapid Agent Hackathon — Arize partner bucket |
 | **Primary goal** | Win 1st place ($5,000) in the Arize partner bucket |
 | **Secondary goal** | A submission whose user experience is good enough that a stressed person filing an appeal at 11pm finds it usable, and that holds up as a portfolio-grade PM artifact |
@@ -136,6 +136,7 @@ This is a genuinely emerging space. Aegis is **not** the first patient-side AI a
 5. **G5.** 3-minute demo video that visibly shows the self-improvement loop
 6. **G6.** Public GitHub repo with Apache 2.0 license
 7. **G7.** Devpost submission complete
+8. **G8.** UX quality as a first-class pillar — calm, accessible, consumer-health grade
 
 ### Non-Goals (deferred to Part B or post-hackathon)
 - ✗ Multi-agent architecture (Part B)
@@ -162,11 +163,12 @@ This is a genuinely emerging space. Aegis is **not** the first patient-side AI a
 | **Appeal stage** | Internal appeal (first level) only |
 | **Outputs** | Appeal letter, citations, evidence checklist, missing-info flags, risk notes |
 | **Languages** | English |
+| **Frontend** | Next.js App Router, Tailwind, shadcn/ui, framer-motion |
 
 ## 5. MVP Functional Requirements
 
 ### FR1 — Denial Case Intake
-Streamlit UI accepts pasted text or uploaded PDF. User can also pick from 12-case benchmark.
+Next.js UI accepts pasted text or uploaded PDF. User can also pick from 12-case benchmark.
 
 ### FR2 — Structured Case Parsing
 Agent parses input to JSON: insurer, plan_type, denial_type, service_or_procedure (+CPT), diagnosis_summary, state, cited_denial_reason, deadlines_mentioned, missing_facts[].
@@ -191,10 +193,10 @@ LLM verifies: each citation traceable to corpus, no invented statutes, facts mat
 2. Deterministic scoring per published rules in `eval/simulator_rules.json`
 
 ### FR9 — Manual Learning Job
-`learn.py` script pulls failed traces from Phoenix, proposes prompt/playbook patches, runs Phoenix experiments on held-out 6 cases, presents proposals for human approval via Streamlit UI.
+`learn.py` script pulls failed traces from Phoenix, proposes prompt/playbook patches, runs Phoenix experiments on held-out 6 cases, presents proposals for human approval via Next.js UI.
 
 ### FR10 — Demo Mode in UI
-Streamlit UI: case selector, v1/v3 buttons, side-by-side comparison, eval score panel, simulator outcome, pending learning proposals, Phoenix Cloud links.
+Next.js UI: case selector, v1/v3 buttons, side-by-side comparison, eval score panel, simulator outcome, pending learning proposals, Phoenix Cloud links.
 
 ## 6. MVP Non-Functional Requirements
 
@@ -204,6 +206,10 @@ Streamlit UI: case selector, v1/v3 buttons, side-by-side comparison, eval score 
 - **NFR4 — Trace fidelity:** Every run produces complete Phoenix trace with full metadata
 - **NFR5 — Cost:** Gemini API spend < $50 for MVP
 - **NFR6 — Performance:** Each run completes < 60s
+- **NFR7 — UX Quality:** Follows design-brief.md for a premium, calm consumer-health feel.
+
+### 6.1 UX & Tone Principles
+See docs/design-brief.md. The UI must feel calm, dignified, and trustworthy. No AI marketing voice, no exclamation marks. Tone is factual and grounded.
 
 ## 7. MVP Success Criteria
 
@@ -238,7 +244,7 @@ Streamlit UI: case selector, v1/v3 buttons, side-by-side comparison, eval score 
 - Eval suite: 12 cases × 6 metrics in Phoenix
 - Regression gate: v3 promoted only if held-out composite ≥ v(n-1)
 - Safety gate: no version with safety regression promotes
-- Demo smoke test: full Streamlit + Cloud Run flow on hero case
+- Demo smoke test: full Next.js + Cloud Run flow on hero case
 
 ## 9. MVP Demo Script (Day 7 Backup)
 
@@ -247,10 +253,10 @@ If we submit at end of Week 1, this is the demo:
 | Time | Beat | Screen |
 |---|---|---|
 | 0:00–0:20 | Hook | *"I'm a PM in India. This agent drafts US insurance appeals and gets smarter by querying its own Phoenix traces."* |
-| 0:20–0:50 | v1 fails | Cigna case loaded. v1 appeal generic, composite 0.52, simulator DENY |
+| 0:20–0:50 | v1 fails | Cigna case loaded. v1 appeal generic, composite 0.52 (baseline target), simulator DENY |
 | 0:50–1:30 | Phoenix protagonist | Open Phoenix, show MCP-driven failure summary, show approved prompt/playbook patch |
-| 1:30–2:10 | v3 wins | New appeal quotes plan language, composite 0.81, simulator APPROVE |
-| 2:10–2:40 | Held-out chart | v1 vs v3 across 6 cases, +24% lift, safety stable, hallucination 0 |
+| 1:30–2:10 | v3 wins | New appeal quotes plan language, composite 0.75 (improved target), simulator APPROVE |
+| 2:10–2:40 | Held-out chart | v1 vs v3 across 6 cases, +24% lift, safety stable, hallucination 0. Phoenix UI prominently shown on screen (>= 60s total display time) |
 | 2:40–3:00 | Close | *"Phoenix isn't monitoring this agent — it's how it improves."* |
 
 ---
@@ -263,7 +269,7 @@ If we submit at end of Week 1, this is the demo:
 
 > **"We're not submitting an agent. We're submitting the *first self-improving multi-agent organism* — a swarm of 12 specialist agents that collectively learn US health-insurance appeals from outcomes. Phoenix isn't a sidecar. Phoenix is the swarm's nervous system. Watch it get measurably smarter, in production, in front of you."**
 
-## 11. Why this aaproach (for Arize Specifically)
+## 11. Why this approach (for Arize Specifically)
 
 Other 6 partner tracks (MongoDB, Elastic, Fivetran, GitLab, Dynatrace) cannot tell a self-improvement story at all. A 12-agent self-improving swarm where Phoenix is structurally load-bearing isn't just better — it's a *different category of submission*.
 
@@ -271,9 +277,9 @@ Judges will see:
 - Submission 1: "Customer support agent with Phoenix tracing" (most common)
 - Submission 2: "Code-review agent with Phoenix evals"
 - Submission 3: "Phoenix dashboard improver" (safe meta-play)
-- **Submission X: Aegis — a 12-agent swarm that learns US insurance appeals from 200+ Phoenix traces, demonstrating measurable composite-quality lift from 0.31 → 0.78 across 8 prompt versions on a 100-case benchmark, with the entire learning loop visible in the Phoenix UI**
+- **Submission X: Aegis — a 12-agent swarm that learns US insurance appeals from 200+ Phoenix traces, demonstrating measurable composite-quality lift from ~0.40 → ~0.75 (design target) across 8 prompt versions on a 100-case benchmark, with the entire learning loop visible in the Phoenix UI**
 
-There is no contest.
+This is a highly differentiated approach.
 
 ## 12. The Swarm Architecture (12 Agents)
 
@@ -411,12 +417,13 @@ Aetna, Cigna, UnitedHealthcare, Anthem/Elevance, Humana, Kaiser Permanente, Cent
 ## 14. The 20-Day Build Plan
 
 ### Week 1 — MVP (Days 1–7) — Part A above
+- Day 1-10 must include: Run the 5 critical assumption tests (A1 eval signal, A2 Phoenix UI demo viability, A3 case credibility, A4 MCP+ADK integration, A5 Learning Coordinator autonomy). If any fail, pitch is updated downward.
 - Day 1: Resolve open questions, sign up for Phoenix Cloud, set up Google Cloud, scaffold repo
 - Day 2: Build local corpus (~30 docs); generate first 20 benchmark cases
 - Day 3: Build single ADK agent with 7 tools; first end-to-end run
 - Day 4: Phoenix instrumentation + Phoenix MCP wired; first traces appearing
 - Day 5: 5 of 7 LLM judges implemented; first benchmark eval run (v1 baseline)
-- Day 6: Streamlit UI v1 — case workbench + Phoenix link-out
+- Day 6: Next.js UI v1 — case workbench + Phoenix link-out
 - Day 7: **🎯 Milestone 1 — MVP shippable as standalone submission**
 
 ### Week 2 — Swarm (Days 8–14)
@@ -432,7 +439,7 @@ Aetna, Cigna, UnitedHealthcare, Anthem/Elevance, Humana, Kaiser Permanente, Cent
 - Day 15: Implement Learning Coordinator meta-agent
 - Day 16: Run learning loop iterations 1–4 (Cigna med necessity, UHC prior auth, Aetna mental health, Anthem step therapy)
 - Day 17: Add Pattern Synthesizer; expand benchmark to 100 cases; run iterations 5–8
-- Day 18: Auto-promotion + rollback safety gates; Streamlit polish; v1 → v8 comparison chart
+- Day 18: Auto-promotion + rollback safety gates; Next.js UI polish; v1 → v8 comparison chart
 - Day 19: Demo video script + record + edit
 - Day 20: **🎯 Milestone 3 — Full Plan shippable. Final benchmark run, submit to Devpost.**
 
@@ -478,9 +485,9 @@ No other Arize-track submission will have this data wall.
 |---|---|---|
 | 0:00–0:15 | Audacious claim | *"I'm a PM in India. Twenty days ago I'd never read a US insurance denial letter. Today, this swarm of 12 agents wins ~78% of the appeals I throw at it — because Phoenix taught them how."* |
 | 0:15–0:40 | Show the swarm | Architecture diagram animates: case enters Triage, fans out to 4 Researchers in parallel, Strategist synthesizes, Drafter writes, Red Team attacks, Drafter iterates. Phoenix dashboard ticks in background |
-| 0:40–1:10 | Hero case live | Real Cigna mental-health denial (synthetic). Watch all 12 agents play roles. Final appeal: composite 0.81, simulator APPROVE |
+| 0:40–1:10 | Hero case live | Real Cigna mental-health denial (synthetic). Watch all 12 agents play roles. Final appeal: composite 0.75, simulator APPROVE |
 | 1:10–1:50 | Learning loop is protagonist | Phoenix UI: timeline of 8 prompt versions over 20 days. Click v1 vs v8 prompt diff. Learning Coordinator audit log: *"Patch promoted day 12: Cigna mental-health, added MHPAEA parity citation rule. Composite lift +14%. Auto-promoted."* |
-| 1:50–2:20 | The benchmark | Chart: composite on 40-case held-out across 8 versions. 0.31 → 0.78. Per-insurer breakdown. Safety stable. Hallucination 0 |
+| 1:50–2:20 | The benchmark | Chart: composite on 40-case held-out across 8 versions. ~0.40 → ~0.75. Per-insurer breakdown. Safety stable. Hallucination 0 |
 | **2:20–2:50** | **Counterfactual (mic drop)** | **Disable Phoenix MCP. Composite collapses to 0.42.** *"Without Phoenix, the swarm forgets everything it learned. Phoenix isn't a sidecar. It's the swarm's nervous system."* |
 | 2:50–3:00 | Close | *"This is what self-improving agents actually look like. Aegis. Built in 20 days. Open source. Apache 2.0."* |
 
@@ -503,30 +510,39 @@ No other Arize-track submission will have this data wall.
 
 # Cross-Cutting Concerns (Apply to MVP and Full Plan)
 
-## 18. Hard Constraints (Both Phases)
+## 18. Arize Rubric Alignment
+
+- **Technical implementation**: Next.js + Python ADK + Phoenix MCP architecture.
+- **Meaningful use of tracing and MCP**: Phoenix is structurally load-bearing; removing it degrades quality.
+- **Quality of self-improvement loop**: Learning Coordinator meta-agent iteratively improves prompts/playbooks.
+- **Overall impact**: Tackling a massive asymmetry in US healthcare where 99% of denials go unappealed.
+- **Bonus**: The entire premise is an agent using its observability data to improve.
+
+## 19. Hard Constraints (Both Phases)
 
 These are locked-in regardless of phase:
 - ✅ Apache 2.0 license
 - ✅ Cloud Run hosting
-- ✅ Streamlit UI (no Next.js)
+- ✅ Next.js UI (no Streamlit)
+- ✅ UX as a co-equal product pillar
 - ✅ Synthetic composite cases (no PHI ever)
 - ✅ Transparent two-step simulator with published rules
 - ✅ Held-out benchmark for honest improvement reporting
 - ✅ Safety disclaimers in UI/repo/video
 - ✅ Google ADK + Gemini 3 + Phoenix MCP
 
-## 19. Submission Deliverables (Devpost)
+## 20. Submission Deliverables (Devpost)
 - Hosted project URL (Cloud Run)
 - Public GitHub repo with Apache 2.0 license in About section
 - ~3-minute demo video
 - Devpost form
 - Track: **Arize**
 
-## 20. Required Disclaimers (Verbatim)
+## 21. Required Disclaimers (Verbatim)
 
 > **Aegis is a hackathon demonstration. It is not legal or medical advice. Outputs are intended as drafting assistance for human review. No real patient data (PHI) is used. The simulator is a transparent rule-based proxy, not a prediction of insurer behaviour.**
 
-## 21. What Stays vs Changes Between Phases
+## 22. What Stays vs Changes Between Phases
 
 | Decision | MVP (Part A) | Full Plan (Part B) |
 |---|---|---|
@@ -537,11 +553,12 @@ These are locked-in regardless of phase:
 | Learning loop trigger | Manual, ~3 runs | Continuous, ~200 runs |
 | Promotion gate | Human-approved | Auto-promote on gate pass + audit + rollback |
 | Phoenix usage | Decorative + functional MCP read | Phoenix as swarm coordination memory |
-| Demo improvement claim | +20% on 6 cases | +151% on 40 cases (0.31 → 0.78) across 8 versions |
+| Demo improvement claim | +20% on 6 cases | Significant lift (e.g., ~0.40 → ~0.75 design target) |
+| UX Priority | Functional utility | Premium consumer-grade |
 | Build time | ~50 hours | ~160 hours (8 hrs/day × 20 days) |
 | Pitch energy | Safe and credible | Audacious and category-defining |
 
-## 22. Source References
+## 23. Source References
 
 - ProPublica *Denied* series — public reporting on insurance denials
 - KFF (Kaiser Family Foundation) appeal-rate research
@@ -549,12 +566,16 @@ These are locked-in regardless of phase:
 - State insurance commissioner public complaint databases
 - Healthcare.gov appeal-rights educational pages
 - Reddit r/HealthInsurance (public posts; inspiration only, not copied)
+- [docs/research/impact-stats.md](../research/impact-stats.md)
+- [docs/research/assumption-map.md](../research/assumption-map.md)
+- [docs/design-brief.md](../design-brief.md)
+- [docs/challenge.md](../challenge.md)
 
-## 23. Open Questions
+## 24. Open Questions
 
 See [docs/open-questions.md](../open-questions.md). Must be resolved before code begins.
 
-## 24. Out-of-Scope Ideas (Post-Hackathon Backlog)
+## 25. Out-of-Scope Ideas (Post-Hackathon Backlog)
 
 - External / IRO appeals automation
 - Medicare appeals (different stack, ALJ hearings)
@@ -567,7 +588,7 @@ See [docs/open-questions.md](../open-questions.md). Must be resolved before code
 
 ---
 
-## 25. The Bet
+## 26. The Bet
 
 Two paths exist within this PRD:
 - **Part A optimizes for *not losing*.** Ships a credible, complete Arize-track submission by Day 7.
@@ -575,6 +596,6 @@ Two paths exist within this PRD:
 
 In a hackathon with 6 separate $5,000 buckets, "not losing" gets you 3rd place at best. **Winning** requires being the one submission judges talk about after the event. That requires audacity.
 
-You have 20 days. ou have a vibe-coding stack that turns a PM into an effective builder. **Build the Full Plan, with the MVP as your Day 7 safety net.**
+You have 20 days. You have a vibe-coding stack that turns a PM into an effective builder. **Build the Full Plan, with the MVP as your Day 7 safety net.**
 
 Aegis isn't a hackathon submission. It's a manifesto: *agents should improve from their own observability data, autonomously, with safety gates, in production.* That's the Arize thesis. Be the one team that actually built it.

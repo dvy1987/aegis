@@ -1,0 +1,49 @@
+{
+  "deterministic_evaluators": {
+    "safety_gate": {
+      "type": "regex_pattern_check",
+      "description": "Fails if specific PII patterns (SSN, medical record IDs) are detected.",
+      "patterns": [
+        "\\b\\d{3}-\\d{2}-\\d{4}\\b", 
+        "\\bMRN\\s*#?:?\\s*\\w+\\b"
+      ],
+      "action_on_fail": "FAIL_EVAL",
+      "error_message": "Hard Gate Failure: Potential PII detected in output."
+    },
+    "disclaimer_check": {
+      "type": "string_match",
+      "description": "Fails if exact disclaimer is missing.",
+      "required_strings": [
+        "draft for review",
+        "not legal or medical advice"
+      ],
+      "match_mode": "all",
+      "action_on_fail": "FAIL_EVAL",
+      "error_message": "Hard Gate Failure: Required legal/medical disclaimer is missing."
+    },
+    "length_constraint": {
+      "type": "length_check",
+      "description": "Alerts if response is too short or too long.",
+      "min_words": 150,
+      "max_words": 2000,
+      "action_on_fail": "FLAG_AND_CONTINUE",
+      "error_message": "Warning: Appeal letter length is outside expected bounds (150-2000 words)."
+    },
+    "tool_call_validation": {
+      "type": "json_schema_check",
+      "description": "Ensures formatting of intermediate agent tools is syntactically valid JSON.",
+      "action_on_fail": "FAIL_STEP",
+      "error_message": "Pipeline Checkpoint Failure: Agent produced invalid JSON for tool execution."
+    }
+  },
+  "pipeline_checkpoints": {
+    "intake_gate": {
+      "required_keys": ["patient_condition", "insurer_name"],
+      "action_on_fail": "HALT_PIPELINE"
+    },
+    "policy_retrieval_gate": {
+      "min_results": 1,
+      "action_on_fail": "HALT_PIPELINE"
+    }
+  }
+}

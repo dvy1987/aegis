@@ -1,4 +1,4 @@
-# Open Questions — Reverse
+# Open Questions — Aegis
 
 These must be answered (or consciously deferred) before code begins. Items marked **🔴 BLOCKER** prevent any build work.
 
@@ -6,20 +6,8 @@ These must be answered (or consciously deferred) before code begins. Items marke
 
 ## A. Strategic & Scoping
 
-### A1. 🔴 BLOCKER — Final track lock-in
-**Question:** Confirm Arize as the target track. We've been planning for it; this question is just to lock it in.
-**Default if not answered:** Arize.
-
-### A2. 🔴 BLOCKER — Solo build or team?
-**Question:** Are you building alone, or is there a co-builder for demo polish / video production / writing?
-**Why it matters:** A 3-minute demo video is half the submission. Solo builders should budget 8–12 hours for video production alone.
-
-### A3. 🔴 BLOCKER — Time budget
-**Question:** What is the hackathon submission deadline, and how many focused hours per week can you commit between now and then?
-**Why it matters:** Reverse is ~30–50 hours of focused work for a non-developer using Amp/Cursor. If you have <20 hours total, we should pre-emptively cut the learning job and ship only the v1 + simulated v3 prompts.
-
 ### A4. Strategic narrative line — final wording
-**Question:** Approve the one-sentence pitch: *"Phoenix isn't just monitoring Reverse — it's how Reverse improves."*
+**Question:** Approve the one-sentence pitch: *"Phoenix isn't just monitoring Aegis — it's how Aegis improves."*
 Or: *"An agent that learns insurer-specific appeal tactics from its own Phoenix traces."*
 **Default if not answered:** First option (more memorable).
 
@@ -31,14 +19,6 @@ Or: *"An agent that learns insurer-specific appeal tactics from its own Phoenix 
 
 ## B. Scope & Product
 
-### B1. 🔴 BLOCKER — Insurer set lock-in
-**Question:** Confirm benchmark insurer set as **Aetna, Cigna, UnitedHealthcare**. Or swap one (e.g., BCBS, Anthem, Humana)?
-**Default:** Aetna, Cigna, UHC (most public reporting available; most judge-recognizable).
-
-### B2. 🔴 BLOCKER — Denial-type lock-in
-**Question:** Confirm benchmark denial types as **medical necessity** + **prior authorization / missing pre-auth**. Or swap one?
-**Default:** As stated.
-
 ### B3. Are mental-health parity denials in scope?
 **Question:** UHC's PXDX algorithm (ProPublica 2023 exposé) auto-denies mental-health codes — including this slice would be a powerful "the agent learned something a generalist wouldn't catch" demo moment. But it widens scope.
 **Default:** Include as 1 of the 6 calibration cases (Cigna or UHC); not as a separate denial type.
@@ -47,20 +27,12 @@ Or: *"An agent that learns insurer-specific appeal tactics from its own Phoenix 
 **Question:** Of the appeal package outputs (letter, citations, evidence checklist, missing-info flags, risk flags), which is most important for the demo to spotlight?
 **Default:** Letter + citations (most legible in video).
 
-### B5. Single-user demo only — confirm
-**Question:** Confirm no user accounts, no auth, no multi-tenant. Just a public Cloud Run URL with the demo benchmark cases.
-**Default:** Confirmed.
-
 ---
 
 ## C. Data & Evals
 
-### C1. 🔴 BLOCKER — Eval case construction approach
-**Question:** Synthetic composite cases (oracle's recommendation, lower risk) vs lightly anonymized real cases from r/HealthInsurance (richer, higher provenance risk)?
-**Default:** Synthetic composite. PRD assumes this. If you want real anonymized cases, flag now and we'll need additional ethics framing.
-
 ### C2. Calibration vs held-out split
-**Question:** Confirm 6 + 6 split. Or prefer 8 + 4 (more learning data, less held-out signal)?
+**Question:** Confirm 6 + 6 split for MVP. Or prefer 8 + 4 (more learning data, less held-out signal)?
 **Default:** 6 + 6 (balanced, lets us claim improvement on enough cases to be statistically interesting for the demo).
 
 ### C3. Held-out improvement target
@@ -75,10 +47,6 @@ Or: *"An agent that learns insurer-specific appeal tactics from its own Phoenix 
 
 ## D. Simulator & Honesty
 
-### D1. 🔴 BLOCKER — Simulator transparency level
-**Question:** Confirm the two-step transparent simulator (LLM feature extraction → deterministic rules) per PRD §9.3. Or simpler/more-complex alternative?
-**Default:** As specified.
-
 ### D2. Should the simulator be tunable per insurer?
 **Question:** Oracle suggests per-insurer feature weights (Cigna weights plan-language quotes higher; UHC weights clinical rationale higher). Adds rigor but more files to maintain.
 **Default:** Yes, per-insurer weights — but only ship 3 sets (one per benchmark insurer).
@@ -91,29 +59,9 @@ Or: *"An agent that learns insurer-specific appeal tactics from its own Phoenix 
 
 ## E. Technical
 
-### E1. 🔴 BLOCKER — Cloud account ready?
-**Question:** Do you have an active Google Cloud account with billing enabled, Cloud Run access, and Gemini API quota?
-**Default:** Assume yes; verify before build start. Free tier is sufficient.
-
-### E2. 🔴 BLOCKER — Phoenix Cloud account ready?
-**Question:** Free Phoenix Cloud account created? API key in hand?
-**Default:** Sign up at https://app.phoenix.arize.com — takes 2 minutes.
-
 ### E3. Python version & package manager
 **Question:** Python 3.11 (ADK requirement). uv or poetry for deps?
 **Default:** Python 3.11 + uv (faster, simpler).
-
-### E4. Streamlit confirmed over alternatives?
-**Question:** Confirm Streamlit. Gradio and FastAPI+HTMX are alternatives.
-**Default:** Streamlit (fastest for a demo; oracle agrees).
-
-### E5. ADK vs raw `google-genai`
-**Question:** Hackathon spec requires ADK / Agent Platform SDK / Cloud Run for the Arize track. Confirm ADK.
-**Default:** ADK (closest match to "code-owned agent runtime" + best instrumentor support).
-
-### E6. Phoenix MCP — npx or Docker?
-**Question:** `@arizeai/phoenix-mcp` runs via npx. Acceptable to require Node.js in the Cloud Run container, or prefer Docker-installed?
-**Default:** npx — simpler.
 
 ### E7. Retrieval method for corpus
 **Question:** BM25 (via `rank_bm25`) vs naive keyword vs minimal vector embed (Gemini embeddings)?
@@ -155,29 +103,9 @@ Or: *"An agent that learns insurer-specific appeal tactics from its own Phoenix 
 **Question:** Oracle recommends one quick review by a US benefits navigator / healthcare ops person. Is that feasible in your network?
 **Default:** Try; if no, proceed with public-source-citation defense.
 
-### G3. Pre-commit PHI scanner
-**Question:** Implement pre-commit hook to scan for SSN/MRN/date-of-birth patterns?
-**Default:** Yes. Cheap insurance.
-
 ---
 
-## H. Submission Logistics
-
-### H1. 🔴 BLOCKER — Devpost account
-**Question:** Devpost account created and joined to the hackathon?
-**Default:** Sign up at https://rapid-agent.devpost.com if not.
-
-### H2. 🔴 BLOCKER — Public GitHub repo
-**Question:** Create public GitHub repo with Apache 2.0 license now (before any code). License must be detectable in repo About section.
-**Default:** Yes — do it before writing any code.
-
-### H3. Submission narrative copy
-**Question:** Devpost form asks for project description, "inspiration," "what it does," "how it's built," "what's next." Write these in advance from the PRD or wait until the project ships?
-**Default:** Write after agent works end-to-end; reuse PRD content liberally.
-
----
-
-## J. Tooling & Stack (newly opened — 2026-05-27)
+## J. Tooling & Stack
 
 ### J1. `google-agents-cli` observability ↔ Phoenix MCP compatibility
 **Question:** `google-agents-cli` bundles a `google-agents-cli-observability` skill that emphasizes Cloud Trace. We rely on Phoenix Cloud + `@arizeai/phoenix-mcp` as our load-bearing observability surface. Do they coexist cleanly, or does adopting agents-cli's observability skill fight our Phoenix instrumentation?
@@ -208,6 +136,14 @@ For clarity, these are **locked**:
 - ✅ UX is a co-equal product pillar (per [decision-log.md 2026-05-25](memory/decision-log.md)).
 - ✅ Narrative is "learns insurer-specific tactics from outcomes" (NOT "learns US healthcare law").
 - ✅ Tone guardrail: no violence, vigilantism, or polarizing public events around the insurance industry in any artifact (per [AGENTS.md](../AGENTS.md) and [design-brief.md §8](design-brief.md)).
+- ✅ **Builder:** Solo PM (non-technical) using Amp + skills (Resolved A2)
+- ✅ **Time budget:** 20 days (Resolved A3)
+- ✅ **Insurer set & Denial types:** 10 insurers, 7 denial types for Full Plan. 3 insurers, 2 types for MVP. (Resolved B1, B2)
+- ✅ **Eval cases:** Synthetic composite cases only (Resolved C1)
+- ✅ **Simulator transparency:** Two-step transparent simulator (Resolved D1)
+- ✅ **Infrastructure:** Google Cloud account, Phoenix Cloud, GitHub, Devpost accounts are assumed ready or will be created on Day 1 (Resolved E1, E2, H1, H2)
+- ✅ **Phoenix MCP:** Installed via npx, backend container has Node.js (Resolved E6)
+- ✅ **Pre-commit PHI scanner:** Implemented as cheap insurance (Resolved G3)
 
 ---
 
@@ -215,12 +151,6 @@ For clarity, these are **locked**:
 
 For each open question:
 1. PM provides a one-line answer (or "use default")
-2. I (Amp) update the PRD / architecture / AGENTS.md as needed
+2. I update the PRD / architecture / AGENTS.md as needed
 3. Question moves to a "Resolved" section at the bottom (with date + decision)
 4. Once all 🔴 BLOCKER items resolved → code begins
-
----
-
-## Resolved
-
-*(empty — populate as questions close)*

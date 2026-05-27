@@ -6,19 +6,16 @@
 
 ---
 
-## The pitch in one sentence
+## The Problem: Asymmetric Warfare
 
-> *"Phoenix isn't just monitoring Aegis — it's the swarm's nervous system."*
+**Who is facing this problem?** Patients navigating an insurance denial—often when they are sick, stressed, and financially squeezed.
 
----
+**What is the problem?** US health insurers deny roughly 19% of in-network claims (about 85 million a year on ACA exchanges alone). Fewer than 1% are ever appealed. The asymmetry is structural: insurers automate denial with AI and entire third-party "denial-management" companies, while patients face a thirty-page policy document and a phone tree.
 
-## Why this exists
+**Why is it important?** Of the appeals that *are* filed, more than a third are overturned. That means roughly 99 of every 100 denied patients walk away from money or care that an appeal could have recovered. 
 
-~$262B/year in US health insurance is denied annually. ~80% of appealed denials get overturned — but only ~1% are ever appealed because the process is opaque and per-insurer cryptic.
-
-Aegis is a swarm of specialist AI agents that draft first-pass internal appeals on behalf of patients. The agents don't claim to know US healthcare law. They claim — and *demonstrate* — that they learn **insurer-specific appeal tactics from observed outcomes**, by querying their own Arize Phoenix traces via the Phoenix MCP server at runtime.
-
-The agents get measurably better over time. We prove it on a held-out benchmark, and the entire learning loop is visible in Phoenix.
+**What is our solution?** 
+Aegis exists to close that gap. It is a calm, free tool that helps any patient understand a denial and draft an appeal in plain language, in under thirty minutes. We don't promise to win the appeal—half of all appeals lose. We promise to make filing one feel possible. Every appeal Aegis helps with becomes a learning signal that makes the next one better, transparently, with the receipts visible in Phoenix Cloud.
 
 ---
 
@@ -130,13 +127,14 @@ The system **knows when it's competent** and **knows when it isn't** — that's 
 
 | Layer | Tool | Why |
 |---|---|---|
-| Agent runtime | **Google ADK** (Python) | Hackathon requirement; best instrumentor support |
+| Agent runtime | **Google ADK** (Python) | Hackathon requirement; built with `google-agents-cli` |
 | LLM | **Gemini 3** | Hackathon requirement |
 | Observability + evals | **Arize Phoenix Cloud** (free tier) | The whole point of the Arize track |
 | Runtime introspection | **`@arizeai/phoenix-mcp`** | Lets the agent query its own past traces at runtime |
 | Instrumentation | **`openinference-instrumentation-google-adk`** | Auto-tracing for ADK |
-| Frontend | **Streamlit** | Dead-simple; lets the Phoenix UI do the heavy visual lifting |
-| Hosting | **Google Cloud Run** | Pay-per-request, scales to zero, perfect for demos |
+| Frontend | **Next.js** (React) | Consumer-grade UX is a first-class product pillar |
+| Backend | **FastAPI** | Hosts the ADK orchestrator and specialist swarm |
+| Hosting | **Google Cloud Run** | 2 services (Frontend + Backend); scales to zero |
 
 ---
 
@@ -166,8 +164,8 @@ The system **knows when it's competent** and **knows when it isn't** — that's 
 
 ## Repository structure
 
-```
-elessar/
+```text
+aegis/
 ├── README.md                      ← you are here
 ├── LICENSE                        ← Apache 2.0 (hackathon requirement)
 ├── AGENTS.md                      ← rules for AI agents working on this repo
@@ -177,17 +175,19 @@ elessar/
 ├── docs/
 │   ├── challenge.md               ← hackathon brief
 │   ├── ideas.md                   ← exploration & ranking of 15 ideas (history)
-│   ├── architecture.md            ← system blueprint
+│   ├── architecture/              ← system blueprint & ADRs
 │   ├── open-questions.md          ← what's still unresolved
 │   ├── prd/
 │   │   └── PRD.md                 ← unified PRD: MVP (Part A) + Full Plan (Part B)
 │   ├── memory/                    ← agent memory (handoffs, state, index)
 │   └── skill-outputs/             ← ledger of skill invocations
 │
-├── src/                           ← (TBD) Python ADK agent + Streamlit app
-├── corpus/                        ← (TBD) authorities + playbooks
+├── frontend/                      ← Next.js App Router UI
+├── backend/                       ← Python ADK FastAPI service + `google-agents-cli`
+├── corpus/                        ← (TBD) authorities
+├── playbooks/                     ← (TBD) learning patches and tactics
 ├── eval/                          ← (TBD) benchmark cases + judges + simulator rules
-└── tests/                         ← (TBD)
+└── scripts/                       ← (TBD) deployment and eval execution
 ```
 
 ---
@@ -195,11 +195,12 @@ elessar/
 ## Built with
 
 - [Google Cloud Agent Development Kit (ADK)](https://google.github.io/adk-docs/)
+- [google-agents-cli](https://google.github.io/agents-cli/)
 - [Gemini 3](https://ai.google.dev/gemini-api)
 - [Arize Phoenix](https://docs.arize.com/phoenix)
 - [Phoenix MCP Server](https://docs.arize.com/phoenix/integrations/mcp/phoenix-mcp-server)
 - [OpenInference instrumentors](https://github.com/Arize-ai/openinference)
-- [Streamlit](https://streamlit.io/)
+- [Next.js](https://nextjs.org/) + [FastAPI](https://fastapi.tiangolo.com/)
 - [Google Cloud Run](https://cloud.google.com/run)
 - Built with [Amp](https://ampcode.com) (AI pair-programming)
 

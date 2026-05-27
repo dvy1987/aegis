@@ -290,3 +290,35 @@ Newly created or modified this session:
 - Modified: `docs/memory/decision-log.md` · `docs/memory/current-state.md` · `docs/memory/agent-handoffs.md` (this entry) · `docs/open-questions.md` · `docs/skill-outputs/SKILL-OUTPUTS.md`
 
 Recommend PM commit before Session 4 starts so the architecture rebuild is preserved as a clean checkpoint. `git add -A && git commit -m "Session 3: AGENTS.md rebuild + architecture skill-driven rebuild + 5 ADRs"` (or similar).
+
+## 2026-05-27 11:15 - Session 4 Handoff (Antigravity)
+
+### Done
+- Refactored `README.md` to prioritize user-scenario/pain framing and Next.js + FastAPI stack.
+- Swept `docs/open-questions.md`, resolving stale technical questions into the "decided" section.
+- Finished PRD v4 updates (UX pillar, Next.js, assumption tests, demo script updates, Arize Rubric alignment).
+- Generated `docs/product-soul.md` for strategic grounding.
+- Rebuilt eval design per AlphaEval 2026: created `docs/evals/2026-05-27-aegis-appeal-rubric.md`, `docs/evals/2026-05-27-aegis-judges.md`, `docs/evals/2026-05-27-aegis-eval-pipeline.md`, and `eval/simulator_rules.json`.
+- Generated 10 agent role prompts via `create-agent-prompt` skill and seeded them in `backend/src/prompts/`.
+- Updated `docs/memory/current-state.md` and `docs/skill-outputs/SKILL-OUTPUTS.md`.
+
+### Debated
+- Addressed backlog of document inconsistencies directly resulting from architectural shifts in Sessions 2 and 3 without reopening the debates.
+
+### Decisions
+- Treat Phase 0 (Planning) and Phase 1 (Eval Design) as officially complete.
+
+### Deferred
+- Day 1 build spikes (installing `google-agents-cli`, setting up Phoenix MCP integration tests).
+
+### Next Agent Should Know
+- The PRD, architecture, eval pipeline, and agent prompts are now 100% aligned with the 12-agent Next.js + Python ADK swarm strategy. 
+- The project is fully unblocked for Day 1 Build (Phase 6 of original TODO list).
+- First tasks: Set up GCP/Phoenix environment variables, `git init`, and `google-agents-cli` backend scaffolding.
+
+### Revisit Triggers
+- (Carry forward from Session 3): Day 10 progress gate, A5 Learning Coordinator autonomy check, Demo coherence test (Day 15).
+- Phoenix Cloud free tier approaching 80% quota limits.
+
+### Working Tree
+- Dirty. Many planning artifacts created/modified (`backend/src/prompts/*`, `docs/evals/*`, `README.md`, `PRD.md`, `docs/open-questions.md`, `product-soul.md`, `eval/simulator_rules.json`, memory files). Should be committed to a clean `git init` repo.
