@@ -493,3 +493,54 @@ Corrective session. PM identified 5 gaps in Session 4 output. All 6 TODOs in the
 - New: `frontend/` (full Next.js scaffold), `frontend/src/styles/tokens.{css,ts}`, `frontend/src/icons/{lucide.tsx,index.ts}`, `frontend/src/lib/cn.ts`, `frontend/src/components/{Wordmark,Button}.tsx`.
 - Modified: `frontend/AGENTS.md` (merge Next-16 notice + design-system handoff), `docs/memory/{current-state.md,project-index.md,agent-handoffs.md}`, `docs/skill-outputs/SKILL-OUTPUTS.md`.
 - Build verified: `pnpm install`, `pnpm build`, `pnpm lint`, `pnpm dev` (HTTP 200, hero copy renders).
+
+---
+
+## 2026-05-27 15:30 - Session 8 Handoff (Droid)
+
+### Done
+- Finished `scripts/dev.sh` and `scripts/dev.ps1` dev launcher scripts (both were mostly complete from prior session; fixed bugs and added improvements):
+  - Fixed `.env` loader to skip empty values — `GOOGLE_APPLICATION_CREDENTIALS=` was overriding gcloud ADC chain
+  - DRY'd up tool checks using the existing `require()` function
+  - Added 30s backend readiness health-check probe (`curl /health`)
+  - Updated PowerShell `dev.ps1` with matching empty-value fix
+- Configured `gcloud auth application-default login` — ADC now working on this machine
+- Added `GOOGLE_CLOUD_PROJECT=gen-lang-client-0362343014` and `GOOGLE_CLOUD_LOCATION=global` to `.env`
+- Switched backend from standalone Gemini API to Vertex AI (Gemini Enterprise Agent Platform):
+  - Added `GOOGLE_GENAI_USE_VERTEXAI=TRUE` to `.env`
+  - Changed `backend/app/agent.py` model from `gemini-flash-latest` to `gemini-3.1-pro-preview`
+  - Verified: `gemini-3.1-pro-preview` via Vertex AI global endpoint returns responses (no API key needed, uses ADC)
+- Updated `backend/WINDOWS_SETUP.md` with Section 4 (Google Cloud ADC auth) and Vertex AI env vars in the `.env` template
+- Full end-to-end verified: `./scripts/dev.sh` starts both services, backend health returns `{"status":"ok"}`, frontend returns HTTP 200
+
+### Debated
+- Whether to use Vertex AI vs standalone Gemini API — PM chose Vertex AI via ADC (faster, no API key management)
+- Model name `gemini-3.1-pro` vs `gemini-3.1-pro-preview` — `gemini-3.1-pro` returns 404 on Vertex AI; `-preview` is the only valid ID currently. PM initially said "don't need preview" but the API requires it.
+
+### Decisions
+- Use Vertex AI (Gemini Enterprise Agent Platform) via ADC for all Gemini calls, location `global`
+- Model ID = `gemini-3.1-pro-preview` (the only available version on Vertex AI)
+- Dev script readiness timeout = 30s (ADK initialization is slow)
+
+### Deferred
+- T1.3: Wire Phoenix telemetry on backend stub agent and emit one trace
+- T1.4 spike pt.2: 20 MCP queries with latency/reliability for A4 Day 2 EOD go/no-go
+- 8 bespoke SVGs (denial, appeal, draft-letter, deadline, evidence, doctor, insurer, signature-dot)
+- All backend source code changes beyond agent.py model swap — the agent is still a spike stub
+
+### Next Agent Should Know
+- `./scripts/dev.sh` is the canonical way to start both services. Backend on :8000, frontend on :3000.
+- The backend uses Vertex AI via ADC (no `GOOGLE_API_KEY` needed). Three env vars must be set: `GOOGLE_CLOUD_PROJECT`, `GOOGLE_CLOUD_LOCATION=global`, `GOOGLE_GENAI_USE_VERTEXAI=TRUE`.
+- `gemini-3.1-pro-preview` is the correct model ID. Do NOT use `gemini-3.1-pro` (404s).
+- A4 (Phoenix MCP + ADK) is the most load-bearing thing for the demo and the soonest hard gate (Day 2 EOD).
+
+### Revisit Triggers
+- If `gemini-3.1-pro` (without `-preview`) becomes available, update agent.py
+- A4 (Phoenix MCP + ADK integration) Day 2 EOD go/no-go
+- A2 (Phoenix UI demo-viability) Day 2 EOD
+- Day 10 progress gate + A5 (Learning Coordinator autonomy)
+- Phoenix Cloud free tier > 80% quota
+
+### Working Tree
+- Modified: `.env` (added GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION, GOOGLE_GENAI_USE_VERTEXAI), `backend/app/agent.py` (model swap), `backend/WINDOWS_SETUP.md` (ADC + Vertex AI section), `scripts/dev.sh` (bug fixes + readiness probe), `scripts/dev.ps1` (empty-value fix)
+- Untracked: `scripts/` dir, `backend/WINDOWS_SETUP.md`, `backend/app/`, `test_health.py`, other backend files from prior sessions

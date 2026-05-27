@@ -1,7 +1,7 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-27 (Session 7 — close)
-**Phase:** **Execution — Phase 1.** Phase 0 setup is complete. Backend is scaffolded with `/health`. Frontend is now scaffolded with full design system (archetype + tokens + icon strategy + hero) — T1.2 done.
+**Updated:** 2026-05-27 (Session 8 — close)
+**Phase:** **Execution — Phase 1.** Phase 0 setup complete. Backend scaffolded with `/health`. Frontend scaffolded with full design system. Dev launcher scripts finished. Vertex AI via ADC configured and verified.
 
 ---
 
@@ -43,12 +43,19 @@
 - ✅ Frontend `AGENTS.md` rewritten to merge Next.js 16 version-specific notice + design-system handoff section.
 - ✅ Skill outputs ledger and current-state updated.
 
+### Session 8 (Dev scripts + Vertex AI config)
+- ✅ **Dev launcher scripts finished** — `scripts/dev.sh` + `scripts/dev.ps1`. Colored prefixes, .env loading (skip empty values), tool checks, 30s readiness probe, graceful shutdown.
+- ✅ **ADC configured** — `gcloud auth application-default login` completed.
+- ✅ **Vertex AI (Gemini Enterprise Agent Platform) configured** — backend uses `gemini-3.1-pro-preview` via ADC, location `global`. No API key needed.
+- ✅ **`backend/WINDOWS_SETUP.md`** updated with ADC auth section and Vertex AI env vars.
+- ✅ **Full end-to-end verified** — `./scripts/dev.sh` starts both services, health check passes.
+
 ## What's blocked
 - **Arize Cloud Auth** — A4 spike succeeded connecting to MCP tool, but Arize auth (`PHOENIX_CLIENT_HEADERS` or API key permissions) blocks actual trace retrieval.
 
 ## Active decisions (top items)
 - Codename: **Aegis**
-- Stack: Google ADK + Gemini 3 + Phoenix Cloud + Phoenix MCP + Next.js + Python FastAPI + Cloud Run + `google-agents-cli`
+- Stack: Google ADK + Gemini 3.1 Pro (Vertex AI / Agent Platform, via ADC) + Phoenix Cloud + Phoenix MCP + Next.js + Python FastAPI + Cloud Run + `google-agents-cli`
 - License: Apache 2.0
 - Autonomy ladder: 3-stage (Apprentice → Journeyman → Master) — thresholds TBD on Day 5 after judge calibration κ measured
 - 12-agent Part B with 4 hard revisit triggers ([ADR-004](../adr/))
@@ -95,6 +102,6 @@
 
 ## Next recommended action
 
-T1.2 (frontend scaffold) is **done**. Next focus options are: T1.3 — wire Phoenix telemetry on the backend stub agent and emit one trace, OR T1.4 spike pt.2 — run 20 MCP queries, record latency, drive the **A4 Day 2 EOD go/no-go** gate, OR continue frontend work (draw the 8 bespoke SVGs in `.design/aegis/ICONS.md`, add the workbench surface for T6.2). A4 is the most load-bearing for the demo and the soonest hard gate — recommend it next.
+T1.2 (frontend scaffold) and dev infrastructure are **done**. Next: T1.3 (wire Phoenix telemetry, emit one trace) or T1.4 spike pt.2 (20 MCP queries for A4 Day 2 EOD go/no-go). A4 is the most load-bearing for the demo and the soonest hard gate — recommend T1.4 next.
 
 Hard gate to watch first: **A4 (Day 2 EOD)** — Phoenix MCP + ADK integration go/no-go. If FAIL, escalate to PM with fallback options before continuing.

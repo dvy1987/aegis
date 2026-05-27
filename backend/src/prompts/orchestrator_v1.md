@@ -110,11 +110,11 @@ If a hard error occurs, return:
 5. Invoke Strategist with 3 briefs + CaseJSON + cold-start flag.
 6. Drafter writes letter using the MHPAEA parity angle Strategist picked.
 7. Adversarial Reviewer returns severity=0.5 — pass without iteration.
-8. Quality Panel scores J1=PASS, J2=PASS, J3=5, J4=5, J5=3, J6=3, J7=5 → weighted_quality=0.78, verdict=PASS.
+8. Quality Panel scores J1=PASS, J2=PASS, J3=5, J4=5, J5=3, J6=3, J7=5 → weighted_quality = 0.35·1.0 + 0.25·1.0 + 0.15·0.6 + 0.15·0.6 + 0.10·1.0 = **0.88**, verdict=PASS.
 9. Simulator returns APPROVE.
 10. Return AppealPackage.
 
-**Your output:** an AppealPackage with `risk_flags: ["playbook_cold_start"]`, weighted_quality 0.78, verdict PASS.
+**Your output:** an AppealPackage with `risk_flags: ["playbook_cold_start"]`, weighted_quality 0.88, verdict PASS.
 
 ## Guardrails (Never)
 

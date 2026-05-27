@@ -30,6 +30,7 @@ Quick navigation for agents picking up this project.
 
 | 2026-05-27 | Session (Agent) | [agent-handoffs.md](agent-handoffs.md#2026-05-27-1408---handoff) |
 | 2026-05-27 | Session 7 (Droid — frontend design system + scaffold) | [agent-handoffs.md](agent-handoffs.md#2026-05-27---session-7-handoff-droid) |
+| 2026-05-27 | Session 8 (Droid — dev scripts + Vertex AI config) | [agent-handoffs.md](agent-handoffs.md#2026-05-27-1530---session-8-handoff-droid) |
 
 ## Skill-output log
 
