@@ -1,0 +1,158 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+/* ============================================================
+   Tailwind v4 @theme inline:
+   Disable the default palette, expose ONLY our semantic tokens.
+   Components reference these as bg-surface-primary, text-text-primary,
+   text-display-lg, font-display, etc. — never raw Tailwind palette names.
+============================================================ */
+
+@theme inline {
+  /* Wipe the default palette so naive class names fail loud */
+  --color-*: initial;
+
+  /* Surfaces */
+  --color-surface-primary:   var(--surface-primary);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-tertiary:  var(--surface-tertiary);
+  --color-surface-overlay:   var(--surface-overlay);
+  --color-surface-inverse:   var(--surface-inverse);
+
+  /* Text */
+  --color-text-primary:    var(--text-primary);
+  --color-text-secondary:  var(--text-secondary);
+  --color-text-tertiary:   var(--text-tertiary);
+  --color-text-muted:      var(--text-muted);
+  --color-text-on-accent:  var(--text-on-accent);
+  --color-text-link:       var(--text-link);
+
+  /* Borders */
+  --color-border-subtle:  var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong:  var(--border-strong);
+  --color-border-accent:  var(--border-accent);
+
+  /* Accents */
+  --color-accent-sage:        var(--accent-sage);
+  --color-accent-sage-soft:   var(--accent-sage-soft);
+  --color-accent-sage-deep:   var(--accent-sage-deep);
+  --color-accent-sage-tint:   var(--accent-sage-tint);
+  --color-accent-clay:        var(--accent-clay);
+  --color-accent-clay-soft:   var(--accent-clay-soft);
+  --color-accent-clay-tint:   var(--accent-clay-tint);
+
+  /* Status */
+  --color-status-success: var(--status-success);
+  --color-status-warning: var(--status-warning);
+  --color-status-error:   var(--status-error);
+  --color-status-info:    var(--status-info);
+
+  /* Ink scale (named for role; available when a token gap surfaces) */
+  --color-ink-0: var(--ink-0);
+  --color-ink-1: var(--ink-1);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-ink-5: var(--ink-5);
+  --color-ink-6: var(--ink-6);
+  --color-ink-7: var(--ink-7);
+  --color-ink-8: var(--ink-8);
+  --color-ink-9: var(--ink-9);
+
+  /* Typography families (wired from next/font CSS variables in layout.tsx) */
+  --font-display: var(--font-display, 'Source Serif 4', Georgia, serif);
+  --font-body:    var(--font-body, 'Inter', system-ui, sans-serif);
+  --font-mono:    var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+
+  /* Type scale */
+  --text-xs:    var(--text-xs);
+  --text-sm:    var(--text-sm);
+  --text-base:  var(--text-base);
+  --text-lg:    var(--text-lg);
+  --text-xl:    var(--text-xl);
+
+  --text-display-sm:  var(--display-sm);
+  --text-display-md:  var(--display-md);
+  --text-display-lg:  var(--display-lg);
+  --text-display-xl:  var(--display-xl);
+  --text-display-2xl: var(--display-2xl);
+
+  /* Spacing — log-spaced */
+  --spacing-0:  var(--space-0);
+  --spacing-1:  var(--space-1);
+  --spacing-2:  var(--space-2);
+  --spacing-3:  var(--space-3);
+  --spacing-4:  var(--space-4);
+  --spacing-6:  var(--space-6);
+  --spacing-8:  var(--space-8);
+  --spacing-12: var(--space-12);
+  --spacing-16: var(--space-16);
+  --spacing-24: var(--space-24);
+  --spacing-32: var(--space-32);
+
+  /* Radius */
+  --radius-sm:   var(--radius-sm);
+  --radius-md:   var(--radius-md);
+  --radius-lg:   var(--radius-lg);
+  --radius-xl:   var(--radius-xl);
+  --radius-pill: var(--radius-pill);
+
+  /* Containers */
+  --container-prose: var(--container-prose);
+  --container-app:   var(--container-app);
+  --container-wide:  var(--container-wide);
+}
+
+/* ============================================================
+   Base element styles — token-driven.
+============================================================ */
+
+html, body {
+  background-color: var(--surface-primary);
+  color: var(--text-primary);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-base);
+  font-feature-settings: "ss01", "cv11", "kern";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: var(--accent-sage-tint);
+  color: var(--text-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Hairline rule utility — used in lieu of card chrome wherever possible. */
+.hairline {
+  border-top: var(--border-hairline) solid var(--border-subtle);
+}
+
+/* Signature 6px sage dot — recurring element across status / stepper / markers. */
+.signature-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background-color: var(--accent-sage);
+  vertical-align: middle;
+}
+
+/* Token-driven button transitions — Tailwind utilities for motion are
+   intentionally not used so timing always tracks the design tokens. */
+.aegis-button {
+  transition-property: background-color, color, border-color, transform;
+  transition-duration: var(--duration-quick);
+  transition-timing-function: var(--easing-standard);
+}

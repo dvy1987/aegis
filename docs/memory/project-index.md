@@ -28,6 +28,9 @@ Quick navigation for agents picking up this project.
 | 2026-05-24 | Session 1 (Amp) | [agent-handoffs.md](agent-handoffs.md#2026-05-24--session-1-handoff-amp) |
 | 2026-05-25 | Session 2 (Amp) | [agent-handoffs.md](agent-handoffs.md#2026-05-25--session-2-handoff-amp) |
 
+| 2026-05-27 | Session (Agent) | [agent-handoffs.md](agent-handoffs.md#2026-05-27-1408---handoff) |
+| 2026-05-27 | Session 7 (Droid — frontend design system + scaffold) | [agent-handoffs.md](agent-handoffs.md#2026-05-27---session-7-handoff-droid) |
+
 ## Skill-output log
 
 See [docs/skill-outputs/SKILL-OUTPUTS.md](../skill-outputs/SKILL-OUTPUTS.md).

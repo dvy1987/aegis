@@ -376,3 +376,120 @@ Corrective session. PM identified 5 gaps in Session 4 output. All 6 TODOs in the
 - Phoenix Cloud free tier > 80% quota.
 - Open Q J1 (`google-agents-cli` observability vs Phoenix MCP) — Day 1 (task T1.5).
 - Open Q J2 (`google-agents-cli deploy` vs 2-service Cloud Run) — Day 7 (task T7.1).
+
+---
+
+## 2026-05-27 — Session 6 Handoff (Antigravity)
+
+### Done
+- **Phase 0 setup complete**: `gcloud` installed locally via Homebrew to respect user preference against global/sudo pollution. GCP APIs enabled, `.env` file created, pre-commit hooks configured for PHI/secrets.
+- **Backend scaffolded**: Task T1.1 completed using `agents-cli create -a adk` mapped to `backend/`. Replaced generic app with one having a `/health` endpoint returning `{"ok":true}`.
+- **Task tracked**: `task.md` created to track implementation. T0.1–T0.6 and T1.1 marked complete.
+- **Frontend halted**: Task T1.2 Next.js scaffolding was initiated but explicitly halted by PM request.
+- **Memory updated**: `current-state.md` updated to reflect the transition from Planning to Execution Phase 1.
+
+### Debated
+- **GCP authentication & permissions**: Discussed installation strategy. PM preferred manual authorization checks and explicit scoping. Used targeted `chown` and Homebrew rather than sudo/root installs.
+- **Dataset Size**: Reduced benchmark size from 12 cases to 4 cases (2 train / 2 holdout) across PRD and implementation plan for MVP validation.
+
+### Decisions
+- Install `gcloud` via Homebrew instead of native package to avoid sudo permission creep.
+- Pause frontend development pending further PM instruction.
+
+### Deferred
+- Frontend scaffolding (T1.2).
+- Phoenix telemetry setup for backend (T1.3).
+- Phoenix MCP toy roundtrip spike (T1.4).
+
+### Next Agent Should Know
+- The project is officially in Phase 1 (Execution). The backend exists and works.
+- The Next.js frontend has NOT been created yet. Wait for explicit PM sign-off before proceeding with frontend scaffolding.
+- The user is security-conscious; they prefer to be asked for permissions and avoid wide sudo grants. Always explain permission/installation needs beforehand.
+- The `gcloud` CLI is available and authenticated against project `gen-lang-client-0362343014`.
+
+### Revisit Triggers
+- Frontend architecture/scaffolding approval from PM.
+- A4 (Phoenix MCP + ADK integration) Day 2 EOD go/no-go.
+
+## 2026-05-27 14:08 - Handoff
+
+### Done
+- Conducted adversarial and constructive project evaluation for Aegis hackathon submission (saved in `aegis_evaluation.md`).
+- Executed spike for A4 Assumption (Phoenix MCP + ADK integration). Built `test_mcp_standalone.py` showing `mcp.client.stdio_client` successfully connects to `npx -y @arizeai/phoenix-mcp` and lists all Phoenix tools.
+
+### Debated
+- N/A
+
+### Decisions
+- A4 (Phoenix MCP integration) is functionally viable from the Python client side. The MCP server initializes and exposes tools successfully.
+
+### Deferred
+- Need to resolve the Arize backend auth for `phoenix-mcp` (e.g. configuring `PHOENIX_CLIENT_HEADERS` or validating `PHOENIX_API_KEY`) as `list-traces` returns a server version/auth error from Arize cloud.
+
+### Next Agent Should Know
+- `backend/test_mcp_standalone.py` contains the working 20-line MCP connection proof. 
+- Ensure you set up `PHOENIX_CLIENT_HEADERS` properly for the Node MCP server to authenticate with the Arize backend.
+
+### Revisit Triggers
+- If `list-traces` continues to fail after auth is fixed, revisit the MCP integration approach (fallback to direct REST API).
+
+### Working Tree
+- `backend/test_mcp_standalone.py` (New - spike script)
+- `backend/spike_mcp.py` (New - failed ADK Runner spike)
+- `backend/app/agent.py` (Modified - tested MCP tool wrapper)
+- `.env` (Modified - added `PHOENIX_HOST`)
+
+## 2026-05-27 - Session 7 Handoff (Droid)
+
+### Done
+- Resumed frontend after PM green-light. Ran the full `frontend-design` skill chain end-to-end (orchestrator > archetype > tokens > icons > scaffold). All artifacts written to `.design/aegis/`.
+- Locked premium-consumer (health-shaded) archetype with "feels like One Medical x Headspace, with Calm motion and Apple Health restraint". See `.design/aegis/ARCHETYPE.md`.
+- Generated archetype-grounded design tokens (CSS + TS): warm-paper neutrals, sage accent, no Tailwind defaults, oklch source-of-truth, hand-set dark mode, Calm-style 240-520ms motion budget. Banned-defaults audit clean. See `.design/aegis/TOKENS.md` and `frontend/src/styles/tokens.{css,ts}`.
+- Locked icon strategy as mixed (tuned Lucide subset + 8 bespoke SVGs for high-trust surfaces). Tuning rules + bespoke inventory in `.design/aegis/ICONS.md`. The Lucide tuning HOC ships at `frontend/src/icons/lucide.tsx`; bespoke SVGs are deferred to T1.3+.
+- T1.2 done: Next.js 16.2.6 + React 19 + Tailwind v4 + App Router + src dir + TS strict scaffolded via `pnpm create next-app`. Hero page renders the archetype: serif-display headline (Source Serif 4) over warm parchment, sage signature dot, hairline rules between sections, full disclaimer in footer. Self-hosted fonts via `next/font` (Inter, Source Serif 4, JetBrains Mono). `pnpm install`, `pnpm build`, `pnpm lint`, `pnpm dev` (HTTP 200) all green.
+- pnpm 11 settings: configured `pnpm-workspace.yaml` with `allowBuilds: { sharp: true, unrs-resolver: true }` so Next.js postinstall hooks can run.
+- Frontend `AGENTS.md` rewritten to merge Next.js-16 version-specific notice (auto-generated) with our existing design-system rules + new design-system handoff section.
+- Skill outputs ledger and current-state updated; this handoff appended.
+
+### Debated
+- Package manager: PM had just installed pnpm; T1.2 plan called for it; used pnpm 11.3.0 (Homebrew).
+- Whether to scaffold or design-first: AGENTS.md says design-first, so ran archetype + tokens + icons skills BEFORE create-next-app so the scaffold never carried Tailwind defaults for even one commit.
+- Bespoke SVG drawing: deferred from this session because they need careful craft and the scaffold milestone (T1.2) has clear DoD without them. Strategy + inventory locked in ICONS.md.
+
+### Decisions
+- Archetype = premium-consumer (health-shaded), feels-like One Medical x Headspace x Calm.
+- Tokens use `oklch()` (not `hsl`) for perceptual lightness consistency. Tailwind palette wiped via `--color-*: initial`.
+- Icon strategy = mixed (tuned Lucide functional + bespoke signature). 8 bespoke SVGs inventoried.
+- pnpm allowBuilds for sharp + unrs-resolver: yes (these are Next.js dependencies, not third-party scripts).
+
+### Deferred
+- T1.3: Phoenix telemetry on backend (next priority option).
+- T1.4 spike pt.2: 20 MCP queries with latency / reliability for the A4 Day 2 EOD go/no-go gate.
+- 8 bespoke SVGs (denial, appeal, draft-letter, deadline, evidence, doctor, insurer, signature-dot variants). Drawn during T1.3+.
+- Stylelint rule rejecting raw `lucide-react` imports outside `src/icons/` and rejecting Tailwind palette names — mentioned in AGENTS.md, not yet implemented.
+- T6.2: workbench surface (case selector, v1/v3 toggle, side-by-side appeal, eval panel, simulator, Phoenix link-outs).
+
+### Next Agent Should Know
+- The frontend is alive. `cd frontend && pnpm dev` then http://localhost:3000 shows the hero.
+- Design system contract is in `.design/aegis/`; runtime copies are in `frontend/src/styles/`. Update the spec first, then sync.
+- All Lucide imports MUST go through `frontend/src/icons/lucide.tsx` (the `tuneLucide` HOC). Never `import { ... } from 'lucide-react'` directly in app code.
+- Tailwind defaults (`slate`, `zinc`, `gray`, `bg-blue-500`, etc.) are forbidden. Use the semantic tokens declared in `globals.css` `@theme inline`: `bg-surface-primary`, `text-text-secondary`, `text-display-lg`, `font-display`, etc.
+- A4 (Phoenix MCP + ADK) is the most load-bearing thing for the demo and the soonest hard gate (Day 2 EOD). Recommend running T1.4 spike pt.2 next session.
+- The hackathon style guidance (no AI marketing, no exclamation marks, "person" not "human", disclaimer always visible) is enforced in copy of the hero page; the design-review skill should run any time new copy is added.
+
+### Revisit Triggers
+- A4 (Phoenix MCP + ADK integration) Day 2 EOD go/no-go.
+- A2 (Phoenix UI demo-viability) Day 2 EOD.
+- A3 (case credibility) Day 3 EOD.
+- A1 (eval signal) Day 5 EOD.
+- Day 10 progress gate + A5 (Learning Coordinator autonomy).
+- Phoenix Cloud free tier > 80% quota.
+- Open Q J1 (`google-agents-cli` observability vs Phoenix MCP) — Day 1 (task T1.5).
+- Open Q J2 (`google-agents-cli deploy` vs 2-service Cloud Run) — Day 7 (task T7.1).
+- Frontend design-review (run when new pages or significant copy ship).
+
+### Working Tree
+- New: `.design/aegis/{ARCHETYPE,TOKENS,ICONS}.md`, `.design/aegis/tokens.{css,ts}`, `.design/aegis/icons/`.
+- New: `frontend/` (full Next.js scaffold), `frontend/src/styles/tokens.{css,ts}`, `frontend/src/icons/{lucide.tsx,index.ts}`, `frontend/src/lib/cn.ts`, `frontend/src/components/{Wordmark,Button}.tsx`.
+- Modified: `frontend/AGENTS.md` (merge Next-16 notice + design-system handoff), `docs/memory/{current-state.md,project-index.md,agent-handoffs.md}`, `docs/skill-outputs/SKILL-OUTPUTS.md`.
+- Build verified: `pnpm install`, `pnpm build`, `pnpm lint`, `pnpm dev` (HTTP 200, hero copy renders).

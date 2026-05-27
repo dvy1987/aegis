@@ -52,3 +52,10 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-05-27 — Session 5 | project-constitution | docs/constitution.md | Constitution v1 with 7 core invariants |
 | 2026-05-27 — Session 5 | feature-spec | docs/specs/2026-05-27-aegis-part-a-mvp-feature-spec.md | Spec: Part A MVP (Draft) |
 | 2026-05-27 — Session 5 | feature-spec | docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md | Spec: Part B Swarm (Draft) |
+
+| 2026-05-27 14:08 | memory-handoff | docs/memory/agent-handoffs.md | Appended session handoff summary |
+| 2026-05-27 — Session 7 | memory-startup | (read-only) | Session 7 cold start; bounded context load |
+| 2026-05-27 — Session 7 | frontend-design (orchestrator) | .design/aegis/, frontend/src/{app,components,icons,lib,styles}/ | Full path: archetype + tokens + icons + Next.js scaffold (T1.2) |
+| 2026-05-27 — Session 7 | design-archetype | .design/aegis/ARCHETYPE.md | Locked premium-consumer (health-shaded) — feels like One Medical x Headspace; tokens/icons hand-off contract |
+| 2026-05-27 — Session 7 | design-tokens-craft | .design/aegis/TOKENS.md, tokens.css, tokens.ts (also copied to frontend/src/styles/) | Warm-paper neutrals, sage accent, Source Serif 4 + Inter, Calm-style motion; banned-defaults audit |
+| 2026-05-27 — Session 7 | icon-craft | .design/aegis/ICONS.md | Mixed strategy: tuned Lucide + 8 bespoke; tuning rules + bespoke inventory |

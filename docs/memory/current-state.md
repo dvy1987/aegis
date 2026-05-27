@@ -1,7 +1,7 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-27 (Session 5 — close)
-**Phase:** **Planning complete.** All Phase 0 / Phase 1 artifacts (PRD v4, architecture spec, eval rubric v2, eval pipeline, agent prompts v1, Day 1–20 implementation plan + task list) are aligned and committed. **Ready for Phase 0 execution pending PM sign-off on GCP + Phoenix Cloud setup.** No application code exists yet.
+**Updated:** 2026-05-27 (Session 7 — close)
+**Phase:** **Execution — Phase 1.** Phase 0 setup is complete. Backend is scaffolded with `/health`. Frontend is now scaffolded with full design system (archetype + tokens + icon strategy + hero) — T1.2 done.
 
 ---
 
@@ -24,10 +24,27 @@
 - ✅ **Product Soul rewritten** via `product-soul` skill with anti-positioning, values hierarchy, and specific hypotheses.
 - ✅ **Project Constitution established** via `project-constitution` skill — `docs/constitution.md` (v1) sets 7 non-negotiable engineering invariants (testing, security, performance, etc.).
 - ✅ **Feature Specs written** via `feature-spec` skill for Part A (MVP) and Part B (Swarm). Both are in Draft status pending clarification review.
-- ✅ **Memory closed:** Session 5 handoff finalised; decision-log appended with new entries; skill-outputs ledger updated.
+
+### Session 6 (Execution)
+- ✅ MVP benchmark dataset size cut from 12-cases to 4-cases across all spec and plan documents.
+- ✅ Phase 0 setup fully complete: GCP APIs enabled, `PHOENIX_API_KEY` stored in `.env`, `.pre-commit-config.yaml` established for PHI/secret checking.
+- ✅ Tooling installed: `uv`, `google-agents-cli` (with 7 ADK skills via Node).
+- ✅ **Backend scaffolded:** Task T1.1 done. Created standard ADK FastAPI app using `agents-cli create -a adk`, added custom `/health` endpoint (returns `{"ok":true}`).
+- ⏸️ **Frontend scaffold:** Paused by PM. No Next.js app generated yet.
+- ✅ **Memory closed:** Session 6 handoff finalised; current-state updated.
+- ✅ **A4 spike:** Verified MCP client connects successfully and lists Phoenix trace tools.
+
+### Session 7 (Frontend design system + scaffold — T1.2 done)
+- ✅ **frontend-design skill chain run end-to-end** for the first time. Outputs in `.design/aegis/`.
+- ✅ **Archetype locked** via `design-archetype` skill — premium-consumer (health-shaded), feels-like One Medical × Headspace, with Calm motion + Apple Health restraint. See `.design/aegis/ARCHETYPE.md`.
+- ✅ **Design tokens generated** via `design-tokens-craft` skill — warm-paper neutrals, sage accent, no Tailwind defaults, oklch source-of-truth, hand-set dark mode, motion budget 240–520ms with Calm easing. CSS + TS in `.design/aegis/` and copied to `frontend/src/styles/tokens.{css,ts}`. Banned-defaults audit clean. See `.design/aegis/TOKENS.md`.
+- ✅ **Icon strategy locked** via `icon-craft` — mixed: tuned Lucide subset (functional) + 8 bespoke SVGs (signature surfaces). Tuning rules + bespoke inventory in `.design/aegis/ICONS.md`. The 8 bespoke SVGs are drawn during T1.3+; tuning wrapper at `frontend/src/icons/lucide.tsx` is shipped.
+- ✅ **T1.2 Next.js scaffolded** (`pnpm`, Next 16.2.6, React 19, Tailwind v4, App Router, src dir, TS strict). Hero page renders with serif display + Inter body, sage signature dot, hairline rules, no exclamation marks, full disclaimer. `pnpm build`, `pnpm lint`, and `pnpm dev` (HTTP 200) all green.
+- ✅ Frontend `AGENTS.md` rewritten to merge Next.js 16 version-specific notice + design-system handoff section.
+- ✅ Skill outputs ledger and current-state updated.
 
 ## What's blocked
-- **Phase 0 execution (GCP + Phoenix + repo + agents-cli setup)** — gated on PM sign-off per Session 5 instruction. No `gcloud` runs, no Phoenix account creation, no remote push without PM confirmation.
+- **Arize Cloud Auth** — A4 spike succeeded connecting to MCP tool, but Arize auth (`PHOENIX_CLIENT_HEADERS` or API key permissions) blocks actual trace retrieval.
 
 ## Active decisions (top items)
 - Codename: **Aegis**
@@ -67,6 +84,10 @@
 | Feature Spec: Part A | [`docs/specs/2026-05-27-aegis-part-a-mvp-feature-spec.md`](../specs/2026-05-27-aegis-part-a-mvp-feature-spec.md) |
 | Feature Spec: Part B | [`docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md`](../specs/2026-05-27-aegis-part-b-swarm-feature-spec.md) |
 | Autonomy Ladder Design | [`docs/specs/2026-05-27-autonomy-ladder-design.md`](../specs/2026-05-27-autonomy-ladder-design.md) |
+| Frontend archetype | [`.design/aegis/ARCHETYPE.md`](../../.design/aegis/ARCHETYPE.md) |
+| Frontend tokens (rationale) | [`.design/aegis/TOKENS.md`](../../.design/aegis/TOKENS.md) |
+| Frontend tokens (runtime) | [`frontend/src/styles/tokens.css`](../../frontend/src/styles/tokens.css) + `tokens.ts` |
+| Frontend icons strategy | [`.design/aegis/ICONS.md`](../../.design/aegis/ICONS.md) |
 | Open questions | [`docs/open-questions.md`](../open-questions.md) |
 | Agent rules | [`AGENTS.md`](../../AGENTS.md) + `frontend/AGENTS.md` + `backend/AGENTS.md` |
 | Decision log | [`docs/memory/decision-log.md`](decision-log.md) |
@@ -74,6 +95,6 @@
 
 ## Next recommended action
 
-**Get PM sign-off on Phase 0**, then execute Phase 0 tasks T0.1–T0.6 (open-questions sweep + GCP + Phoenix Cloud + `git push` + `google-agents-cli` setup + pre-commit hook). Once Phase 0 is green, Day 1 starts the parallel work streams: backend scaffold (T1.1), frontend scaffold (T1.2), Phoenix instrumentation (T1.3), Phoenix MCP toy roundtrip (T1.4 — the A4 spike).
+T1.2 (frontend scaffold) is **done**. Next focus options are: T1.3 — wire Phoenix telemetry on the backend stub agent and emit one trace, OR T1.4 spike pt.2 — run 20 MCP queries, record latency, drive the **A4 Day 2 EOD go/no-go** gate, OR continue frontend work (draw the 8 bespoke SVGs in `.design/aegis/ICONS.md`, add the workbench surface for T6.2). A4 is the most load-bearing for the demo and the soonest hard gate — recommend it next.
 
 Hard gate to watch first: **A4 (Day 2 EOD)** — Phoenix MCP + ADK integration go/no-go. If FAIL, escalate to PM with fallback options before continuing.
