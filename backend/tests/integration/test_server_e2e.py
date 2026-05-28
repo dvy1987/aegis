@@ -137,7 +137,16 @@ def test_chat_stream(server_fixture: subprocess.Popen[str]) -> None:
         "session_id": session_id,
         "new_message": {
             "role": "user",
-            "parts": [{"text": "Hi!"}],
+            "parts": [
+                {
+                    "text": (
+                        "Synthetic case: Aetna denied prior authorization for "
+                        "TMS for severe OCD because medication failures were "
+                        "not sufficiently documented. The denial says the "
+                        "appeal deadline is 180 days."
+                    )
+                }
+            ],
         },
         "streaming": True,
     }

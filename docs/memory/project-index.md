@@ -25,6 +25,7 @@ Quick navigation for agents picking up this project.
 
 | Date | Session | Handoff file |
 |---|---|---|
+| 2026-05-28 | Session 12 (aegis_v1 ADK agent) | [agent-handoffs.md](agent-handoffs.md#2026-05-28-0755---handoff) |
 | 2026-05-24 | Session 1 (Amp) | [agent-handoffs.md](agent-handoffs.md#2026-05-24--session-1-handoff-amp) |
 | 2026-05-25 | Session 2 (Amp) | [agent-handoffs.md](agent-handoffs.md#2026-05-25--session-2-handoff-amp) |
 

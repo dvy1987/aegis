@@ -4,6 +4,7 @@ Append-only log of every skill invocation + output file. Newest at the bottom.
 
 | Date/Time | Skill | Output | Purpose |
 |---|---|---|---|
+| 2026-05-28 07:55 | test-driven-development | backend/tests/unit/agent/test_aegis_v1_tools.py, backend/tests/unit/agent/test_aegis_v1_agent.py | TDD: real `aegis_v1` ADK agent with seven MVP tools, `AppealPackage` schema, and local 7-tool smoke |
 | 2026-05-24 — Session 1 | brainstorming (loaded but not followed-to-completion) | docs/ideas.md (informal, not skill-output-format) | Hackathon idea exploration |
 | 2026-05-24 — Session 1 | eval-output (loaded; pending sub-skill chain) | none yet | Will route to eval-rubric-design → eval-judge → eval-pipeline next session |
 | 2026-05-24 — Session 1 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session 1 → Session 2 handoff |

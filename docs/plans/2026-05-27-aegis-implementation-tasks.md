@@ -37,8 +37,8 @@
 ### Day 3 — A3 reader test + first end-to-end agent
 - [ ] **T3.1** **A3 Reader test:** 2 outside readers rate case realism. **DoD:** Both "plausible/realistic" or escalate to re-source. **Trace:** A3.
 - [ ] **T3.2** Draft 2 held-out cases from distinct public sources. **DoD:** 2 cases in `eval/cases/holdout/` + provenance. **Trace:** FR8.
-- [ ] **T3.3** Build single ADK agent (`aegis_v1`) with 7 tools + deliberately-weak v1 prompt. **DoD:** End-to-end run on 1 case → structured `AppealPackage`. **Trace:** FR1, FR2, FR3, FR4, FR6, FR7.
-- [ ] **T3.4** Strict JSON output via `response_mime_type=application/json`; Pydantic schemas in `backend/src/agent/schemas.py`. **DoD:** Schema validation passes on Day-3 run. **Trace:** NFR4.
+- [x] **T3.3** Build single ADK agent (`aegis_v1`) with 7 tools + deliberately-weak v1 prompt. **DoD:** End-to-end run on 1 case → structured `AppealPackage`. **Trace:** FR1, FR2, FR3, FR4, FR6, FR7. **Done 2026-05-28:** `backend/app/agent.py` now wires the 7 MVP tools as ADK `FunctionTool`s; local 7-tool smoke produced a structured `AppealPackage`.
+- [x] **T3.4** Strict JSON output via `response_mime_type=application/json`; Pydantic schemas in `backend/src/agent/schemas.py`. **DoD:** Schema validation passes on Day-3 run. **Trace:** NFR4. **Done 2026-05-28:** schema source lives at `backend/app/aegis_v1/schemas.py`; ADK `output_schema=AppealPackage` and JSON MIME configured.
 - [ ] **🔴 T3.5** **Demo capture: first v1 run.** Open Aegis app (left) + Phoenix dashboard (right). Load a calibration case, run v1 agent, capture the weak appeal output + low eval scores + simulator DENY + Phoenix trace. **DoD:** `docs/demo/raw/day3-v1-first-run.mp4` saved. **Trace:** G5. **Note:** This footage CANNOT be recreated after the prompt is patched.
 
 ### Day 4 — Phoenix MCP load-bearing

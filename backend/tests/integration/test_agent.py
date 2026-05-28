@@ -32,7 +32,19 @@ def test_agent_stream() -> None:
     runner = Runner(agent=root_agent, session_service=session_service, app_name="test")
 
     message = types.Content(
-        role="user", parts=[types.Part.from_text(text="Why is the sky blue?")]
+        role="user",
+        parts=[
+            types.Part.from_text(
+                text=(
+                    "Synthetic case: Cigna denied Intensive Outpatient Program "
+                    "services for severe OCD as not medically necessary. The "
+                    "denial says weekly outpatient therapy is available and "
+                    "the person may appeal within 180 days. Clinical context: "
+                    "the provider documented failed weekly therapy and daily "
+                    "compulsions lasting 6 hours."
+                )
+            )
+        ],
     )
 
     events = list(

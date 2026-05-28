@@ -79,6 +79,13 @@
 - ✅ **PM question answered**: Yes, the UX must show the simulator outcome (APPROVE/DENY) — per FR8 and FR10, this is a core demo element. The flip from DENY to APPROVE is one of the most compelling visual moments.
 - ✅ **Combined handoff** from 3 concurrent sessions written.
 
+### Session 12 (Execution - aegis_v1 ADK agent)
+- Done: **T3.3/T3.4**. `backend/app/agent.py` now exposes `aegis_v1` with the 7 MVP tools: `case_parser`, `corpus_retrieval`, `phoenix_mcp_lookup`, `playbook_loader`, `drafter`, `self_check`, `simulator`.
+- Added Pydantic schemas and deterministic tool pipeline under `backend/app/aegis_v1/`: `schemas.py`, `tools.py`, `pipeline.py`.
+- Strict JSON path: ADK `output_schema=AppealPackage` plus `response_mime_type="application/json"`.
+- Local smoke produced structured `AppealPackage`: Cigna med-necessity, 3 corpus citations, self-check PASS, simulator score 9/10 -> DENY. This preserves the planned weak-v1 demo arc.
+- Verification: `pytest tests/unit` -> 8 passed; ADK canonical tools resolve to 7 `FunctionTool`s. Ruff could not run because it is not installed in the backend venv.
+
 ## What's blocked
 - **Arize Cloud Auth** — A4 MCP connection works, but Arize auth (`PHOENIX_CLIENT_HEADERS` or API key permissions) blocks actual trace retrieval from the MCP server. Workaround: direct Phoenix SDK calls work; MCP is functional for ADK tool integration (T2.1 proved this with 20/20 successes).
 
@@ -138,6 +145,8 @@
 | Eval configs | [`eval/{diversity_matrix,banned_topics,case_schema}.json`](../../eval/) |
 
 ## Next recommended action
+
+**Updated 2026-05-28:** T3.3/T3.4 are now done. Immediate next actions are: (1) complete A3 reader credibility test / held-out case cleanup if not already done, (2) run and record the first weak `aegis_v1` demo capture (T3.5) before improving the prompt, and (3) wire live Phoenix MCP trace retrieval into `phoenix_mcp_lookup` for T4.1.
 
 **Two parallel paths for next session:**
 
