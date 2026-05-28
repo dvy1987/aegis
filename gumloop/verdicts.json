@@ -1,0 +1,40 @@
+[
+  {
+    "case_id": "case_01_aetna_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "DISCARD",
+    "reason": "Tell Detector hard gate returned FAIL due to an unprompted meta-explanation of procedural rationale and suspiciously structured clinical vignette hallmarks characteristic of LLM-generated text.",
+    "suggested_revisions": [],
+    "critic_verdicts": {
+      "clinical_critic": {
+        "score": 5,
+        "justification": "Every clinical element is medically coherent: severe OCD (F42.2) is an FDA-cleared TMS indication, fluvoxamine and clomipramine represent two genuinely distinct pharmacological classes (SSRI and TCA), Y-BOCS scores of 28-31 confirm objective severity, the step-therapy documentation requirement under Aetna CPB 0469 is a real policy criterion, and the pivot from a clinical deficiency claim to a procedural administrative closure via an expired 5-business-day peer-to-peer window is a textbook, infuriatingly common real-world denial tactic."
+      },
+      "tone_critic": {
+        "score": 5,
+        "justification": "The letter is a masterclass in bureaucratic deflection — it buries the real reason for denial (a provider's missed 5-day administrative deadline) under layers of policy bulletin citations and procedural language, uses classic boilerplate openers and closers, references CPB 0469 and MCG guidelines without any plain-language explanation, and leaves the patient with no actionable clarity on whether they were denied on clinical or purely procedural grounds — the very definition of cold, sterile, and liability-averse denial writing."
+      },
+      "tell_detector": {
+        "verdict": "FAIL",
+        "justification": "The denial letter contains a defining LLM tell: it unprompted explains the rationale behind its own procedural rule ('This timeframe ensures the timely processing of authorization requests while allowing providers to supply missing clinical context verbally'), something a real legacy insurance template or human bureaucrat would never do; additionally, the clinical context reads as a flawlessly structured case vignette that hits every required criterion (two named drug classes, twelve-week durations, specific Y-BOCS scores, ERP therapy) in a suspiciously logical sequence, and the phrase 'next therapeutic step' is a hallmark LLM medical-writing construction."
+      },
+      "financial_auditor": {
+        "score": 5,
+        "justification": "The letter correctly omits financial liability language appropriate for a pre-service prior auth denial, cites a real and verifiable Aetna CPB (0469) for TMS, uses a plausible ICD-10 code (F42.2) for OCD, accurately reflects real clinical step-therapy criteria (two failed medication classes), and follows standard commercial plan billing mechanics throughout."
+      },
+      "legal_auditor": {
+        "score": 3,
+        "justification": "The letter correctly states the 180-day appeal window, but critically omits several mandatory ERISA disclosures — specifically the right to request free copies of plan documents and the clinical criteria used (29 CFR 2560.503-1(g)(1)(vii)(B)), the right to bring a civil action under ERISA Section 502(a), and the right to an external independent review under ACA/ERISA regulations — and notably fails to reference MHPAEA parity protections despite denying a mental health treatment, making it partially realistic but too legally sparse to have passed through a real Aetna compliance review."
+      },
+      "contradiction_hunter": {
+        "verdict": "PASS",
+        "justification": "The denial letter correctly identifies the exact procedure (TMS) and diagnosis (Severe OCD, F42.2) requested in the clinical context, invents no contradictory clinical facts, and denies on internally consistent procedural technicalities — insufficient documentation of medication failures and a missed peer-to-peer review deadline — rather than hallucinating a different case premise."
+      },
+      "demographic_validator": {
+        "score": 5,
+        "justification": "A 32-year-old female with severe OCD is epidemiologically unremarkable — OCD onset typically occurs in late adolescence to early adulthood, women represent a substantial portion of adult OCD diagnoses, and TMS is an FDA-cleared intervention for treatment-resistant OCD, making this age/gender/diagnosis/treatment combination entirely statistically plausible."
+      }
+    },
+    "evaluated_at": "2026-05-28T02:03:00Z"
+  }
+]
