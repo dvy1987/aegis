@@ -1,8 +1,13 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "description": "Real-world insurer denial patterns sourced from published research. Used by p4_realistic_flaw_injector to embed exploitable flaws into synthetic denial letters. Each pattern maps to one or more appeal vectors that the Aegis agent must discover.",
   "patterns": [
+
+    // ─── CATEGORY 1: Procedural & Disclosure Violations ───────────────────────
+
     {
       "id": "step_therapy_vague_mcg",
+      "category": "procedural_disclosure",
       "description": "Insurer cites MCG guidelines without naming the specific edition or module",
       "source": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
       "insurer_affinity": ["Cigna", "UHC"],
@@ -11,6 +16,7 @@
     },
     {
       "id": "missing_erisa_disclosures",
+      "category": "procedural_disclosure",
       "description": "Denial letter omits some or all legally required ERISA disclosure rights",
       "source": "DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
       "insurer_affinity": ["Aetna", "Cigna"],
@@ -18,7 +24,47 @@
       "appeal_vector": "Procedural violation under 29 U.S.C. § 1133"
     },
     {
+      "id": "missing_cost_liability",
+      "category": "procedural_disclosure",
+      "description": "Denial fails to state clearly whether the patient is financially liable if they proceed with the treatment.",
+      "source": "No Surprises Act Compliance Audit 2024",
+      "insurer_affinity": ["Cigna"],
+      "realistic_flaws": ["missing financial liability details", "vague cost warnings"],
+      "appeal_vector": "Use as leverage if treatment was already rendered; argue patient wasn't properly informed of liability."
+    },
+    {
+      "id": "missing_iro_notice",
+      "category": "procedural_disclosure",
+      "description": "Denial letter omits the right to independent external review (IRO), which is legally required under ACA for non-grandfathered plans.",
+      "source": "CMS External Appeal Regulations 45 CFR § 147.136; ACA § 2719",
+      "insurer_affinity": ["Aetna", "UHC", "Cigna"],
+      "realistic_flaws": ["no mention of IRO process", "only internal appeal described"],
+      "appeal_vector": "Procedural defect — insurer must re-issue denial with proper IRO notice, effectively restarting the appeal clock."
+    },
+    {
+      "id": "timeline_violation",
+      "category": "procedural_disclosure",
+      "description": "Denial issued past the regulatory deadline — 72 hours for urgent/concurrent care, 30 days for standard pre-service.",
+      "source": "DOL ERISA Claims Procedure Regulations 29 CFR § 2560.503-1; documented in UHC state AG complaints 2022–2024",
+      "insurer_affinity": ["UHC"],
+      "realistic_flaws": ["denial dated after regulatory window", "no documentation of tolling"],
+      "appeal_vector": "Procedural deemed-denial: if insurer missed deadline, the claim may be treated as approved by operation of law."
+    },
+    {
+      "id": "wrong_appeals_contact",
+      "category": "procedural_disclosure",
+      "description": "Denial letter lists incorrect or outdated appeals department address, fax, or portal, making timely appeal submission harder.",
+      "source": "State Insurance Commissioner complaint logs (CA, NY, TX) 2023",
+      "insurer_affinity": ["Cigna", "Aetna"],
+      "realistic_flaws": ["outdated appeals PO Box", "wrong fax number for appeals submission"],
+      "appeal_vector": "If appeal was submitted to the listed address and rejected as 'wrong department', use the defective notice as grounds to extend the appeal deadline."
+    },
+
+    // ─── CATEGORY 2: Clinical Reasoning Failures ──────────────────────────────
+
+    {
       "id": "circular_medical_necessity",
+      "category": "clinical_reasoning",
       "description": "Denial states 'not medically necessary' because it 'does not meet criteria for medical necessity', offering no clinical specifics.",
       "source": "ProPublica 'Uncovered' Series 2023",
       "insurer_affinity": ["UHC"],
@@ -27,6 +73,7 @@
     },
     {
       "id": "incorrect_demographic_guideline",
+      "category": "clinical_reasoning",
       "description": "Applies a guideline meant for adults to a pediatric case, or vice versa.",
       "source": "Commonwealth Fund 2023 Review of Prior Auth Denials",
       "insurer_affinity": ["Aetna", "Cigna", "UHC"],
@@ -34,20 +81,130 @@
       "appeal_vector": "Cite peer-reviewed evidence that the insurer's cited guideline is inapplicable to this patient's age group."
     },
     {
-      "id": "missing_cost_liability",
-      "description": "Denial fails to state clearly whether the patient is financially liable if they proceed with the treatment.",
-      "source": "No Surprises Act Compliance Audit 2024",
-      "insurer_affinity": ["Cigna"],
-      "realistic_flaws": ["missing financial liability details", "vague cost warnings"],
-      "appeal_vector": "Use as leverage if treatment was already rendered; argue patient wasn't properly informed of liability."
-    },
-    {
       "id": "ignored_physician_letter",
+      "category": "clinical_reasoning",
       "description": "Denial template completely ignores the letter of medical necessity previously submitted by the physician.",
       "source": "AMA 2023 Prior Authorization Physician Survey",
       "insurer_affinity": ["UHC", "Aetna"],
       "realistic_flaws": ["boilerplate ignores prior auth context", "makes no reference to submitted evidence"],
       "appeal_vector": "Point out the ignored evidence; demand a peer-to-peer review since the initial reviewer clearly didn't read the file."
+    },
+    {
+      "id": "superseded_guideline",
+      "category": "clinical_reasoning",
+      "description": "Insurer cites a clinical guideline or coverage policy that has since been withdrawn, superseded, or updated to support coverage.",
+      "source": "AHIP 2022 Coverage Policy Review; documented in multiple Cigna litigation cases 2021–2023",
+      "insurer_affinity": ["Cigna", "Aetna"],
+      "realistic_flaws": ["cites outdated InterQual version", "references withdrawn MCG module"],
+      "appeal_vector": "Produce the current version of the cited guideline to show it now supports coverage; argue insurer's medical policy is out of date."
+    },
+    {
+      "id": "contraindication_to_step_therapy",
+      "category": "clinical_reasoning",
+      "description": "Insurer demands the patient try a first-line alternative that the patient's records document as contraindicated or previously failed.",
+      "source": "AMA 2023 Prior Authorization Physician Survey; State step-therapy exception laws (NY, TX, IL)",
+      "insurer_affinity": ["UHC", "Cigna"],
+      "realistic_flaws": ["demands step therapy despite documented allergy or adverse reaction in chart", "ignores prior treatment failure"],
+      "appeal_vector": "Cite documented contraindication or prior failure directly from clinical notes; invoke state step-therapy exception law if applicable."
+    },
+    {
+      "id": "non_specialist_reviewer",
+      "category": "clinical_reasoning",
+      "description": "The denial was issued by a reviewer who is not board-certified in the relevant specialty — particularly common and legally significant in behavioral health under MHPAEA.",
+      "source": "MHPAEA Final Rule 2024 (29 CFR § 2590.712); Cal. Health & Safety Code § 1374.72",
+      "insurer_affinity": ["Aetna", "UHC"],
+      "realistic_flaws": ["reviewer credential not listed", "MD specialty not matching clinical area"],
+      "appeal_vector": "Request the reviewer's credentials and specialty; if non-matching, the denial review was procedurally defective and must be repeated by a qualified specialist."
+    },
+
+    // ─── CATEGORY 3: MHPAEA / Mental Health Parity Violations ────────────────
+
+    {
+      "id": "mhpaea_visit_limit_asymmetry",
+      "category": "mhpaea_parity",
+      "description": "Insurer applies a stricter annual visit limit to mental health/SUD treatment than to comparable medical or surgical benefits.",
+      "source": "MHPAEA Final Rule 2024; KFF 2023 Mental Health Parity Enforcement Report",
+      "insurer_affinity": ["Aetna", "Cigna", "UHC"],
+      "realistic_flaws": ["caps behavioral health at 30 visits/year while no cap exists for comparable medical benefit", "visit limit not disclosed in plain language"],
+      "appeal_vector": "Document the asymmetry by identifying the analogous medical/surgical benefit with no visit cap; cite MHPAEA's quantitative treatment limitation (QTL) parity requirement."
+    },
+    {
+      "id": "mhpaea_step_therapy_asymmetry",
+      "category": "mhpaea_parity",
+      "description": "Insurer requires fail-first step therapy for a behavioral health treatment but does not impose equivalent step therapy requirements for a comparable medical/surgical condition.",
+      "source": "MHPAEA Final Rule 2024; DOL MHPAEA Self-Compliance Tool 2023",
+      "insurer_affinity": ["Cigna", "UHC"],
+      "realistic_flaws": ["demands 6-month outpatient trial before IOP approval", "no analogous requirement exists for medical inpatient step-down"],
+      "appeal_vector": "Invoke MHPAEA non-quantitative treatment limitation (NQTL) parity: if insurer cannot show an analogous step-therapy requirement for medical/surgical benefits, the restriction is unlawful."
+    },
+    {
+      "id": "mhpaea_level_of_care_asymmetry",
+      "category": "mhpaea_parity",
+      "description": "Insurer uses more restrictive level-of-care criteria to approve psychiatric inpatient or IOP admission than it uses for medically comparable inpatient or partial hospitalization.",
+      "source": "MHPAEA Final Rule 2024; Wit v. United Behavioral Health (9th Cir. 2023)",
+      "insurer_affinity": ["UHC"],
+      "realistic_flaws": ["applies UBH Level of Care Guidelines instead of generally accepted clinical standards", "uses proprietary criteria more restrictive than APA/ASAM"],
+      "appeal_vector": "Cite Wit v. UBH and the MHPAEA Final Rule: insurer must use generally accepted standards of care (APA, ASAM), not internally developed criteria that are more restrictive."
+    },
+
+    // ─── CATEGORY 4: Coverage Interpretation Abuse ────────────────────────────
+
+    {
+      "id": "experimental_despite_fda_approval",
+      "category": "coverage_interpretation",
+      "description": "Insurer labels a treatment 'experimental or investigational' using an outdated coverage policy that predates the relevant FDA approval or updated NCCN/AHA guideline.",
+      "source": "ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis",
+      "insurer_affinity": ["Cigna", "Aetna"],
+      "realistic_flaws": ["coverage policy last reviewed 2+ years ago", "FDA approval or NCCN Category 1 designation not reflected"],
+      "appeal_vector": "Produce the current FDA label or NCCN guideline showing Category 1 evidence; demonstrate insurer's coverage policy is stale and its own stated review cycle has lapsed."
+    },
+    {
+      "id": "wrong_benefit_category",
+      "category": "coverage_interpretation",
+      "description": "Service is placed in the wrong benefit category — e.g., speech therapy for a stroke survivor coded as 'habilitative' (excluded) rather than 'rehabilitative' (covered).",
+      "source": "CMS Essential Health Benefits Bulletin 2022; documented in Aetna member complaints",
+      "insurer_affinity": ["Aetna", "UHC"],
+      "realistic_flaws": ["habilitative vs rehabilitative miscategorisation", "benefit category determination not explained"],
+      "appeal_vector": "Cite the clinical definition of rehabilitation (restoring lost function) vs. habilitation (developing new function); provide physician letter confirming the correct classification."
+    },
+    {
+      "id": "plan_exclusion_overrides_state_mandate",
+      "category": "coverage_interpretation",
+      "description": "Denial invokes a plan exclusion that conflicts with a binding state insurance mandate (e.g., state mandated mental health coverage, infertility, or autism ABA therapy).",
+      "source": "NCSL State Health Insurance Mandates Database 2024; documented in CA, NJ, IL enforcement actions",
+      "insurer_affinity": ["Cigna", "Aetna"],
+      "realistic_flaws": ["cites plan exclusion without checking state mandate applicability", "applies self-funded plan logic to a fully-insured state-regulated plan"],
+      "appeal_vector": "Identify the applicable state mandate and confirm the plan is fully-insured (not ERISA self-funded); state mandates preempt conflicting plan exclusions for fully-insured plans."
+    },
+
+    // ─── CATEGORY 5: Process & Timing Manipulation ────────────────────────────
+
+    {
+      "id": "unreasonable_documentation_deadline",
+      "category": "process_timing",
+      "description": "Insurer requests additional clinical documentation but gives an unreasonably short response window (e.g., 48 hours) with no extension option, effectively manufacturing a denial.",
+      "source": "DOL ERISA Claims Procedure Regulations 29 CFR § 2560.503-1(g); AMA 2023 Prior Authorization Survey",
+      "insurer_affinity": ["Cigna", "UHC"],
+      "realistic_flaws": ["48-hour doc request with no extension language", "request sent to provider portal with no fax/phone backup"],
+      "appeal_vector": "Argue the documentation request was procedurally defective; a 48-hour window is not a 'reasonable' opportunity to submit information under ERISA regulations."
+    },
+    {
+      "id": "appeal_closed_as_withdrawn",
+      "category": "process_timing",
+      "description": "Insurer closes an active appeal as 'member withdrawn' without documentation that the member ever withdrew, effectively ending the appeal clock.",
+      "source": "State Insurance Commissioner complaint logs (CA DOI 2022, NY DFS 2023)",
+      "insurer_affinity": ["UHC", "Aetna"],
+      "realistic_flaws": ["closure letter cites withdrawal not requested by member", "no written withdrawal confirmation on file"],
+      "appeal_vector": "Demand the insurer produce written evidence of withdrawal; if none exists, the appeal was wrongly closed and the clock must be restarted."
+    },
+    {
+      "id": "peer_to_peer_window_verbal_only",
+      "category": "process_timing",
+      "description": "Insurer communicates the peer-to-peer review window verbally (by phone to office staff) but does not confirm in writing, making it impossible for the physician to verify or dispute the window.",
+      "source": "AMA 2023 Prior Authorization Physician Survey; documented in multiple state PA reform laws (TX HB 2002, VA SB 1272)",
+      "insurer_affinity": ["Cigna", "UHC"],
+      "realistic_flaws": ["no written P2P window confirmation", "window communicated to staff not treating physician"],
+      "appeal_vector": "Argue the peer-to-peer opportunity was not meaningfully provided; request a new P2P window in writing and cite the applicable state PA reform statute if available."
     }
   ]
 }
