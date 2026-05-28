@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "patterns": [
+    {
+      "id": "step_therapy_vague_mcg",
+      "description": "Insurer cites MCG guidelines without naming the specific edition or module",
+      "source": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "insurer_affinity": ["Cigna", "UHC"],
+      "realistic_flaws": ["vague guideline citation", "no specific edition number"],
+      "appeal_vector": "Request the specific criteria used; insurer often cannot produce them"
+    },
+    {
+      "id": "missing_erisa_disclosures",
+      "description": "Denial letter omits some or all legally required ERISA disclosure rights",
+      "source": "DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
+      "insurer_affinity": ["Aetna", "Cigna"],
+      "realistic_flaws": ["missing external review right", "missing civil action right"],
+      "appeal_vector": "Procedural violation under 29 U.S.C. § 1133"
+    },
+    {
+      "id": "circular_medical_necessity",
+      "description": "Denial states 'not medically necessary' because it 'does not meet criteria for medical necessity', offering no clinical specifics.",
+      "source": "ProPublica 'Uncovered' Series 2023",
+      "insurer_affinity": ["UHC"],
+      "realistic_flaws": ["circular reasoning", "no specific clinical thresholds cited"],
+      "appeal_vector": "Highlight lack of specific clinical rationale; force disclosure of the actual threshold."
+    },
+    {
+      "id": "incorrect_demographic_guideline",
+      "description": "Applies a guideline meant for adults to a pediatric case, or vice versa.",
+      "source": "Commonwealth Fund 2023 Review of Prior Auth Denials",
+      "insurer_affinity": ["Aetna", "Cigna", "UHC"],
+      "realistic_flaws": ["wrong age band for guideline", "inflexible template logic"],
+      "appeal_vector": "Cite peer-reviewed evidence that the insurer's cited guideline is inapplicable to this patient's age group."
+    },
+    {
+      "id": "missing_cost_liability",
+      "description": "Denial fails to state clearly whether the patient is financially liable if they proceed with the treatment.",
+      "source": "No Surprises Act Compliance Audit 2024",
+      "insurer_affinity": ["Cigna"],
+      "realistic_flaws": ["missing financial liability details", "vague cost warnings"],
+      "appeal_vector": "Use as leverage if treatment was already rendered; argue patient wasn't properly informed of liability."
+    },
+    {
+      "id": "ignored_physician_letter",
+      "description": "Denial template completely ignores the letter of medical necessity previously submitted by the physician.",
+      "source": "AMA 2023 Prior Authorization Physician Survey",
+      "insurer_affinity": ["UHC", "Aetna"],
+      "realistic_flaws": ["boilerplate ignores prior auth context", "makes no reference to submitted evidence"],
+      "appeal_vector": "Point out the ignored evidence; demand a peer-to-peer review since the initial reviewer clearly didn't read the file."
+    }
+  ]
+}

@@ -14,6 +14,7 @@ MATRIX_PATH = EVAL_DIR / "diversity_matrix.json"
 BANNED_PATH = EVAL_DIR / "banned_topics.json"
 
 DEFAULT_MODEL = os.environ.get("AEGIS_CASEGEN_MODEL", "gemini-3.1-pro-preview")
+CRITIC_MODEL = os.environ.get("AEGIS_CASEGEN_CRITIC_MODEL", "gemini-3.1-pro-preview") # Ideally should be non-Gemini to prevent self-enhancement bias
 
 
 @lru_cache(maxsize=1)

@@ -1,0 +1,57 @@
+You are an AppealDifficulty evaluator for synthetic insurance denial cases.
+
+DIMENSION: How likely is a well-crafted appeal to succeed against this denial?
+
+EVALUATION CRITERIA — assess each of these:
+- Exploitable procedural weaknesses: Missing ERISA disclosures, wrong appeal window, omitted rights.
+- Exploitable clinical weaknesses: Vague criteria, misapplied guidelines, circular reasoning.
+- Exploitable factual weaknesses: Wrong guideline cited, inapplicable sub-tactic logic.
+- Strong defenses: Correctly applied guideline, clear clinical threshold, well-documented criteria.
+
+EDGE CASES:
+- If the denial uses circular logic but the clinical context shows the patient clearly does NOT meet standard of care, it's still hard to appeal clinically -> score 2 or 3.
+- If procedural errors exist (e.g. missing ERISA) but the clinical denial is rock solid, the appeal has a procedural vector but a weak clinical one -> score 3 or 4.
+
+BIAS GUARDS:
+- Length does not equal quality.
+- Confident tone does not mean accurate content.
+- Do not reward complexity for its own sake.
+
+---
+INPUT:
+Denial Letter:
+{denial_letter_text}
+
+Clinical Context:
+{clinical_context}
+
+---
+ANALYSIS INSTRUCTION:
+Write your critical analysis first. Quote specific evidence from the input.
+Identify both strengths and weaknesses before reaching any conclusion. List exploitable weaknesses and strong defenses.
+
+---
+SCORING RUBRIC (apply AFTER your analysis):
+5 — Strong appeal case (easy to appeal). Has major procedural violations, circular logic, or the patient clearly meets the standard of care which was ignored.
+3 — Medium. Guideline exists but application is arguable, some documentation gaps exist.
+1 — Nearly impossible to appeal. Guideline is correctly applied, patient genuinely hasn't met criteria, strong clinical threshold.
+
+CONFIDENCE BANDS:
+0.9-1.0: Clear evidence, unambiguous
+0.6-0.8: Evidence present, interpretation needed
+0.3-0.5: Ambiguous or edge case
+<0.3: Cannot reliably score — flag for human review
+
+OUTPUT — exact JSON (no markdown):
+{{
+  "dimension": "appeal_difficulty",
+  "reasoning": "<your critical analysis, 50-200 words, MUST come before score>",
+  "score": <1, 3, or 5>,
+  "confidence": <0.0-1.0>,
+  "exploitable_weaknesses": ["<weakness 1>", "<weakness 2>"],
+  "strong_defenses": ["<defense 1>"],
+  "evidence_quotes": ["<exact quotes>"],
+  "improvement": null
+}}
+
+Score ONLY appeal_difficulty. Do not bleed into other concerns.

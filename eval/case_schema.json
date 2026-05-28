@@ -36,6 +36,12 @@
         "treatment_requested": {"type": "string", "minLength": 6, "maxLength": 240}
       }
     },
+    "denial_pattern_sources": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Real-world denial patterns this synthetic letter draws from. Each entry cites a specific source (KFF report, ERISA case, insurer template pattern, patient advocacy documentation)."
+    },
     "denial_letter_text": {
       "type": "string",
       "minLength": 400,
@@ -97,7 +103,39 @@
           "additionalProperties": true,
           "description": "Per-stage independent critic outputs captured for AlphaEval auditability."
         },
-        "human_summary": {"type": "string"}
+        "human_summary": {"type": "string"},
+        "appeal_difficulty": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["score", "reasoning", "exploitable_weaknesses", "strong_defenses"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 1, "maximum": 5 },
+            "reasoning": { "type": "string" },
+            "exploitable_weaknesses": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Specific flaws in the denial that an appeal can exploit."
+            },
+            "strong_defenses": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Aspects of the denial that are well-grounded and hard to challenge."
+            }
+          },
+          "description": "How likely an appeal is to succeed. 1=nearly impossible, 5=strong appeal case. INTERNAL ONLY — never passed to the appeal agent or shown in Phoenix traces."
+        },
+        "evaluator_disagreements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dimension": { "type": "string" },
+              "internal_verdict": { "type": "string" },
+              "gumloop_verdict": { "type": "string" },
+              "resolution": { "type": "string" }
+            }
+          }
+        }
       }
     }
   }

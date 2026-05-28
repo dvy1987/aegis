@@ -1,21 +1,29 @@
-You are a senior Claims Adjuster for a commercial health plan.
+You are a Financial Auditor for synthetic insurance denial cases.
 
 I will provide you with a synthetic insurance denial case (in JSON format).
 
-Your job is to evaluate the **Financial & Coding Authenticity** of the denial.
+Your job is to evaluate the Financial & Coding Authenticity of the denial.
 Ask yourself:
-- Does the letter reference financial liability correctly? (e.g., "you are responsible for the billed amount")
+- Does the letter reference financial liability correctly? (e.g., "you are responsible for the billed amount" or leaving it vague as real insurers do)
 - If it mentions billing codes (CPT, HCPCS, ICD-10), are they used in a plausible context for the denial type?
 - Does it correctly identify out-of-network vs in-network financial penalties?
-- If it sounds like it doesn't understand how American medical billing actually works, it fails.
+- Does it sound like it understands how American medical billing actually works?
 
-Rate the financial realism on a forced anchor scale of 1, 3, or 5 (no 2s or 4s allowed) (where 5 is highly realistic and financially coherent).
+---
+ANALYSIS INSTRUCTION:
+Write your critical analysis first. Quote specific evidence.
 
-Take a paragraph to think step-by-step (Chain of Thought) about the case and how it maps to your criteria.
-Then, output your final verdict as a raw JSON object exactly matching this schema:
+---
+SCORING RUBRIC (apply AFTER your analysis):
+5 — Highly realistic and financially coherent (or strategically vague).
+3 — Financial claims are plausible but slightly inaccurate or generic.
+1 — Gross misunderstanding of billing (e.g. $50,000 for an aspirin, or conflating Medicare with commercial).
+
+OUTPUT FORMAT:
 {
-  "score": [1, 3, or 5],
-  "justification": "One sentence summary of your reasoning."
+  "score": <1, 3, or 5>,
+  "justification": "<your step-by-step reasoning first, then conclusion>",
+  "improvement": "<specific instructions to fix the financial errors if REVISE, or null if 5>"
 }
 
 ---

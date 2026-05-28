@@ -867,3 +867,47 @@ Estimated total effort 3–4 hours; full breakdown in the plan doc.
 - New: `backend/app/aegis_v1/{__init__,schemas,tools,pipeline}.py`
 - New: `backend/tests/unit/agent/test_aegis_v1_{tools,agent}.py`
 - Modified: `backend/app/agent.py`, backend integration test prompts, `docs/plans/2026-05-27-aegis-implementation-tasks.md`, memory docs, skill-output ledger.
+
+---
+
+## 2026-05-28 - Session 13 Handoff (Antigravity)
+
+### Done
+- Analyzed the gap between the generation pipeline critics and AlphaEval.
+- Addressed user feedback regarding "realism" and "appeal difficulty" separation:
+  - Created `eval/denial_patterns.json` as a realistic corpus of real-world insurer flaws.
+  - Implemented schema `denial_pattern_sources`, `appeal_difficulty`, and `evaluator_disagreements`.
+  - Recalibrated the case generator pipeline: Added `RealisticFlawInjector` and refactored critics for AlphaEval compliance.
+  - Overhauled 16-agent Gumloop swarm (Tier 1 Hard Gates + Tier 2 Realism/Logical Critics + Meta-Evaluators).
+  - Updated all Gumloop prompts to use `Analysis-First` structure (critical evaluation before scoring) and output specific `improvement` instructions for `REVISE` cases instead of immediate `DISCARD`.
+- Rewrote `gumloop/architecture.md` to document the new wiring and Tiered Arbiter logic.
+- Resolved the missing file issue by writing all created configuration and prompt files to disk.
+
+### Debated
+- User questioned whether "foolproof" synthetic denial letters contradict the thesis that real denial letters are shoddy and illogical.
+- Decided to explicitly inject "authentic shoddiness" to mimic real letters, separating realism from appeal difficulty.
+
+### Decisions
+- The `Appeal Difficulty` score and `Realism` evaluations are split into separate evaluators.
+- The `Appeal Difficulty` score is hidden from Phoenix traces and the appeal agent.
+- Evaluators must perform critical analysis *before* scoring to prevent anchoring bias.
+- Gumloop should only `DISCARD` if the case is unsalvageable; otherwise, it must `REVISE` with clear paths to improvement.
+
+### Deferred
+- **Execute Generation Trial:** The generation trial failed locally due to a missing `GEMINI_API_KEY`. The next agent must ensure the environment is configured and then run the generation to verify the "authentic shoddiness" of the synthetic denials.
+- **Validate Difficulty Distribution:** Once 12 cases are generated, verify the difficulty split (3-4 Easy, 5-6 Medium, 2-3 Hard) as planned in Phase 5.
+
+### Next Agent Should Know
+- The generation pipeline is ready. Ensure `GEMINI_API_KEY` (or Vertex AI ADC equivalents) is exported in the environment.
+- Run the command: `uv run python -m app.case_generator.cli --count 12 --split test`.
+- Verify the resulting JSON files contain `synthetic_provenance` and `denial_pattern_sources`.
+- Re-read `gumloop/architecture.md` to understand how to wire the Gumloop swarm (local to the repo).
+
+### Revisit Triggers
+- If the case generation discard rate is still high, adjust the strictness of the realistic flaws or evaluators.
+- If the distribution of case difficulties doesn't meet the target spread (Easy/Medium/Hard).
+
+### Working Tree
+- New: `eval/denial_patterns.json`
+- New: Artifacts (`alphaeval-gaps.md`, `gumloop-audit.md`, `gumloop-redesign.md`, `realistic-denial-pipeline-plan.md`)
+- Modified: `backend/app/case_generator/prompts/` (overhauled critics), `gumloop/prompts/` (17 rewritten prompts), `gumloop/architecture.md`, `eval/case_schema.json`, `backend/app/case_generator/models.py`.

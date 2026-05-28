@@ -86,6 +86,15 @@
 - Local smoke produced structured `AppealPackage`: Cigna med-necessity, 3 corpus citations, self-check PASS, simulator score 9/10 -> DENY. This preserves the planned weak-v1 demo arc.
 - Verification: `pytest tests/unit` -> 8 passed; ADK canonical tools resolve to 7 `FunctionTool`s. Ruff could not run because it is not installed in the backend venv.
 
+### Session 13 (Realistic Imperfection & AlphaEval Gap Fixes)
+- ✅ Overhauled architecture to support "Realistic Imperfection" for generated synthetic denial cases.
+- ✅ Implemented schema `denial_pattern_sources`, `appeal_difficulty`, and `evaluator_disagreements`.
+- ✅ Created `eval/denial_patterns.json` as the source-of-truth corpus for real-world insurer flaws.
+- ✅ Recalibrated generator pipeline (`RealisticFlawInjector` added, critics refactored for AlphaEval compliance).
+- ✅ Built out 16-agent Gumloop swarm (Tier 1 Hard Gates + Tier 2 Realism/Logical Critics + Meta-Evaluators).
+- ✅ Rewrote `gumloop/architecture.md` to document the new multi-tier architecture.
+- ⏸️ Generation trial paused due to missing `GEMINI_API_KEY`.
+
 ## What's blocked
 - **Arize Cloud Auth** — A4 MCP connection works, but Arize auth (`PHOENIX_CLIENT_HEADERS` or API key permissions) blocks actual trace retrieval from the MCP server. Workaround: direct Phoenix SDK calls work; MCP is functional for ADK tool integration (T2.1 proved this with 20/20 successes).
 

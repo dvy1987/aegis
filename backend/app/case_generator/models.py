@@ -25,6 +25,18 @@ class PatientProfile(BaseModel):
     treatment_requested: str
 
 
+class AppealDifficulty(BaseModel):
+    score: int = Field(ge=1, le=5)
+    reasoning: str
+    exploitable_weaknesses: list[str]
+    strong_defenses: list[str]
+
+class EvaluatorDisagreement(BaseModel):
+    dimension: str
+    internal_verdict: str
+    gumloop_verdict: str
+    resolution: str
+
 class SynthProvenance(BaseModel):
     generator_model: str
     run_id: str
@@ -36,6 +48,8 @@ class SynthProvenance(BaseModel):
     diversity_matrix_version: str
     critic_verdicts: dict[str, Any]
     human_summary: str
+    appeal_difficulty: AppealDifficulty
+    evaluator_disagreements: list[EvaluatorDisagreement] = Field(default_factory=list)
 
 
 class CaseDraft(BaseModel):
@@ -43,6 +57,7 @@ class CaseDraft(BaseModel):
     insurer: Literal["Aetna", "Cigna", "UHC"]
     denial_type: Literal["Medical Necessity", "Prior Authorization"]
     patient_profile: PatientProfile
+    denial_pattern_sources: list[str] = Field(default_factory=list)
     denial_letter_text: str
     clinical_context: str
     synthetic_provenance: SynthProvenance

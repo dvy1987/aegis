@@ -85,16 +85,15 @@ def run_clinical_writer(
     return _generate_json(prompt, model=model, temperature=0.8)
 
 
-def run_adversarial_diversifier(
+def run_realistic_flaw_injector(
     assembled_case: dict[str, Any],
-    neighbour_summaries: str,
+    intended_flaw_types: list[str],
     *,
     model: str | None = None,
 ) -> dict[str, Any]:
-    prompt = load_prompt("p4_adversarial_diversifier").format(
+    prompt = load_prompt("p4_realistic_flaw_injector").format(
         assembled_case_json=json.dumps(assembled_case, indent=2),
-        neighbour_summaries=neighbour_summaries
-        or "(this is the first case in the run)",
+        intended_flaw_types=json.dumps(intended_flaw_types, indent=2),
     )
     return _generate_json(prompt, model=model, temperature=0.85)
 
@@ -296,4 +295,14 @@ def critic_citation_traceability(denial_letter_text: str) -> dict[str, Any]:
     return _run_critic(
         "c_citation_traceability",
         denial_letter_text=denial_letter_text,
+    )
+
+
+def critic_appeal_difficulty(
+    denial_letter_text: str, clinical_context: str
+) -> dict[str, Any]:
+    return _run_critic(
+        "c_appeal_difficulty",
+        denial_letter_text=denial_letter_text,
+        clinical_context=clinical_context,
     )

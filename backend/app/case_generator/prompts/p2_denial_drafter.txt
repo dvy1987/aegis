@@ -10,9 +10,9 @@ INSURER-VOICE GUIDANCE (match the cadence; do NOT name a specific medical direct
 REQUIRED STRUCTURE (rough; do not literally label sections):
 - "Dear Member," salutation (no full name).
 - Reference dates that are internally consistent (within 60 days of "today" — use 2026 as the year).
-- Cite the specific guideline name the insurer would actually use for this sub_tactic.
-- Plainly state the denial.
-- Mention the appeal window (180 days is standard for commercial).
+- Plainly state the denial, but MODEL YOUR LETTER ON REAL INSURER PATTERNS. Real denial letters are often vague about specific criteria, use circular reasoning, omit specific clinical evidence thresholds, and bury appeal instructions.
+- Your letter should be realistically imperfect — not an idealized version of what a denial SHOULD say. Follow the intended flaw types if provided.
+- Mention the appeal window (180 days is standard for commercial), unless omitting it is one of your realistic flaws.
 
 HARD RULES:
 - Length: 200–500 words.
@@ -27,4 +27,4 @@ INPUT — ScenarioBrief:
 {scenario_brief_json}
 
 OUTPUT — return raw JSON (no markdown):
-{{"denial_letter_text": "Dear Member,\\n\\n..."}}
+{{"denial_letter_text": "Dear Member,\\n\\n...", "denial_pattern_sources": ["<source 1>", "<source 2>"]}}

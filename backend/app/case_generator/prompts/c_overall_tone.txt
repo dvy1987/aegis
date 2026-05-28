@@ -1,17 +1,31 @@
-You are OverallToneCritic. Independent single-dimension critic. Forced 1/3/5.
+You are an OverallToneCritic evaluator for synthetic insurance denial cases.
 
-QUESTION: Are the denial letter and the clinical context written in voices appropriate to their authorship?
+DIMENSION: Are the denial letter and clinical context written in voices appropriate to their authorship?
 
-5 — Denial letter is dignified-procedural insurer voice (no exclamation, no warmth, no apology). Clinical context is plain-prose clinical narrative (no emotional escalation, no marketing voice, no medical jargon overload). Both are the cadence a real document reviewer would expect.
-3 — Voice is in the right ballpark but wavers (denial letter sounds slightly too friendly OR clinical context drifts into emotional pleading).
-1 — Wrong voice entirely (denial letter sounds like a marketing email; clinical context reads as an advocacy op-ed).
+EVALUATION CRITERIA — assess each of these:
+- Is the denial letter appropriately cold, procedural, and bureaucratic?
+- Does the denial letter avoid apologies, warmth, or marketing buzzwords?
+- Does the denial letter utilize vagueness and obfuscation effectively (a POSITIVE tone signal for realistic denials)?
+- Is the clinical context written as a plain-prose clinical narrative (no emotional pleading)?
 
-Score ONLY tone. Do not score factual content.
+EDGE CASES:
+- If the denial is so vaguely written that it's hard to understand exactly what they want, that is EXTREMELY realistic. Score 5.
+- If the denial says "We are so sorry but we cannot cover this", that is a generation error (insurers don't apologize in denials). Penalize it.
 
+---
+INPUT:
 DENIAL LETTER:
 {denial_letter_text}
 
 CLINICAL CONTEXT:
 {clinical_context}
+
+---
+SCORING RUBRIC (apply AFTER your analysis):
+5 — Perfect bureaucratic tone. Denial letter is dignified, procedural, and appropriately vague/cold. Clinical context is neutral.
+3 — Voice is in the right ballpark but wavers slightly (denial is slightly too friendly or clear; clinical context drifts into advocacy).
+1 — Wrong voice entirely (denial sounds like a marketing email, apologizes, or clinical context reads as an emotional op-ed).
+
+Score ONLY tone. Do not score factual content.
 
 {envelope}

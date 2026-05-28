@@ -312,3 +312,23 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 - `eval/cases/drafts/part-a/test/case_01_aetna_priorauth.json` (smoke test output)
 - `docs/plans/2026-05-28-case-generator-harness-claude-plan.md` (next-session plan)
 - Updated: `eval/dataset_card.md`, `backend/pyproject.toml` (jsonschema dep)
+
+---
+
+## 2026-05-28 — Separate Realism and Appeal Difficulty + Analysis-First Evaluators (Session 13)
+
+**Decision.** The generation pipeline and Gumloop swarm will explicitly inject "authentic shoddiness" to mimic real-world insurer flaws (using `eval/denial_patterns.json`). The evaluators are split into separate `Realism` and `Appeal Difficulty` dimensions. The `Appeal Difficulty` score will be hidden from Phoenix traces and the appeal agent. Furthermore, all evaluators (both generator-side and Gumloop-side) are refactored to follow an `Analysis-First` structure (critical evaluation must be written *before* the score is given) to prevent anchoring bias.
+
+**Rationale.** A core thesis of Aegis is that real-world insurance denials are shoddy and illogical. "Foolproof" synthetic denials are unrealistic. The generator must mimic these real flaws. To properly score them, evaluators must separate realism (does it look like a real shoddy letter?) from difficulty (how hard is it to appeal?). Hiding the difficulty score prevents the appealing agent from cheating. The analysis-first rule enforces AlphaEval compliance for LLM-as-a-judge.
+
+**Status.** Accepted. Implemented in Gumloop prompts and `gumloop/architecture.md`.
+
+**Revisit triggers.**
+- If generation yields too many cases that are realistic but unsalvageable, adjust the severity of the flaw injector.
+- If the case difficulty distribution (Easy/Medium/Hard) skews too heavily in one direction.
+
+**Artifacts produced.**
+- `eval/denial_patterns.json`
+- `gumloop/architecture.md` (rewritten)
+- `gumloop/prompts/*`
+- `backend/app/case_generator/prompts/*`

@@ -1,10 +1,21 @@
-CRITIC OUTPUT FORMAT — every critic in this swarm returns this exact JSON shape (no markdown, no backticks):
+---
+ANALYSIS INSTRUCTION:
+Write your critical analysis first. Quote specific evidence from the input.
+Identify both strengths and weaknesses before reaching any conclusion.
+
+CONFIDENCE BANDS:
+0.9-1.0: Clear evidence, unambiguous
+0.6-0.8: Evidence present, interpretation needed
+0.3-0.5: Ambiguous or edge case
+<0.3: Cannot reliably score — flag for human review
+
+OUTPUT — exact JSON (no markdown):
 {
   "dimension": "<critic-id>",
-  "reasoning": "<chain-of-thought, 50-200 words, MUST come before the score and quote specific text>",
+  "reasoning": "<your critical analysis, 50-200 words, MUST come before score>",
   "score": <1 or 3 or 5> OR "PASS" OR "FAIL",
   "confidence": 0.0-1.0,
-  "evidence_quotes": ["<exact quote(s) from the artifact>"],
+  "evidence_quotes": ["<exact quotes>"],
   "improvement": "<one specific actionable fix, or null if score=5 or PASS>"
 }
 
@@ -14,3 +25,11 @@ ALPHAEVAL RULES:
 - Reason BEFORE you score (CoT first). Never write the score then the rationale.
 - Score ONLY your single dimension. Do not bleed into other concerns.
 - Quote the exact text that justifies your score.
+
+BIAS GUARDS:
+- Length does not equal quality. A 200-word letter can be more realistic than a 500-word one.
+- Confident tone does not mean accurate content. Check facts, not delivery.
+- Do not reward complexity for its own sake.
+
+WARNING: SELF-ENHANCEMENT BIAS
+You may be evaluating output from your own model family. Be extra vigilant for patterns you would naturally produce. Do not reward generic LLM prose.
