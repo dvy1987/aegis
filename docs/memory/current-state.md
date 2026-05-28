@@ -1,7 +1,7 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-27 (Session 8 — close)
-**Phase:** **Execution — Phase 1.** Phase 0 setup complete. Backend scaffolded with `/health`. Frontend scaffolded with full design system. Dev launcher scripts finished. Vertex AI via ADC configured and verified.
+**Updated:** 2026-05-27 (Session 11 — combined close across 3 concurrent sessions)
+**Phase:** **Execution — Phase 1.** Phase 0 setup complete. Backend scaffolded with `/health`. Frontend scaffolded with full design system. Dev launcher scripts finished. Vertex AI via ADC configured and verified. Phoenix telemetry emitting traces. A4 gate PASSED. Case generator swarm built + smoke-tested. Gumloop evaluator architecture defined. Rolling demo capture plan established.
 
 ---
 
@@ -50,8 +50,37 @@
 - ✅ **`backend/WINDOWS_SETUP.md`** updated with ADC auth section and Vertex AI env vars.
 - ✅ **Full end-to-end verified** — `./scripts/dev.sh` starts both services, health check passes.
 
+### Session 9 (Dataset Generation & Eval Architecture - T2.4 Done)
+- ✅ **10 Train and 10 Test synthetic cases drafted** for MVP Part A (T2.4 done).
+- ✅ **Gumloop 8-agent case evaluation swarm designed** — prompts and architecture documented in `gumloop/`.
+- ✅ **Case dataset lifecycle restructured** into strict `drafts/` -> `approved/` folders.
+- ✅ **AlphaEval 2026 compliance enforced** — Gumloop & manual prompts updated to use strict 1/3/5 anchor scoring and binary hard gates for LLM Tells / Contradictions.
+- ✅ **Manual Evaluation Prompts created** for ChatGPT and Perplexity (Mega-Prompt spot-check mode) with JSON schema output.
+
+### Session 9 (Concurrent — Phoenix telemetry + A4 gate)
+- ✅ **T1.3 Phoenix telemetry wired** — traces actively appearing in Phoenix under project `aegis-hackathon` via `openinference-instrumentation-google-adk`.
+- ✅ **T1.4 A4 spike pt.1 complete** — MCP query successfully round-tripped and fetched trace data.
+- ✅ **T1.5 J1 conflict resolved** — Phoenix is primary; agents-cli observability skill skipped.
+- ✅ **T2.1 A4 spike pt.2 complete** — 20 MCP queries, 20/20 successes, p50=1.24s, p95=2.52s. **A4 GATE PASSED.** Phoenix MCP is a load-bearing dependency.
+- ✅ **A4 go/no-go decision logged** in `decision-log.md`.
+
+### Session 10 (Concurrent — Case Generator Swarm)
+- ✅ **`backend/app/case_generator/` swarm built** — 4 producers + 19 per-stage critics (16 LLM, 3 deterministic) + safety + schema validator + writer.
+- ✅ **21 versioned prompt templates** in `backend/app/case_generator/prompts/`.
+- ✅ **CLI** `uv run python -m app.case_generator.cli --count N --split {train|test} --seed N --start-index N --dry-run -v`.
+- ✅ **Smoke test** produced 1 valid case: `eval/cases/drafts/part-a/test/case_01_aetna_priorauth.json` (Aetna / Prior Auth / behavioral_health / missing_peer_to_peer / TMS for treatment-resistant OCD). All 19 critic verdicts captured in provenance.
+- ✅ **Configs externalised**: `eval/diversity_matrix.json`, `eval/banned_topics.json`, `eval/case_schema.json`.
+- ✅ **PM course corrections applied**: (1) Drafter+critic both Gemini — need different-family critics (G1: Claude-on-Vertex), (2) Harness Task tool can replace custom file-queue (G2: harness orchestration), (3) No Phoenix tracing needed for offline generation.
+- ✅ **Plan for next session**: `docs/plans/2026-05-28-case-generator-harness-claude-plan.md` — G1 (Claude-on-Vertex critic, highest priority), G2 (harness-Task path, optional), G3 (keep Vertex-Python path).
+
+### Session 11 (Demo Capture Planning + Combined Handoff)
+- ✅ **Rolling demo capture plan established** — `docs/demo/rolling-capture-checklist.md` with PM-friendly step-by-step instructions for each capture point.
+- ✅ **Implementation plan updated** with capture tasks at Days 3, 5, 7, 10, 14, 17.
+- ✅ **PM question answered**: Yes, the UX must show the simulator outcome (APPROVE/DENY) — per FR8 and FR10, this is a core demo element. The flip from DENY to APPROVE is one of the most compelling visual moments.
+- ✅ **Combined handoff** from 3 concurrent sessions written.
+
 ## What's blocked
-- **Arize Cloud Auth** — A4 spike succeeded connecting to MCP tool, but Arize auth (`PHOENIX_CLIENT_HEADERS` or API key permissions) blocks actual trace retrieval.
+- **Arize Cloud Auth** — A4 MCP connection works, but Arize auth (`PHOENIX_CLIENT_HEADERS` or API key permissions) blocks actual trace retrieval from the MCP server. Workaround: direct Phoenix SDK calls work; MCP is functional for ADK tool integration (T2.1 proved this with 20/20 successes).
 
 ## Active decisions (top items)
 - Codename: **Aegis**
@@ -99,9 +128,23 @@
 | Agent rules | [`AGENTS.md`](../../AGENTS.md) + `frontend/AGENTS.md` + `backend/AGENTS.md` |
 | Decision log | [`docs/memory/decision-log.md`](decision-log.md) |
 | TODO + handoff | [`docs/memory/agent-handoffs.md`](agent-handoffs.md) |
+| Demo capture checklist | [`docs/demo/rolling-capture-checklist.md`](../demo/rolling-capture-checklist.md) |
+| Phoenix shotlist (A2) | [`docs/demo/phoenix-shotlist.md`](../demo/phoenix-shotlist.md) |
+| Case generator plan (G1-G3) | [`docs/plans/2026-05-28-case-generator-harness-claude-plan.md`](../plans/2026-05-28-case-generator-harness-claude-plan.md) |
+| Gumloop evaluator architecture | [`gumloop/architecture.md`](../../gumloop/architecture.md) |
+| Gumloop evaluator prompts | [`gumloop/prompts/01-08_*.txt`](../../gumloop/prompts/) |
+| Case generator code | [`backend/app/case_generator/`](../../backend/app/case_generator/) |
+| Case generator prompts | [`backend/app/case_generator/prompts/`](../../backend/app/case_generator/prompts/) |
+| Eval configs | [`eval/{diversity_matrix,banned_topics,case_schema}.json`](../../eval/) |
 
 ## Next recommended action
 
-T1.2 (frontend scaffold) and dev infrastructure are **done**. Next: T1.3 (wire Phoenix telemetry, emit one trace) or T1.4 spike pt.2 (20 MCP queries for A4 Day 2 EOD go/no-go). A4 is the most load-bearing for the demo and the soonest hard gate — recommend T1.4 next.
+**Two parallel paths for next session:**
 
-Hard gate to watch first: **A4 (Day 2 EOD)** — Phoenix MCP + ADK integration go/no-go. If FAIL, escalate to PM with fallback options before continuing.
+1. **Case generator G1 (highest priority per PM correction):** Execute `docs/plans/2026-05-28-case-generator-harness-claude-plan.md` G1 — wire Claude-on-Vertex as the critic backend for the case generator. This is the single biggest AlphaEval-rigour upgrade. Steps: verify Claude enabled in Vertex Model Garden → add `anthropic[vertex]` dep → implement `ClaudeVertexBackend` → smoke test 1 case → log cost.
+
+2. **Core agent build (T3.3):** Build the single ADK agent with 7 tools + deliberately weak v1 prompt. This is the most load-bearing code task for the demo — without a running agent, there is nothing to record for the rolling demo capture.
+
+**A4 gate is PASSED.** Next hard gates to watch: **A2 (Phoenix UI demo-viability — Day 2)**, **A3 (case credibility — Day 3)**, **A1 (eval signal — Day 5)**.
+
+**Demo capture reminder:** First recording happens on **Day 3** when the v1 agent runs for the first time. See `docs/demo/rolling-capture-checklist.md`.

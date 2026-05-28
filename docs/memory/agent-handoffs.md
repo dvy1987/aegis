@@ -726,3 +726,109 @@ Estimated total effort 3–4 hours; full breakdown in the plan doc.
 - New: `eval/cases/drafts/part-a/test/case_01_aetna_priorauth.json` (first smoke-test case).
 - Modified: `backend/pyproject.toml` (jsonschema dep), `eval/dataset_card.md`, `docs/memory/agent-handoffs.md` (this file).
 - Unchanged from Session 9 onward: everything else.
+
+## 2026-05-27 21:33 - Handoff
+
+### Done
+- Created 10 train and 10 test synthetic cases for MVP Part A (`eval/cases/drafts/part-a/`).
+- Designed and prompted an 8-agent case evaluation swarm in Gumloop (`gumloop/architecture.md`, `gumloop/prompts/`).
+- Restructured case dataset lifecycle (Drafts -> Gumloop/LLM Swarm -> Approved).
+- Overhauled manual ChatGPT and Perplexity evaluation prompts to act as AlphaEval-compliant Mega-Prompts.
+- Enforced AlphaEval 2026 rubric principles (forced 1/3/5 scaling, binary hard gates for Safety/Hallucinations) across all evaluation prompts (Gumloop + Manual).
+- Checked off T2.4.
+
+### Debated
+- **Mega-Prompt Anti-Pattern:** The manual ChatGPT/Perplexity eval prompts are mega-prompts (evaluating 8 dimensions at once), which violates AlphaEval. We concluded to keep them but clearly label them as "Spot-Check Mode" for diversified human vibe-checks only.
+
+### Decisions
+- Added 4 additional specialized metrics (Financial Auditor, Legal/ERISA, Contradiction Hunter, Demographic Validator) to the original 4 metrics, resulting in a strict 8-point rubric for evaluating synthetic case realism.
+
+### Deferred
+- **T3.3 Build `aegis_v1` agent:** The actual backend ADK agent to process the approved test cases.
+
+### Next Agent Should Know
+- The synthetic dataset is in `eval/cases/drafts/part-a/`. The PM will use the Gumloop/ChatGPT/Perplexity prompts we created to evaluate those drafts. Once evaluated, they will be moved to `eval/cases/approved/part-a/`. Wait for the approved cases before running the benchmark.
+- All evaluation architecture for *case realism* is strictly aligned with the AlphaEval 2026 principles.
+
+### Revisit Triggers
+- If the Gumloop swarm is too expensive or flaky, we can revert to using the manual ChatGPT/Perplexity prompts for evaluation.
+
+### Working Tree
+- `eval/cases/drafts/*`
+- `eval/evaluator_output_schema.json`
+- `eval/chatgpt/prompt.md`
+- `eval/perplexity/prompt.md`
+- `gumloop/architecture.md`
+- `gumloop/prompts/*`
+- `docs/plans/2026-05-27-alphaeval-alignment-plan.md`
+
+---
+
+## 2026-05-27 — Session 11 Combined Handoff (Droid — 3 concurrent sessions merged)
+
+> This handoff combines work from three sessions running concurrently on 2026-05-27: (1) this session (demo capture planning + documentation updates), (2) Session 9/10 continuation (case generator swarm + Phoenix telemetry + A4 gate), and (3) Gumloop evaluator design. All handoff entries above this line capture the individual session outputs; this entry summarises the combined state and next actions.
+
+### Done (this session — demo capture planning)
+
+- ✅ **Rolling demo capture plan created** — `docs/demo/rolling-capture-checklist.md`. PM-friendly step-by-step guide explaining: what two windows to open (Aegis app left + Phoenix dashboard right), what to record at each capture point, when to hit record, what to narrate, and where to save the file. Written for a non-technical PM — no jargon, exact URLs, exact file names.
+- ✅ **Implementation plan updated** with capture tasks at Days 3, 5, 7, 10, 14, 17. Each capture point marked with 🔴 for critical (Day 3 and Day 7 cannot be recreated later). Executive summary updated with rolling-capture reference.
+- ✅ **PM question answered:** Yes, the UX shows the simulator outcome (APPROVE/DENY). Per FR8 and FR10, the Aegis frontend must display the simulator's verdict alongside eval scores. The flip from DENY (v1) to APPROVE (v3) is one of the demo's most visually compelling moments. Documented in the capture checklist.
+- ✅ **Current-state.md updated** with all concurrent session progress (Sessions 9, 10, 11) and rolling capture info.
+
+### Combined state across all 3 sessions
+
+| Workstream | Session(s) | Status |
+|---|---|---|
+| Phoenix telemetry (T1.3) | 9 | ✅ Traces emitting to `aegis-hackathon` |
+| A4 gate (T1.4, T1.5, T2.1) | 9 | ✅ PASSED — 20/20 MCP queries, p50=1.24s, p95=2.52s |
+| Case generator swarm | 10 | ✅ Built + smoke-tested (1 valid Aetna case) |
+| Claude-on-Vertex plan (G1) | 10 | 📋 Plan written, awaiting next-session execution |
+| Gumloop evaluator architecture | 9 (concurrent) | ✅ 8-agent parallel critic + arbiter designed, prompts written |
+| Manual eval prompts (ChatGPT/Perplexity) | 9 (concurrent) | ✅ AlphaEval-aligned mega-prompts for spot-check mode |
+| Demo capture plan | 11 (this) | ✅ Rolling checklist + implementation plan integration |
+| Implementation plan update | 11 (this) | ✅ Capture tasks added at Days 3, 5, 7, 10, 14, 17 |
+
+### Decisions (this session)
+- Demo footage must be captured throughout the build at key milestones, not just at the end. The "v1 is weak" footage only exists on the day the weak agent first runs (Day 3). Cannot be recreated after patches.
+- The Aegis frontend MUST show the simulator outcome (APPROVE/DENY) — this is a core demo element per PRD FR8 and FR10, not a nice-to-have.
+- Days 18-19 are for editing and voiceover only. All raw footage captured by Day 17 at the latest.
+
+### Key PM clarifications from this session
+1. **"Where do I record?"** — In your browser. Two windows side-by-side: Aegis app (left) at localhost:3000 or Cloud Run URL, Phoenix Cloud dashboard (right) at app.arize.com. Hit screen record (Mac: Cmd+Shift+5).
+2. **"What do I record?"** — At each capture point, the checklist tells you exactly which screens to show and what to narrate. The two things you show are: (a) the Aegis app showing the appeal output, eval scores, and simulator outcome, and (b) Phoenix dashboard showing traces, experiments, and prompt versions.
+3. **"Does the UX show the appeal outcome?"** — Yes. The simulator's APPROVE/DENY verdict is displayed in the frontend. The flip from DENY to APPROVE across versions is a core demo moment.
+
+### Deferred
+- **T3.3 Build aegis_v1 single ADK agent** — the most load-bearing code task. No demo capture is possible until the agent runs.
+- **G1 Claude-on-Vertex critic** for case generator — highest priority per PM correction (different-family critics for AlphaEval rigour). Plan at `docs/plans/2026-05-28-case-generator-harness-claude-plan.md`.
+- **Arize Cloud Auth resolution** — MCP tool connection works, but trace retrieval blocked by auth. Direct Phoenix SDK calls work as fallback.
+- 8 bespoke SVGs (from earlier sessions).
+- Stylelint rule for Lucide/Tailwind enforcement.
+
+### Next Agent Should Know
+
+1. **A4 gate is PASSED.** Phoenix MCP is validated as a load-bearing dependency. Move on to building the actual agent.
+2. **Two parallel paths for next session, in priority order:**
+   - (a) **G1 Claude-on-Vertex critic** — see `docs/plans/2026-05-28-case-generator-harness-claude-plan.md`. Verify Claude enabled in Vertex Model Garden first, then implement `ClaudeVertexBackend` in the case generator. Smoke test 1 case.
+   - (b) **T3.3 aegis_v1 agent** — build the single ADK agent with 7 tools + deliberately weak v1 prompt. This is the gate that unblocks demo capture starting Day 3.
+3. **Demo capture starts Day 3.** The first time the v1 agent runs, PM needs to record it. See `docs/demo/rolling-capture-checklist.md` for exact instructions. The checklist is written for a non-technical PM — it tells you which windows to open, what to record, when to hit record.
+4. **The case generator and the Gumloop evaluator are decoupled.** Cases flow: `backend/app/case_generator/` (producer) → `eval/cases/drafts/` → Gumloop arbiter → `eval/cases/approved/`. Do not merge these pipelines.
+5. **PM is non-technical.** Explain what to record in plain language. The rolling-capture-checklist is the reference doc for this.
+
+### Revisit Triggers (carry-forward + new)
+- A4 (Phoenix MCP + ADK integration) — PASSED, but if MCP performance degrades under higher payload, investigate native API alternatives.
+- A2 (Phoenix UI demo-viability) — Day 2. Phoenix shotlist exists at `docs/demo/phoenix-shotlist.md`.
+- A3 (case credibility) — Day 3. Outside-reader test still needed.
+- A1 (eval signal) — Day 5. v1 vs v2 lift test still needed.
+- Day 10 progress gate + A5 (Learning Coordinator autonomy).
+- Phoenix Cloud free tier > 80% quota.
+- If Claude-on-Vertex cost per case at Opus > $0.60, switch routine batches to Sonnet, reserve Opus for Day 5 benchmark.
+- If case generator produces > 25% discards, tighten ScenarioPlanner prompt or relax overly-strict critics.
+- Frontend design-review — run when new pages or significant copy ship.
+
+### Working Tree (changes from this session)
+- New: `docs/demo/rolling-capture-checklist.md`
+- Modified: `docs/plans/2026-05-27-aegis-implementation-plan.md` (rolling capture tasks added at Days 3, 5, 7, 10, 14, 17; executive summary updated)
+- Modified: `docs/memory/current-state.md` (Sessions 9-11 progress merged; A4 PASSED noted; rolling capture info added; source-of-truth table expanded)
+- Modified: `docs/memory/agent-handoffs.md` (this combined entry)
+

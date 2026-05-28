@@ -21,6 +21,8 @@ Build Aegis in two nested phases over 20 days:
 
 Daily work pattern: morning = build, afternoon = eval, end-of-day = commit + handoff. Assumption tests A1–A5 are scheduled as **hard go/no-go gates** at Days 2, 3, 5, 7, 10, and 15 — failure of any gate escalates to PM with options, not silent downscope.
 
+**Rolling demo capture:** The demo's hero arc (agent getting better over time) requires capturing the *weak* v1 output while it still exists. Demo footage is captured throughout the build at key milestones, not just at the end. See [`docs/demo/rolling-capture-checklist.md`](../demo/rolling-capture-checklist.md) for the PM-friendly step-by-step guide. Capture points: Day 3 (first v1 run), Day 5 (v1 vs v2 eval), Day 7 (MVP full walkthrough = safety-net demo), Day 10 (swarm first run), Day 14 (benchmark improvement arc), Day 17 (counterfactual). Days 18-19 are editing and voiceover only — all footage already captured.
+
 The plan is structured so each day has a demoable deliverable, every task has an explicit Definition of Done, and every task traces back to a PRD FR/NFR/G/SC identifier.
 
 ## 2. Technical Stack (fixed, from AGENTS.md + ADRs)
@@ -92,6 +94,8 @@ Two-service Cloud Run deployment:
 
 **End-of-day commit:** `Day 1: backend + frontend scaffold + Phoenix instrumentation`.
 
+**Demo capture (rolling):** No capture yet — no agent output exists.
+
 #### Day 2 — A2 + A4 Final Go/No-Go
 | Task | Description | DoD | Traces to |
 |---|---|---|---|
@@ -102,7 +106,9 @@ Two-service Cloud Run deployment:
 
 **Hard gate (EOD Day 2):** A4 PASS → continue. A4 FAIL → PM escalation; fallback is Phoenix SDK direct calls and softening the "Phoenix MCP load-bearing" pitch.
 
-#### Day 3 — A3 Validation + First End-to-End Agent
+**Demo capture (rolling):** No capture yet — agent doesn't run until Day 3.
+
+#### Day 3 — A3 Validation + First End-to_End Agent
 | Task | Description | DoD | Traces to |
 |---|---|---|---|
 | T3.1 | **A3 Reader test:** show 3 cases to 2 outside readers; if either flags "feels fake / too clean" → re-source with more public denial-letter language | Both readers describe cases as "plausible" / "scary realistic" — yes/no recorded in `eval/dataset_card.md` | A3 |
@@ -111,6 +117,8 @@ Two-service Cloud Run deployment:
 | T3.4 | Strict JSON output enforced (`response_mime_type="application/json"`); Pydantic schemas in `backend/src/agent/schemas.py` | Schema validation passes on the Day-3 output | NFR4 |
 
 **Hard gate (EOD Day 3):** A3 PASS → continue. A3 FAIL → swap cases or move to real-anonymised public denial letters.
+
+**🔴 Demo capture (rolling — CRITICAL, cannot be recreated later):** Record the first v1 agent run. Open two browser windows: Aegis app (left) + Phoenix dashboard (right). Load a calibration case, run the agent, capture the weak v1 appeal output + low eval scores + simulator DENY. Switch to Phoenix, show the trace. Save as `docs/demo/raw/day3-v1-first-run.mp4`. See [rolling-capture-checklist.md](../demo/rolling-capture-checklist.md) for step-by-step instructions.
 
 #### Day 4 — Phoenix MCP Wired Load-Bearing
 | Task | Description | DoD | Traces to |
@@ -130,6 +138,8 @@ Two-service Cloud Run deployment:
 
 **Hard gate (EOD Day 5):** A1 PASS → continue MVP build. A1 FAIL → PM call: recalibrate eval, kill learning-loop pitch, or both.
 
+**Demo capture (rolling):** Record the v1 vs v2 eval comparison. Open Aegis app (left) + Phoenix Experiments (right). Show score delta between v1 (weak) and v2 (hand-tuned). Show the v2 appeal citing plan language. Show simulator outcome improvement. Save as `docs/demo/raw/day5-v1-vs-v2-eval.mp4`.
+
 #### Day 6 — Frontend Workbench + 2 Remaining Judges
 | Task | Description | DoD | Traces to |
 |---|---|---|---|
@@ -148,6 +158,8 @@ Two-service Cloud Run deployment:
 | T7.5 | MVP-only Devpost draft ready (safety-net submission text + 3-min demo script per PRD §9) | `docs/demo/mvp-script.md` reviewed by PM | G5, G7 |
 
 **🎯 Milestone 1 (Day 7):** Aegis MVP is shippable as a complete Arize-track submission. If anything from Day 8+ fails, this is the safety-net submission.
+
+**🔴 Demo capture (rolling — SAFETY-NET DEMO):** Record a full v1→v3 walkthrough on the hero case. This footage can be edited into a complete 3-minute MVP demo if Days 8+ fail. Open Aegis app (left) + Phoenix (right). Walk through: v1 weak appeal → Phoenix MCP failure summary → approved patch → v3 strong appeal → score jump → simulator flip from DENY to APPROVE → benchmark chart. Save as `docs/demo/raw/day7-mvp-full-walkthrough.mp4`.
 
 ---
 
@@ -178,6 +190,8 @@ Two-service Cloud Run deployment:
 
 **Hard gate (EOD Day 10):** Day 10 + A5 both PASS → continue Part B as designed. Either FAIL → PM escalation with options per Code-Wall Protocol.
 
+**Demo capture (rolling):** Record the swarm first run. Open Aegis app (left) + Phoenix Traces (right). Show the 9-agent fan-out, parallel researcher briefs, and the trace waterfall. If Learning Coordinator has proposed its first patch, capture that in Phoenix. Save as `docs/demo/raw/day10-swarm-first-run.mp4`.
+
 #### Day 11 — Precedent Miner + Benchmark to 60
 | Task | Description | DoD | Traces to |
 |---|---|---|---|
@@ -206,6 +220,8 @@ Two-service Cloud Run deployment:
 
 **🎯 Milestone 2 (Day 14):** 9-agent swarm + 60-case benchmark shippable. If Days 15–20 fail, this submits.
 
+**Demo capture (rolling):** Record the benchmark improvement arc. Open Aegis app (left) + Phoenix Experiments + Prompts (right). Show the prompt version timeline (v1→v_current), click a diff (e.g., added MHPAEA citation rule), show the experiment score climbing version by version, show the benchmark chart. Capture the "learning loop is protagonist" beat. Save as `docs/demo/raw/day14-benchmark-arc.mp4`.
+
 ---
 
 ### Phase 3 — Learning Loop + Polish (Days 15–20)
@@ -225,12 +241,13 @@ Two-service Cloud Run deployment:
 | T16.1 | Run 4 learning iterations: Cigna medical-necessity, UHC prior-auth, Aetna mental-health-parity, Anthem step-therapy | Each iteration logged in Phoenix Experiments; promotions/archives all visible in audit | PRD §14 Day 16 |
 | T16.2 | Auto-rollback test: deliberately push a regressing patch through the gates as a dry-run; confirm auto-rollback triggers per §15.3 | Rollback log entry created; previous version restored | PRD §15.3 |
 
-#### Day 17 — Pattern Synthesizer + 100-Case Benchmark
+#### Day 17 — Pattern Synthesizer + 100-Case Benchmark + Counterfactual
 | Task | Description | DoD | Traces to |
 |---|---|---|---|
 | T17.1 | Pattern Synthesizer post-run agent: summarises meta-patterns across insurers; output writes to inherited meta-playbook | Meta-playbook updates visible across multiple slices; trace shows synthesis step | PRD §12.2 +Pattern |
 | T17.2 | Expand benchmark to 100 cases (60 train + 40 held-out) | All 100 cases in `eval/cases/`; dataset_card complete | PRD §13.5 |
 | T17.3 | Learning iterations 5–8 | 4 more iterations promoted/archived | PRD §14 Day 17 |
+| T17.4 | **Counterfactual recording:** Run with `PHOENIX_MCP_ENABLED=false`, capture quality collapse. Open Aegis app (left), run same hero case with Phoenix off, show generic appeal + low score + simulator DENY. Save as `docs/demo/raw/day17-counterfactual.mp4` | Clip shows quality collapsing when Phoenix MCP is disabled | PRD §16, FR5 |
 
 #### Day 18 — Polish + v1→v8 Comparison Chart
 | Task | Description | DoD | Traces to |

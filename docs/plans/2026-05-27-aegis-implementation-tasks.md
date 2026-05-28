@@ -39,6 +39,7 @@
 - [ ] **T3.2** Draft 2 held-out cases from distinct public sources. **DoD:** 2 cases in `eval/cases/holdout/` + provenance. **Trace:** FR8.
 - [ ] **T3.3** Build single ADK agent (`aegis_v1`) with 7 tools + deliberately-weak v1 prompt. **DoD:** End-to-end run on 1 case → structured `AppealPackage`. **Trace:** FR1, FR2, FR3, FR4, FR6, FR7.
 - [ ] **T3.4** Strict JSON output via `response_mime_type=application/json`; Pydantic schemas in `backend/src/agent/schemas.py`. **DoD:** Schema validation passes on Day-3 run. **Trace:** NFR4.
+- [ ] **🔴 T3.5** **Demo capture: first v1 run.** Open Aegis app (left) + Phoenix dashboard (right). Load a calibration case, run v1 agent, capture the weak appeal output + low eval scores + simulator DENY + Phoenix trace. **DoD:** `docs/demo/raw/day3-v1-first-run.mp4` saved. **Trace:** G5. **Note:** This footage CANNOT be recreated after the prompt is patched.
 
 ### Day 4 — Phoenix MCP load-bearing
 - [ ] **T4.1** Insert Phoenix MCP query into pre-draft step (FR5); structured failure-summary augments the prompt. **DoD:** Trace shows MCP query + summary + prompt augmentation. **Trace:** FR5.
@@ -51,6 +52,7 @@
 - [ ] **T5.2** Implement J1–J5 LLM judges as Phoenix Evals (cross-model: Claude 4 or GPT-5). **DoD:** Eval call returns rubric-shaped JSON; run visible in Phoenix Evals UI. **Trace:** FR7.
 - [ ] **T5.3** Calibration: hand-score 2 cases; Cohen's κ; reject judges with κ < 0.6. **DoD:** `eval/calibration_log.md` has κ per judge. **Trace:** rubric §calibration.
 - [ ] **T5.4** **A1 GATE:** v1 vs v2 on 2 held-out cases — lift ≥ +15%? judge std-dev ≤ ±0.08? **DoD:** PASS/FAIL recorded; PM escalation if FAIL. **Trace:** A1, SC1.
+- [ ] **T5.5** **Demo capture: v1 vs v2 eval comparison.** Open Aegis app (left) + Phoenix Experiments (right). Show score delta between v1 and v2. Show v2 appeal citing plan language. Show simulator outcome improvement. **DoD:** `docs/demo/raw/day5-v1-vs-v2-eval.mp4` saved. **Trace:** G5.
 
 ### Day 6 — Frontend workbench + last 2 judges
 - [ ] **T6.1** Implement J6 + J7 judges. **DoD:** All 7 judges run end-to-end in <90s. **Trace:** rubric.
@@ -64,6 +66,7 @@
 - [ ] **T7.3** Manual learning loop `backend/learn.py`: pull failed traces, propose patch, Phoenix Experiment on held-out 6, human approval in UI, version bump. **DoD:** v1→v2→v3 cycle logged. **Trace:** FR9.
 - [ ] **T7.4** MVP eval run: full 4-case benchmark, v1 vs v3, record `weighted_quality`, hard-gate PASS rates, p95, Phoenix URL. **DoD:** SC1/SC2/SC3/SC5 logged. **Trace:** SC1–SC5.
 - [ ] **T7.5** Draft MVP Devpost text + 3-min demo script per PRD §9. **DoD:** `docs/demo/mvp-script.md` reviewed by PM. **Trace:** G5, G7.
+- [ ] **🔴 T7.6** **Demo capture: MVP full walkthrough (SAFETY-NET DEMO).** Record a full v1→v3 walkthrough on the hero case. Open Aegis app (left) + Phoenix (right). Walk through: v1 weak appeal → Phoenix MCP failure summary → approved patch → v3 strong appeal → score jump → simulator flip from DENY to APPROVE → benchmark chart. **DoD:** `docs/demo/raw/day7-mvp-full-walkthrough.mp4` saved. This footage can be edited into a complete 3-minute MVP demo if Days 8+ fail. **Trace:** G5.
 
 ---
 
@@ -83,6 +86,7 @@
 - [ ] **T10.2** Expand benchmark to 40 cases. **DoD:** 40 case files; dataset_card updated. **Trace:** PRD §13.5.
 - [ ] **T10.3** **Day 10 PROGRESS GATE (ADR-004):** ≥5 of 9 specialist agents credible? **DoD:** PASS/FAIL in decision-log with evidence. **Trace:** ADR-004.
 - [ ] **T10.4** **A5 GATE:** stub Learning Coordinator on 3 failed traces; ≥1-in-5 credible-patch rate? **DoD:** PASS/FAIL recorded; PM call if FAIL. **Trace:** A5.
+- [ ] **T10.5** **Demo capture: swarm first run.** Open Aegis app (left) + Phoenix Traces (right). Show 9-agent fan-out, parallel researcher briefs, trace waterfall. If Learning Coordinator has proposed first patch, capture in Phoenix. **DoD:** `docs/demo/raw/day10-swarm-first-run.mp4` saved. **Trace:** G5.
 
 ### Day 11 — Precedent Miner + benchmark to 60
 - [ ] **T11.1** Add Precedent Miner agent. **DoD:** Each brief includes ≥1 traceable precedent. **Trace:** PRD §12.2 #7.
@@ -101,6 +105,7 @@
 - [ ] **T14.1** Full 60-case benchmark. **DoD:** Metrics dumped to `eval/benchmark-runs/day14.json`. **Trace:** SC1.
 - [ ] **T14.2** **Demo-coherence pre-check (ADR-004):** can current build sustain a 3-min story? **DoD:** PM reviews script draft. **Trace:** ADR-004.
 - [ ] **T14.3** Frontend polish #1: animated arch diagram, agent-status streaming, Phoenix link-outs per agent. **DoD:** Hero case shows live 9-agent activity. **Trace:** G8.
+- [ ] **T14.4** **Demo capture: benchmark improvement arc.** Open Aegis app (left) + Phoenix Experiments + Prompts (right). Show prompt version timeline, click a diff, show experiment score climbing, show benchmark chart, show safety stable. **DoD:** `docs/demo/raw/day14-benchmark-arc.mp4` saved. **Trace:** G5.
 
 ---
 
@@ -119,6 +124,7 @@
 - [ ] **T17.1** Pattern Synthesizer post-run agent. **DoD:** Meta-playbook updates across slices; synthesis step traced. **Trace:** PRD §12.2 +Pattern.
 - [ ] **T17.2** Expand benchmark to 100 cases (60 train + 40 held-out). **DoD:** All 100 + provenance. **Trace:** PRD §13.5.
 - [ ] **T17.3** Learning iterations 5–8. **DoD:** 4 more promoted/archived. **Trace:** PRD §14 Day 17.
+- [ ] **🔴 T17.4** **Demo capture: counterfactual (mic drop).** Run same hero case with `PHOENIX_MCP_ENABLED=false`. Show quality collapse: generic appeal + low score + simulator DENY. **DoD:** `docs/demo/raw/day17-counterfactual.mp4` saved. **Trace:** G5, PRD §16.
 
 ### Day 18 — Polish + v1→v8 chart
 - [ ] **T18.1** Frontend polish #2: full design-brief compliance, motion pass, AAA where possible. **DoD:** Lighthouse perf ≥90, a11y ≥95, best-practices ≥95. **Trace:** NFR7, G8.

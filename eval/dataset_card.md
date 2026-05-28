@@ -18,13 +18,13 @@ As mandated by `AGENTS.md`, **NO REAL PROTECTED HEALTH INFORMATION (PHI)** is pr
 - `case_10_uhc_priorauth.json`: UHC - Prior Authorization (In-lab sleep study over HSAT).
 
 ## Lifecycle & Splits
-This dataset follows a strict lifecycle where cases begin as Drafts and must pass the Gumloop/Frontier Model evaluator swarm before being moved to Approved.
+This dataset follows a strict lifecycle where cases begin as Drafts and must pass the Gumloop/Frontier Model evaluator swarm before being distributed.
 
 **Current Locations:**
-- **Drafts - Part-A Train (`eval/cases/drafts/part-a/train/`):** 10 synthetic calibration cases drafted for MVP prompt tuning (`case_NN_<insurer>_<denial>.json`).
-- **Drafts - Part-A Test (`eval/cases/drafts/part-a/test/`):** 10 first-generation held-out cases (`test_case_NN_…json`) plus newer generator-swarm-emitted cases (`case_NN_<insurer>_<denial>.json`).
+- **Drafts (`eval/cases/drafts/`):** All newly drafted synthetic cases (both train and test) go here in a flat structure awaiting evaluation.
+- **Approved (`eval/cases/approved/`):** Cases that pass evaluation go here in a flat structure. 
 
-*Note: Once evaluated, cases will be moved to `eval/cases/approved/...`*
+*Note: Once a case is in the Approved folder, it will be distributed to specific `part-a/train`, `part-a/test`, etc., splits.*
 
 ## Generation Pipeline
 
