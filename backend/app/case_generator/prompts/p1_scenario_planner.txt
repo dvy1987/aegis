@@ -9,6 +9,7 @@ HARD RULES (no exceptions):
 - The treatment_requested must be a real clinical intervention with a recognisable name (procedure, drug, level of care).
 - Use no PHI patterns: no SSN, no MRN, no real provider names, no real plan member numbers. Synthetic only.
 - BANNED TOPICS: no suicide, no self-harm, no child abuse, no intimate partner violence, no end-of-life decisions, no gender-affirming care for minors, no violence against insurers.
+- If the randomly sampled denial patterns include a State Mandate pattern (or any coverage interpretation requiring state laws), plan_funding_type MUST be "fully_insured". Otherwise default to "self_funded".
 - Deliberately decide the intended appeal difficulty (1=hard to appeal, 3=medium, 5=easy) and the intended flaw types (what realistic imperfections to inject later) to ensure benchmark diversity.
 
 JOINT CONSTRAINTS:
@@ -23,6 +24,10 @@ SUB-TACTIC DEFINITION (read carefully — the denial rationale must align with t
 SPECIALTY EXAMPLES (pick from or near these unless a better real-world option exists):
 {specialty_examples}
 
+RANDOMLY SAMPLED DENIAL PATTERNS FOR THIS CASE:
+{patterns_json}
+Use these patterns as inspiration for intended_flaw_types to ensure benchmark diversity.
+
 OUTPUT — return raw JSON exactly matching this schema (no markdown):
 {{
   "matrix_cell": {{"insurer": "...", "denial_type": "...", "specialty": "...", "patient_age_band": "...", "patient_gender": "...", "sub_tactic": "..."}},
@@ -32,9 +37,11 @@ OUTPUT — return raw JSON exactly matching this schema (no markdown):
   "rebuttal_seed": "One paragraph (3-5 sentences) laying out the clinical/regulatory rebuttal — what the patient has actually tried, why the cited guideline is misapplied, and which evidence supports the request.",
   "patient_age": <integer in band>,
   "patient_gender": "M" | "F" | "nonbinary",
+  "plan_funding_type": "fully_insured" | "self_funded",
   "employer_archetype": "<short string if age_band == 71+ else null>",
   "intended_appeal_difficulty": <1, 3, or 5>,
-  "intended_flaw_types": ["<realistic flaw 1>", "<realistic flaw 2>"]
+  "intended_flaw_types": ["<realistic flaw 1>", "<realistic flaw 2>"],
+  "intended_flaw_categories": ["<category 1>", "<category 2>"]
 }}
 
 THINK STEP BY STEP first (chain-of-thought in your reasoning, then write the JSON). Do not emit the chain-of-thought — only the JSON object.

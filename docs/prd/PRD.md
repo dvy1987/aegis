@@ -462,6 +462,7 @@ Aetna, Cigna, UnitedHealthcare, Anthem/Elevance, Humana, Kaiser Permanente, Cent
 ## 15. The Self-Improvement Loop (Autonomous Version)
 
 ### 15.1 Continuous Loop (Learning Coordinator)
+Implements **SkillOpt-style Textual Gradient Descent**, treating the prompts and playbooks as optimizable weights while keeping the LLM frozen.
 - Wakes hourly (configurable)
 - Queries Phoenix MCP: `traces WHERE prompt_version=current AND composite_score < 0.6 LIMIT 50`
 - Per slice `(insurer, denial_type)`:
@@ -489,7 +490,15 @@ If gates fail → archived with full audit; user can manually override.
 - One-click rollback in UI
 - Auto-rollback triggers on **any** of: (a) `weighted_quality` drop > 10% across the next 10 production runs, (b) a single J1 Safety FAIL, (c) a single J2 Hallucination & Internal Consistency FAIL. Hard-gate FAIL is zero-tolerance — one strike triggers rollback.
 
-### 15.4 The Demo Showcase
+### 15.4 Anti-Cheating Firewall (Teacher vs. Student)
+To guarantee the system is actually learning and not just memorizing the answer key, a strict architectural firewall is enforced:
+- **The Student (Appeal Agent & Learner):** Blind to all ground truth files in `eval/` (`intended_flaw_types`, `appeal_difficulty`). The agent only sees the raw denial letter. The Learning Coordinator only learns from empirical trace outcomes.
+- **The Teacher (Quality Panel & Simulator):** Receives the full `synthetic_provenance` answer key so it can mathematically grade whether the agent found the injected flaw or hallucinated a fake one.
+
+### 15.5 The Weak-v1 Starting Baseline
+The "hero arc" of the demonstration relies entirely on the system failing initially. Therefore, the v1 prompts for the Drafter and Strategist must be deliberately generic and weak. **Under no circumstances should the v1 prompts be manually hand-tuned to succeed at the benchmark.** The system *must* fail so that it can generate the negative Phoenix traces required for the Learning Coordinator to deduce improvements.
+
+### 15.6 The Demo Showcase
 Over 20 days, learning loop runs **~200 iterations**. Demo shows:
 - Composite score over time, version stamps
 - Prompt evolution: v1 vs v8 with annotated changes

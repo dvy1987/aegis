@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from backend.app.fast_api_app import app
+from backend.app.main_v1 import app
 
 client = TestClient(app)
 response = client.get("/health")

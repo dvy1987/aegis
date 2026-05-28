@@ -1,19 +1,28 @@
-# temp-backend
+# Aegis Backend
 
-Simple ReAct agent
-Agent generated with `agents-cli` version `0.2.0`
+Multi-service Python backend hosting ADK agents for health-insurance appeal drafting.
 
 ## Project Structure
 
 ```
-temp-backend/
-├── app/         # Core agent code
-│   ├── agent.py               # Main agent logic
-│   ├── fast_api_app.py        # FastAPI Backend server
-│   └── app_utils/             # App utilities and helpers
-├── tests/                     # Unit, integration, and load tests
-├── GEMINI.md                  # AI-assisted development guide
-└── pyproject.toml             # Project dependencies
+backend/
+├── app/
+│   ├── main_v1.py              # FastAPI entry point — aegis-v1 baseline agent (port 8001)
+│   ├── main_swarm.py           # FastAPI entry point — aegis-swarm agent (port 8002)
+│   ├── aegis_v1/               # V1 baseline single agent (7 tools, weak prompt)
+│   │   ├── agent.py            #   ADK root_agent definition
+│   │   ├── schemas.py          #   Pydantic models (AppealPackage, etc.)
+│   │   ├── tools.py            #   7 MVP tool implementations
+│   │   └── pipeline.py         #   Deterministic tool orchestration
+│   ├── aegis_swarm/            # Part B multi-agent swarm (stub)
+│   │   └── agent.py            #   ADK root_agent (Learning Coordinator)
+│   ├── app_utils/              # Shared utilities (telemetry, etc.)
+│   ├── case_generator/         # Offline synthetic-case generation pipeline
+│   └── __init__.py
+├── Dockerfile                  # Cloud Run image — v1 service
+├── Dockerfile.swarm            # Cloud Run image — swarm service
+├── tests/                      # Unit + integration tests
+└── pyproject.toml              # Dependencies
 ```
 
 > 💡 **Tip:** Use [Gemini CLI](https://github.com/google-gemini/gemini-cli) for AI-assisted development - project context is pre-configured in `GEMINI.md`.

@@ -9,6 +9,16 @@ Verdict = Literal["PASS", "FAIL"]
 Anchor = Literal[1, 3, 5]
 
 
+class DenialPattern(BaseModel):
+    id: str
+    category: str
+    description: str
+    source: str
+    insurer_affinity: list[str]
+    realistic_flaws: list[str]
+    appeal_vector: str
+
+
 class MatrixCell(BaseModel):
     insurer: str
     denial_type: str
@@ -23,6 +33,7 @@ class PatientProfile(BaseModel):
     gender: Literal["M", "F", "nonbinary"]
     diagnosis: str
     treatment_requested: str
+    plan_funding_type: Literal["fully_insured", "self_funded"] = Field(default="self_funded")
 
 
 class AppealDifficulty(BaseModel):
@@ -60,6 +71,8 @@ class CaseDraft(BaseModel):
     denial_pattern_sources: list[str] = Field(default_factory=list)
     denial_letter_text: str
     clinical_context: str
+    submission_timestamp: str | None = None
+    denial_timestamp: str | None = None
     synthetic_provenance: SynthProvenance
 
 
@@ -82,10 +95,14 @@ class ScenarioBrief(BaseModel):
     )
     patient_age: int
     patient_gender: Literal["M", "F", "nonbinary"]
+    plan_funding_type: Literal["fully_insured", "self_funded"] = Field(default="self_funded")
     employer_archetype: str | None = Field(
         default=None,
         description="Required if patient_age_band == 71+; commercial plan justification.",
     )
+    intended_appeal_difficulty: int = Field(default=3)
+    intended_flaw_types: list[str] = Field(default_factory=list)
+    intended_flaw_categories: list[str] = Field(default_factory=list)
 
 
 class DenialLetterDraft(BaseModel):
@@ -107,7 +124,23 @@ class AdversarialPerturbation(BaseModel):
     clinical_context: str
     diagnosis: str
     treatment_requested: str
+    submission_timestamp: str | None = None
+    denial_timestamp: str | None = None
+    denial_pattern_sources: list[str] = Field(default_factory=list)
     perturbation_notes: str
+
+
+class StylisticDiversification(BaseModel):
+    """Producer-5 output. Adds stylistic diversity without breaking injected flaws."""
+
+    denial_letter_text: str
+    clinical_context: str
+    diagnosis: str
+    treatment_requested: str
+    submission_timestamp: str | None = None
+    denial_timestamp: str | None = None
+    denial_pattern_sources: list[str] = Field(default_factory=list)
+    stylistic_notes: str
 
 
 class CriticOutput(BaseModel):

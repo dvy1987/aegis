@@ -86,7 +86,7 @@ Two-service Cloud Run deployment:
 #### Day 1 — Scaffold + A4 Integration Spike
 | Task | Description | DoD | Traces to |
 |---|---|---|---|
-| T1.1 | `agents-cli create aegis-backend` scaffold inside `backend/`; FastAPI `/health` endpoint returns 200 | `curl localhost:8000/health` returns `{"ok":true}` | G1 |
+| T1.1 | `agents-cli create aegis-backend` scaffold inside `backend/`; FastAPI `/health` endpoint returns 200 on both services | `curl localhost:8001/health` and `curl localhost:8002/health` both return `{"ok":true}` | G1 |
 | T1.2 | Next.js scaffold inside `frontend/` (Tailwind + shadcn/ui + framer-motion + Lucide installed) | `pnpm dev` serves a hero page on `localhost:3000` | G8, FR10 |
 | T1.3 | Wire `openinference-instrumentation-google-adk`; instantiate a stub "echo agent"; emit ≥1 trace to Phoenix Cloud | One trace visible in Phoenix UI tagged `aegis-hackathon` | G2, NFR4 |
 | T1.4 | **A4 spike — part 1:** Configure `@arizeai/phoenix-mcp` server as an ADK tool; toy "query my own traces" call returns a structured summary | MCP roundtrip latency logged; result printed to stdout in structured form | A4, FR5 |

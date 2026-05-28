@@ -1,18 +1,19 @@
 # Aegis dev launcher (Windows PowerShell 5.1+ / PowerShell 7+).
 #
-# Starts the backend (FastAPI / ADK) and the frontend (Next.js) together,
-# streams interleaved logs with [backend] / [frontend] prefixes, and
-# cleans up both processes on Ctrl-C.
+# Starts the backend services (v1 + swarm) and the frontend (Next.js) together,
+# streams interleaved logs with [back-v1] / [back-swarm] / [frontend] prefixes,
+# and cleans up all processes on Ctrl-C.
 #
 # Usage:
-#   .\scripts\dev.ps1                 # both
-#   .\scripts\dev.ps1 -Target backend # backend only
-#   .\scripts\dev.ps1 -Target frontend
+#   .\scripts\dev.ps1                     # all three
+#   .\scripts\dev.ps1 -Target backend    # both backends only
+#   .\scripts\dev.ps1 -Target frontend   # frontend only
 #
 # Env / param overrides:
-#   -BackendPort   default 8000
-#   -FrontendPort  default 3000
-#   -BackendHost   default 127.0.0.1
+#   -BackendV1Port    default 8001
+#   -BackendSwarmPort default 8002
+#   -FrontendPort     default 3000
+#   -BackendHost      default 127.0.0.1
 #
 # If you get an execution-policy error, run once per shell:
 #   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
@@ -21,9 +22,10 @@
 param(
   [ValidateSet("both", "backend", "frontend")]
   [string] $Target = "both",
-  [int]    $BackendPort = 8000,
-  [int]    $FrontendPort = 3000,
-  [string] $BackendHost = "127.0.0.1"
+  [int]    $BackendV1Port    = 8001,
+  [int]    $BackendSwarmPort = 8002,
+  [int]    $FrontendPort     = 3000,
+  [string] $BackendHost      = "127.0.0.1"
 )
 
 $ErrorActionPreference = "Stop"
@@ -157,28 +159,50 @@ function Start-StreamingProcess {
 
 # --- Launchers -------------------------------------------------------------
 
-function Start-Backend {
-  Write-Info "starting backend on http://${BackendHost}:${BackendPort} (uvicorn, --reload)"
+function Start-BackendV1 {
+  Write-Info "starting backend v1 on http://${BackendHost}:${BackendV1Port} (Phoenix: default)"
   $args = @(
-    "run", "uvicorn", "app.fast_api_app:app",
+    "run", "uvicorn", "app.main_v1:app",
     "--host", $BackendHost,
-    "--port", "$BackendPort",
+    "--port", "$BackendV1Port",
     "--reload"
   )
+  $extra = @{
+    PHOENIX_PROJECT_NAME = "default"
+  }
   $p = Start-StreamingProcess `
-    -Label "backend" -Color Green `
+    -Label "back-v1" -Color Green `
     -WorkingDir $BackendDir `
-    -FileName "uv" -Arguments $args
+    -FileName "uv" -Arguments $args `
+    -ExtraEnv $extra
+  $processes.Add($p) | Out-Null
+}
+
+function Start-BackendSwarm {
+  Write-Info "starting backend swarm on http://${BackendHost}:${BackendSwarmPort} (Phoenix: aegis-hackathon)"
+  $args = @(
+    "run", "uvicorn", "app.main_swarm:app",
+    "--host", $BackendHost,
+    "--port", "$BackendSwarmPort",
+    "--reload"
+  )
+  $extra = @{
+    PHOENIX_PROJECT_NAME = "aegis-hackathon"
+  }
+  $p = Start-StreamingProcess `
+    -Label "back-swarm" -Color Cyan `
+    -WorkingDir $BackendDir `
+    -FileName "uv" -Arguments $args `
+    -ExtraEnv $extra
   $processes.Add($p) | Out-Null
 }
 
 function Start-Frontend {
   Write-Info "starting frontend on http://localhost:${FrontendPort} (next dev)"
-  $env:NEXT_PUBLIC_BACKEND_URL = "http://${BackendHost}:${BackendPort}"
-  $env:PORT = "$FrontendPort"
   $extra = @{
-    NEXT_PUBLIC_BACKEND_URL = "http://${BackendHost}:${BackendPort}";
-    PORT                    = "$FrontendPort"
+    NEXT_PUBLIC_BACKEND_V1_URL    = "http://${BackendHost}:${BackendV1Port}";
+    NEXT_PUBLIC_BACKEND_SWARM_URL = "http://${BackendHost}:${BackendSwarmPort}";
+    PORT                          = "$FrontendPort"
   }
   $p = Start-StreamingProcess `
     -Label "frontend" -Color Yellow `
@@ -188,8 +212,44 @@ function Start-Frontend {
   $processes.Add($p) | Out-Null
 }
 
-if ($needsBackend)  { Start-Backend }
+if ($needsBackend)  { Start-BackendV1; Start-BackendSwarm }
 if ($needsFrontend) { Start-Frontend }
+
+# --- Readiness probes ------------------------------------------------------
+
+if ($needsBackend) {
+  $deadline = (Get-Date).AddSeconds(30)
+  $v1Ready = $false
+  $swarmReady = $false
+
+  while ((Get-Date) -lt $deadline -and -not ($v1Ready -and $swarmReady)) {
+    if (-not $v1Ready) {
+      try {
+        $r = Invoke-WebRequest -Uri "http://${BackendHost}:${BackendV1Port}/health" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop
+        if ($r.StatusCode -eq 200) {
+          Write-Info "backend v1 ready   http://${BackendHost}:${BackendV1Port}/health"
+          $v1Ready = $true
+        }
+      } catch {}
+    }
+    if (-not $swarmReady) {
+      try {
+        $r = Invoke-WebRequest -Uri "http://${BackendHost}:${BackendSwarmPort}/health" -UseBasicParsing -TimeoutSec 2 -ErrorAction Stop
+        if ($r.StatusCode -eq 200) {
+          Write-Info "backend swarm ready http://${BackendHost}:${BackendSwarmPort}/health"
+          $swarmReady = $true
+        }
+      } catch {}
+    }
+    Start-Sleep -Milliseconds 500
+  }
+  if (-not $v1Ready)    { Write-Warn2 "backend v1 did not become ready within 30s" }
+  if (-not $swarmReady) { Write-Warn2 "backend swarm did not become ready within 30s" }
+}
+
+if ($needsFrontend) {
+  Write-Info "frontend starting on http://localhost:${FrontendPort}"
+}
 
 Write-Info "press Ctrl-C to stop"
 
@@ -213,9 +273,9 @@ try {
   }
 
   if ($cancelled) {
-    Write-Info "shutting down…"
+    Write-Info "shutting down..."
   } else {
-    Write-Warn2 "a child process exited; stopping the other"
+    Write-Warn2 "a child process exited; stopping the others"
   }
 } finally {
   Stop-AllProcesses

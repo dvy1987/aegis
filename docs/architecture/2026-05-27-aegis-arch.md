@@ -86,7 +86,7 @@ Total of 14 components. The "12-agent" framing is preserved in product copy and 
 
 | # | Agent | Role | Trigger | Notes |
 |---|---|---|---|---|
-| 13 | **Learning Coordinator** | Reads low-scoring traces from Phoenix, proposes prompt/playbook patches, runs Phoenix experiments on held-out subsample, applies hard safety gates, auto-promotes survivors with full audit | Wakes hourly (configurable). Heavy Phoenix MCP user. | The Part B autonomous-loop heart. Hard safety gates: composite lift ≥ +3%, safety regression ≤ 0.05, hallucination rate = 0, Adversarial-Reviewer critique severity not regressing, diff ≤ 200 tokens, rate limit ≤ 5/day. One-click rollback always available. **Auto-demotion** of the system's autonomy stage if composite drops > 10% over 10 runs. |
+| 13 | **Learning Coordinator** | Reads low-scoring traces from Phoenix, proposes prompt/playbook patches, runs Phoenix experiments on held-out subsample, applies hard safety gates, auto-promotes survivors with full audit | Wakes hourly (configurable). Heavy Phoenix MCP user. | The Part B autonomous-loop heart. Implements **SkillOpt-style Textual Gradient Descent**: treats text prompts/playbooks as optimizable weights. Hard safety gates: composite lift ≥ +3%, safety regression ≤ 0.05, hallucination rate = 0, Adversarial-Reviewer critique severity not regressing, diff ≤ 200 tokens, rate limit ≤ 5/day. One-click rollback always available. **Auto-demotion** of the system's autonomy stage if composite drops > 10% over 10 runs. |
 | 14 | **Pattern Synthesizer** | Reads the corpus of learnings across insurers + denial types, identifies meta-patterns, writes to inherited meta-playbook | Wakes daily (post-run, off-peak). | Produces cross-slice insights (e.g. "MHPAEA parity citations help across mental-health denials regardless of insurer"). Lower priority than Learning Coordinator; ship Day 17. |
 
 ### 3.4 Prompt strategy hints
@@ -203,6 +203,13 @@ Same FastAPI surface, but the Orchestrator collapses to a single ADK agent that 
 - `eval/simulator_rules.json` — transparent rule set for the Outcome Simulator.
 - `proposals/` — pending learning patches awaiting approval (Part A) or audit (Part B).
 
+### 5.5 Anti-Cheating Firewall (Teacher vs. Student)
+
+To ensure the self-improvement loop learns from experience rather than memorizing the answer key, a strict architectural firewall separates ground truth from runtime execution:
+- **The Student (Appeal Agent Runtime):** Receives only the parsed `CaseJSON` (denial letter text + clinical context). It is strictly blind to `synthetic_provenance`, `intended_flaw_types`, and `appeal_difficulty`.
+- **The Teacher (Quality Judge Panel & Outcome Simulator):** Receives both the `AppealPackage` (the agent's output) AND the ground truth metadata (`synthetic_provenance`). This allows the judges to rigorously evaluate whether the agent actually found the injected flaw or just hallucinated a persuasive argument.
+- **The Learner (Learning Coordinator):** Has no filesystem access to the `eval/` directory or raw benchmark files. It can only read Phoenix traces (empirical outcomes) to deduce better tactics.
+
 ---
 
 ## 6. Error Handling & Human-in-the-Loop
@@ -275,7 +282,29 @@ ADK registers the MCP server as a tool source, exposing trace-query capabilities
 
 ---
 
-## 8. Repository Layout
+## 8. Case Generation Pipeline (Offline Tooling)
+
+While Aegis evaluates and appeals denial letters, it relies on a robust offline generator pipeline (`backend/app/case_generator`) to create the 100-case synthetic benchmark. This pipeline enforces several strict architectural rules to ensure the benchmark is valid, realistic, and fair:
+
+### 8.1 Realistic Imperfection ("Authentic Shoddiness")
+Real-world denial letters are rarely pristine legal documents. They are often vague, missing required phone numbers, citing wrong CPT codes, or using contradictory logic. The generation pipeline is explicitly prompted to inject "authentic shoddiness" into the synthetic cases. The Appeal Agent must learn to handle this messiness.
+
+### 8.2 Evaluator Rules (Internal & Gumloop Swarm)
+- **Analysis-First Structure:** Every LLM evaluator in the generation pipeline must critically analyze the case *before* outputting a numerical score. This prevents the LLM from anchoring on a prematurely generated number.
+- **Split Scoring:** Evaluators assess `Realism` and `Appeal Difficulty` as separate dimensions. 
+- **Score Hiding:** The `Appeal Difficulty` score is explicitly stripped from the trace metadata passed to the runtime Orchestrator (it is part of the Anti-Cheating Firewall).
+
+### 8.3 Gumloop Arbiter Logic
+The Gumloop swarm acts as the final gatekeeper for generated cases. To optimize API costs, the Arbiter is forbidden from aggressively discarding cases. It must only output `DISCARD` if a case violates a hard safety constraint or is structurally unsalvageable. For logic or tone issues, it must output `REVISE` with specific, actionable paths to fix the case.
+
+### 8.4 The Diversity Matrix
+The generator pipeline samples from a `diversity_matrix.json` to ensure the benchmark reflects reality without straying out of scope. It enforces strict constraints:
+- **In-Scope:** Only Commercial / ACA plans. Samples across demographics, insurers, and specific denial flaws.
+- **Out-of-Scope (Hard Bans):** No Medicare/Medicaid, no unapproved/experimental drugs, and strict safety boundaries around behavioral health (no self-harm scenarios).
+
+---
+
+## 9. Repository Layout
 
 ```
 aegis/
@@ -375,7 +404,7 @@ aegis/
 
 ---
 
-## 9. Deployment
+## 10. Deployment
 
 Two Cloud Run services, deployed independently. Both region `us-central1` (close to Gemini + Phoenix).
 
@@ -397,7 +426,7 @@ Two Cloud Run services, deployed independently. Both region `us-central1` (close
 
 ---
 
-## 10. Security & Privacy
+## 11. Security & Privacy
 
 - No PHI. Synthetic composite cases only. Pre-commit PHI scanner reject commits matching SSN/MRN/DOB patterns or real-sounding name + ICD/CPT combinations.
 - API keys in `.env` (gitignored), referenced in deploy via Cloud Run secrets.
@@ -407,7 +436,7 @@ Two Cloud Run services, deployed independently. Both region `us-central1` (close
 
 ---
 
-## 11. Open architecture questions (deferred to Session 4+)
+## 12. Open architecture questions (deferred to Session 4+)
 
 - **J1** — `google-agents-cli` observability vs Phoenix MCP coexistence (Day 1 spike).
 - **J2** — `google-agents-cli deploy` for 2-service Cloud Run (Day 6–7).
@@ -417,7 +446,7 @@ Two Cloud Run services, deployed independently. Both region `us-central1` (close
 
 ---
 
-## 12. Revisit triggers (from [decision-log.md 2026-05-27](../memory/decision-log.md))
+## 13. Revisit triggers (from [decision-log.md 2026-05-27](../memory/decision-log.md))
 
 - **Day 10 progress gate:** if <50% of the 9 specialist agents (beyond MVP) have credible role prompts and pass basic integration tests, escalate to PM with options (compress to lean 5-agent composite). Architecture revisit.
 - **Assumption A5 (Learning Coordinator autonomy) fails:** Part B autonomous-loop thesis collapses. Architecture revisit — likely demotes Part B to "manual learning with human approval" + keeps multi-agent runtime.

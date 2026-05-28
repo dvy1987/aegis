@@ -1,7 +1,7 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-27 (Session 11 — combined close across 3 concurrent sessions)
-**Phase:** **Execution — Phase 1.** Phase 0 setup complete. Backend scaffolded with `/health`. Frontend scaffolded with full design system. Dev launcher scripts finished. Vertex AI via ADC configured and verified. Phoenix telemetry emitting traces. A4 gate PASSED. Case generator swarm built + smoke-tested. Gumloop evaluator architecture defined. Rolling demo capture plan established.
+**Updated:** 2026-05-28 (Session 17)
+**Phase:** **Execution — Phase 1.** Phase 0 setup complete. Backend wired up into a 3-service logical topology (v1, swarm, and generator job) to properly isolate Phoenix traces. Generator uses ADC, dev launcher spins up 3 processes. Firewall logic designed for eval scoring. 
 
 ---
 
@@ -95,6 +95,24 @@
 - ✅ Rewrote `gumloop/architecture.md` to document the new multi-tier architecture.
 - ⏸️ Generation trial paused due to missing `GEMINI_API_KEY`.
 
+
+### Session 15 (Generation Pipeline P5)
+- ✅ Added `StylisticDiversifier` (P5) to the generation pipeline to ensure clinical/procedural diversity.
+- ✅ Re-architected pipeline to separate factual diversity (Orchestrator), logic flaws (P4), and stylistic noise (P5).
+- ✅ Added strict safety rules to P5 to preserve P4's injected flaws and timestamps.
+
+### Session 14 (User/Manual updates)
+- ✅ Expanded `eval/denial_patterns.json` with a new `category` field and 19 new patterns across 5 categories.
+- ✅ Added category 6 `algorithmic_ai_denial` patterns (3 patterns) to `eval/denial_patterns.json`.
+- ✅ Simplified category 6 to 3 single-filer-detectable proxy patterns.
+
+### Session 16 & 17 (Documentation Sweep & Multi-Service Topology)
+- ✅ Codified the "Weak-v1" Demo arc rule explicitly into PRD Section 15.5.
+- ✅ Added "Case Generation Pipeline (Offline Tooling)" Section 8 to the Architecture spec.
+- ✅ Documented pipeline mechanics: Realistic Imperfection, Analysis-First rules, Split Scoring, Gumloop Arbiter REVISE logic, and Diversity constraints.
+- ✅ Formalised the "Anti-Cheating Firewall" logic for the SkillOpt textual gradient descent structure.
+- ✅ Implemented 3-service backend topology (`aegis-v1-api` on 8001, `aegis-swarm-api` on 8002) in `scripts/dev.sh` and created `ADR-006`.
+
 ## What's blocked
 - **Arize Cloud Auth** — A4 MCP connection works, but Arize auth (`PHOENIX_CLIENT_HEADERS` or API key permissions) blocks actual trace retrieval from the MCP server. Workaround: direct Phoenix SDK calls work; MCP is functional for ADK tool integration (T2.1 proved this with 20/20 successes).
 
@@ -153,15 +171,25 @@
 | Case generator prompts | [`backend/app/case_generator/prompts/`](../../backend/app/case_generator/prompts/) |
 | Eval configs | [`eval/{diversity_matrix,banned_topics,case_schema}.json`](../../eval/) |
 
+### Session 18 (Critical Audit — Droid)
+- ✅ Full cross-repo audit of all uncommitted changes from Sessions 15–17.
+- ✅ Identified 16 inconsistencies (1 syntax-breaking bug, 4 high, 6 medium, 3 low, 2 deferred).
+- ✅ Confirmed architectural direction is sound; inconsistencies are execution-layer cleanup, not design corrections.
+- ⚠️ **dev.sh is broken** — duplicate C_RESET + orphaned else/fi block causes bash syntax error. Must fix before any dev work.
+- ⚠️ **9+ files reference deleted `fast_api_app.py` and port 8000** — stale references across tests, Dockerfile, docs, scripts.
+- ⚠️ **Phoenix project name split not propagated** — code/docs still say `aegis-hackathon`; dev.sh uses `aegis-baseline`/`aegis-swarm` per ADR-006.
+
 ## Next recommended action
 
-**Updated 2026-05-28:** T3.3/T3.4 are now done. Immediate next actions are: (1) complete A3 reader credibility test / held-out case cleanup if not already done, (2) run and record the first weak `aegis_v1` demo capture (T3.5) before improving the prompt, and (3) wire live Phoenix MCP trace retrieval into `phoenix_mcp_lookup` for T4.1.
+**Updated 2026-05-28 (Session 18):** Before any feature work, the next agent must resolve the inconsistencies identified in the audit. PM wants to review each issue individually — see Session 18 handoff in `agent-handoffs.md` for the full 16-item table with recommendations.
 
-**Two parallel paths for next session:**
-
-1. **Case generator G1 (highest priority per PM correction):** Execute `docs/plans/2026-05-28-case-generator-harness-claude-plan.md` G1 — wire Claude-on-Vertex as the critic backend for the case generator. This is the single biggest AlphaEval-rigour upgrade. Steps: verify Claude enabled in Vertex Model Garden → add `anthropic[vertex]` dep → implement `ClaudeVertexBackend` → smoke test 1 case → log cost.
-
-2. **Core agent build (T3.3):** Build the single ADK agent with 7 tools + deliberately weak v1 prompt. This is the most load-bearing code task for the demo — without a running agent, there is nothing to record for the rolling demo capture.
+**Priority order:**
+1. **Fix dev.sh syntax bug** (issue #1) — blocks all development. Likely OK to fix without PM debate since it's a plain bug.
+2. **PM review of issues #2–#16** — go through each one with PM before fixing.
+3. **Phoenix project name decision** (issues #10–#12) — blocks T4.1 (live MCP wiring).
+4. **T3.5 demo capture** — time-sensitive; cannot be recreated after prompt is patched.
+5. **T4.1 live Phoenix MCP** — load-bearing demo feature.
+6. **G1 Claude-on-Vertex critic** — AlphaEval compliance for case generator.
 
 **A4 gate is PASSED.** Next hard gates to watch: **A2 (Phoenix UI demo-viability — Day 2)**, **A3 (case credibility — Day 3)**, **A1 (eval signal — Day 5)**.
 

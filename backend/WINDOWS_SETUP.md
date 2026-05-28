@@ -75,14 +75,25 @@ Run the test script to ensure your Windows machine can successfully talk to Ariz
 # Verify Phoenix MCP connection
 uv run python test_mcp_standalone.py
 
-# Verify backend starts and Google auth works
-uv run uvicorn app.fast_api_app:app --host 127.0.0.1 --port 8000
+# Verify backend v1 starts and Google auth works
+uv run uvicorn app.main_v1:app --host 127.0.0.1 --port 8001
 ```
 
 In a separate terminal, check the health endpoint:
 
 ```powershell
-Invoke-RestMethod http://127.0.0.1:8000/health
+Invoke-RestMethod http://127.0.0.1:8001/health
 ```
 
 If you get `{"ok": true}`, your Windows machine is fully armed and ready to build!
+
+To start both backend services and the frontend, use the dev launcher:
+
+```powershell
+.\scripts\dev.ps1
+```
+
+This starts:
+- **Backend v1** on port 8001 (Phoenix project: `aegis-baseline`)
+- **Backend swarm** on port 8002 (Phoenix project: `aegis-swarm`)
+- **Frontend** on port 3000

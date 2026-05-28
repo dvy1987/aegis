@@ -68,6 +68,7 @@ class ScenarioDiscarded(Exception):
 
 def _scenario_planner_stage(
     matrix_cell: dict[str, str],
+    patterns: list[dict[str, Any]],
     *,
     revisions: int = 0,
     prior_brief: dict[str, Any] | None = None,
@@ -85,6 +86,7 @@ def _scenario_planner_stage(
         sub_tactic_definition=sub_def,
         specialty_examples=examples,
         joint_constraints=constraints,
+        patterns=patterns,
     )
 
     cov = agents.critic_matrix_coverage(brief, matrix_cell)
@@ -96,6 +98,7 @@ def _scenario_planner_stage(
             raise ScenarioDiscarded(f"matrix_coverage FAIL after {revisions} revisions")
         return _scenario_planner_stage(
             matrix_cell,
+            patterns,
             revisions=revisions + 1,
             prior_brief=brief,
             prior_critique=cov.get("improvement"),
@@ -105,6 +108,7 @@ def _scenario_planner_stage(
             raise ScenarioDiscarded("scenario_realism = 1 after revisions")
         return _scenario_planner_stage(
             matrix_cell,
+            patterns,
             revisions=revisions + 1,
             prior_brief=brief,
             prior_critique=realism.get("improvement"),
@@ -153,9 +157,19 @@ def _clinical_writer_stage(
 def _flaw_injector_stage(
     assembled: dict[str, Any],
     intended_flaws: list[str],
+    patterns: list[dict[str, Any]],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    perturbed = agents.run_realistic_flaw_injector(assembled, intended_flaws)
+    perturbed = agents.run_realistic_flaw_injector(assembled, intended_flaws, patterns)
     return perturbed, {}
+
+
+def _stylistic_diversifier_stage(
+    assembled: dict[str, Any],
+    neighbour_summaries: list[str],
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    ns_text = "\n".join(f"- {s}" for s in neighbour_summaries)
+    stylized = agents.run_stylistic_diversifier(assembled, ns_text)
+    return stylized, {}
 
 
 def _safety_stage(denial_letter_text: str, clinical_context: str) -> dict[str, Any]:
@@ -296,9 +310,10 @@ def generate_one_case(
     """Run the full swarm for a single case. Returns the case dict or None on discard."""
     for retry in range(MAX_SCENARIO_RETRIES):
         cell = config.sample_matrix_cell(rng, forbid_cells=accepted_cells)
+        patterns = config.sample_denial_patterns(rng, cell["insurer"], cell["specialty"])
         logger.info("[case %d retry %d] matrix cell %s", index, retry, cell)
         try:
-            brief, planner_critics = _scenario_planner_stage(cell)
+            brief, planner_critics = _scenario_planner_stage(cell, patterns)
         except ScenarioDiscarded as exc:
             logger.warning("scenario discarded: %s", exc)
             continue
@@ -313,13 +328,15 @@ def generate_one_case(
             "denial_letter_text": letter,
             "clinical_context": ctx,
         }
-        perturbed, div_critics = _flaw_injector_stage(assembled, brief.get("intended_flaw_types", []))
+        perturbed, div_critics = _flaw_injector_stage(assembled, brief.get("intended_flaw_types", []), patterns)
+        assembled_for_p5 = {**assembled, **perturbed}
+        stylized, style_critics = _stylistic_diversifier_stage(assembled_for_p5, neighbour_summaries)
 
         safety_v = _safety_stage(
-            perturbed["denial_letter_text"], perturbed["clinical_context"]
+            stylized["denial_letter_text"], stylized["clinical_context"]
         )
         phi_v = _phi_stage(
-            perturbed["denial_letter_text"], perturbed["clinical_context"]
+            stylized["denial_letter_text"], stylized["clinical_context"]
         )
 
         if _is_fail(safety_v) or _is_fail(phi_v):
@@ -333,17 +350,18 @@ def generate_one_case(
         patient_profile = {
             "age": brief["patient_age"],
             "gender": brief["patient_gender"],
-            "diagnosis": perturbed["diagnosis"],
-            "treatment_requested": perturbed["treatment_requested"],
+            "diagnosis": stylized["diagnosis"],
+            "treatment_requested": stylized["treatment_requested"],
+            "plan_funding_type": brief.get("plan_funding_type", "self_funded"),
         }
         final_critics = _final_panel(
             patient_profile=patient_profile,
-            diagnosis=perturbed["diagnosis"],
-            treatment_requested=perturbed["treatment_requested"],
+            diagnosis=stylized["diagnosis"],
+            treatment_requested=stylized["treatment_requested"],
             insurer=cell["insurer"],
             denial_type=cell["denial_type"],
-            denial_letter_text=perturbed["denial_letter_text"],
-            clinical_context=perturbed["clinical_context"],
+            denial_letter_text=stylized["denial_letter_text"],
+            clinical_context=stylized["clinical_context"],
         )
 
         all_critics: dict[str, dict[str, Any]] = {
@@ -393,9 +411,11 @@ def generate_one_case(
             "insurer": cell["insurer"],
             "denial_type": cell["denial_type"],
             "patient_profile": patient_profile,
-            "denial_pattern_sources": perturbed.get("denial_pattern_sources", []),
-            "denial_letter_text": perturbed["denial_letter_text"],
-            "clinical_context": perturbed["clinical_context"],
+            "denial_pattern_sources": stylized.get("denial_pattern_sources", []),
+            "denial_letter_text": stylized["denial_letter_text"],
+            "clinical_context": stylized["clinical_context"],
+            "submission_timestamp": stylized.get("submission_timestamp"),
+            "denial_timestamp": stylized.get("denial_timestamp"),
             "synthetic_provenance": provenance,
         }
         result = validate_case(case_obj)

@@ -54,6 +54,7 @@ def run_scenario_planner(
     sub_tactic_definition: str,
     specialty_examples: list[str],
     joint_constraints: str,
+    patterns: list[dict[str, Any]],
     *,
     model: str | None = None,
 ) -> dict[str, Any]:
@@ -62,6 +63,7 @@ def run_scenario_planner(
         matrix_cell_json=json.dumps(matrix_cell, indent=2),
         sub_tactic_definition=sub_tactic_definition,
         specialty_examples=", ".join(specialty_examples) or "(none listed)",
+        patterns_json=json.dumps(patterns, indent=2) if patterns else "[]",
     )
     return _generate_json(prompt, model=model, temperature=0.9)
 
@@ -88,12 +90,27 @@ def run_clinical_writer(
 def run_realistic_flaw_injector(
     assembled_case: dict[str, Any],
     intended_flaw_types: list[str],
+    patterns: list[dict[str, Any]],
     *,
     model: str | None = None,
 ) -> dict[str, Any]:
     prompt = load_prompt("p4_realistic_flaw_injector").format(
         assembled_case_json=json.dumps(assembled_case, indent=2),
         intended_flaw_types=json.dumps(intended_flaw_types, indent=2),
+        patterns_json=json.dumps(patterns, indent=2) if patterns else "[]",
+    )
+    return _generate_json(prompt, model=model, temperature=0.85)
+
+
+def run_stylistic_diversifier(
+    assembled_case: dict[str, Any],
+    neighbour_summaries: str,
+    *,
+    model: str | None = None,
+) -> dict[str, Any]:
+    prompt = load_prompt("p5_stylistic_diversifier").format(
+        assembled_case_json=json.dumps(assembled_case, indent=2),
+        neighbour_summaries=neighbour_summaries or "(this is the first case in the run)",
     )
     return _generate_json(prompt, model=model, temperature=0.85)
 

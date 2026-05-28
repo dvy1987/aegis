@@ -12,6 +12,8 @@ EVAL_DIR = REPO_ROOT / "eval"
 SCHEMA_PATH = EVAL_DIR / "case_schema.json"
 MATRIX_PATH = EVAL_DIR / "diversity_matrix.json"
 BANNED_PATH = EVAL_DIR / "banned_topics.json"
+PATTERNS_PATH = EVAL_DIR / "denial_patterns.json"
+
 
 DEFAULT_MODEL = os.environ.get("AEGIS_CASEGEN_MODEL", "gemini-3.1-pro-preview")
 CRITIC_MODEL = os.environ.get("AEGIS_CASEGEN_CRITIC_MODEL", "gemini-3.1-pro-preview") # Ideally should be non-Gemini to prevent self-enhancement bias
@@ -32,6 +34,12 @@ def load_matrix() -> dict[str, Any]:
 @lru_cache(maxsize=1)
 def load_banned() -> dict[str, Any]:
     with BANNED_PATH.open() as fh:
+        return json.load(fh)
+
+
+@lru_cache(maxsize=1)
+def load_denial_patterns() -> dict[str, Any]:
+    with PATTERNS_PATH.open() as fh:
         return json.load(fh)
 
 
@@ -85,6 +93,48 @@ def sample_matrix_cell(
         "specialty": specialty,
         "sub_tactic": sub_tactic,
     }
+
+
+def sample_denial_patterns(
+    rng: random.Random,
+    insurer: str,
+    specialty: str,
+    max_patterns: int = 2
+) -> list[dict[str, Any]]:
+    """Sample denial patterns from denial_patterns.json, ensuring diversity."""
+    patterns = load_denial_patterns().get("patterns", [])
+    valid_patterns = []
+    for p in patterns:
+        if insurer not in p.get("insurer_affinity", []):
+            continue
+        if p.get("category") == "mhpaea_parity" and specialty != "behavioral_health":
+            continue
+        valid_patterns.append(p)
+    
+    if not valid_patterns:
+        return []
+    
+    # Try to pick patterns from different categories
+    chosen = []
+    seen_categories = set()
+    rng.shuffle(valid_patterns)
+    for p in valid_patterns:
+        cat = p.get("category", "")
+        if cat not in seen_categories:
+            chosen.append(p)
+            seen_categories.add(cat)
+            if len(chosen) >= max_patterns:
+                break
+    
+    # If we still need more, just pick any valid
+    if len(chosen) < max_patterns:
+        for p in valid_patterns:
+            if p not in chosen:
+                chosen.append(p)
+                if len(chosen) >= max_patterns:
+                    break
+    
+    return chosen
 
 
 def specialty_examples(specialty: str) -> list[str]:

@@ -32,6 +32,11 @@ Quick navigation for agents picking up this project.
 | 2026-05-27 | Session (Agent) | [agent-handoffs.md](agent-handoffs.md#2026-05-27-1408---handoff) |
 | 2026-05-27 | Session 7 (Droid — frontend design system + scaffold) | [agent-handoffs.md](agent-handoffs.md#2026-05-27---session-7-handoff-droid) |
 | 2026-05-27 | Session 8 (Droid — dev scripts + Vertex AI config) | [agent-handoffs.md](agent-handoffs.md#2026-05-27-1530---session-8-handoff-droid) |
+| 2026-05-28 | Session 13 (Realistic Imperfection & AlphaEval Gap Fixes) | [agent-handoffs.md](agent-handoffs.md#2026-05-28---session-13-handoff-antigravity) |
+| 2026-05-28 | Session 14 (User/Manual updates) | [agent-handoffs.md](agent-handoffs.md#2026-05-28---session-14-handoff-usermanual) |
+| 2026-05-28 | Session 15 (Generation Pipeline P5) | [agent-handoffs.md](agent-handoffs.md#2026-05-28---session-15-handoff) |
+| 2026-05-28 | Session 16 (Documentation Sweep) | [agent-handoffs.md](agent-handoffs.md#2026-05-28-1416---session-16-handoff-antigravity) |
+| 2026-05-28 | Session 17 (SkillOpt & Multi-Service Topology) | [agent-handoffs.md](agent-handoffs.md#2026-05-28-1448---session-17-handoff-antigravity) |
 
 ## Skill-output log
 

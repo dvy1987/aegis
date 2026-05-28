@@ -28,12 +28,13 @@
     "patient_profile": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["age", "gender", "diagnosis", "treatment_requested"],
+      "required": ["age", "gender", "diagnosis", "treatment_requested", "plan_funding_type"],
       "properties": {
         "age": {"type": "integer", "minimum": 18, "maximum": 89},
         "gender": {"type": "string", "enum": ["M", "F", "nonbinary"]},
         "diagnosis": {"type": "string", "minLength": 6, "maxLength": 240},
-        "treatment_requested": {"type": "string", "minLength": 6, "maxLength": 240}
+        "treatment_requested": {"type": "string", "minLength": 6, "maxLength": 240},
+        "plan_funding_type": {"type": "string", "enum": ["fully_insured", "self_funded"]}
       }
     },
     "denial_pattern_sources": {
@@ -53,6 +54,14 @@
       "minLength": 150,
       "maxLength": 1800,
       "description": "Plain-prose patient/provider narrative explaining why the denial is rebuttable."
+    },
+    "submission_timestamp": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "denial_timestamp": {
+      "type": ["string", "null"],
+      "format": "date-time"
     },
     "synthetic_provenance": {
       "type": "object",

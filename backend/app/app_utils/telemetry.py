@@ -6,7 +6,7 @@ from phoenix.otel import register
 
 
 def setup_telemetry() -> None:
-    os.environ.setdefault("PHOENIX_PROJECT_NAME", "aegis-hackathon")
+    os.environ.setdefault("PHOENIX_PROJECT_NAME", "default")
     os.environ.setdefault(
         "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true"
     )

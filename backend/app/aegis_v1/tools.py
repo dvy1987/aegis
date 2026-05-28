@@ -278,7 +278,7 @@ def phoenix_mcp_lookup(
     if normalized_type == "unknown":
         normalized_type = _slug(denial_type)
     query = (
-        "traces where project='aegis-hackathon' "
+        "traces where project='default' "
         f"and insurer='{insurer}' and denial_type='{normalized_type}'"
     )
 

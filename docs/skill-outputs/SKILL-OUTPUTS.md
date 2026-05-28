@@ -60,3 +60,5 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-05-27 — Session 7 | design-archetype | .design/aegis/ARCHETYPE.md | Locked premium-consumer (health-shaded) — feels like One Medical x Headspace; tokens/icons hand-off contract |
 | 2026-05-27 — Session 7 | design-tokens-craft | .design/aegis/TOKENS.md, tokens.css, tokens.ts (also copied to frontend/src/styles/) | Warm-paper neutrals, sage accent, Source Serif 4 + Inter, Calm-style motion; banned-defaults audit |
 | 2026-05-27 — Session 7 | icon-craft | .design/aegis/ICONS.md | Mixed strategy: tuned Lucide + 8 bespoke; tuning rules + bespoke inventory |
+| 2026-05-28 14:24 | architectural-decision-log | docs/adr/ADR-006-multi-service-backend-topology.md | ADR: Multi-Service Backend Topology |
+| 2026-05-28 14:48 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session 17 -> Handoff |

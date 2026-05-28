@@ -22,7 +22,7 @@
 ## Phase 1 — MVP (Days 1–7)
 
 ### Day 1 — Scaffold + A4 spike
-- [ ] **T1.1** `agents-cli create` backend scaffold; FastAPI `/health` returns 200. **DoD:** `curl localhost:8000/health` → `{"ok":true}`. **Trace:** G1.
+- [ ] **T1.1** `agents-cli create` backend scaffold; FastAPI `/health` returns 200. **DoD:** `curl localhost:8001/health` → `{"ok":true}` AND `curl localhost:8002/health` → `{"ok":true}`. **Trace:** G1.
 - [ ] **T1.2** Next.js scaffold + Tailwind + shadcn/ui + framer-motion + Lucide. **DoD:** `pnpm dev` serves a hero page. **Trace:** G8, FR10.
 - [x] **T1.3** Wire `openinference-instrumentation-google-adk` on a stub agent; emit ≥1 trace to Phoenix. **DoD:** Trace visible in Phoenix UI tagged `aegis-hackathon`. **Trace:** G2, NFR4.
 - [x] **T1.4** **A4 spike pt.1:** Configure `@arizeai/phoenix-mcp` as ADK tool; one toy query returns structured summary. **DoD:** MCP roundtrip latency logged; structured result in stdout. **Trace:** A4, FR5.

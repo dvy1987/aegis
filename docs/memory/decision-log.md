@@ -332,3 +332,36 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 - `gumloop/architecture.md` (rewritten)
 - `gumloop/prompts/*`
 - `backend/app/case_generator/prompts/*`
+
+---
+
+## 2026-05-28 — SkillOpt Alignment & Anti-Cheating Firewall (Session 13)
+
+**Decision.** Formalise the Learning Coordinator as an implementation of "SkillOpt-style Textual Gradient Descent" (optimising prompt/playbook text rather than model weights). Enforce a strict "Anti-Cheating Firewall" where the Appeal Agent (Student) and Learning Coordinator (Learner) are strictly blind to the benchmark ground truth (`eval/` files, `intended_flaw_types`, `appeal_difficulty`). Only the Quality Judge Panel and Outcome Simulator (Teachers) receive the full `synthetic_provenance` answer key to grade the exam.
+
+**Rationale.** Aligning with Microsoft Research's SkillOpt framework validates our core architectural thesis (trace-based reflection + shadow-tested bounded edits on frozen models). The Anti-Cheating Firewall is mandatory to ensure the system is genuinely learning to appeal flawed cases rather than just memorising the answer key during eval runs. A judge needs the answer key to grade; a student must not have it to take the test.
+
+**Status.** Accepted. Architecture and PRD updated to reflect the firewall.
+
+**Revisit triggers.**
+- If instrumentation inadvertently leaks `synthetic_provenance` onto the trace payload passed to the Orchestrator, break the build until plugged.
+
+**Artifacts produced.**
+- Updated `docs/architecture/2026-05-27-aegis-arch.md`
+- Updated `docs/prd/PRD.md`
+
+---
+
+## 2026-05-28 — Multi-Service Backend Topology & GCP Generation Job
+
+**Decision.** Run the offline case generator as a headless Cloud Run Job (or local script) to leverage Google Cloud ADC, bypassing the need for raw API keys for Vertex Gemini and Vertex Claude. Keep a single Python backend repository but launch it as two isolated logical services: `aegis-v1-api` (Port 8001, Phoenix project `aegis-baseline`) and `aegis-swarm-api` (Port 8002, Phoenix project `aegis-swarm`). 
+
+**Rationale.** Using ADC for offline generation solves the API key constraint natively. Splitting the runtime into two logical services enforces physical separation between the safety-net MVP (v1) and the complex Full Plan (swarm). Crucially, this split allows emitting traces to completely isolated Phoenix projects, creating a clean "Before vs After" narrative for the 3-minute hackathon demo without needing manual trace filtering.
+
+**Status.** Accepted.
+
+**Revisit triggers.** 
+- If managing 3 dev processes locally (frontend + v1 + swarm) causes significant resource strain on the PM's machine, revert to sequential testing or consolidate for local dev while deploying separately.
+
+**Artifacts produced.** `docs/adr/ADR-006-multi-service-backend-topology.md`.
+
