@@ -170,6 +170,8 @@
 | Case generator code | [`backend/app/case_generator/`](../../backend/app/case_generator/) |
 | Case generator prompts | [`backend/app/case_generator/prompts/`](../../backend/app/case_generator/prompts/) |
 | Eval configs | [`eval/{diversity_matrix,banned_topics,case_schema}.json`](../../eval/) |
+| Part A judge panel spec | [`docs/specs/2026-05-29-part-a-judge-panel-feature-spec.md`](../specs/2026-05-29-part-a-judge-panel-feature-spec.md) + [`docs/evals/2026-05-29-part-a-judge-panel-spec.md`](../evals/2026-05-29-part-a-judge-panel-spec.md) |
+| Part A judge panel code | [`backend/app/evals/part_a/`](../../backend/app/evals/part_a/) |
 
 ### Session 18 (Critical Audit — Droid)
 - ✅ Full cross-repo audit of all uncommitted changes from Sessions 15–17.
@@ -179,6 +181,14 @@
 - ⚠️ **9+ files reference deleted `fast_api_app.py` and port 8000** — stale references across tests, Dockerfile, docs, scripts.
 - ⚠️ **Phoenix project name split not propagated** — code/docs still say `aegis-hackathon`; dev.sh uses `aegis-baseline`/`aegis-swarm` per ADR-006.
 
+### Session 19 (Part A Judge Panel)
+- ✅ Approved and documented the Part A judge panel firewall: Aegis v1 gets a `StudentCasePacket`; judges get a teacher-only grading packet with provenance, expected appeal vectors, and exploitable weaknesses.
+- ✅ Implemented local judge-panel package at `backend/app/evals/part_a/` with Pydantic schemas, teacher-packet builder, deterministic gates, offline heuristic judge client, Gemini-swappable client, aggregator, and CLI.
+- ✅ Added seven judge prompt templates under `eval/judges/part_a/`, including J6 `Appeal-Vector Capture` to grade whether Aegis finds the synthetic case's embedded flaw.
+- ✅ Added focused unit tests: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_part_a_judge_panel.py -q` → 6 passed.
+- ⚠️ Same-model judging is accepted: Gemini 3.1 Pro will judge Gemini 3.1 Pro drafts; mitigations are deterministic gates, single-dimension prompts, evidence-first scoring, quote validation, calibration, and human spot checks.
+- ⚠️ Broad `tests/unit` remains blocked by pre-existing stale import `from app.agent` in `tests/unit/agent/test_aegis_v1_agent.py` (Session 18 issue family).
+
 ## Next recommended action
 
 **Updated 2026-05-28 (Session 18):** Before any feature work, the next agent must resolve the inconsistencies identified in the audit. PM wants to review each issue individually — see Session 18 handoff in `agent-handoffs.md` for the full 16-item table with recommendations.
@@ -187,9 +197,10 @@
 1. **Fix dev.sh syntax bug** (issue #1) — blocks all development. Likely OK to fix without PM debate since it's a plain bug.
 2. **PM review of issues #2–#16** — go through each one with PM before fixing.
 3. **Phoenix project name decision** (issues #10–#12) — blocks T4.1 (live MCP wiring).
-4. **T3.5 demo capture** — time-sensitive; cannot be recreated after prompt is patched.
-5. **T4.1 live Phoenix MCP** — load-bearing demo feature.
-6. **G1 Claude-on-Vertex critic** — AlphaEval compliance for case generator.
+4. **Gemini/cloud calibration for Part A judge panel** — once GCP is configured, run the seven judge prompts against calibration examples; offline heuristic scores are diagnostic only.
+5. **T3.5 demo capture** — time-sensitive; cannot be recreated after prompt is patched.
+6. **T4.1 live Phoenix MCP** — load-bearing demo feature.
+7. **G1 critic model revisiting is no longer viable as originally written** if Gemini-only judging remains a hard constraint; use same-model mitigations instead.
 
 **A4 gate is PASSED.** Next hard gates to watch: **A2 (Phoenix UI demo-viability — Day 2)**, **A3 (case credibility — Day 3)**, **A1 (eval signal — Day 5)**.
 

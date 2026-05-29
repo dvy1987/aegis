@@ -62,3 +62,8 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-05-27 — Session 7 | icon-craft | .design/aegis/ICONS.md | Mixed strategy: tuned Lucide + 8 bespoke; tuning rules + bespoke inventory |
 | 2026-05-28 14:24 | architectural-decision-log | docs/adr/ADR-006-multi-service-backend-topology.md | ADR: Multi-Service Backend Topology |
 | 2026-05-28 14:48 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session 17 -> Handoff |
+| 2026-05-29 09:00 | feature-spec | docs/specs/2026-05-29-part-a-judge-panel-feature-spec.md | Approved spec: Part A judge panel with student/teacher packet firewall |
+| 2026-05-29 09:00 | eval-rubric-design | docs/evals/2026-05-29-part-a-judge-panel-spec.md | Judge panel spec: seven judges, teacher-only answer key, same-model mitigation |
+| 2026-05-29 09:00 | implementation-plan | docs/plans/2026-05-29-part-a-judge-panel-plan.md | Plan: local/offline Part A judge panel implementation |
+| 2026-05-29 09:07 | memory-capture | docs/memory/current-state.md, docs/memory/project-index.md | Captured Session 19 Part A judge panel state |
+| 2026-05-29 09:07 | memory-handoff | docs/memory/agent-handoffs.md | Appended Session 19 handoff |

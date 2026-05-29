@@ -1144,3 +1144,50 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 - **Phoenix project name decision (#10–#12) blocks T4.1.**
 - **Simulator threshold should be documented as intentional before any agent "optimizes" it.**
 
+---
+
+## 2026-05-29 09:07 - Session 19 Handoff (Codex)
+
+### Done
+- Built the Part A judge panel implementation and docs after PM approval of the teacher/student grading model.
+- Added approved feature spec: `docs/specs/2026-05-29-part-a-judge-panel-feature-spec.md`.
+- Added judge-panel spec: `docs/evals/2026-05-29-part-a-judge-panel-spec.md`.
+- Added implementation plan: `docs/plans/2026-05-29-part-a-judge-panel-plan.md`.
+- Added backend package `backend/app/evals/part_a/`:
+  - `schemas.py` with `StudentCasePacket`, `TeacherGradingPacket`, `JudgeResult`, `PanelReport`.
+  - `teacher_packet.py` to keep answer-key data teacher-only.
+  - `deterministic_gates.py` for safety/scope and citation prechecks.
+  - `llm_judges.py` with offline diagnostic judge client and Gemini-swappable client.
+  - `panel.py` deterministic aggregation with hard gates, weighted quality, quote validation, and J6 promotion blocker.
+  - `cli.py` for local/offline dry runs.
+- Added seven prompt templates in `eval/judges/part_a/`, including J6 `Appeal-Vector Capture`.
+- Added focused tests in `backend/tests/unit/evals/test_part_a_judge_panel.py`.
+
+### Debated
+- PM confirmed Gemini 3.1 Pro is the only viable model for both drafting and judging. Same-model judge bias is accepted and mitigated with deterministic gates, single-dimension prompts, evidence-first scoring, quote validation, calibration, and human spot checks.
+- Clarified that Aegis v1 sees only student-visible case data while judges see all generated-case provenance.
+
+### Decisions
+- J6 is now `Appeal-Vector Capture`, not generic playbook alignment. It grades whether the appeal attacks the generator's embedded flaw.
+- J6 score `1` is a promotion blocker even if hard gates pass and weighted score looks acceptable.
+- Offline heuristic scoring is diagnostic-only and flagged as `offline_scores_not_official`.
+
+### Deferred
+- Real Gemini judge execution and calibration are deferred until GCP/Gemini is configured on the machine.
+- Phoenix eval metadata integration is deferred.
+- Regeneration/backfill of legacy cases with weak provenance is deferred.
+
+### Next Agent Should Know
+- Focused verification passed: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_part_a_judge_panel.py -q` → 6 passed.
+- CLI dry run works offline when output goes outside repo:
+  `env UV_CACHE_DIR=/tmp/uv-cache uv run python -m app.evals.part_a.cli ../eval/cases/drafts/case_01_cigna_mednec.json --judge offline --output-dir /tmp/aegis-eval-runs`.
+- Broad `tests/unit` still fails on pre-existing stale import `from app.agent` in `tests/unit/agent/test_aegis_v1_agent.py`, consistent with Session 18 stale-reference audit. This session did not fix that unrelated issue.
+
+### Revisit Triggers
+- If Gemini judge reruns drift more than the claimed v1→v3 lift, calibrate or mark the affected judge advisory.
+- If a benchmark case has `weak_teacher_packet`, do not use its score for official demo claims until provenance is backfilled or the case is regenerated.
+- If J6 quote validation starts flagging Gemini evidence quotes, tighten prompts or reject that judge output.
+
+### Working Tree
+- New: `backend/app/evals/part_a/`, `backend/tests/unit/evals/`, `eval/judges/part_a/`, judge-panel docs/spec/plan.
+- Modified: `docs/skill-outputs/SKILL-OUTPUTS.md`, `docs/memory/current-state.md`, `docs/memory/project-index.md`, `docs/memory/agent-handoffs.md`.

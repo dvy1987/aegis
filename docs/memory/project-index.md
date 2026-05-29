@@ -37,6 +37,7 @@ Quick navigation for agents picking up this project.
 | 2026-05-28 | Session 15 (Generation Pipeline P5) | [agent-handoffs.md](agent-handoffs.md#2026-05-28---session-15-handoff) |
 | 2026-05-28 | Session 16 (Documentation Sweep) | [agent-handoffs.md](agent-handoffs.md#2026-05-28-1416---session-16-handoff-antigravity) |
 | 2026-05-28 | Session 17 (SkillOpt & Multi-Service Topology) | [agent-handoffs.md](agent-handoffs.md#2026-05-28-1448---session-17-handoff-antigravity) |
+| 2026-05-29 | Session 19 (Part A Judge Panel) | [agent-handoffs.md](agent-handoffs.md#2026-05-29-0907---session-19-handoff-codex) |
 
 ## Skill-output log
 
