@@ -6,9 +6,169 @@
     "age": 49,
     "gender": "F",
     "diagnosis": "Complications of prior gastric bypass with severe reflux",
-    "treatment_requested": "Bariatric Surgery Revision (Conversion to Roux-en-Y)"
+    "treatment_requested": "Bariatric Surgery Revision (Conversion to Roux-en-Y)",
+    "plan_funding_type": "self_funded"
   },
   "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for a Bariatric Surgery Revision. Based on UnitedHealthcare's Medical Management Guidelines, this request is denied.\n\nWhile we recognize you are experiencing severe acid reflux following a previous gastric sleeve procedure, the clinical information provided does not demonstrate that maximum medical management (such as high-dose proton pump inhibitors and lifestyle modifications) has been attempted and failed for at least 6 months. Therefore, surgical revision is not considered medically necessary at this time as a first-line treatment for your reflux.",
   "clinical_context": "Patient had a gastric sleeve 5 years ago. Now experiencing severe GERD causing esophageal strictures and Barrett's esophagus (pre-cancerous changes). The surgeon notes that PPIs will not fix the anatomical issue causing the bile reflux, making conservative therapy useless and dangerous.",
-  "synthetic_provenance": "Generated purely via LLM referencing typical bariatric revision medical necessity denials."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-151ad",
+    "generated_at": "2026-05-29T02:25:24Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "unknown",
+      "patient_gender": "F",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "There is a factual contradiction regarding the patient's surgical history between the patient profile and the narrative documents. The patient profile lists the diagnosis as 'Complications of prior gastric bypass'. However, both the denial letter and the clinical context explicitly state the patient had a 'previous gastric sleeve procedure' and a 'gastric sleeve 5 years ago'. Gastric bypass and gastric sleeve are distinct bariatric procedures, meaning the core facts of the scenario are unstable across the documents.",
+        "score": "FAIL",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Complications of prior gastric bypass with severe reflux",
+          "severe acid reflux following a previous gastric sleeve procedure",
+          "Patient had a gastric sleeve 5 years ago."
+        ],
+        "improvement": "Change the diagnosis in the patient profile to 'Complications of prior gastric sleeve with severe reflux' to match the surgical history provided in the denial letter and clinical context."
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The letter is brief, bureaucratic, and highly direct, lacking the typical verbosity and flowery vocabulary of LLM-generated text. There are no signature GPT words like 'delve,' 'tapestry,' or 'navigate.' The phrasing 'While we recognize...' followed by a strict adherence to policy ('does not demonstrate that maximum medical management... has been attempted') perfectly mimics standard insurance denial macros. The sentence structure is functional rather than perfectly symmetrical, and it avoids robotic enumeration, listicles, or overly empathetic padding. It reads exactly like a standard, human-authored insurance denial template.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Based on UnitedHealthcare's Medical Management Guidelines, this request is denied.",
+          "While we recognize you are experiencing severe acid reflux following a previous gastric sleeve procedure, the clinical information provided does not demonstrate that maximum medical management"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It avoids outright apologies, instead utilizing standard administrative pseudo-empathy ('While we recognize you are experiencing...') before immediately pivoting to rigid policy requirements and step-therapy prerequisites. It relies heavily on standard insurance terminology like 'medically necessary' and 'Medical Management Guidelines'. The clinical context is written in a straightforward, objective clinical narrative, accurately summarizing the patient's history and the surgeon's rationale without resorting to emotional pleading.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Based on UnitedHealthcare's Medical Management Guidelines, this request is denied.",
+          "While we recognize you are experiencing severe acid reflux following a previous gastric sleeve procedure, the clinical information provided does not demonstrate that maximum medical management... has been attempted",
+          "Patient had a gastric sleeve 5 years ago. Now experiencing severe GERD causing esophageal strictures and Barrett's esophagus"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter focuses entirely on the clinical rationale for denying the Bariatric Surgery Revision (lack of documented maximum medical management for 6 months). It makes absolutely no mention of the patient's potential out-of-pocket cost liability, estimates, or financial obligations if they choose to proceed with the surgery out-of-pocket. According to the evaluation criteria, omitting cost liability entirely is standard practice for medical necessity denial letters. There is no unrealistic precision or conflation of insurance terms.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Based on UnitedHealthcare's Medical Management Guidelines, this request is denied.",
+          "Therefore, surgical revision is not considered medically necessary at this time as a first-line treatment for your reflux."
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "regulatory_and_appeal_references",
+        "reasoning": "The denial letter completely omits any reference to appeal rights, appeal windows (such as the standard 180-day ERISA timeframe), or regulatory frameworks. While the prompt notes that omitting external review rights or specific ERISA disclosures can be a realistic imperfection, entirely failing to include basic internal appeal instructions or deadlines is a critical generation error. This complete omission makes the letter unrealistically non-compliant and implausible for a US commercial plan, which would always include at least boilerplate appeal rights. Because it lacks any legal or regulatory framing to evaluate, it represents a hallucination of omission and receives the lowest score.",
+        "score": 1,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Based on UnitedHealthcare's Medical Management Guidelines, this request is denied."
+        ],
+        "improvement": "Add standard commercial appeal rights and a specific appeal window (e.g., 180 days), as completely omitting all appeal instructions is unrealistic for a formal US commercial denial letter."
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The demographic combination of a 49-year-old female presenting with severe reflux and Barrett's esophagus following a previous gastric sleeve is highly plausible and aligns perfectly with bariatric surgery epidemiology. Females in their 40s represent the most common demographic for both primary and revisional bariatric procedures, particularly for post-sleeve GERD complications. The denial letter uses neutral, second-person language, avoiding any pronoun mismatches or stereotyping. There is no language that exoticizes or inappropriately frames the patient based on her gender or age.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 49",
+          "\"gender\": \"F\"",
+          "\"diagnosis\": \"Complications of prior gastric bypass with severe reflux\"",
+          "Dear Member,",
+          "While we recognize you are experiencing severe acid reflux"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is an adult (age 49). The insurer is UHC and the denial type is Medical Necessity, both of which are explicitly approved. The plan is listed as 'self_funded', which aligns with employer-sponsored commercial coverage, and there is no framing around Medicare, Medicaid, TRICARE, VA, or marketplace plans. Finally, the provided text contains no language regarding live-filing, attorney work, or court representation.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 49",
+          "UHC \u2014 Medical Necessity",
+          "\"plan_funding_type\": \"self_funded\""
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The provided text lacks specific absolute dates for the denial letter, service request, or appeal window (e.g., no 2025 or 2026 dates are present). Instead, the clinical context relies on a relative and vague timeframe, noting the patient had a gastric sleeve '5 years ago'. The denial letter mentions a duration of 'at least 6 months' for medical management. While these relative timeframes do not contradict each other and are broadly plausible, the complete absence of specific calendar dates and the use of vague relative timelines perfectly align with the criteria for a score of 3.",
+        "score": 3,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "5 years ago",
+          "at least 6 months"
+        ],
+        "improvement": "Include specific calendar dates for the denial letter (e.g., a date in 2026), the service request, the appeal deadline, and the exact month/year of the previous gastric sleeve procedure."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter cites \"UnitedHealthcare's Medical Management Guidelines\" as the basis for the decision. This is a highly realistic, generic umbrella term that avoids over-specifying edition numbers, page numbers, or specific policy bulletins. It successfully avoids hallucinating fake alphanumeric codes while remaining frustratingly vague for a provider attempting to trace the exact criteria, perfectly aligning with the criteria for a top score.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Based on UnitedHealthcare's Medical Management Guidelines, this request is denied."
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial relies on a generic step-therapy requirement (6 months of PPIs) for acid reflux, completely ignoring the severe clinical context. The patient has developed esophageal strictures and Barrett's esophagus, which are severe anatomical and pre-cancerous complications of a previous gastric sleeve. The surgeon explicitly notes that conservative therapy is 'useless and dangerous' for this anatomical issue. This is a highly exploitable clinical weakness, as standard of care dictates surgical revision (usually to Roux-en-Y) for severe refractory GERD with Barrett's post-sleeve, rather than delaying for medical management. Furthermore, the denial letter completely omits procedural safeguards like ERISA appeal rights, instructions, and timeframes. Therefore, a well-crafted appeal highlighting the contraindication of step-therapy and the severity of the complications has a very high likelihood of success.",
+        "score": 5,
+        "confidence": 0.95,
+        "exploitable_weaknesses": [
+          "Failure to account for severe complications (Barrett's esophagus, strictures) that clinically contraindicate a 6-month delay for step-therapy.",
+          "Misapplication of generic GERD guidelines to an anatomical post-bariatric complication (bile reflux).",
+          "Complete omission of ERISA disclosures, appeal rights, and appeal window information."
+        ],
+        "strong_defenses": [
+          "The denial clearly states the specific missing criteria (6 months of maximum medical management) based on standard guidelines for uncomplicated reflux."
+        ],
+        "evidence_quotes": [
+          "does not demonstrate that maximum medical management (such as high-dose proton pump inhibitors and lifestyle modifications) has been attempted and failed for at least 6 months",
+          "causing esophageal strictures and Barrett's esophagus (pre-cancerous changes)",
+          "PPIs will not fix the anatomical issue causing the bile reflux, making conservative therapy useless and dangerous"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial relies on a generic step-therapy requirement (6 months of PPIs) for acid reflux, completely ignoring the severe clinical context. The patient has developed esophageal strictures and Barrett's esophagus, which are severe anatomical and pre-cancerous complications of a previous gastric sleeve. The surgeon explicitly notes that conservative therapy is 'useless and dangerous' for this anatomical issue. This is a highly exploitable clinical weakness, as standard of care dictates surgical revision (usually to Roux-en-Y) for severe refractory GERD with Barrett's post-sleeve, rather than delaying for medical management. Furthermore, the denial letter completely omits procedural safeguards like ERISA appeal rights, instructions, and timeframes. Therefore, a well-crafted appeal highlighting the contraindication of step-therapy and the severity of the complications has a very high likelihood of success.",
+      "exploitable_weaknesses": [
+        "Failure to account for severe complications (Barrett's esophagus, strictures) that clinically contraindicate a 6-month delay for step-therapy.",
+        "Misapplication of generic GERD guidelines to an anatomical post-bariatric complication (bile reflux).",
+        "Complete omission of ERISA disclosures, appeal rights, and appeal window information."
+      ],
+      "strong_defenses": [
+        "The denial clearly states the specific missing criteria (6 months of maximum medical management) based on standard guidelines for uncomplicated reflux."
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

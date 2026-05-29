@@ -147,7 +147,7 @@ start_backend_v1() {
         export "$key=$val"
       done < "$ROOT/.env"
     fi
-    export PHOENIX_PROJECT_NAME="default"
+
     exec uv run uvicorn app.main_v1:app \
       --host "$BACKEND_HOST" \
       --port "$BACKEND_V1_PORT" \
@@ -168,7 +168,7 @@ start_backend_swarm() {
         export "$key=$val"
       done < "$ROOT/.env"
     fi
-    export PHOENIX_PROJECT_NAME="aegis-hackathon"
+
     exec uv run uvicorn app.main_swarm:app \
       --host "$BACKEND_HOST" \
       --port "$BACKEND_SWARM_PORT" \

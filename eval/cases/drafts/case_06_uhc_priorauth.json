@@ -6,9 +6,167 @@
     "age": 29,
     "gender": "F",
     "diagnosis": "Endometriosis, stage IV",
-    "treatment_requested": "Laparoscopic excision surgery by an Out-of-Network specialist"
+    "treatment_requested": "Laparoscopic excision surgery by an Out-of-Network specialist",
+    "plan_funding_type": "self_funded"
   },
   "denial_letter_text": "Dear Member,\n\nWe have received a prior authorization request for a Laparoscopic Excision Surgery with Dr. Jane Doe (Out-of-Network). We are denying coverage for this out-of-network service.\n\nAccording to your plan documents, services performed by an out-of-network provider require a Network Gap Exception / Prior Authorization proving that there is no in-network provider within 30 miles capable of performing the requested service. Our directory indicates there are three (3) in-network OB/GYNs in your area who perform laparoscopic surgery. Because you have not demonstrated that these in-network providers are clinically unable to treat your condition, the request for an out-of-network exception is denied.",
   "clinical_context": "Patient has severe, deeply infiltrating endometriosis involving the bowel and ureters. The local in-network OB/GYNs only perform simple ablation, which has failed twice before and is contraindicated for deep bowel involvement. The requested out-of-network doctor is an excision specialist.",
-  "synthetic_provenance": "Generated purely via LLM referencing typical Network Adequacy / Gap Exception denial patterns."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-3c24b",
+    "generated_at": "2026-05-29T02:07:09Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "unknown",
+      "patient_gender": "F",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are internally and cross-document consistent. The diagnosis (Endometriosis, stage IV) and requested treatment (Laparoscopic excision surgery by an Out-of-Network specialist) match perfectly across the patient profile, denial letter, and clinical context. The denial letter is internally consistent, stating the requirement for a Network Gap Exception and denying it based on the presence of three in-network OB/GYNs. While the denial letter claims the patient has 'not demonstrated that these in-network providers are clinically unable to treat your condition,' and the clinical context clearly outlines why the in-network providers are inadequate (they only perform simple ablation, which is contraindicated), this falls perfectly under the allowed edge case. It represents an appealable denial rather than a factual contradiction of the scenario's core details.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Laparoscopic excision surgery by an Out-of-Network specialist",
+          "Laparoscopic Excision Surgery with Dr. Jane Doe (Out-of-Network)",
+          "Because you have not demonstrated that these in-network providers are clinically unable to treat your condition, the request for an out-of-network exception is denied.",
+          "The local in-network OB/GYNs only perform simple ablation, which has failed twice before and is contraindicated for deep bowel involvement."
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The text is highly concise and adopts a dry, bureaucratic tone typical of real insurance denial letters. It avoids common LLM tropes such as overly empathetic language, symmetrical paragraph structures, bulleted lists, or signature vocabulary like 'delve,' 'navigate,' or 'tapestry.' The phrasing 'three (3) in-network OB/GYNs' and 'Network Gap Exception' reflects authentic administrative cadence rather than generative AI boilerplate. It reads exactly like a standard legacy template used by claims handlers.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "three (3) in-network OB/GYNs",
+          "Network Gap Exception / Prior Authorization",
+          "Because you have not demonstrated that these in-network providers are clinically unable to treat your condition"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It avoids any apologies or warmth, instead relying on policy jargon like 'Network Gap Exception' and placing the burden of proof squarely on the patient. The use of a vague reference to 'three (3) in-network OB/GYNs' without naming them is highly realistic obfuscation. The clinical context is written in objective, plain-prose medical narrative without any emotional pleading.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Because you have not demonstrated that these in-network providers are clinically unable to treat your condition, the request for an out-of-network exception is denied.",
+          "Patient has severe, deeply infiltrating endometriosis involving the bowel and ureters."
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter focuses entirely on the administrative requirements for a Network Gap Exception and the availability of in-network providers. It makes absolutely no mention of the patient's potential financial liability, out-of-pocket costs, or specific dollar amounts if they choose to proceed with the out-of-network provider. According to the evaluation criteria, omitting cost liability entirely is standard practice for insurance denials and perfectly aligns with realistic, unhelpful financial framing.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "We are denying coverage for this out-of-network service."
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "regulatory_and_appeal_references",
+        "reasoning": "The input denial letter entirely lacks any regulatory references, legal boilerplate, or appeal window instructions. It ends abruptly after stating the administrative reason for denial. While the prompt notes that omitting external review rights is a realistic imperfection, completely omitting all internal appeal rights, deadlines, and basic legal framing is a severe generation error. A real US commercial denial letter is legally required to include basic appeal instructions and deadlines (such as a 180-day window). Because it lacks even generic legal language or an appeal window, it fails to provide the necessary regulatory framing for evaluation and is unrealistically incomplete.",
+        "score": 1,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "the request for an out-of-network exception is denied."
+        ],
+        "improvement": "Add standard commercial appeal boilerplate at the end of the letter, including a specific appeal window (e.g., 180 days) and basic internal appeal instructions, even if strategically omitting external review rights or specific ERISA citations."
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The demographic combination of a 29-year-old female with stage IV endometriosis is highly plausible and aligns perfectly with the epidemiology of the disease, which predominantly affects women of reproductive age. The clinical context of deeply infiltrating endometriosis requiring specialized excision surgery is also highly realistic for this demographic, as many patients in this age group seek specialized care after failed standard treatments. There is no stereotyping or exoticizing language used in the patient profile, clinical context, or the denial letter. The letter uses neutral, second-person language ('Dear Member', 'your plan documents') avoiding any pronoun mismatches.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 29",
+          "\"gender\": \"F\"",
+          "\"diagnosis\": \"Endometriosis, stage IV\""
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is an adult (age 29). The insurer is UHC and the denial type is Prior Authorization, both of which are explicitly approved. The plan is 'self_funded', indicating employer-sponsored commercial coverage, with no mention of excluded government or marketplace plans. Finally, there is no language implying live-filing, attorney work, or court representation.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 29",
+          "UHC \u2014 Prior Authorization",
+          "\"plan_funding_type\": \"self_funded\""
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The provided text contains no specific dates. The denial letter lacks a date of issuance, a requested date of service, and an appeal window deadline. The clinical context only includes a vague temporal reference, noting that simple ablation 'has failed twice before.' Because there are no explicit dates, there are no direct chronological contradictions, numerically wrong appeal windows, or impossible durations that would trigger a score of 1. However, the complete omission of 2025-2026 anchoring dates and the reliance on vague clinical timelines prevents it from scoring a 5. It aligns best with the vagueness criteria of a 3, as the timeline is broadly understandable but lacks any specific quarter/year anchoring.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "failed twice before"
+        ],
+        "improvement": "Add specific 2025-2026 dates to the denial letter (e.g., date of notice, date of service, 180-day appeal deadline) and specify the exact months/years of the previous failed ablations."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter bases its decision on a highly generic reference, stating 'According to your plan documents' and citing the general rules for a 'Network Gap Exception / Prior Authorization'. It does not provide a specific section, page number, or edition of the plan documents, which realistically mirrors the frustratingly vague citations often used by insurers. Furthermore, it successfully avoids hallucinating any fake alphanumeric policy codes or overly specific module numbers. This level of obscurity perfectly aligns with the criteria for a highly realistic, unspecific citation.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "According to your plan documents, services performed by an out-of-network provider require a Network Gap Exception / Prior Authorization"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial asserts there are three in-network OB/GYNs capable of performing generic 'laparoscopic surgery' within 30 miles. However, the clinical context reveals a glaring factual and clinical weakness: the patient requires complex laparoscopic excision for deeply infiltrating endometriosis involving the bowel and ureters, whereas the in-network providers only perform simple ablation. Ablation is not only ineffective, having failed twice previously, but is explicitly contraindicated for deep bowel involvement. The denial's reliance on generic surgical capabilities fails to address the specific, highly specialized surgical intervention required for the patient's severe condition. A well-crafted appeal demonstrating that the in-network providers are clinically incapable of performing the necessary excision surgery will easily satisfy the plan's stated requirement for a Network Gap Exception. Therefore, this is a highly exploitable denial and a very strong appeal case.",
+        "score": 5,
+        "confidence": 0.95,
+        "exploitable_weaknesses": [
+          "False equivalence between generic laparoscopic surgery and complex endometriosis excision surgery.",
+          "In-network providers only perform ablation, which is clinically contraindicated for the patient's specific bowel involvement.",
+          "The denial provides a clear pathway to approval (proving in-network providers are clinically unable to treat the condition), which the clinical facts easily satisfy."
+        ],
+        "strong_defenses": [
+          "The plan clearly defines the geographic (30 miles) and procedural requirements for a Network Gap Exception."
+        ],
+        "evidence_quotes": [
+          "three (3) in-network OB/GYNs in your area who perform laparoscopic surgery",
+          "you have not demonstrated that these in-network providers are clinically unable to treat your condition",
+          "local in-network OB/GYNs only perform simple ablation",
+          "contraindicated for deep bowel involvement"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial asserts there are three in-network OB/GYNs capable of performing generic 'laparoscopic surgery' within 30 miles. However, the clinical context reveals a glaring factual and clinical weakness: the patient requires complex laparoscopic excision for deeply infiltrating endometriosis involving the bowel and ureters, whereas the in-network providers only perform simple ablation. Ablation is not only ineffective, having failed twice previously, but is explicitly contraindicated for deep bowel involvement. The denial's reliance on generic surgical capabilities fails to address the specific, highly specialized surgical intervention required for the patient's severe condition. A well-crafted appeal demonstrating that the in-network providers are clinically incapable of performing the necessary excision surgery will easily satisfy the plan's stated requirement for a Network Gap Exception. Therefore, this is a highly exploitable denial and a very strong appeal case.",
+      "exploitable_weaknesses": [
+        "False equivalence between generic laparoscopic surgery and complex endometriosis excision surgery.",
+        "In-network providers only perform ablation, which is clinically contraindicated for the patient's specific bowel involvement.",
+        "The denial provides a clear pathway to approval (proving in-network providers are clinically unable to treat the condition), which the clinical facts easily satisfy."
+      ],
+      "strong_defenses": [
+        "The plan clearly defines the geographic (30 miles) and procedural requirements for a Network Gap Exception."
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

@@ -6,9 +6,168 @@
     "age": 28,
     "gender": "F",
     "diagnosis": "Severe Obsessive-Compulsive Disorder (OCD)",
-    "treatment_requested": "Intensive Outpatient Program (IOP) - 4 days per week"
+    "treatment_requested": "Intensive Outpatient Program (IOP) - 4 days per week",
+    "plan_funding_type": "fully_insured"
   },
   "denial_letter_text": "Dear Member,\n\nWe have reviewed the request from your provider for an Intensive Outpatient Program (IOP) from 05/10/2026 to 06/10/2026. Based on Cigna's Medical Necessity Guidelines and the Milliman Care Guidelines (MCG) for Behavioral Health, we are denying this request.\n\nThe clinical information provided does not indicate that your symptoms are severe enough to require an intensive program of care multiple days per week. The records show you are medically stable and able to perform activities of daily living. Therefore, you can be safely treated at a lower level of care, such as weekly standard outpatient therapy. The requested IOP service is not considered medically necessary. You may appeal this decision within 180 days.",
   "clinical_context": "Patient has severe OCD with daily compulsions lasting 6+ hours, leading to job loss and inability to leave the house. Provider noted that she has already tried standard weekly outpatient therapy for 6 months with no improvement, and stepped up care (IOP) is required per APA guidelines.",
-  "synthetic_provenance": "Generated purely via LLM referencing typical MCG behavioral health step-therapy/IOP denial patterns."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-ba2e4",
+    "generated_at": "2026-05-29T02:12:38Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "unknown",
+      "patient_gender": "F",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are internally consistent and the core scenario facts (diagnosis, requested treatment) align perfectly across the profile, denial letter, and clinical context. The denial letter claims the patient can be safely treated with 'weekly standard outpatient therapy,' whereas the clinical context explicitly states she has 'already tried standard weekly outpatient therapy for 6 months with no improvement.' According to the evaluation criteria, this discrepancy is an allowed falsehood by the insurance company designed to create an appealable denial, rather than a factual contradiction in the scenario's generation. There are no internal contradictions within the denial letter or the clinical context themselves.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Intensive Outpatient Program (IOP) - 4 days per week",
+          "Severe Obsessive-Compulsive Disorder (OCD)",
+          "Therefore, you can be safely treated at a lower level of care, such as weekly standard outpatient therapy.",
+          "Provider noted that she has already tried standard weekly outpatient therapy for 6 months with no improvement"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The denial letter is highly concise and relies on standard insurance industry boilerplate rather than LLM-generated prose. It lacks classic AI tells such as flowery vocabulary ('delve', 'tapestry'), overly symmetrical paragraph structures, listicles, or excessive, artificial empathy. The tone is appropriately dry, bureaucratic, and terse, using standard claims phrasing like 'medically stable' and 'activities of daily living'. This perfectly aligns with how a real claims handler or macro-driven system would generate a denial letter, showing no signs of GPT-typical generation.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "The records show you are medically stable and able to perform activities of daily living.",
+          "Therefore, you can be safely treated at a lower level of care, such as weekly standard outpatient therapy."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It avoids any apologies or warmth, relying instead on standard boilerplate language like 'medically stable' and 'able to perform activities of daily living' to justify the denial. This effectively obfuscates the specific clinical reality of the patient's condition, which is a hallmark of realistic denials. The clinical context is written as a neutral, plain-prose clinical narrative without any emotional pleading, accurately reflecting a provider's objective documentation.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Based on Cigna's Medical Necessity Guidelines and the Milliman Care Guidelines (MCG) for Behavioral Health, we are denying this request.",
+          "The records show you are medically stable and able to perform activities of daily living.",
+          "Patient has severe OCD with daily compulsions lasting 6+ hours, leading to job loss and inability to leave the house."
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The provided denial letter focuses entirely on the clinical rationale for denying the Intensive Outpatient Program (IOP), citing Cigna's Medical Necessity Guidelines and MCG criteria. It makes absolutely no mention of the patient's potential out-of-pocket cost liability, financial responsibility, or specific dollar amounts. According to the evaluation criteria and edge cases, being completely silent on costs is standard industry practice for medical necessity denials, as insurers rarely provide exact financial estimates in these clinical determinations. Because the letter avoids any unrealistic or overly helpful cost estimates, it perfectly meets the criteria for realistic financial framing.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "LegalAuditor",
+        "reasoning": "The denial letter includes a standard commercial appeal timeframe ('within 180 days') but completely omits mandatory ERISA disclosures, instructions on how to file the appeal, and external review rights. This omission aligns perfectly with the criteria for a realistically imperfect denial, as it reflects real-world tactics where plans provide bare-minimum appeal information, creating a procedural attack vector for the patient. Furthermore, the text successfully avoids hallucinating any statutes or incorrectly applying Medicare regulations to a commercial Cigna plan.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "You may appeal this decision within 180 days."
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The demographic combination of a 28-year-old female with severe Obsessive-Compulsive Disorder (OCD) is clinically plausible and aligns well with epidemiological data, as OCD often presents or reaches peak severity requiring intensive treatment in early adulthood. The clinical context appropriately uses the pronoun 'she', which matches the patient profile's female gender designation. The presentation of severe OCD, characterized by compulsions lasting 6+ hours and resulting in job loss, is a realistic description of the illness's functional impairment and does not rely on gendered or cultural stereotypes. The denial letter uses neutral second-person pronouns. Overall, the demographics are highly realistic and appropriately handled without invoking stereotypes.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 28",
+          "\"gender\": \"F\"",
+          "\"diagnosis\": \"Severe Obsessive-Compulsive Disorder (OCD)\"",
+          "she has already tried standard weekly outpatient therapy"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope constraints. The patient is 28 years old, which falls within the required adult age range of 18-89. The insurer is Cigna and the denial type is Medical Necessity, both of which are explicitly approved. The plan funding type is listed as 'fully_insured' with no mention of excluded government or marketplace plans (Medicare, Medicaid, TRICARE, VA), aligning with employer-sponsored commercial coverage. Finally, there is no language indicating live-filing, attorney work, or court representation in the provided text.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 28",
+          "Cigna \u2014 Medical Necessity",
+          "\"plan_funding_type\": \"fully_insured\""
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The provided text includes specific service dates ('05/10/2026 to 06/10/2026') and a precise, compliant appeal window ('180 days'). The clinical context also provides a clear duration for prior treatment ('6 months'), which plausibly stacks before the requested 2026 service dates without any contradictions. However, the denial letter lacks an explicit date of issuance (e.g., a header date) and a specific date for when the provider made the request. While the dates present are broadly acceptable and realistic for 2026 operations, the absence of the letter's issuance date introduces vagueness, making it impossible to fully verify the chronological consistency between the request date, the denial date, and the service start date.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "05/10/2026 to 06/10/2026",
+          "within 180 days",
+          "standard weekly outpatient therapy for 6 months"
+        ],
+        "improvement": "Add an explicit date of issuance at the top of the denial letter (e.g., May 1, 2026) to establish a complete and verifiable chronological timeline."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter cites \"Cigna's Medical Necessity Guidelines\" and \"the Milliman Care Guidelines (MCG) for Behavioral Health\". These citations are highly realistic because they are intentionally vague and broad umbrella terms. They successfully avoid over-specifying edition numbers, specific module codes (such as MCG's alphanumeric codes), or page numbers, which is a common tactic used by insurers to make appeals more difficult for providers. Furthermore, the letter does not hallucinate any fake alphanumeric policy codes. This level of obscurity perfectly matches the criteria for a realistically unspecific citation.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Based on Cigna's Medical Necessity Guidelines and the Milliman Care Guidelines (MCG) for Behavioral Health, we are denying this request."
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial presents a highly exploitable clinical weakness by claiming the patient can be treated with 'weekly standard outpatient therapy,' completely ignoring the clinical context that the patient already failed 6 months of this exact treatment. Furthermore, the denial's assertion that the patient is 'able to perform activities of daily living' is directly contradicted by her job loss, inability to leave the house, and 6+ hours of daily compulsions. Because the patient clearly meets the standard of care for stepped-up treatment per APA guidelines and has documented failure of lower-level care, a well-crafted appeal highlighting these factual omissions will have a very high likelihood of success.",
+        "score": 5,
+        "confidence": 0.95,
+        "exploitable_weaknesses": [
+          "Ignores documented failure of lower-level care (6 months of standard outpatient)",
+          "Falsely claims patient can perform ADLs despite being housebound and losing her job",
+          "Fails to address APA guidelines supporting stepped-up care"
+        ],
+        "strong_defenses": [
+          "Cites specific guidelines (Cigna/MCG) and provides a standard 180-day appeal window"
+        ],
+        "evidence_quotes": [
+          "can be safely treated at a lower level of care, such as weekly standard outpatient therapy",
+          "tried standard weekly outpatient therapy for 6 months with no improvement",
+          "able to perform activities of daily living",
+          "daily compulsions lasting 6+ hours, leading to job loss and inability to leave the house"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial presents a highly exploitable clinical weakness by claiming the patient can be treated with 'weekly standard outpatient therapy,' completely ignoring the clinical context that the patient already failed 6 months of this exact treatment. Furthermore, the denial's assertion that the patient is 'able to perform activities of daily living' is directly contradicted by her job loss, inability to leave the house, and 6+ hours of daily compulsions. Because the patient clearly meets the standard of care for stepped-up treatment per APA guidelines and has documented failure of lower-level care, a well-crafted appeal highlighting these factual omissions will have a very high likelihood of success.",
+      "exploitable_weaknesses": [
+        "Ignores documented failure of lower-level care (6 months of standard outpatient)",
+        "Falsely claims patient can perform ADLs despite being housebound and losing her job",
+        "Fails to address APA guidelines supporting stepped-up care"
+      ],
+      "strong_defenses": [
+        "Cites specific guidelines (Cigna/MCG) and provides a standard 180-day appeal window"
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

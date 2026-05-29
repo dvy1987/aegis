@@ -6,9 +6,164 @@
     "age": 71,
     "gender": "F",
     "diagnosis": "Post-stroke hemiparesis",
-    "treatment_requested": "Transfer to Inpatient Rehabilitation Facility (IRF)"
+    "treatment_requested": "Transfer to Inpatient Rehabilitation Facility (IRF)",
+    "plan_funding_type": "self_funded"
   },
   "denial_letter_text": "Dear Member,\n\nWe received a prior authorization request to transfer you from acute hospital care to an Inpatient Rehabilitation Facility (IRF). We are denying this request.\n\nBased on UnitedHealthcare guidelines, admission to an IRF requires evidence that the patient can actively participate in and benefit from at least three (3) hours of intensive therapy per day. The clinical notes from your physical therapist in the hospital indicate you fatigued after 30 minutes of therapy yesterday. Therefore, we are authorizing a transfer to a Skilled Nursing Facility (SNF) instead, which provides a lower, less intensive level of care.",
   "clinical_context": "Patient had a severe stroke but is highly motivated. The single day she fatigued after 30 minutes was the day immediately following her stroke. Since then, she has been doing 2 hours a day easily, but the hospital submitted the older notes. An SNF will not provide the intensive daily therapy needed for her to regain walking ability.",
-  "synthetic_provenance": "Generated purely via LLM referencing IRF vs SNF level-of-care prior authorization disputes."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-c9523",
+    "generated_at": "2026-05-29T01:56:01Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "unknown",
+      "patient_gender": "F",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The scenario contains a timeline contradiction between the denial letter and the clinical context. The denial letter explicitly states that the clinical notes indicate the patient fatigued after 30 minutes of therapy 'yesterday.' However, the clinical context explains that this 30-minute fatigue occurred on the day immediately following her stroke, and that 'since then, she has been doing 2 hours a day easily.' The context also mentions the hospital submitted 'older notes.' If the patient has been completing 2 hours of therapy daily for a period long enough to be described as 'since then,' and the submitted notes are 'older,' the fatigue event could not have happened 'yesterday.' This creates an unstable timeline regarding when the fatigue occurred and how much time has passed since the stroke. Therefore, the documents fail the cross-document consistency check.",
+        "score": "FAIL",
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "indicate you fatigued after 30 minutes of therapy yesterday",
+          "Since then, she has been doing 2 hours a day easily, but the hospital submitted the older notes."
+        ],
+        "improvement": "Change 'yesterday' in the denial letter to 'in the submitted notes' or a specific past date to align with the clinical context's timeline that time has passed and the notes are older."
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The letter reads exactly like a standard, human-authored insurance denial. It is blunt, concise, and highly bureaucratic. It completely lacks common LLM tells such as overly empathetic filler ('we understand this journey'), flowery vocabulary ('delve', 'tapestry', 'navigate'), or perfectly symmetrical, bulleted structures. The phrasing 'We are denying this request' and the direct, dry citation of the 3-hour rule alongside the 30-minute fatigue note reflect standard claims handler cadence. There is no robotic enumeration or triplet adjective use.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "We are denying this request.",
+          "Based on UnitedHealthcare guidelines, admission to an IRF requires evidence that the patient can actively participate in and benefit from at least three (3) hours of intensive therapy per day.",
+          "The clinical notes from your physical therapist in the hospital indicate you fatigued after 30 minutes of therapy yesterday."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter successfully avoids apologies and maintains a generally procedural tone. However, it wavers by being slightly too clear and using phrasing uncharacteristic of a real insurer; specifically, it explicitly admits the alternative SNF provides a 'lower, less intensive level of care' rather than obfuscating with terms like 'the appropriate level of care'. Furthermore, the clinical context drifts slightly into patient advocacy rather than strict clinical prose, using subjective phrases like 'highly motivated' and 'needed for her to regain walking ability'.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "which provides a lower, less intensive level of care",
+          "highly motivated",
+          "needed for her to regain walking ability"
+        ],
+        "improvement": "Replace the insurer's admission of a 'lower, less intensive level of care' with vague bureaucratic phrasing like 'the medically appropriate level of care'. Remove advocacy language from the clinical context to make it strictly objective."
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter focuses entirely on the clinical criteria for an Inpatient Rehabilitation Facility (IRF) versus a Skilled Nursing Facility (SNF). It makes absolutely no mention of the patient's potential out-of-pocket cost liability, nor does it provide any financial estimates or conflate insurance terms. According to the evaluation guidelines, a complete absence of cost liability language is standard industry practice for clinical denials. Therefore, it perfectly meets the criteria for a realistically silent financial framing.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "regulatory_and_appeal_references",
+        "reasoning": "The denial letter completely omits any mention of appeal rights, appeal windows, or regulatory frameworks (such as ERISA). While the prompt notes that omitting specific external review rights is a realistic imperfection, the total absence of a basic appeal window or any generic legal boilerplate makes this an incomplete and unrealistic representation of a commercial insurance denial letter. A real commercial denial must legally contain at least a token reference to the member's right to appeal and a timeframe to do so. Because it lacks even generic legal language, it falls to the lowest score.",
+        "score": 1,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Therefore, we are authorizing a transfer to a Skilled Nursing Facility (SNF) instead, which provides a lower, less intensive level of care."
+        ],
+        "improvement": "Add a standard appeal rights section that mentions a 180-day appeal window and vaguely references ERISA rights, while strategically omitting external review details to create a realistic imperfection."
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The demographic combination of a 71-year-old female with post-stroke hemiparesis is highly plausible and aligns perfectly with the epidemiology of cerebrovascular accidents, which predominantly affect older adults. The pronoun usage in the clinical context ('she', 'her') correctly matches the patient profile's female gender. The denial letter appropriately uses the second-person 'you' without making any gendered assumptions or relying on harmful stereotypes. There is no language that exoticizes the patient; the scenario is clinically standard and demographically sound.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 71",
+          "\"gender\": \"F\"",
+          "\"diagnosis\": \"Post-stroke hemiparesis\"",
+          "The single day she fatigued after 30 minutes was the day immediately following her stroke."
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The insurer is UHC and the denial type is Prior Authorization. The patient is an adult (age 71, which falls within the allowed 18-89 range). The plan is designated as 'self_funded', indicating employer-sponsored commercial coverage, and there is absolutely no framing or mention of Medicare, Medicaid, TRICARE, VA, or marketplace plans. Finally, there is no prohibited language regarding live-filing, attorney-work, or court representation.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "age\": 71",
+          "plan_funding_type\": \"self_funded\"",
+          "UHC \u2014 Prior Authorization"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The provided text contains no specific calendar dates, years (such as 2025 or 2026), or standard appeal windows, which are necessary for a realistic commercial insurance denial letter. The only temporal references are relative, such as 'yesterday' and 'the day immediately following her stroke.' While these relative timelines do not explicitly contradict each other (the sequence of the stroke, fatigue the next day, and subsequent improvement is logically possible), the complete omission of explicit dates makes the timeline highly vague. It avoids a score of 1 because there are no impossible durations or direct date contradictions, but it falls far short of a 5 due to the lack of concrete 2025-2026 dates.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "...fatigued after 30 minutes of therapy yesterday.",
+          "The single day she fatigued after 30 minutes was the day immediately following her stroke.",
+          "Since then, she has been doing 2 hours a day easily"
+        ],
+        "improvement": "Add specific calendar dates (e.g., in 2026) for the denial letter, the date of the stroke, the physical therapy sessions, and include a standard 180-day appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter cites 'UnitedHealthcare guidelines' as the basis for its decision. This perfectly aligns with the criteria for a realistically vague and unspecific citation. It uses a generic umbrella term without providing specific module numbers, edition numbers, or alphanumeric codes. Furthermore, it successfully avoids hallucinating fake policy names or codes, matching the edge case guidance that citing internal guidelines without naming a specific bulletin is highly realistic.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Based on UnitedHealthcare guidelines"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial presents a very strong case for appeal (easy to appeal). Procedurally, the letter completely omits mandatory ERISA disclosures, appeal rights, and timeframes. Clinically and factually, the denial relies on outdated physical therapy notes from the day immediately following the stroke ('fatigued after 30 minutes'). The clinical context reveals the patient is now easily tolerating 2 hours of therapy daily. A well-crafted appeal simply needs to submit the updated PT notes demonstrating her current capacity to participate in intensive therapy, easily refuting the denial's factual basis. The combination of glaring procedural omissions and easily correctable factual errors makes this highly exploitable.",
+        "score": 5,
+        "confidence": 0.95,
+        "exploitable_weaknesses": [
+          "Complete omission of ERISA disclosures, appeal rights, and appeal windows in the letter.",
+          "Reliance on outdated clinical notes that do not reflect the patient's current therapy tolerance."
+        ],
+        "strong_defenses": [
+          "The cited guideline (requiring 3 hours of intensive therapy per day for IRF admission) is a standard and valid clinical threshold."
+        ],
+        "evidence_quotes": [
+          "admission to an IRF requires evidence that the patient can actively participate in and benefit from at least three (3) hours of intensive therapy per day",
+          "fatigued after 30 minutes of therapy yesterday",
+          "The single day she fatigued after 30 minutes was the day immediately following her stroke. Since then, she has been doing 2 hours a day easily"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial presents a very strong case for appeal (easy to appeal). Procedurally, the letter completely omits mandatory ERISA disclosures, appeal rights, and timeframes. Clinically and factually, the denial relies on outdated physical therapy notes from the day immediately following the stroke ('fatigued after 30 minutes'). The clinical context reveals the patient is now easily tolerating 2 hours of therapy daily. A well-crafted appeal simply needs to submit the updated PT notes demonstrating her current capacity to participate in intensive therapy, easily refuting the denial's factual basis. The combination of glaring procedural omissions and easily correctable factual errors makes this highly exploitable.",
+      "exploitable_weaknesses": [
+        "Complete omission of ERISA disclosures, appeal rights, and appeal windows in the letter.",
+        "Reliance on outdated clinical notes that do not reflect the patient's current therapy tolerance."
+      ],
+      "strong_defenses": [
+        "The cited guideline (requiring 3 hours of intensive therapy per day for IRF admission) is a standard and valid clinical threshold."
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

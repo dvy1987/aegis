@@ -6,9 +6,163 @@
     "age": 45,
     "gender": "F",
     "diagnosis": "Strong family history of breast cancer",
-    "treatment_requested": "BRCA1 and BRCA2 Genetic Testing"
+    "treatment_requested": "BRCA1 and BRCA2 Genetic Testing",
+    "plan_funding_type": "self_funded"
   },
   "denial_letter_text": "Dear Member,\n\nWe are denying coverage for the BRCA1 and BRCA2 genetic testing performed on 05/20/2026.\n\nAccording to Aetna policy, all genetic testing requires prior authorization and must be accompanied by genetic counseling from a certified genetic counselor. While your records indicate you have a first-degree relative with breast cancer, your provider did not submit a prior authorization request with documentation of the required pre-test genetic counseling session. Because this requirement was not met before the test was performed, the claim is denied.",
   "clinical_context": "The patient's mother and sister both died of breast cancer before age 50. Her OB/GYN drew the blood for the BRCA test during her annual exam without realizing Aetna required a separate consultation with a certified genetic counselor first. The test is completely medically necessary, but denied on a procedural prior auth technicality.",
-  "synthetic_provenance": "Generated purely via LLM referencing genetic testing prior authorization procedural denials."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-c814d",
+    "generated_at": "2026-05-29T02:17:53Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "unknown",
+      "patient_gender": "F",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are highly consistent across all fields. The patient profile, denial letter, and clinical context all agree on the requested treatment (BRCA1 and BRCA2 Genetic Testing) and the clinical history (strong family history of breast cancer). The denial reason explicitly states a lack of prior authorization and pre-test genetic counseling, which perfectly matches the clinical context explaining that the OB/GYN drew the blood without realizing the prior authorization and counseling requirements. There are no internal contradictions within the documents, and the timeline of events is logically sound.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "We are denying coverage for the BRCA1 and BRCA2 genetic testing",
+          "your provider did not submit a prior authorization request with documentation of the required pre-test genetic counseling session",
+          "Her OB/GYN drew the blood for the BRCA test during her annual exam without realizing Aetna required a separate consultation with a certified genetic counselor first."
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The denial letter reads as highly plausible, bureaucratic, and human-authored. It completely avoids common LLM tells such as flowery language, overly empathetic apologies, or verbose explanations. There are no signature GPT words like 'delve', 'navigate', or 'complexities'. The structure is strictly functional and asymmetrical, getting straight to the point of the denial, citing the specific policy requirement, noting the missing documentation, and concluding abruptly. This dry, administrative cadence perfectly mimics a standard insurance claims handler's output without any robotic enumeration or listicle formatting.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "We are denying coverage for the BRCA1 and BRCA2 genetic testing performed on 05/20/2026.",
+          "Because this requirement was not met before the test was performed, the claim is denied."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It avoids any apologies, warmth, or marketing buzzwords, stating the policy and the reason for denial directly and dispassionately. The clinical context is written as a straightforward narrative explaining the medical background and the procedural misstep by the OB/GYN. While the final sentence of the context slightly editorializes by stating the test is 'completely medically necessary,' it functions well to establish the premise of the synthetic case without crossing into emotional pleading. Overall, the voices are highly appropriate for their respective authorships.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Because this requirement was not met before the test was performed, the claim is denied.",
+          "The test is completely medically necessary, but denied on a procedural prior auth technicality."
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter makes absolutely no mention of the patient's financial liability, out-of-pocket costs, or specific dollar amounts. It focuses entirely on the procedural reason for the denial (lack of prior authorization and genetic counseling). According to the evaluation criteria, if a denial makes no mention of cost liability at all, this reflects standard industry practice and automatically warrants a top score. It successfully avoids being unrealistically helpful or precise about what the patient will owe.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Because this requirement was not met before the test was performed, the claim is denied."
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "LegalAuditor",
+        "reasoning": "The denial letter completely omits any mention of appeal rights, appeal windows, or regulatory frameworks. While the prompt notes that omitting external review rights or specific ERISA disclosures can be a realistic imperfection, omitting all appeal rights and deadlines makes the letter structurally incomplete and highly unrealistic for a US commercial plan. The rubric for a top score explicitly requires that the letter 'mentions appeal rights.' Because this generation abruptly ends after the clinical rationale without providing any legal, regulatory, or appeal framing whatsoever, it fails to provide the necessary components for this dimension. It reads as an incomplete synthetic generation rather than a realistically flawed commercial denial.",
+        "score": 1,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Because this requirement was not met before the test was performed, the claim is denied."
+        ],
+        "improvement": "Add standard commercial appeal boilerplate at the end of the letter that mentions the member's right to appeal and includes a realistic timeframe, such as a 180-day appeal window."
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The demographic combination of a 45-year-old female with a strong family history of early-onset breast cancer seeking BRCA1 and BRCA2 genetic testing is highly plausible and aligns perfectly with epidemiological norms and clinical guidelines. The pronouns used in the clinical context ('Her OB/GYN') correctly match the female gender profile. There is no evidence of stereotyping, exoticising language, or demographic mismatch.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 45",
+          "\"gender\": \"F\"",
+          "\"diagnosis\": \"Strong family history of breast cancer\"",
+          "The patient's mother and sister both died of breast cancer before age 50. Her OB/GYN drew the blood"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is 45 years old, fitting the adult criteria (18-89). The insurer is Aetna, and the denial is based on a Prior Authorization technicality. The plan is 'self_funded', which indicates employer-sponsored commercial coverage, with no framing around Medicare, Medicaid, TRICARE, VA, or marketplace plans. Finally, there is no language suggesting live-filing, attorney work, or court representation.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 45",
+          "Aetna \u2014 Prior Authorization",
+          "\"plan_funding_type\": \"self_funded\""
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The input contains only one specific date: the date of service on '05/20/2026'. There are no explicit chronological contradictions, which prevents a score of 1. However, the letter completely omits standard timeline elements required for a realistic 2026 commercial insurance denial, such as the date of the denial notice itself and the appeal window timeframe (e.g., 180 days). Furthermore, the clinical context is vague regarding timelines, noting only that relatives died 'before age 50' without specifying when these events occurred relative to the 2026 date of service. Because the dates are broadly acceptable but suffer from significant vagueness and omission, it aligns perfectly with a score of 3.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "05/20/2026",
+          "before age 50"
+        ],
+        "improvement": "Include a specific denial letter date (e.g., June 2026) and an explicit appeal window (e.g., 180 days) to establish a complete and realistic timeline."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter cites 'Aetna policy' as the basis for the denial without providing a specific Clinical Policy Bulletin (CPB) number, section, or edition. This aligns perfectly with the evaluation criteria and edge case guidance, which state that referencing internal guidelines without naming the specific bulletin is highly realistic and effectively frustrating for providers. The text successfully avoids over-specifying details and does not hallucinate any fake alphanumeric codes.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "According to Aetna policy, all genetic testing requires prior authorization"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial relies on a strict administrative defense: the provider failed to obtain prior authorization and the patient did not receive pre-test counseling from a certified genetic counselor. However, the appeal case is strong for two main reasons. Clinically, the patient undeniably meets the standard of care for BRCA testing due to a profound family history (mother and sister died of breast cancer before age 50), making the medical necessity argument overwhelming. Procedurally, the denial letter is highly defective as it completely omits mandatory ERISA disclosures, including appeal rights, instructions, and timeframes. An appeal leveraging the undeniable medical necessity, the provider's administrative oversight, and the procedurally non-compliant denial letter has a high likelihood of success.",
+        "score": 5,
+        "confidence": 0.9,
+        "exploitable_weaknesses": [
+          "Complete omission of ERISA appeal rights, instructions, and timeframes in the denial letter.",
+          "Patient clearly meets the clinical standard of care for BRCA testing, which was bypassed for an administrative technicality."
+        ],
+        "strong_defenses": [
+          "The insurer's policy explicitly requires prior authorization and pre-test genetic counseling, which were factually not completed."
+        ],
+        "evidence_quotes": [
+          "your provider did not submit a prior authorization request with documentation of the required pre-test genetic counseling session",
+          "The patient's mother and sister both died of breast cancer before age 50."
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial relies on a strict administrative defense: the provider failed to obtain prior authorization and the patient did not receive pre-test counseling from a certified genetic counselor. However, the appeal case is strong for two main reasons. Clinically, the patient undeniably meets the standard of care for BRCA testing due to a profound family history (mother and sister died of breast cancer before age 50), making the medical necessity argument overwhelming. Procedurally, the denial letter is highly defective as it completely omits mandatory ERISA disclosures, including appeal rights, instructions, and timeframes. An appeal leveraging the undeniable medical necessity, the provider's administrative oversight, and the procedurally non-compliant denial letter has a high likelihood of success.",
+      "exploitable_weaknesses": [
+        "Complete omission of ERISA appeal rights, instructions, and timeframes in the denial letter.",
+        "Patient clearly meets the clinical standard of care for BRCA testing, which was bypassed for an administrative technicality."
+      ],
+      "strong_defenses": [
+        "The insurer's policy explicitly requires prior authorization and pre-test genetic counseling, which were factually not completed."
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

@@ -6,9 +6,166 @@
     "age": 42,
     "gender": "F",
     "diagnosis": "Morbid Obesity with Severe Sleep Apnea",
-    "treatment_requested": "Roux-en-Y Gastric Bypass Surgery"
+    "treatment_requested": "Roux-en-Y Gastric Bypass Surgery",
+    "plan_funding_type": "self_funded"
   },
   "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for a Roux-en-Y Gastric Bypass. Based on Cigna's Medical Coverage Policy for Bariatric Surgery, this request is denied.\n\nWhile your BMI of 41 meets the initial criteria for bariatric surgery, the clinical information provided does not show that you have actively participated in a medically supervised weight loss program for at least six (6) consecutive months immediately prior to the surgery request, as required by our policy. Your records only show four months of documented dietary counseling. Therefore, the requested surgery is not considered medically necessary at this time. You may appeal this decision within 180 days.",
   "clinical_context": "Patient has a BMI of 41 with life-threatening sleep apnea and hypertension. She participated in a weight loss program for 4 months but her cardiologist ordered the surgery to be expedited because the sleep apnea is causing severe right heart strain, making a 6-month delay clinically dangerous.",
-  "synthetic_provenance": "Generated purely via LLM referencing typical strict timeline step-therapy denials for bariatric procedures."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-b2dcc",
+    "generated_at": "2026-05-29T02:30:23Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "unknown",
+      "patient_gender": "F",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are perfectly consistent across all factual dimensions. The requested treatment (Roux-en-Y Gastric Bypass) and diagnosis (Morbid Obesity with Severe Sleep Apnea / BMI 41) match across the patient profile, denial letter, and clinical context. The denial letter accurately notes that the patient only completed 'four months of documented dietary counseling,' which aligns exactly with the clinical context stating she 'participated in a weight loss program for 4 months.' There are no internal contradictions within the denial letter or the clinical context. The scenario presents a stable set of facts where the denial is based on a strict policy requirement (6 months) while the context provides the clinical rationale for the exception (expedited after 4 months due to right heart strain).",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Your records only show four months of documented dietary counseling.",
+          "She participated in a weight loss program for 4 months",
+          "While your BMI of 41 meets the initial criteria",
+          "Patient has a BMI of 41 with life-threatening sleep apnea"
+        ],
+        "improvement": "N/A"
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The letter is highly direct and bureaucratic, completely lacking typical LLM flourishes. There are no listicles, no overly empathetic transitions, and no signature GPT vocabulary such as 'delve,' 'navigate,' or 'tapestry.' The phrasing 'six (6) consecutive months' is a classic human legal and insurance convention that LLMs rarely generate unprompted unless specifically instructed. The tone is appropriately dry, rigid, and policy-focused, reading exactly like a standard claims handler macro rather than an AI attempting to sound like one.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "six (6) consecutive months",
+          "Based on Cigna's Medical Coverage Policy for Bariatric Surgery, this request is denied."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It relies strictly on policy criteria ('six (6) consecutive months') and completely ignores the clinical urgency, which is highly realistic. It contains no apologies, warmth, or marketing language, maintaining a strictly administrative voice. The clinical context is written as a neutral, plain-prose medical narrative, stating the facts of the cardiologist's orders and the physiological risks ('severe right heart strain') without resorting to emotional pleading or advocacy.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Based on Cigna's Medical Coverage Policy for Bariatric Surgery, this request is denied.",
+          "Therefore, the requested surgery is not considered medically necessary at this time.",
+          "cardiologist ordered the surgery to be expedited because the sleep apnea is causing severe right heart strain"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter focuses entirely on the clinical criteria regarding the medically supervised weight loss program and makes no mention of the patient's financial liability, out-of-pocket costs, or specific dollar amounts. According to the evaluation criteria, omitting cost liability entirely is standard practice for clinical denials and warrants a perfect score.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "LegalAuditor",
+        "reasoning": "The denial letter successfully demonstrates a realistically imperfect regulatory framing typical of commercial insurance plans. It includes the federally mandated internal appeal timeframe ('You may appeal this decision within 180 days') but strategically omits all other ERISA-required disclosures. There is no mention of the member's right to access their claim file, no explanation of how to actually file the appeal, and a complete omission of external review rights. Furthermore, the letter avoids hallucinating any fake statutes or inappropriately applying Medicare regulations to a commercial Cigna policy. This bare-minimum legal compliance provides a highly realistic attack vector for an appeal.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "You may appeal this decision within 180 days."
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The demographic combination of a 42-year-old female presenting with morbid obesity, severe sleep apnea, and hypertension is clinically highly plausible and aligns perfectly with the typical epidemiology for bariatric surgery candidates. Pronoun usage in the clinical context ('She participated') correctly matches the patient profile gender ('F'). The denial letter appropriately uses neutral second-person pronouns ('you', 'your'), avoiding any risk of misgendering. There is no language that exoticizes or stereotypes the patient, and the clinical presentation is straightforward and medically appropriate for this demographic.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "age\": 42",
+          "gender\": \"F\"",
+          "diagnosis\": \"Morbid Obesity with Severe Sleep Apnea\"",
+          "She participated in a weight loss program"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is an adult (age 42). The insurer is Cigna, and the denial is based on Medical Necessity. The plan is self-funded, indicating employer-sponsored commercial coverage without any framing of Medicare, Medicaid, TRICARE, VA, or marketplace plans. Finally, there is no language suggesting live-filing, attorney-work, or court representation.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 42",
+          "\"plan_funding_type\": \"self_funded\"",
+          "Cigna \u2014 Medical Necessity"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The text includes relative timeline durations such as 'four months of documented dietary counseling,' a '6-month delay,' and an appeal window of '180 days.' These relative timelines are logically consistent with each other and align with standard insurance practices. However, the letter and clinical context completely lack actual calendar dates (e.g., a specific denial date in 2025 or 2026, or specific dates of service). Because the absolute dates are entirely omitted rather than contradictory, this represents a high degree of vagueness rather than a direct chronological contradiction, fitting the criteria for a score of 3.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "four months of documented dietary counseling",
+          "appeal this decision within 180 days",
+          "6-month delay"
+        ],
+        "improvement": "Add specific calendar dates for the denial letter (e.g., a date in 2026), the date of the service request, and the exact start/end dates of the 4-month weight loss program to anchor the timeline."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter cites \"Cigna's Medical Coverage Policy for Bariatric Surgery\" as the basis for the decision. This is a highly realistic, appropriately vague citation. It provides the brand and the general topic of the policy but deliberately omits any specific policy numbers, effective dates, section headers, or page numbers that would make it easy for a provider to look up the exact text. Furthermore, it successfully avoids hallucinating fake alphanumeric codes, fitting the criteria for a realistically unspecific reference.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Based on Cigna's Medical Coverage Policy for Bariatric Surgery, this request is denied."
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial relies on a rigid application of a 6-month medically supervised weight loss requirement, accurately noting that only 4 months were completed. However, the clinical context provides a highly exploitable weakness: a cardiologist explicitly ordered the surgery to be expedited due to life-threatening sleep apnea causing severe right heart strain, making further delay clinically dangerous. An appeal has a very high likelihood of success by arguing that enforcing the remaining two months of the conservative management requirement contradicts the specialist's assessment of imminent harm and violates the core principle of medical necessity. The denial's failure to address this expedited specialist order makes it highly vulnerable to a clinical appeal.",
+        "score": 5,
+        "confidence": 0.95,
+        "exploitable_weaknesses": [
+          "Rigid application of conservative management timeline ignoring imminent clinical danger",
+          "Failure to address the cardiologist's expedited order and documentation of severe right heart strain"
+        ],
+        "strong_defenses": [
+          "Clear policy requirement of 6 months of supervised weight loss",
+          "Accurate factual statement that only 4 months of the program were completed"
+        ],
+        "evidence_quotes": [
+          "does not show that you have actively participated in a medically supervised weight loss program for at least six (6) consecutive months",
+          "cardiologist ordered the surgery to be expedited because the sleep apnea is causing severe right heart strain, making a 6-month delay clinically dangerous"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial relies on a rigid application of a 6-month medically supervised weight loss requirement, accurately noting that only 4 months were completed. However, the clinical context provides a highly exploitable weakness: a cardiologist explicitly ordered the surgery to be expedited due to life-threatening sleep apnea causing severe right heart strain, making further delay clinically dangerous. An appeal has a very high likelihood of success by arguing that enforcing the remaining two months of the conservative management requirement contradicts the specialist's assessment of imminent harm and violates the core principle of medical necessity. The denial's failure to address this expedited specialist order makes it highly vulnerable to a clinical appeal.",
+      "exploitable_weaknesses": [
+        "Rigid application of conservative management timeline ignoring imminent clinical danger",
+        "Failure to address the cardiologist's expedited order and documentation of severe right heart strain"
+      ],
+      "strong_defenses": [
+        "Clear policy requirement of 6 months of supervised weight loss",
+        "Accurate factual statement that only 4 months of the program were completed"
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

@@ -6,9 +6,170 @@
     "age": 22,
     "gender": "M",
     "diagnosis": "Suspected Scaphoid Fracture",
-    "treatment_requested": "MRI of Wrist without contrast (Out-of-Network)"
+    "treatment_requested": "MRI of Wrist without contrast (Out-of-Network)",
+    "plan_funding_type": "self_funded"
   },
   "denial_letter_text": "Dear Member,\n\nWe are denying coverage for the MRI of the wrist performed on 06/02/2026 by an out-of-network radiology center.\n\nYour plan requires prior authorization for all advanced imaging, and specifically requires out-of-network services to receive a Network Exception authorization before the service is rendered. Our records indicate no such authorization was requested or approved. Because this was not a life-threatening emergency, you are responsible for the out-of-network charges.",
   "clinical_context": "Patient fell skateboarding and went to an urgent care. X-rays were negative but the doctor suspected a scaphoid fracture (which can cause bone death if missed). The doctor sent him immediately to the imaging center next door. The center was out-of-network and did not run a prior auth because of the urgent nature of the referral.",
-  "synthetic_provenance": "Generated purely via LLM referencing out-of-network advanced imaging prior auth denials."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-8721b",
+    "generated_at": "2026-05-29T02:15:18Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "unknown",
+      "patient_gender": "M",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are highly consistent across all factual dimensions. The diagnosis (Suspected Scaphoid Fracture) and requested treatment (MRI of Wrist without contrast, Out-of-Network) match perfectly between the patient profile, denial letter, and clinical context. The denial letter correctly identifies the lack of prior authorization and out-of-network status, which is directly corroborated by the clinical context stating the center 'was out-of-network and did not run a prior auth'. The denial's assertion that this was 'not a life-threatening emergency' aligns with the clinical context of a skateboarding injury evaluated at an urgent care, setting up a valid appealable scenario regarding the definition of 'urgent' versus 'emergency' without introducing any factual contradictions.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Suspected Scaphoid Fracture",
+          "MRI of Wrist without contrast (Out-of-Network)",
+          "Our records indicate no such authorization was requested or approved.",
+          "The center was out-of-network and did not run a prior auth because of the urgent nature of the referral."
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The text is evaluated for LLM-specific writing tics, such as overly flowery vocabulary, symmetrical paragraph structures, or robotic enumeration. The denial letter is highly direct, dry, and bureaucratic, utilizing standard insurance terminology like 'Network Exception authorization' and 'prior authorization' without any unnecessary adjectives or conversational filler. The clinical context is written in a natural, concise medical shorthand. There are no instances of typical GPT phrasing like 'delve', 'navigate', or 'tapestry'. The cadence is plausibly human and accurately reflects standard claims handler boilerplate.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "We are denying coverage for the MRI of the wrist performed on 06/02/2026 by an out-of-network radiology center.",
+          "Your plan requires prior authorization for all advanced imaging, and specifically requires out-of-network services to receive a Network Exception authorization before the service is rendered.",
+          "Because this was not a life-threatening emergency, you are responsible for the out-of-network charges."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It avoids any apologies or warmth, relying instead on strict policy language like 'Network Exception authorization' and 'life-threatening emergency'. It is appropriately blunt about the financial responsibility. The clinical context is equally well-calibrated, presenting a plain-prose, factual narrative of the patient's injury, the clinical reasoning for the MRI, and the urgent care visit without resorting to emotional pleading or patient advocacy.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "We are denying coverage for the MRI of the wrist",
+          "specifically requires out-of-network services to receive a Network Exception authorization",
+          "Because this was not a life-threatening emergency, you are responsible for the out-of-network charges.",
+          "Patient fell skateboarding and went to an urgent care.",
+          "The center was out-of-network and did not run a prior auth because of the urgent nature of the referral."
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter addresses financial liability by stating, 'you are responsible for the out-of-network charges.' It does not provide any specific dollar amount, estimate, or exact out-of-pocket cost liability. This is highly realistic, as actual insurance denials typically use this exact type of vague, blanket language to assign financial responsibility without being overly helpful or precise about the actual cost. There is no conflation with Medicare/Medicaid terminology. Therefore, it perfectly aligns with the criteria for a top score.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "you are responsible for the out-of-network charges."
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "regulatory_and_appeal_references",
+        "reasoning": "The denial letter completely omits any regulatory framing, legal language, or appeal rights. While the prompt notes that omitting external review rights is a realistic imperfection, this letter fails to include even a basic internal appeal window or instructions. A complete absence of appeal rights makes the letter highly unrealistic for a US commercial plan, as basic internal appeal disclosures are legally mandated and universally present in real-world denials. Because it lacks any regulatory references or appeal-window references to evaluate, it fails to meet the criteria for a realistically imperfect letter (Score 5) or even one with generic legal language (Score 3). This represents a generation error where the legal/regulatory component was entirely forgotten.",
+        "score": 1,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "Because this was not a life-threatening emergency, you are responsible for the out-of-network charges."
+        ],
+        "improvement": "Add a standard 180-day internal appeal window and basic instructions on how to appeal, while strategically omitting ERISA or external review disclosures to maintain a realistic imperfection."
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The patient is a 22-year-old male presenting with a suspected scaphoid fracture after falling while skateboarding. This demographic profile perfectly aligns with the epidemiology of scaphoid fractures, which most commonly occur in young adult males (typically aged 15-30) due to falls onto an outstretched hand (FOOSH) during sports or activities like skateboarding. The pronoun usage in the clinical context ('sent him immediately') correctly matches the male gender profile. There is no evidence of harmful stereotyping or exoticization; rather, the scenario represents a highly typical, clinically accurate, and plausible demographic presentation for this specific injury.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 22",
+          "\"gender\": \"M\"",
+          "\"diagnosis\": \"Suspected Scaphoid Fracture\"",
+          "Patient fell skateboarding",
+          "The doctor sent him immediately"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case meets all Aegis MVP scope requirements. The patient is 22 years old, which falls within the required 18-89 adult age range. The insurer is Aetna and the denial is based on Prior Authorization, both of which are explicitly approved. The plan is 'self_funded', indicating employer-sponsored commercial coverage, and there is no mention of excluded government or marketplace plans like Medicare or Medicaid. Finally, the text contains no prohibited live-filing, attorney-work, or court representation language.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 22",
+          "Aetna \u2014 Prior Authorization",
+          "\"plan_funding_type\": \"self_funded\"",
+          "Your plan requires prior authorization for all advanced imaging"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The text contains exactly one date: the date of service ('06/02/2026'). While this date correctly falls within the expected 2026 timeframe and presents no chronological contradictions, the timeline suffers from significant vagueness and omissions. The denial letter completely lacks an issuance date, making it impossible to verify if the denial chronologically follows the service appropriately. It also omits the standard appeal window timeframe (e.g., 180 days). Furthermore, the clinical context provides a sequence of events (skateboarding fall, urgent care visit, immediate referral) but lacks specific dates to anchor these events to the date of service. Because the timeline is free of contradictions but highly vague and missing standard dates, it aligns with a score of 3.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "MRI of the wrist performed on 06/02/2026"
+        ],
+        "improvement": "Add a specific issuance date at the top of the denial letter (e.g., a few days after 06/02/2026), include an exact appeal deadline, and add specific dates to the clinical context to establish a complete timeline."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter relies on generic, unnamed plan requirements, stating 'Your plan requires prior authorization' and mentioning a 'Network Exception authorization.' It does not provide specific policy numbers, edition numbers, or page references, which perfectly aligns with the realistically vague and frustrating nature of actual insurance denials. There are no hallucinated alphanumeric codes or overly specific citations. This fits the criteria for a top score as it successfully uses internal un-named policies without over-specifying.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Your plan requires prior authorization for all advanced imaging",
+          "specifically requires out-of-network services to receive a Network Exception authorization"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial letter contains major procedural violations, completely omitting ERISA disclosures, appeal rights, and appeal timeframes. Clinically, the denial relies on an overly restrictive definition of emergency ('not a life-threatening emergency') to justify the lack of prior authorization. However, the clinical context reveals a suspected scaphoid fracture, which poses a severe risk of avascular necrosis (bone death) if not immediately diagnosed. This constitutes a limb- or function-threatening emergency, which typically qualifies for urgent exceptions under standard medical necessity definitions. While the insurer has a strong administrative defense regarding the lack of a Network Exception and prior authorization, the combination of glaring procedural omissions in the letter and the strong clinical standard of care for urgent MRI in this specific scenario makes this a highly appealable case.",
+        "score": 5,
+        "confidence": 0.9,
+        "exploitable_weaknesses": [
+          "Complete omission of ERISA disclosures, appeal rights, and appeal timeframes in the denial letter.",
+          "Use of 'life-threatening' as the sole emergency threshold, ignoring limb-threatening clinical urgency like a suspected scaphoid fracture."
+        ],
+        "strong_defenses": [
+          "Clear administrative requirement for prior authorization and Network Exception for out-of-network services."
+        ],
+        "evidence_quotes": [
+          "Because this was not a life-threatening emergency, you are responsible for the out-of-network charges.",
+          "requires out-of-network services to receive a Network Exception authorization before the service is rendered"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial letter contains major procedural violations, completely omitting ERISA disclosures, appeal rights, and appeal timeframes. Clinically, the denial relies on an overly restrictive definition of emergency ('not a life-threatening emergency') to justify the lack of prior authorization. However, the clinical context reveals a suspected scaphoid fracture, which poses a severe risk of avascular necrosis (bone death) if not immediately diagnosed. This constitutes a limb- or function-threatening emergency, which typically qualifies for urgent exceptions under standard medical necessity definitions. While the insurer has a strong administrative defense regarding the lack of a Network Exception and prior authorization, the combination of glaring procedural omissions in the letter and the strong clinical standard of care for urgent MRI in this specific scenario makes this a highly appealable case.",
+      "exploitable_weaknesses": [
+        "Complete omission of ERISA disclosures, appeal rights, and appeal timeframes in the denial letter.",
+        "Use of 'life-threatening' as the sole emergency threshold, ignoring limb-threatening clinical urgency like a suspected scaphoid fracture."
+      ],
+      "strong_defenses": [
+        "Clear administrative requirement for prior authorization and Network Exception for out-of-network services."
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

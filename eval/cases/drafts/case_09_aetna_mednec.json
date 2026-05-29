@@ -6,9 +6,166 @@
     "age": 31,
     "gender": "F",
     "diagnosis": "Macromastia with chronic back/neck pain",
-    "treatment_requested": "Bilateral Reduction Mammaplasty"
+    "treatment_requested": "Bilateral Reduction Mammaplasty",
+    "plan_funding_type": "fully_insured"
   },
   "denial_letter_text": "Dear Member,\n\nWe have reviewed the request from your provider for a Bilateral Reduction Mammaplasty (breast reduction). Based on Aetna Clinical Policy Bulletin 0017, we are denying this request.\n\nThe clinical information provided does not demonstrate that conservative treatment has been exhausted. Our policy requires documentation of at least three (3) consecutive months of conservative therapy, such as medically supervised physical therapy, chiropractic care, or specialized support garments, which have failed to relieve your symptoms. The records provided only mention the use of over-the-counter NSAIDs. Therefore, the requested surgery is considered cosmetic and not medically necessary. You may appeal within 180 days.",
   "clinical_context": "Patient suffers from severe grooving in the shoulders, chronic upper back pain, and recurring rashes under the breasts. She has been going to a massage therapist for 6 months and wearing custom bras, but the doctor's office failed to include the receipts or clinical notes for these conservative treatments in the prior auth submission.",
-  "synthetic_provenance": "Generated purely via LLM referencing typical cosmetic vs medical necessity disputes for reduction mammaplasty."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-28535",
+    "generated_at": "2026-05-29T01:50:46Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "unknown",
+      "patient_gender": "F",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are internally and cross-document consistent. The diagnosis (Macromastia) and requested treatment (Bilateral Reduction Mammaplasty) match perfectly across the patient profile, denial letter, and clinical context. The denial letter states that the submitted records lack proof of 3 months of conservative therapy and only mention NSAIDs. The clinical context explains that the patient actually completed 6 months of conservative therapy (massage and custom bras), but the provider failed to submit the documentation. This aligns perfectly with the allowed edge case for an appealable denial, where the denial's claim of missing information is explained by the context's administrative error, rather than being a factual contradiction of the scenario's core details.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "The clinical information provided does not demonstrate that conservative treatment has been exhausted.",
+          "The records provided only mention the use of over-the-counter NSAIDs.",
+          "She has been going to a massage therapist for 6 months and wearing custom bras, but the doctor's office failed to include the receipts or clinical notes for these conservative treatments in the prior auth submission."
+        ],
+        "improvement": "None needed."
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The denial letter reads exactly like a standard, human-authored insurance boilerplate. It lacks common LLM tells such as overly flowery language, perfectly symmetrical paragraph structures, or listicle formatting. The phrasing is dry, bureaucratic, and direct, utilizing standard medical insurance terminology and legalistic formatting like 'three (3) consecutive months'. The cadence is appropriately clinical and administrative without the typical GPT-style conversational padding, forced transitions, or excessive adjective triplets.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Based on Aetna Clinical Policy Bulletin 0017, we are denying this request.",
+          "Our policy requires documentation of at least three (3) consecutive months of conservative therapy",
+          "Therefore, the requested surgery is considered cosmetic and not medically necessary."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It avoids any warmth, apologies, or marketing buzzwords, directly citing the clinical policy bulletin and stating the administrative reason for denial in a detached manner. The clinical context is equally successful, written as a neutral, plain-prose narrative that outlines the patient's symptoms and the specific administrative error (missing receipts/notes) without resorting to emotional pleading or advocacy.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Based on Aetna Clinical Policy Bulletin 0017, we are denying this request.",
+          "Therefore, the requested surgery is considered cosmetic and not medically necessary.",
+          "Patient suffers from severe grooving in the shoulders, chronic upper back pain, and recurring rashes under the breasts.",
+          "but the doctor's office failed to include the receipts or clinical notes for these conservative treatments"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter makes absolutely no mention of the patient's potential financial liability, out-of-pocket costs, or specific dollar amounts. This aligns perfectly with standard insurance industry practices, where prior authorization denials typically focus strictly on medical necessity and policy criteria without providing helpful cost estimates or explicitly stating what the patient will owe if they proceed. As per the evaluation edge cases, complete silence on cost liability is standard practice and warrants a perfect score.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "regulatory_and_appeal_references",
+        "reasoning": "The denial letter accurately reflects a realistically imperfect commercial insurance denial. It includes the standard ERISA-mandated 180-day appeal window but completely omits detailed appeal instructions, ERISA disclosures, and external review rights. As noted in the evaluation criteria, omitting external review rights is a realistic real-world tactic that provides a valid attack vector for an appeal, rather than a generation error. Furthermore, the letter successfully avoids hallucinating any federal statutes or incorrectly applying Medicare regulations to a commercial case. The appeal notification is brief and tacked onto the end of the clinical rationale, making it appropriately minimal.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "You may appeal within 180 days."
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The demographic combination of a 31-year-old female presenting with macromastia and chronic back/neck pain is highly plausible and aligns perfectly with the typical epidemiology for bilateral reduction mammaplasty. The clinical context accurately describes standard physical manifestations of this condition, such as 'severe grooving in the shoulders, chronic upper back pain, and recurring rashes under the breasts,' without relying on stereotypes or inappropriate framing. Furthermore, the pronoun usage in the clinical context ('She has been going...') correctly matches the female gender specified in the patient profile. The denial letter addresses the patient neutrally in the second person. There is no exoticizing language used, making this a clinically accurate and demographically sound scenario.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 31",
+          "\"gender\": \"F\"",
+          "\"diagnosis\": \"Macromastia with chronic back/neck pain\"",
+          "She has been going to a massage therapist for 6 months"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The insurer is Aetna and the denial type is Medical Necessity, both of which are explicitly approved. The patient is 31 years old, fitting the 18-89 adult age requirement. The plan funding type is 'fully_insured' with no references to Medicare, Medicaid, TRICARE, VA, or marketplace plans, aligning with employer-sponsored commercial coverage. Finally, there is no language indicating live-filing, attorney work, or court representation.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 31",
+          "Aetna \u2014 Medical Necessity",
+          "\"plan_funding_type\": \"fully_insured\""
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The denial letter and clinical context include realistic relative durations and timeframes, such as a requirement for 'three (3) consecutive months of conservative therapy,' a '6 months' history of massage therapy, and a standard '180 days' appeal window. However, the text completely lacks absolute dates. There is no date on the denial letter, no date of service request, and no specific years (e.g., 2025 or 2026) mentioned to anchor the timeline. Because the timeline relies entirely on relative durations and omits specific chronological dates, it suffers from vagueness. There are no contradictions or impossible durations, so it avoids a score of 1, but the lack of explicit 2025-2026 dates prevents a 5.",
+        "score": 3,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "three (3) consecutive months of conservative therapy",
+          "appeal within 180 days",
+          "going to a massage therapist for 6 months"
+        ],
+        "improvement": "Add specific absolute dates for the denial letter issuance, the service request, and the conservative treatment timeline (e.g., specifying dates in 2025 or 2026) to firmly anchor the chronology."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter cites a specific, real policy: 'Aetna Clinical Policy Bulletin 0017'. While it successfully avoids hallucinating a fake policy name (CPB 0017 is indeed Aetna's actual policy for breast reduction), it is slightly too specific by providing the exact bulletin number. According to the rubric, providing this level of specificity falls under a score of 3. To achieve maximum realism (a score of 5), the citation should be more obscured or vague, such as referencing 'Aetna Clinical Policy Bulletins' generally or 'our medical necessity guidelines,' which is a common tactic used to frustrate providers by forcing them to hunt for the specific policy.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "Based on Aetna Clinical Policy Bulletin 0017, we are denying this request."
+        ],
+        "improvement": "Remove the specific bulletin number ('0017') and instead refer generally to 'Aetna Clinical Policy Bulletins' or 'our medical necessity guidelines' to increase the realistic vagueness of the citation."
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial is based entirely on a lack of documentation regarding conservative therapy, stating 'The records provided only mention the use of over-the-counter NSAIDs.' However, the clinical context reveals the patient has actually completed 6 months of conservative treatment (massage therapy and custom bras) and experiences severe, documented symptoms (shoulder grooving, rashes). The weakness here is purely an administrative omission by the provider during the initial prior authorization. Because the patient genuinely meets the clinical threshold outlined in the denial's cited guideline (Aetna CPB 0017), a well-crafted appeal that simply includes the missing receipts and clinical notes has a very high likelihood of success. The insurer's defense is strong only against the original incomplete submission, making the appeal highly actionable and straightforward.",
+        "score": 5,
+        "confidence": 0.95,
+        "exploitable_weaknesses": [
+          "The denial rests entirely on missing documentation rather than a clinical failure to meet criteria.",
+          "The patient actually exceeds the 3-month conservative therapy requirement, making the appeal a simple matter of submitting omitted records."
+        ],
+        "strong_defenses": [
+          "The insurer correctly applied the clinical guideline (Aetna CPB 0017) based strictly on the incomplete records initially provided."
+        ],
+        "evidence_quotes": [
+          "The records provided only mention the use of over-the-counter NSAIDs.",
+          "doctor's office failed to include the receipts or clinical notes for these conservative treatments in the prior auth submission",
+          "Our policy requires documentation of at least three (3) consecutive months of conservative therapy"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial is based entirely on a lack of documentation regarding conservative therapy, stating 'The records provided only mention the use of over-the-counter NSAIDs.' However, the clinical context reveals the patient has actually completed 6 months of conservative treatment (massage therapy and custom bras) and experiences severe, documented symptoms (shoulder grooving, rashes). The weakness here is purely an administrative omission by the provider during the initial prior authorization. Because the patient genuinely meets the clinical threshold outlined in the denial's cited guideline (Aetna CPB 0017), a well-crafted appeal that simply includes the missing receipts and clinical notes has a very high likelihood of success. The insurer's defense is strong only against the original incomplete submission, making the appeal highly actionable and straightforward.",
+      "exploitable_weaknesses": [
+        "The denial rests entirely on missing documentation rather than a clinical failure to meet criteria.",
+        "The patient actually exceeds the 3-month conservative therapy requirement, making the appeal a simple matter of submitting omitted records."
+      ],
+      "strong_defenses": [
+        "The insurer correctly applied the clinical guideline (Aetna CPB 0017) based strictly on the incomplete records initially provided."
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

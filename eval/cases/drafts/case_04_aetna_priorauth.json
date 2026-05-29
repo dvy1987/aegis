@@ -6,9 +6,166 @@
     "age": 35,
     "gender": "F",
     "diagnosis": "Severe Rheumatoid Arthritis",
-    "treatment_requested": "Adalimumab (Humira) Injection"
+    "treatment_requested": "Adalimumab (Humira) Injection",
+    "plan_funding_type": "self_funded"
   },
   "denial_letter_text": "Dear Member,\n\nWe have received a claim for the administration of Adalimumab (Humira) on 04/30/2026. We are denying coverage for this medication because prior authorization was not obtained before the drug was dispensed.\n\nAccording to your plan documents, specialty biologic medications require prior authorization from Aetna's Pharmacy Benefit Manager to confirm the medication is clinically appropriate and that step-therapy protocols have been met. Because your provider did not submit a prior authorization request prior to the date of service, the claim is denied. You are responsible for the full cost of the medication.",
   "clinical_context": "Patient was previously on Humira under a different insurance plan and was stable. She changed jobs and insurance to Aetna. Her doctor continued the prescription during the transition period to prevent a severe joint flare-up, failing to realize the new Aetna plan required a fresh prior authorization.",
-  "synthetic_provenance": "Generated purely via LLM referencing typical specialty pharmacy prior-authorization denial patterns."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-03a59",
+    "generated_at": "2026-05-29T02:35:03Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "unknown",
+      "patient_gender": "F",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are highly consistent across all dimensions. The requested treatment (Adalimumab/Humira) and the insurance provider (Aetna) match perfectly between the denial letter and clinical context. The denial reason\u2014failure to obtain prior authorization before the date of service\u2014is directly supported by the clinical context, which explains that the doctor continued the prescription during an insurance transition without realizing a new prior authorization was required. There are no internal contradictions within the denial letter or the clinical timeline.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "administration of Adalimumab (Humira)",
+          "prior authorization was not obtained before the drug was dispensed",
+          "failing to realize the new Aetna plan required a fresh prior authorization"
+        ],
+        "improvement": "N/A"
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The text is highly direct and bureaucratic, accurately mimicking a standard insurance denial template. It avoids all common LLM tells: there are no listicles, no flowery vocabulary like 'delve' or 'tapestry,' and no overly empathetic or symmetrical paragraph structures. The phrasing is standard industry boilerplate, not LLM-generated fluff. The clinical context is similarly concise, factual, and devoid of AI-typical narrative flourishes.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "We are denying coverage for this medication because prior authorization was not obtained before the drug was dispensed.",
+          "According to your plan documents, specialty biologic medications require prior authorization",
+          "You are responsible for the full cost of the medication."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter successfully captures the cold, procedural, and bureaucratic tone of a real insurance denial. It avoids any warmth, apologies, or marketing buzzwords, stating bluntly that 'the claim is denied' and 'You are responsible for the full cost of the medication.' The clinical context is equally well-executed, presenting a plain-prose, factual narrative of the patient's transition of care and the provider's administrative oversight without resorting to emotional pleading or patient advocacy. Both texts perfectly match their respective authorships.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Because your provider did not submit a prior authorization request prior to the date of service, the claim is denied. You are responsible for the full cost of the medication.",
+          "Patient was previously on Humira under a different insurance plan and was stable."
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter explicitly states that the patient is 'responsible for the full cost of the medication' without providing a specific dollar amount. This is highly realistic, as actual insurance denials rarely calculate or disclose the exact out-of-pocket financial liability for the patient, instead relying on vague language regarding financial responsibility. There is no conflation of commercial and Medicare/Medicaid terminology. The financial framing perfectly aligns with standard industry practices.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "You are responsible for the full cost of the medication."
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "regulatory_and_appeal_references",
+        "reasoning": "The denial letter completely omits any mention of appeal rights, an appeal window, or ERISA disclosures. While the prompt notes that omitting external review rights is a realistic imperfection, omitting all internal appeal rights and deadlines makes the letter incomplete for a formal commercial denial. It relies solely on generic contractual phrasing ('According to your plan documents') without invoking any federal laws or regulatory frameworks. Because it lacks an appeal window entirely, it cannot score a 5 (which explicitly requires mentioning appeal rights). However, it successfully avoids hallucinated statutes or Medicare framing, keeping it out of the 1 category. It represents generic, overly brief legal framing.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "According to your plan documents, specialty biologic medications require prior authorization",
+          "You are responsible for the full cost of the medication."
+        ],
+        "improvement": "Include a standard but perhaps slightly ambiguous internal appeal window (e.g., 'You have 180 days to appeal') while continuing to omit external review rights to create a realistically imperfect regulatory framing."
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The patient is a 35-year-old female diagnosed with Severe Rheumatoid Arthritis. This combination is highly plausible and aligns perfectly with the epidemiology of RA, which disproportionately affects women (typically 2-3 times more than men) and frequently has an onset between the ages of 30 and 60. The clinical context correctly and consistently uses female pronouns ('She changed jobs', 'Her doctor'). There is no language in the denial letter or the clinical context that relies on stereotypes, exoticizes the patient, or makes inappropriate assumptions based on her demographics. The scenario of a job change causing a lapse in prior authorization is a standard administrative event.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "She changed jobs and insurance to Aetna.",
+          "Her doctor continued the prescription during the transition period"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case meets all Aegis MVP scope requirements. The patient is an adult (age 35). The insurer is Aetna, and the denial type is explicitly Prior Authorization. The coverage is employer-sponsored commercial, as evidenced by the 'self_funded' plan funding type and the clinical context stating she 'changed jobs and insurance to Aetna.' There is no mention of excluded government or marketplace plans, nor is there any live-filing, attorney-work, or court representation language present.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 35",
+          "Aetna \u2014 Prior Authorization",
+          "\"plan_funding_type\": \"self_funded\"",
+          "She changed jobs and insurance to Aetna."
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The only specific date provided in the text is the date of service (04/30/2026), which correctly aligns with the 2026 timeframe requirement. However, the timeline suffers from significant vagueness. The denial letter lacks a date of issuance to establish chronological consistency with the service date, and it completely omits the standard appeal window timeframe. Furthermore, the clinical context relies on vague temporal markers like 'previously' and 'transition period' rather than providing specific months or years for the patient's prior treatment and insurance change. While there are no direct chronological contradictions to warrant a score of 1, the pervasive lack of specific dates for the denial, appeal, and clinical history places this firmly in the 3 category.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "04/30/2026",
+          "previously on Humira",
+          "transition period"
+        ],
+        "improvement": "Add a specific date of issuance to the denial letter (e.g., May 15, 2026), include a standard 180-day appeal window, and specify the exact months/years for the patient's prior Humira treatment and insurance transition."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter references 'your plan documents' and 'Aetna's Pharmacy Benefit Manager' as the source of the prior authorization requirement. It does not provide any specific policy numbers, edition numbers, or page references. This aligns perfectly with the criteria for a realistically unspecific citation, as it uses generic umbrella terms and avoids hallucinating fake alphanumeric codes. This level of vagueness is highly realistic for an initial denial letter and would be appropriately frustrating for a provider attempting to trace the exact policy.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "According to your plan documents, specialty biologic medications require prior authorization from Aetna's Pharmacy Benefit Manager"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial is based purely on an administrative failure (lack of prior authorization) rather than clinical inappropriateness. However, the appeal case is exceptionally strong for two main reasons. Procedurally, the denial letter completely omits required ERISA disclosures, appeal rights, and timeframes, creating a significant compliance violation. Clinically, the context reveals this is a transition of care issue; the patient was already stable on Humira under a previous plan. Most insurers have continuity of care policies that allow for retroactive authorization or transition fills to prevent severe flare-ups when a member changes plans. Because the patient clearly meets the clinical standard of care and the denial letter is procedurally defective, a well-crafted appeal requesting retroactive authorization based on continuity of care is highly likely to succeed.",
+        "score": 5,
+        "confidence": 0.95,
+        "exploitable_weaknesses": [
+          "Complete omission of ERISA appeal rights, timeframes, and instructions in the denial letter.",
+          "Failure to account for transition of care/continuity of care policies for a new enrollee stable on a biologic."
+        ],
+        "strong_defenses": [
+          "The provider technically violated the plan's administrative requirement by failing to submit a PA prior to the date of service."
+        ],
+        "evidence_quotes": [
+          "prior authorization was not obtained before the drug was dispensed.",
+          "Patient was previously on Humira under a different insurance plan and was stable.",
+          "changed jobs and insurance to Aetna."
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial is based purely on an administrative failure (lack of prior authorization) rather than clinical inappropriateness. However, the appeal case is exceptionally strong for two main reasons. Procedurally, the denial letter completely omits required ERISA disclosures, appeal rights, and timeframes, creating a significant compliance violation. Clinically, the context reveals this is a transition of care issue; the patient was already stable on Humira under a previous plan. Most insurers have continuity of care policies that allow for retroactive authorization or transition fills to prevent severe flare-ups when a member changes plans. Because the patient clearly meets the clinical standard of care and the denial letter is procedurally defective, a well-crafted appeal requesting retroactive authorization based on continuity of care is highly likely to succeed.",
+      "exploitable_weaknesses": [
+        "Complete omission of ERISA appeal rights, timeframes, and instructions in the denial letter.",
+        "Failure to account for transition of care/continuity of care policies for a new enrollee stable on a biologic."
+      ],
+      "strong_defenses": [
+        "The provider technically violated the plan's administrative requirement by failing to submit a PA prior to the date of service."
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

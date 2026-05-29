@@ -6,9 +6,168 @@
     "age": 58,
     "gender": "M",
     "diagnosis": "Obesity (BMI 36) with pre-diabetes",
-    "treatment_requested": "Semaglutide (Wegovy)"
+    "treatment_requested": "Semaglutide (Wegovy)",
+    "plan_funding_type": "fully_insured"
   },
   "denial_letter_text": "Dear Member,\n\nWe have reviewed your provider's request for Semaglutide (Wegovy). We are denying this request because it does not meet Cigna's coverage criteria.\n\nWhile Wegovy is FDA-approved for weight management, your specific employer-sponsored pharmacy benefit plan has a strict exclusion for all weight-loss medications. Additionally, you do not have a diagnosis of Type 2 Diabetes, which would be required for coverage of similar GLP-1 medications (like Ozempic) under your medical benefit. Therefore, this request is denied as a plan exclusion and is not medically necessary.",
   "clinical_context": "Patient has struggled with weight and is on the verge of developing full-blown Type 2 Diabetes. The doctor prescribed Wegovy to prevent the onset of diabetes. The denial relies on a hard employer plan exclusion for 'weight loss drugs', forcing an appeal to argue the preventative medical necessity rather than cosmetic weight loss.",
-  "synthetic_provenance": "Generated purely via LLM referencing GLP-1 weight loss employer plan exclusions."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-c6a75",
+    "generated_at": "2026-05-29T01:58:51Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "unknown",
+      "patient_gender": "M",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are internally and cross-document consistent. The requested drug (Semaglutide/Wegovy) and the patient's diagnosis (Obesity with pre-diabetes / lack of Type 2 Diabetes) match perfectly across the Patient Profile, Denial Letter, and Clinical Context. The denial reason\u2014a strict employer plan exclusion for weight-loss medications\u2014is consistently stated in both the denial letter and the clinical context. There are no internal contradictions within the denial letter or the context.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Treatment requested: Semaglutide (Wegovy)",
+          "your specific employer-sponsored pharmacy benefit plan has a strict exclusion for all weight-loss medications",
+          "The denial relies on a hard employer plan exclusion for 'weight loss drugs'",
+          "you do not have a diagnosis of Type 2 Diabetes",
+          "on the verge of developing full-blown Type 2 Diabetes"
+        ],
+        "improvement": "N/A"
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The denial letter is concise, blunt, and highly representative of actual insurance correspondence. It avoids common LLM pitfalls such as overly empathetic padding, listicle formatting, or signature vocabulary like 'delve' or 'navigate'. The sentence structure is straightforward and bureaucratic, lacking the perfectly symmetrical, overly polished rhythm typical of raw GPT output. The phrasing 'employer-sponsored pharmacy benefit plan has a strict exclusion' is standard industry terminology, not generic LLM prose. There are no AI tics present.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "We are denying this request because it does not meet Cigna's coverage criteria.",
+          "your specific employer-sponsored pharmacy benefit plan has a strict exclusion for all weight-loss medications."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter successfully captures a cold, procedural, and bureaucratic tone. It avoids apologies and effectively uses standard insurance boilerplate, including the classic bureaucratic catch-all of denying the request simultaneously as a 'plan exclusion' and 'not medically necessary.' However, the clinical context wavers from a strict, plain-prose clinical narrative. Phrases like 'struggled with weight,' 'verge of developing full-blown Type 2 Diabetes,' and 'forcing an appeal' drift into colloquialism and slight advocacy rather than maintaining neutral medical terminology (e.g., 'prediabetes,' 'elevated A1c'). Because the clinical context's voice wavers slightly from a neutral clinical tone, it earns a 3.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "denied as a plan exclusion and is not medically necessary.",
+          "verge of developing full-blown Type 2 Diabetes",
+          "forcing an appeal"
+        ],
+        "improvement": "Revise the clinical context to use strict, neutral medical terminology (e.g., 'patient presents with prediabetes' instead of 'verge of developing full-blown Type 2 Diabetes') and remove narrative advocacy."
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter makes absolutely no mention of the patient's potential out-of-pocket costs, drug prices, or financial liability if they choose to proceed with the medication. According to the evaluation criteria, omitting cost liability entirely is standard practice for real-world insurance denials, which rarely warn patients of exact financial exposure. Furthermore, the letter correctly utilizes commercial insurance terminology by referencing an 'employer-sponsored pharmacy benefit plan' and avoids conflating this with Medicare or Medicaid terms. Because it is completely silent on costs, it perfectly aligns with the realistically vague financial framing expected in a genuine denial.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "your specific employer-sponsored pharmacy benefit plan has a strict exclusion for all weight-loss medications"
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "regulatory_and_appeal_references",
+        "reasoning": "The denial letter completely omits any mention of an appeal window, internal appeal rights, or regulatory boilerplate (such as ERISA disclosures). While the prompt notes that omitting external review rights is a realistic imperfection, omitting all appeal instructions makes the letter unrealistically bare. A real commercial denial letter must legally contain at least a basic reference to the member's right to appeal and the timeframe to do so. Because it lacks these fundamental components entirely, it fails to provide realistically imperfect regulatory framing and instead reads as an incomplete generation. It contains zero legal or regulatory language to evaluate.",
+        "score": 1,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "Therefore, this request is denied as a plan exclusion and is not medically necessary."
+        ],
+        "improvement": "Add a basic appeal window (e.g., 180 days) and generic, slightly vague ERISA or state-level appeal rights boilerplate to make it a realistic commercial denial."
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The demographic combination of a 58-year-old male with obesity (BMI 36) and pre-diabetes is highly plausible and aligns perfectly with the epidemiology of metabolic conditions. The presentation does not invoke any gender or age stereotypes, nor does it rely on exoticizing language. The clinical context and denial letter use neutral, appropriate terminology that fits the patient profile.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "age\": 58",
+          "gender\": \"M\"",
+          "diagnosis\": \"Obesity (BMI 36) with pre-diabetes"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is an adult (age 58). The insurer is Cigna, and the denial type is categorized as Medical Necessity. The coverage is explicitly identified as an employer-sponsored plan, with no references to Medicare, Medicaid, TRICARE, VA, or marketplace insurance. Finally, there is no language implying live-filing, attorney work, or court representation.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 58",
+          "Cigna \u2014 Medical Necessity",
+          "your specific employer-sponsored pharmacy benefit plan"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The provided denial letter and clinical context completely omit all dates and timelines. There is no denial date, no service request date, no clinical history timeline, and no appeal window mentioned. A realistic 2026 commercial insurance denial letter legally requires specific chronological markers, including the date of the decision and the deadline for appeals (e.g., 180 days). The total absence of dates makes it impossible to establish a consistent timeline, functioning as a critical failure in date sanity and realism.",
+        "score": 1,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Dear Member,"
+        ],
+        "improvement": "Add specific dates to the letter header (e.g., a date in 2026), the date of the service request, and explicitly state the appeal window (e.g., 180 days from the date of the letter)."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter references \"Cigna's coverage criteria\" and the member's \"specific employer-sponsored pharmacy benefit plan\" without providing any specific policy numbers, document names, or page references. This is highly realistic, as insurers frequently use these vague, umbrella terms to justify denials based on plan exclusions without giving the provider or patient a precise, traceable document to review. It successfully avoids hallucinating fake alphanumeric codes or over-specifying the citation, perfectly aligning with the criteria for a realistically unspecific citation.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Cigna's coverage criteria",
+          "your specific employer-sponsored pharmacy benefit plan"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial relies on a 'strict exclusion for all weight-loss medications,' which is a contractual barrier that is exceptionally difficult to overturn via standard clinical appeals. The patient also lacks a Type 2 Diabetes diagnosis, closing the alternative GLP-1 pathway. However, the denial letter contains severe procedural weaknesses: it completely omits ERISA disclosures, appeal rights, and timeframes. Furthermore, it conflates contractual exclusions with clinical necessity ('denied as a plan exclusion and is not medically necessary'). While the contractual defense is rock solid, the glaring procedural omissions provide a viable vector for appeal, aligning with the edge-case guidance for a moderate score.",
+        "score": 3,
+        "confidence": 0.9,
+        "exploitable_weaknesses": [
+          "Complete omission of ERISA disclosures, appeal rights, and timeframes",
+          "Conflates contractual plan exclusion with lack of medical necessity"
+        ],
+        "strong_defenses": [
+          "Hard employer-sponsored plan exclusion for weight-loss medications",
+          "Patient lacks a Type 2 Diabetes diagnosis required for alternative GLP-1 coverage"
+        ],
+        "evidence_quotes": [
+          "strict exclusion for all weight-loss medications",
+          "do not have a diagnosis of Type 2 Diabetes",
+          "denied as a plan exclusion and is not medically necessary"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 3,
+      "reasoning": "The denial relies on a 'strict exclusion for all weight-loss medications,' which is a contractual barrier that is exceptionally difficult to overturn via standard clinical appeals. The patient also lacks a Type 2 Diabetes diagnosis, closing the alternative GLP-1 pathway. However, the denial letter contains severe procedural weaknesses: it completely omits ERISA disclosures, appeal rights, and timeframes. Furthermore, it conflates contractual exclusions with clinical necessity ('denied as a plan exclusion and is not medically necessary'). While the contractual defense is rock solid, the glaring procedural omissions provide a viable vector for appeal, aligning with the edge-case guidance for a moderate score.",
+      "exploitable_weaknesses": [
+        "Complete omission of ERISA disclosures, appeal rights, and timeframes",
+        "Conflates contractual plan exclusion with lack of medical necessity"
+      ],
+      "strong_defenses": [
+        "Hard employer-sponsored plan exclusion for weight-loss medications",
+        "Patient lacks a Type 2 Diabetes diagnosis required for alternative GLP-1 coverage"
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

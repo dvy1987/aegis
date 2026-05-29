@@ -6,9 +6,175 @@
     "age": 41,
     "gender": "M",
     "diagnosis": "Severe Alcohol Use Disorder",
-    "treatment_requested": "Inpatient Medical Detoxification (3 days)"
+    "treatment_requested": "Inpatient Medical Detoxification (3 days)",
+    "plan_funding_type": "fully_insured"
   },
   "denial_letter_text": "Dear Member,\n\nWe have reviewed the request from your provider for Inpatient Detoxification from 05/18/2026 to 05/21/2026. Based on Aetna's Clinical Policy Bulletins (CPBs) and the ASAM (American Society of Addiction Medicine) Criteria, we are denying this request.\n\nThe clinical information provided does not demonstrate that you are experiencing severe or complicated withdrawal symptoms (such as Delirium Tremens or seizures) that require 24-hour medical nursing and monitoring. The records indicate your vital signs are stable and you do not have severe co-occurring medical conditions. Therefore, you can be safely treated at a lower level of care, such as an Ambulatory (Outpatient) Detox program. The requested inpatient service is not considered medically necessary. You have the right to appeal this decision within 180 days.",
   "clinical_context": "Patient has a 10-year history of heavy daily alcohol use. Attempted to quit cold turkey and experienced severe tremors, profuse sweating, and visual hallucinations in the ER. Provider noted a CIWA score of 18 (moderate-severe) and high risk of progression to seizures due to previous withdrawal history.",
-  "synthetic_provenance": "Generated purely via LLM referencing typical ASAM criteria / inpatient detox denial patterns."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-1c159",
+    "generated_at": "2026-05-29T02:20:24Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "unknown",
+      "patient_gender": "M",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are internally and cross-document consistent. The patient profile, diagnosis, and treatment requested (Inpatient Medical Detoxification for 3 days) align perfectly with the denial letter's dates (05/18/2026 to 05/21/2026) and subject matter. There are no internal contradictions within the denial letter or the clinical context. The discrepancy between the denial letter's assertion that the patient lacks severe withdrawal symptoms ('does not demonstrate that you are experiencing severe or complicated withdrawal symptoms') and the clinical context's evidence of severe symptoms ('visual hallucinations in the ER', 'CIWA score of 18') represents a valid, appealable denial rather than a factual contradiction in the scenario's premise. All core facts remain stable.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Inpatient Medical Detoxification (3 days)",
+          "Inpatient Detoxification from 05/18/2026 to 05/21/2026",
+          "The clinical information provided does not demonstrate that you are experiencing severe or complicated withdrawal symptoms",
+          "experienced severe tremors, profuse sweating, and visual hallucinations in the ER. Provider noted a CIWA score of 18"
+        ],
+        "improvement": "N/A"
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The letter reads as a highly plausible, dry, bureaucratic insurance denial. It lacks common LLM tells such as flowery vocabulary ('delve', 'tapestry', 'navigate'), overly symmetrical paragraph structures, or listicle formatting. The phrasing relies on standard industry boilerplate ('Based on Aetna's Clinical Policy Bulletins', 'lower level of care', 'not considered medically necessary') rather than generative AI filler. The tone is appropriately clinical and direct, matching the expected output of a human claims handler using standard denial templates.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Based on Aetna's Clinical Policy Bulletins (CPBs) and the ASAM",
+          "The clinical information provided does not demonstrate",
+          "Therefore, you can be safely treated at a lower level of care"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone expected from an insurance company. It relies heavily on standard boilerplate language and policy citations, completely avoiding any warmth, apologies, or marketing buzzwords. It also effectively utilizes a realistic level of obfuscation by broadly claiming the patient's 'vital signs are stable' to justify a lower level of care, despite the severe symptoms noted in the clinical context. The clinical context itself is written as a straightforward, objective medical narrative without any emotional pleading or inappropriate advocacy.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Based on Aetna's Clinical Policy Bulletins (CPBs) and the ASAM (American Society of Addiction Medicine) Criteria, we are denying this request.",
+          "The clinical information provided does not demonstrate that you are experiencing severe or complicated withdrawal symptoms",
+          "Patient has a 10-year history of heavy daily alcohol use. Attempted to quit cold turkey and experienced severe tremors, profuse sweating, and visual hallucinations in the ER."
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter focuses entirely on the clinical rationale for denying the inpatient detoxification request based on ASAM criteria and Aetna's CPBs. It makes absolutely no mention of the patient's potential financial liability, out-of-pocket costs, or billing estimates. According to the evaluation criteria, omitting cost liability entirely is standard practice for clinical denial letters. Therefore, it perfectly aligns with realistic financial framing by remaining completely silent on costs.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "The requested inpatient service is not considered medically necessary. You have the right to appeal this decision within 180 days."
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "regulatory_and_appeal_references",
+        "reasoning": "The denial letter successfully avoids hallucinated statutes and incorrect Medicare framing for a commercial plan. It includes a standard commercial appeal window ('You have the right to appeal this decision within 180 days') placed at the very end of the text. Crucially, it completely omits specific ERISA disclosures, external review rights, and state-specific regulatory boilerplate. As per the evaluation criteria, omitting external review rights and ERISA language constitutes a realistic imperfection that provides a valid attack vector for an appeal. The brevity and strategic omission of dense legal boilerplate make it realistically flawed rather than unrealistically perfect.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "You have the right to appeal this decision within 180 days."
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The patient is a 41-year-old male with Severe Alcohol Use Disorder. This aligns well with the epidemiology of the condition, as AUD frequently presents in middle-aged males. A 10-year history of heavy use starting in his early 30s is clinically plausible. The denial letter uses second-person pronouns ('you', 'your') appropriately without misgendering, and there is no language that relies on harmful stereotypes or exoticises the patient. The demographic combination is highly realistic and appropriate for the clinical scenario.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "41",
+          "M",
+          "Severe Alcohol Use Disorder",
+          "10-year history of heavy daily alcohol use"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is an adult (age 41). The insurer is Aetna, and the denial type is explicitly Medical Necessity. The plan is fully insured commercial coverage with no mention of Medicare, Medicaid, TRICARE, VA, or marketplace framing. Finally, the text contains no live-filing language, attorney-work claims, or court representation claims.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 41",
+          "Aetna \u2014 Medical Necessity",
+          "\"plan_funding_type\": \"fully_insured\"",
+          "not considered medically necessary"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The denial letter includes specific service dates in 2026 ('05/18/2026 to 05/21/2026') and correctly cites a standard '180 days' appeal window. There are no chronological contradictions. However, the timeline suffers from vagueness. The denial letter lacks a formal date of issuance at the top. Additionally, the clinical context relies on broad timeframes like a '10-year history' and 'previous withdrawal history' without providing specific dates, months, or years for the ER visit or prior withdrawal episodes. This lack of precision in the clinical history aligns with the criteria for a score of 3.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "05/18/2026 to 05/21/2026",
+          "within 180 days",
+          "10-year history",
+          "previous withdrawal history"
+        ],
+        "improvement": "Add a specific date of issuance to the denial letter (e.g., May 19, 2026) and replace vague clinical timeframes with specific dates for the ER visit and prior withdrawal episodes."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter cites \"Aetna's Clinical Policy Bulletins (CPBs)\" and the \"ASAM (American Society of Addiction Medicine) Criteria.\" These are accurate, real-world umbrella terms commonly used in behavioral health and substance use utilization management. The letter successfully avoids over-specifying edition numbers, specific CPB policy numbers, or exact ASAM dimensions/levels of care. This makes the citation realistically vague and frustrating for a provider to trace without further inquiry, perfectly aligning with common insurer tactics. It also avoids hallucinating any fake alphanumeric codes.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Based on Aetna's Clinical Policy Bulletins (CPBs) and the ASAM (American Society of Addiction Medicine) Criteria, we are denying this request."
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial letter asserts that the patient 'does not demonstrate that you are experiencing severe or complicated withdrawal symptoms' and claims vital signs are stable. However, the clinical context reveals a stark contradiction: the patient presented to the ER with 'visual hallucinations,' a 'CIWA score of 18,' and a 'high risk of progression to seizures due to previous withdrawal history.' By ignoring the documented hallucinations, high CIWA score, and historical seizure risk, the denial blatantly misrepresents the patient's clinical reality and misapplies the cited ASAM criteria, which typically warrant inpatient management for such severe presentations. This creates a highly exploitable clinical weakness. Procedurally, the letter provides a 180-day appeal window but lacks detailed ERISA disclosures or specific rationale for why the CIWA score was disregarded. Because the patient clearly meets the standard of care for inpatient detoxification and the denial relies on factually incorrect clinical summaries, a well-crafted appeal has a very high likelihood of success.",
+        "score": 5,
+        "confidence": 0.95,
+        "exploitable_weaknesses": [
+          "Blatant misrepresentation of clinical facts by ignoring documented visual hallucinations and a CIWA score of 18.",
+          "Misapplication of ASAM criteria, which typically support inpatient care for patients with a history of severe withdrawal and high seizure risk.",
+          "Omission of specific ERISA disclosures and failure to address the provider's specific clinical findings."
+        ],
+        "strong_defenses": [
+          "Cites recognized, standard guidelines (ASAM Criteria and Aetna CPBs).",
+          "Clearly defines the clinical threshold required for approval (24-hour medical nursing for severe withdrawal like DTs or seizures)."
+        ],
+        "evidence_quotes": [
+          "does not demonstrate that you are experiencing severe or complicated withdrawal symptoms",
+          "visual hallucinations in the ER",
+          "CIWA score of 18 (moderate-severe)",
+          "high risk of progression to seizures due to previous withdrawal history"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial letter asserts that the patient 'does not demonstrate that you are experiencing severe or complicated withdrawal symptoms' and claims vital signs are stable. However, the clinical context reveals a stark contradiction: the patient presented to the ER with 'visual hallucinations,' a 'CIWA score of 18,' and a 'high risk of progression to seizures due to previous withdrawal history.' By ignoring the documented hallucinations, high CIWA score, and historical seizure risk, the denial blatantly misrepresents the patient's clinical reality and misapplies the cited ASAM criteria, which typically warrant inpatient management for such severe presentations. This creates a highly exploitable clinical weakness. Procedurally, the letter provides a 180-day appeal window but lacks detailed ERISA disclosures or specific rationale for why the CIWA score was disregarded. Because the patient clearly meets the standard of care for inpatient detoxification and the denial relies on factually incorrect clinical summaries, a well-crafted appeal has a very high likelihood of success.",
+      "exploitable_weaknesses": [
+        "Blatant misrepresentation of clinical facts by ignoring documented visual hallucinations and a CIWA score of 18.",
+        "Misapplication of ASAM criteria, which typically support inpatient care for patients with a history of severe withdrawal and high seizure risk.",
+        "Omission of specific ERISA disclosures and failure to address the provider's specific clinical findings."
+      ],
+      "strong_defenses": [
+        "Cites recognized, standard guidelines (ASAM Criteria and Aetna CPBs).",
+        "Clearly defines the clinical threshold required for approval (24-hour medical nursing for severe withdrawal like DTs or seizures)."
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

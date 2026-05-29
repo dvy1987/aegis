@@ -6,9 +6,165 @@
     "age": 61,
     "gender": "M",
     "diagnosis": "Post-operative total knee arthroplasty",
-    "treatment_requested": "Physical Therapy (Visits 21-30)"
+    "treatment_requested": "Physical Therapy (Visits 21-30)",
+    "plan_funding_type": "self_funded"
   },
   "denial_letter_text": "Dear Member,\n\nWe have received a claim for Outpatient Physical Therapy services performed on 05/01/2026. We are denying coverage for these services because they exceed the authorized limit and prior authorization for additional visits was not obtained.\n\nYour plan document limits outpatient physical therapy to 20 visits per calendar year without medical necessity review. Our records indicate you have already utilized your 20 authorized visits. Because your provider did not submit a prior authorization request for additional visits demonstrating medical necessity before continuing treatment, these claims are denied. You are responsible for the cost.",
   "clinical_context": "Patient had a total knee replacement and suffered a minor post-op infection that delayed his rehab progress. The PT clinic assumed the initial authorization covered the entire episode of care and failed to request an extension after visit 20. The patient still has significant mobility deficits.",
-  "synthetic_provenance": "Generated purely via LLM referencing typical hard-cap physical therapy prior authorization denials."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-15d68",
+    "generated_at": "2026-05-29T02:32:34Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "unknown",
+      "patient_gender": "M",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are highly consistent across all fields. The patient profile, denial letter, and clinical context all align on the diagnosis (total knee arthroplasty/replacement) and the treatment requested (Physical Therapy visits 21-30). The denial letter states the claim is denied because the 20-visit limit was reached and no prior authorization was submitted for additional visits. The clinical context perfectly mirrors this, explaining that the PT clinic failed to request an extension after visit 20. There are no internal contradictions within the documents or across the scenario facts.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Treatment requested: Physical Therapy (Visits 21-30)",
+          "limits outpatient physical therapy to 20 visits per calendar year... provider did not submit a prior authorization request for additional visits",
+          "The PT clinic assumed the initial authorization covered the entire episode of care and failed to request an extension after visit 20."
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The letter is highly direct, bureaucratic, and devoid of typical LLM fluff. There are no listicles, no overly empathetic transitions, and no signature GPT vocabulary words like 'delve,' 'navigate,' or 'tapestry.' The phrasing perfectly mimics the dry, templated cadence of a real insurance denial letter. The sentence structure is functional rather than perfectly symmetrical, and it ends abruptly with 'You are responsible for the cost,' which is characteristic of human-authored or legacy-system-generated claims correspondence rather than an overly polite, verbose LLM.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "We are denying coverage for these services because they exceed the authorized limit",
+          "You are responsible for the cost."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It avoids any apologies or warmth, directly stating the policy limits and the administrative failure (lack of prior authorization) before concluding bluntly with 'You are responsible for the cost.' The clinical context is equally well-executed, presenting a neutral, plain-prose narrative of the medical situation and the clinic's administrative error without resorting to emotional pleading or advocacy.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "We are denying coverage for these services because they exceed the authorized limit",
+          "You are responsible for the cost.",
+          "The PT clinic assumed the initial authorization covered the entire episode of care and failed to request an extension"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter concludes with the statement, 'You are responsible for the cost.' This perfectly aligns with the evaluation criteria for realistically vague financial framing. It avoids providing an exact dollar amount or an unrealistically helpful estimate of the patient's out-of-pocket liability, which is standard practice in real-world insurance denials. Furthermore, there is no conflation of commercial and Medicare/Medicaid terminology. The financial framing is appropriately unhelpful and vague.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "You are responsible for the cost."
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "LegalAuditor",
+        "reasoning": "The denial letter completely fails to include any regulatory references, appeal rights, or an appeal window. While the prompt notes that omitting *external* review rights is a realistic imperfection (which would score a 5), this letter lacks even the most basic internal appeal instructions or deadlines required by law for any US commercial plan. It abruptly ends after stating the financial responsibility. Because it completely omits standard mandatory legal boilerplate, it is an unrealistic generation of a commercial denial letter and fails to provide the necessary regulatory framing to evaluate.",
+        "score": 1,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "You are responsible for the cost."
+        ],
+        "improvement": "Add a basic appeal rights section with a specific appeal window (e.g., 180 days) to make it a plausible commercial denial letter, while still omitting external review rights or specific ERISA disclosures to keep it realistically imperfect."
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The patient is a 61-year-old male with a diagnosis of post-operative total knee arthroplasty. This age and gender combination is highly clinically plausible and aligns perfectly with the typical epidemiology for knee replacements, which are most commonly performed on older adults due to osteoarthritis. The clinical context correctly uses the pronoun 'his', which matches the patient's stated gender ('M'). There is no language that invokes stereotypes or exoticises the patient.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 61",
+          "\"gender\": \"M\"",
+          "\"diagnosis\": \"Post-operative total knee arthroplasty\"",
+          "delayed his rehab progress"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is 61 years old, which falls within the required 18-89 adult age range. The insurer is Cigna and the denial type is Prior Authorization, both of which are explicitly approved. The plan is listed as 'self_funded', indicating employer-sponsored commercial coverage, with no references to Medicare, Medicaid, TRICARE, VA, or marketplace plans. Finally, the provided text contains no prohibited language regarding live-filing, attorney work, or court representation.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 61",
+          "Cigna \u2014 Prior Authorization",
+          "\"plan_funding_type\": \"self_funded\""
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The denial letter includes a specific service date of '05/01/2026', which correctly aligns with the 2026 timeframe. However, the letter lacks a date of issuance and does not provide an appeal window deadline. Furthermore, the clinical context is entirely devoid of specific dates or timeframes, vaguely describing a 'total knee replacement' and 'minor post-op infection' without establishing a clear chronological timeline (e.g., surgery date, start of PT). While there are no direct date contradictions, the absence of a denial date, appeal timeline, and specific clinical dates makes the timeline broadly acceptable but highly vague.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "05/01/2026",
+          "Patient had a total knee replacement and suffered a minor post-op infection"
+        ],
+        "improvement": "Add a specific date of notice to the denial letter, include a standard 180-day appeal deadline, and specify the dates of the knee replacement surgery and initial PT evaluation in the clinical context."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter references 'Your plan document' and the need for a 'medical necessity review' without providing a specific policy name, bulletin number, or edition. This aligns perfectly with the evaluation criteria and edge cases, which state that citing internal guidelines or plan documents without naming the specific bulletin is highly realistic and appropriately vague. The text successfully avoids hallucinating fake alphanumeric codes or providing unrealistically perfect citations such as page numbers or exact modules.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Your plan document limits outpatient physical therapy to 20 visits per calendar year without medical necessity review."
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial is based on an administrative failure (lack of prior authorization) rather than a lack of clinical merit. A major exploitable procedural weakness is the complete omission of ERISA appeal rights, deadlines, and instructions in the denial letter. Clinically, the patient has a highly compelling case for continued therapy due to a documented post-op infection that delayed rehab following a total knee replacement, leaving them with significant mobility deficits. While the health plan has a strong defense in the provider's failure to follow the prior authorization rule, the combination of clear medical necessity and severe procedural omissions makes this a strong candidate for a successful retrospective appeal.",
+        "score": 5,
+        "confidence": 0.9,
+        "exploitable_weaknesses": [
+          "Complete omission of ERISA appeal rights, deadlines, and instructions in the denial letter",
+          "Denial is purely administrative, whereas the clinical context shows clear medical necessity justifying a retrospective review"
+        ],
+        "strong_defenses": [
+          "The plan explicitly limits therapy to 20 visits without review, and the provider objectively failed to request the required authorization"
+        ],
+        "evidence_quotes": [
+          "limits outpatient physical therapy to 20 visits per calendar year without medical necessity review",
+          "provider did not submit a prior authorization request for additional visits",
+          "patient still has significant mobility deficits"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial is based on an administrative failure (lack of prior authorization) rather than a lack of clinical merit. A major exploitable procedural weakness is the complete omission of ERISA appeal rights, deadlines, and instructions in the denial letter. Clinically, the patient has a highly compelling case for continued therapy due to a documented post-op infection that delayed rehab following a total knee replacement, leaving them with significant mobility deficits. While the health plan has a strong defense in the provider's failure to follow the prior authorization rule, the combination of clear medical necessity and severe procedural omissions makes this a strong candidate for a successful retrospective appeal.",
+      "exploitable_weaknesses": [
+        "Complete omission of ERISA appeal rights, deadlines, and instructions in the denial letter",
+        "Denial is purely administrative, whereas the clinical context shows clear medical necessity justifying a retrospective review"
+      ],
+      "strong_defenses": [
+        "The plan explicitly limits therapy to 20 visits without review, and the provider objectively failed to request the required authorization"
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

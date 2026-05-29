@@ -17,7 +17,12 @@ _ENVELOPE = load_prompt("_critic_envelope")
 
 
 def _client() -> genai.Client:
-    return genai.Client()
+    return genai.Client(vertexai=True, location="global")
+
+def _format_prompt(template: str, **kwargs: Any) -> str:
+    for k, v in kwargs.items():
+        template = template.replace(f"{{{k}}}", str(v))
+    return template
 
 
 def _generate_json(
@@ -58,7 +63,8 @@ def run_scenario_planner(
     *,
     model: str | None = None,
 ) -> dict[str, Any]:
-    prompt = load_prompt("p1_scenario_planner").format(
+    prompt = _format_prompt(
+        load_prompt("p1_scenario_planner"),
         joint_constraints=joint_constraints,
         matrix_cell_json=json.dumps(matrix_cell, indent=2),
         sub_tactic_definition=sub_tactic_definition,
@@ -71,7 +77,8 @@ def run_scenario_planner(
 def run_denial_drafter(
     scenario_brief: dict[str, Any], *, model: str | None = None
 ) -> dict[str, Any]:
-    prompt = load_prompt("p2_denial_drafter").format(
+    prompt = _format_prompt(
+        load_prompt("p2_denial_drafter"),
         scenario_brief_json=json.dumps(scenario_brief, indent=2),
     )
     return _generate_json(prompt, model=model, temperature=0.75)
@@ -80,7 +87,8 @@ def run_denial_drafter(
 def run_clinical_writer(
     scenario_brief: dict[str, Any], denial_letter_text: str, *, model: str | None = None
 ) -> dict[str, Any]:
-    prompt = load_prompt("p3_clinical_writer").format(
+    prompt = _format_prompt(
+        load_prompt("p3_clinical_writer"),
         scenario_brief_json=json.dumps(scenario_brief, indent=2),
         denial_letter_text=denial_letter_text,
     )
@@ -94,7 +102,8 @@ def run_realistic_flaw_injector(
     *,
     model: str | None = None,
 ) -> dict[str, Any]:
-    prompt = load_prompt("p4_realistic_flaw_injector").format(
+    prompt = _format_prompt(
+        load_prompt("p4_realistic_flaw_injector"),
         assembled_case_json=json.dumps(assembled_case, indent=2),
         intended_flaw_types=json.dumps(intended_flaw_types, indent=2),
         patterns_json=json.dumps(patterns, indent=2) if patterns else "[]",
@@ -108,7 +117,8 @@ def run_stylistic_diversifier(
     *,
     model: str | None = None,
 ) -> dict[str, Any]:
-    prompt = load_prompt("p5_stylistic_diversifier").format(
+    prompt = _format_prompt(
+        load_prompt("p5_stylistic_diversifier"),
         assembled_case_json=json.dumps(assembled_case, indent=2),
         neighbour_summaries=neighbour_summaries or "(this is the first case in the run)",
     )
@@ -131,7 +141,7 @@ def _critic_model() -> str:
 
 def _run_critic(prompt_id: str, **fmt: Any) -> dict[str, Any]:
     template = load_prompt(prompt_id)
-    prompt = template.format(envelope=_ENVELOPE, **fmt)
+    prompt = _format_prompt(template, envelope=_ENVELOPE, **fmt)
     return _generate_json(prompt, model=_critic_model(), temperature=0.2)
 
 

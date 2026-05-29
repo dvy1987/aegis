@@ -6,9 +6,168 @@
     "age": 52,
     "gender": "M",
     "diagnosis": "Cervical Radiculopathy",
-    "treatment_requested": "MRI of Cervical Spine without contrast"
+    "treatment_requested": "MRI of Cervical Spine without contrast",
+    "plan_funding_type": "fully_insured"
   },
   "denial_letter_text": "Dear Member,\n\nWe have received a claim for an MRI of the Cervical Spine performed on 04/22/2026. We are denying coverage for this service because prior authorization was not obtained before the procedure was performed.\n\nAccording to your plan documents, advanced imaging (such as MRI, CT, and PET scans) requires prior authorization from Cigna to confirm the service is medically appropriate. Because your provider did not submit a prior authorization request prior to the date of service, the claim is denied. You are responsible for the full cost of the procedure.",
   "clinical_context": "Patient experienced sudden, severe numbness and weakness in left arm following a minor car accident. The ER doctor ordered the MRI immediately to rule out a spinal cord injury. There was no time to wait for a standard 72-hour prior authorization window.",
-  "synthetic_provenance": "Generated purely via LLM referencing typical retrospective prior-authorization denial patterns for advanced imaging."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-fb274",
+    "generated_at": "2026-05-29T02:27:45Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "unknown",
+      "patient_gender": "M",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are internally consistent and align across all provided sections. The patient profile, denial letter, and clinical context all agree on the requested treatment (MRI of the Cervical Spine). The denial letter consistently states in both paragraphs that the claim is denied due to a lack of prior authorization. The clinical context does not contradict this fact; rather, it explains why the prior authorization was missing (an emergency ER visit following a car accident), which perfectly sets up an appealable scenario based on an emergency exception. There are no conflicting dates, body parts, or diagnoses.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "MRI of Cervical Spine without contrast",
+          "MRI of the Cervical Spine performed on 04/22/2026",
+          "denying coverage for this service because prior authorization was not obtained",
+          "ER doctor ordered the MRI immediately to rule out a spinal cord injury. There was no time to wait for a standard 72-hour prior authorization window."
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The text reads exactly like a standard, boilerplate insurance denial letter. It uses dry, administrative language without any of the typical LLM flourishes. There are no listicles, no overly symmetrical paragraphs, and no signature GPT vocabulary like 'delve,' 'navigate,' or 'tapestry.' The clinical context is similarly direct and clinical, avoiding the trap of over-explaining or using dramatic adjectives. The cadence is appropriately bureaucratic and plausibly human-authored.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "We are denying coverage for this service because prior authorization was not obtained before the procedure was performed.",
+          "According to your plan documents, advanced imaging (such as MRI, CT, and PET scans) requires prior authorization from Cigna to confirm the service is medically appropriate."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter successfully adopts a cold, procedural, and bureaucratic tone. It avoids any apologies, warmth, or marketing language, stating the denial reason (lack of prior authorization) and the financial liability with robotic detachment. While the denial is straightforward rather than highly obfuscated, its administrative rigidity is highly realistic for a prior authorization denial. The clinical context is written as a factual, plain-prose narrative without emotional pleading, appropriately describing the emergency situation and the clinical rationale.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "We are denying coverage for this service because prior authorization was not obtained before the procedure was performed.",
+          "You are responsible for the full cost of the procedure.",
+          "Patient experienced sudden, severe numbness and weakness in left arm following a minor car accident."
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter addresses financial liability by stating, 'You are responsible for the full cost of the procedure.' It does not provide a specific dollar amount or estimate, which accurately reflects standard insurance denial practices. Insurers rarely provide exact out-of-pocket figures in denial letters due to the complexities of provider billing and contracted rates. The language is appropriately vague and avoids conflating commercial insurance terms with Medicare/Medicaid terminology. Therefore, the financial framing is highly realistic.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "You are responsible for the full cost of the procedure."
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "regulatory_and_appeal_references",
+        "reasoning": "The provided denial letter completely omits any mention of appeal rights, appeal windows, or regulatory frameworks. While strategically obscuring external review rights or burying the appeal window represents a realistic imperfection in real-world cases, completely failing to notify the member of their basic right to appeal is a severe generation error. US commercial plans are legally mandated under ERISA and the ACA to include at least basic boilerplate instructions on how to appeal a denied claim. Because this letter ends abruptly at 'You are responsible for the full cost of the procedure' and lacks any legal, regulatory, or appeal framing whatsoever, it is highly unrealistic. It falls into the lowest tier for failing to include the necessary structural elements of a compliance-bound denial letter.",
+        "score": 1,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Because your provider did not submit a prior authorization request prior to the date of service, the claim is denied. You are responsible for the full cost of the procedure."
+        ],
+        "improvement": "Add standard boilerplate language regarding the member's right to appeal, including a specific timeframe (e.g., 180 days), to make it a realistic commercial denial letter."
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The patient is a 52-year-old male with a diagnosis of Cervical Radiculopathy. This demographic profile is highly plausible and matches the epidemiology of the condition, which frequently affects middle-aged adults in their 40s and 50s due to degenerative changes or acute herniation. The clinical context of a car accident causing acute symptoms is also realistic for this age and gender. There are no stereotypes invoked, and the scenario avoids any demographic-diagnosis mismatch.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 52",
+          "\"gender\": \"M\"",
+          "\"diagnosis\": \"Cervical Radiculopathy\""
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is an adult (age 52). The insurer is Cigna, and the denial type is Prior Authorization, both of which are explicitly approved. The plan funding type is 'fully_insured', indicating standard commercial coverage with no mention of excluded government or marketplace plans (Medicare, Medicaid, TRICARE, VA). Finally, there is no language implying live-filing, attorney-work, or court representation in the provided text.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 52",
+          "Cigna \u2014 Prior Authorization",
+          "\"plan_funding_type\": \"fully_insured\"",
+          "We are denying coverage for this service because prior authorization was not obtained before the procedure was performed."
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The input contains exactly one specific date: the date of service ('04/22/2026'). While this date correctly aligns with the target 2026 timeframe and the clinical context mentions a realistic '72-hour' standard prior authorization window, the overall timeline suffers from significant vagueness and omissions. Specifically, the denial letter lacks a generation date at the top, making it impossible to verify if the denial chronologically follows the service date appropriately. Additionally, standard timeline elements like the appeal window deadline (e.g., 180 days) and the exact date of the car accident are completely missing. Because the dates are broadly acceptable but lack necessary specificity and completeness for a realistic commercial insurance letter, it earns a 3.",
+        "score": 3,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "performed on 04/22/2026",
+          "standard 72-hour prior authorization window"
+        ],
+        "improvement": "Add a specific generation date to the top of the denial letter (e.g., May 5, 2026) and include the standard 180-day appeal window deadline to complete the chronological timeline."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter justifies its decision by stating 'According to your plan documents'. This is a highly realistic, generic umbrella term commonly used in administrative denials for lack of prior authorization. It successfully avoids over-specifying section numbers, page numbers, or edition years, which would be unrealistic for a standard template letter. Furthermore, it does not hallucinate any fake alphanumeric policy codes. This level of vagueness perfectly aligns with standard insurer tactics.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "According to your plan documents, advanced imaging (such as MRI, CT, and PET scans) requires prior authorization from Cigna"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial presents a very strong and easily exploitable appeal case. Procedurally, the letter completely omits required ERISA disclosures, including appeal rights, instructions, and timeframes. Clinically and administratively, the denial applies a standard prior authorization requirement to an emergency situation. The clinical context confirms the MRI was ordered immediately in the ER for sudden, severe neurological deficits following trauma, which universally qualifies for emergency exceptions to prior authorization rules (and falls under EMTALA protections). An appeal highlighting the emergency nature of the service and the procedural deficiencies of the denial letter is highly likely to succeed.",
+        "score": 5,
+        "confidence": 0.95,
+        "exploitable_weaknesses": [
+          "Complete lack of ERISA appeal rights and disclosures in the denial letter.",
+          "Failure to account for emergency medical exceptions to prior authorization requirements.",
+          "Patient clearly met standard of care for immediate imaging due to acute trauma and neurological deficits."
+        ],
+        "strong_defenses": [
+          "Plan documents do generally require prior authorization for advanced imaging like MRIs."
+        ],
+        "evidence_quotes": [
+          "prior authorization was not obtained before the procedure was performed",
+          "The ER doctor ordered the MRI immediately to rule out a spinal cord injury.",
+          "There was no time to wait for a standard 72-hour prior authorization window."
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial presents a very strong and easily exploitable appeal case. Procedurally, the letter completely omits required ERISA disclosures, including appeal rights, instructions, and timeframes. Clinically and administratively, the denial applies a standard prior authorization requirement to an emergency situation. The clinical context confirms the MRI was ordered immediately in the ER for sudden, severe neurological deficits following trauma, which universally qualifies for emergency exceptions to prior authorization rules (and falls under EMTALA protections). An appeal highlighting the emergency nature of the service and the procedural deficiencies of the denial letter is highly likely to succeed.",
+      "exploitable_weaknesses": [
+        "Complete lack of ERISA appeal rights and disclosures in the denial letter.",
+        "Failure to account for emergency medical exceptions to prior authorization requirements.",
+        "Patient clearly met standard of care for immediate imaging due to acute trauma and neurological deficits."
+      ],
+      "strong_defenses": [
+        "Plan documents do generally require prior authorization for advanced imaging like MRIs."
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }

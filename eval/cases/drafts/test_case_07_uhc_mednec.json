@@ -6,9 +6,164 @@
     "age": 19,
     "gender": "F",
     "diagnosis": "Anorexia Nervosa, restrictive type",
-    "treatment_requested": "Intensive Outpatient Program (IOP) for Eating Disorders"
+    "treatment_requested": "Intensive Outpatient Program (IOP) for Eating Disorders",
+    "plan_funding_type": "fully_insured"
   },
   "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for an Eating Disorder Intensive Outpatient Program (IOP). Based on UnitedHealthcare's Medical Necessity Guidelines and the APA practice guidelines, we are denying this request.\n\nThe clinical information indicates you are currently at 88% of your ideal body weight (IBW) and your vital signs are stable without severe bradycardia. Our guidelines require a patient to either be below 85% of IBW or exhibit acute medical instability (such as severe electrolyte imbalance) to qualify for an intensive eating disorder program. Because you do not meet these criteria, you can be safely managed in standard weekly outpatient therapy.",
   "clinical_context": "The patient is medically stable only because her parents force-feed her, causing severe daily panic attacks. While her weight is technically 88% of IBW, she is actively losing 2-3 lbs a week and restricting heavily. Standard weekly therapy is failing to stop the rapid weight loss trajectory.",
-  "synthetic_provenance": "Generated purely via LLM referencing eating disorder level-of-care denials."
+  "synthetic_provenance": {
+    "generator_model": "legacy-manual",
+    "run_id": "gen-legacy-61f88",
+    "generated_at": "2026-05-29T02:10:04Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "unknown",
+      "patient_gender": "F",
+      "specialty": "unknown",
+      "sub_tactic": "unknown"
+    },
+    "prompt_versions": {},
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "The documents are highly consistent across all factual dimensions. Both the denial letter and the clinical context agree on the patient's diagnosis, the requested treatment (IOP), and the specific clinical metrics (the patient is currently at 88% of ideal body weight and is medically stable). The denial letter uses these facts to justify a denial based on strict criteria (<85% IBW or medical instability), while the clinical context provides the nuanced reality (rapid weight loss, force-feeding by parents) that makes this an appealable case. There are no internal contradictions within the documents, and the timeline and facts remain perfectly stable.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "The clinical information indicates you are currently at 88% of your ideal body weight (IBW) and your vital signs are stable",
+          "While her weight is technically 88% of IBW, she is actively losing 2-3 lbs a week",
+          "The patient is medically stable only because her parents force-feed her"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "LLMTellDetector",
+        "reasoning": "The text reads as highly plausible, human-authored insurance boilerplate. It is appropriately dry, bureaucratic, and direct, which is a major strength for realism. It lacks any typical LLM hallmarks\u2014there is no faux empathy, no flowery language (e.g., 'delve,' 'tapestry,' 'navigate'), no listicle formatting, and no perfectly symmetrical paragraph structures. The use of specific clinical and insurance terminology, such as '88% of your ideal body weight (IBW)' and 'severe bradycardia,' feels authentic to a claims handler's voice rather than a generative model trying to sound professional. There are no weaknesses or obvious AI tells present in this text.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Based on UnitedHealthcare's Medical Necessity Guidelines and the APA practice guidelines, we are denying this request.",
+          "The clinical information indicates you are currently at 88% of your ideal body weight (IBW) and your vital signs are stable without severe bradycardia."
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "OverallToneCritic",
+        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It relies strictly on algorithmic criteria, specifically IBW percentages and vital signs, to justify the denial, completely avoiding any apologies, warmth, or marketing language. The clinical context is written as a straightforward, plain-prose narrative that presents the stark realities of the patient's condition, such as rapid weight loss and panic attacks, without resorting to emotional pleading or overt advocacy.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Based on UnitedHealthcare's Medical Necessity Guidelines and the APA practice guidelines, we are denying this request.",
+          "Because you do not meet these criteria, you can be safely managed in standard weekly outpatient therapy.",
+          "Standard weekly therapy is failing to stop the rapid weight loss trajectory."
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "FinancialAuditor",
+        "reasoning": "The denial letter focuses entirely on the clinical rationale for denying the Eating Disorder Intensive Outpatient Program (IOP) based on ideal body weight and medical stability. It makes absolutely no mention of the patient's potential out-of-pocket costs, financial liability, or specific dollar amounts. According to the evaluation criteria, omitting cost liability entirely is standard practice for real-world insurance denials. Therefore, it perfectly meets the criteria for a realistically silent financial framing.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "LegalAuditor",
+        "reasoning": "The denial letter completely omits any mention of appeal rights, appeal windows, or regulatory frameworks. While the prompt notes that omitting external review rights is a realistic imperfection, omitting all internal appeal rights and deadlines is a fundamental generation error. Real-world commercial denial letters are legally required to include basic appeal instructions, even if they obscure specific ERISA disclosures. The rubric for a score of 5 explicitly requires that the letter 'mentions appeal rights,' and a score of 3 requires 'generic legal language.' Because this letter lacks even a buried appeal window or generic legal boilerplate, it is an unrealistic generation that fails to provide the necessary regulatory framing.",
+        "score": 1,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "we are denying this request."
+        ],
+        "improvement": "Add a standard commercial appeal boilerplate section that mentions the member's right to appeal within 180 days, but strategically omit external review instructions or specific ERISA rights to make it realistically imperfect."
+      },
+      "demographic_validator": {
+        "dimension": "DemographicValidator",
+        "reasoning": "The demographic combination of a 19-year-old female with Anorexia Nervosa, restrictive type, is highly clinically plausible. The peak age of onset for anorexia nervosa is during adolescence and young adulthood (specifically ages 15-19), and it disproportionately affects females. The clinical context correctly uses female pronouns ('her parents force-feed her'), aligning with the patient profile's 'F' gender marker. There is no language in the denial letter or clinical context that exoticizes or stereotypes the patient; the text focuses strictly on clinical metrics such as ideal body weight and vital signs. The demographics perfectly match the epidemiology of the diagnosis without invoking harmful stereotypes.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 19",
+          "\"gender\": \"F\"",
+          "\"diagnosis\": \"Anorexia Nervosa, restrictive type\"",
+          "her parents force-feed her"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "ScopeGuard",
+        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is 19 years old, which falls within the required adult range of 18-89. The insurer is UHC and the denial is based on Medical Necessity. The plan is listed as 'fully_insured' with no references to excluded government or marketplace plans (Medicare, Medicaid, TRICARE, VA). Finally, there is no prohibited language regarding live-filing, attorney work, or court representation.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "\"age\": 19",
+          "UHC \u2014 Medical Necessity",
+          "\"plan_funding_type\": \"fully_insured\""
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "DateSanityCritic",
+        "reasoning": "The provided denial letter and clinical context completely omit all dates. There is no date of notice, no requested dates of service, no appeal deadline, and no chronological markers in the clinical history other than a rate of weight loss ('2-3 lbs a week'). A complete absence of dates makes it impossible to establish a 2025-2026 timeline and is highly unrealistic for a commercial insurance denial letter, which legally requires specific dates to establish appeal windows and service periods. Therefore, it fails the baseline requirement for date realism.",
+        "score": 1,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "actively losing 2-3 lbs a week"
+        ],
+        "improvement": "Add specific dates for the denial letter issuance (e.g., a date in 2026), the requested dates of service, and the 180-day appeal window deadline."
+      },
+      "citation_traceability": {
+        "dimension": "CitationTraceabilityCritic",
+        "reasoning": "The denial letter cites \"UnitedHealthcare's Medical Necessity Guidelines\" and \"the APA practice guidelines.\" These references are highly realistic because they are intentionally vague, acting as generic umbrella terms without providing specific bulletin numbers, edition years, or page numbers. This aligns perfectly with the evaluation criteria and edge cases, which note that citing internal medical necessity guidelines without naming a specific bulletin is a common, frustrating insurer tactic. Furthermore, the text successfully avoids hallucinating fake alphanumeric codes or providing unrealistically perfect citations.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Based on UnitedHealthcare's Medical Necessity Guidelines and the APA practice guidelines, we are denying this request."
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial relies on a rigid application of an 85% IBW threshold and current medical stability, ignoring the patient's rapid weight loss trajectory (2-3 lbs/week) and the failure of the recommended lower level of care (standard weekly therapy). Furthermore, the patient's current stability is artificially maintained by parental force-feeding, which is unsustainable and causing severe panic attacks. An appeal can easily leverage APA guidelines, which support IOP for patients failing outpatient treatment with rapid weight loss, even if they haven't yet crossed the 85% IBW threshold. Procedurally, the letter also omits standard ERISA appeal rights and timeframes, making this a highly exploitable denial.",
+        "score": 5,
+        "confidence": 0.95,
+        "exploitable_weaknesses": [
+          "Rigid application of IBW threshold ignoring rapid weight loss trajectory",
+          "Ignores failure of the recommended lower level of care (standard outpatient)",
+          "Omission of ERISA appeal rights and deadlines"
+        ],
+        "strong_defenses": [
+          "Patient technically does not meet the strict <85% IBW or acute medical instability criteria cited in the specific UHC guideline"
+        ],
+        "evidence_quotes": [
+          "currently at 88% of your ideal body weight (IBW)",
+          "actively losing 2-3 lbs a week and restricting heavily",
+          "Standard weekly therapy is failing to stop the rapid weight loss trajectory"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial relies on a rigid application of an 85% IBW threshold and current medical stability, ignoring the patient's rapid weight loss trajectory (2-3 lbs/week) and the failure of the recommended lower level of care (standard weekly therapy). Furthermore, the patient's current stability is artificially maintained by parental force-feeding, which is unsustainable and causing severe panic attacks. An appeal can easily leverage APA guidelines, which support IOP for patients failing outpatient treatment with rapid weight loss, even if they haven't yet crossed the 85% IBW threshold. Procedurally, the letter also omits standard ERISA appeal rights and timeframes, making this a highly exploitable denial.",
+      "exploitable_weaknesses": [
+        "Rigid application of IBW threshold ignoring rapid weight loss trajectory",
+        "Ignores failure of the recommended lower level of care (standard outpatient)",
+        "Omission of ERISA appeal rights and deadlines"
+      ],
+      "strong_defenses": [
+        "Patient technically does not meet the strict <85% IBW or acute medical instability criteria cited in the specific UHC guideline"
+      ]
+    }
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z"
 }
