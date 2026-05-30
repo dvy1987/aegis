@@ -1,6 +1,7 @@
 from app.evals.part_a.evaluated_run import run_evaluated_case
 from app.evals.part_a.recorder import InMemoryPhoenixRecorder
 from app.aegis_v1.drafter_client import StubDrafterClient
+from app.aegis_v1.simulator_client import StubSimulatorClient
 from app.evals.part_a.llm_judges import OfflineHeuristicJudgeClient
 
 
@@ -31,3 +32,19 @@ def test_run_evaluated_case_closes_the_loop_offline():
     # laundered signal landed on the trace
     assert "weighted_quality" in stored["annotations"]
     assert "dimensions" in stored["annotations"]
+
+
+def test_run_evaluated_case_annotates_simulator_outcome_offline():
+    rec = InMemoryPhoenixRecorder()
+    result = run_evaluated_case(
+        _case(),
+        recorder=rec,
+        drafter_client=StubDrafterClient(),
+        judge_client=OfflineHeuristicJudgeClient(),
+        run_simulator=True,
+        simulator_client=StubSimulatorClient(verdict="DENY", score=2),
+    )
+    assert result.simulator_result["verdict"] == "DENY"
+    ann = rec.get(result.trace_ref)["annotations"]
+    assert ann["simulator_verdict"] == "DENY"   # INV-3: recorded as guardrail/demo signal
+    assert ann["simulator_score"] == 2

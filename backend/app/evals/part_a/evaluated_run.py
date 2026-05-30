@@ -1,10 +1,13 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from pydantic import BaseModel
 
 from app.aegis_v1.drafter_client import DrafterLLMClient
+
+if TYPE_CHECKING:
+    from app.aegis_v1.simulator_client import SimulatorClient
 from app.aegis_v1.pipeline import run_aegis_v1_pipeline
 from app.evals.part_a.llm_judges import JudgeClient
 from app.evals.part_a.panel import run_panel
@@ -26,6 +29,7 @@ def run_evaluated_case(
     drafter_client: DrafterLLMClient | None = None,
     judge_client: JudgeClient | None = None,
     run_simulator: bool = True,
+    simulator_client: "SimulatorClient | None" = None,
 ) -> EvaluatedRun:
     """Student → record run → eval layer (judges [+ simulator]) → annotate trace."""
 
@@ -53,6 +57,7 @@ def run_evaluated_case(
             parsed_case=appeal_package["parsed_case"],
             appeal_draft=appeal_package["appeal_package_draft"],
             self_check_result=appeal_package["self_check"],
+            client=simulator_client,
         )
 
     # 4. Annotate the trace with the LAUNDERED signal + sim verdict (INV-2/INV-3).

@@ -3,6 +3,7 @@ import os
 from fastapi import FastAPI
 from google.adk.cli.fast_api import get_fast_api_app
 
+from app.aegis_v1.appeal_api import router as appeal_router
 from app.app_utils.telemetry import setup_telemetry
 
 os.environ.setdefault("PHOENIX_PROJECT_NAME", "default")
@@ -23,6 +24,11 @@ app: FastAPI = get_fast_api_app(
 )
 app.title = "aegis-v1"
 app.description = "Aegis V1 Agent API"
+
+# Product appeal endpoint: runs the Student + Outcome Simulator and returns the
+# drafted letter together with the insurer APPROVE/DENY verdict. The simulator is
+# run by this orchestration layer, not as a Student tool (separation of powers).
+app.include_router(appeal_router)
 
 
 if __name__ == "__main__":

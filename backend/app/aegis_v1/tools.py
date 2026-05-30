@@ -424,80 +424,17 @@ def simulator(
     parsed_case: dict[str, Any],
     appeal_draft: dict[str, Any],
     self_check_result: dict[str, Any],
+    client: "SimulatorClient | None" = None,
 ) -> dict[str, Any]:
-    """Run the Insurer Persona LLM simulator over the appeal draft."""
-    
-    from google import genai
-    from google.genai import types
-    from pydantic import BaseModel, Field
-    from typing import Literal
-    
-    class LLMSimulatorResponse(BaseModel):
-        critique: str = Field(description="Analysis-first critique of the appeal against the denial letter. Be ruthless.")
-        score: int = Field(description="Score from 1 to 10, where 10 means undeniable and forces approval.")
-        verdict: Literal["APPROVE", "DENY"]
-        features_extracted: dict[str, bool] = Field(description="Features found in the letter")
-        
-    case = ParsedCase.model_validate(parsed_case)
-    draft = AppealDraft.model_validate(appeal_draft)
-    
-    prompt = f"""
-    You are a strict Insurer Claims Adjuster evaluating an appeal.
-    
-    Denial Letter you originally sent:
-    {case.denial_text}
-    
-    Clinical Context provided by provider:
-    {case.clinical_context}
-    
-    Appeal Letter drafted by the patient's agent:
-    {draft.appeal_letter}
-    
-    INSTRUCTIONS:
-    1. CRITIQUE FIRST: Analyze if the appeal actually addresses your specific denial reason. Does it cite real clinical evidence from the context? Does it cite binding policy?
-    2. SCORE: 1 to 10.
-    3. VERDICT: "APPROVE" or "DENY". 
-    NOTE: You look for any reason to DENY unless the appeal is absolutely flawless.
+    """Run the Insurer Persona Outcome Simulator over the appeal draft.
+
+    The simulator is NOT a Student tool — it is invoked by the orchestration/eval
+    layer wrapping the Student (separation of powers, D11). The persona itself is
+    an evolvable/injectable client (offline stub / Gemini prod). `self_check_result`
+    is accepted for interface stability; the persona judges the letter, not the
+    self-check.
     """
-    
-    threshold = 10
-    
-    try:
-        # Fast LLM call for the simulator persona via Vertex AI
-        client = genai.Client(vertexai=True, location="global")
-        response = client.models.generate_content(
-            model='gemini-3.1-pro',
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-                response_schema=LLMSimulatorResponse,
-                temperature=0.2,
-            ),
-        )
-        data = json.loads(response.text)
-        score = data.get("score", 1)
-        
-        # INTENTIONAL DEMO ARC DESIGN CHOICE:
-        # We require a perfect 10/10 to approve. This ensures the "weak-v1" agent
-        # guarantees a DENY in the simulator during the initial demo recording.
-        # Do NOT lower this threshold without explicitly checking the PRD demo arc (Section 15.5).
-        verdict = "APPROVE" if score >= threshold else "DENY"
-            
-        result = SimulatorResult(
-            verdict=verdict,
-            score=score,
-            threshold=threshold,
-            features=data.get("features_extracted", {}),
-            rationale=[data.get("critique", "No critique provided")]
-        )
-    except Exception as e:
-        # Fallback to failing deterministic result if API fails
-        result = SimulatorResult(
-            verdict="DENY",
-            score=0,
-            threshold=threshold,
-            features={"llm_fallback": True},
-            rationale=["LLM Insurer Simulator failed.", str(e)]
-        )
-        
-    return result.model_dump()
+    from app.aegis_v1.simulator_client import GeminiSimulatorClient, SimulatorClient
+
+    active: SimulatorClient = client or GeminiSimulatorClient()
+    return active.simulate(parsed_case, appeal_draft)
