@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import os
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -49,3 +51,35 @@ class StubDrafterClient:
             f"Requested action: please conduct a full and fair review and have a "
             f"qualified reviewer reassess whether the service meets plan criteria."
         )
+
+
+def _build_contents(prompt, parsed_case, citations, playbook, phoenix_summary) -> str:
+    context = {
+        "parsed_case": parsed_case,
+        "citations": citations,
+        "playbook": playbook,
+        "phoenix_summary": phoenix_summary,
+    }
+    return f"{prompt}\n\nCONTEXT JSON:\n{json.dumps(context, indent=2, default=str)}"
+
+
+class GeminiDrafterClient:
+    """Vertex/Gemini-backed drafter. Returns the appeal-letter body text."""
+
+    name = "gemini"
+
+    def __init__(self, model: str | None = None, location: str = "global") -> None:
+        self.model = model or os.environ.get("AEGIS_DRAFTER_MODEL", "gemini-3.1-pro")
+        self.location = location
+
+    def draft(self, prompt, parsed_case, citations, playbook, phoenix_summary) -> str:
+        from google import genai
+        from google.genai import types
+
+        client = genai.Client(vertexai=True, location=self.location)
+        response = client.models.generate_content(
+            model=self.model,
+            contents=_build_contents(prompt, parsed_case, citations, playbook, phoenix_summary),
+            config=types.GenerateContentConfig(temperature=0.3),
+        )
+        return response.text or ""

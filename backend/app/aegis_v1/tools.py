@@ -308,52 +308,45 @@ def drafter(
     retrieval_results: dict[str, Any],
     playbook: dict[str, Any],
     phoenix_summary: dict[str, Any],
+    client: "DrafterLLMClient | None" = None,
 ) -> dict[str, Any]:
-    """Draft the weak v1 appeal package using only parsed facts and local citations."""
+    """Draft the appeal package. The letter PROSE is produced by an evolvable
+    LLM (or offline stub); structure, citations, and safety are deterministic."""
+
+    from app.aegis_v1.drafter_client import (
+        GeminiDrafterClient,
+        DrafterLLMClient,
+        load_drafter_prompt,
+    )
+    from app.aegis_v1.guardrails import apply_guardrails
 
     case = ParsedCase.model_validate(parsed_case)
     retrieval = RetrievalResult.model_validate(retrieval_results)
     loaded_playbook = Playbook.model_validate(playbook)
     phoenix = PhoenixSummary.model_validate(phoenix_summary)
     citations = retrieval.hits[:3]
-    citation_lines = "\n".join(
-        f"- {hit.title} ({hit.corpus_doc_id}): {hit.quote}" for hit in citations
-    )
-    if not citation_lines:
-        citation_lines = "- No local corpus citation was retrieved."
 
-    evidence_items = list(dict.fromkeys(case.missing_facts + loaded_playbook.required_evidence))
+    active: DrafterLLMClient = client or GeminiDrafterClient()
+    raw_body = active.draft(
+        prompt=load_drafter_prompt("drafter_v1"),
+        parsed_case=case.model_dump(),
+        citations=[c.model_dump() for c in citations],
+        playbook=loaded_playbook.model_dump(),
+        phoenix_summary=phoenix.model_dump(),
+    )
+    allowed_doc_ids = {hit.corpus_doc_id for hit in citations}
+    letter = apply_guardrails(raw_body, allowed_doc_ids=allowed_doc_ids)
+
+    evidence_items = list(
+        dict.fromkeys(case.missing_facts + loaded_playbook.required_evidence)
+    )
     tactic_text = " ".join(loaded_playbook.tactics[:2])
-    deadline_text = (
-        f"The denial mentions an appeal window of {', '.join(case.deadlines_mentioned)}."
-        if case.deadlines_mentioned
-        else "The denial text does not clearly state the appeal deadline."
-    )
-
-    letter = f"""To the appeals reviewer:
-
-{DISCLAIMER} This is a draft for review by a person before filing.
-
-I am appealing {case.insurer}'s denial of {case.service_or_procedure}. The denial appears to rest on this reason: {case.cited_denial_reason}
-
-The record supports review because {case.clinical_context or "the clinical context should be attached by the treating provider"}. {deadline_text}
-
-Appeal basis:
-{tactic_text}
-
-Local source support:
-{citation_lines}
-
-Requested action:
-Please conduct a full and fair review, consider the attached clinical records, and have an appropriately qualified reviewer assess whether the requested service meets the plan criteria.
-
-Missing evidence to attach before filing:
-{chr(10).join(f"- {item}" for item in evidence_items) if evidence_items else "- None identified from the supplied synthetic case."}
-"""
 
     risk_flags = ["weak_prompt_v1"]
     risk_flags.extend(loaded_playbook.risk_flags)
-    risk_flags.extend(flag for flag in phoenix.risk_flags if not flag.startswith("case_id:"))
+    risk_flags.extend(
+        flag for flag in phoenix.risk_flags if not flag.startswith("case_id:")
+    )
     if not citations:
         risk_flags.append("no_corpus_citations")
 
@@ -364,7 +357,7 @@ Missing evidence to attach before filing:
         ),
         denial_grounds_interpreted=case.cited_denial_reason,
         appeal_strategy=tactic_text or "Use a conservative medical-record appeal.",
-        appeal_letter=letter.strip(),
+        appeal_letter=letter,
         citations_used=citations,
         missing_evidence_checklist=evidence_items,
         risk_flags=sorted(set(risk_flags)),

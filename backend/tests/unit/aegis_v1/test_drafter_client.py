@@ -1,4 +1,9 @@
-from app.aegis_v1.drafter_client import DrafterLLMClient, StubDrafterClient
+from app.aegis_v1.drafter_client import (
+    DrafterLLMClient,
+    GeminiDrafterClient,
+    StubDrafterClient,
+)
+from app.aegis_v1.tools import DISCLAIMER, drafter
 
 
 def test_stub_client_is_a_drafter_llm_client():
@@ -27,3 +32,34 @@ def test_stub_client_returns_deterministic_letter_body_from_inputs():
                          {"tactics": ["Rebut the medical-necessity rationale."]},
                          {"success_traits": ["cite local corpus"]})
     assert body == again
+
+
+def test_drafter_uses_injected_client_and_applies_guardrails():
+    parsed = {"case_id": "case_demo", "insurer": "Cigna", "denial_type": "medical_necessity",
+              "service_or_procedure": "TMS",
+              "diagnosis_summary": "treatment-resistant depression",
+              "cited_denial_reason": "not medically necessary",
+              "denial_text": "We denied coverage for TMS as not medically necessary.",
+              "clinical_context": "failed two SSRIs", "missing_facts": ["plan_document_language"]}
+    retrieval = {"query": "x", "hits": [
+        {"corpus_doc_id": "erisa_503.md", "title": "ERISA 503", "quote": "full and fair review", "relevance_score": 1.0}]}
+    playbook = {"insurer": "Cigna", "denial_type": "medical_necessity", "version": "cold-start",
+                "status": "missing", "tactics": ["Rebut the rationale."], "required_evidence": ["clinical notes"],
+                "risk_flags": ["playbook_cold_start"]}
+    phoenix = {"status": "cold_start", "query": "q", "similar_trace_count": 0,
+               "failure_patterns": [], "success_traits": [], "risk_flags": ["phoenix_mcp_cold_start"]}
+
+    out = drafter(parsed, retrieval, playbook, phoenix, client=StubDrafterClient())
+
+    assert DISCLAIMER.lower() in out["appeal_letter"].lower()   # guardrail injected
+    assert out["citations_used"][0]["corpus_doc_id"] == "erisa_503.md"  # only retrieved cites attached
+    assert "weak_prompt_v1" in out["risk_flags"]
+    assert out["safety_disclaimer"] == DISCLAIMER
+
+
+def test_gemini_drafter_client_constructs_with_default_model(monkeypatch):
+    monkeypatch.delenv("AEGIS_DRAFTER_MODEL", raising=False)
+    client = GeminiDrafterClient()
+    assert client.name == "gemini"
+    assert client.model == "gemini-3.1-pro"
+    assert client.location == "global"
