@@ -1191,3 +1191,48 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 ### Working Tree
 - New: `backend/app/evals/part_a/`, `backend/tests/unit/evals/`, `eval/judges/part_a/`, judge-panel docs/spec/plan.
 - Modified: `docs/skill-outputs/SKILL-OUTPUTS.md`, `docs/memory/current-state.md`, `docs/memory/project-index.md`, `docs/memory/agent-handoffs.md`.
+
+---
+
+## 2026-05-29 — Session 20 Handoff (Antigravity)
+
+### Done
+- **Full Gumloop prompt overhaul** — all 17 critic prompts rewritten, `gumloop/architecture.md` updated.
+- Root cause identified: the old prompts evaluated denial letters as if they *should* be legally and clinically perfect. They were penalising exactly what P4 Flaw Injector deliberately injected.
+- **Second pass:** Added REVISION DISCIPLINE blocks to all 15 actionable critics — every `improvement` field must now follow `"In [field], replace '[exact quote]' with '[exact replacement]'. Reason: [why]."` format. Concrete worked examples embedded in each prompt. Final Arbiter updated to copy critic improvement text verbatim rather than paraphrase it.
+- New prompts follow the "Flaws Are Features" principle throughout. Every prompt that evaluated denial letter quality now explicitly tells the LLM:
+  - Which patterns are intentional (circular reasoning, missing disclosures, boilerplate, vague citations, algo timestamps) and must not be flagged
+  - What the critic is *actually* checking (clinical scenario plausibility, AI writing tells, real factual contradictions, PHI, scope)
+- Key per-prompt fixes:
+  - `13_denial_logic` scoring INVERTED — score 5 now means "authentically shoddy" (correct), not "airtight"
+  - `14_date_sanity` now explicitly exempts `algo_time_delta` (1–5 min timestamps) from FAIL
+  - `15_citation_traceability` now rewards vague/absent citations (the real pattern); only flags hallucinated guideline names
+  - `05_legal_auditor` now validates flaw plausibility rather than penalising missing disclosures
+  - `08_final_arbiter` completely rewritten with explicit tiered logic, PREFER APPROVE discipline, and requirement that REVISE instructions be specific and actionable
+  - `10_appeal_difficulty` enriched as a proper teacher-packet input with `exploitable_weaknesses` and `strong_defenses` arrays
+  - `07_demographic_validator` elevated to Tier 1 Hard Gate (PASS/FAIL)
+- `gumloop/architecture.md` updated with: "Flaws Are Features" principle section, flaw pattern handling table, updated 5-gate Tier 1 list (added demographic validator), clear PREFER APPROVE arbiter rule, updated Gumloop setup instructions.
+
+### Decisions
+- Old prompts evaluated denial letters objectively (as if written by a good-faith insurer). New prompts evaluate them adversarially (as intentionally flawed training cases).
+- Demographic Validator promoted to Tier 1 Hard Gate (was Tier 2 before).
+- Appeal Difficulty is explicitly excluded from APPROVE/REVISE reasoning and is marked as teacher-packet-only.
+
+### Deferred
+- The 16-item audit backlog from Session 18 is still pending. PM wants to review each individually.
+- dev.sh syntax bug (issue #1) still unfixed.
+- Generation trial still hasn't run — need Gemini/Vertex ADC working in the environment.
+- T3.5 demo capture and T4.1 live Phoenix MCP still pending.
+
+### Next Agent Should Know
+- **The Gumloop swarm is now aligned with the pipeline.** Run a test case through the updated prompts before the first generation trial to confirm the critics no longer flag intentional flaws.
+- **verdicts.json has one historical example** (`case_01_aetna_priorauth` DISCARD). Under the new prompts, the legal_auditor would score this 5 (not 3) since missing ERISA disclosures are now recognised as intentional. The DISCARD verdict itself is still valid because the tell_detector FAIL was a genuine AI-writing-style tell (not a flaw-injection pattern).
+- **Session 18 audit issues are still the top priority** — fix dev.sh (#1) before any development work.
+
+### Revisit Triggers
+- (All carry-forward from Sessions 18 and 19)
+- If Gumloop DISCARD rate remains high after this prompt update, the prompts themselves may need calibration examples (few-shot) added.
+
+### Working Tree
+- Modified: `gumloop/prompts/01_clinical_critic.txt` through `17_safety_redactor.txt` (all 17), `gumloop/architecture.md`.
+

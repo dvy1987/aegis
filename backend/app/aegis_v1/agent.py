@@ -64,7 +64,7 @@ Hard safety rules:
 
 root_agent = Agent(
     name="aegis_v1",
-    model=Gemini(model="gemini-3.1-pro-preview"),
+    model=Gemini(model="gemini-3.1-pro"),
     instruction=AEGIS_V1_INSTRUCTION,
     tools=[
         case_parser,

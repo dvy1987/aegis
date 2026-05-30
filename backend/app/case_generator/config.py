@@ -15,8 +15,8 @@ BANNED_PATH = EVAL_DIR / "banned_topics.json"
 PATTERNS_PATH = EVAL_DIR / "denial_patterns.json"
 
 
-DEFAULT_MODEL = os.environ.get("AEGIS_CASEGEN_MODEL", "gemini-3.1-pro-preview")
-CRITIC_MODEL = os.environ.get("AEGIS_CASEGEN_CRITIC_MODEL", "gemini-3.1-pro-preview") # Ideally should be non-Gemini to prevent self-enhancement bias
+DEFAULT_MODEL = os.environ.get("AEGIS_CASEGEN_MODEL", "gemini-3.1-pro")
+CRITIC_MODEL = os.environ.get("AEGIS_CASEGEN_CRITIC_MODEL", "gemini-3.1-pro") # Ideally should be non-Gemini to prevent self-enhancement bias
 
 
 @lru_cache(maxsize=1)

@@ -153,9 +153,21 @@ def run_panel(
     if getattr(client, "name", "") == "gemini":
         risk_flags.append("same_model_drafting_and_judging")
 
+    verdict = "FAIL" if hard_gate_failures else "PASS"
+    
+    # Check for divergence between Insurer Simulator and Teacher Panel
+    simulator = appeal_package.get("simulator_result", {})
+    sim_verdict = simulator.get("verdict")
+    if sim_verdict == "APPROVE" and verdict == "FAIL":
+        risk_flags.append("evaluator_disagreement:simulator_approve_but_judges_fail")
+    elif sim_verdict == "DENY" and verdict == "PASS":
+        # Check if it was a high-quality PASS (e.g. all dimensions perfect) 
+        # or just a general divergence. We'll flag it regardless.
+        risk_flags.append("evaluator_disagreement:simulator_deny_but_judges_pass")
+
     return PanelReport(
         case_id=teacher.case_id,
-        verdict="FAIL" if hard_gate_failures else "PASS",
+        verdict=verdict,
         weighted_quality=weighted_quality,
         hard_gate_failures=hard_gate_failures,
         promotion_blockers=promotion_blockers,

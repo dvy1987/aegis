@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from app.agent import AEGIS_V1_TOOL_NAMES, root_agent
+from app.aegis_v1.agent import AEGIS_V1_TOOL_NAMES, root_agent
 from app.aegis_v1.schemas import AppealPackage
 
 

@@ -432,43 +432,79 @@ def simulator(
     appeal_draft: dict[str, Any],
     self_check_result: dict[str, Any],
 ) -> dict[str, Any]:
-    """Run the transparent deterministic v1 simulator over the appeal draft."""
-
+    """Run the Insurer Persona LLM simulator over the appeal draft."""
+    
+    from google import genai
+    from google.genai import types
+    from pydantic import BaseModel, Field
+    from typing import Literal
+    
+    class LLMSimulatorResponse(BaseModel):
+        critique: str = Field(description="Analysis-first critique of the appeal against the denial letter. Be ruthless.")
+        score: int = Field(description="Score from 1 to 10, where 10 means undeniable and forces approval.")
+        verdict: Literal["APPROVE", "DENY"]
+        features_extracted: dict[str, bool] = Field(description="Features found in the letter")
+        
     case = ParsedCase.model_validate(parsed_case)
     draft = AppealDraft.model_validate(appeal_draft)
-    check = SelfCheckResult.model_validate(self_check_result)
-    letter_lower = draft.appeal_letter.lower()
-
-    features = {
-        "cites_local_authority": bool(draft.citations_used),
-        "mentions_appeal_window": bool(case.deadlines_mentioned)
-        or "180 days" in letter_lower,
-        "rebuts_denial_reason": bool(case.cited_denial_reason)
-        and case.cited_denial_reason[:24].lower() in letter_lower,
-        "includes_clinical_context": bool(case.clinical_context)
-        and any(term in letter_lower for term in ("clinical", "record", "documented")),
-        "requests_full_and_fair_review": "full and fair review" in letter_lower,
-        "has_evidence_checklist": bool(draft.missing_evidence_checklist),
-        "passes_safety_gate": check.hard_gate_pass,
-        "uses_playbook_or_phoenix_memory": not all(
-            flag in draft.risk_flags
-            for flag in ("playbook_cold_start", "phoenix_mcp_cold_start")
-        ),
-        "requests_qualified_reviewer": "qualified reviewer" in letter_lower,
-        "avoids_guarantee_language": check.safety_check.get(
-            "no_guarantee_language", False
-        ),
-    }
-    score = sum(1 for value in features.values() if value)
+    
+    prompt = f"""
+    You are a strict Insurer Claims Adjuster evaluating an appeal.
+    
+    Denial Letter you originally sent:
+    {case.denial_text}
+    
+    Clinical Context provided by provider:
+    {case.clinical_context}
+    
+    Appeal Letter drafted by the patient's agent:
+    {draft.appeal_letter}
+    
+    INSTRUCTIONS:
+    1. CRITIQUE FIRST: Analyze if the appeal actually addresses your specific denial reason. Does it cite real clinical evidence from the context? Does it cite binding policy?
+    2. SCORE: 1 to 10.
+    3. VERDICT: "APPROVE" or "DENY". 
+    NOTE: You look for any reason to DENY unless the appeal is absolutely flawless.
+    """
+    
     threshold = 10
-    result = SimulatorResult(
-        verdict="APPROVE" if score >= threshold else "DENY",
-        score=score,
-        threshold=threshold,
-        features=features,
-        rationale=[
-            "Transparent proxy only; not a prediction of real insurer behavior.",
-            f"v1 threshold is {threshold}; this draft scored {score}.",
-        ],
-    )
+    
+    try:
+        # Fast LLM call for the simulator persona via Vertex AI
+        client = genai.Client(vertexai=True, location="global")
+        response = client.models.generate_content(
+            model='gemini-3.1-pro',
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=LLMSimulatorResponse,
+                temperature=0.2,
+            ),
+        )
+        data = json.loads(response.text)
+        score = data.get("score", 1)
+        
+        # INTENTIONAL DEMO ARC DESIGN CHOICE:
+        # We require a perfect 10/10 to approve. This ensures the "weak-v1" agent
+        # guarantees a DENY in the simulator during the initial demo recording.
+        # Do NOT lower this threshold without explicitly checking the PRD demo arc (Section 15.5).
+        verdict = "APPROVE" if score >= threshold else "DENY"
+            
+        result = SimulatorResult(
+            verdict=verdict,
+            score=score,
+            threshold=threshold,
+            features=data.get("features_extracted", {}),
+            rationale=[data.get("critique", "No critique provided")]
+        )
+    except Exception as e:
+        # Fallback to failing deterministic result if API fails
+        result = SimulatorResult(
+            verdict="DENY",
+            score=0,
+            threshold=threshold,
+            features={"llm_fallback": True},
+            rationale=["LLM Insurer Simulator failed.", str(e)]
+        )
+        
     return result.model_dump()

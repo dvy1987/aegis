@@ -245,8 +245,11 @@ class GeminiJudgeClient:
     name = "gemini"
 
     def __init__(self, model: str | None = None, location: str = "global") -> None:
-        self.model = model or os.environ.get(
-            "AEGIS_JUDGE_MODEL", "gemini-3.1-pro-preview"
+        self.model = (
+            model
+            or os.environ.get(
+                "AEGIS_JUDGE_MODEL", "gemini-3.1-pro"
+            )
         )
         self.location = location
 

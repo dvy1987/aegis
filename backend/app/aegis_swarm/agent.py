@@ -7,7 +7,7 @@ from google.adk.models import Gemini
 # Stub agent for the swarm (to be expanded in Part B)
 root_agent = Agent(
     name="aegis_swarm_coordinator",
-    model=Gemini(model="gemini-3.1-pro-preview"),
+    model=Gemini(model="gemini-3.1-pro"),
     instruction="You are the Learning Coordinator for Aegis Swarm.",
     tools=[],
 )
