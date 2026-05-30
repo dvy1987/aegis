@@ -194,7 +194,10 @@ The self-improvement loop has been designed end-to-end (brainstorming) →
 [`docs/specs/2026-05-30-learning-coordinator-design.md`](../specs/2026-05-30-learning-coordinator-design.md).
 Key reframe: the drafter is currently deterministic templating (no evolvable surface) and the judge
 panel's signal never reaches Phoenix — both fixed in the spec (substrate fixes F1–F7) before the
-Learning Coordinator itself. **Next: write the implementation plan via `writing-plans`.** See the
+Learning Coordinator itself. **Plan 1 (substrate F1–F7) is written:**
+[`docs/plans/2026-05-30-learning-loop-substrate-plan.md`](../plans/2026-05-30-learning-loop-substrate-plan.md)
+— 9 TDD tasks, fully offline-testable. **Next: execute Plan 1**, then write Plan 2 (the Learning
+Coordinator itself: per-dimension specialists + experiment harness + HITL gate). See the
 orientation map ([`orientation-map.md`](orientation-map.md)) for the built-vs-designed picture and
 `graphify-out/` for a queryable repo graph.
 
