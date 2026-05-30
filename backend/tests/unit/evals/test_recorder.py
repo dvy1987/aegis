@@ -1,4 +1,8 @@
-from app.evals.part_a.recorder import InMemoryPhoenixRecorder, laundered_signal
+from app.evals.part_a.recorder import (
+    InMemoryPhoenixRecorder,
+    OtelPhoenixRecorder,
+    laundered_signal,
+)
 from app.evals.part_a.schemas import JudgeResult, PanelReport
 
 
@@ -31,3 +35,10 @@ def test_in_memory_recorder_round_trips_run_and_annotation():
     stored = rec.get(ref)
     assert stored["metadata"]["insurer"] == "Cigna"
     assert stored["annotations"]["weighted_quality"] == 0.6
+
+
+def test_otel_recorder_has_expected_name_and_project(monkeypatch):
+    monkeypatch.setenv("PHOENIX_PROJECT_NAME", "default")
+    rec = OtelPhoenixRecorder()
+    assert rec.name == "otel_phoenix"
+    assert rec.project_name == "default"

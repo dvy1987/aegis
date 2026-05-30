@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import Any, Protocol
 
 from app.evals.part_a.schemas import PanelReport
@@ -68,3 +69,37 @@ class InMemoryPhoenixRecorder:
 
     def get(self, trace_ref: str) -> dict[str, Any]:
         return self._runs[trace_ref]
+
+
+class OtelPhoenixRecorder:
+    """Production recorder: a tagged span per run + Phoenix eval annotations.
+
+    Live span emission and `log_evaluations` are exercised in a GCP integration
+    session; this class is unit-tested only for construction/config here.
+    """
+
+    name = "otel_phoenix"
+
+    def __init__(self, project_name: str | None = None) -> None:
+        self.project_name = project_name or os.environ.get("PHOENIX_PROJECT_NAME", "default")
+
+    def record_run(self, appeal_package, trace_metadata) -> str:
+        from opentelemetry import trace as otel_trace
+
+        tracer = otel_trace.get_tracer("aegis.evaluated_run")
+        with tracer.start_as_current_span("aegis_v1.evaluated_run") as span:
+            for key, value in trace_metadata.items():
+                span.set_attribute(f"aegis.{key}", str(value))
+            span.set_attribute("aegis.run_id", str(appeal_package.get("run_id", "")))
+            ctx = span.get_span_context()
+            return format(ctx.span_id, "016x")
+
+    def annotate(self, trace_ref, annotations) -> None:
+        import pandas as pd
+        import phoenix as px
+        from phoenix.trace import SpanEvaluations
+
+        df = pd.DataFrame([{"span_id": trace_ref, **annotations}])
+        px.Client().log_evaluations(
+            SpanEvaluations(eval_name="aegis_part_a_panel", dataframe=df)
+        )
