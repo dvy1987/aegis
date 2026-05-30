@@ -112,6 +112,5 @@ class AppealPackage(BaseModel):
     parsed_case: ParsedCase
     appeal_package_draft: AppealDraft
     self_check: SelfCheckResult
-    simulator_result: SimulatorResult
     risk_flags: list[str] = Field(default_factory=list)
     trace_metadata: TraceMetadata

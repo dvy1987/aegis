@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from app.aegis_v1.drafter_client import StubDrafterClient
 from app.aegis_v1.pipeline import run_aegis_v1_pipeline
 from app.aegis_v1.schemas import ParsedCase
 from app.aegis_v1.schemas import AppealPackage
@@ -91,6 +92,7 @@ def test_tool_pipeline_produces_self_checked_appeal_package() -> None:
         retrieval_results=retrieval,
         playbook=playbook,
         phoenix_summary=phoenix,
+        client=StubDrafterClient(),
     )
     check = self_check(parsed_case=parsed, appeal_draft=draft, retrieval_results=retrieval)
     sim = simulator(parsed_case=parsed, appeal_draft=draft, self_check_result=check)
@@ -113,6 +115,7 @@ def test_local_pipeline_returns_structured_appeal_package() -> None:
             case_id="case_01_cigna_mednec",
             dataset_split="train",
             run_mode="benchmark",
+            drafter_client=StubDrafterClient(),
         )
     )
 

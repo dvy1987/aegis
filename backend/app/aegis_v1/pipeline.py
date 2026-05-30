@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import TYPE_CHECKING, Any, Literal
 from uuid import uuid4
 
 from app.aegis_v1.schemas import AppealPackage
@@ -13,8 +13,10 @@ from app.aegis_v1.tools import (
     phoenix_mcp_lookup,
     playbook_loader,
     self_check,
-    simulator,
 )
+
+if TYPE_CHECKING:
+    from app.aegis_v1.drafter_client import DrafterLLMClient
 
 
 def run_aegis_v1_pipeline(
@@ -25,8 +27,10 @@ def run_aegis_v1_pipeline(
     run_mode: Literal["interactive", "benchmark", "autonomous_promotion"] = (
         "interactive"
     ),
+    drafter_client: "DrafterLLMClient | None" = None,
 ) -> dict[str, Any]:
-    """Run the deterministic seven-tool v1 flow for local smoke tests."""
+    """Run the six-tool v1 Student flow. The Outcome Simulator is no longer part
+    of the Student — it runs in the eval layer (`run_evaluated_case`)."""
 
     parsed = case_parser(
         denial_text=denial_text,
@@ -57,16 +61,12 @@ def run_aegis_v1_pipeline(
         retrieval_results=retrieval,
         playbook=playbook,
         phoenix_summary=phoenix,
+        client=drafter_client,
     )
     check = self_check(
         parsed_case=parsed,
         appeal_draft=draft,
         retrieval_results=retrieval,
-    )
-    sim = simulator(
-        parsed_case=parsed,
-        appeal_draft=draft,
-        self_check_result=check,
     )
 
     risk_flags = sorted(
@@ -83,7 +83,6 @@ def run_aegis_v1_pipeline(
         parsed_case=parsed,
         appeal_package_draft=draft,
         self_check=check,
-        simulator_result=sim,
         risk_flags=risk_flags,
         trace_metadata=TraceMetadata(
             case_id=parsed["case_id"],

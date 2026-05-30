@@ -14,7 +14,6 @@ from app.aegis_v1.tools import (
     phoenix_mcp_lookup,
     playbook_loader,
     self_check,
-    simulator,
 )
 
 
@@ -25,7 +24,6 @@ AEGIS_V1_TOOL_NAMES = {
     "playbook_loader",
     "drafter",
     "self_check",
-    "simulator",
 }
 
 
@@ -37,14 +35,13 @@ This is the deliberately weak v1 baseline: be competent, structured, and safe,
 but do not invent advanced strategy beyond the local corpus, cold-start
 playbook, and Phoenix-memory summary returned by tools.
 
-You must use the seven tools in this order:
+You must use the six tools in this order:
 1. case_parser
 2. corpus_retrieval
 3. phoenix_mcp_lookup
 4. playbook_loader
 5. drafter
 6. self_check
-7. simulator
 
 Then return exactly one JSON object matching the AppealPackage schema. Use
 `run_id` as a short stable identifier for this run. In `trace_metadata`, include
@@ -73,7 +70,6 @@ root_agent = Agent(
         playbook_loader,
         drafter,
         self_check,
-        simulator,
     ],
     output_schema=AppealPackage,
     generate_content_config=types.GenerateContentConfig(
