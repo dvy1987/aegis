@@ -22,7 +22,7 @@
 ## File Structure
 
 **New files**
-- `backend/src/prompts/drafter_v1.md` — the deliberately-weak starting drafter system prompt (INV-4).
+- `backend/app/aegis_v1/prompts/drafter_v1.md` — the deliberately-weak starting drafter system prompt (INV-4). (Part A prompts are colocated with the `aegis_v1` backend, matching the `case_generator` pattern; the Part B swarm prompts live under `backend/app/aegis_swarm/prompts/`. The legacy shared `backend/src/prompts/` dir was retired during Task 1.)
 - `backend/app/aegis_v1/drafter_client.py` — `DrafterLLMClient` protocol, `StubDrafterClient` (offline), `GeminiDrafterClient` (prod).
 - `backend/app/aegis_v1/guardrails.py` — deterministic post-filter (disclaimer/citation/no-exclamation/schema) applied to every draft.
 - `backend/app/evals/part_a/recorder.py` — `PhoenixRecorder` protocol, `InMemoryPhoenixRecorder` (offline), `OtelPhoenixRecorder` (prod), and `laundered_signal()`.
@@ -43,13 +43,13 @@
 ## Task 1: Weak drafter prompt + `DrafterLLMClient` protocol + offline stub
 
 **Files:**
-- Create: `backend/src/prompts/drafter_v1.md`
+- Create: `backend/app/aegis_v1/prompts/drafter_v1.md`
 - Create: `backend/app/aegis_v1/drafter_client.py`
 - Test: `backend/tests/unit/aegis_v1/test_drafter_client.py`
 
 - [ ] **Step 1: Write the weak starting prompt** (INV-4 — thin strategy, still safe/structured)
 
-Create `backend/src/prompts/drafter_v1.md`:
+Create `backend/app/aegis_v1/prompts/drafter_v1.md`:
 
 ```markdown
 # Drafter — v1 (weak baseline)
@@ -119,7 +119,7 @@ from pathlib import Path
 from typing import Any, Protocol
 
 
-PROMPT_DIR = Path(__file__).resolve().parents[2] / "src" / "prompts"
+PROMPT_DIR = Path(__file__).resolve().parent / "prompts"  # Part A prompts colocated with aegis_v1
 
 
 def load_drafter_prompt(version: str = "drafter_v1") -> str:
@@ -172,7 +172,7 @@ Expected: PASS (2 passed).
 - [ ] **Step 6: Commit**
 
 ```bash
-git add backend/src/prompts/drafter_v1.md backend/app/aegis_v1/drafter_client.py backend/tests/unit/aegis_v1/test_drafter_client.py
+git add backend/app/aegis_v1/prompts/drafter_v1.md backend/app/aegis_v1/drafter_client.py backend/tests/unit/aegis_v1/test_drafter_client.py
 git commit -m "feat(aegis_v1): add weak drafter prompt + DrafterLLMClient protocol with offline stub"
 ```
 

@@ -4,7 +4,9 @@ from pathlib import Path
 from typing import Any, Protocol
 
 
-PROMPT_DIR = Path(__file__).resolve().parents[2] / "src" / "prompts"
+# Part A prompts are colocated with the aegis_v1 backend (matching the
+# case_generator pattern). Swarm/Part B prompts live under aegis_swarm/prompts/.
+PROMPT_DIR = Path(__file__).resolve().parent / "prompts"
 
 
 def load_drafter_prompt(version: str = "drafter_v1") -> str:
