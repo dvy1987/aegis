@@ -21,7 +21,7 @@ Quick navigation for agents picking up this project.
 - **By:** Solo PM (non-technical) vibe-coding with Amp over 20 days
 - **Why this wins:** Self-improvement loop via Phoenix MCP is the *core mechanic*, not bolted-on
 - **Two-phase strategy:** Day 7 MVP = safety net, Day 20 Full Plan = win condition
-- **Reality check (2026-05-30):** Part A v1 + case generator + Part A judge panel are built; the Part B swarm and Learning Coordinator (the self-improvement loop) are stubs, and `phoenix_mcp_lookup` is not yet live — see [orientation-map.md](orientation-map.md)
+- **Reality check (2026-05-30, post-Plan-1):** Part A v1 + case generator + Part A judge panel are built. **Plan 1 substrate (F1–F7) is now done:** the drafter is LLM-driven (injected client + guardrails), the Outcome Simulator is out of the 6-tool Student, and `run_evaluated_case()` closes the loop by writing a firewall-safe *laundered* signal to a `PhoenixRecorder`. Still unbuilt: the **Learning Coordinator (Plan 2)**, live Phoenix MCP *reads* (`phoenix_mcp_lookup` still a stub), and the Part B swarm. See [learnings.md](learnings.md) Session 22 entry + [orientation-map.md](orientation-map.md)
 
 ## Handoff log
 
@@ -42,7 +42,7 @@ Quick navigation for agents picking up this project.
 | 2026-05-29 | Session 19 (Part A Judge Panel) | [agent-handoffs.md](agent-handoffs.md#2026-05-29-0907---session-19-handoff-codex) |
 | 2026-05-29 | Session 20 (Gumloop prompt overhaul) | [agent-handoffs.md](agent-handoffs.md#2026-05-29--session-20-handoff-antigravity) |
 | 2026-05-30 | Session 21 (Orientation + Learning Coordinator design + plan) | [agent-handoffs.md](agent-handoffs.md#2026-05-30--session-21-handoff-claude--orientation--learning-coordinator-design) |
-| 2026-05-30 | Session 22 (planned — **execute Plan 1 substrate**, subagent-driven) | [session-22-execution-handoff.md](session-22-execution-handoff.md) |
+| 2026-05-30 | Session 22 (✅ **executed Plan 1 substrate F1–F7**, subagent-driven; 26 tests green offline; commits 2a5e9c3..ab1bcd2) | [session-22-execution-handoff.md](session-22-execution-handoff.md) |
 
 ## Skill-output log
 

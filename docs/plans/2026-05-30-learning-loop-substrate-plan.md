@@ -1,6 +1,6 @@
 # Learning-Loop Substrate (F1–F7) Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Make the Aegis self-improvement loop physically possible and observable — give the appeal agent an evolvable LLM drafter, move the insurer simulator out of the agent, capture all eval signal onto Phoenix, and join the pipeline + judge panel into one evaluated-run entrypoint — so a later Learning Coordinator (Plan 2) has a surface to evolve and a Phoenix signal to learn from.
 
@@ -47,7 +47,7 @@
 - Create: `backend/app/aegis_v1/drafter_client.py`
 - Test: `backend/tests/unit/aegis_v1/test_drafter_client.py`
 
-- [ ] **Step 1: Write the weak starting prompt** (INV-4 — thin strategy, still safe/structured)
+- [x] **Step 1: Write the weak starting prompt** (INV-4 — thin strategy, still safe/structured)
 
 Create `backend/app/aegis_v1/prompts/drafter_v1.md`:
 
@@ -67,7 +67,7 @@ professional tone. Do not use exclamation marks. Do not promise the appeal will
 win. Do not invent statutes, policy text, or citations beyond those provided.
 ```
 
-- [ ] **Step 2: Write the failing test**
+- [x] **Step 2: Write the failing test**
 
 Create `backend/tests/unit/aegis_v1/test_drafter_client.py`:
 
@@ -103,12 +103,12 @@ def test_stub_client_returns_deterministic_letter_body_from_inputs():
     assert body == again
 ```
 
-- [ ] **Step 3: Run test to verify it fails**
+- [x] **Step 3: Run test to verify it fails**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/aegis_v1/test_drafter_client.py -q`
 Expected: FAIL — `ModuleNotFoundError: No module named 'app.aegis_v1.drafter_client'`.
 
-- [ ] **Step 4: Implement the protocol + stub**
+- [x] **Step 4: Implement the protocol + stub**
 
 Create `backend/app/aegis_v1/drafter_client.py`:
 
@@ -164,12 +164,12 @@ class StubDrafterClient:
         )
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/aegis_v1/test_drafter_client.py -q`
 Expected: PASS (2 passed).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add backend/app/aegis_v1/prompts/drafter_v1.md backend/app/aegis_v1/drafter_client.py backend/tests/unit/aegis_v1/test_drafter_client.py
@@ -186,7 +186,7 @@ The LLM may omit the disclaimer, add an exclamation mark, or cite something not 
 - Create: `backend/app/aegis_v1/guardrails.py`
 - Test: `backend/tests/unit/aegis_v1/test_guardrails.py`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `backend/tests/unit/aegis_v1/test_guardrails.py`:
 
@@ -210,12 +210,12 @@ def test_guardrails_soften_guarantee_language():
     assert "will win" not in out.lower()
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/aegis_v1/test_guardrails.py -q`
 Expected: FAIL — `ModuleNotFoundError: No module named 'app.aegis_v1.guardrails'`.
 
-- [ ] **Step 3: Implement guardrails**
+- [x] **Step 3: Implement guardrails**
 
 Create `backend/app/aegis_v1/guardrails.py`:
 
@@ -246,12 +246,12 @@ def apply_guardrails(letter_body: str, allowed_doc_ids: set[str]) -> str:
     return text.strip()
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/aegis_v1/test_guardrails.py -q`
 Expected: PASS (3 passed).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/aegis_v1/guardrails.py backend/tests/unit/aegis_v1/test_guardrails.py
@@ -266,7 +266,7 @@ git commit -m "feat(aegis_v1): deterministic guardrail post-filter (disclaimer/n
 - Modify: `backend/app/aegis_v1/tools.py:306-373` (the `drafter` function)
 - Test: `backend/tests/unit/aegis_v1/test_drafter_client.py` (add cases)
 
-- [ ] **Step 1: Add the failing test**
+- [x] **Step 1: Add the failing test**
 
 Append to `backend/tests/unit/aegis_v1/test_drafter_client.py`:
 
@@ -296,12 +296,12 @@ def test_drafter_uses_injected_client_and_applies_guardrails():
     assert out["safety_disclaimer"] == DISCLAIMER
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/aegis_v1/test_drafter_client.py -q`
 Expected: FAIL — `drafter()` has no `client` keyword argument (TypeError).
 
-- [ ] **Step 3: Rewrite `drafter()`**
+- [x] **Step 3: Rewrite `drafter()`**
 
 In `backend/app/aegis_v1/tools.py`, replace the whole `drafter(...)` function (currently lines 306–373) with:
 
@@ -371,12 +371,12 @@ def drafter(
 
 (`GeminiDrafterClient` lands in Task 4; the import is lazy so offline tests passing `client=StubDrafterClient()` never touch it.)
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/aegis_v1/test_drafter_client.py -q`
 Expected: PASS (all). The deterministic template is gone; prose now flows from the injected client.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/aegis_v1/tools.py backend/tests/unit/aegis_v1/test_drafter_client.py
@@ -393,7 +393,7 @@ Mirrors the existing `GeminiJudgeClient`/`simulator()` Vertex usage. Unit-tested
 - Modify: `backend/app/aegis_v1/drafter_client.py`
 - Test: `backend/tests/unit/aegis_v1/test_drafter_client.py` (add a construction test)
 
-- [ ] **Step 1: Add the failing test**
+- [x] **Step 1: Add the failing test**
 
 Append to `backend/tests/unit/aegis_v1/test_drafter_client.py`:
 
@@ -409,12 +409,12 @@ def test_gemini_drafter_client_constructs_with_default_model(monkeypatch):
     assert client.location == "global"
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/aegis_v1/test_drafter_client.py::test_gemini_drafter_client_constructs_with_default_model -q`
 Expected: FAIL — `ImportError: cannot import name 'GeminiDrafterClient'`.
 
-- [ ] **Step 3: Implement `GeminiDrafterClient`**
+- [x] **Step 3: Implement `GeminiDrafterClient`**
 
 Append to `backend/app/aegis_v1/drafter_client.py`:
 
@@ -456,12 +456,12 @@ class GeminiDrafterClient:
         return response.text or ""
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/aegis_v1/test_drafter_client.py -q`
 Expected: PASS (all). No live call is made (only construction is tested).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/aegis_v1/drafter_client.py backend/tests/unit/aegis_v1/test_drafter_client.py
@@ -480,7 +480,7 @@ The Student must stop simulating its own outcome. Drop `simulator` from the agen
 - Modify: `backend/app/aegis_v1/agent.py:21-83`
 - Modify: `backend/tests/unit/agent/test_aegis_v1_agent.py`
 
-- [ ] **Step 1: Update the contract test to expect 6 tools (write the failing expectation)**
+- [x] **Step 1: Update the contract test to expect 6 tools (write the failing expectation)**
 
 In `backend/tests/unit/agent/test_aegis_v1_agent.py`, change the tool-set assertions so the expected set is exactly the 6 below and `simulator` is asserted absent:
 
@@ -500,12 +500,12 @@ def test_root_agent_is_aegis_v1_with_required_tools():
 
 Also update `test_root_agent_instruction_requires_ordered_tool_flow_and_disclaimer` to expect the 6-step order ending at `self_check` (no `simulator` line).
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/agent/test_aegis_v1_agent.py -q`
 Expected: FAIL — current agent still has 7 tools including `simulator`.
 
-- [ ] **Step 3: Remove `simulator` from the agent**
+- [x] **Step 3: Remove `simulator` from the agent**
 
 In `backend/app/aegis_v1/agent.py`:
 - Drop `simulator` from the `from app.aegis_v1.tools import (...)` import.
@@ -513,18 +513,18 @@ In `backend/app/aegis_v1/agent.py`:
 - In `AEGIS_V1_INSTRUCTION`, change the numbered list to 6 steps ending at `6. self_check`; delete the `7. simulator` line. Remove the sentence telling it to return `simulator` output.
 - Remove `simulator` from the `tools=[...]` list.
 
-- [ ] **Step 4: Remove the simulator call from the pipeline + AppealPackage**
+- [x] **Step 4: Remove the simulator call from the pipeline + AppealPackage**
 
 In `backend/app/aegis_v1/pipeline.py`, delete the `sim = simulator(...)` block (lines ~66–70) and the `simulator_result=sim,` argument to `AppealPackage(...)`. Remove `simulator` from the tools import.
 
 In `backend/app/aegis_v1/schemas.py`, delete the `simulator_result: SimulatorResult` line from `AppealPackage` (lines ~110–117). Keep the `SimulatorResult` model itself (the eval layer still uses it).
 
-- [ ] **Step 5: Run the agent + pipeline tests**
+- [x] **Step 5: Run the agent + pipeline tests**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/agent/test_aegis_v1_agent.py tests/unit/agent/test_aegis_v1_tools.py -q`
 Expected: PASS. (If `test_aegis_v1_tools.py` asserts `AppealPackage.simulator_result`, update that assertion to read the simulator result from the eval layer instead — it is no longer on the package.)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add backend/app/aegis_v1/agent.py backend/app/aegis_v1/pipeline.py backend/app/aegis_v1/schemas.py backend/tests/unit/agent/test_aegis_v1_agent.py
@@ -541,7 +541,7 @@ git commit -m "refactor(aegis_v1): move Outcome Simulator out of Student pipelin
 - Create: `backend/app/evals/part_a/recorder.py`
 - Test: `backend/tests/unit/evals/test_recorder.py`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `backend/tests/unit/evals/test_recorder.py`:
 
@@ -581,12 +581,12 @@ def test_in_memory_recorder_round_trips_run_and_annotation():
     assert stored["annotations"]["weighted_quality"] == 0.6
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_recorder.py -q`
 Expected: FAIL — `ModuleNotFoundError: No module named 'app.evals.part_a.recorder'`.
 
-- [ ] **Step 3: Implement the recorder + laundering**
+- [x] **Step 3: Implement the recorder + laundering**
 
 Create `backend/app/evals/part_a/recorder.py`:
 
@@ -663,12 +663,12 @@ class InMemoryPhoenixRecorder:
         return self._runs[trace_ref]
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_recorder.py -q`
 Expected: PASS (2 passed).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/evals/part_a/recorder.py backend/tests/unit/evals/test_recorder.py
@@ -685,7 +685,7 @@ Writes a run as a span with tagged attributes and attaches eval annotations via 
 - Modify: `backend/app/evals/part_a/recorder.py`
 - Test: `backend/tests/unit/evals/test_recorder.py` (add construction test)
 
-- [ ] **Step 1: Add the failing test**
+- [x] **Step 1: Add the failing test**
 
 Append to `backend/tests/unit/evals/test_recorder.py`:
 
@@ -700,12 +700,12 @@ def test_otel_recorder_has_expected_name_and_project(monkeypatch):
     assert rec.project_name == "default"
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_recorder.py::test_otel_recorder_has_expected_name_and_project -q`
 Expected: FAIL — `ImportError: cannot import name 'OtelPhoenixRecorder'`.
 
-- [ ] **Step 3: Implement `OtelPhoenixRecorder`**
+- [x] **Step 3: Implement `OtelPhoenixRecorder`**
 
 Append to `backend/app/evals/part_a/recorder.py`:
 
@@ -747,12 +747,12 @@ class OtelPhoenixRecorder:
         )
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_recorder.py -q`
 Expected: PASS (all). Imports inside methods keep the offline suite from importing pandas/phoenix.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/evals/part_a/recorder.py backend/tests/unit/evals/test_recorder.py
@@ -769,7 +769,7 @@ This is the closed evaluation loop in one entrypoint. Eval layer = judge panel *
 - Create: `backend/app/evals/part_a/evaluated_run.py`
 - Test: `backend/tests/unit/evals/test_evaluated_run.py`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `backend/tests/unit/evals/test_evaluated_run.py`:
 
@@ -809,12 +809,12 @@ def test_run_evaluated_case_closes_the_loop_offline():
     assert "dimensions" in stored["annotations"]
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_evaluated_run.py -q`
 Expected: FAIL — `ModuleNotFoundError: No module named 'app.evals.part_a.evaluated_run'`.
 
-- [ ] **Step 3: Implement the entrypoint**
+- [x] **Step 3: Implement the entrypoint**
 
 Create `backend/app/evals/part_a/evaluated_run.py`:
 
@@ -892,18 +892,18 @@ def run_evaluated_case(
     )
 ```
 
-- [ ] **Step 4: Thread `drafter_client` through the pipeline**
+- [x] **Step 4: Thread `drafter_client` through the pipeline**
 
 `run_aegis_v1_pipeline` must accept and forward `drafter_client`. In `backend/app/aegis_v1/pipeline.py`:
 - Add parameter `drafter_client: "DrafterLLMClient | None" = None` to the signature.
 - Change the `draft = drafter(...)` call to `draft = drafter(parsed_case=parsed, retrieval_results=retrieval, playbook=playbook, phoenix_summary=phoenix, client=drafter_client)`.
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_evaluated_run.py -q`
 Expected: PASS (1 passed). The loop closes fully offline.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add backend/app/evals/part_a/evaluated_run.py backend/app/aegis_v1/pipeline.py backend/tests/unit/evals/test_evaluated_run.py
@@ -920,7 +920,7 @@ A build-breaking test that answer-key fields never reach the Student input or th
 - Create: `backend/tests/unit/evals/test_firewall.py`
 - Create: `playbooks/README.md`
 
-- [ ] **Step 1: Write the firewall test**
+- [x] **Step 1: Write the firewall test**
 
 Create `backend/tests/unit/evals/test_firewall.py`:
 
@@ -962,12 +962,12 @@ def test_laundered_annotation_never_leaks_answer_key():
     assert SECRET not in str(rec.get(ref)["annotations"])   # firewall holds
 ```
 
-- [ ] **Step 2: Run test to verify it fails or passes**
+- [x] **Step 2: Run test to verify it fails or passes**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_firewall.py -q`
 Expected: PASS if laundering (Task 6) is correct. If the laundered signal leaks `SECRET` (e.g. an unfiltered evidence quote), this FAILS — fix `laundered_signal()` until green. This test is the firewall's guardrail.
 
-- [ ] **Step 3: Document the playbooks convention**
+- [x] **Step 3: Document the playbooks convention**
 
 Create `playbooks/README.md`:
 
@@ -990,12 +990,12 @@ Schema (matches `Playbook` in `aegis_v1/schemas.py`, plus optional learning fiel
   "provenance": { "experiment_id", "promoted_at", "approved_by" } }
 ```
 
-- [ ] **Step 4: Run the full unit suite for the touched areas**
+- [x] **Step 4: Run the full unit suite for the touched areas**
 
 Run: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/aegis_v1 tests/unit/evals -q`
 Expected: PASS (all). This confirms the closed loop + firewall hold offline.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/tests/unit/evals/test_firewall.py playbooks/README.md

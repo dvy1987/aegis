@@ -1,5 +1,13 @@
 # Session 22 — Execution Handoff: build the learning-loop substrate (Plan 1)
 
+> ✅ **COMPLETE (2026-05-30).** Plan 1 (substrate F1–F7) executed end-to-end, subagent-driven.
+> All 9 tasks done; acceptance suite green offline — `26 passed` for
+> `tests/unit/aegis_v1 tests/unit/evals tests/unit/agent`. Commits `2a5e9c3..ab1bcd2` on `main`
+> (not pushed to `origin`). Outcomes & deltas-from-plan recorded in
+> [learnings.md](learnings.md) (Session 22 entry). **Next: write Plan 2 (the Learning
+> Coordinator) — see "After Plan 1 → Plan 2" below; unblock DEP-1 (Arize MCP read auth)
+> and DEP-2 (live Gemini/Vertex) first.**
+
 **Created:** 2026-05-30 (end of Session 21) · **Mode:** subagent-driven execution
 **Read this first if you are a fresh/compacted session about to start coding.**
 
