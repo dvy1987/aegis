@@ -1,1 +1,0 @@
-{"nodes": [{"id": "telemetry_setup_telemetry", "label": "setup_telemetry (Phoenix OTEL)", "file_type": "code", "source_file": "backend/app/app_utils/telemetry.py", "source_location": "L8", "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [], "hyperedges": []}

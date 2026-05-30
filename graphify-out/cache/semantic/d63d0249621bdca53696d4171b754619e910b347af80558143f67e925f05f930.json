@@ -1,1 +1,0 @@
-{"nodes": [{"id": "test_dummy", "label": "Dummy placeholder unit test", "file_type": "code", "source_file": "backend/tests/unit/test_dummy.py", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [], "hyperedges": []}

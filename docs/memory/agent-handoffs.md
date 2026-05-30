@@ -1236,3 +1236,49 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 ### Working Tree
 - Modified: `gumloop/prompts/01_clinical_critic.txt` through `17_safety_redactor.txt` (all 17), `gumloop/architecture.md`.
 
+---
+
+## 2026-05-30 — Session 21 Handoff (Claude) — Orientation + Learning Coordinator design
+
+### Done
+- **Built a repo-wide knowledge graph** via `/graphify` → `graphify-out/` (`graph.html`, `GRAPH_REPORT.md`, `graph.json`; 715 nodes / 1046 edges / 50 communities). Future sessions: `/graphify query "…"` and `/graphify --update` instead of re-reading 182 files.
+- **Wrote an orientation map + learnings** from a code-vs-docs audit: [`orientation-map.md`](orientation-map.md) (built-vs-designed table + ranked gaps) and populated the empty [`learnings.md`](learnings.md). Added pointers in `project-index.md` and `MEMORY-ROUTING.md`. (Committed earlier as `b8b81ff`.)
+- **Brainstormed and specced the Learning Coordinator + closed self-improvement loop** end-to-end → [`docs/specs/2026-05-30-learning-coordinator-design.md`](../specs/2026-05-30-learning-coordinator-design.md). Design spec only; **implementation plan deferred to next session**.
+
+### Key findings (the reframe)
+- **The drafter is deterministic Python templating, not an LLM** (`aegis_v1/tools.py:drafter()`) — so there is **no prompt surface to evolve**. The agent is at a *fixed point*, not a local minimum. Must become LLM-driven for any learning to be possible.
+- **The judge panel's output never reaches Phoenix.** `telemetry.py` only `auto_instrument`s raw I/O; the `PanelReport` (per-dim scores, reasoning, `improvement` notes, gates, `evaluator_disagreement`) is discarded. The pipeline and panel aren't even connected.
+- The richest training signal (judge `reasoning` + `improvement` + `evidence_quotes`) is already computed and thrown away — a ready-made textual gradient, but must be **laundered through the Anti-Cheating Firewall**.
+- The Outcome Simulator currently runs **inside** the Student pipeline (tool #7) — gameable once the drafter is evolvable.
+
+### Decisions (locked with PM in brainstorming)
+- D1 Drafter → **LLM-driven** (evolvable prompt + playbook + Phoenix memory); deterministic guardrails as post-filter.
+- D2 Scope = **full closed loop** (substrate fixes F1–F7 + Coordinator).
+- D3 **Part A offline / human-approved first**, architected to become autonomous Part B by config.
+- D4 Evolvable surface = **drafter prompt (global) + per-(insurer×denial_type) playbooks (local)**.
+- D5 Objective = **honest held-out composite lift** (~+20%); demo arc must be a genuine consequence.
+- D6 Runtime = **Gemini/Vertex target + offline test harness** (heuristic judge + stubbed LLM).
+- D7 Algorithm = **per-dimension specialists + meta-merge** + mini-beam/stagnation-restart/held-out validation (local-minima escapes).
+- D8 Part A HITL = Coordinator **proposes + runs held-out experiment**; PM approves promotion.
+- D9 **Phoenix load-bearing for *learning*** (not just runtime): signal/experiments/versions all in Phoenix via MCP (SDK fallback). MCP off → learning halts.
+- D10 **Five-role separation of powers** — Student · Quality Judges · Outcome Simulator · Optimizer · Patch Approver. Optimizer blind to answer key.
+- D11 **Optimize judges, never the insurer verdict.** Simulator = guardrail + demo signal; "APPROVE while judges FAIL" = promotion veto. Simulator **moves out of the Student pipeline** into the eval layer (Student = 6 tools).
+
+### Deferred
+- **Implementation plan (`writing-plans`)** — next session, per PM.
+- All Session 18 audit backlog + dev.sh fix + generation trial + T3.5 demo capture + T4.1 live MCP still pending (carry-forward).
+
+### Next Agent Should Know
+- **Start here:** read [`orientation-map.md`](orientation-map.md), then the LC design spec, then run `writing-plans` against the spec.
+- The spec bundles **F1–F7 substrate fixes** as prerequisites; if the plan gets large, F1–F7 can be split into their own plan ahead of the Coordinator itself.
+- **Hard dependency surfaced (DEP-1):** MCP trace/annotation *read* must work against Arize cloud (auth was flaky; SDK worked) for the "Phoenix load-bearing for learning" claim. **DEP-2:** live Gemini/Vertex (absent on this dev machine) for real drafter + judges.
+- Spec §4.1 names a prompt path under `backend/src/prompts/`; the plan should reconcile to the real `backend/app/aegis_v1/` layout (blueprint/reality drift noted in orientation-map gap #4).
+
+### Revisit Triggers
+- If held-out lift is too noisy on the 10+10 benchmark → expand benchmark (ties to assumption A1 / Day-5 gate).
+- If MCP read auth can't be fixed → the load-bearing-for-learning claim falls back to Phoenix-client SDK reads (still Phoenix, but not MCP) — flag in demo framing.
+
+### Working Tree
+- New (this session's commit): `docs/specs/2026-05-30-learning-coordinator-design.md`, this handoff entry, `project-index.md` + `current-state.md` updates, `.gitignore` cleanup (untracking `graphify-out/cache/` + machine-specific `.graphify_*` dotfiles).
+- Previously committed (`b8b81ff`): `graphify-out/` outputs + `docs/memory/{orientation-map,learnings}.md` + index/routing pointers.
+

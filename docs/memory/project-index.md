@@ -40,6 +40,8 @@ Quick navigation for agents picking up this project.
 | 2026-05-28 | Session 16 (Documentation Sweep) | [agent-handoffs.md](agent-handoffs.md#2026-05-28-1416---session-16-handoff-antigravity) |
 | 2026-05-28 | Session 17 (SkillOpt & Multi-Service Topology) | [agent-handoffs.md](agent-handoffs.md#2026-05-28-1448---session-17-handoff-antigravity) |
 | 2026-05-29 | Session 19 (Part A Judge Panel) | [agent-handoffs.md](agent-handoffs.md#2026-05-29-0907---session-19-handoff-codex) |
+| 2026-05-29 | Session 20 (Gumloop prompt overhaul) | [agent-handoffs.md](agent-handoffs.md#2026-05-29--session-20-handoff-antigravity) |
+| 2026-05-30 | Session 21 (Orientation + Learning Coordinator design) | [agent-handoffs.md](agent-handoffs.md#2026-05-30--session-21-handoff-claude--orientation--learning-coordinator-design) |
 
 ## Skill-output log
 
