@@ -6,6 +6,7 @@ Quick navigation for agents picking up this project.
 
 ## Read order on session start
 
+0. **[docs/memory/orientation-map.md](orientation-map.md)** — fastest cold-start orientation: what's *built* vs *only designed*, plus the real gaps (derived 2026-05-30 via `/graphify`). A queryable graph of the whole repo lives in `graphify-out/`.
 1. **[docs/memory/current-state.md](current-state.md)** — what's the project state right now?
 2. **[docs/memory/agent-handoffs.md](agent-handoffs.md)** — latest handoff + comprehensive TODO list
 3. **[AGENTS.md](../../AGENTS.md)** — rules for working in this repo + working-with-PM agreement
@@ -20,6 +21,7 @@ Quick navigation for agents picking up this project.
 - **By:** Solo PM (non-technical) vibe-coding with Amp over 20 days
 - **Why this wins:** Self-improvement loop via Phoenix MCP is the *core mechanic*, not bolted-on
 - **Two-phase strategy:** Day 7 MVP = safety net, Day 20 Full Plan = win condition
+- **Reality check (2026-05-30):** Part A v1 + case generator + Part A judge panel are built; the Part B swarm and Learning Coordinator (the self-improvement loop) are stubs, and `phoenix_mcp_lookup` is not yet live — see [orientation-map.md](orientation-map.md)
 
 ## Handoff log
 

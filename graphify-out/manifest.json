@@ -1,0 +1,730 @@
+{
+  "/bv3/aimbot/divya/buildmind-misc/aegis/test_health.py": {
+    "mtime": 1780019084.9516194,
+    "hash": "fd2fbb318800b1068e47308e492dca91"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/scripts/dev.ps1": {
+    "mtime": 1780019084.9516194,
+    "hash": "0989bda274ae7d16f24039785491cd9f"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/scripts/rewrite_cases.py": {
+    "mtime": 1780023349.5028677,
+    "hash": "17bafd2cb3f0d895c563be6fdd3cb62d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/postcss.config.mjs": {
+    "mtime": 1780019084.9516194,
+    "hash": "239f3ebf717465dc636818a1a619398d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/next.config.ts": {
+    "mtime": 1780019084.9476192,
+    "hash": "9b77af189a21a7a64e4bd7a426f64176"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/eslint.config.mjs": {
+    "mtime": 1780019084.9476192,
+    "hash": "dfa1f5f6a7037bf39dc510f30b180002"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/src/icons/index.ts": {
+    "mtime": 1780019084.9516194,
+    "hash": "ec11543b133774f61e7f4dfaf5c13bba"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/src/icons/lucide.tsx": {
+    "mtime": 1780019084.9516194,
+    "hash": "1ab08e0d8485e239a28b2c54f2d3e8ca"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/src/lib/cn.ts": {
+    "mtime": 1780019084.9516194,
+    "hash": "2262507d23d851bbc53f1202f1205895"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/src/components/Wordmark.tsx": {
+    "mtime": 1780019084.9516194,
+    "hash": "5b2db9e39a1a05e09ac92cac62682b62"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/src/components/Button.tsx": {
+    "mtime": 1780019084.9516194,
+    "hash": "96da1e06344293e20faf5353f4518ec9"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/src/app/page.tsx": {
+    "mtime": 1780019084.9516194,
+    "hash": "e8d70adce419baad50cf8da0f3ae10b6"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/src/app/layout.tsx": {
+    "mtime": 1780019084.9516194,
+    "hash": "61fc39f94469dd1dc6ef77dbdb3ddb55"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/spike_mcp.py": {
+    "mtime": 1780019084.347621,
+    "hash": "cbf40386753c5e5c8fd3af2ec9859bde"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/test_mcp_standalone.py": {
+    "mtime": 1780019084.347621,
+    "hash": "d08ee5e4e0e195b318e37d1feff8f27d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/spike_bm25.py": {
+    "mtime": 1780019084.347621,
+    "hash": "2b9a041a07aa986b16021f5f383ecd8e"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/spike_mcp_latency.py": {
+    "mtime": 1780019084.347621,
+    "hash": "db47495750f0d95b5219aaacd94337b0"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/tests/integration/test_agent.py": {
+    "mtime": 1780126668.100356,
+    "hash": "df2909d653541d70a6ed6eeca75e153d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/tests/integration/test_server_e2e.py": {
+    "mtime": 1780019084.347621,
+    "hash": "33f1b92ac556f97b402d31e115365337"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/tests/unit/test_dummy.py": {
+    "mtime": 1780019084.347621,
+    "hash": "43d69916f46fd2e4b69e72132112c058"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/tests/unit/agent/test_aegis_v1_agent.py": {
+    "mtime": 1780126668.100356,
+    "hash": "2dbe9fee99a901a80572560d974199ba"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/tests/unit/agent/test_aegis_v1_tools.py": {
+    "mtime": 1780019084.347621,
+    "hash": "d70021b150456255cb5965408bf1a9e6"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/tests/unit/evals/test_part_a_judge_panel.py": {
+    "mtime": 1780025661.6199286,
+    "hash": "f149de0d911c00299ca3fda5bc005cb5"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/deployment/terraform/shared/completions.sql": {
+    "mtime": 1780019084.347621,
+    "hash": "79a0220584cc370860a822c29ad426cf"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/main_v1.py": {
+    "mtime": 1780019084.347621,
+    "hash": "9a82b7e295e415e5d66b498b81d36f61"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/main_swarm.py": {
+    "mtime": 1780019084.347621,
+    "hash": "c595f0f1000ef44bb2988b8c701c9065"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/__init__.py": {
+    "mtime": 1780023349.4948678,
+    "hash": "44b7d1361f2ddfa997517b5dec15c479"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/aegis_v1/tools.py": {
+    "mtime": 1780126667.5283582,
+    "hash": "02af8a382db6ec45b481e794a0428209"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/aegis_v1/agent.py": {
+    "mtime": 1780126667.5283582,
+    "hash": "0153e660bc6b37eb27605696e2a33a06"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/aegis_v1/pipeline.py": {
+    "mtime": 1780019084.343621,
+    "hash": "9284accb91df1841023b8764b767fb73"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/aegis_v1/schemas.py": {
+    "mtime": 1780019084.343621,
+    "hash": "1f19bcf0428dbe89190bf2a7a65a5088"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/aegis_v1/__init__.py": {
+    "mtime": 1780019084.343621,
+    "hash": "f27aea5a1a3dd014ba0e0cb46595dca4"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/aegis_swarm/agent.py": {
+    "mtime": 1780126667.5283582,
+    "hash": "170ac5f0111be62bcd19902ea45bb6d1"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/evals/__init__.py": {
+    "mtime": 1780025615.2600734,
+    "hash": "9ac2cc44596f7ecf462f94b9b6f1851b"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/evals/part_a/panel.py": {
+    "mtime": 1780126668.100356,
+    "hash": "6244d68e1a4d218edfe4b9986c4dcfff"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/evals/part_a/deterministic_gates.py": {
+    "mtime": 1780025617.2000673,
+    "hash": "7dfe393963ecbe0c2b08c3cab837e76e"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/evals/part_a/cli.py": {
+    "mtime": 1780025619.0040617,
+    "hash": "1599531e7aa4774bce78402b11f52265"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/evals/part_a/llm_judges.py": {
+    "mtime": 1780126667.9123569,
+    "hash": "36276c06d97bfeedb7e47b3dd0263808"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/evals/part_a/teacher_packet.py": {
+    "mtime": 1780025616.7360687,
+    "hash": "b2cfc2ce953faa9965c28695d196559e"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/evals/part_a/schemas.py": {
+    "mtime": 1780025675.2198863,
+    "hash": "edc6f5783a142492d6d4e7c7fb8259da"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/evals/part_a/__init__.py": {
+    "mtime": 1780025615.7560718,
+    "hash": "f02bf7fb128de88d89cf70915dfc7531"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/config.py": {
+    "mtime": 1780126667.5283582,
+    "hash": "a02a0c532277f6217f99a798fe61dcba"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/safety.py": {
+    "mtime": 1780019084.347621,
+    "hash": "25a2962634bdd58550a83362272304e4"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/pipeline.py": {
+    "mtime": 1780019084.343621,
+    "hash": "1f662eda5e7df014838e00dfbe4bf512"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/models.py": {
+    "mtime": 1780019084.343621,
+    "hash": "f0c075948cdf78832b7eabe8d3e9ec95"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/cli.py": {
+    "mtime": 1780019084.343621,
+    "hash": "a70d07c4786494cd34d84f3d3d37717f"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/validator.py": {
+    "mtime": 1780019084.347621,
+    "hash": "296ec4fbb1a517b91ff49e677dbc55f3"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/agents.py": {
+    "mtime": 1780023349.4948678,
+    "hash": "1969353959584a303d0e32265f47a6cc"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/__init__.py": {
+    "mtime": 1780019084.343621,
+    "hash": "6341464f82476d799dc20c05a50657f1"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/__init__.py": {
+    "mtime": 1780019084.343621,
+    "hash": "3ca3c711d74ad162cff444c0a063980d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/app_utils/telemetry.py": {
+    "mtime": 1780019084.343621,
+    "hash": "0fa7f3ae9df24719987dbaa615c73b5a"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/app_utils/typing.py": {
+    "mtime": 1780019084.343621,
+    "hash": "46f82a2f1847f027d7e8397c720efa83"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/README.md": {
+    "mtime": 1780019084.343621,
+    "hash": "f6dcd77d6f2425e872a95f05cc0d6255"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/AGENTS.md": {
+    "mtime": 1780019084.343621,
+    "hash": "12676acc01b0869f8552fb01f9cf555f"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/pnpm-workspace.yaml": {
+    "mtime": 1780019084.9516194,
+    "hash": "c3dd7262847d512cf502a50accad8a9e"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/README.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "f15aaa42d5d299d091b1171097ea56ad"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/AGENTS.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "64ab4d0c871b81d7ad022465d86e9673"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/agents-cli-manifest.yaml": {
+    "mtime": 1780019084.343621,
+    "hash": "a00c85cb39af58c4a772f7ad3103e2e2"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/README.md": {
+    "mtime": 1780019084.343621,
+    "hash": "b4b65d20ea391310e427cf9f4535e181"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/WINDOWS_SETUP.md": {
+    "mtime": 1780019084.343621,
+    "hash": "58486a05b4407e0fd3f5da1b21cffdf3"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/GEMINI.md": {
+    "mtime": 1780019084.343621,
+    "hash": "fb4f045d42b6f5ab85bf763b8c33fd92"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/AGENTS.md": {
+    "mtime": 1780019084.343621,
+    "hash": "2d6722a2697ed65431702658d87de468"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/src/prompts/legal_researcher_v1.md": {
+    "mtime": 1780019084.347621,
+    "hash": "d132c0d19e4403ea27dae8619d3c21cf"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/src/prompts/medical_necessity_v1.md": {
+    "mtime": 1780019084.347621,
+    "hash": "8572d493129313728252599109e4193c"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/src/prompts/adversarial_reviewer_v1.md": {
+    "mtime": 1780019084.347621,
+    "hash": "2b95480084e23f062457661a44874329"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/src/prompts/insurer_intelligence_v1.md": {
+    "mtime": 1780019084.347621,
+    "hash": "3d9d6320e9e2c176ca07a6014de23700"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/src/prompts/orchestrator_v1.md": {
+    "mtime": 1780019084.347621,
+    "hash": "813433c59dfe49a7c2293776a2f65712"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/src/prompts/triage_v1.md": {
+    "mtime": 1780019084.347621,
+    "hash": "40fa3e44256b045419eabe3c8ebba936"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/src/prompts/precedent_miner_v1.md": {
+    "mtime": 1780019084.347621,
+    "hash": "cebe35e55fc2401bf7782677ea94b6b0"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/src/prompts/strategist_v1.md": {
+    "mtime": 1780019084.347621,
+    "hash": "86d503d880d69cb060be850610ebd7f2"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/src/prompts/drafter_v1.md": {
+    "mtime": 1780019084.347621,
+    "hash": "0e7d11aac70292fdde793d052e258707"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/src/prompts/policy_detective_v1.md": {
+    "mtime": 1780019084.347621,
+    "hash": "70f4e7de4dd8aa9215352cd956b04af5"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/tests/eval/evalsets/README.md": {
+    "mtime": 1780019084.347621,
+    "hash": "0b74bab9126e09de2bb238e316a2f6ef"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_denial_logic.txt": {
+    "mtime": 1780019084.343621,
+    "hash": "12bb0cdafdbcb9725eec45bd133be7ed"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_diagnosis_treatment_match.txt": {
+    "mtime": 1780019084.343621,
+    "hash": "b2f87d6f4183e657e79968672c537575"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_overall_tone.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "7fa7f27fdeaab0b1f7311b921f7e6cb5"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_date_sanity.txt": {
+    "mtime": 1780019084.343621,
+    "hash": "5302ccc9202264cf2574f5fa13d9c653"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_citation_traceability.txt": {
+    "mtime": 1780019084.343621,
+    "hash": "a2735c69ccbfa14367c2a70acb5f1b2c"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/p2_denial_drafter.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "096063266cf4cc0fb61c659a196c3522"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/p5_stylistic_diversifier.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "a4fe2d2b6ca5a7e7369207c6f986f68a"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/p4_adversarial_diversifier.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "264bbbb39287057a42b1363173652678"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_contradiction_hunter.txt": {
+    "mtime": 1780019084.343621,
+    "hash": "09279a2e7e9ecfefda2ccfcc9e550a39"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_scenario_realism.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "97c96cd8d2c5ea81e0f492d55855e04c"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/p3_clinical_writer.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "02df34b66e2cfdce31047040252ce582"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_legal_auditor.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "8ef72596bbba167731d525976e622805"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_safety_redactor.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "84aa9a833fbe30e4dbe01bdd6fa65f1a"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/p1_scenario_planner.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "b87c51826dbfb693312cb52d08739682"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/_critic_envelope.txt": {
+    "mtime": 1780019084.343621,
+    "hash": "cc65d46117d4ea0cef2a35318f2e17ae"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/p4_realistic_flaw_injector.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "7e7b12c388afde4030c0a3185ad573b5"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_financial_auditor.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "22c8bf8cf09a6fe845c29e633633e422"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_diversity_delta.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "61261b40af23b1c5996b35e88459913d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_clinical_realism.txt": {
+    "mtime": 1780019084.343621,
+    "hash": "225c3b0d63e3cd99f58379426439060c"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_insurer_voice.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "281f1bd413353ba38b87728e35304b45"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_matrix_coverage.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "d2db72986ab753704e96c12d90b087d9"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_llm_tell_detector.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "350ef3a1db8a44ce3431969264502d9f"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_appeal_difficulty.txt": {
+    "mtime": 1780019084.343621,
+    "hash": "fdc1189fbfc5f124387c12a137431e36"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_demographic_validator.txt": {
+    "mtime": 1780019084.343621,
+    "hash": "8f685e4b2261d129173448168b55c65d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/app/case_generator/prompts/c_scope_guard.txt": {
+    "mtime": 1780019084.347621,
+    "hash": "895db4ed1c8487f2276a06ccf3aad2d8"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/corpus/erisa_503.md": {
+    "mtime": 1780019084.347621,
+    "hash": "e98b6ff5ace755706a37782fa873bdfd"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/corpus/cigna_medical_necessity.md": {
+    "mtime": 1780019084.347621,
+    "hash": "4300555463a13352ed07bf0efedaa190"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/corpus/nsa_surprise_billing.md": {
+    "mtime": 1780019084.347621,
+    "hash": "8dd02f37d1a008ab2326256eb4132998"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/backend/corpus/mhpaea_parity.md": {
+    "mtime": 1780019084.347621,
+    "hash": "473d0954daf60eda244ac53c78e62e4d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/architecture.md": {
+    "mtime": 1780126668.168356,
+    "hash": "dd442e22d21007bc192ff59e93af5b4a"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/08_final_arbiter.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "a74d8d3e8b1ea4b1f9aa2682feed6cf7"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/07_demographic_validator.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "f00f886fcf8e603c2be8f3c2cce90d6b"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/02_tone_critic.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "1622d5093354ea036b1b9fbc80e3256d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/12_insurer_voice.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "6682ff6d5843ec9e3191dcc9421a82a6"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/14_date_sanity.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "6d3fce44076e1f0bfe32235a9d4c539d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/13_denial_logic.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "3a8ff68cb297dcc9826602cad5f0214b"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/06_contradiction_hunter.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "439b4f350fcf1d3505fe728c036882df"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/09_realism_assessor.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "d2616359f5ca79e5650188110f1bdb35"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/18_flaw_injection_verifier.txt": {
+    "mtime": 1780126668.172356,
+    "hash": "52a5fd5e6efa51a6a776280232c0d21b"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/05_legal_auditor.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "222df83ea71b8e035826fed77983e43f"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/03_llm_tell_detector.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "218652a727be23fb0f910e7384ee62d6"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/10_appeal_difficulty.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "de0bdbb1d24081b341854a98a8cabe90"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/04_financial_auditor.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "b082f4636c72aa84aa061662d97669df"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/17_safety_redactor.txt": {
+    "mtime": 1780126668.172356,
+    "hash": "b38d965ee7390e679723d7c8ad5d15c3"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/15_citation_traceability.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "5b7b0ddc2079e3f1875795d0bb8e5ced"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/16_scope_guard.txt": {
+    "mtime": 1780126668.172356,
+    "hash": "06c9bbf6dcd1e1ed2b730bc3a9b736ac"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/11_dx_tx_match.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "821853a5f57e7cd1d2f96db6534e5803"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/gumloop/prompts/01_clinical_critic.txt": {
+    "mtime": 1780126668.168356,
+    "hash": "0e5aae4eabd7cfe4a382acf56b5966eb"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/eval/dataset_card.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "9e49a113e848841885f8f87a24793f6e"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/eval/judges/part_a/j7_persuasive_coherence.md": {
+    "mtime": 1780025622.8560498,
+    "hash": "ddf73aebf072775a4f2eee2e881f683e"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/eval/judges/part_a/j4_case_specific_rebuttal.md": {
+    "mtime": 1780025621.216055,
+    "hash": "762d73e85243c207bd5815127e6143fd"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/eval/judges/part_a/j6_appeal_vector_capture.md": {
+    "mtime": 1780025622.3440514,
+    "hash": "de6d179ca116cfa24e45e069c5ce5714"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/eval/judges/part_a/j3_grounding.md": {
+    "mtime": 1780025620.5840569,
+    "hash": "28624dae3e6a3b5adbbd01fab1841d8a"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/eval/judges/part_a/j5_evidence_completeness.md": {
+    "mtime": 1780025621.7200532,
+    "hash": "3038680f698312ea85c12b7b8c350230"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/eval/judges/part_a/j2_faithfulness_hallucination.md": {
+    "mtime": 1780025620.0360584,
+    "hash": "dadb56a04b7e370b80d3c11fc3353bbc"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/eval/judges/part_a/j1_safety_scope.md": {
+    "mtime": 1780025619.52806,
+    "hash": "6d1a60d943bc9e1623140a46fd6dd65e"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/eval/chatgpt/prompt.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "2ddbdaa88d0b604f6863dd064d33b6d5"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/eval/perplexity/prompt.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "3462e56f12d7aae28598f8de0ccb23e2"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/ideas.md": {
+    "mtime": 1780019084.4756207,
+    "hash": "7a8f2f32dc212ecdba0355c78c6c9f68"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/architecture.md": {
+    "mtime": 1780019084.355621,
+    "hash": "4c90b386c3feeec10d85b751fcf5efba"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/open-questions.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "eada3db7c49c0c3cd019a38199b08b07"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/feedback.md": {
+    "mtime": 1780019084.4756207,
+    "hash": "6766e2db5c1cfcb43745fb4e54ee3dde"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/challenge.md": {
+    "mtime": 1780019084.355621,
+    "hash": "84ff9717cf12eb3ad0eb7998ae39ea23"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/constitution.md": {
+    "mtime": 1780019084.355621,
+    "hash": "949ee51a0341546b8cb1ce1b79b5c343"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/design-brief.md": {
+    "mtime": 1780019084.4716206,
+    "hash": "de5472fd0c4086c9e4866f2ea4405e54"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/product-soul.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "1653c02a678faed0e65df7bfe70d1f32"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/adr/ADR-001-google-adk-agent-framework.md": {
+    "mtime": 1780019084.351621,
+    "hash": "20224851496ea89fd1319d43bb4383b6"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/adr/ADR-003-nextjs-frontend-python-adk-backend.md": {
+    "mtime": 1780019084.351621,
+    "hash": "469e98d22348690bc7726ebf5bdfe2b6"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/adr/ADR-004-twelve-agent-part-b-swarm.md": {
+    "mtime": 1780019084.351621,
+    "hash": "61a9cfbd0ffa46873529b87021235e04"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/adr/ADR-006-multi-service-backend-topology.md": {
+    "mtime": 1780019084.351621,
+    "hash": "6972a7378b28052b5de41e14da2c3ccd"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/adr/ADR-005-google-agents-cli-dev-workflow.md": {
+    "mtime": 1780019084.351621,
+    "hash": "699fa74378f39c07e6c081ccc307a174"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/adr/ADR-002-phoenix-mcp-load-bearing.md": {
+    "mtime": 1780019084.351621,
+    "hash": "4d67280a40c586e0c309169df5d3973f"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/plans/2026-05-27-alphaeval-alignment-plan.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "a8e7c8d33aa8f5e7d8ad1b869f8e30ec"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/plans/2026-05-27-aegis-implementation-tasks.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "28a0e34b8cc2d90e80d388f1a67e4d9b"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/plans/2026-05-29-part-a-judge-panel-plan.md": {
+    "mtime": 1780025661.0519304,
+    "hash": "7ae4bbcb1c5e3d33cc1bb7cfbac0e419"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/plans/2026-05-27-aegis-implementation-plan.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "9d47d8fbdc9286c12e56d55ff92cadc6"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/plans/2026-05-28-case-generator-harness-claude-plan.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "ab378b62bf4a9c25449acf4435e3f08b"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/architecture/2026-05-27-aegis-arch.md": {
+    "mtime": 1780019084.355621,
+    "hash": "5985fb30c54447a0c6c03a9630415af6"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/prd/PRD.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "8f72cf72ca75b77037f94b27ccfd4294"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/demo/rolling-capture-checklist.md": {
+    "mtime": 1780019084.4716206,
+    "hash": "fa155d1fbe3ce749dce64c6925ab0a85"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/demo/phoenix-shotlist.md": {
+    "mtime": 1780019084.355621,
+    "hash": "eda7e4fa25658d5070dc1e307ec6f07b"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/session_16_handoff_scratch.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "214c1ca2a29e0caea319eeece476bbd1"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/deferred.md": {
+    "mtime": 1780019084.74362,
+    "hash": "d5fa7141d985d9b40c7611a60d3bc1d1"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/current-state.md": {
+    "mtime": 1780025865.0912905,
+    "hash": "0f9b21e2d812abd35e402c7d4bcb1c45"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/open-questions.md": {
+    "mtime": 1780019084.9436193,
+    "hash": "fd4dc0d71956f77f5532caacfbc16503"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/MEMORY-ROUTING.md": {
+    "mtime": 1780019084.4756207,
+    "hash": "2f3f5894b04bb3051fe79a0bcc29853b"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/agent-handoffs.md": {
+    "mtime": 1780126668.168356,
+    "hash": "fb57fd87d6687b17eecaded31178a0b1"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/session_15_handoff.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "1f887a45fd296fc53387fe011f0676ec"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/session-20-draft-handoff.md": {
+    "mtime": 1780126668.168356,
+    "hash": "58340249b43b969eae13f622a4c6a09f"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/learnings.md": {
+    "mtime": 1780019084.74362,
+    "hash": "92a1c59dffe5752597131e8ef459262b"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/session-log.md": {
+    "mtime": 1780019084.9436193,
+    "hash": "ff0f163dbe229db29b3103dbb8ff1562"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/project-index.md": {
+    "mtime": 1780025865.6312888,
+    "hash": "1dc6d8a201474b56196ab99414581f29"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/memory/decision-log.md": {
+    "mtime": 1780019084.74362,
+    "hash": "e1a5e5683ea9d6a9a3578c55ac03b830"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/evals/2026-05-29-part-a-judge-panel-spec.md": {
+    "mtime": 1780025660.4799323,
+    "hash": "60cbac191fd0bd5e5ad0964d4b1698ec"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/evals/2026-05-27-aegis-judges.md": {
+    "mtime": 1780019084.4756207,
+    "hash": "80cb616319778a54a8119e909b37fe73"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/evals/2026-05-27-aegis-appeal-rubric.md": {
+    "mtime": 1780019084.4756207,
+    "hash": "e8693a889324c55e24fef346269b4c1a"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/evals/2026-05-27-aegis-eval-pipeline.md": {
+    "mtime": 1780019084.4756207,
+    "hash": "e2991f1696a283d571806cbdea21a353"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/skill-outputs/SKILL-OUTPUTS.md": {
+    "mtime": 1780025866.7352853,
+    "hash": "96f07841c0408ae1f241921d4c9790ba"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "b1c55ee6669f6ddb6462541b864a71a3"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/specs/2026-05-27-aegis-part-a-mvp-feature-spec.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "49c3d20587b95a5286c9b5f90992211a"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/specs/2026-05-29-part-a-judge-panel-feature-spec.md": {
+    "mtime": 1780025613.6000786,
+    "hash": "fe26d17cfab7db804967f30c81c4717e"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/specs/2026-05-27-autonomy-ladder-design.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "d202757c7035daa708d783a0a72c8d23"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/research/impact-stats.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "0282747ddca25129f8997b4f420d530d"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/research/assumption-map.md": {
+    "mtime": 1780019084.9476192,
+    "hash": "0149e11ef4e90a1b9900ef102073bca3"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/public/file.svg": {
+    "mtime": 1780019084.9516194,
+    "hash": "d09f95206c3fa0bb9bd9fefabfd0ea71"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/public/next.svg": {
+    "mtime": 1780019084.9516194,
+    "hash": "8e061864f388b47f33a1c3780831193e"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/public/window.svg": {
+    "mtime": 1780019084.9516194,
+    "hash": "a2760511c65806022ad20adf74370ff3"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/public/vercel.svg": {
+    "mtime": 1780019084.9516194,
+    "hash": "c0af2f507b369b085b35ef4bbe3bcf1e"
+  },
+  "/bv3/aimbot/divya/buildmind-misc/aegis/frontend/public/globe.svg": {
+    "mtime": 1780019084.9516194,
+    "hash": "2aaafa6a49b6563925fe440891e32717"
+  }
+}

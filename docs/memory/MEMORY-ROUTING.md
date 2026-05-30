@@ -4,6 +4,7 @@ Read this file first. Do not load every memory file by default.
 
 | Intent | File | Read when |
 |---|---|---|
+| Cold-start orientation | `orientation-map.md` | First time on the project, or need the built-vs-designed map + gaps. Derived snapshot; defer to current-state/PRD/arch on conflict. |
 | Resume work | `agent-handoffs.md` | Starting a new session; read latest entry only. |
 | Current status | `current-state.md` | Need a snapshot of where the project is now. |
 | Past decisions | `decision-log.md` | Need rationale for a choice; filter by tag/date. |
