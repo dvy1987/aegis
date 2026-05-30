@@ -66,3 +66,25 @@ on `main`. Key facts and deltas-from-plan for whoever builds Plan 2:
      before trusting the laundered signal as an Optimizer reward.
 - **`playbooks/` now exists** (was a missing dir) with a `README.md` convention doc; `playbook_loader`
   still cold-starts when a slice file is absent.
+
+### Follow-up fixed same session — per-appeal Outcome Simulator re-wired (commit `280f7f4`)
+
+Moving the simulator out of the Student (Task 5) left the per-appeal APPROVE/DENY **orphaned** — no
+product path produced it (the served ADK agent is the Student; the frontend is a scaffold with no API
+calls). Fixed *properly* (offline-buildable; live calls wait for GCP only):
+- **`SimulatorClient`** protocol + `StubSimulatorClient` (offline) + `GeminiSimulatorClient` (live logic
+  extracted from `tools.simulator`); `simulator()` now delegates to an injected client (mirrors
+  `DrafterLLMClient`). Threshold-10 weak-v1 demo arc lives in `GeminiSimulatorClient`.
+- **Product entrypoint:** `app.aegis_v1.appeal_orchestrator.run_appeal_with_outcome()` → returns
+  `AppealRunResult{appeal_package, outcome}`. Runs Student then simulator; **no judges** (grading needs
+  the teacher key — that stays in `run_evaluated_case`). The simulator runs in this orchestration layer,
+  never as a Student tool (separation of powers, D11).
+- **HTTP:** `POST /v1/appeal` (`app.aegis_v1.appeal_api`, included into `main_v1`), `Depends`-injected
+  clients so it's offline-testable via `dependency_overrides`. This is the endpoint the UX should call
+  per appeal (the frontend wiring is still to-do — frontend is currently a scaffold).
+- **GCP-machine test:** `backend/tests/integration/test_live_appeal.py` runs the real Gemini
+  drafter+simulator (and a real-Phoenix eval variant) end-to-end; auto-skips without ADC. Run it on the
+  wired machine: `cd backend && env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/integration -q`.
+  *(Note: `tests/integration/` also has pre-existing `test_agent.py`/`test_server_e2e.py` that need a
+  live server and fail offline — not part of the offline `tests/unit` acceptance.)*
+- Offline acceptance is now **35 passed** for `tests/unit/{aegis_v1,evals,agent}`.
