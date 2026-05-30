@@ -12,6 +12,15 @@ those win. Re-derive with `/graphify --update` after significant code changes.
 > (`graph.html`, `GRAPH_REPORT.md`, `graph.json`). Run `/graphify query "<question>"` instead of
 > re-reading 182 files. Rebuild incrementally with `/graphify --update`.
 
+> **Update (2026-05-30, Session 22):** Plan 1 substrate (F1–F7) is now **built** — the drafter is an
+> evolvable LLM client behind guardrails, the Student is 6 tools, the Outcome Simulator runs in the
+> orchestration/eval layer (`run_appeal_with_outcome` / `POST /v1/appeal` / `run_evaluated_case`),
+> prompts are colocated per backend (`aegis_v1/prompts/`, `aegis_swarm/prompts/`; `src/prompts/`
+> retired), `playbooks/` exists, and `run_evaluated_case` writes a firewall-safe laundered eval signal
+> to a `PhoenixRecorder`. Still unbuilt (Plan 2): the Learning Coordinator and live Phoenix MCP reads
+> (`phoenix_mcp_lookup` is still a stub). Sections below predate this — see
+> [learnings.md](learnings.md) Session 22 entry for specifics.
+
 ---
 
 ## 1. What Aegis is (in one paragraph)
@@ -25,10 +34,13 @@ should make quality visibly collapse. Built by a non-technical PM driving AI cod
 
 ## 2. The intended system (two nested phases)
 
-- **Part A / MVP** — one ADK agent calling **7 deterministic tools** in fixed order:
-  `case_parser → corpus_retrieval → phoenix_mcp_lookup → playbook_loader → drafter → self_check → simulator`.
-  Human approval for every learning promotion. Intentionally a **weak v1** so the demo can show a
-  before/after lift (the "Weak-v1" rule, PRD §15.5).
+- **Part A / MVP** — one ADK agent (the **Student**) calling **6 tools** in fixed order:
+  `case_parser → corpus_retrieval → phoenix_mcp_lookup → playbook_loader → drafter → self_check`.
+  As of Session 22 the `drafter` is an **evolvable LLM client** (offline stub / Gemini prod) behind
+  deterministic guardrails — no longer a fixed template. The **Outcome Simulator** runs in the
+  wrapping orchestrator (`run_appeal_with_outcome` / `POST /v1/appeal`) and the eval harness, never as
+  a Student tool (separation of powers). Human approval for every learning promotion. Intentionally a
+  **weak v1** so the demo can show a before/after lift (the "Weak-v1" rule, PRD §15.5).
 - **Part B / Full Plan** — a **"12-agent swarm"** (honest count: 10 LLM agents + 1 judge panel +
   1 simulator + 2 background meta-agents = 14 components; see arch §3.1). Coordinator → parallel
   researcher fan-out (Insurer Intel, Policy Detective, Medical Necessity, Legal, Precedent) →
@@ -59,7 +71,7 @@ should make quality visibly collapse. Built by a non-technical PM driving AI cod
 | **Part B swarm runtime** | **STUB** | `aegis_swarm/agent.py` is **15 lines** — "to be expanded in Part B" |
 | **Learning Coordinator / Pattern Synthesizer** | **Not built** | no `learning_coordinator.py` / `pattern_synthesizer.py` anywhere |
 | **`phoenix_mcp_lookup` (load-bearing tool)** | **STUB** | returns hardcoded `cold_start`/`disabled`; T4.1 live wiring pending |
-| `playbooks/`, `proposals/` dirs | **Missing** | the durable learning artifacts don't exist on disk |
+| `playbooks/` dir | **Exists** (Session 22: README + convention doc); `proposals/` still missing | `playbooks/README.md` present; `proposals/` not yet on disk |
 | Corpus | **Thin/flat** | 4 markdown authorities vs the planned clinical/legal/precedent/insurer tree |
 
 ## 5. Key gaps & risks (ordered by leverage)

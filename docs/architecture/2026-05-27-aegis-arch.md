@@ -35,7 +35,7 @@ Two co-existing phases:
 ## 2. Orchestration Pattern
 
 ### Part A (MVP)
-**Sequential pipeline** (one ADK agent with 7 tools called in fixed order) + **batch offline learning job** (manual trigger, human approval).
+**Sequential pipeline** (one ADK agent with 6 tools called in fixed order; the Outcome Simulator runs in the wrapping orchestration/eval layer, not as a Student tool) + **batch offline learning job** (manual trigger, human approval).
 
 ### Part B (Full Plan)
 **Composite Pattern** combining 6 of Google's 8 [official ADK multi-agent patterns](https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/):
@@ -77,7 +77,7 @@ Total of 14 components. The "12-agent" framing is preserved in product copy and 
 | 6 | **Legal Researcher** | Federal (ERISA, ACA §2719, MHPAEA, No Surprises Act) + state law + recent CMS enforcement | Tool: BM25 over `corpus/authorities/legal/`. | `LegalBrief` | Researcher pool member. |
 | 7 | **Precedent Miner** | Searches state insurance commissioner decisions, ProPublica *Denied* cases, public IRO decisions | Tool: BM25 over `corpus/authorities/precedent/`. | `PrecedentBrief` | Researcher pool member. |
 | 8 | **Strategist Agent** | Synthesizes all 5 briefs (Insurer + Policy + Clinical + Legal + Precedent), picks an angle of attack, selects playbook tactics, outputs structured `AppealStrategy` | Inputs: 5 briefs. Tool: `get_learned_playbook`. | `AppealStrategy` (angles, plan-citation list, evidence requests) | Gemini 3 (expensive, high-reasoning). |
-| 9 | **Drafter Agent** | Writes the actual appeal letter, using current promoted prompt version | Inputs: `AppealStrategy` + briefs. Tool: current `system_prompt_vN` + `workflow_prompt_vN` from `src/prompts/`. | `AppealPackageDraft` (letter, citations, missing-evidence list, risk flags) | Gemini 3. The hot-spot for prompt evolution. |
+| 9 | **Drafter Agent** | Writes the actual appeal letter, using current promoted prompt version | Inputs: `AppealStrategy` + briefs. Tool: current `system_prompt_vN` + `workflow_prompt_vN` from `backend/app/aegis_swarm/prompts/`. | `AppealPackageDraft` (letter, citations, missing-evidence list, risk flags) | Gemini 3. The hot-spot for prompt evolution. |
 | 10 | **Adversarial Reviewer (Red Team)** | Plays the insurer's denial reviewer, attacks the draft for weaknesses (factual gaps, weak citations, unconvincing tone) | Input: `AppealPackageDraft`. Tool: critique-only prompt. | `Critique` with severity scores | Generator-Critic pattern. If severity > threshold, loop back to Drafter (max 2 iterations). Different model from Drafter to avoid self-enhancement bias. |
 | 11 | **Quality Judge Panel** | 7 LLM-as-judge graders running as Phoenix evals: grounding, specificity, evidence, tactic alignment, legal soundness, safety (binary gate), persuasive coherence | Input: `AppealPackage` (post-Reviewer-loop). Each judge is a Phoenix eval with a chain-of-thought prompt. | `EvalReport` with per-dimension scores + binary gates | Not an "agent" — it's the eval surface. Built via the `eval-output` skill chain (`eval-rubric-design` → `eval-judge` → `eval-pipeline`). |
 | 12 | **Outcome Simulator** | Two-step transparent simulator: feature-extraction (LLM marks ~10 features Y/N) → deterministic scoring per published rules in `eval/simulator_rules.json` | Input: `AppealPackage`. | `SimulatorResult` (score, outcome label, feature flags, explanation) | The "would the insurer have approved?" demo signal. Rule set per insurer; published in repo. |
@@ -95,7 +95,7 @@ Total of 14 components. The "12-agent" framing is preserved in product copy and 
 - **Reasoning agents (Strategist, Drafter):** Gemini 3 (or 2.5 Pro as fallback) — high reasoning quality.
 - **Researcher pool:** Gemini 2.5 Pro — balance.
 - **All agents:** strict JSON output via `response_mime_type=application/json` and Pydantic schemas in `src/agent/schemas.py`.
-- Each agent has versioned prompts in `src/prompts/<agent>_vN.md` AND registered as a Phoenix Prompt. Bump version on every promotion.
+- Each agent has versioned prompts in `backend/app/aegis_swarm/prompts/<agent>_vN.md` AND registered as a Phoenix Prompt. Bump version on every promotion. (Prompts are colocated per backend — Part A's drafter prompt lives in `backend/app/aegis_v1/prompts/`, matching the `case_generator` pattern; the legacy shared `backend/src/prompts/` dir was retired in Session 22.)
 - **Role prompts to be drafted via `create-agent-prompt` skill** before Day 8 starts — Phase 4 of the original Session 1 TODO.
 
 ---
@@ -148,7 +148,7 @@ graph TB
 
   Phoenix -.->|"reads failed traces"| LearningCoord["Learning Coordinator<br/>(hourly cron)"]
   LearningCoord -.->|"queries trace patterns"| PhoenixMCP
-  LearningCoord -.->|"writes new prompt/playbook versions<br/>+ audit"| PromptsRepo["src/prompts/, playbooks/<br/>(git-tracked)"]
+  LearningCoord -.->|"writes new prompt/playbook versions<br/>+ audit"| PromptsRepo["backend/app/aegis_swarm/prompts/, playbooks/<br/>(git-tracked)"]
   LearningCoord -.->|"runs experiments"| Phoenix
   PromptsRepo -.->|"current promoted version"| Drafter
   PromptsRepo -.->|"current playbook"| Strategist
@@ -170,7 +170,7 @@ graph TB
 ```
 
 ### Part A (MVP) is a degenerate case of the above
-Same FastAPI surface, but the Orchestrator collapses to a single ADK agent that calls 7 tools in sequence (`parse_denial_case` → `retrieve_authorities` → `get_learned_playbook` → `phoenix_trace_summary` → `draft_appeal_package` → `self_check_appeal` → `simulate_outcome`). No parallel researchers, no Adversarial Reviewer iteration, no autonomous Learning Coordinator. The offline `learn.py` script is the Part A version of the Learning Coordinator, with human approval required for every promotion.
+Same FastAPI surface, but the Orchestrator collapses to a single ADK agent (the **Student**) that calls 6 tools in sequence (`case_parser` → `corpus_retrieval` → `phoenix_mcp_lookup` → `playbook_loader` → `drafter` → `self_check`). The **Outcome Simulator** (`simulate_outcome`) is no longer a Student tool: it runs in the orchestration layer that wraps the Student — the product endpoint `POST /v1/appeal` (`run_appeal_with_outcome`) runs the Student then the simulator and returns the letter + APPROVE/DENY outcome; the eval harness (`run_evaluated_case`) likewise runs it after the judge panel. This keeps the Student from optimizing toward its own simulated outcome (separation of powers, D11). No parallel researchers, no Adversarial Reviewer iteration, no autonomous Learning Coordinator. The offline `learn.py` script is the Part A version of the Learning Coordinator, with human approval required for every promotion.
 
 ---
 
@@ -196,7 +196,7 @@ Same FastAPI surface, but the Orchestrator collapses to a single ADK agent that 
 
 ### 5.4 Git-tracked artifacts (durable across deploys)
 
-- `src/prompts/<agent>_v<N>.md` — versioned prompts.
+- `backend/app/aegis_swarm/prompts/<agent>_v<N>.md` — versioned prompts.
 - `playbooks/<insurer>__<denial_type>.json` — versioned per-slice tactics.
 - `corpus/authorities/**/*.md` — public statutory/regulatory text + insurer-published appeal instructions.
 - `eval/cases/case_NNN.json` — synthetic composite benchmark cases with provenance in `eval/dataset_card.md`.

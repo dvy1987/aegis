@@ -140,7 +140,7 @@ The system **knows when it's competent** and **knows when it isn't** — that's 
 
 ## Build plan (20 days)
 
-- **Week 1 (Days 1–7) — MVP.** Single ADK agent + 7 tools + 12-case benchmark + Phoenix MCP wired. Shippable as standalone submission on Day 7 if anything goes wrong.
+- **Week 1 (Days 1–7) — MVP.** Single ADK agent + 6-tool Student (the insurer Outcome Simulator runs in the wrapping orchestrator, not as a Student tool) + 12-case benchmark + Phoenix MCP wired. Shippable as standalone submission on Day 7 if anything goes wrong.
 - **Week 2 (Days 8–14) — Swarm.** Decompose into 9-agent runtime swarm. Expand benchmark to 60 cases.
 - **Week 3 (Days 15–20) — Autonomous learning + demo.** Add Learning Coordinator. Run ~200 learning iterations across slices. Expand benchmark to 100 cases. Record demo. Submit.
 

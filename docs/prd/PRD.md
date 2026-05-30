@@ -29,7 +29,7 @@ Each part is independently shippable. Build the MVP first; if life lets us, laye
 │                                                              │
 │  ╭─────────────────────╮                                     │
 │  │ Part A — MVP        │  ← Day 7 shippable                  │
-│  │ Days 1–7            │     Single agent + 7 tools          │
+│  │ Days 1–7            │     Single agent + 6 tools          │
 │  │ §1–§9 below          │     4-case benchmark + Phoenix MCP  │
 │  ╰──────────┬──────────╯                                     │
 │             │                                                │

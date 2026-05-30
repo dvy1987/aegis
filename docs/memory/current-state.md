@@ -1,6 +1,6 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-28 (Session 17)
+**Updated:** 2026-05-30 (Session 22)
 **Phase:** **Execution — Phase 1.** Phase 0 setup complete. Backend wired up into a 3-service logical topology (v1, swarm, and generator job) to properly isolate Phoenix traces. Generator uses ADC, dev launcher spins up 3 processes. Firewall logic designed for eval scoring. 
 
 ---
@@ -142,7 +142,7 @@
 | Eval rubric | [`docs/evals/2026-05-27-aegis-appeal-rubric.md`](../evals/2026-05-27-aegis-appeal-rubric.md) (v2) |
 | Eval pipeline | [`docs/evals/2026-05-27-aegis-eval-pipeline.md`](../evals/2026-05-27-aegis-eval-pipeline.md) |
 | Judges spec | [`docs/evals/2026-05-27-aegis-judges.md`](../evals/2026-05-27-aegis-judges.md) |
-| Agent prompts (v1) | [`backend/src/prompts/*_v1.md`](../../backend/src/prompts/) |
+| Agent prompts (v1) | Part A: [`backend/app/aegis_v1/prompts/`](../../backend/app/aegis_v1/prompts/) · Part B swarm: [`backend/app/aegis_swarm/prompts/`](../../backend/app/aegis_swarm/prompts/) (legacy `backend/src/prompts/` retired in Session 22) |
 | Implementation plan | [`docs/plans/2026-05-27-aegis-implementation-plan.md`](../plans/2026-05-27-aegis-implementation-plan.md) |
 | Agent-pickable tasks | [`docs/plans/2026-05-27-aegis-implementation-tasks.md`](../plans/2026-05-27-aegis-implementation-tasks.md) |
 | ADRs | [`docs/adr/ADR-001..005`](../adr/) |
@@ -192,14 +192,35 @@
 ## Learning loop design (Session 21, 2026-05-30)
 The self-improvement loop has been designed end-to-end (brainstorming) →
 [`docs/specs/2026-05-30-learning-coordinator-design.md`](../specs/2026-05-30-learning-coordinator-design.md).
-Key reframe: the drafter is currently deterministic templating (no evolvable surface) and the judge
-panel's signal never reaches Phoenix — both fixed in the spec (substrate fixes F1–F7) before the
+Key reframe (as of Session 21): the drafter was deterministic templating (no evolvable surface) and the
+judge panel's signal never reached Phoenix — both addressed by substrate fixes F1–F7 before the
 Learning Coordinator itself. **Plan 1 (substrate F1–F7) is written:**
 [`docs/plans/2026-05-30-learning-loop-substrate-plan.md`](../plans/2026-05-30-learning-loop-substrate-plan.md)
 — 9 TDD tasks, fully offline-testable. **Next: execute Plan 1**, then write Plan 2 (the Learning
 Coordinator itself: per-dimension specialists + experiment harness + HITL gate). See the
 orientation map ([`orientation-map.md`](orientation-map.md)) for the built-vs-designed picture and
 `graphify-out/` for a queryable repo graph.
+
+## Learning loop substrate BUILT (Session 22, 2026-05-30)
+Plan 1 (substrate F1–F7) was executed end-to-end, subagent-driven, fully offline (no GCP). Now in code:
+- **Drafter is LLM-driven** via an injected `DrafterLLMClient` (`StubDrafterClient` offline /
+  `GeminiDrafterClient` prod) behind deterministic guardrails — the fixed template is gone.
+- **Student is 6 tools**; the **Outcome Simulator** is relocated out of the agent. It now runs in the
+  orchestration layer (`aegis_v1/appeal_orchestrator.run_appeal_with_outcome`, exposed at
+  `POST /v1/appeal`) and in the eval harness (`evals/part_a/evaluated_run.run_evaluated_case`), via an
+  injectable `SimulatorClient` (stub / `GeminiSimulatorClient`). `AppealPackage` no longer carries
+  `simulator_result`.
+- **`run_evaluated_case`** joins Student → record trace → judges (+ optional simulator) → writes a
+  **firewall-safe laundered** eval signal to a `PhoenixRecorder` (`InMemoryPhoenixRecorder` offline /
+  `OtelPhoenixRecorder` prod).
+- **Prompts colocated** per backend; `playbooks/` created with a convention doc.
+- **Tests:** 35 offline unit tests green (`tests/unit/{aegis_v1,evals,agent}`); a GCP-ready live
+  integration test (`tests/integration/test_live_appeal.py`) auto-skips without ADC.
+
+**Open (Plan 2):** the Learning Coordinator itself; live Phoenix MCP *reads* (`phoenix_mcp_lookup`
+still a stub); finishing the Outcome Simulator's two-step transparent scoring (LLM fuzzy feature
+judgment → deterministic scoring per published rules, critique-first-then-score per AlphaEval —
+currently a single LLM call with a `threshold=10` hack). See [learnings.md](learnings.md) Session 22.
 
 ## Next recommended action
 
