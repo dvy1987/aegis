@@ -291,10 +291,20 @@ All 12 tasks green; commits `9f048f7..53f1eaf`. Now in code:
   `judge_client.score(...)` adapter over the Part-A panel; real Gemini/Anthropic drafter+judge+reflection;
   the stagnation from-scratch restart (needs re-recorded signal between promotions); measured +20% lift,
   κ≥0.6 calibration, MCP-off counterfactual, DENY→APPROVE demo capture.
-- **Phase 2 (next):** assistant-orchestrated prompt optimization — drive drafter/judge/reflection via the
-  Claude session itself (no API keys) over the real cases to measure real held-out lift and optimize
-  `drafter_v1.md` + the reflection meta-prompt. Runbook in
-  [`session-24-execution-handoff.md`](session-24-execution-handoff.md).
+- **Phase 2 (DONE, Session 24) — real efficacy measured.** Assistant-orchestrated manual GEPA run with
+  the Claude session as the drafter/judge/reflection intelligence (no API keys) over the real synthetic
+  cases. Optimized the Student drafter prompt for its weakest *promptable* dimension
+  (`appeal_vector_capture`): **held-out composite 0.73 → 0.88 = +0.15 abs / +20.5% rel**, no vetoes,
+  promotable — meeting the v1 §12 target on cases the reflection never saw, INV-2 firewall intact.
+  `drafter_v1.md → drafter_v2.md` (+131-token focused reflection: "confront the denial's strongest
+  stated ground head-on" + "audit for missing procedural/appeal-rights disclosures"); promoted in
+  `tools.py` (now loads `drafter_v2`). Run captured under `eval/efficacy_runs/2026-05-31/`
+  (inputs/drafts/judgments/reflections/result.json + prep/score scripts) and locked as an offline
+  replay regression (`backend/tests/unit/learning/test_efficacy_run_fixture.py`, 4 tests). Full unit
+  suite **90 passed**. Evidence doc + honest caveats (small N, single round, Claude-judges-Claude,
+  grounding corpus-bound) in [`docs/evals/2026-05-31-coordinator-efficacy-run.md`](../evals/2026-05-31-coordinator-efficacy-run.md). Commit `2c21d33`.
+  **Deferred:** round 2+ (next promptable dimension) + full 10/10 split; the Gemini-drafts + independent-judge
+  + κ≥0.6 re-run lands in the companion GCP plan (these prompts are its starting point).
 
 ## Next recommended action
 
