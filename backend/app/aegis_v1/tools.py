@@ -307,10 +307,32 @@ def drafter(
     retrieval_results: dict[str, Any],
     playbook: dict[str, Any],
     phoenix_summary: dict[str, Any],
+) -> dict[str, Any]:
+    """ADK Student tool: draft the appeal package.
+
+    This is the LLM-facing tool registered on the agent, so its signature exposes
+    ONLY the data parameters the model fills — deliberately no dependency-injection
+    seam. A `client: "DrafterLLMClient | None"` param here would (a) make ADK's
+    tool-schema builder call `typing.get_type_hints()` on a forward ref it cannot
+    resolve (the type is imported lazily inside the body) and crash agent setup,
+    and (b) leak an internal type into the model's function declaration. The drafter
+    LLM client is injected only by the orchestration/eval layer via `draft_appeal()`;
+    the live agent path uses the default GeminiDrafterClient.
+    """
+    return draft_appeal(parsed_case, retrieval_results, playbook, phoenix_summary)
+
+
+def draft_appeal(
+    parsed_case: dict[str, Any],
+    retrieval_results: dict[str, Any],
+    playbook: dict[str, Any],
+    phoenix_summary: dict[str, Any],
     client: "DrafterLLMClient | None" = None,
 ) -> dict[str, Any]:
-    """Draft the appeal package. The letter PROSE is produced by an evolvable
-    LLM (or offline stub); structure, citations, and safety are deterministic."""
+    """Injectable drafter core. The letter PROSE is produced by an evolvable LLM
+    (or offline stub); structure, citations, and safety are deterministic. Tests
+    and the deterministic pipeline pass `client`; ADK calls the thin `drafter()`
+    wrapper instead so the DI seam never reaches the model's tool schema."""
 
     from app.aegis_v1.drafter_client import (
         GeminiDrafterClient,

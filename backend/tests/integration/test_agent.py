@@ -12,12 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
 from google.adk.agents.run_config import RunConfig, StreamingMode
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
 
 from app.aegis_v1.agent import root_agent
+
+
+def _adc_available() -> bool:
+    try:
+        import google.auth
+
+        google.auth.default()
+        return True
+    except Exception:
+        return False
+
+
+pytestmark = pytest.mark.skipif(
+    not _adc_available(),
+    reason="No GCP ADC; live ADK agent run skipped — run on the machine where GCP is wired.",
+)
 
 
 def test_agent_stream() -> None:

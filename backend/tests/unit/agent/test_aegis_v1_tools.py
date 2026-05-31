@@ -8,7 +8,7 @@ from app.aegis_v1.schemas import AppealPackage
 from app.aegis_v1.tools import (
     case_parser,
     corpus_retrieval,
-    drafter,
+    draft_appeal,
     phoenix_mcp_lookup,
     playbook_loader,
     self_check,
@@ -88,7 +88,7 @@ def test_tool_pipeline_produces_self_checked_appeal_package() -> None:
         denial_type=parsed["denial_type"],
         case_id=parsed["case_id"],
     )
-    draft = drafter(
+    draft = draft_appeal(
         parsed_case=parsed,
         retrieval_results=retrieval,
         playbook=playbook,

@@ -30,6 +30,24 @@ from requests.exceptions import RequestException
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+def _adc_available() -> bool:
+    try:
+        import google.auth
+
+        google.auth.default()
+        return True
+    except Exception:
+        return False
+
+
+# The e2e server boots a real uvicorn process that calls Gemini; skip cleanly when
+# GCP ADC is absent (matches tests/integration/test_live_appeal.py).
+pytestmark = pytest.mark.skipif(
+    not _adc_available(),
+    reason="No GCP ADC; live server e2e skipped — run on the machine where GCP is wired.",
+)
+
 BASE_URL = "http://127.0.0.1:8001"
 STREAM_URL = BASE_URL + "/run_sse"
 FEEDBACK_URL = BASE_URL + "/feedback"

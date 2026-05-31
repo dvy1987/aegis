@@ -9,7 +9,7 @@ from app.aegis_v1.schemas import TraceMetadata
 from app.aegis_v1.tools import (
     case_parser,
     corpus_retrieval,
-    drafter,
+    draft_appeal,
     phoenix_mcp_lookup,
     playbook_loader,
     self_check,
@@ -56,7 +56,7 @@ def run_aegis_v1_pipeline(
         insurer=parsed["insurer"],
         denial_type=parsed["denial_type"],
     )
-    draft = drafter(
+    draft = draft_appeal(
         parsed_case=parsed,
         retrieval_results=retrieval,
         playbook=playbook,

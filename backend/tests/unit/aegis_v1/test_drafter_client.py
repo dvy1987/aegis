@@ -3,7 +3,7 @@ from app.aegis_v1.drafter_client import (
     GeminiDrafterClient,
     StubDrafterClient,
 )
-from app.aegis_v1.tools import DISCLAIMER, drafter
+from app.aegis_v1.tools import DISCLAIMER, draft_appeal
 
 
 def test_stub_client_is_a_drafter_llm_client():
@@ -49,7 +49,7 @@ def test_drafter_uses_injected_client_and_applies_guardrails():
     phoenix = {"status": "cold_start", "query": "q", "similar_trace_count": 0,
                "failure_patterns": [], "success_traits": [], "risk_flags": ["phoenix_mcp_cold_start"]}
 
-    out = drafter(parsed, retrieval, playbook, phoenix, client=StubDrafterClient())
+    out = draft_appeal(parsed, retrieval, playbook, phoenix, client=StubDrafterClient())
 
     assert DISCLAIMER.lower() in out["appeal_letter"].lower()   # guardrail injected
     assert out["citations_used"][0]["corpus_doc_id"] == "erisa_503.md"  # only retrieved cites attached
