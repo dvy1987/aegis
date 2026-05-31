@@ -1,0 +1,45 @@
+{
+  "case_id": "case_01_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 28,
+    "gender": "F",
+    "diagnosis": "Severe Obsessive-Compulsive Disorder (OCD)",
+    "treatment_requested": "Intensive Outpatient Program (IOP) - 4 days per week",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request from your provider for an Intensive Outpatient Program (IOP) from 05/10/2026 to 06/10/2026. Based on Cigna's Medical Necessity Guidelines and the Milliman Care Guidelines (MCG) for Behavioral Health, we are denying this request.\n\nThe clinical information provided does not indicate that your symptoms are severe enough to require an intensive program of care multiple days per week. The records show you are medically stable and able to perform activities of daily living. Therefore, you can be safely treated at a lower level of care, such as weekly standard outpatient therapy. The requested IOP service is not considered medically necessary. You may appeal this decision within 180 days.",
+  "clinical_context": "Patient has severe OCD with daily compulsions lasting 6+ hours, leading to job loss and inability to leave the house. Provider noted that she has already tried standard weekly outpatient therapy for 6 months with no improvement, and stepped up care (IOP) is required per APA guidelines.",
+  "matrix_cell": {
+    "insurer": "Cigna",
+    "denial_type": "Medical Necessity",
+    "patient_age_band": "unknown",
+    "patient_gender": "F",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Ignores documented failure of lower-level care (6 months of standard outpatient)",
+    "Falsely claims patient can perform ADLs despite being housebound and losing her job",
+    "Fails to address APA guidelines supporting stepped-up care"
+  ],
+  "exploitable_weaknesses": [
+    "Ignores documented failure of lower-level care (6 months of standard outpatient)",
+    "Falsely claims patient can perform ADLs despite being housebound and losing her job",
+    "Fails to address APA guidelines supporting stepped-up care"
+  ],
+  "strong_defenses": [
+    "Cites specific guidelines (Cigna/MCG) and provides a standard 180-day appeal window"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

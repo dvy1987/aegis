@@ -1,0 +1,43 @@
+{
+  "case_id": "test_case_02_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 22,
+    "gender": "M",
+    "diagnosis": "Suspected Scaphoid Fracture",
+    "treatment_requested": "MRI of Wrist without contrast (Out-of-Network)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe are denying coverage for the MRI of the wrist performed on 06/02/2026 by an out-of-network radiology center.\n\nYour plan requires prior authorization for all advanced imaging, and specifically requires out-of-network services to receive a Network Exception authorization before the service is rendered. Our records indicate no such authorization was requested or approved. Because this was not a life-threatening emergency, you are responsible for the out-of-network charges.",
+  "clinical_context": "Patient fell skateboarding and went to an urgent care. X-rays were negative but the doctor suspected a scaphoid fracture (which can cause bone death if missed). The doctor sent him immediately to the imaging center next door. The center was out-of-network and did not run a prior auth because of the urgent nature of the referral.",
+  "matrix_cell": {
+    "insurer": "Aetna",
+    "denial_type": "Prior Authorization",
+    "patient_age_band": "unknown",
+    "patient_gender": "M",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Complete omission of ERISA disclosures, appeal rights, and appeal timeframes in the denial letter.",
+    "Use of 'life-threatening' as the sole emergency threshold, ignoring limb-threatening clinical urgency like a suspected scaphoid fracture."
+  ],
+  "exploitable_weaknesses": [
+    "Complete omission of ERISA disclosures, appeal rights, and appeal timeframes in the denial letter.",
+    "Use of 'life-threatening' as the sole emergency threshold, ignoring limb-threatening clinical urgency like a suspected scaphoid fracture."
+  ],
+  "strong_defenses": [
+    "Clear administrative requirement for prior authorization and Network Exception for out-of-network services."
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "case_id": "test_case_01_uhc_mednec",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "Claims are attributed to the case's own facts and the guideline the denial itself cited ('under UnitedHealthcare's Medical Management Guidelines ... maximum medical management ... for at least six months'). No invented statute or fabricated policy text. As designed, the draft carries no discrete citations to attached records or named authorities ('citations_used':[]), so it lands at the expected 3 rather than 5.",
+    "appeal_vector_capture": "Hits the single most important embedded flaw and the other listed vectors with this case's facts. Severe-complication / delay-contraindication vector: 'the reflux has already progressed to esophageal strictures and Barrett's esophagus, which represents pre-cancerous change ... continued conservative therapy ... carries risk given the pre-cancerous progression.' Misapplication-of-generic-GERD vector: 'proton pump inhibitors and lifestyle measures cannot correct the anatomical problem driving the bile reflux ... This is not an untreated patient presenting for an initial reflux workup.' Procedural/appeal-rights vector: 'The denial as provided does not state the deadline for filing this appeal ... I respectfully assert the member's right to a complete and fair review.' Covers MOST listed vectors plus the appeal-rights vector = 5.",
+    "case_specific_clinical_rebuttal": "Uses the specific diagnosis (post-sleeve bile reflux), the documented severity (esophageal strictures, Barrett's / pre-cancerous change), and the surgeon's assessment that PPIs cannot correct the anatomical cause to DIRECTLY contradict the insurer's specific assertion that revision is 'a first-line treatment for your reflux' requiring six months of failed medical management. The argument cannot be reused for another case.",
+    "evidence_completeness": "Prioritized checklist of the exact records that close THIS case's gaps: surgeon's written statement that PPIs/lifestyle cannot correct the anatomical cause, pathology/endoscopy documenting strictures and Barrett's, the prior gastric sleeve operative report, any record of conservative measures already tried with dates, the specific cited guideline criteria, and the appeal deadline/procedure/review-rights statement.",
+    "persuasive_coherence": "Tight flow: denial summary -> direct rebuttal of the six-month criterion -> distinguishing facts -> procedural point -> crisp two-part requested action -> calm close. No padding, no repetition, no exclamation marks."
+  },
+  "improvement_notes": {
+    "grounding": "Where the letter references the surgeon's assessment and the strictures/Barrett's findings, tie each to the specific source record (e.g., the dated pathology report or the surgeon's note) so a reviewer can verify the claim rather than relying on narrative attribution."
+  }
+}

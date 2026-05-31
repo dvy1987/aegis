@@ -1,0 +1,56 @@
+{
+  "train": [
+    "case_01_cigna_mednec",
+    "case_03_aetna_mednec",
+    "case_05_uhc_mednec",
+    "case_02_cigna_priorauth"
+  ],
+  "holdout": [
+    "test_case_01_uhc_mednec",
+    "test_case_02_aetna_priorauth",
+    "test_case_03_cigna_mednec",
+    "test_case_04_uhc_priorauth"
+  ],
+  "cases": {
+    "case_01_cigna_mednec": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "split": "train"
+    },
+    "case_03_aetna_mednec": {
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "split": "train"
+    },
+    "case_05_uhc_mednec": {
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "split": "train"
+    },
+    "case_02_cigna_priorauth": {
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "split": "train"
+    },
+    "test_case_01_uhc_mednec": {
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "split": "holdout"
+    },
+    "test_case_02_aetna_priorauth": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "split": "holdout"
+    },
+    "test_case_03_cigna_mednec": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "split": "holdout"
+    },
+    "test_case_04_uhc_priorauth": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "split": "holdout"
+    }
+  }
+}

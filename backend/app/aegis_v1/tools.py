@@ -349,7 +349,7 @@ def draft_appeal(
 
     active: DrafterLLMClient = client or GeminiDrafterClient()
     raw_body = active.draft(
-        prompt=load_drafter_prompt("drafter_v1"),
+        prompt=load_drafter_prompt("drafter_v2"),  # promoted Session 24: +20.5% held-out appeal_vector_capture lift
         parsed_case=case.model_dump(),
         citations=[c.model_dump() for c in citations],
         playbook=loaded_playbook.model_dump(),

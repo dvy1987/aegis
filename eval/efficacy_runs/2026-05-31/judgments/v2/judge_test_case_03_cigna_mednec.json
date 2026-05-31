@@ -1,0 +1,24 @@
+{
+  "case_id": "test_case_03_cigna_mednec",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "Claims trace to case facts and the denial's two stated grounds (the 'strict exclusion for all weight-loss medications' and the absent Type 2 Diabetes diagnosis required for GLP-1 coverage 'under your medical benefit'). No invented plan language or statute. No discrete citations by design ('citations_used':[]), so expected 3.",
+    "appeal_vector_capture": "Captures both listed vectors with this case's facts. Conflation-of-contractual-exclusion-with-medical-necessity vector is attacked head-on: the letter separates the exclusion ground from the necessity ground and argues 'whether a medication prescribed to prevent the onset of a serious metabolic disease falls within an exclusion written for weight-loss drugs,' then pivots to a medical-necessity exception if the exclusion is held to apply on its face. Appeal-rights/ERISA-omission vector: 'The denial as provided does not state the deadline for filing this appeal ... I respectfully assert the member's right to a complete and fair review.' Most important flaw plus all listed vectors = 5.",
+    "case_specific_clinical_rebuttal": "Uses the specific facts (on the verge of Type 2 Diabetes; clinician prescribed Wegovy to prevent diabetes onset; pre-diabetes risk) to directly contradict the denial's 'weight-loss medication' characterization and to challenge the requirement that the member progress to established diabetes before a preventive intervention is covered. Tied to this patient's clinical purpose.",
+    "evidence_completeness": "Prioritized, case-specific checklist: prescriber statement that Wegovy was prescribed to prevent T2D rather than for weight loss, labs/glycemic markers establishing high diabetes risk, the exact exclusion language and any indication-based or medical-necessity exceptions, the medical-benefit GLP-1 criteria including any prevention/pre-diabetes provisions, prior interventions tried, and the appeal deadline/procedure/review-rights statement.",
+    "persuasive_coherence": "Tight: denial summary (both grounds) -> direct rebuttal of the strongest ground (exclusion) -> fallback medical-necessity argument -> procedural point -> crisp two-part requested action -> calm close. No padding or exclamation marks."
+  },
+  "improvement_notes": {
+    "grounding": "Tie the 'prescribed to prevent the onset of Type 2 Diabetes' claim and the high-risk characterization to the specific source records (the prescriber's rationale and the named lab values) so the indication is verifiable rather than narrative."
+  }
+}

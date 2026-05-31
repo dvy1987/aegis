@@ -1,0 +1,44 @@
+{
+  "case_id": "test_case_03_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 58,
+    "gender": "M",
+    "diagnosis": "Obesity (BMI 36) with pre-diabetes",
+    "treatment_requested": "Semaglutide (Wegovy)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed your provider's request for Semaglutide (Wegovy). We are denying this request because it does not meet Cigna's coverage criteria.\n\nWhile Wegovy is FDA-approved for weight management, your specific employer-sponsored pharmacy benefit plan has a strict exclusion for all weight-loss medications. Additionally, you do not have a diagnosis of Type 2 Diabetes, which would be required for coverage of similar GLP-1 medications (like Ozempic) under your medical benefit. Therefore, this request is denied as a plan exclusion and is not medically necessary.",
+  "clinical_context": "Patient has struggled with weight and is on the verge of developing full-blown Type 2 Diabetes. The doctor prescribed Wegovy to prevent the onset of diabetes. The denial relies on a hard employer plan exclusion for 'weight loss drugs', forcing an appeal to argue the preventative medical necessity rather than cosmetic weight loss.",
+  "matrix_cell": {
+    "insurer": "Cigna",
+    "denial_type": "Medical Necessity",
+    "patient_age_band": "unknown",
+    "patient_gender": "M",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Complete omission of ERISA disclosures, appeal rights, and timeframes",
+    "Conflates contractual plan exclusion with lack of medical necessity"
+  ],
+  "exploitable_weaknesses": [
+    "Complete omission of ERISA disclosures, appeal rights, and timeframes",
+    "Conflates contractual plan exclusion with lack of medical necessity"
+  ],
+  "strong_defenses": [
+    "Hard employer-sponsored plan exclusion for weight-loss medications",
+    "Patient lacks a Type 2 Diabetes diagnosis required for alternative GLP-1 coverage"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

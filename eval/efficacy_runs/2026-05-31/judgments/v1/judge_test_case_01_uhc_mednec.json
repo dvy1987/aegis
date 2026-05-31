@@ -1,0 +1,25 @@
+{
+  "case_id": "test_case_01_uhc_mednec",
+  "prompt_version": "v1",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 3,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "citations_used is empty by design. Claims are correctly attributed to case facts: 'The patient underwent a gastric sleeve procedure five years ago' and 'severe GERD that has progressed to esophageal strictures and Barrett's esophagus' track the clinical context, and the denial rationale is quoted faithfully ('does not demonstrate that maximum medical management... has been attempted and failed for at least six months'). No discrete record citations or named attached authorities, so capped at 3 per the corpus-bound anchor.",
+    "appeal_vector_capture": "The letter directly and affirmatively attacks the single most important embedded flaw: it argues PPIs 'will not correct the underlying anatomical problem causing the bile reflux' and that the revision 'is directed at the structural cause... rather than being requested as a first-line treatment,' contesting the misapplied step-therapy framing and invoking Barrett's/strictures severity that argues against a multi-month delay. It captures both the severity-contraindicates-delay and misapplied-generic-guideline vectors. It does NOT raise the procedural/appeal-rights-and-disclosure omission vector at all, so it does not cover most listed vectors; scored 4 rather than 5.",
+    "case_specific_clinical_rebuttal": "Weaves diagnosis (post-sleeve bile reflux), the specific complications (esophageal strictures, Barrett's pre-cancerous change), the 5-year history, and the surgeon's mechanistic rationale to DIRECTLY contradict the insurer's stated reason that revision is 'a first-line treatment' requiring 6 months of PPI failure. The argument is non-transferable to another case.",
+    "evidence_completeness": "Prioritized, case-specific checklist naming the exact records that close this case's gaps: surgeon's letter of medical necessity on why PPIs cannot fix the anatomy, endoscopy/pathology reports for the strictures and Barrett's, PPI dose/duration history and response, lifestyle-modification documentation, original operative records, and imaging of the anatomical basis. Directly maps to the denial's stated missing criteria.",
+    "persuasive_coherence": "Tight sequence: denial summary -> specific anatomical rebuttal -> requested action (overturn, with a clear alternative to identify required documentation) -> calm close. No exclamation marks, dignified, well-ordered."
+  },
+  "improvement_notes": {
+    "appeal_vector_capture": "The letter rebuts the clinical reasoning well but never challenges the procedural completeness of the denial itself (whether it stated the member's appeal rights, the appeal window, or the basis of the review); adding a short paragraph contesting any procedural or disclosure gaps in the denial would broaden the attack beyond the clinical merits.",
+    "case_specific_clinical_rebuttal": "The requested treatment is specifically a conversion to Roux-en-Y; naming the exact surgical procedure rather than the generic 'revision' would sharpen the contrast with the insurer's 'first-line reflux treatment' characterization."
+  }
+}

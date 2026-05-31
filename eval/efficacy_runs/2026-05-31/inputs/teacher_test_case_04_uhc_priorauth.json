@@ -1,0 +1,43 @@
+{
+  "case_id": "test_case_04_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 71,
+    "gender": "F",
+    "diagnosis": "Post-stroke hemiparesis",
+    "treatment_requested": "Transfer to Inpatient Rehabilitation Facility (IRF)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe received a prior authorization request to transfer you from acute hospital care to an Inpatient Rehabilitation Facility (IRF). We are denying this request.\n\nBased on UnitedHealthcare guidelines, admission to an IRF requires evidence that the patient can actively participate in and benefit from at least three (3) hours of intensive therapy per day. The clinical notes from your physical therapist in the hospital indicate you fatigued after 30 minutes of therapy yesterday. Therefore, we are authorizing a transfer to a Skilled Nursing Facility (SNF) instead, which provides a lower, less intensive level of care.",
+  "clinical_context": "Patient had a severe stroke but is highly motivated. The single day she fatigued after 30 minutes was the day immediately following her stroke. Since then, she has been doing 2 hours a day easily, but the hospital submitted the older notes. An SNF will not provide the intensive daily therapy needed for her to regain walking ability.",
+  "matrix_cell": {
+    "insurer": "UHC",
+    "denial_type": "Prior Authorization",
+    "patient_age_band": "unknown",
+    "patient_gender": "F",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Complete omission of ERISA disclosures, appeal rights, and appeal windows in the letter.",
+    "Reliance on outdated clinical notes that do not reflect the patient's current therapy tolerance."
+  ],
+  "exploitable_weaknesses": [
+    "Complete omission of ERISA disclosures, appeal rights, and appeal windows in the letter.",
+    "Reliance on outdated clinical notes that do not reflect the patient's current therapy tolerance."
+  ],
+  "strong_defenses": [
+    "The cited guideline (requiring 3 hours of intensive therapy per day for IRF admission) is a standard and valid clinical threshold."
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

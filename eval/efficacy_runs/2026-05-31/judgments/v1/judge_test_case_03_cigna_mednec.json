@@ -1,0 +1,25 @@
+{
+  "case_id": "test_case_03_cigna_mednec",
+  "prompt_version": "v1",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 3,
+    "case_specific_clinical_rebuttal": 3,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 3
+  },
+  "reasoning": {
+    "grounding": "citations_used empty by design. Claims trace to case facts: 'the patient is on the verge of developing Type 2 Diabetes' and 'the treating provider prescribed Wegovy to prevent the onset of diabetes rather than for cosmetic weight loss' track the clinical context, and the denial's dual basis (employer 'strict exclusion for all weight-loss medications' and lack of a Type 2 Diabetes diagnosis) is quoted faithfully. No discrete record citations, so capped at 3.",
+    "appeal_vector_capture": "The most important embedded flaw is the denial's conflation of a contractual plan exclusion with a medical-necessity determination. The letter NOTICES the distinction ('I recognize that the denial cites an employer plan exclusion') but then largely ASKS the plan to 'confirm whether the prescription... falls within the scope of that exclusion, and to identify the specific plan language being applied' rather than affirmatively arguing that a hard contractual exclusion and a medical-necessity finding are legally distinct issues that cannot be merged. Because it requests clarification/reconsideration of the exclusion rather than attacking the conflation head-on, and does not raise procedural disclosure gaps, this is capped at 3.",
+    "case_specific_clinical_rebuttal": "Cites the preventive purpose, prediabetes/'verge of Type 2 Diabetes' status, and the provider's non-cosmetic intent, but the rebuttal is partial: it does not directly overcome the insurer's specific points that the plan has a hard exclusion and that the patient lacks the Type 2 Diabetes diagnosis required for GLP-1 coverage. It reframes intent without directly contradicting the stated coverage barrier; scored 3.",
+    "evidence_completeness": "Specific, prioritized checklist closing this case's gaps: provider letter of medical necessity on preventive purpose and progression risk, A1c/fasting-glucose lab results supporting prediabetes, weight history and prior interventions, the full plan-exclusion language and any exceptions, records of other treatments tried, and clinical notes on the Wegovy rationale. Directly targets both the exclusion and the necessity prongs.",
+    "persuasive_coherence": "Clear denial summary -> preventive-purpose rebuttal -> requested action with alternative; tone is calm with no exclamation marks. But the third paragraph is soft and overlaps the closing request (both ask the plan to identify exclusion language and documentation needs), making the request less crisp; scored 4."
+  },
+  "improvement_notes": {
+    "appeal_vector_capture": "The letter asks the plan to 'confirm whether' the exclusion applies; instead, affirmatively argue that a contractual plan-exclusion decision and a medical-necessity decision are two separate determinations and that the denial improperly merged them -- attack the conflation directly rather than requesting the insurer clarify it.",
+    "case_specific_clinical_rebuttal": "The denial rests on two concrete barriers (a hard exclusion and the absence of a Type 2 Diabetes diagnosis); the rebuttal should meet each directly -- e.g., argue why preventive treatment of documented prediabetes is medical management of a disease process rather than the excluded 'weight-loss' category -- rather than only reframing the prescriber's intent."
+  }
+}

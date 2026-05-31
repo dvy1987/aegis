@@ -1,0 +1,14 @@
+{
+  "case_id": "test_case_02_aetna_priorauth",
+  "prompt_version": "v1",
+  "appeal_letter": "Dear Aetna Appeals Reviewer,\n\nI am writing to appeal the denial of coverage for the MRI of the wrist performed on 06/02/2026 at an out-of-network radiology center. The denial states that the plan requires prior authorization for all advanced imaging and, specifically, requires out-of-network services to receive a Network Exception authorization before the service is rendered, that no such authorization was requested or approved, and that because this was not a life-threatening emergency the member is responsible for the out-of-network charges.\n\nI respectfully ask the plan to reconsider this determination in light of the circumstances under which the imaging was obtained. The patient fell while skateboarding and was evaluated at an urgent care center. X-rays taken at that visit were negative, but the treating physician suspected a scaphoid fracture, which can lead to bone death if it is missed. Because of that concern, the physician sent the patient immediately to the imaging center located next door. That center was out of network and did not obtain a prior authorization due to the urgent nature of the referral.\n\nThe basis of this appeal is that the imaging was obtained on an urgent, same-visit physician referral to rule out a suspected scaphoid fracture, a condition the treating physician identified as carrying a risk of bone death if missed. The decision to proceed without first obtaining a Network Exception was driven by that clinical urgency and the immediate referral, rather than by a choice to bypass the authorization process. I ask the plan to take these circumstances into account in reconsidering the network and authorization determination.\n\nI request that Aetna overturn the denial and cover the wrist MRI of 06/02/2026, or in the alternative approve a retroactive Network Exception for this service. If the plan maintains the denial, I request a written explanation identifying the documentation needed to support a retroactive Network Exception and the procedure for submitting it.\n\nNot legal or medical advice. Draft assistance only.\n\nThank you for your reconsideration of this matter.\n\nSincerely,\nThe Member",
+  "missing_evidence_checklist": [
+    "Urgent care visit notes documenting the skateboarding fall and the physician's suspicion of a scaphoid fracture",
+    "The negative X-ray report from the urgent care visit",
+    "Written referral or order from the urgent care physician sending the patient for the MRI",
+    "The wrist MRI report and findings from 06/02/2026",
+    "Documentation of the timing showing the MRI followed immediately from the urgent care visit",
+    "Itemized bill or claim for the out-of-network imaging service"
+  ],
+  "citations_used": []
+}
