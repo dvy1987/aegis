@@ -75,7 +75,9 @@ def _build_assess_prompt(denial_text: str, clinical_context: str, appeal_letter:
 
 
 class GeminiSimulatorClient:
-    """Vertex/Gemini-backed Insurer Persona simulator. Returns the outcome verdict.
+    """Vertex/Gemini-backed Insurer Persona. Emits a critique-first FeatureAssessment
+    (per-feature 1/3/5 marks); the APPROVE/DENY verdict is computed downstream by the
+    deterministic `score_outcome`, never by this class (INV-S2/S3).
 
     Live generation is exercised in a GCP integration session; this class is
     unit-tested only for construction/config offline.
