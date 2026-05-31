@@ -45,6 +45,7 @@ Quick navigation for agents picking up this project.
 | 2026-05-30 | Session 22 (✅ **executed Plan 1 substrate F1–F7**, subagent-driven; 26 tests green offline; commits 2a5e9c3..ab1bcd2) | [session-22-execution-handoff.md](session-22-execution-handoff.md) |
 | 2026-05-31 | Session 22 cont. (✅ per-appeal Outcome Simulator re-wired; ✅ core docs reconciled; **spec + plan for two-step transparent simulator**) | [session-23-execution-handoff.md](session-23-execution-handoff.md) |
 | 2026-05-31 | Session 23 (✅ **executed the two-step transparent Outcome Simulator** plan, subagent-driven; LLM fuzzy `assess` → deterministic `score_outcome`; `threshold=10` hack deleted; 48 offline tests green; commits `b380469..89f737f`) | [session-23-execution-handoff.md](session-23-execution-handoff.md) |
+| 2026-05-31 | Session 23 cont. (✅ fixed live-agent drafter↔ADK forward-ref bug `7dec151`; **Learning Coordinator v2 GEPA spec + offline build plan** `c56a9cc`/`02c273c` → next: build + assistant-orchestrated prompt optimization) | [session-24-execution-handoff.md](session-24-execution-handoff.md) |
 
 ## Skill-output log
 
