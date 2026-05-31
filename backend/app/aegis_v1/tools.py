@@ -15,7 +15,6 @@ from app.aegis_v1.schemas import (
     Playbook,
     RetrievalResult,
     SelfCheckResult,
-    SimulatorResult,
 )
 from app.aegis_v1.schemas import ParsedCase
 
@@ -426,15 +425,25 @@ def simulator(
     self_check_result: dict[str, Any],
     client: "SimulatorClient | None" = None,
 ) -> dict[str, Any]:
-    """Run the Insurer Persona Outcome Simulator over the appeal draft.
-
-    The simulator is NOT a Student tool — it is invoked by the orchestration/eval
-    layer wrapping the Student (separation of powers, D11). The persona itself is
-    an evolvable/injectable client (offline stub / Gemini prod). `self_check_result`
-    is accepted for interface stability; the persona judges the letter, not the
-    self-check.
-    """
+    """Run the Insurer Persona Outcome Simulator: LLM critique-first feature
+    judgment, then deterministic published-rules scoring. Not a Student tool —
+    invoked by the orchestration/eval layer (D11). `self_check_result` is accepted
+    for interface stability."""
     from app.aegis_v1.simulator_client import GeminiSimulatorClient, SimulatorClient
+    from app.aegis_v1.simulator_scoring import load_simulator_rules, score_outcome
+    from app.aegis_v1.schemas import FeatureAssessment
 
+    case = ParsedCase.model_validate(parsed_case)
+    draft = AppealDraft.model_validate(appeal_draft)
     active: SimulatorClient = client or GeminiSimulatorClient()
-    return active.simulate(parsed_case, appeal_draft)
+    # `client` is an injected SimulatorClient boundary; model_validate coerces an
+    # already-typed FeatureAssessment as a no-op but also accepts a dict from a
+    # serialized/remote client impl, matching the parsed_case/appeal_draft validation above.
+    assessment = FeatureAssessment.model_validate(
+        active.assess(
+            denial_text=case.denial_text,
+            clinical_context=case.clinical_context,
+            appeal_letter=draft.appeal_letter,
+        )
+    )
+    return score_outcome(assessment, load_simulator_rules()).model_dump()

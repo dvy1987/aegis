@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from app.aegis_v1.drafter_client import StubDrafterClient
-from app.aegis_v1.simulator_client import StubSimulatorClient
+from app.aegis_v1.simulator_client import StubSimulatorClient, uniform_assessment
 from app.aegis_v1.pipeline import run_aegis_v1_pipeline
 from app.aegis_v1.schemas import ParsedCase
 from app.aegis_v1.schemas import AppealPackage
@@ -97,13 +97,13 @@ def test_tool_pipeline_produces_self_checked_appeal_package() -> None:
     )
     check = self_check(parsed_case=parsed, appeal_draft=draft, retrieval_results=retrieval)
     sim = simulator(parsed_case=parsed, appeal_draft=draft, self_check_result=check,
-                    client=StubSimulatorClient(verdict="DENY", score=2))
+                    client=StubSimulatorClient(assessment=uniform_assessment(1)))
 
     assert "Not legal or medical advice. Draft assistance only." in draft["appeal_letter"]
     assert check["hard_gate_pass"] is True
     assert check["citation_check"]["all_citations_traceable"] is True
     assert sim["verdict"] == "DENY"
-    assert sim["verdict"] in {"APPROVE", "DENY"}
+    assert sim["feature_scores"]
 
 
 def test_local_pipeline_returns_structured_appeal_package() -> None:

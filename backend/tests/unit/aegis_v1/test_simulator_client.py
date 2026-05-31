@@ -1,7 +1,9 @@
+from app.aegis_v1.schemas import FeatureAssessment
 from app.aegis_v1.simulator_client import (
     GeminiSimulatorClient,
     SimulatorClient,
     StubSimulatorClient,
+    uniform_assessment,
 )
 from app.aegis_v1.tools import simulator
 
@@ -23,15 +25,8 @@ def _draft():
 
 
 def test_stub_simulator_is_a_simulator_client():
-    client: SimulatorClient = StubSimulatorClient(verdict="APPROVE", score=10)
+    client: SimulatorClient = StubSimulatorClient()
     assert client.name == "stub_simulator"
-
-
-def test_stub_simulator_returns_requested_outcome():
-    out = StubSimulatorClient(verdict="APPROVE", score=10).simulate(_parsed(), _draft())
-    assert out["verdict"] == "APPROVE"
-    assert out["score"] == 10
-    assert out["threshold"] == 10
 
 
 def test_gemini_simulator_constructs_with_default_model(monkeypatch):
@@ -40,18 +35,22 @@ def test_gemini_simulator_constructs_with_default_model(monkeypatch):
     assert client.name == "gemini_simulator"
     assert client.model == "gemini-3.1-pro"
     assert client.location == "global"
-    assert client.threshold == 10  # weak-v1 demo arc: perfect 10 required to APPROVE
 
 
-def test_simulator_tool_uses_injected_client():
+def test_simulator_tool_denies_on_weak_assessment():
     out = simulator(parsed_case=_parsed(), appeal_draft=_draft(),
-                    self_check_result={}, client=StubSimulatorClient(verdict="DENY", score=2))
+                    self_check_result={}, client=StubSimulatorClient(assessment=uniform_assessment(1)))
     assert out["verdict"] == "DENY"
-    assert out["score"] == 2
+    assert out["score"] == 0.2
+    assert out["gaps"]
 
 
-from app.aegis_v1.simulator_client import uniform_assessment
-from app.aegis_v1.schemas import FeatureAssessment
+def test_simulator_tool_approves_on_strong_assessment():
+    out = simulator(parsed_case=_parsed(), appeal_draft=_draft(),
+                    self_check_result={}, client=StubSimulatorClient(assessment=uniform_assessment(5)))
+    assert out["verdict"] == "APPROVE"
+    assert out["score"] == 1.0
+    assert out["gaps"] == []
 
 
 def test_uniform_assessment_marks_all_rubric_features():

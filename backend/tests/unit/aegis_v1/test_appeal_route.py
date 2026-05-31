@@ -3,21 +3,21 @@ from starlette.testclient import TestClient
 
 from app.aegis_v1.appeal_api import get_drafter_client, get_simulator_client, router
 from app.aegis_v1.drafter_client import StubDrafterClient
-from app.aegis_v1.simulator_client import StubSimulatorClient
+from app.aegis_v1.simulator_client import StubSimulatorClient, uniform_assessment
 
 
-def _client(verdict: str = "APPROVE", score: int = 10) -> TestClient:
+def _client(anchor: int = 5) -> TestClient:
     app = FastAPI()
     app.include_router(router)
     app.dependency_overrides[get_drafter_client] = lambda: StubDrafterClient()
     app.dependency_overrides[get_simulator_client] = lambda: StubSimulatorClient(
-        verdict=verdict, score=score
+        assessment=uniform_assessment(anchor)
     )
     return TestClient(app)
 
 
 def test_post_appeal_returns_letter_and_outcome_offline():
-    resp = _client(verdict="APPROVE", score=10).post(
+    resp = _client(anchor=5).post(
         "/v1/appeal",
         json={
             "denial_text": "Cigna denied TMS as not medically necessary.",
@@ -34,7 +34,7 @@ def test_post_appeal_returns_letter_and_outcome_offline():
 
 
 def test_post_appeal_surfaces_a_deny_outcome():
-    resp = _client(verdict="DENY", score=3).post(
+    resp = _client(anchor=1).post(
         "/v1/appeal",
         json={"denial_text": "Denied: not medically necessary.", "case_id": "x"},
     )
