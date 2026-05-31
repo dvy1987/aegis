@@ -51,11 +51,13 @@ def test_live_appeal_run_produces_letter_and_outcome():
     # guardrail must hold even on real model prose
     assert "Not legal or medical advice" in letter
     assert "!" not in letter
-    # a real outcome came back
+    # a real outcome came back, scored deterministically from LLM features
     assert result.outcome["verdict"] in {"APPROVE", "DENY"}
-    assert isinstance(result.outcome["score"], int)
-    # weak-v1 demo arc: perfect-10 threshold means the baseline should DENY
-    assert result.outcome["threshold"] == 10
+    assert 0.0 <= result.outcome["score"] <= 1.0
+    assert result.outcome["threshold"] == 0.70
+    assert result.outcome["feature_scores"]            # transparent breakdown present
+    # weak-v1 demo arc: the baseline should land in DENY territory
+    assert result.outcome["verdict"] == "DENY"
 
 
 def test_live_evaluated_case_writes_real_phoenix_annotation():
