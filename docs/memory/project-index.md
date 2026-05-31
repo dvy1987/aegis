@@ -43,6 +43,7 @@ Quick navigation for agents picking up this project.
 | 2026-05-29 | Session 20 (Gumloop prompt overhaul) | [agent-handoffs.md](agent-handoffs.md#2026-05-29--session-20-handoff-antigravity) |
 | 2026-05-30 | Session 21 (Orientation + Learning Coordinator design + plan) | [agent-handoffs.md](agent-handoffs.md#2026-05-30--session-21-handoff-claude--orientation--learning-coordinator-design) |
 | 2026-05-30 | Session 22 (✅ **executed Plan 1 substrate F1–F7**, subagent-driven; 26 tests green offline; commits 2a5e9c3..ab1bcd2) | [session-22-execution-handoff.md](session-22-execution-handoff.md) |
+| 2026-05-31 | Session 22 cont. (✅ per-appeal Outcome Simulator re-wired; ✅ core docs reconciled; **spec + plan for two-step transparent simulator** → next: execute) | [session-23-execution-handoff.md](session-23-execution-handoff.md) |
 
 ## Skill-output log
 
