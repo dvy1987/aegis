@@ -473,7 +473,13 @@ def acquire_signal(store: PhoenixLearningStore, *, component_id: str, dataset_sp
             if note:
                 notes[dim].append(note)
 
-    failing = [r for r in runs if not r.hard_gate_pass or r.dimension_scores.get(weakest, 1) < 5]
+    # Launder improvement_notes on the runs we carry forward too (defence in depth):
+    # failing_cases are serialized into the reflection minibatch, so forbidden keys must
+    # be stripped here as well, not only in the aggregated `notes` (INV-2).
+    failing = [
+        r.model_copy(update={"improvement_notes": _launder(r.improvement_notes)})
+        for r in runs if not r.hard_gate_pass or r.dimension_scores.get(weakest, 1) < 5
+    ]
     return DimensionSignal(component_id=component_id, weakest_dimension=weakest,
                            failing_cases=failing, notes=notes)
 ```
