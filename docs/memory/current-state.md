@@ -243,10 +243,16 @@ The `threshold=10` hack and the old single-LLM-call `simulate` path are deleted.
   `tests/integration/test_live_appeal.py` auto-skips (2 skipped) without ADC. Commits `b380469..89f737f`.
 - **Deferred:** per-insurer rule sets; live-Gemini calibration of the weights/threshold against the
   benchmark (verify, never hand-tune); any Learning-Coordinator evolution of the rubric (Plan 2).
-- **Note (pre-existing, not from this work):** `tests/integration/{test_agent.py,test_server_e2e.py}` fail
-  because the *drafter* tool's `client: "DrafterLLMClient | None"` forward-ref annotation (`tools.py:310`,
-  from the earlier drafter feature) is unresolvable by ADK's function-declaration builder. The simulator
-  shares the annotation style but is not a registered ADK tool, so it's unaffected.
+- **Live-agent bug fixed (was pre-existing, commit `7dec151`):** the *drafter* ADK tool exposed a DI
+  `client: "DrafterLLMClient | None"` param whose type is imported lazily inside the body; with
+  `from __future__ import annotations`, ADK's tool-schema builder called `get_type_hints()` on that
+  forward ref at agent-run time and raised `NameError: DrafterLLMClient`, breaking the live `aegis_v1`
+  agent + e2e server (offline unit tests never hit it). Fix: split into a clean ADK-facing `drafter()`
+  wrapper (no DI seam in the model's tool schema) + an injectable `draft_appeal(..., client=None)` core
+  (pipeline/tests use the core). Added regression tests (every registered tool's hints must resolve; no
+  registered tool may expose a `client` param) and gave the live ADK-agent/server-e2e integration tests
+  the same ADC skip-guard as `test_live_appeal.py`. Now: unit **51 passed**, `tests/integration` **6
+  skipped** cleanly offline. The simulator was never affected (not a registered ADK tool, INV-S1).
 
 ## Next recommended action
 
