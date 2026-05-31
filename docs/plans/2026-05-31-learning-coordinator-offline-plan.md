@@ -1,6 +1,8 @@
 # Learning Coordinator (offline build) — Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
+
+> **✅ COMPLETE (Session 24, 2026-05-31).** All 12 tasks executed subagent-driven; commits `9f048f7..53f1eaf` on `main`. Learning suite **35 passed**, full `tests/unit` **86 passed** offline; no module-top cloud imports. One genuine plan bug was caught during Task 3 and fixed: the firewall must also launder `improvement_notes` on the `failing_cases` runs that feed the reflection minibatch (corrected in this doc + commit `dab6dc0`). Next: Phase 2 (assistant-orchestrated prompt optimization) — see [`docs/memory/session-24-execution-handoff.md`](../memory/session-24-execution-handoff.md).
 
 **Goal:** Build the full Learning Coordinator machinery — GEPA-faithful reflective prompt evolution that reads its eval signal from a `PhoenixLearningStore`, mutates one component at a time via dimension-targeted reflection, selects on an instance-wise Pareto frontier, merges lineages, gates promotion behind vetoes + a human, and is measurable for real *efficacy* via a pluggable-intelligence harness — all offline-testable with stubs/fakes, no GCP and no API key.
 
@@ -45,7 +47,7 @@
 
 **Files:** Create `backend/app/learning/__init__.py` (empty), `backend/app/learning/models.py`; Test `backend/tests/unit/learning/__init__.py` (empty), `backend/tests/unit/learning/test_models.py`.
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_models.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_models.py`:
 
 ```python
 from app.learning.models import (
@@ -94,9 +96,9 @@ def test_candidate_carries_components_and_lineage():
     assert c.parent_id is None
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/learning/test_models.py -q` → `ModuleNotFoundError: app.learning.models`.
+- [x] **Step 2: Run to verify it fails** — `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/learning/test_models.py -q` → `ModuleNotFoundError: app.learning.models`.
 
-- [ ] **Step 3: Implement** — create `backend/app/learning/__init__.py` (empty) and `backend/app/learning/models.py`:
+- [x] **Step 3: Implement** — create `backend/app/learning/__init__.py` (empty) and `backend/app/learning/models.py`:
 
 ```python
 from __future__ import annotations
@@ -219,9 +221,9 @@ class PromotionProposal(BaseModel):
         return not self.vetoes and self.after.composite > self.before.composite
 ```
 
-- [ ] **Step 4: Run to verify pass** — `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/learning/test_models.py -q` → 6 passed.
+- [x] **Step 4: Run to verify pass** — `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/learning/test_models.py -q` → 6 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/__init__.py backend/app/learning/models.py backend/tests/unit/learning/__init__.py backend/tests/unit/learning/test_models.py
@@ -236,7 +238,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 **Files:** Create `backend/app/learning/store.py`; Test `backend/tests/unit/learning/test_store.py`.
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_store.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_store.py`:
 
 ```python
 from app.learning.models import Component, ScoredRun
@@ -280,9 +282,9 @@ def test_register_promotion_bumps_version_and_records_audit():
     assert store.audits[-1].approver == "pm"
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_store.py -q` → ImportError.
+- [x] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_store.py -q` → ImportError.
 
-- [ ] **Step 3: Implement** — `backend/app/learning/store.py`:
+- [x] **Step 3: Implement** — `backend/app/learning/store.py`:
 
 ```python
 from __future__ import annotations
@@ -359,9 +361,9 @@ class InMemoryPhoenixLearningStore:
 
 > The real `PhoenixLearningStore` (MCP/SDK-backed) is built in the companion GCP plan; it implements the same Protocol so the Coordinator is unchanged. `run_experiment` lives on the `ExperimentRunner` seam (Task 9), keeping persistence (store) separate from execution (runner) — a refinement of v2 spec §2.2 for testability.
 
-- [ ] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_store.py -q` → 3 passed.
+- [x] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_store.py -q` → 3 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/store.py backend/tests/unit/learning/test_store.py
@@ -376,7 +378,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 **Files:** Create `backend/app/learning/signal.py`; Test `backend/tests/unit/learning/test_signal.py`.
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_signal.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_signal.py`:
 
 ```python
 import pytest
@@ -428,9 +430,9 @@ def test_signal_never_exposes_answer_key_fields():
         assert forbidden not in blob
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_signal.py -q` → ImportError.
+- [x] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_signal.py -q` → ImportError.
 
-- [ ] **Step 3: Implement** — `backend/app/learning/signal.py`:
+- [x] **Step 3: Implement** — `backend/app/learning/signal.py`:
 
 ```python
 from __future__ import annotations
@@ -484,9 +486,9 @@ def acquire_signal(store: PhoenixLearningStore, *, component_id: str, dataset_sp
                            failing_cases=failing, notes=notes)
 ```
 
-- [ ] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_signal.py -q` → 3 passed.
+- [x] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_signal.py -q` → 3 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/signal.py backend/tests/unit/learning/test_signal.py
@@ -503,7 +505,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 The Stub is deterministic and *constructive*: it returns the same component with a tactic/prompt-line **tagged with the target dimension**, so downstream scoring (Task 9) can reward it and the loop demonstrably climbs. Gemini/Anthropic backends are written (cloud/SDK imports inside the method, fallback to a no-op edit on failure) but unit-tested for **construction only**.
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_reflection_client.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_reflection_client.py`:
 
 ```python
 from app.learning.models import Component, DimensionSignal, ScoredRun
@@ -544,9 +546,9 @@ def test_cloud_backends_construct_without_calls():
     assert AnthropicReflectionClient().name == "anthropic_reflection"
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_reflection_client.py -q` → ImportError.
+- [x] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_reflection_client.py -q` → ImportError.
 
-- [ ] **Step 3: Implement** — `backend/app/learning/reflection_client.py`:
+- [x] **Step 3: Implement** — `backend/app/learning/reflection_client.py`:
 
 ```python
 from __future__ import annotations
@@ -681,9 +683,9 @@ def _apply_text_edit(component: Component, revised: str) -> Component:
         return component.model_copy(update={"version": nxt})
 ```
 
-- [ ] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_reflection_client.py -q` → 4 passed.
+- [x] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_reflection_client.py -q` → 4 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/reflection_client.py backend/tests/unit/learning/test_reflection_client.py
@@ -700,7 +702,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 Offline selection is **deterministic** (argmax coverage, ties→higher mean→candidate_id) so tests are stable; the docstring notes the live version may sample stochastically.
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_selection.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_selection.py`:
 
 ```python
 from app.learning.models import Candidate, Component
@@ -736,9 +738,9 @@ def test_select_component_round_robins_for_coverage():
                      "drafter_system_prompt", "playbook:Cigna:medical_necessity"]
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_selection.py -q` → ImportError.
+- [x] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_selection.py -q` → ImportError.
 
-- [ ] **Step 3: Implement** — `backend/app/learning/selection.py`:
+- [x] **Step 3: Implement** — `backend/app/learning/selection.py`:
 
 ```python
 from __future__ import annotations
@@ -797,9 +799,9 @@ def select_component(parent: Candidate, round_index: int) -> str:
     return ids[round_index % len(ids)]
 ```
 
-- [ ] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_selection.py -q` → 3 passed.
+- [x] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_selection.py -q` → 3 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/selection.py backend/tests/unit/learning/test_selection.py
@@ -814,7 +816,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 **Files:** Create `backend/app/learning/mutation.py`; Test `backend/tests/unit/learning/test_mutation.py`.
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_mutation.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_mutation.py`:
 
 ```python
 from app.learning.models import Candidate, Component, DimensionSignal
@@ -843,9 +845,9 @@ def test_mutation_edits_exactly_one_component_and_records_lineage():
     assert "appeal_vector_capture" in child.components["playbook:Cigna:medical_necessity"].playbook["dimension_targets"]
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_mutation.py -q` → ImportError.
+- [x] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_mutation.py -q` → ImportError.
 
-- [ ] **Step 3: Implement** — `backend/app/learning/mutation.py`:
+- [x] **Step 3: Implement** — `backend/app/learning/mutation.py`:
 
 ```python
 from __future__ import annotations
@@ -871,9 +873,9 @@ def reflective_mutate(parent: Candidate, signal: DimensionSignal,
     )
 ```
 
-- [ ] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_mutation.py -q` → 1 passed.
+- [x] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_mutation.py -q` → 1 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/mutation.py backend/tests/unit/learning/test_mutation.py
@@ -888,7 +890,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 **Files:** Create `backend/app/learning/merge.py`; Test `backend/tests/unit/learning/test_merge.py`.
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_merge.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_merge.py`:
 
 ```python
 from app.learning.models import Candidate, Component
@@ -921,9 +923,9 @@ def test_merge_returns_none_on_conflict_same_component():
     assert system_aware_merge(a, b, base=base, next_id="m1") is None
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_merge.py -q` → ImportError.
+- [x] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_merge.py -q` → ImportError.
 
-- [ ] **Step 3: Implement** — `backend/app/learning/merge.py`:
+- [x] **Step 3: Implement** — `backend/app/learning/merge.py`:
 
 ```python
 from __future__ import annotations
@@ -955,9 +957,9 @@ def system_aware_merge(a: Candidate, b: Candidate, *, base: Candidate,
     )
 ```
 
-- [ ] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_merge.py -q` → 2 passed.
+- [x] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_merge.py -q` → 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/merge.py backend/tests/unit/learning/test_merge.py
@@ -972,7 +974,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 **Files:** Create `backend/app/learning/gates.py`; Test `backend/tests/unit/learning/test_gates.py`.
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_gates.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_gates.py`:
 
 ```python
 from app.learning.models import Candidate, CaseScore, Component, ExperimentResult
@@ -1020,9 +1022,9 @@ def test_veto_on_oversized_diff():
     assert "diff_too_large" in evaluate_vetoes(before, after, _cand(diff_tokens=500))
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_gates.py -q` → ImportError.
+- [x] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_gates.py -q` → ImportError.
 
-- [ ] **Step 3: Implement** — `backend/app/learning/gates.py`:
+- [x] **Step 3: Implement** — `backend/app/learning/gates.py`:
 
 ```python
 from __future__ import annotations
@@ -1059,9 +1061,9 @@ def evaluate_vetoes(before: ExperimentResult, after: ExperimentResult,
     return vetoes
 ```
 
-- [ ] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_gates.py -q` → 5 passed.
+- [x] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_gates.py -q` → 5 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/gates.py backend/tests/unit/learning/test_gates.py
@@ -1078,7 +1080,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 The `StubExperimentRunner` scores a candidate **deterministically** from its components — each tactic/prompt-line tagged with a dimension bumps that dimension's anchor — so a reflected (tagged) candidate scores measurably higher than the seed. `LiveExperimentRunner` runs the real drafter+judge over a dataset (used by the efficacy harness / GCP plan).
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_experiment.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_experiment.py`:
 
 ```python
 from app.learning.models import Candidate, Component
@@ -1117,9 +1119,9 @@ def test_targeting_the_weak_dimension_raises_the_composite():
     assert improved_score > seed_score   # the loop has real signal to climb
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_experiment.py -q` → ImportError.
+- [x] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_experiment.py -q` → ImportError.
 
-- [ ] **Step 3: Implement** — `backend/app/learning/experiment.py`:
+- [x] **Step 3: Implement** — `backend/app/learning/experiment.py`:
 
 ```python
 from __future__ import annotations
@@ -1209,9 +1211,9 @@ class LiveExperimentRunner:
 
 > The `judge_client.score(case, appeal_letter) -> {dimension_scores, hard_gate_pass, simulator_verdict?}` adapter is thin glue over the existing Part-A judge panel; the GCP/efficacy plan supplies the concrete `GeminiJudgeClient`/`AnthropicJudgeClient` adapters. Offline tests use only `StubExperimentRunner`.
 
-- [ ] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_experiment.py -q` → 2 passed.
+- [x] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_experiment.py -q` → 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/experiment.py backend/tests/unit/learning/test_experiment.py
@@ -1226,7 +1228,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 **Files:** Create `backend/app/learning/coordinator.py`; Test `backend/tests/unit/learning/test_coordinator.py`.
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_coordinator.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_coordinator.py`:
 
 ```python
 from app.learning.coordinator import LearningCoordinator
@@ -1290,9 +1292,9 @@ def test_promote_writes_new_version_and_audit():
     assert store.audits[-1].after_composite == proposal.after.composite
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_coordinator.py -q` → ImportError.
+- [x] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_coordinator.py -q` → ImportError.
 
-- [ ] **Step 3: Implement** — `backend/app/learning/coordinator.py`:
+- [x] **Step 3: Implement** — `backend/app/learning/coordinator.py`:
 
 ```python
 from __future__ import annotations
@@ -1408,9 +1410,9 @@ class LearningCoordinator:
         self.store.register_promotion(proposal.candidate, audit)
 ```
 
-- [ ] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_coordinator.py -q` → 3 passed.
+- [x] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_coordinator.py -q` → 3 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/coordinator.py backend/tests/unit/learning/test_coordinator.py
@@ -1427,7 +1429,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 The harness runs the full loop with **injected** backends and reports the lift; it refuses to report lift measured on the training split (V2-INV-3). The stub-backed test asserts mechanics (a rigged constructive reflection yields measurable lift); the Anthropic/Gemini backends plug in the same way for real efficacy (companion plan / when a key exists).
 
-- [ ] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_efficacy_harness.py`:
+- [x] **Step 1: Write the failing test** — `backend/tests/unit/learning/test_efficacy_harness.py`:
 
 ```python
 import pytest
@@ -1470,9 +1472,9 @@ def test_harness_refuses_to_measure_on_train_split_INV_V2_3():
                      holdout_split="benchmark_train")
 ```
 
-- [ ] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_efficacy_harness.py -q` → ImportError.
+- [x] **Step 2: Run to verify it fails** — `... pytest tests/unit/learning/test_efficacy_harness.py -q` → ImportError.
 
-- [ ] **Step 3: Implement** — `backend/app/learning/efficacy_harness.py`:
+- [x] **Step 3: Implement** — `backend/app/learning/efficacy_harness.py`:
 
 ```python
 from __future__ import annotations
@@ -1552,9 +1554,9 @@ if __name__ == "__main__":  # pragma: no cover
     _main()
 ```
 
-- [ ] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_efficacy_harness.py -q` → 2 passed.
+- [x] **Step 4: Run to verify pass** — `... pytest tests/unit/learning/test_efficacy_harness.py -q` → 2 passed.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/learning/efficacy_harness.py backend/tests/unit/learning/test_efficacy_harness.py
@@ -1569,7 +1571,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 **Files:** Test `backend/tests/unit/learning/test_integration.py`.
 
-- [ ] **Step 1: Write the integration test** — `backend/tests/unit/learning/test_integration.py`:
+- [x] **Step 1: Write the integration test** — `backend/tests/unit/learning/test_integration.py`:
 
 ```python
 """End-to-end offline: seed weak components + recorded signal -> optimize -> promotable
@@ -1614,11 +1616,11 @@ def test_full_offline_learning_loop():
     assert store.audits[-1].after_composite == proposal.after.composite
 ```
 
-- [ ] **Step 2: Run the integration test** — `... pytest tests/unit/learning/test_integration.py -q` → 1 passed.
+- [x] **Step 2: Run the integration test** — `... pytest tests/unit/learning/test_integration.py -q` → 1 passed.
 
-- [ ] **Step 3: Full offline acceptance** — `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit -q` → all green (existing suite + the new `tests/unit/learning/*`).
+- [x] **Step 3: Full offline acceptance** — `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit -q` → all green (existing suite + the new `tests/unit/learning/*`).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add backend/tests/unit/learning/test_integration.py

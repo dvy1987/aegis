@@ -1,6 +1,6 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-31 (Session 23)
+**Updated:** 2026-05-31 (Session 24)
 **Phase:** **Execution — Phase 1.** Phase 0 setup complete. Backend wired up into a 3-service logical topology (v1, swarm, and generator job) to properly isolate Phoenix traces. Generator uses ADC, dev launcher spins up 3 processes. Firewall logic designed for eval scoring. 
 
 ---
@@ -253,6 +253,48 @@ The `threshold=10` hack and the old single-LLM-call `simulate` path are deleted.
   registered tool may expose a `client` param) and gave the live ADK-agent/server-e2e integration tests
   the same ADC skip-guard as `test_live_appeal.py`. Now: unit **51 passed**, `tests/integration` **6
   skipped** cleanly offline. The simulator was never affected (not a registered ADK tool, INV-S1).
+
+## Learning Coordinator (Plan 2) — offline machinery BUILT (Session 24, 2026-05-31)
+Phase 1 of the v2 plan is done: the full GEPA-faithful Learning Coordinator now exists as the offline
+package `backend/app/learning/`, executed subagent-driven over the 12-task plan
+([`docs/plans/2026-05-31-learning-coordinator-offline-plan.md`](../plans/2026-05-31-learning-coordinator-offline-plan.md);
+spec [`docs/specs/2026-05-31-learning-coordinator-v2-gepa-design.md`](../specs/2026-05-31-learning-coordinator-v2-gepa-design.md)).
+All 12 tasks green; commits `9f048f7..53f1eaf`. Now in code:
+- **`models.py`** — `Component`/`Candidate`/`ScoredRun`/`DimensionSignal`/`ExperimentResult`/`PromotionProposal`
+  + `composite_score` (weighted, hard-gated; all-5→1.0, all-1→0.2, gate-fail→0.0). Rubric weights:
+  grounding .30, appeal_vector_capture .25, case_specific_clinical_rebuttal .20, evidence_completeness .15,
+  persuasive_coherence .10.
+- **`store.py`** — `PhoenixLearningStore` Protocol (the ONLY contract to Phoenix, INV-1) +
+  `InMemoryPhoenixLearningStore` fake (reads back recorded runs, versions components, `register_promotion`
+  appends only changed versions).
+- **`signal.py`** — `acquire_signal()` reads the gradient FROM Phoenix, picks the weakest rubric dimension,
+  collects **laundered** notes; returns `None` when Phoenix has no signal (INV-1 halt). `FORBIDDEN_FIELDS`
+  firewall (INV-2) strips answer-key keys — **including on the `failing_cases` runs that feed the reflection
+  minibatch** (a genuine plan bug a subagent caught and we fixed in `dab6dc0`; defence in depth).
+- **`reflection_client.py`** — `ReflectionClient` Protocol + `StubReflectionClient` (deterministic
+  constructive edit, tags target dimension) + `Gemini`/`Anthropic` backends (cloud SDK imports method-local,
+  construction-only tested) + critique-first `build_reflection_prompt` (firewall holds in the prompt too).
+- **`selection.py`/`mutation.py`/`merge.py`/`gates.py`** — pure GEPA mechanics: instance-wise Pareto
+  frontier + coverage select + round-robin `select_component`; single-component `reflective_mutate` with
+  lineage+credit (V2-INV-2); `system_aware_merge` of complementary lineages (None on conflict);
+  `evaluate_vetoes` (held-out regression, safety/hard-gate, `simulator_approve_but_judges_fail` (INV-3),
+  diff>200 tokens).
+- **`experiment.py`** — `StubExperimentRunner` (deterministic monotone scorer — targeted dims bump 1→3→5,
+  gives the loop a real gradient) + `LiveExperimentRunner` (real drafter+judge, construction-safe, run() is
+  live-only). **`coordinator.py`** — `LearningCoordinator.optimize()` (Phoenix-signal probe → seed → reflect/
+  select/merge rounds → `PromotionProposal`) + HITL `promote()`. **`efficacy_harness.py`** — `run_efficacy()`
+  reports held-out lift for any injected backend; refuses to measure on the train split (V2-INV-3).
+- **Tests:** `tests/unit/learning/*` **35 passed**; full `tests/unit` suite **86 passed** offline.
+  Build-breaking invariant tests: INV-1 (no-signal → `optimize()` returns None), INV-2 (firewall in signal
+  + prompt), V2-INV-2 (one component/child), V2-INV-3 (held-out-only). No module-top cloud imports.
+- **Deferred to the companion (GCP/live) plan:** real `PhoenixLearningStore` over MCP/SDK; the
+  `judge_client.score(...)` adapter over the Part-A panel; real Gemini/Anthropic drafter+judge+reflection;
+  the stagnation from-scratch restart (needs re-recorded signal between promotions); measured +20% lift,
+  κ≥0.6 calibration, MCP-off counterfactual, DENY→APPROVE demo capture.
+- **Phase 2 (next):** assistant-orchestrated prompt optimization — drive drafter/judge/reflection via the
+  Claude session itself (no API keys) over the real cases to measure real held-out lift and optimize
+  `drafter_v1.md` + the reflection meta-prompt. Runbook in
+  [`session-24-execution-handoff.md`](session-24-execution-handoff.md).
 
 ## Next recommended action
 
