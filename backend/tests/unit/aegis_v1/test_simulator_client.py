@@ -48,3 +48,26 @@ def test_simulator_tool_uses_injected_client():
                     self_check_result={}, client=StubSimulatorClient(verdict="DENY", score=2))
     assert out["verdict"] == "DENY"
     assert out["score"] == 2
+
+
+from app.aegis_v1.simulator_client import uniform_assessment
+from app.aegis_v1.schemas import FeatureAssessment
+
+
+def test_uniform_assessment_marks_all_rubric_features():
+    fa = uniform_assessment(5)
+    assert isinstance(fa, FeatureAssessment)
+    assert fa.features["rebuts_specific_flaw"].anchor == 5
+    assert len(fa.features) == 6
+
+
+def test_stub_assess_returns_the_configured_assessment():
+    fa = uniform_assessment(3)
+    out = StubSimulatorClient(assessment=fa).assess(
+        denial_text="d", clinical_context="c", appeal_letter="a")
+    assert out.features["credible_tone"].anchor == 3
+
+
+def test_stub_assess_defaults_to_weak():
+    out = StubSimulatorClient().assess(denial_text="d", clinical_context="c", appeal_letter="a")
+    assert out.features["rebuts_specific_flaw"].anchor == 1
