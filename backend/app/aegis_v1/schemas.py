@@ -85,11 +85,34 @@ class SelfCheckResult(BaseModel):
     risk_flags: list[str] = Field(default_factory=list)
 
 
+class FeatureMark(BaseModel):
+    anchor: Literal[1, 3, 5]
+    evidence: str = ""
+
+
+class FeatureAssessment(BaseModel):
+    """LLM output of the simulator's fuzzy step: critique-first, then per-feature
+    1/3/5 anchors with evidence. No score, no verdict."""
+
+    critique: str = ""
+    features: dict[str, FeatureMark] = Field(default_factory=dict)
+
+
+class FeatureScore(BaseModel):
+    feature: str
+    anchor: Literal[1, 3, 5]
+    weight: float
+    must_have: bool
+    evidence: str = ""
+
+
 class SimulatorResult(BaseModel):
     verdict: Literal["APPROVE", "DENY"]
-    score: int
-    threshold: int
-    features: dict[str, bool]
+    score: float                       # normalized 0.0–1.0
+    threshold: float                   # e.g. 0.70
+    feature_scores: list[FeatureScore] = Field(default_factory=list)
+    gaps: list[str] = Field(default_factory=list)   # why DENY (empty on APPROVE)
+    critique: str = ""
     rationale: list[str] = Field(default_factory=list)
 
 

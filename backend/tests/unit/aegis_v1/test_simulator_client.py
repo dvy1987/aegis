@@ -32,7 +32,6 @@ def test_stub_simulator_returns_requested_outcome():
     assert out["verdict"] == "APPROVE"
     assert out["score"] == 10
     assert out["threshold"] == 10
-    assert isinstance(out["features"], dict)
 
 
 def test_gemini_simulator_constructs_with_default_model(monkeypatch):
