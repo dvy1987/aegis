@@ -21,7 +21,7 @@ Quick navigation for agents picking up this project.
 - **By:** Solo PM (non-technical) vibe-coding with Amp over 20 days
 - **Why this wins:** Self-improvement loop via Phoenix MCP is the *core mechanic*, not bolted-on
 - **Two-phase strategy:** Day 7 MVP = safety net, Day 20 Full Plan = win condition
-- **Reality check (2026-05-30, post-Plan-1):** Part A v1 + case generator + Part A judge panel are built. **Plan 1 substrate (F1–F7) is now done:** the drafter is LLM-driven (injected client + guardrails), the Outcome Simulator is out of the 6-tool Student, and `run_evaluated_case()` closes the loop by writing a firewall-safe *laundered* signal to a `PhoenixRecorder`. Still unbuilt: the **Learning Coordinator (Plan 2)**, live Phoenix MCP *reads* (`phoenix_mcp_lookup` still a stub), and the Part B swarm. See [learnings.md](learnings.md) Session 22 entry + [orientation-map.md](orientation-map.md)
+- **Reality check (2026-05-31, post-Session-23):** Part A v1 + case generator + Part A judge panel are built. **Plan 1 substrate (F1–F7) done** (drafter LLM-driven; Outcome Simulator out of the 6-tool Student; `run_evaluated_case()` writes a firewall-safe *laundered* signal to a `PhoenixRecorder`). **The Outcome Simulator is now the two-step transparent form** (Session 23): LLM `assess` does critique-first fuzzy 1/3/5 feature judgment, a deterministic `score_outcome` over published `eval/simulator_rules.json` produces APPROVE/DENY (weighted sum + must-have veto + 0.70 threshold); the `threshold=10` hack is deleted. Still unbuilt: the **Learning Coordinator (Plan 2)**, live Phoenix MCP *reads* (`phoenix_mcp_lookup` still a stub), and the Part B swarm. See [current-state.md](current-state.md) Session 23 + [learnings.md](learnings.md) Session 22 + [orientation-map.md](orientation-map.md)
 
 ## Handoff log
 
@@ -43,7 +43,8 @@ Quick navigation for agents picking up this project.
 | 2026-05-29 | Session 20 (Gumloop prompt overhaul) | [agent-handoffs.md](agent-handoffs.md#2026-05-29--session-20-handoff-antigravity) |
 | 2026-05-30 | Session 21 (Orientation + Learning Coordinator design + plan) | [agent-handoffs.md](agent-handoffs.md#2026-05-30--session-21-handoff-claude--orientation--learning-coordinator-design) |
 | 2026-05-30 | Session 22 (✅ **executed Plan 1 substrate F1–F7**, subagent-driven; 26 tests green offline; commits 2a5e9c3..ab1bcd2) | [session-22-execution-handoff.md](session-22-execution-handoff.md) |
-| 2026-05-31 | Session 22 cont. (✅ per-appeal Outcome Simulator re-wired; ✅ core docs reconciled; **spec + plan for two-step transparent simulator** → next: execute) | [session-23-execution-handoff.md](session-23-execution-handoff.md) |
+| 2026-05-31 | Session 22 cont. (✅ per-appeal Outcome Simulator re-wired; ✅ core docs reconciled; **spec + plan for two-step transparent simulator**) | [session-23-execution-handoff.md](session-23-execution-handoff.md) |
+| 2026-05-31 | Session 23 (✅ **executed the two-step transparent Outcome Simulator** plan, subagent-driven; LLM fuzzy `assess` → deterministic `score_outcome`; `threshold=10` hack deleted; 48 offline tests green; commits `b380469..89f737f`) | [session-23-execution-handoff.md](session-23-execution-handoff.md) |
 
 ## Skill-output log
 

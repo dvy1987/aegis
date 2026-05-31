@@ -1,6 +1,6 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-30 (Session 22)
+**Updated:** 2026-05-31 (Session 23)
 **Phase:** **Execution — Phase 1.** Phase 0 setup complete. Backend wired up into a 3-service logical topology (v1, swarm, and generator job) to properly isolate Phoenix traces. Generator uses ADC, dev launcher spins up 3 processes. Firewall logic designed for eval scoring. 
 
 ---
@@ -218,9 +218,35 @@ Plan 1 (substrate F1–F7) was executed end-to-end, subagent-driven, fully offli
   integration test (`tests/integration/test_live_appeal.py`) auto-skips without ADC.
 
 **Open (Plan 2):** the Learning Coordinator itself; live Phoenix MCP *reads* (`phoenix_mcp_lookup`
-still a stub); finishing the Outcome Simulator's two-step transparent scoring (LLM fuzzy feature
-judgment → deterministic scoring per published rules, critique-first-then-score per AlphaEval —
-currently a single LLM call with a `threshold=10` hack). See [learnings.md](learnings.md) Session 22.
+still a stub). (The Outcome Simulator's two-step transparent scoring is now **built** — see Session 23
+below.) See [learnings.md](learnings.md) Session 22.
+
+## Outcome Simulator two-step transparent scoring BUILT (Session 23, 2026-05-31)
+The simulator is now a transparent two-step function, executed subagent-driven over the 6-task plan
+([`docs/plans/2026-05-31-outcome-simulator-two-step-plan.md`](../plans/2026-05-31-outcome-simulator-two-step-plan.md);
+spec [`docs/specs/2026-05-30-outcome-simulator-two-step-design.md`](../specs/2026-05-30-outcome-simulator-two-step-design.md)).
+The `threshold=10` hack and the old single-LLM-call `simulate` path are deleted. Now in code:
+- **LLM does fuzzy judgment only** (`SimulatorClient.assess` → `FeatureAssessment`): critique-first, then
+  per-feature 1/3/5 anchors + evidence. The schema/prompt forbid it emitting a score or verdict (INV-S3).
+  Inputs are insurer-visible only — `denial_text`/`clinical_context`/`appeal_letter`, no answer key (INV-S4).
+- **Deterministic scorer** (`aegis_v1/simulator_scoring.score_outcome`): pure function of (LLM anchors,
+  published `eval/simulator_rules.json`). score = Σ(weight·anchor)/max_anchor; APPROVE iff score ≥ 0.70
+  AND every must-have feature ≥ anchor 3 (must-have veto). Emits `feature_scores` + `gaps` + `critique`
+  for auditability (INV-S2). `eval/simulator_rules.json` is now the published rubric (6 features, weights
+  sum to 1.0; `rebuts_specific_flaw` is the must-have) — its old unused gate content was overwritten.
+- **`SimulatorResult`** now carries a float `score` (0.0–1.0), float `threshold` (0.70), `feature_scores`,
+  `gaps`, `critique`. `tools.simulator()` composes `assess → load_simulator_rules → score_outcome`; it
+  stays out of the Student's tool list (INV-S1) and feeds `POST /v1/appeal` + `run_evaluated_case` unchanged.
+- **Math (test-asserted):** uniform(1)→0.2 DENY, uniform(5)→1.0 APPROVE, weak-v1→0.38 DENY,
+  must-have-veto-despite-0.84→DENY. Weights/threshold are principled, not tuned to the demo arc (INV-S5).
+- **Tests:** offline acceptance green — `tests/unit/{aegis_v1,evals,agent}` 48 passed; the GCP-ready
+  `tests/integration/test_live_appeal.py` auto-skips (2 skipped) without ADC. Commits `b380469..89f737f`.
+- **Deferred:** per-insurer rule sets; live-Gemini calibration of the weights/threshold against the
+  benchmark (verify, never hand-tune); any Learning-Coordinator evolution of the rubric (Plan 2).
+- **Note (pre-existing, not from this work):** `tests/integration/{test_agent.py,test_server_e2e.py}` fail
+  because the *drafter* tool's `client: "DrafterLLMClient | None"` forward-ref annotation (`tools.py:310`,
+  from the earlier drafter feature) is unresolvable by ADK's function-declaration builder. The simulator
+  shares the annotation style but is not a registered ADK tool, so it's unaffected.
 
 ## Next recommended action
 
