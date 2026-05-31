@@ -305,6 +305,10 @@ All 12 tasks green; commits `9f048f7..53f1eaf`. Now in code:
   grounding corpus-bound) in [`docs/evals/2026-05-31-coordinator-efficacy-run.md`](../evals/2026-05-31-coordinator-efficacy-run.md). Commit `2c21d33`.
   **Deferred:** round 2+ (next promptable dimension) + full 10/10 split; the Gemini-drafts + independent-judge
   + κ≥0.6 re-run lands in the companion GCP plan (these prompts are its starting point).
+- **Next work planned (Session 24, ready to execute).** Two plans written + a Session-25 handoff:
+  - **Tier 2 (offline, now):** [`docs/plans/2026-05-31-learning-efficacy-tier2-offline-plan.md`](../plans/2026-05-31-learning-efficacy-tier2-offline-plan.md) — extract a tested `efficacy_io` module, run efficacy round 2 on the full 10/10 split, A/B the reflection meta-prompt.
+  - **Tier 1 (live, credential-gated):** [`docs/plans/2026-05-31-learning-coordinator-live-gcp-companion-plan.md`](../plans/2026-05-31-learning-coordinator-live-gcp-companion-plan.md) — the submission thesis: live `phoenix_mcp_lookup` (T4.1), `LivePhoenixLearningStore`, live Gemini+Phoenix coordinator, the **MCP-off counterfactual** demo, κ≥0.6 judge calibration. Offline cores are TDD'd against fixtures; network calls gated behind `_creds_available()`.
+  - Runbook + order (Tier 2 first) + the MCP-auth critical path are in [`session-25-execution-handoff.md`](session-25-execution-handoff.md).
 
 ## Next recommended action
 
