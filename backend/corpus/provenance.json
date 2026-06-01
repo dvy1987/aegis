@@ -1,0 +1,65 @@
+{
+  "_note": "Provenance for every corpus document (ADR-007). 'seed' = hand-curated factual summary of a public authority, vetted, no verbatim proprietary text. 'discovery' docs (added later by LiteratureDiscovery) carry source_url + source_tier + retrieved_at + ingest_mode=discovery and are auditable / one-click removable.",
+  "documents": [
+    {
+      "doc_id": "erisa_503.md",
+      "domain": "legal",
+      "title": "ERISA Section 503: Full and Fair Review",
+      "source_url": "",
+      "source_tier": "seed",
+      "retrieved_at": "",
+      "ingest_mode": "seed",
+      "notes": "Factual summary of ERISA 1974 Section 503 / 29 CFR 2560.503-1 claims-procedure requirements."
+    },
+    {
+      "doc_id": "mhpaea_parity.md",
+      "domain": "legal",
+      "title": "MHPAEA Mental Health Parity",
+      "source_url": "",
+      "source_tier": "seed",
+      "retrieved_at": "",
+      "ingest_mode": "seed",
+      "notes": "Factual summary of the Mental Health Parity and Addiction Equity Act / 2024 Final Rule NQTL principles."
+    },
+    {
+      "doc_id": "nsa_surprise_billing.md",
+      "domain": "legal",
+      "title": "No Surprises Act",
+      "source_url": "",
+      "source_tier": "seed",
+      "retrieved_at": "",
+      "ingest_mode": "seed",
+      "notes": "Factual summary of the No Surprises Act balance-billing protections."
+    },
+    {
+      "doc_id": "cigna_medical_necessity.md",
+      "domain": "insurer",
+      "title": "Cigna Medical Necessity Appeal Guidelines",
+      "source_url": "",
+      "source_tier": "seed",
+      "retrieved_at": "",
+      "ingest_mode": "seed",
+      "notes": "Factual summary of general Cigna medical-necessity appeal expectations; not verbatim policy text."
+    },
+    {
+      "doc_id": "medical_necessity_evidence.md",
+      "domain": "clinical",
+      "title": "Medical-Necessity Evidence Standards (General Reference)",
+      "source_url": "",
+      "source_tier": "seed",
+      "retrieved_at": "",
+      "ingest_mode": "seed",
+      "notes": "Hand-curated general reference on medical-necessity evidence; no verbatim guideline text or specific citations."
+    },
+    {
+      "doc_id": "external_review_iro.md",
+      "domain": "precedent",
+      "title": "External Review and IRO Decisions as Persuasive Precedent (General Reference)",
+      "source_url": "",
+      "source_tier": "seed",
+      "retrieved_at": "",
+      "ingest_mode": "seed",
+      "notes": "Hand-curated general reference on ACA 2719 external review; contains no specific case identifiers."
+    }
+  ]
+}

@@ -67,3 +67,6 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-05-29 09:00 | implementation-plan | docs/plans/2026-05-29-part-a-judge-panel-plan.md | Plan: local/offline Part A judge panel implementation |
 | 2026-05-29 09:07 | memory-capture | docs/memory/current-state.md, docs/memory/project-index.md | Captured Session 19 Part A judge panel state |
 | 2026-05-29 09:07 | memory-handoff | docs/memory/agent-handoffs.md | Appended Session 19 handoff |
+| 2026-06-01 18:42 | memory-startup | (read-only) | Session 27 cold start; bounded context load |
+| 2026-06-01 18:42 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session 27 handoff — Cloud Run deploy scripts + Track B smoke + Vertex-latency finding |
+| 2026-06-01 20:38 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end handoff — Part B swarm Phases 1–3 DONE + evolution-integrity hardening (173 unit green) |

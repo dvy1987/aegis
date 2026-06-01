@@ -1,0 +1,28 @@
+.gcloudignore
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.ruff_cache
+.mypy_cache
+.coverage
+coverage
+htmlcov
+.DS_Store
+.vscode
+.idea
+
+# Repo-level junk that Cloud Build doesn't need.
+tests
+spike_*.py
+test_*.py
+test_mcp_standalone.py
+spike_app
+deployment
+
+# Big artifacts.
+graphify-out
+agent-transcripts

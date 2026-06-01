@@ -210,6 +210,14 @@ To ensure the self-improvement loop learns from experience rather than memorizin
 - **The Teacher (Quality Judge Panel & Outcome Simulator):** Receives both the `AppealPackage` (the agent's output) AND the ground truth metadata (`synthetic_provenance`). This allows the judges to rigorously evaluate whether the agent actually found the injected flaw or just hallucinated a persuasive argument.
 - **The Learner (Learning Coordinator):** Has no filesystem access to the `eval/` directory or raw benchmark files. It can only read Phoenix traces (empirical outcomes) to deduce better tactics.
 
+### 5.6 Research corpus: GCP-hosted, self-growing, trust-gated (ADR-007, Session 27)
+
+Researcher retrieval goes through a **`CorpusStore`** seam (`backend/app/aegis_swarm/corpus_store.py`) with two backends:
+- **`LocalCorpusStore`** — BM25 over `backend/corpus/<domain>/**.md` (`clinical`, `legal`, `precedent`, `insurer`). Offline default; no creds.
+- **`VertexSearchCorpusStore`** — Vertex AI Search over a **GCS-hosted** corpus. Live, credential-gated.
+
+When a researcher's retrieval is thin, a **trust-gated `LiteratureDiscovery`** step may run a Vertex grounded search restricted to an allow-list (`.gov`/eCFR/CMS, state DOI IRO decisions, PubMed/NIH, specialty societies, ProPublica), then **sanitize (`secure-*`) -> trust-tier filter -> provenance capture -> autonomous ingest into the corpus with audit log + one-click removal**. **Citations still come only from the corpus** — discovery feeds the corpus; the corpus stays the sole citation source, so the grounding/hallucination gates hold. Discovery is rate-limited and off by default (`CORPUS_DISCOVERY_ENABLED`); a $30/mo billing alert caps cost. This makes the corpus a **second learning surface**: a credit-assignment `evidence_completeness` failure can route to a corpus gap rather than only an agent prompt. See [ADR-007](../adr/ADR-007-gcp-corpus-vertex-discovery.md).
+
 ---
 
 ## 6. Error Handling & Human-in-the-Loop

@@ -1,7 +1,45 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-01 (Session 26)
-**Phase:** **Execution — Phase 1.** Phase 0 setup complete. Backend wired up into a 3-service logical topology (v1, swarm, and generator job) to properly isolate Phoenix traces. Generator uses ADC, dev launcher spins up 3 processes. Firewall logic designed for eval scoring. 
+**Updated:** 2026-06-01 (Session 27)
+**Phase:** **Execution — Part B swarm build (Phases 0–3 of 6 DONE), demo-prep.** Track A (no-creds demo) is ready; Track B (live thesis) blocked on a Vertex latency issue, not on code.
+
+### Session 27 (Part B swarm build — Phase 3: weak-v1 trio + per-agent trace signal DONE)
+- ✅ **Phase 3 complete, all tests green (68 swarm / 171 unit).**
+- ✅ **Three deliberately-weak baselines (PM decision, up from 1):** `drafter`, `strategist`, `medical_necessity` ship as `<role>_v1_weak.md` pinned via `registry.WEAK_V1_AGENTS`; strong `<role>_v1.md` kept on disk as the evolved target. Chosen because they own three distinct, non-overlapping dimensions = **0.75 of the weighted composite** → big AND attributable lift. `insurer_intelligence` (MCP-off counterfactual) and `adversarial_reviewer` (safety gate) kept strong. Weak set is a **config dial**; safety never weakened, only quality.
+- ✅ **Registry helpers:** `is_weak_agent`, `weak_agents`, `has_target_reference`, `load_target_reference`; `CURRENT_VERSIONS` pins weak agents to `v1_weak`.
+- ✅ **Per-agent firewall-safe trace signal (FR-5):** new `AgentTraceSignal` schema + `tools.make_agent_trace_signal` (stamps `role + prompt_version + is_weak_v1 + owned_dimensions + counts + risk_flags + templated summary`). `swarm_pipeline` emits one per invoked agent into `SwarmRunArtifacts.agent_trace_signals`. Summaries are structural one-liners — NO letter text / brief quotes / `thinking` / PHI (INV-2). `AGENT_OWNED_DIMENSIONS` map (inverted from the credit map) routes each signal to its dimension. Live Phoenix-span wiring is Phase 4.
+- ✅ **Evolution-integrity hardening (post-Phase-3):** weak-prompt bodies carry NO "deliberately weak" meta-commentary (would bias generation); rationale moved to `prompts/WEAK_BASELINES.md` (never loaded). Strong reference prompts quarantined to `prompts/targets/<role>.md` — not a loadable version, NEVER an optimizer seed (only `current_version` seeds the loop; success = held-out lift vs weak baseline, not similarity to target). Two new credit-map invariants: "no known-good leakage" + "no experiment metadata in runtime prompts".
+- ⏭️ **Next: Phase 4** — live surfaces (ADK graph + `VertexSearchCorpusStore` + Vertex discovery, creds-gated, budget-capped).
+
+### Session 27 (Part B swarm build — Phase 2: full fan-out + discovery DONE)
+- ✅ **Phase 2 complete, e2e offline, all tests green (59 swarm / 162 unit).**
+- ✅ **Full 5-researcher fan-out:** `tools.py` now carries the real `DENIAL_ROUTING` table (from `triage_v1.md`) + `estimate_complexity`/`complexity_to_depth`/`build_routing`. `insurer_intelligence` is ALWAYS invoked (Phoenix-load-bearing); `precedent_miner` is added on complexity 5 (state-law-sensitive / secondary denial / multi-reason). Stub Triage fans out per the table; the pipeline already looped `manifest.researchers`, so no pipeline rewrite was needed.
+- ✅ **Per-domain research behavior** in `StubSwarmClient.research`: each researcher reports its own empty-retrieval flag (`no_guidelines_found`/`no_statute_found`/`cpb_not_found`/`no_precedent_found`/`no_trace_history`) — precedent "no match" no longer masquerades as a gap. Legal adds `state_unknown` + a document-production angle; Policy adds `missing_plan_docs` + a plan-contradiction angle. Strategy `degraded` now means "no findings anywhere" (a legit empty precedent brief doesn't degrade).
+- ✅ **LiteratureDiscovery (offline fakes)** — `backend/app/aegis_swarm/literature_discovery.py`: gated pipeline `search → sanitize(secure-*) → trust-tier filter → provenance capture → ingest` + audit log + one-click `remove()`. OFF by default (`CORPUS_DISCOVERY_ENABLED`), rate-limited (per-case + per-day caps, $30/mo guardrail). `sanitize_discovered_content` strips/flags zero-width, HTML comments, hidden CSS, and injection phrases (hidden content ⇒ unsafe ⇒ reject). `DiscoverySearchClient` Protocol + `FakeDiscoverySearchClient` (live Vertex backend is Phase 4). Discovery only feeds the corpus; the corpus stays the sole citation source.
+- ⏭️ **Next: Phase 3** — weak-v1 target agent (PRD 15.5) + per-agent firewall-safe trace signal. See latest handoff entry.
+
+### Session 27 (Part B swarm build — Phase 1: walking skeleton DONE)
+- ✅ **Phase 1 walking skeleton complete, e2e offline, all tests green (37 swarm / 140 unit).**
+- ✅ **Tool/client seam:** `backend/app/aegis_swarm/{tools.py, client.py}`. `tools.py` retrieves via the `CorpusStore` seam + REUSES Part A `playbook_loader`/`phoenix_mcp_lookup` (one shared surface). `client.py` = `SwarmAgentClient` Protocol (`@runtime_checkable`) + `StubSwarmClient` (deterministic, offline) + `GeminiSwarmClient` (live, stub-fallback) — mirrors Part A's injectable `drafter_client`/`simulator_client` pattern; each method loads its prompt from the registry (the credit-assignment unit).
+- ✅ **Pure pipeline + orchestrator:** `swarm_pipeline.run_swarm_pipeline` wires Triage→researcher→Strategist→Drafter→Adversarial Reviewer (1-loop on overall_severity≥0.6)→`self_check`→Part A `AppealPackage` + `SwarmRunArtifacts` sidecar. `swarm_orchestrator.run_swarm_appeal_with_outcome` wraps it + runs Part A `simulator` in the eval layer (separation of powers, D11). Reuses Part A `apply_guardrails`, `self_check`, `case_parser`, `simulator`.
+- ✅ **Thin slice:** stub Triage routes ONE researcher (medical_necessity); full 5-researcher fan-out + always-on insurer_intelligence is Phase 2. Pipeline already loops over `manifest.researchers`, so Phase 2 only widens the manifest.
+- ⏭️ **Next: Phase 2** — full agents + 5-researcher fan-out + LiteratureDiscovery logic (offline fakes). See latest handoff entry.
+
+### Session 27 (Part B swarm build — Phase 0: foundation DONE)
+- ✅ **Started the Part B swarm runtime build** (plan `aegis swarm runtime`, offline-first, 7 phases). **Phase 0 complete, all tests green.**
+- ✅ **Schemas + registry + CorpusStore:** `backend/app/aegis_swarm/{schemas.py, corpus_store.py, prompts/registry.py}`. Terminal output reuses Part A `AppealPackage`; every agent prompt is a versioned `component_id` (credit-assignment unit); retrieval goes through a `CorpusStore` Protocol (`LocalCorpusStore` offline; `VertexSearchCorpusStore` is Phase 4). 24 new tests pass.
+- ✅ **Corpus re-homed** into `corpus/{clinical,legal,precedent,insurer}/` (+ 2 sourced seed docs, `provenance.json`, README). Part A switched to rglob and still passes (43 tests).
+- ✅ **Spec-first + ADR-007 + arch 5.6 + credit-assignment-map.md** written (GCP corpus + Vertex trust-gated discovery; $30/mo cap; dimension->agent routing).
+- 📝 Correction: prior "frontend not merged" note is stale — `feat/frontend-two-surface` IS on `origin/main`.
+
+### Session 27 (earlier — Demo-readiness audit + Cloud Run deploy scripts + Track B latency finding)
+- ✅ **Wrote Cloud Run deploy scripts** (uncommitted): `backend/deploy-v1.sh` (v1 only; `--bootstrap` enables APIs + creates Secret Manager `phoenix-api-key` + grants IAM), `frontend/deploy.sh` (demo mode default, `--mode live --api <url>` for Track B). Both use Cloud Build (`gcloud run deploy --source .`) — no local Docker required. Print plan + ask `[y/N]` before destructive action.
+- ✅ **Added `frontend/Dockerfile`** (3-stage Node 20, Next.js standalone, non-root, port 8080) + set `output: 'standalone'` in `next.config.ts`. `.gcloudignore`/`.dockerignore` files added on both sides.
+- ✅ **Wrote Track B smoke test** `backend/scripts/smoke_track_b.py` — L1 imports / L2 env / L3 Vertex auth / L4 Phoenix tracing / L5 Outcome Simulator. L1+L2+L3 ✅; L4/L5 unreached.
+- 🔴 **Track B live latency is unworkable today.** Gemini `2.5-flash` first call: 155 s for one token; second call: hung past 4 min, killed. Likely cause: `GOOGLE_CLOUD_LOCATION=global`. Quickest fix to try: flip to `us-central1` in `.env` + refresh ADC.
+- ⚠️ **Frontend build blocked locally** by pnpm `minimumReleaseAge` policy rejecting `vite@8.0.15` (published today). PM's choice: wait, `pnpm clean --lockfile`, or relax policy.
+- 📝 **Stale-handoff finding:** Session 26's `feat/frontend-two-surface` IS already merged + pushed to `origin/main` (commits `fcdedfd..daf5f6a`). Prior handoffs said "not merged/pushed" — that's outdated. No action needed beyond noting it.
+- ⏭️ Per ADR-006 there are two backend services; only v1 deploy script was built this session (PM-directed). Swarm script (`deploy-swarm.sh`) will mirror it when the swarm is ready.
 
 ### Session 26 (Frontend two-surface reimagining — built)
 - ✅ **Reimagined the frontend** (was a lone landing page) into **two surfaces, one locked design language**: `/` + `/appeal` = the calm consumer flow (intake → working → mirror → draft → decide, never names the AI); `/showcase` = "How Aegis learns" (judge-facing v1/v3 + diff + memory-off counterfactual). Spec `docs/superpowers/specs/2026-06-01-aegis-frontend-design.md`, plan `docs/superpowers/plans/2026-06-01-aegis-frontend.md`.

@@ -114,9 +114,14 @@ def _best_quote(text: str, query_tokens: set[str]) -> str:
 
 
 def _load_corpus() -> list[tuple[Path, str]]:
+    # rglob: the corpus is now organized into domain subdirs (clinical/legal/
+    # precedent/insurer) for the Part B swarm; Part A retrieves over the union.
     if not CORPUS_DIR.exists():
         return []
-    return [(path, path.read_text(encoding="utf-8")) for path in CORPUS_DIR.glob("*.md")]
+    return [
+        (path, path.read_text(encoding="utf-8"))
+        for path in sorted(CORPUS_DIR.rglob("*.md"))
+    ]
 
 
 def _slug(value: str) -> str:

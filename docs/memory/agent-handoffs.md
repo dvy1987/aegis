@@ -1282,3 +1282,226 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 - New (this session's commit): `docs/specs/2026-05-30-learning-coordinator-design.md`, this handoff entry, `project-index.md` + `current-state.md` updates, `.gitignore` cleanup (untracking `graphify-out/cache/` + machine-specific `.graphify_*` dotfiles).
 - Previously committed (`b8b81ff`): `graphify-out/` outputs + `docs/memory/{orientation-map,learnings}.md` + index/routing pointers.
 
+---
+
+## 2026-06-01 18:42 — Session 27 Handoff (Cursor / Opus 4.7) — Demo-readiness audit + Cloud Run deploy scripts + Track B latency finding
+
+### Done
+- **Audited demo readiness** against `docs/demo/2026-06-01-demo-runbook.md`. Stale-handoff finding: Session 26's `feat/frontend-two-surface` was **already merged + pushed** before this session (`fcdedfd..daf5f6a` on `main`), contrary to what `current-state.md` and `project-index.md` say. Devpost-ready code is on `main`.
+- **Wrote Cloud Run deploy scripts** (uncommitted, on `main`):
+  - `backend/deploy-v1.sh` — deploys ONLY `aegis-v1-api` (NOT the swarm). `--bootstrap` mode enables APIs, creates Secret Manager `phoenix-api-key`, grants Cloud Run runtime SA the `secretmanager.secretAccessor` + `aiplatform.user` roles. Uses Cloud Build (`gcloud run deploy --source .`) — no local Docker needed.
+  - `frontend/deploy.sh` — deploys `aegis-frontend`. **Demo mode by default** (no backend, bundled fixtures, Track A); `--mode live --api <url>` for Track B.
+  - `frontend/Dockerfile` (new) — 3-stage Node 20 build, Next.js standalone output, non-root user, port 8080.
+  - `frontend/next.config.ts` — added `output: 'standalone'` (required by the Dockerfile).
+  - `backend/.gcloudignore`, `frontend/.gcloudignore`, `frontend/.dockerignore` — keep Cloud Build upload context slim.
+  - Both scripts print plan + ask `[y/N]` before any destructive action; `YES=1` skips. Sane defaults: project from `.env`/`gcloud`, region `us-central1`, Phoenix project `aegis-baseline`.
+- **Wrote Track B smoke test** `backend/scripts/smoke_track_b.py` (uncommitted) — walks 5 links (imports → env → Vertex auth → Phoenix tracing → Outcome Simulator).
+- **Smoke-tested Track B live pipe.** L1 (imports), L2 (env), L3 (Vertex auth) ✅. L4/L5 unreached.
+
+### Debated / Findings
+- **Track B live latency is currently unworkable.** First Gemini `2.5-flash` call returned `PONG` in **155 s**; second attempt hung past 4 minutes and was killed. Suspected cause is `GOOGLE_CLOUD_LOCATION=global` in `.env` — Vertex `global` routes through multi-region and is known to be slow + sometimes silently retry. Also possible: project `gen-lang-client-0362343014` is a Vertex AI Studio auto-project that's slow on first deploys of certain model variants, or ADC token needs a refresh (`print-access-token` hung when probed directly).
+- **Frontend build is currently blocked locally** by pnpm `minimumReleaseAge` rejecting `vite@8.0.15` (published 2026-06-01, within the policy cutoff). Three options: wait it out, `pnpm clean --lockfile && pnpm install`, or relax the policy. Did NOT touch this — PM's call.
+- **Two backends, one script for now.** Per ADR-006 there are `aegis-v1-api` + `aegis-swarm-api`. PM directed: build v1 deploy script only, name unambiguously. Result: `deploy-v1.sh`. The swarm script will mirror it as `deploy-swarm.sh` when the swarm is ready.
+
+### Decisions
+- D1 Cloud Run deploy uses `--source .` (Cloud Build), not local Docker.
+- D2 `PHOENIX_API_KEY` lives in Google Secret Manager (`phoenix-api-key:latest`), mounted as env var in Cloud Run. Created by `--bootstrap`.
+- D3 Frontend default deploy mode = **demo** (Track A from the runbook).
+- D4 Region default = `us-central1` (overridable via `REGION` env var).
+- D5 Min instances = 1 on both services during demo period (avoids cold starts) — matches `frontend/AGENTS.md` "Min instances = 1 during demo period".
+- D6 Build artifacts split: `Dockerfile` ↔ `deploy-v1.sh`, `Dockerfile.swarm` ↔ future `deploy-swarm.sh`, `frontend/Dockerfile` ↔ `frontend/deploy.sh`. Naming intentionally mirrors the existing Dockerfile split per ADR-006.
+
+### Deferred
+- **Track B live demo is at risk** until Vertex latency is fixed. Quickest test: change `GOOGLE_CLOUD_LOCATION=global` → `us-central1` in `.env` and re-run `backend/scripts/smoke_track_b.py`. If still slow, refresh ADC (`gcloud auth application-default login`).
+- L4 Phoenix tracing + L5 Outcome Simulator smoke links not exercised (L3 hung before reaching them).
+- Frontend `pnpm` lockfile/policy issue with `vite@8.0.15` — not touched.
+- **Commits.** Eight uncommitted files (deploy scripts, Dockerfile, smoke script, ignore files, next.config tweak). PM did not request a commit.
+- Hosted URL, video, Devpost form — still all open per the demo-readiness audit.
+
+### Next Agent Should Know
+- **Demo is Track-A-ready, Track-B is not.** The frontend code on `main` + the demo runbook are enough to record/host a clickable Track A demo today. Track B (live thesis) is blocked on the Vertex latency issue, not on code.
+- **Two deploy scripts ready to run** (after `pnpm install` is unblocked):
+  - One-time: `cd backend && ./deploy-v1.sh --bootstrap`
+  - Backend: `cd backend && ./deploy-v1.sh`
+  - Frontend demo mode: `cd frontend && ./deploy.sh`
+  - Frontend live mode: `cd frontend && ./deploy.sh --mode live --api <backend URL>`
+- **First diagnostic for Track B latency:** flip `GOOGLE_CLOUD_LOCATION` from `global` to `us-central1` in `.env`, re-run `backend/scripts/smoke_track_b.py`. ~30 seconds. If that fixes it, Track B is back on the table.
+- **Stale memory:** `current-state.md` + `project-index.md` still say Session 26's frontend branch is "not merged/pushed" — it actually IS on `main` and on `origin/main`. Worth a quick docs fix next session.
+- A zombie `uvicorn app.fast_api_app:app` process (Session 18-era, deleted module) is still alive in the background on this machine. Harmless but stale.
+
+### Revisit Triggers
+- If Vertex latency persists after region/region-routing fixes → fall back to **Track A only** for the demo recording; deploy backend later as an optional showcase.
+- If pnpm policy still rejects `vite@8.0.15` tomorrow → it'll be inside the release-age window for ~24h; either wait or run `pnpm clean --lockfile`.
+- If `phoenix-api-key` rotates → `./deploy-v1.sh --bootstrap` adds a new version (script handles existing-secret case).
+
+### Working Tree
+- Uncommitted (on `main`): `backend/deploy-v1.sh`, `backend/.gcloudignore`, `backend/scripts/smoke_track_b.py`, `frontend/deploy.sh`, `frontend/Dockerfile`, `frontend/.dockerignore`, `frontend/.gcloudignore`, `frontend/next.config.ts` (added `output: 'standalone'`).
+- `main` is up to date with `origin/main`.
+
+---
+
+## 2026-06-01 — Session 27 Handoff (Cursor) — Part B swarm build, Phase 0 DONE
+
+### Context / plan
+- Building the **Part B swarm runtime**, offline-first, per the approved plan `aegis swarm runtime` (Cursor plan id 4a2b5ba4). 7 phases (0-6). Phase 6 (Learning Coordinator re-point) is a deferred follow-on.
+- Key PM decisions baked in: (1) learning feedback must route to the **right agent** -> credit-assignment seams built now; (2) corpus moves to **GCP (GCS + Vertex AI Search)** with **trust-gated autonomous-with-audit literature discovery** (ADR-007); (3) **$30/mo GCP budget cap**, only $100 free credits -> discovery rate-limited + OFF by default; (4) one agent gets a deliberately **weak v1** (Phase 3) for demo lift.
+
+### Done (Phase 0 — foundation, all tests green)
+- **Spec-first:** updated [Part B feature-spec](../specs/2026-05-27-aegis-part-b-swarm-feature-spec.md) (added FR-5 credit assignment, FR-6 GCP corpus, FR-7 trust-gated discovery, Build-scope note, resolved CL-1 = manual demo trigger).
+- **ADR:** wrote [ADR-007](../adr/ADR-007-gcp-corpus-vertex-discovery.md) (GCS + Vertex AI Search + trust-gated discovery, budget cap, safety gates).
+- **Arch:** added section 5.6 to [architecture spec](../architecture/2026-05-27-aegis-arch.md) (CorpusStore seam + discovery + corpus as 2nd learning surface).
+- **Schemas:** `backend/app/aegis_swarm/schemas.py` (RoutingManifest, ResearchBrief + InsurerBrief subtype, AppealStrategy + submodels, AdversarialCritique, SwarmRunArtifacts). Terminal output REUSES Part A `aegis_v1.AppealPackage`. Briefs are one unified shape (per-researcher behavior specializes in Phase 2, not schema).
+- **Prompt registry:** `backend/app/aegis_swarm/prompts/registry.py` — every agent prompt is an individually-loadable versioned `component_id` (= the credit-assignment unit). 10 roles, all v1 on disk.
+- **CorpusStore:** `backend/app/aegis_swarm/corpus_store.py` — `CorpusStore` Protocol + `LocalCorpusStore` (BM25 over `corpus/<domain>/**.md`) + `CorpusProvenance` + trust-tier allow-list `classify_trust_tier()`. `VertexSearchCorpusStore` is Phase 4.
+- **Corpus re-homed** into domain subdirs: `corpus/{clinical,legal,precedent,insurer}/`. Moved the 4 flat files via `git mv` (doc_ids unchanged = filename). Added 2 seed docs (clinical, precedent — factual general refs, NO fabricated citations). Wrote `corpus/provenance.json` + `corpus/README.md`.
+- **Part A kept working:** changed `aegis_v1/tools._load_corpus` glob -> rglob so Part A retrieves over the union. Part A + judge-panel suites still pass (43 passed).
+- **Credit map:** [docs/architecture/credit-assignment-map.md](../architecture/credit-assignment-map.md) — dimension -> responsible agent prompt OR corpus-gap. This is what Phase 6 consumes.
+- **Tests:** `backend/tests/unit/aegis_swarm/{test_swarm_schemas,test_swarm_registry,test_swarm_corpus_store}.py` — 24 passed.
+
+### Next Agent Should Know / Next steps (Phase 1 = walking skeleton)
+- Build the tools/client seam: retrieval via `CorpusStore` (LocalCorpusStore offline); `get_learned_playbook` (reuse Part A `playbook_loader`); `phoenix_mcp` stub+live; **`SwarmAgentClient` Protocol + `StubSwarmClient` + `GeminiSwarmClient`** (mirror Part A's `drafter_client`/`simulator_client` injectable pattern — stub for offline tests, Gemini for live).
+- Wire a THIN vertical slice e2e: Triage -> ONE researcher -> Strategist -> Drafter -> Adversarial Reviewer -> self_check -> `AppealPackage`, via `swarm_pipeline` (pure) + `swarm_orchestrator` (adds simulator). Must run e2e offline with stubs. Mirror `aegis_v1/pipeline.py` + `aegis_v1/appeal_orchestrator.py`.
+- `aegis_swarm/agent.py` is still a 15-line stub — leave it; the ADK graph rewrite is Phase 4 (creds-gated), built over the SAME pure core to avoid drift.
+- Pydantic v2 patterns + injectable-client pattern are the house style; reuse `apply_guardrails`, `self_check`, `simulator`, `score_outcome` from `aegis_v1`.
+- Run tests: `cd backend && uv run pytest tests/unit/aegis_swarm -q`. Shell cwd note: a prior `cd backend/corpus` persists across calls — use absolute paths.
+
+### Working Tree
+- New/changed (uncommitted, on `main`): `backend/app/aegis_swarm/{schemas.py,corpus_store.py,prompts/registry.py}`, `backend/tests/unit/aegis_swarm/*`, `backend/app/aegis_v1/tools.py` (rglob), `backend/corpus/**` (re-homed + 2 seed docs + provenance.json + README.md), `docs/adr/ADR-007-*.md`, `docs/architecture/credit-assignment-map.md`, `docs/architecture/2026-05-27-aegis-arch.md`, `docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md`.
+- No commit made (PM has not requested one).
+
+---
+
+## 2026-06-01 — Session 27 Handoff (Cursor) — Part B swarm build, Phase 1 DONE (walking skeleton)
+
+### Context / plan
+- Continuing the **Part B swarm runtime** build, offline-first, plan `aegis swarm runtime` (Cursor plan id 4a2b5ba4). **Phase 1 of 6 complete, e2e offline, all tests green.** Phase 6 (Learning Coordinator re-point) is a deferred follow-on.
+
+### Done (Phase 1 — walking skeleton, all tests green: 37 swarm / 140 full unit)
+- **Tool seam — `backend/app/aegis_swarm/tools.py`:** `corpus_search(store, domain, query, top_k)` over the `CorpusStore` seam; `get_learned_playbook` + `swarm_phoenix_lookup` REUSE Part A `playbook_loader`/`phoenix_mcp_lookup` unchanged (one shared playbook + Phoenix surface, so the Learning Coordinator sees one surface). `RESEARCHER_DOMAIN` map + `depth_to_top_k` (brief=1/standard=3/deep=5) + `build_research_query` (same query Part A builds).
+- **Client seam — `backend/app/aegis_swarm/client.py`:** `SwarmAgentClient` Protocol (`@runtime_checkable`) with `triage/research/strategize/draft/critique`. `StubSwarmClient` (deterministic, offline, used by every test) + `GeminiSwarmClient` (Vertex; each method loads its role prompt from the registry, calls Gemini with `response_schema`, falls back to the stub on any error — mirrors Part A `GeminiDrafterClient`/`GeminiSimulatorClient`; construction-only tested offline). Mirrors Part A's injectable-client DI pattern exactly.
+- **Pure pipeline — `backend/app/aegis_swarm/swarm_pipeline.py`:** `run_swarm_pipeline(...)` → `{"appeal_package", "artifacts"}`. Flow: `case_parser` → `triage` → loop invoked researchers (`corpus_search` per domain → `client.research`) → `strategize` → `draft` → `critique` (one redraft if `overall_severity ≥ 0.6`) → `_assemble_draft` (Part A `apply_guardrails` + `AppealDraft`) → Part A `self_check` → Part A `AppealPackage` + `SwarmRunArtifacts`. CorpusHits→Part A CitationHits so reused `self_check` validates traceability. Defaults to `StubSwarmClient`+`LocalCorpusStore` (no creds).
+- **Orchestrator — `backend/app/aegis_swarm/swarm_orchestrator.py`:** `run_swarm_appeal_with_outcome(...)` → `SwarmAppealRunResult(appeal_package, outcome, artifacts)`. Runs the pipeline then Part A `simulator` in the eval layer (NOT a Student tool — D11 separation of powers). Mirrors `aegis_v1/appeal_orchestrator.py`.
+- **Tests:** `backend/tests/unit/aegis_swarm/{test_swarm_client,test_swarm_pipeline,test_swarm_orchestrator}.py` — protocol conformance, stub behaviors (triage denial-type mapping, brief-from-hits, insurer-brief MCP-off flag, citation discipline, disclaimer/critique loop), e2e pipeline (valid `AppealPackage`, self-check hard-gate PASS, artifacts attached, traceable citations), orchestrator (Student→simulator, APPROVE/DENY + score/threshold). 13+6+2 added.
+
+### Key decisions (Phase 1)
+- **Thin slice = ONE researcher.** Stub Triage invokes only `medical_necessity`. The pipeline already iterates `manifest.researchers`, so Phase 2 = widen the manifest (full 5-researcher fan-out + always-on `insurer_intelligence`) + give each researcher real per-domain behavior; no pipeline rewrite needed.
+- **Reuse over reinvention.** Swarm shares Part A `apply_guardrails`, `self_check`, `case_parser`, `simulator`, `playbook_loader`, `phoenix_mcp_lookup`, and the `AppealPackage`/`AppealDraft`/`CitationHit` schemas. Swarm-only artifacts (`RoutingManifest`/briefs/`AppealStrategy`/critiques) ride along in `SwarmRunArtifacts`.
+- **Playbook/Phoenix keyed on Part A denial_type** (`parsed["denial_type"]`); the `RoutingManifest`/trace carry the swarm's 7-type classification. Avoids cold-starting every playbook.
+- **`GeminiSwarmClient` falls back to the stub on any failure** so a live run never crashes mid-pipeline (same posture as the Part A clients).
+
+### Next Agent Should Know / Next steps (Phase 2)
+- **Phase 2 = full agents + 5-researcher fan-out + LiteratureDiscovery (offline fakes).** Widen stub/Gemini Triage to the real routing table (insurer_intelligence ALWAYS on — it's Phoenix-load-bearing). Give each `research()` real per-domain behavior. Build `LiteratureDiscovery` (Phase 2 logic, offline fakes): trust-tier allow-list (`corpus_store.classify_trust_tier`) → sanitize (`secure-*`) → provenance capture → ingest; OFF by default, rate-limited (ADR-007, $30/mo cap). Live Vertex discovery + `VertexSearchCorpusStore` are Phase 4 (creds-gated).
+- `aegis_swarm/agent.py` is still a 15-line stub — leave it; the ADK graph rewrite is Phase 4 over the SAME pure core (`swarm_pipeline`) to avoid drift.
+- Run tests: `cd backend && uv run pytest tests/unit/aegis_swarm -q` (shell cwd note: a prior `cd backend/corpus` can persist — use absolute paths). Ruff is NOT installed in the venv (lint skipped, as in earlier sessions).
+
+### Working Tree
+- New (uncommitted, on `main`): `backend/app/aegis_swarm/{tools.py,client.py,swarm_pipeline.py,swarm_orchestrator.py}`, `backend/tests/unit/aegis_swarm/{test_swarm_client,test_swarm_pipeline,test_swarm_orchestrator}.py`.
+- Modified: `docs/memory/current-state.md`, `docs/memory/agent-handoffs.md` (this entry). Plus all Phase 0 files from the prior entry.
+- No commit made (PM has not requested one).
+
+---
+
+## 2026-06-01 — Session 27 Handoff (Cursor) — Part B swarm build, Phase 2 DONE (full fan-out + discovery)
+
+### Context / plan
+- Continuing the **Part B swarm runtime** build, offline-first, plan `aegis swarm runtime` (Cursor plan id 4a2b5ba4). **Phase 2 of 6 complete, e2e offline, all tests green (59 swarm / 162 full unit).** Phase 6 (Learning Coordinator re-point) is a deferred follow-on.
+
+### Done (Phase 2 — full agents + 5-researcher fan-out + LiteratureDiscovery, all tests green)
+- **Routing table — `backend/app/aegis_swarm/tools.py`:** added `DENIAL_ROUTING` (the 7-type → researchers table from `triage_v1.md`), `estimate_complexity` (deterministic 1/3/5: state-law-sensitive CA/NY/MA, secondary denial type, or multi-reason → 5), `complexity_to_depth` (1→brief/3→standard/5→deep), and `build_routing(denial_type, complexity)` → `list[ResearcherInvocation]`. **`insurer_intelligence` is ALWAYS appended** (Phoenix-load-bearing, never skipped); **`precedent_miner` is added on complexity 5**.
+- **Triage + per-domain research — `backend/app/aegis_swarm/client.py`:** `StubSwarmClient.triage` now fans out via `build_routing`/`estimate_complexity` (no longer single-researcher). `research()` got per-domain behavior: per-researcher empty-retrieval risk flags (`no_guidelines_found`/`no_statute_found`/`cpb_not_found`/`no_precedent_found`/`no_trace_history`) so precedent "no match" ≠ a guidelines/statute gap; legal adds `state_unknown` + a document-production `evidence_gap` angle; policy adds `missing_plan_docs` + a plan-contradiction angle. `strategize` degraded logic changed to "no findings anywhere" (a legit empty precedent brief no longer degrades the strategy). `GeminiSwarmClient` unchanged (still falls back to the stub, which now fans out).
+- **LiteratureDiscovery — `backend/app/aegis_swarm/literature_discovery.py` (NEW):** the trust-gated, self-growing-corpus logic (ADR-007), **Phase 2 = offline fakes**. Pipeline: `search → sanitize(secure-*) → classify_trust_tier filter → provenance capture → ingest (write md + append provenance.json) → audit log`; plus one-click `remove(doc_id)` rollback. `sanitize_discovered_content` strips + flags zero-width chars, HTML comments, hidden CSS, and prompt-injection phrases — **any hidden-content/injection marker ⇒ unsafe ⇒ rejected** (hidden content is the attack vector). `DiscoverySearchClient` Protocol + `FakeDiscoverySearchClient` (canned mix: trusted-clean NIH ingested, off-allow-list blog rejected, allow-listed-but-tampered ProPublica rejected). `DiscoveryConfig` is **OFF by default** (`CORPUS_DISCOVERY_ENABLED`) and **rate-limited** (per-case + per-day caps, $30/mo guardrail). **Discovery only feeds the corpus; the corpus stays the sole citation source** (invariant preserved — discovered docs can't be cited until ingested through the gate).
+- **Tests:** `test_swarm_client.py` (+ triage always-on insurer / fan-out / complexity-5 precedent + per-domain empty flags + legal/policy flags), `test_swarm_pipeline.py` (new fan-out test; widened citation-traceability test to the union of domain subtrees), `test_literature_discovery.py` (NEW — sanitize clean/injection/zero-width, disabled no-op, protocol conformance, trusted-clean-only ingest, file+provenance write, full audit log, untrusted reject, per-case + per-day caps, day rollover, one-click removal, env default-off). 162 unit total.
+
+### Key decisions (Phase 2)
+- **Routing lives in `tools.py` (deterministic), not only in the prompt.** `build_routing` is the stub's default AND the Gemini client's fallback, so offline runs and a live-failure both fan out identically. Gemini Triage may still diverge case-by-case via the LLM.
+- **Per-researcher empty flags matter for credit assignment.** A precedent "no match" is legitimate (prompt says so) and must not look like an evidence gap that the Learning Coordinator would (wrongly) route to a corpus-gap fix. Distinct flags keep credit assignment honest.
+- **Discovery is standalone in Phase 2, NOT wired into the live retrieval path.** Per the plan, Phase 2 = discovery *logic* against a fake search client; Phase 4 swaps in live Vertex grounded search + `VertexSearchCorpusStore` and wires the "retrieval thin → discover" hook (creds-gated). Building it standalone keeps the pure pipeline + its tests credential-free and side-effect-free.
+- **Sanitize-before-anything.** Even allow-listed sources are sanitized; a trusted host carrying a hidden-instruction payload is still rejected (the ProPublica fake proves it).
+
+### Next Agent Should Know / Next steps (Phase 3)
+- **Phase 3 = weak-v1 target agent + per-agent firewall-safe trace signal.** Pick ONE target agent (PRD 15.5) and author a deliberately weak `<role>_v1_weak.md`; pin it in `prompts/registry.CURRENT_VERSIONS` so the strong prompt is kept as the evolved target (registry already supports `available_versions`/version pinning). Emit a per-agent, firewall-safe trace signal per run (role + `prompt_version` + laundered output summary — NO raw letter text, NO PHI) so credit assignment (FR-5) and the demo lift have a signal. The `SwarmRunArtifacts.agent_versions` map is already populated per run — extend it into the laundered trace signal. Keep using Part A's Anti-Cheating Firewall posture.
+- `aegis_swarm/agent.py` is still a 15-line stub — leave it; the ADK graph rewrite is Phase 4 over the SAME pure core (`swarm_pipeline`) to avoid drift.
+- Run tests: `cd backend && uv run pytest tests/unit/aegis_swarm -q` (or `tests/unit` for the full suite). Shell cwd note: a prior `cd backend/corpus` can persist — use absolute paths. Ruff is NOT installed in the venv (lint skipped, as in earlier sessions).
+
+### Working Tree
+- New (uncommitted, on `main`): `backend/app/aegis_swarm/literature_discovery.py`, `backend/tests/unit/aegis_swarm/test_literature_discovery.py`.
+- Modified (uncommitted): `backend/app/aegis_swarm/{tools.py,client.py}`, `backend/tests/unit/aegis_swarm/{test_swarm_client.py,test_swarm_pipeline.py}`, `docs/memory/{current-state.md,agent-handoffs.md}`. Plus all Phase 0–1 files from the prior entries.
+- No commit made (PM has not requested one).
+
+---
+
+## 2026-06-01 — Session 27 Handoff (Cursor) — Part B swarm build, Phase 3 DONE (weak-v1 trio + trace signal)
+
+### Context / plan
+- Continuing the **Part B swarm runtime** build, offline-first, plan `aegis swarm runtime` (Cursor plan id 4a2b5ba4). **Phase 3 of 6 complete, all tests green (68 swarm / 171 full unit).** Phase 6 (Learning Coordinator re-point) is a deferred follow-on.
+- **PM decision this phase:** changed the weak-v1 demo scaffold from **one** target agent to **three** (the PM asked why not all; agreed three is the sweet spot — see below). Also clarified for the record that **non-weak agents still improve** — the weak/non-weak label only sets the starting point; the credit map covers all 10 agents and the coordinator re-points whichever agent owns the current weakest dimension (one at a time).
+
+### Done (Phase 3 — weak-v1 trio + per-agent firewall-safe trace signal)
+- **3 deliberately-weak prompts** authored: `backend/app/aegis_swarm/prompts/{drafter,strategist,medical_necessity}_v1_weak.md`. Each is clearly labelled "DELIBERATELY WEAK — DEMO SCAFFOLD", states which dimension(s) it under-performs, and **keeps every SAFETY guardrail intact** (disclaimer / no-invention / no-PHI / no-"will win" / no-"human"). Weakness is quality-only.
+  - drafter_weak → loose citation discipline + no structure (`grounding` 0.30 + `persuasive_coherence` 0.10).
+  - strategist_weak → no archetype selection + thin/empty evidence checklist (`appeal_vector_capture` 0.25 + `evidence_completeness` 0.15); grounding/citation-discipline preserved.
+  - medical_necessity_weak → generic, non-case-specific clinical support (`case_specific_clinical_rebuttal` 0.20); never-invent preserved.
+  - **Why these three:** distinct, non-overlapping dimensions = **0.75 of the weighted composite** → large + attributable lift. `insurer_intelligence` kept strong (its degradation = the Phoenix-MCP-off counterfactual, not a weak prompt); `adversarial_reviewer` kept strong (never weaken a safety gate).
+- **Registry — `prompts/registry.py`:** `WEAK_V1_AGENTS = (drafter, strategist, medical_necessity)` (a **config dial**); `CURRENT_VERSIONS` pins those to `v1_weak`, everyone else `v1`. New helpers `is_weak_agent`, `target_version` (→ `v1`, the evolved target kept on disk), `weak_agents`. `available_versions` already parses `v1_weak` via the existing regex.
+- **Per-agent trace signal (FR-5) — `schemas.AgentTraceSignal` + `tools.make_agent_trace_signal`:** one signal per invoked agent, stamping `role + prompt_version + is_weak_v1 + target_version + owned_dimensions + status + finding/citation counts + risk_flags + a templated summary`. **Firewall-safe (INV-2):** summaries are structural one-liners (enums + counts) — NEVER letter text, brief quotes, agent `thinking`, PHI, or answer-key fields. `tools.AGENT_OWNED_DIMENSIONS` inverts the credit map (drafter→grounding+coherence, strategist→appeal_vector+evidence_completeness, medical_necessity→clinical_rebuttal) so each signal self-describes which dimension it owns.
+- **Pipeline — `swarm_pipeline._build_trace_signals`:** builds the signals from manifest/briefs/strategy/critiques/draft + the self-check disclaimer bit, attaches to `SwarmRunArtifacts.agent_trace_signals`. `agent_versions` now reflects the weak pins (drafter/strategist/medical_necessity → `v1_weak`).
+- **Tests:** `test_swarm_registry.py` (rewrote the all-v1 assertion → weak-pin assertions; weak-prompt safety-gate presence), new `test_swarm_trace_signal.py` (builder stamps weak/strong metadata + owned dims + sorted flags; pipeline emits one signal per invoked agent; weak agents flagged in signals; no-leak firewall check). 9 added.
+
+### Key decisions (Phase 3)
+- **Weak count = 3, as a dial.** Not 1 (too thin a story), not all 10 (diffuse, noisy, over budget, and deliberately crippling every agent is theater — production agents start reasonable and improve from *real* failures). `registry.WEAK_V1_AGENTS` makes it trivial to change later.
+- **Stub behavior is unchanged by the weak prompts.** `StubSwarmClient` is deterministic and does not read prompt *text*, so offline output does NOT degrade — which is correct: the weakness (and the honest lift) only manifests when the weak prompt actually drives Gemini live (Track B). The trace signal still reports the pinned `v1_weak` version offline, which is what credit assignment reads. We did NOT fake an offline lift (honest-lift principle, D5).
+- **Trace signal lives on `SwarmRunArtifacts` for now.** Phase 4 wires it onto Phoenix spans (live). Keeping it in the sidecar keeps the pure pipeline + tests credential-free.
+
+### Next Agent Should Know / Next steps (Phase 4)
+- **Phase 4 = live surfaces (creds-gated, budget-capped):** ADK graph in `aegis_swarm/agent.py` built over the SAME pure `swarm_pipeline` core (no logic fork); `VertexSearchCorpusStore` (GCS + Vertex AI Search) behind the existing `CorpusStore` Protocol; live Vertex grounded-search backend swapped in for `FakeDiscoverySearchClient` + the "retrieval thin → discover" hook wired (still OFF by default, rate-limited, $30/mo cap, ADR-007); emit the per-agent trace signals onto Phoenix spans. Mind the known Track-B Vertex latency issue (`GOOGLE_CLOUD_LOCATION=global` → try `us-central1`).
+- Run tests: `cd backend && uv run pytest tests/unit/aegis_swarm -q` (or `tests/unit`). Ruff is NOT installed (lint skipped). Shell cwd note: a prior `cd backend/corpus` can persist — use absolute paths.
+
+### Working Tree
+- New (uncommitted, on `main`): `backend/app/aegis_swarm/prompts/{drafter,strategist,medical_necessity}_v1_weak.md`, `backend/tests/unit/aegis_swarm/test_swarm_trace_signal.py`.
+- Modified (uncommitted): `backend/app/aegis_swarm/{prompts/registry.py,tools.py,schemas.py,swarm_pipeline.py}`, `backend/tests/unit/aegis_swarm/test_swarm_registry.py`, `docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md`, `docs/architecture/credit-assignment-map.md`, `docs/memory/{current-state.md,agent-handoffs.md}`. Plus all Phase 0–2 files from the prior entries.
+- No commit made (PM has not requested one).
+
+### ADDENDUM — Phase 3 evolution-integrity hardening (same session, supersedes the `target_version` notes above)
+PM flagged two ways the self-improvement claim could be "game-able". Fixed all three:
+1. **No experiment metadata in runtime prompts.** Stripped every "DELIBERATELY WEAK / weak on dimension X" header from the 3 `_v1_weak.md` bodies (it would prime/bias Gemini's generation). The weakness is now expressed only as genuinely under-specified *instructions*. Rationale moved to `prompts/WEAK_BASELINES.md` — does NOT match the `<role>_v*.md` glob, so it is NEVER loaded into agent context.
+2. **Strong prompts quarantined.** `git mv` the 3 strong prompts → `prompts/targets/{drafter,strategist,medical_necessity}.md`. They are NO LONGER loadable versions (`available_versions("drafter") == ['v1_weak']`), so a Phase 6 optimizer-seed step cannot read the known-good answer. New registry API `has_target_reference` / `load_target_reference` exposes them ONLY as a human eval ceiling. Removed `registry.target_version()` + `TARGET_VERSION`; dropped `AgentTraceSignal.target_version` field + builder arg (climbing "toward" a known prompt is not the metric).
+3. **Invariants codified.** Credit map now has "No known-good leakage (evolution integrity)" + "No experiment metadata in runtime prompts". Success = held-out composite lift vs the weak baseline, NEVER similarity to the target.
+- Tests: rewrote weak-pin asserts; added `test_strong_reference_is_quarantined_not_a_loadable_version` + `test_runtime_prompt_carries_no_experiment_metadata`; pointed `test_available_versions_includes_v1` at non-weak `triage`. **173 passed.**
+- Extra new/moved files: `backend/app/aegis_swarm/prompts/{WEAK_BASELINES.md, targets/{drafter,strategist,medical_necessity}.md}`.
+
+---
+
+## 2026-06-01 20:38 — Session-end Handoff (Cursor) — Part B swarm Phases 1–3 DONE + evolution-integrity hardening
+
+### Done
+- **Phase 1–3 of the Part B swarm runtime, offline-first, all green (173 unit).** Full 10-agent topology as a pure, credential-free core (`swarm_pipeline`) with `StubSwarmClient`/`GeminiSwarmClient` behind a `SwarmAgentClient` Protocol.
+- **Phase 2:** 5-researcher fan-out via deterministic `tools.build_routing`/`estimate_complexity` (`insurer_intelligence` always on, `precedent_miner` on complexity 5); per-domain research behavior + empty-retrieval risk flags; `LiteratureDiscovery` (ADR-007, offline fakes) — sanitize→trust-tier→provenance→ingest→audit + one-click `remove`, OFF by default, rate-limited.
+- **Phase 3:** three deliberately-weak baselines (`drafter`, `strategist`, `medical_necessity`) pinned via `registry.WEAK_V1_AGENTS` dial (own 0.75 of the composite, non-overlapping); per-agent firewall-safe `AgentTraceSignal` emitted per run into `SwarmRunArtifacts.agent_trace_signals` (`AGENT_OWNED_DIMENSIONS` map routes each to its dimension).
+- **Evolution-integrity hardening (PM-driven):** stripped "deliberately weak" meta from prompt bodies → `prompts/WEAK_BASELINES.md` (never loaded); quarantined strong prompts → `prompts/targets/<role>.md` (not a loadable version, never an optimizer seed); two new credit-map invariants. See ADDENDUM above for the full detail.
+
+### Debated
+- **How many weak agents → 3, as a config dial** (not 1 = thin story; not 10 = noisy/theater). Non-weak agents still improve when judges find their dimension is the bottleneck.
+- **Is the loop game-able? → fixed.** The optimizer now has neither the answer key (firewall INV-2) nor the known-good prompt (quarantine). Success = held-out lift vs the weak baseline, not similarity to a target.
+
+### Decisions
+- Routing is deterministic in `tools.py` (stub default + Gemini fallback), so offline and live-failure fan out identically. See credit-assignment-map.md + ADR-007.
+- Stub output does NOT degrade from weak prompts (it ignores prompt text) — honest-lift principle: the weakness only manifests when `v1_weak` drives Gemini live (Track B). No faked offline lift.
+
+### Deferred
+- **Phase 4** = live surfaces (creds-gated): ADK graph in `aegis_swarm/agent.py` over the SAME pure core; `VertexSearchCorpusStore` (GCS + Vertex AI Search); live Vertex grounded-search swapped for `FakeDiscoverySearchClient` + the "retrieval thin → discover" hook; emit trace signals onto Phoenix spans.
+- **Phase 5/6** = autonomous Learning Coordinator re-point + autonomy ladder + 100-case benchmark (FR-2/3/4).
+- No commit made (PM has not requested one).
+
+### Next Agent Should Know
+- `aegis_swarm/agent.py` is still a 15-line stub — leave it; the ADK graph is a Phase 4 rewrite over `swarm_pipeline` to avoid logic drift.
+- Known Track-B blocker (Session 27): Vertex grounded search at `GOOGLE_CLOUD_LOCATION=global` returns ~155 s / hangs — try `us-central1` first.
+- Run tests: `cd backend && uv run pytest tests/unit -q` (or `tests/unit/aegis_swarm`). Ruff NOT installed (lint skipped). Shell cwd gotcha: a prior `cd backend/corpus` can persist — use absolute paths.
+
+### Revisit Triggers
+- If a Phase 6 optimizer is built: enforce that it seeds ONLY from `registry.current_version` and never calls `load_target_reference` in the mutation path (it's a human eval ceiling only).
+- If the weak set changes: edit `registry.WEAK_V1_AGENTS` + drop a matching `_v1_weak.md`; keep `AGENT_OWNED_DIMENSIONS` and the credit map in sync.
+
+### Working Tree (uncommitted, on `main`)
+- New: `backend/app/aegis_swarm/{tools,client,swarm_pipeline,swarm_orchestrator,schemas,corpus_store,literature_discovery}.py`, `prompts/{registry.py, WEAK_BASELINES.md, drafter_v1_weak.md, strategist_v1_weak.md, medical_necessity_v1_weak.md}`, `backend/tests/unit/aegis_swarm/*`, `docs/adr/ADR-007-*`, `docs/architecture/credit-assignment-map.md`.
+- Renamed (git): 3 strong prompts → `prompts/targets/`; corpus docs into domain subtrees.
+- Modified: `docs/memory/{current-state,agent-handoffs,project-index}.md`, `docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md`, `docs/skill-outputs/SKILL-OUTPUTS.md`.
