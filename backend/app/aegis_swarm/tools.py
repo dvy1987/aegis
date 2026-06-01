@@ -13,10 +13,13 @@ retrieves over its own domain subtree.
 
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from app.aegis_swarm.prompts import registry
 from app.aegis_swarm.corpus_store import CorpusHit, CorpusStore, LocalCorpusStore
+
+if TYPE_CHECKING:
+    from app.aegis_swarm.literature_discovery import LiteratureDiscovery
 from app.aegis_swarm.schemas import (
     AgentTraceSignal,
     ResearchDepth,
@@ -149,6 +152,36 @@ def corpus_search(
     """Retrieve traceable corpus hits for one researcher domain via the store."""
     active = store or LocalCorpusStore()
     return active.search(domain, query, top_k=top_k)
+
+
+def corpus_search_with_discovery(
+    store: CorpusStore | None,
+    domain: ResearcherDomain,
+    query: str,
+    top_k: int,
+    case_id: str,
+    discovery: LiteratureDiscovery | None = None,
+) -> tuple[list[CorpusHit], dict[str, Any] | None]:
+    """Retrieve hits; if thin, run trust-gated discovery then re-search.
+
+    Returns ``(hits, discovery_result_dict)``. Discovery is OFF unless
+    ``LiteratureDiscovery.config.enabled`` (``CORPUS_DISCOVERY_ENABLED``).
+    """
+    hits = corpus_search(store, domain, query, top_k=top_k)
+    discovery_meta: dict[str, Any] | None = None
+    if len(hits) >= top_k:
+        return hits, discovery_meta
+
+    if discovery is None:
+        from app.aegis_swarm.swarm_config import build_literature_discovery
+
+        discovery = build_literature_discovery()
+
+    result = discovery.maybe_discover(domain, query, case_id)
+    discovery_meta = result.model_dump()
+    if result.ingested:
+        hits = corpus_search(store, domain, query, top_k=top_k)
+    return hits, discovery_meta
 
 
 def get_learned_playbook(insurer: str, denial_type: str) -> dict[str, Any]:

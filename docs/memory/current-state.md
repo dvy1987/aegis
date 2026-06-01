@@ -1,7 +1,16 @@
 # Current State — Aegis
 
 **Updated:** 2026-06-01 (Session 27)
-**Phase:** **Execution — Part B swarm build (Phases 0–3 of 6 DONE), demo-prep.** Track A (no-creds demo) is ready; Track B (live thesis) blocked on a Vertex latency issue, not on code.
+**Phase:** **Execution — Part B swarm build (Phases 0–4 of 6 DONE), demo-prep.** Track A (no-creds demo) is ready; Track B (live thesis) blocked on a Vertex latency issue, not on code.
+
+### Session 27 (Part B swarm build — Phase 4: live surfaces DONE)
+- ✅ **Phase 4 complete, all tests green (88 swarm / 192 unit).**
+- ✅ **ADK graph:** `aegis_swarm/agent.py` exposes one `run_swarm_appeal` tool over the pure `swarm_pipeline` core (no logic fork). `main_swarm` mounts `/v1/swarm/appeal` (mirrors Part A).
+- ✅ **`VertexSearchCorpusStore`:** `vertex_search.py` + `build_corpus_store()` factory — local BM25 when `VERTEX_SEARCH_DATA_STORE_ID` unset; Discovery Engine backend when set, with local fallback on API failure.
+- ✅ **Live discovery seam:** `vertex_discovery.py` + `build_discovery_search_client()` — fake by default; `VertexGroundedDiscoveryClient` when `AEGIS_VERTEX_DISCOVERY=true`. Thin-retrieval hook (`corpus_search_with_discovery`) wired in pipeline (still OFF unless `CORPUS_DISCOVERY_ENABLED`).
+- ✅ **Phoenix spans:** `trace_recorder.py` — `OtelSwarmTraceRecorder` emits one child span per `AgentTraceSignal` (firewall-safe attrs only); `AEGIS_SWARM_TRACE_MODE=memory` for offline tests.
+- ✅ **Live wiring dial:** `swarm_config.py` — `AEGIS_SWARM_MODE=live` → `GeminiSwarmClient` + `us-central1` default location.
+- ⏭️ **Next: Phase 5** — wire swarm into Learning Coordinator re-point + eval layer (FR-2 deferred scope).
 
 ### Session 27 (Part B swarm build — Phase 3: weak-v1 trio + per-agent trace signal DONE)
 - ✅ **Phase 3 complete, all tests green (68 swarm / 171 unit).**

@@ -39,6 +39,8 @@ def run_swarm_appeal_with_outcome(
     client: "SwarmAgentClient | None" = None,
     simulator_client: "SimulatorClient | None" = None,
     corpus_store: CorpusStore | None = None,
+    discovery=None,
+    trace_recorder=None,
 ) -> SwarmAppealRunResult:
     """Run the swarm Student, then the Outcome Simulator, and return both + the
     swarm artifacts. Reuses Part A's ``simulator`` so the swarm and Part A share
@@ -53,6 +55,8 @@ def run_swarm_appeal_with_outcome(
         run_mode=run_mode,
         client=client,
         corpus_store=corpus_store,
+        discovery=discovery,
+        trace_recorder=trace_recorder,
     )
     package = result["appeal_package"]
     outcome = simulator(

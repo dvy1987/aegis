@@ -5,7 +5,7 @@ Retrieval goes through a ``CorpusStore`` Protocol with two backends:
 - ``LocalCorpusStore`` - BM25 over ``backend/corpus/<subdir>/**.md``. Offline
   default, no credentials. Built here.
 - ``VertexSearchCorpusStore`` - Vertex AI Search over a GCS-hosted corpus.
-  Live, credential-gated. Added in Phase 4.
+  Live, credential-gated (``vertex_search.py``).
 
 Also defines the **trust-tier** vocabulary + allow-list classifier used by the
 ``LiteratureDiscovery`` pipeline (Phase 2): discovered literature must classify

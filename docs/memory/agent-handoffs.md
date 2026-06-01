@@ -1505,3 +1505,29 @@ PM flagged two ways the self-improvement claim could be "game-able". Fixed all t
 - New: `backend/app/aegis_swarm/{tools,client,swarm_pipeline,swarm_orchestrator,schemas,corpus_store,literature_discovery}.py`, `prompts/{registry.py, WEAK_BASELINES.md, drafter_v1_weak.md, strategist_v1_weak.md, medical_necessity_v1_weak.md}`, `backend/tests/unit/aegis_swarm/*`, `docs/adr/ADR-007-*`, `docs/architecture/credit-assignment-map.md`.
 - Renamed (git): 3 strong prompts → `prompts/targets/`; corpus docs into domain subtrees.
 - Modified: `docs/memory/{current-state,agent-handoffs,project-index}.md`, `docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md`, `docs/skill-outputs/SKILL-OUTPUTS.md`.
+
+---
+
+## 2026-06-01 — Session 27 Handoff (Cursor) — Part B swarm Phase 4 DONE (live surfaces)
+
+### Done (Phase 4)
+- **ADK + HTTP:** `agent.py` → `run_swarm_appeal` tool; `appeal_api.py` → `POST /v1/swarm/appeal`; `main_swarm.py` includes router + `PHOENIX_PROJECT_NAME=aegis-swarm`.
+- **Vertex corpus:** `vertex_search.py` (`VertexSearchCorpusStore`, `DiscoveryEngineVertexBackend`, `build_corpus_store`). Env: `VERTEX_SEARCH_DATA_STORE_ID`, `VERTEX_SEARCH_PROJECT`, `VERTEX_SEARCH_LOCATION`, `VERTEX_SEARCH_SERVING_CONFIG`.
+- **Vertex discovery:** `vertex_discovery.py` (`VertexGroundedDiscoveryClient`, `build_discovery_search_client`). Env: `AEGIS_VERTEX_DISCOVERY=true` (live), `CORPUS_DISCOVERY_ENABLED` (gate still off by default).
+- **Thin retrieval → discover:** `tools.corpus_search_with_discovery` + pipeline hook; re-searches after gated ingest.
+- **Phoenix spans:** `trace_recorder.py` (`OtelSwarmTraceRecorder`, `InMemorySwarmTraceRecorder`). Env: `AEGIS_SWARM_TRACE_MODE=memory|otel|off`.
+- **Config factory:** `swarm_config.py` — `AEGIS_SWARM_MODE=stub|live`, default location `us-central1`.
+- **Tests:** +19 (vertex search/discovery, config, trace recorder, discovery hook, agent tool, appeal API). **192 unit green.**
+
+### Next (Phase 5)
+- Wire swarm `agent_trace_signals` into Learning Coordinator re-point path; live Phoenix MCP reads for insurer counterfactual; eval layer grading (not in orchestrator).
+
+### Live env cheat sheet
+| Env | Effect |
+|---|---|
+| `AEGIS_SWARM_MODE=live` | Gemini client (not stub) |
+| `GOOGLE_CLOUD_LOCATION=us-central1` | Avoid global latency blocker |
+| `VERTEX_SEARCH_DATA_STORE_ID=...` | Vertex AI Search corpus |
+| `AEGIS_VERTEX_DISCOVERY=true` | Grounded search client (still needs `CORPUS_DISCOVERY_ENABLED`) |
+| `CORPUS_DISCOVERY_ENABLED=true` | Allow autonomous ingest |
+| `AEGIS_SWARM_TRACE_MODE=memory` | Offline tests / no OTel export |

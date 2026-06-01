@@ -51,6 +51,22 @@ def test_builder_dedupes_and_sorts_risk_flags() -> None:
 # --- pipeline emission ------------------------------------------------------
 
 
+def test_pipeline_records_trace_signals_when_recorder_provided() -> None:
+    from app.aegis_swarm.trace_recorder import InMemorySwarmTraceRecorder
+
+    rec = InMemorySwarmTraceRecorder()
+    result = run_swarm_pipeline(
+        denial_text=(
+            "Cigna denied CPT 90837 as not medically necessary for major depressive disorder."
+        ),
+        case_id="trace-rec",
+        trace_recorder=rec,
+    )
+    run_id = result["appeal_package"]["run_id"]
+    assert run_id in rec.runs
+    assert len(rec.runs[run_id]["signals"]) >= 5
+
+
 def test_pipeline_emits_one_signal_per_invoked_agent() -> None:
     artifacts = _artifacts()
     signals = artifacts.agent_trace_signals

@@ -31,12 +31,16 @@ from app.aegis_swarm.schemas import (
 from app.aegis_swarm.tools import (
     RESEARCHER_DOMAIN,
     build_research_query,
-    corpus_search,
+    corpus_search_with_discovery,
     depth_to_top_k,
     get_learned_playbook,
     make_agent_trace_signal,
     swarm_phoenix_lookup,
 )
+
+if TYPE_CHECKING:
+    from app.aegis_swarm.literature_discovery import LiteratureDiscovery
+    from app.aegis_swarm.trace_recorder import SwarmTraceRecorder
 from app.aegis_v1.guardrails import apply_guardrails
 from app.aegis_v1.schemas import (
     AppealDraft,
@@ -197,6 +201,8 @@ def run_swarm_pipeline(
     run_mode: RunMode = "interactive",
     client: "SwarmAgentClient | None" = None,
     corpus_store: CorpusStore | None = None,
+    discovery: "LiteratureDiscovery | None" = None,
+    trace_recorder: "SwarmTraceRecorder | None" = None,
 ) -> dict[str, Any]:
     """Run the swarm Student flow and return ``{"appeal_package", "artifacts"}``.
 
@@ -225,12 +231,22 @@ def run_swarm_pipeline(
     briefs: list[ResearchBrief] = []
     insurer_brief: InsurerBrief | None = None
     all_hits: list[CorpusHit] = []
+    discovery_runs: list[dict[str, Any]] = []
     query = build_research_query(parsed)
     for inv in manifest.researchers:
         if not inv.invoke:
             continue
         domain = RESEARCHER_DOMAIN[inv.name]
-        hits = corpus_search(store, domain, query, top_k=depth_to_top_k(inv.depth))
+        hits, disc = corpus_search_with_discovery(
+            store,
+            domain,
+            query,
+            top_k=depth_to_top_k(inv.depth),
+            case_id=case_id,
+            discovery=discovery,
+        )
+        if disc is not None:
+            discovery_runs.append(disc)
         all_hits.extend(hits)
         brief = active.research(inv.name, parsed, inv.depth, hits, phoenix_summary=phoenix)
         if isinstance(brief, InsurerBrief):
@@ -327,7 +343,18 @@ def run_swarm_pipeline(
         risk_flags=run_risk_flags,
     )
 
-    return {
+    active_recorder = trace_recorder
+    if active_recorder is not None:
+        active_recorder.record_agent_signals(
+            package.run_id,
+            trace_signals,
+            package.trace_metadata.model_dump(),
+        )
+
+    payload = {
         "appeal_package": package.model_dump(),
         "artifacts": artifacts.model_dump(),
     }
+    if discovery_runs:
+        payload["discovery_runs"] = discovery_runs
+    return payload
