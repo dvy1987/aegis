@@ -9,7 +9,7 @@ export function ProgressHairline({ ratio }: { ratio: number }) {
       aria-valuemax={100}
     >
       <div
-        className="h-px bg-accent-sage transition-[width] duration-[400ms] ease-[cubic-bezier(0.2,0.8,0.2,1)]"
+        className="h-px bg-accent-sage transition-[width] duration-[400ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none"
         style={{ width: `${pct}%` }}
       />
     </div>

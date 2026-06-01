@@ -13,15 +13,14 @@ export function CasePicker({
   onSelect: (id: string) => void;
 }) {
   return (
-    <div role="radiogroup" aria-label="Choose a case" className="flex flex-wrap gap-2">
+    <div aria-label="Choose a case" className="flex flex-wrap gap-2">
       {cases.map((c) => {
         const active = c.case_id === selected;
         return (
           <button
             key={c.case_id}
             type="button"
-            role="radio"
-            aria-checked={active}
+            aria-pressed={active}
             onClick={() => onSelect(c.case_id)}
             className={cn(
               "inline-flex items-center gap-2 rounded-pill border px-4 py-2 font-body text-sm",
