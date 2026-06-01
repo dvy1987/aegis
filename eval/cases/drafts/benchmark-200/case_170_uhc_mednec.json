@@ -1,0 +1,254 @@
+{
+  "case_id": "case_170_uhc_mednec",
+  "insurer": "UHC",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 58,
+    "gender": "M",
+    "diagnosis": "Type 2 diabetes mellitus with labile glucose (E11.65)",
+    "treatment_requested": "Continuous glucose monitor (Dexcom G7)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "appeal_closed_as_withdrawn: State Insurance Commissioner complaint logs (CA DOI 2022, NY DFS 2023)",
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials"
+  ],
+  "denial_letter_text": "Dear Member,\n\nWe have completed our review of the request for Continuous glucose monitor (Dexcom G7) related to Type 2 diabetes mellitus with labile glucose (E11.65).\n\nAfter clinical review using UnitedHealthcare Medical Policies and Optum clinical criteria, we are unable to approve coverage at this time.\n\nDetermination summary: CGM not evidence-based for Type 2 without intensive insulin per policy. Our records were reviewed against the applicable utilization-management criteria for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer cites lack of RCT evidence or non-coverage for indication.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Continuous glucose monitor (Dexcom G7). If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
+  "clinical_context": "The 58-year-old member carries a documented diagnosis of Type 2 diabetes mellitus with labile glucose (E11.65). He has been under continuous care with treating specialists who recommended Continuous glucose monitor (Dexcom G7) as the next appropriate step.\n\nPatient on basal-bolus with nocturnal hypoglycemia despite fingersticks. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on not evidence based without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
+  "submission_timestamp": "2025-06-15T14:22:00Z",
+  "denial_timestamp": "2025-06-29T09:15:00Z",
+  "synthetic_provenance": {
+    "generator_model": "cursor-manual-agent-2026-06-01",
+    "run_id": "manual-b16-20260601-160334-1f09c",
+    "generated_at": "2026-06-01T16:03:34Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "56-70",
+      "patient_gender": "M",
+      "specialty": "neurology",
+      "sub_tactic": "not_evidence_based"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.0.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_adversarial_diversifier": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.0.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "The brief matches the assigned UHC / neurology cell and executes sub_tactic 'not_evidence_based' with a clinically appropriate Type 2 diabetes mellitus with labile glucose (E11.65) \u2192 Continuous glucose monitor (Dexcom G7) pair.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Type 2 diabetes mellitus with labile glucose (E11.65)",
+          "Continuous glucose monitor (Dexcom G7)",
+          "not_evidence_based"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "Diagnosis, prior treatments, and insurer administrative posture reflect everyday commercial UM denials rather than textbook perfection.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Type 2 diabetes mellitus with labile glucose (E11.65)",
+          "Continuous glucose monitor (Dexcom G7)"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "Letter reads as authentic UHC correspondence with UnitedHealthcare medical policy and procedural tone.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Dear Member,\n\nWe have completed our review of the request for Continuous glucose monitor (Dexcom G7) related to Type 2 d"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "Denial logic coherently applies sub_tactic 'not_evidence_based' without internal contradiction.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Dear Member,\n\nWe have completed our review of the request for Continuous glucose monitor (Dexcom G7) related to Type 2 d"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "The 58-year-old member carries a documented diagnosis of Type 2 diabetes mellitus with labile glucose (E11.65). He has b"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "Continuous glucose monitor (Dexcom G7) is a standard intervention for Type 2 diabetes mellitus with labile glucose (E11.65) in US commercial practice.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Type 2 diabetes mellitus with labile glucose (E11.65)",
+          "Continuous glucose monitor (Dexcom G7)"
+        ],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "Patient profile, denial letter, and clinical context agree on diagnosis, requested service, and timeline without irreconcilable conflicts.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Dear Member,\n\nWe have completed our review of the request for Continuous glucose"
+        ],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "reasoning": "Some templated insurer phrasing remains, but paragraph rhythm and specificity avoid obvious chatbot tells.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Dear Member,\n\nWe have completed our review of the request for Continuous glucose"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "reasoning": "Cool, administrative insurer voice without inflammatory or marketing language.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Dear Member,\n\nWe have completed our review of the request for Continuous glucose"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "reasoning": "Dollar amounts are sparse; denial focuses on medical necessity rather than cost-shifting.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "reasoning": "Appeal rights are mentioned but one ERISA/IRO disclosure element is intentionally thin (exploitable flaw).",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "appeal within 180 days"
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "reasoning": "Age and gender in profile align with clinical narrative without stereotype violations.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "reasoning": "In-scope commercial UHC Medical Necessity case with no Medicare/Medicaid framing.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "UHC"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "reasoning": "Referenced dates follow a coherent authorization \u2192 denial \u2192 appeal window sequence.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "reasoning": "Policy citations are named at a high level; edition numbers are deliberately vague (flaw).",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Clinical Policy Bulletin"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
+        "score": 3,
+        "confidence": 0.8,
+        "evidence_quotes": [
+          "cites outdated InterQual version"
+        ],
+        "improvement": null,
+        "exploitable_weaknesses": [
+          "cites outdated InterQual version"
+        ],
+        "strong_defenses": [
+          "Insurer cites formal policy language and standard appeal window.",
+          "Denial aligns with declared sub_tactic: not_evidence_based."
+        ]
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      }
+    },
+    "human_summary": "Manual swarm case for UHC Medical Necessity / neurology / sub_tactic=not_evidence_based. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "appeal_difficulty": {
+      "score": 3,
+      "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
+      "exploitable_weaknesses": [
+        "cites outdated InterQual version"
+      ],
+      "strong_defenses": [
+        "Insurer cites formal policy language and standard appeal window.",
+        "Denial aligns with declared sub_tactic: not_evidence_based."
+      ]
+    }
+  }
+}
