@@ -1,0 +1,24 @@
+{
+  "case_id": "test_case_03_cigna_mednec",
+  "measured": true,
+  "v1": {
+    "composite": 0.66,
+    "verdict": "DENY",
+    "letter_excerpt": "We believe this treatment is medically necessary and should be covered. The patient's doctor prescribed this medication for valid medical reasons and we ask that you reconsider..."
+  },
+  "v3": {
+    "composite": 0.88,
+    "verdict": "APPROVE",
+    "letter_excerpt": "This appeal asks you to review the request as preventive medical care, not weight management. The prescribing physician documents pre-diabetes with a documented progression risk toward Type 2 Diabetes — the plan's exclusion addresses weight-loss treatment and does not speak to preventive treatment of a metabolic condition with imminent clinical risk..."
+  },
+  "lift_relative_pct": 20.5,
+  "what_changed": [
+    "Earlier drafts asserted necessity without naming the specific appeal vector.",
+    "The improved version names the strongest vector for this slice and separates the contractual ground from the clinical one."
+  ],
+  "counterfactual": {
+    "on_composite": 0.88,
+    "off_composite": 0.42
+  },
+  "phoenix_url": ""
+}

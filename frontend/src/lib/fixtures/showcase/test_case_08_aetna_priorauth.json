@@ -1,0 +1,24 @@
+{
+  "case_id": "test_case_08_aetna_priorauth",
+  "measured": false,
+  "v1": {
+    "composite": 0.68,
+    "verdict": "DENY",
+    "letter_excerpt": "The patient has a strong family history and the BRCA testing was necessary. The fact that the prior authorization process was not followed should not result in a denial of a necessary medical test..."
+  },
+  "v3": {
+    "composite": 0.84,
+    "verdict": "APPROVE",
+    "letter_excerpt": "USPSTF guidelines recommend BRCA testing for patients with this family history without additional preconditions. The prior authorization was not obtained because the ordering physician was unaware of the separate genetic counseling requirement — a gap in the administrative process, not a clinical one. We request retroactive authorization on the clinical merits and offer to complete the genetic counseling requirement..."
+  },
+  "lift_relative_pct": 20.5,
+  "what_changed": [
+    "Earlier drafts asserted necessity without grounding the argument in the USPSTF recommendation that directly supports coverage.",
+    "The improved version cites USPSTF as an independent standard, frames the denial as procedural rather than clinical, and names retroactive authorization as the specific remedy — which is more actionable for the reviewer."
+  ],
+  "counterfactual": {
+    "on_composite": 0.84,
+    "off_composite": 0.42
+  },
+  "phoenix_url": ""
+}

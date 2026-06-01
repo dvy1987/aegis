@@ -1,0 +1,51 @@
+{
+  "slice": "all_holdout(uhc/aetna/cigna x mednec/priorauth)",
+  "dataset_split": "holdout (test_case_*) \u2014 reflection never saw these (V2-INV-3)",
+  "target_dimension": "appeal_vector_capture",
+  "baseline_composite": 0.73,
+  "optimized_composite": 0.88,
+  "lift_absolute": 0.15,
+  "lift_relative_pct": 20.5,
+  "per_dimension_means_v1": {
+    "grounding": 3.0,
+    "appeal_vector_capture": 3.0,
+    "case_specific_clinical_rebuttal": 4.0,
+    "evidence_completeness": 5.0,
+    "persuasive_coherence": 4.5
+  },
+  "per_dimension_means_v2": {
+    "grounding": 3.0,
+    "appeal_vector_capture": 5.0,
+    "case_specific_clinical_rebuttal": 5.0,
+    "evidence_completeness": 5.0,
+    "persuasive_coherence": 5.0
+  },
+  "per_dimension_deltas": {
+    "grounding": 0.0,
+    "appeal_vector_capture": 2.0,
+    "case_specific_clinical_rebuttal": 1.0,
+    "evidence_completeness": 0.0,
+    "persuasive_coherence": 0.5
+  },
+  "per_case": {
+    "test_case_01_uhc_mednec": {
+      "v1": 0.78,
+      "v2": 0.88
+    },
+    "test_case_02_aetna_priorauth": {
+      "v1": 0.7,
+      "v2": 0.88
+    },
+    "test_case_03_cigna_mednec": {
+      "v1": 0.66,
+      "v2": 0.88
+    },
+    "test_case_04_uhc_priorauth": {
+      "v1": 0.78,
+      "v2": 0.88
+    }
+  },
+  "diff_added_tokens": 131,
+  "vetoes": [],
+  "promotable": true
+}

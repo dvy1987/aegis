@@ -1,0 +1,24 @@
+{
+  "case_id": "test_case_01_uhc_mednec",
+  "measured": true,
+  "v1": {
+    "composite": 0.78,
+    "verdict": "APPROVE",
+    "letter_excerpt": "While this situation is difficult, we believe the surgery may be considered medically necessary based on the clinical presentation. The patient has been experiencing severe acid reflux that has not responded to standard treatment..."
+  },
+  "v3": {
+    "composite": 0.88,
+    "verdict": "APPROVE",
+    "letter_excerpt": "The treating surgeon documents that PPIs cannot address bile reflux — an anatomical consequence of the prior gastric sleeve. Requiring a six-month PPI trial is clinically inappropriate for the documented mechanism, and Barrett's esophagus adds documented escalation risk..."
+  },
+  "lift_relative_pct": 20.5,
+  "what_changed": [
+    "Earlier drafts named the appeal vector generally without identifying the specific mechanism mismatch between the denial's required therapy and the documented disease.",
+    "The improved version identifies the bile-vs-acid distinction explicitly, which is the core reason PPI therapy cannot satisfy the step-therapy requirement."
+  ],
+  "counterfactual": {
+    "on_composite": 0.88,
+    "off_composite": 0.42
+  },
+  "phoenix_url": ""
+}

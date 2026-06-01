@@ -1,0 +1,24 @@
+{
+  "case_id": "test_case_05_aetna_mednec",
+  "measured": false,
+  "v1": {
+    "composite": 0.70,
+    "verdict": "DENY",
+    "letter_excerpt": "The patient has a history of a stutter but it returned after the accident. We ask that you reconsider the denial and cover the speech therapy as necessary treatment..."
+  },
+  "v3": {
+    "composite": 0.86,
+    "verdict": "APPROVE",
+    "letter_excerpt": "The patient overcame the childhood stutter completely and had normal speech for years before the accident. The current dysfluency arose in direct temporal relation to the motor vehicle injury — making this a trauma-induced relapse requiring restorative therapy under Aetna's own policy language..."
+  },
+  "lift_relative_pct": 20.5,
+  "what_changed": [
+    "Earlier drafts acknowledged the childhood history without clearly establishing the intervening period of normal speech that separates developmental from acquired dysfluency.",
+    "The improved version makes the pre-accident baseline explicit, which is the key distinction between developmental (excluded) and restorative (covered) therapy."
+  ],
+  "counterfactual": {
+    "on_composite": 0.86,
+    "off_composite": 0.42
+  },
+  "phoenix_url": ""
+}
