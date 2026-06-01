@@ -1,4 +1,5 @@
-// Mirrors backend/app/aegis_v1/schemas.py — keep field names in sync.
+// Core shapes mirror backend/app/aegis_v1/schemas.py; AppealRequest/AppealResponse
+// mirror backend/app/aegis_v1/appeal_api.py (the wire contract). Keep field names in sync.
 export type Verdict = "APPROVE" | "DENY";
 export type Anchor = 1 | 3 | 5;
 
