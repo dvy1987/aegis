@@ -1,26 +1,13 @@
+import Link from "next/link";
 import { Button } from "@/components/Button";
 import { Wordmark } from "@/components/Wordmark";
+import { Nav } from "@/components/Nav";
 import { ArrowRightIcon } from "@/icons";
 
 export default function Home() {
   return (
     <div className="min-h-dvh flex flex-col bg-surface-primary text-text-primary">
-      <header className="w-full">
-        <div className="mx-auto max-w-(--container-wide) px-6 md:px-12 pt-8 md:pt-12 flex items-center justify-between">
-          <Wordmark />
-          <nav aria-label="Primary" className="hidden md:flex items-center gap-8 text-sm text-text-secondary">
-            <a href="#what-this-is" className="hover:text-text-primary transition-colors">
-              What this is
-            </a>
-            <a href="#how-it-works" className="hover:text-text-primary transition-colors">
-              How it works
-            </a>
-            <a href="#disclosure" className="hover:text-text-primary transition-colors">
-              Disclosure
-            </a>
-          </nav>
-        </div>
-      </header>
+      <Nav />
 
       <main className="flex-1">
         {/* Hero — type-only, asymmetric, generous */}
@@ -39,11 +26,15 @@ export default function Home() {
                 wrote it — grounded in your story and the rules that protect you.
               </p>
               <div className="mt-12 flex flex-col sm:flex-row gap-3">
-                <Button>
-                  Start a draft
-                  <ArrowRightIcon size={16} />
-                </Button>
-                <Button variant="secondary">How this works</Button>
+                <Link href="/appeal">
+                  <Button>
+                    Start a draft
+                    <ArrowRightIcon size={16} />
+                  </Button>
+                </Link>
+                <a href="#how-it-works">
+                  <Button variant="secondary">How this works</Button>
+                </a>
               </div>
               <p className="mt-8 font-body text-sm text-text-tertiary">
                 Filing an appeal takes about thirty minutes. Most people we&apos;ve helped finish in one sitting.
@@ -156,7 +147,13 @@ export default function Home() {
             </p>
           </div>
           <div className="col-span-12 md:col-span-6 md:text-right">
-            <p className="font-body text-sm text-text-tertiary">
+            <Link
+              href="/showcase"
+              className="font-body text-sm text-text-secondary hover:text-text-primary transition-colors"
+            >
+              How this gets better over time
+            </Link>
+            <p className="mt-3 font-body text-sm text-text-tertiary">
               Built for the Google Cloud Rapid Agent Hackathon · Apache 2.0
             </p>
           </div>
