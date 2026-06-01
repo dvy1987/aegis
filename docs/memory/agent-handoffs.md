@@ -1577,22 +1577,24 @@ PM flagged two ways the self-improvement claim could be "game-able". Fixed all t
 
 ---
 
-## 2026-06-01 — Manual benchmark-200 casegen (batches 1–20 DONE)
+## 2026-06-01 — Manual benchmark-200 A+ rebuild (schema v1.1.0) — DONE overnight
 
 ### Done
-- **200 new synthetic cases** (`case_11` … `case_210`) in `eval/cases/drafts/benchmark-200/`.
-- **Manual swarm pipeline** (no Vertex Gemini): `manual_producer.py` executes P1 ScenarioPlanner → P2 DenialDrafter → P3 ClinicalWriter → P4 RealisticFlawInjector → P5 StylisticDiversifier, plus critics: matrix_coverage, scenario_realism, insurer_voice, denial_logic, clinical_realism, diagnosis_treatment_match, contradiction_hunter, llm_tell_detector, overall_tone, financial_auditor, legal_auditor, demographic_validator, scope_guard, date_sanity, citation_traceability, appeal_difficulty, safety_redactor, phi_pii.
-- **All 20 batches × 10 cases** schema-validated (`validate_manual_batch.py`).
+- **Aligned `eval/case_schema.json` → v1.1.0** with P1–P5 prompts: required `denial_pattern_sources`, `appeal_difficulty`, `critic_verdicts`; letter/context length floors aligned to word-count intent; not treated as quality bar alone.
+- **New A+ pipeline** `backend/app/case_generator/aplus/` — specialty-aligned scenario bank (12+ variants × 10 specialties), insurer-voice P2 letters, P3 rebuttal-specific context, P4 pattern-ID flaw injection from `denial_patterns.json`, P5 stylistic pass, honest critics.
+- **Rebuilt all 200 cases** (`case_11`–`case_210`) in `eval/cases/drafts/benchmark-200/` — `upgrade_benchmark_aplus.py`, **0 failures** (schema + safety + PHI + P2/P3 word bands).
+- **Legacy `case_01`–`case_10`**: minimal schema uplift only (`plan_funding_type`, `denial_pattern_sources`, `appeal_difficulty` stub) — **not** full A+ rewrite.
 
-### How to regenerate
+### Not done (explicit)
+- **Gumloop pass** — intentionally deferred; do not read `gumloop/` before running the independent swarm cold.
+- **Promote to `approved/`** — still requires Gumloop APPROVE per dataset_card.
+
+### Regenerate
 ```bash
-cd backend && uv run python scripts/run_manual_case_batch.py --batch N
-uv run python scripts/validate_manual_batch.py --batch N
+cd backend && uv run python scripts/upgrade_benchmark_aplus.py
 ```
 
-### Next
-- Run Gumloop second-opinion evaluator on drafts before `approved/`.
-- PM: split train/holdout from benchmark-200 when benchmark design is fixed.
-
-### Commits
-- 1 infra commit + 20 batch commits (cases 11–20, 21–30, … 201–210).
+### Next agent
+1. Run Gumloop swarm on `benchmark-200` (fresh read of `gumloop/` only at that step).
+2. Apply REVISE/DISCARD feedback; re-run upgrade only for affected case IDs if needed.
+3. PM: train/holdout split design for benchmark-200.

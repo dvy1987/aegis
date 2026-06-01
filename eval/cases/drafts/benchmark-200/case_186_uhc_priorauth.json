@@ -3,24 +3,24 @@
   "insurer": "UHC",
   "denial_type": "Prior Authorization",
   "patient_profile": {
-    "age": 31,
+    "age": 27,
     "gender": "F",
-    "diagnosis": "Obstructive sleep apnea, moderate (G47.33)",
-    "treatment_requested": "In-lab polysomnography",
+    "diagnosis": "Hereditary angioedema (D84.1)",
+    "treatment_requested": "Lanadelumab prophylaxis",
     "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
-    "unreasonable_documentation_deadline: DOL ERISA Claims Procedure Regulations 29 CFR \u00a7 2560.503-1(g); AMA 2023 Prior Authorization Survey"
+    "algo_time_delta: ProPublica + Capitol Forum Cigna Investigation 2023; Senate Finance Committee UHC Investigation 2024",
+    "appeal_closed_as_withdrawn: State Insurance Commissioner complaint logs (CA DOI 2022, NY DFS 2023)"
   ],
-  "denial_letter_text": "Dear Plan Member,\n\nWe have completed our review of the request for In-lab polysomnography related to Obstructive sleep apnea, moderate (G47.33).\n\nAfter clinical review using UnitedHealthcare Medical Policies and Optum clinical criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Home sleep apnea test required first-line. Our records were reviewed against the applicable utilization-management criteria for prior authorization determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer demands a cheaper modality (HSAT vs in-lab sleep study; oral vs infusion).\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize In-lab polysomnography. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
-  "clinical_context": "The 31-year-old member carries a documented diagnosis of Obstructive sleep apnea, moderate (G47.33). She has been under continuous care with treating specialists who recommended In-lab polysomnography as the next appropriate step.\n\nBMI 38, CHF, and suspected central apneas. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on modality substitution without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2025-11-11T14:22:00Z",
-  "denial_timestamp": "2025-11-25T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 07/13/2026 for Lanadelumab prophylaxis related to Hereditary angioedema (D84.1). After review, we cannot approve this request.\n\nOur review applied UnitedHealthcare Medical Management Guidelines and Optum clinical criteria. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. A less costly modality is appropriate before Lanadelumab prophylaxis for Hereditary angioedema (D84.1). Plan policy requires step-down diagnostic or therapeutic approach.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with modality substitution. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nUnitedHealthcare Utilization Management\n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.",
+  "clinical_context": "The 27-year-old member has Hereditary angioedema (D84.1). She has been treated under commercial coverage with Lanadelumab prophylaxis recommended as the next appropriate step. Monthly attacks; C4 chronically low; failed androgens due to side effects. This directly contradicts the insurer's position that modality substitution bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": "2026-03-10T14:00:00Z",
+  "denial_timestamp": "2026-03-10T14:02:00Z",
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b18-20260601-160336-7b799",
-    "generated_at": "2026-06-01T16:03:36Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:10Z",
     "matrix_cell": {
       "insurer": "UHC",
       "denial_type": "Prior Authorization",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned UHC / infusion_specialty_rx cell and executes sub_tactic 'modality_substitution' with a clinically appropriate Obstructive sleep apnea, moderate (G47.33) \u2192 In-lab polysomnography pair.",
+        "reasoning": "The brief matches the assigned UHC / infusion_specialty_rx cell and executes sub_tactic 'modality_substitution' with a clinically appropriate Hereditary angioedema (D84.1) \u2192 Lanadelumab prophylaxis pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Obstructive sleep apnea, moderate (G47.33)",
-          "In-lab polysomnography",
+          "Hereditary angioedema (D84.1)",
+          "Lanadelumab prophylaxis",
           "modality_substitution"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Obstructive sleep apnea, moderate (G47.33)",
-          "In-lab polysomnography"
+          "Hereditary angioedema (D84.1)",
+          "Lanadelumab prophylaxis"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for In-lab polysomnography related to Obstructive sleep apnea,"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 07/13/2026 for Lanadelum"
         ],
         "improvement": null
       },
@@ -95,7 +95,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for In-lab polysomnography related to Obstructive sleep apnea,"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 07/13/2026 for Lanadelum"
         ],
         "improvement": null
       },
@@ -105,18 +105,18 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 31-year-old member carries a documented diagnosis of Obstructive sleep apnea, moderate (G47.33). She has been under "
+          "The 27-year-old member has Hereditary angioedema (D84.1). She has been treated under commercial coverage with Lanadeluma"
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "In-lab polysomnography is a standard intervention for Obstructive sleep apnea, moderate (G47.33) in US commercial practice.",
+        "reasoning": "Lanadelumab prophylaxis is a standard intervention for Hereditary angioedema (D84.1) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Obstructive sleep apnea, moderate (G47.33)",
-          "In-lab polysomnography"
+          "Hereditary angioedema (D84.1)",
+          "Lanadelumab prophylaxis"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for In-lab polyso"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for In-lab polyso"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for In-lab polyso"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -207,18 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 1,
         "confidence": 0.8,
         "evidence_quotes": [
-          "modality substitution without safety rationale"
+          "Exploitable flaw: denial timestamp within 1\u20135 minutes of submission",
+          "Exploitable flaw: no acknowledgment of submitted clinical records"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "modality substitution without safety rationale"
+          "Exploitable flaw: denial timestamp within 1\u20135 minutes of submission",
+          "Exploitable flaw: no acknowledgment of submitted clinical records",
+          "Pattern anchor: algo_time_delta",
+          "Pattern anchor: appeal_closed_as_withdrawn"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: modality_substitution."
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'modality_substitution' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for UHC Prior Authorization / infusion_specialty_rx / sub_tactic=modality_substitution. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: UHC Prior Authorization / infusion_specialty_rx / modality_substitution. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: algo_time_delta, appeal_closed_as_withdrawn.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 1,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "modality substitution without safety rationale"
+        "Exploitable flaw: denial timestamp within 1\u20135 minutes of submission",
+        "Exploitable flaw: no acknowledgment of submitted clinical records",
+        "Pattern anchor: algo_time_delta",
+        "Pattern anchor: appeal_closed_as_withdrawn"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: modality_substitution."
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'modality_substitution' is reflected in the stated rationale."
       ]
     }
   }

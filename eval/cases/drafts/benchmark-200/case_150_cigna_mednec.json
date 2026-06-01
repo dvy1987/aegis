@@ -3,24 +3,24 @@
   "insurer": "Cigna",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 52,
+    "age": 42,
     "gender": "nonbinary",
-    "diagnosis": "Lumbar radiculopathy with neurogenic claudication (M54.16)",
-    "treatment_requested": "L4-L5 microdiscectomy",
-    "plan_funding_type": "self_funded"
+    "diagnosis": "Carpal tunnel syndrome, severe (G56.00)",
+    "treatment_requested": "Carpal tunnel release",
+    "plan_funding_type": "fully_insured"
   },
   "denial_pattern_sources": [
-    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
-    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
+    "missing_cost_liability: No Surprises Act Compliance Audit 2024",
+    "algo_time_delta: ProPublica + Capitol Forum Cigna Investigation 2023; Senate Finance Committee UHC Investigation 2024"
   ],
-  "denial_letter_text": "Dear Plan Member,\n\nWe have completed our review of the request for L4-L5 microdiscectomy related to Lumbar radiculopathy with neurogenic claudication (M54.16).\n\nAfter clinical review using Cigna Medical Coverage Policies and MCG Care Guidelines, we are unable to approve coverage at this time.\n\nDetermination summary: Insurer requires 6 months of structured physical therapy first. Our records were reviewed against the applicable utilization-management criteria for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer demands documented conservative treatment (e.g., 6 mo PT, 6 mo diet) first.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize L4-L5 microdiscectomy. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nCigna Health Care Management\n\nPlease note that standard criteria apply regardless of prior submissions.",
-  "clinical_context": "The 52-year-old member carries a documented diagnosis of Lumbar radiculopathy with neurogenic claudication (M54.16). They has been under continuous care with treating specialists who recommended L4-L5 microdiscectomy as the next appropriate step.\n\nCompleted 18 PT sessions over 14 weeks with persistent leg pain. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on conservative treatment required without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2025-08-15T14:22:00Z",
-  "denial_timestamp": "2025-08-29T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 01/21/2026 for Carpal tunnel release related to Carpal tunnel syndrome, severe (G56.00). After review, we cannot approve this request.\n\nOur review applied Cigna Medical Coverage Policies and Milliman Care Guidelines (MCG). The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Coverage requires a defined course of conservative therapy before Carpal tunnel release. Documentation does not show the required duration or type of conservative care.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with conservative treatment required. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nCigna Health Care Management",
+  "clinical_context": "The 42-year-old member has Carpal tunnel syndrome, severe (G56.00). They has been treated under commercial coverage with Carpal tunnel release recommended as the next appropriate step. EMG severe median neuropathy; thenar atrophy noted. This directly contradicts the insurer's position that conservative treatment required bars coverage: the chart documents dates, doses, and objective findings (including dated scale scores in the chart) that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if their care is delayed further.",
+  "submission_timestamp": "2026-03-10T14:00:00Z",
+  "denial_timestamp": "2026-03-10T14:02:00Z",
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b14-20260601-160333-95506",
-    "generated_at": "2026-06-01T16:03:33Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "Cigna",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Cigna / msk cell and executes sub_tactic 'conservative_treatment_required' with a clinically appropriate Lumbar radiculopathy with neurogenic claudication (M54.16) \u2192 L4-L5 microdiscectomy pair.",
+        "reasoning": "The brief matches the assigned Cigna / msk cell and executes sub_tactic 'conservative_treatment_required' with a clinically appropriate Carpal tunnel syndrome, severe (G56.00) \u2192 Carpal tunnel release pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Lumbar radiculopathy with neurogenic claudication (M54.16)",
-          "L4-L5 microdiscectomy",
+          "Carpal tunnel syndrome, severe (G56.00)",
+          "Carpal tunnel release",
           "conservative_treatment_required"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Lumbar radiculopathy with neurogenic claudication (M54.16)",
-          "L4-L5 microdiscectomy"
+          "Carpal tunnel syndrome, severe (G56.00)",
+          "Carpal tunnel release"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for L4-L5 microdiscectomy related to Lumbar radiculopathy with"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 01/21/2026 for Carpal tu"
         ],
         "improvement": null
       },
@@ -95,7 +95,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for L4-L5 microdiscectomy related to Lumbar radiculopathy with"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 01/21/2026 for Carpal tu"
         ],
         "improvement": null
       },
@@ -105,18 +105,18 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 52-year-old member carries a documented diagnosis of Lumbar radiculopathy with neurogenic claudication (M54.16). The"
+          "The 42-year-old member has Carpal tunnel syndrome, severe (G56.00). They has been treated under commercial coverage with"
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "L4-L5 microdiscectomy is a standard intervention for Lumbar radiculopathy with neurogenic claudication (M54.16) in US commercial practice.",
+        "reasoning": "Carpal tunnel release is a standard intervention for Carpal tunnel syndrome, severe (G56.00) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Lumbar radiculopathy with neurogenic claudication (M54.16)",
-          "L4-L5 microdiscectomy"
+          "Carpal tunnel syndrome, severe (G56.00)",
+          "Carpal tunnel release"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for L4-L5 microdi"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for L4-L5 microdi"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for L4-L5 microdi"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -207,18 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 1,
         "confidence": 0.8,
         "evidence_quotes": [
-          "boilerplate ignores prior auth context"
+          "Exploitable flaw: missing financial liability details",
+          "Exploitable flaw: vague cost warnings"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "boilerplate ignores prior auth context"
+          "Exploitable flaw: missing financial liability details",
+          "Exploitable flaw: vague cost warnings",
+          "Pattern anchor: missing_cost_liability",
+          "Pattern anchor: algo_time_delta"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: conservative_treatment_required."
+          "Denial cites Cigna policy framework and 180-day appeal window.",
+          "Sub-tactic 'conservative_treatment_required' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Cigna Medical Necessity / msk / sub_tactic=conservative_treatment_required. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Cigna Medical Necessity / msk / conservative_treatment_required. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: missing_cost_liability, algo_time_delta.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 1,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "boilerplate ignores prior auth context"
+        "Exploitable flaw: missing financial liability details",
+        "Exploitable flaw: vague cost warnings",
+        "Pattern anchor: missing_cost_liability",
+        "Pattern anchor: algo_time_delta"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: conservative_treatment_required."
+        "Denial cites Cigna policy framework and 180-day appeal window.",
+        "Sub-tactic 'conservative_treatment_required' is reflected in the stated rationale."
       ]
     }
   }

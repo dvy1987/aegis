@@ -3,24 +3,24 @@
   "insurer": "UHC",
   "denial_type": "Prior Authorization",
   "patient_profile": {
-    "age": 55,
+    "age": 49,
     "gender": "M",
-    "diagnosis": "Cervical strain after fall; rule out cord injury (S13.4XXA)",
-    "treatment_requested": "MRI cervical spine without contrast (emergency department)",
-    "plan_funding_type": "fully_insured"
+    "diagnosis": "Pulmonary embolism, suspected low-intermediate risk (I26.99)",
+    "treatment_requested": "CT pulmonary angiography",
+    "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "algo_time_delta: ProPublica + Capitol Forum Cigna Investigation 2023; Senate Finance Committee UHC Investigation 2024",
-    "step_therapy_vague_mcg: KFF 2023 Survey of Consumer Experiences with Health Insurance"
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "non_specialist_reviewer: MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Cal. Health & Safety Code \u00a7 1374.72"
   ],
-  "denial_letter_text": "Dear Member,\n\nThis letter confirms the outcome of our review of the request for MRI cervical spine without contrast (emergency department) related to Cervical strain after fall; rule out cord injury (S13.4XXA).\n\nAfter clinical review using UnitedHealthcare Medical Policies and Optum clinical criteria, we are unable to approve coverage at this time.\n\nDetermination summary: No prior authorization; non-emergent imaging. Our records were reviewed against the applicable utilization-management criteria for prior authorization determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. ER service denied because no prior auth (despite emergency exemption).\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize MRI cervical spine without contrast (emergency department). If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
-  "clinical_context": "The 55-year-old member carries a documented diagnosis of Cervical strain after fall; rule out cord injury (S13.4XXA). He has been under continuous care with treating specialists who recommended MRI cervical spine without contrast (emergency department) as the next appropriate step.\n\nED presentation with neuro deficit; prudent layperson standard. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on emergency retroactive auth without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2026-06-06T14:22:00Z",
-  "denial_timestamp": "2026-06-20T09:15:00Z",
+  "denial_letter_text": "Dear Plan Member,\n\nWe received your provider's request on 02/08/2026 for CT pulmonary angiography related to Pulmonary embolism, suspected low-intermediate risk (I26.99). After review, we cannot approve this request.\n\nOur review applied UnitedHealthcare Medical Management Guidelines and Optum clinical criteria. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Emergency imaging/treatment for Pulmonary embolism, suspected low-intermediate risk (I26.99) is denied for lack of prior authorization. Retroactive authorization is not granted for non-emergent services.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with emergency retroactive auth. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nUnitedHealthcare Utilization Management\n\nThis determination was made by Dr. J. Smith, Medical Director.",
+  "clinical_context": "The 49-year-old member has Pulmonary embolism, suspected low-intermediate risk (I26.99). He has been treated under commercial coverage with CT pulmonary angiography recommended as the next appropriate step. Wells score 4.5; hypoxia 91% on room air; D-dimer elevated. This directly contradicts the insurer's position that emergency retroactive auth bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b18-20260601-160336-7b799",
-    "generated_at": "2026-06-01T16:03:36Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:10Z",
     "matrix_cell": {
       "insurer": "UHC",
       "denial_type": "Prior Authorization",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned UHC / imaging cell and executes sub_tactic 'emergency_retroactive_auth' with a clinically appropriate Cervical strain after fall; rule out cord injury (S13.4XXA) \u2192 MRI cervical spine without contrast (emergency department) pair.",
+        "reasoning": "The brief matches the assigned UHC / imaging cell and executes sub_tactic 'emergency_retroactive_auth' with a clinically appropriate Pulmonary embolism, suspected low-intermediate risk (I26.99) \u2192 CT pulmonary angiography pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Cervical strain after fall; rule out cord injury (S13.4XXA)",
-          "MRI cervical spine without contrast (emergency department)",
+          "Pulmonary embolism, suspected low-intermediate risk (I26.99)",
+          "CT pulmonary angiography",
           "emergency_retroactive_auth"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Cervical strain after fall; rule out cord injury (S13.4XXA)",
-          "MRI cervical spine without contrast (emergency department)"
+          "Pulmonary embolism, suspected low-intermediate risk (I26.99)",
+          "CT pulmonary angiography"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for MRI cervical spine without contrast (emergency department)"
+          "Dear Plan Member,\n\nWe received your provider's request on 02/08/2026 for CT pulmonary angiography related to Pulmonary e"
         ],
         "improvement": null
       },
@@ -95,28 +95,28 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for MRI cervical spine without contrast (emergency department)"
+          "Dear Plan Member,\n\nWe received your provider's request on 02/08/2026 for CT pulmonary angiography related to Pulmonary e"
         ],
         "improvement": null
       },
       "clinical_realism": {
         "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
-        "score": 3,
+        "reasoning": "Clinical context cites measurable treatments, durations, or scores appropriate to the specialty.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 55-year-old member carries a documented diagnosis of Cervical strain after fall; rule out cord injury (S13.4XXA). He"
+          "Wells score 4.5; hypoxia 91% on room air; D-dimer elevated."
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "MRI cervical spine without contrast (emergency department) is a standard intervention for Cervical strain after fall; rule out cord injury (S13.4XXA) in US commercial practice.",
+        "reasoning": "CT pulmonary angiography is a standard intervention for Pulmonary embolism, suspected low-intermediate risk (I26.99) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Cervical strain after fall; rule out cord injury (S13.4XXA)",
-          "MRI cervical spine without contrast (emergency department)"
+          "Pulmonary embolism, suspected low-intermediate risk (I26.99)",
+          "CT pulmonary angiography"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Plan Member,\n\nWe received your provider's request on 02/08/2026 for CT pulm"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Plan Member,\n\nWe received your provider's request on 02/08/2026 for CT pulm"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Plan Member,\n\nWe received your provider's request on 02/08/2026 for CT pulm"
         ],
         "improvement": null
       },
@@ -210,15 +210,19 @@
         "score": 3,
         "confidence": 0.8,
         "evidence_quotes": [
-          "denial dated after regulatory window"
+          "Exploitable flaw: denial rationale is generic with no patient-specific language",
+          "Exploitable flaw: no reference to submitted records, physician name, or clinical history"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "denial dated after regulatory window"
+          "Exploitable flaw: denial rationale is generic with no patient-specific language",
+          "Exploitable flaw: no reference to submitted records, physician name, or clinical history",
+          "Pattern anchor: algo_boilerplate_fingerprint",
+          "Pattern anchor: non_specialist_reviewer"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: emergency_retroactive_auth."
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'emergency_retroactive_auth' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for UHC Prior Authorization / imaging / sub_tactic=emergency_retroactive_auth. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: UHC Prior Authorization / imaging / emergency_retroactive_auth. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: algo_boilerplate_fingerprint, non_specialist_reviewer.",
     "appeal_difficulty": {
       "score": 3,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "denial dated after regulatory window"
+        "Exploitable flaw: denial rationale is generic with no patient-specific language",
+        "Exploitable flaw: no reference to submitted records, physician name, or clinical history",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: non_specialist_reviewer"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: emergency_retroactive_auth."
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'emergency_retroactive_auth' is reflected in the stated rationale."
       ]
     }
   }

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://aegis.local/schemas/case.schema.json",
-  "x-aegis-schema-version": "1.0.0",
+  "x-aegis-schema-version": "1.1.0",
   "title": "Aegis Synthetic Denial Case",
   "type": "object",
   "additionalProperties": false,
@@ -10,6 +10,7 @@
     "insurer",
     "denial_type",
     "patient_profile",
+    "denial_pattern_sources",
     "denial_letter_text",
     "clinical_context",
     "synthetic_provenance"
@@ -39,21 +40,21 @@
     },
     "denial_pattern_sources": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": { "type": "string", "minLength": 8 },
       "minItems": 1,
-      "description": "Real-world denial patterns this synthetic letter draws from. Each entry cites a specific source (KFF report, ERISA case, insurer template pattern, patient advocacy documentation)."
+      "description": "P4 output: each entry SHOULD start with a denial_patterns.json pattern id (e.g. 'missing_iro_notice: <source citation>')."
     },
     "denial_letter_text": {
       "type": "string",
-      "minLength": 400,
-      "maxLength": 3500,
-      "description": "Insurer-voice denial letter prose. Must include appeal-window language."
+      "minLength": 1000,
+      "maxLength": 3200,
+      "description": "P2: insurer-voice denial letter, roughly 200-500 words (not character-count gaming)."
     },
     "clinical_context": {
       "type": "string",
-      "minLength": 150,
-      "maxLength": 1800,
-      "description": "Plain-prose patient/provider narrative explaining why the denial is rebuttable."
+      "minLength": 400,
+      "maxLength": 1600,
+      "description": "P3: rebuttal-specific clinical narrative, roughly 80-250 words, must contradict the denial."
     },
     "submission_timestamp": {
       "type": ["string", "null"],
@@ -74,7 +75,10 @@
         "prompt_versions",
         "banned_topic_filter_version",
         "schema_version",
-        "human_summary"
+        "diversity_matrix_version",
+        "human_summary",
+        "appeal_difficulty",
+        "critic_verdicts"
       ],
       "properties": {
         "generator_model": {"type": "string"},
@@ -119,19 +123,19 @@
           "required": ["score", "reasoning", "exploitable_weaknesses", "strong_defenses"],
           "properties": {
             "score": { "type": "integer", "minimum": 1, "maximum": 5 },
-            "reasoning": { "type": "string" },
+            "reasoning": { "type": "string", "minLength": 40 },
             "exploitable_weaknesses": {
               "type": "array",
-              "items": { "type": "string" },
-              "description": "Specific flaws in the denial that an appeal can exploit."
+              "items": { "type": "string", "minLength": 12 },
+              "minItems": 1
             },
             "strong_defenses": {
               "type": "array",
-              "items": { "type": "string" },
-              "description": "Aspects of the denial that are well-grounded and hard to challenge."
+              "items": { "type": "string", "minLength": 12 },
+              "minItems": 1
             }
           },
-          "description": "How likely an appeal is to succeed. 1=nearly impossible, 5=strong appeal case. INTERNAL ONLY — never passed to the appeal agent or shown in Phoenix traces."
+          "description": "Teacher-only. Never passed to the appeal agent or Phoenix student traces."
         },
         "evaluator_disagreements": {
           "type": "array",

@@ -3,24 +3,24 @@
   "insurer": "UHC",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 20,
+    "age": 19,
     "gender": "F",
-    "diagnosis": "Rheumatoid arthritis, seropositive (M06.9)",
-    "treatment_requested": "Upadacitinib (Rinvoq) after methotrexate",
+    "diagnosis": "Melanoma stage IIIB (C43.9)",
+    "treatment_requested": "Adjuvant pembrolizumab",
     "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
-    "ignored_physician_letter: AMA 2023 Prior Authorization Physician Survey"
+    "wrong_benefit_category: CMS Essential Health Benefits Bulletin 2022; documented in Aetna member complaints",
+    "step_therapy_vague_mcg: KFF 2023 Survey of Consumer Experiences with Health Insurance"
   ],
-  "denial_letter_text": "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinvoq) after methotrexate related to Rheumatoid arthritis, seropositive (M06.9).\n\nAfter clinical review using UnitedHealthcare Medical Policies and Optum clinical criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Requires trial of two DMARDs including methotrexate. Our records were reviewed against the applicable utilization-management criteria (MCG guidelines, current edition not specified) for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer says patient must try cheaper alternative X first.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Upadacitinib (Rinvoq) after methotrexate. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nUnitedHealthcare Utilization Management\n\nPlease note that standard criteria apply regardless of prior submissions.",
-  "clinical_context": "The 20-year-old member carries a documented diagnosis of Rheumatoid arthritis, seropositive (M06.9). She has been under continuous care with treating specialists who recommended Upadacitinib (Rinvoq) after methotrexate as the next appropriate step.\n\nMethotrexate and sulfasalazine failed with DAS28 > 5.1. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on step therapy missing without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2026-11-22T14:22:00Z",
-  "denial_timestamp": "2026-11-36T09:15:00Z",
+  "denial_letter_text": "Dear Plan Member,\n\nWe received your provider's request on 08/24/2026 for Adjuvant pembrolizumab related to Melanoma stage IIIB (C43.9). After review, we cannot approve this request.\n\nOur review applied UnitedHealthcare Medical Management Guidelines and Optum clinical criteria. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. UHC medical policy requires documented failure of prerequisite therapies before Adjuvant pembrolizumab. Submitted records do not establish failure of required lower-cost options for Melanoma stage IIIB (C43.9).\n\nSpecifically, the information provided does not satisfy the MCG Care Guidelines (edition not specified) and utilization-management requirements associated with step therapy missing. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
+  "clinical_context": "The 19-year-old member has Melanoma stage IIIB (C43.9). She has been treated under commercial coverage with Adjuvant pembrolizumab recommended as the next appropriate step. BRAF wild-type; SLNB positive; wide excision completed. This directly contradicts the insurer's position that step therapy missing bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b19-20260601-160337-4eeea",
-    "generated_at": "2026-06-01T16:03:37Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:10Z",
     "matrix_cell": {
       "insurer": "UHC",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned UHC / oncology cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Rheumatoid arthritis, seropositive (M06.9) \u2192 Upadacitinib (Rinvoq) after methotrexate pair.",
+        "reasoning": "The brief matches the assigned UHC / oncology cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Melanoma stage IIIB (C43.9) \u2192 Adjuvant pembrolizumab pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Rheumatoid arthritis, seropositive (M06.9)",
-          "Upadacitinib (Rinvoq) after methotrexate",
+          "Melanoma stage IIIB (C43.9)",
+          "Adjuvant pembrolizumab",
           "step_therapy_missing"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Rheumatoid arthritis, seropositive (M06.9)",
-          "Upadacitinib (Rinvoq) after methotrexate"
+          "Melanoma stage IIIB (C43.9)",
+          "Adjuvant pembrolizumab"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinvoq) after methotrexate related to Rheuma"
+          "Dear Plan Member,\n\nWe received your provider's request on 08/24/2026 for Adjuvant pembrolizumab related to Melanoma stag"
         ],
         "improvement": null
       },
@@ -95,7 +95,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinvoq) after methotrexate related to Rheuma"
+          "Dear Plan Member,\n\nWe received your provider's request on 08/24/2026 for Adjuvant pembrolizumab related to Melanoma stag"
         ],
         "improvement": null
       },
@@ -105,18 +105,18 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 20-year-old member carries a documented diagnosis of Rheumatoid arthritis, seropositive (M06.9). She has been under "
+          "The 19-year-old member has Melanoma stage IIIB (C43.9). She has been treated under commercial coverage with Adjuvant pem"
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Upadacitinib (Rinvoq) after methotrexate is a standard intervention for Rheumatoid arthritis, seropositive (M06.9) in US commercial practice.",
+        "reasoning": "Adjuvant pembrolizumab is a standard intervention for Melanoma stage IIIB (C43.9) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Rheumatoid arthritis, seropositive (M06.9)",
-          "Upadacitinib (Rinvoq) after methotrexate"
+          "Melanoma stage IIIB (C43.9)",
+          "Adjuvant pembrolizumab"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinv"
+          "Dear Plan Member,\n\nWe received your provider's request on 08/24/2026 for Adjuvan"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinv"
+          "Dear Plan Member,\n\nWe received your provider's request on 08/24/2026 for Adjuvan"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinv"
+          "Dear Plan Member,\n\nWe received your provider's request on 08/24/2026 for Adjuvan"
         ],
         "improvement": null
       },
@@ -207,20 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 5,
         "confidence": 0.8,
         "evidence_quotes": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: habilitative vs rehabilitative miscategorisation",
+          "Exploitable flaw: benefit category determination not explained"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: habilitative vs rehabilitative miscategorisation",
+          "Exploitable flaw: benefit category determination not explained",
+          "Pattern anchor: wrong_benefit_category",
+          "Pattern anchor: step_therapy_vague_mcg"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: step_therapy_missing."
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -240,17 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for UHC Medical Necessity / oncology / sub_tactic=step_therapy_missing. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: UHC Medical Necessity / oncology / step_therapy_missing. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: wrong_benefit_category, step_therapy_vague_mcg.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 5,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "vague guideline citation",
-        "ignored prior treatment failure"
+        "Exploitable flaw: habilitative vs rehabilitative miscategorisation",
+        "Exploitable flaw: benefit category determination not explained",
+        "Pattern anchor: wrong_benefit_category",
+        "Pattern anchor: step_therapy_vague_mcg"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: step_therapy_missing."
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
       ]
     }
   }

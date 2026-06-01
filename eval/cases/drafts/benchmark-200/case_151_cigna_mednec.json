@@ -3,24 +3,24 @@
   "insurer": "Cigna",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 38,
+    "age": 34,
     "gender": "F",
-    "diagnosis": "Chronic migraine without aura (G43.709)",
-    "treatment_requested": "Erenumab (Aimovig) CGRP inhibitor",
-    "plan_funding_type": "self_funded"
+    "diagnosis": "Pemphigus vulgaris (L10.0)",
+    "treatment_requested": "Rituximab infusion",
+    "plan_funding_type": "fully_insured"
   },
   "denial_pattern_sources": [
-    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
-    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials"
+    "contraindication_to_step_therapy: AMA 2023 Prior Authorization Physician Survey; State step-therapy exception laws (NY, TX, IL)",
+    "plan_exclusion_overrides_state_mandate: NCSL State Health Insurance Mandates Database 2024; documented in CA, NJ, IL enforcement actions"
   ],
-  "denial_letter_text": "Dear Member,\n\nThis letter confirms the outcome of our review of the request for Erenumab (Aimovig) CGRP inhibitor related to Chronic migraine without aura (G43.709).\n\nAfter clinical review using Cigna Medical Coverage Policies and MCG Care Guidelines, we are unable to approve coverage at this time.\n\nDetermination summary: Lacks RCT evidence for this indication per outdated policy. Our records were reviewed against the applicable utilization-management criteria for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer cites lack of RCT evidence or non-coverage for indication.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Erenumab (Aimovig) CGRP inhibitor. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nCigna Health Care Management",
-  "clinical_context": "The 38-year-old member carries a documented diagnosis of Chronic migraine without aura (G43.709). She has been under continuous care with treating specialists who recommended Erenumab (Aimovig) CGRP inhibitor as the next appropriate step.\n\nFailed topiramate, propranolol, and three triptan trials. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on not evidence based without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2026-09-16T14:22:00Z",
-  "denial_timestamp": "2026-09-30T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nWe received your provider's request on 02/22/2026 for Rituximab infusion related to Pemphigus vulgaris (L10.0). After review, we cannot approve this request.\n\nOur review applied Cigna Medical Coverage Policies and Milliman Care Guidelines (MCG). The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Rituximab infusion is not considered evidence-based for Pemphigus vulgaris (L10.0) under current medical policy. Published criteria do not support authorization.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with not evidence based. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nCigna Health Care Management\n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.",
+  "clinical_context": "The 34-year-old member has Pemphigus vulgaris (L10.0). She has been treated under commercial coverage with Rituximab infusion recommended as the next appropriate step. Failed high-dose prednisone taper attempts; mucosal erosions persist. This directly contradicts the insurer's position that not evidence based bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b15-20260601-160334-92991",
-    "generated_at": "2026-06-01T16:03:34Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "Cigna",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Cigna / infusion_specialty_rx cell and executes sub_tactic 'not_evidence_based' with a clinically appropriate Chronic migraine without aura (G43.709) \u2192 Erenumab (Aimovig) CGRP inhibitor pair.",
+        "reasoning": "The brief matches the assigned Cigna / infusion_specialty_rx cell and executes sub_tactic 'not_evidence_based' with a clinically appropriate Pemphigus vulgaris (L10.0) \u2192 Rituximab infusion pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Chronic migraine without aura (G43.709)",
-          "Erenumab (Aimovig) CGRP inhibitor",
+          "Pemphigus vulgaris (L10.0)",
+          "Rituximab infusion",
           "not_evidence_based"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Chronic migraine without aura (G43.709)",
-          "Erenumab (Aimovig) CGRP inhibitor"
+          "Pemphigus vulgaris (L10.0)",
+          "Rituximab infusion"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Erenumab (Aimovig) CGRP inhibitor related to Chronic migra"
+          "Dear Member,\n\nWe received your provider's request on 02/22/2026 for Rituximab infusion related to Pemphigus vulgaris (L1"
         ],
         "improvement": null
       },
@@ -95,7 +95,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Erenumab (Aimovig) CGRP inhibitor related to Chronic migra"
+          "Dear Member,\n\nWe received your provider's request on 02/22/2026 for Rituximab infusion related to Pemphigus vulgaris (L1"
         ],
         "improvement": null
       },
@@ -105,18 +105,18 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 38-year-old member carries a documented diagnosis of Chronic migraine without aura (G43.709). She has been under con"
+          "The 34-year-old member has Pemphigus vulgaris (L10.0). She has been treated under commercial coverage with Rituximab inf"
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Erenumab (Aimovig) CGRP inhibitor is a standard intervention for Chronic migraine without aura (G43.709) in US commercial practice.",
+        "reasoning": "Rituximab infusion is a standard intervention for Pemphigus vulgaris (L10.0) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Chronic migraine without aura (G43.709)",
-          "Erenumab (Aimovig) CGRP inhibitor"
+          "Pemphigus vulgaris (L10.0)",
+          "Rituximab infusion"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nWe received your provider's request on 02/22/2026 for Rituximab in"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nWe received your provider's request on 02/22/2026 for Rituximab in"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nWe received your provider's request on 02/22/2026 for Rituximab in"
         ],
         "improvement": null
       },
@@ -210,15 +210,19 @@
         "score": 3,
         "confidence": 0.8,
         "evidence_quotes": [
-          "cites outdated InterQual version"
+          "Exploitable flaw: demands step therapy despite documented allergy or adverse reaction in chart",
+          "Exploitable flaw: ignores prior treatment failure"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "cites outdated InterQual version"
+          "Exploitable flaw: demands step therapy despite documented allergy or adverse reaction in chart",
+          "Exploitable flaw: ignores prior treatment failure",
+          "Pattern anchor: contraindication_to_step_therapy",
+          "Pattern anchor: plan_exclusion_overrides_state_mandate"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: not_evidence_based."
+          "Denial cites Cigna policy framework and 180-day appeal window.",
+          "Sub-tactic 'not_evidence_based' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Cigna Medical Necessity / infusion_specialty_rx / sub_tactic=not_evidence_based. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Cigna Medical Necessity / infusion_specialty_rx / not_evidence_based. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: contraindication_to_step_therapy, plan_exclusion_overrides_state_mandate.",
     "appeal_difficulty": {
       "score": 3,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "cites outdated InterQual version"
+        "Exploitable flaw: demands step therapy despite documented allergy or adverse reaction in chart",
+        "Exploitable flaw: ignores prior treatment failure",
+        "Pattern anchor: contraindication_to_step_therapy",
+        "Pattern anchor: plan_exclusion_overrides_state_mandate"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: not_evidence_based."
+        "Denial cites Cigna policy framework and 180-day appeal window.",
+        "Sub-tactic 'not_evidence_based' is reflected in the stated rationale."
       ]
     }
   }

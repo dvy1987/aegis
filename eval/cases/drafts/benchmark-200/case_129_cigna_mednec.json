@@ -3,24 +3,24 @@
   "insurer": "Cigna",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 69,
+    "age": 63,
     "gender": "M",
-    "diagnosis": "Paroxysmal atrial fibrillation (I48.0)",
-    "treatment_requested": "Catheter ablation for symptomatic AFib",
+    "diagnosis": "Osteoporosis with vertebral fracture (M80.08XA)",
+    "treatment_requested": "Denosumab (Prolia)",
     "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "missing_cost_liability: No Surprises Act Compliance Audit 2024",
-    "experimental_despite_fda_approval: ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis"
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials",
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719"
   ],
-  "denial_letter_text": "Dear Plan Member,\n\nWe have completed our review of the request for Catheter ablation for symptomatic AFib related to Paroxysmal atrial fibrillation (I48.0).\n\nAfter clinical review using Cigna Medical Coverage Policies and MCG Care Guidelines, we are unable to approve coverage at this time.\n\nDetermination summary: Insurer requires failure of two class III antiarrhythmics before ablation. Our records were reviewed against the applicable utilization-management criteria (MCG guidelines, current edition not specified) for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer says patient must try cheaper alternative X first.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Catheter ablation for symptomatic AFib. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nCigna Health Care Management\n\nPlease note that standard criteria apply regardless of prior submissions.",
-  "clinical_context": "The 69-year-old member carries a documented diagnosis of Paroxysmal atrial fibrillation (I48.0). He has been under continuous care with treating specialists who recommended Catheter ablation for symptomatic AFib as the next appropriate step.\n\nPatient failed dofetilide and sotalol with documented rhythm logs. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on step therapy missing without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2026-09-14T14:22:00Z",
-  "denial_timestamp": "2026-09-28T09:15:00Z",
+  "denial_letter_text": "Dear Plan Member,\n\nWe received your provider's request on 10/22/2026 for Denosumab (Prolia) related to Osteoporosis with vertebral fracture (M80.08XA). After review, we cannot approve this request.\n\nOur review applied Cigna Medical Coverage Policies and Milliman Care Guidelines (MCG). The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Cigna medical policy requires documented failure of prerequisite therapies before Denosumab (Prolia). Submitted records do not establish failure of required lower-cost options for Osteoporosis with vertebral fracture (M80.08XA).\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with step therapy missing. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination through our internal appeals process. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nCigna Health Care Management",
+  "clinical_context": "The 63-year-old member has Osteoporosis with vertebral fracture (M80.08XA). He has been treated under commercial coverage with Denosumab (Prolia) recommended as the next appropriate step. Failed oral bisphosphonate due to intolerance; T-score -3.0 spine. This directly contradicts the insurer's position that step therapy missing bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b12-20260601-160332-3a154",
-    "generated_at": "2026-06-01T16:03:32Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "Cigna",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Cigna / infusion_specialty_rx cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Paroxysmal atrial fibrillation (I48.0) \u2192 Catheter ablation for symptomatic AFib pair.",
+        "reasoning": "The brief matches the assigned Cigna / infusion_specialty_rx cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Osteoporosis with vertebral fracture (M80.08XA) \u2192 Denosumab (Prolia) pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Paroxysmal atrial fibrillation (I48.0)",
-          "Catheter ablation for symptomatic AFib",
+          "Osteoporosis with vertebral fracture (M80.08XA)",
+          "Denosumab (Prolia)",
           "step_therapy_missing"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Paroxysmal atrial fibrillation (I48.0)",
-          "Catheter ablation for symptomatic AFib"
+          "Osteoporosis with vertebral fracture (M80.08XA)",
+          "Denosumab (Prolia)"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Catheter ablation for symptomatic AFib related to Paroxysm"
+          "Dear Plan Member,\n\nWe received your provider's request on 10/22/2026 for Denosumab (Prolia) related to Osteoporosis with"
         ],
         "improvement": null
       },
@@ -95,28 +95,28 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Catheter ablation for symptomatic AFib related to Paroxysm"
+          "Dear Plan Member,\n\nWe received your provider's request on 10/22/2026 for Denosumab (Prolia) related to Osteoporosis with"
         ],
         "improvement": null
       },
       "clinical_realism": {
         "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
-        "score": 3,
+        "reasoning": "Clinical context cites measurable treatments, durations, or scores appropriate to the specialty.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 69-year-old member carries a documented diagnosis of Paroxysmal atrial fibrillation (I48.0). He has been under conti"
+          "Failed oral bisphosphonate due to intolerance; T-score -3.0 spine."
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Catheter ablation for symptomatic AFib is a standard intervention for Paroxysmal atrial fibrillation (I48.0) in US commercial practice.",
+        "reasoning": "Denosumab (Prolia) is a standard intervention for Osteoporosis with vertebral fracture (M80.08XA) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Paroxysmal atrial fibrillation (I48.0)",
-          "Catheter ablation for symptomatic AFib"
+          "Osteoporosis with vertebral fracture (M80.08XA)",
+          "Denosumab (Prolia)"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Catheter abla"
+          "Dear Plan Member,\n\nWe received your provider's request on 10/22/2026 for Denosum"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Catheter abla"
+          "Dear Plan Member,\n\nWe received your provider's request on 10/22/2026 for Denosum"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Catheter abla"
+          "Dear Plan Member,\n\nWe received your provider's request on 10/22/2026 for Denosum"
         ],
         "improvement": null
       },
@@ -207,20 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 1,
         "confidence": 0.8,
         "evidence_quotes": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: wrong age band for guideline",
+          "Exploitable flaw: inflexible template logic"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: wrong age band for guideline",
+          "Exploitable flaw: inflexible template logic",
+          "Pattern anchor: incorrect_demographic_guideline",
+          "Pattern anchor: missing_iro_notice"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: step_therapy_missing."
+          "Denial cites Cigna policy framework and 180-day appeal window.",
+          "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -240,17 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Cigna Medical Necessity / infusion_specialty_rx / sub_tactic=step_therapy_missing. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Cigna Medical Necessity / infusion_specialty_rx / step_therapy_missing. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: incorrect_demographic_guideline, missing_iro_notice.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 1,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "vague guideline citation",
-        "ignored prior treatment failure"
+        "Exploitable flaw: wrong age band for guideline",
+        "Exploitable flaw: inflexible template logic",
+        "Pattern anchor: incorrect_demographic_guideline",
+        "Pattern anchor: missing_iro_notice"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: step_therapy_missing."
+        "Denial cites Cigna policy framework and 180-day appeal window.",
+        "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
       ]
     }
   }

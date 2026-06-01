@@ -3,24 +3,24 @@
   "insurer": "UHC",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 31,
+    "age": 27,
     "gender": "F",
-    "diagnosis": "HR-positive early breast cancer (C50.911)",
-    "treatment_requested": "Adjuvant abemaciclib with endocrine therapy",
-    "plan_funding_type": "fully_insured"
+    "diagnosis": "Social anxiety disorder, severe (F40.10)",
+    "treatment_requested": "Group cognitive behavioral therapy (16 sessions)",
+    "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "mhpaea_visit_limit_asymmetry: MHPAEA Final Rule 2024; KFF 2023 Mental Health Parity Enforcement Report",
-    "unreasonable_documentation_deadline: DOL ERISA Claims Procedure Regulations 29 CFR \u00a7 2560.503-1(g); AMA 2023 Prior Authorization Survey"
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "peer_to_peer_window_verbal_only: AMA 2023 Prior Authorization Physician Survey; documented in multiple state PA reform laws (TX HB 2002, VA SB 1272)"
   ],
-  "denial_letter_text": "Dear Member,\n\nWe have completed our review of the request for Adjuvant abemaciclib with endocrine therapy related to HR-positive early breast cancer (C50.911).\n\nAfter clinical review using UnitedHealthcare Medical Policies and Optum clinical criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Insurer cites wrong MCG module for metastatic disease. Our records were reviewed against the applicable utilization-management criteria for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer cites the wrong MCG/InterQual/UM criterion or applies it incorrectly.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Adjuvant abemaciclib with endocrine therapy. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
-  "clinical_context": "The 31-year-old member carries a documented diagnosis of HR-positive early breast cancer (C50.911). She has been under continuous care with treating specialists who recommended Adjuvant abemaciclib with endocrine therapy as the next appropriate step.\n\nPatient is stage II; NCCN supports CDK4/6 in high-risk early breast cancer. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on guideline mis cite without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2025-07-21T14:22:00Z",
-  "denial_timestamp": "2025-07-35T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nWe received your provider's request on 07/09/2026 for Group cognitive behavioral therapy (16 sessions) related to Social anxiety disorder, severe (F40.10). After review, we cannot approve this request.\n\nOur review applied UnitedHealthcare Medical Management Guidelines and Optum clinical criteria. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Clinical criteria for Group cognitive behavioral therapy (16 sessions) are not met per the cited utilization guideline module for Social anxiety disorder, severe (F40.10). The request does not satisfy threshold requirements in the referenced criteria set.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with guideline mis cite. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the verbal timeframe communicated to office staff (not confirmed in this letter).\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
+  "clinical_context": "The 27-year-old member has Social anxiety disorder, severe (F40.10). She has been treated under commercial coverage with Group cognitive behavioral therapy (16 sessions) recommended as the next appropriate step. Failed sertraline and escitalopram trials; avoids work due to panic symptoms in meetings. This directly contradicts the insurer's position that guideline mis cite bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b11-20260601-160332-06d4c",
-    "generated_at": "2026-06-01T16:03:32Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "UHC",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned UHC / behavioral_health cell and executes sub_tactic 'guideline_mis_cite' with a clinically appropriate HR-positive early breast cancer (C50.911) \u2192 Adjuvant abemaciclib with endocrine therapy pair.",
+        "reasoning": "The brief matches the assigned UHC / behavioral_health cell and executes sub_tactic 'guideline_mis_cite' with a clinically appropriate Social anxiety disorder, severe (F40.10) \u2192 Group cognitive behavioral therapy (16 sessions) pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "HR-positive early breast cancer (C50.911)",
-          "Adjuvant abemaciclib with endocrine therapy",
+          "Social anxiety disorder, severe (F40.10)",
+          "Group cognitive behavioral therapy (16 sessions)",
           "guideline_mis_cite"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "HR-positive early breast cancer (C50.911)",
-          "Adjuvant abemaciclib with endocrine therapy"
+          "Social anxiety disorder, severe (F40.10)",
+          "Group cognitive behavioral therapy (16 sessions)"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Adjuvant abemaciclib with endocrine therapy related to HR-"
+          "Dear Member,\n\nWe received your provider's request on 07/09/2026 for Group cognitive behavioral therapy (16 sessions) rel"
         ],
         "improvement": null
       },
@@ -95,7 +95,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Adjuvant abemaciclib with endocrine therapy related to HR-"
+          "Dear Member,\n\nWe received your provider's request on 07/09/2026 for Group cognitive behavioral therapy (16 sessions) rel"
         ],
         "improvement": null
       },
@@ -105,18 +105,18 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 31-year-old member carries a documented diagnosis of HR-positive early breast cancer (C50.911). She has been under c"
+          "The 27-year-old member has Social anxiety disorder, severe (F40.10). She has been treated under commercial coverage with"
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Adjuvant abemaciclib with endocrine therapy is a standard intervention for HR-positive early breast cancer (C50.911) in US commercial practice.",
+        "reasoning": "Group cognitive behavioral therapy (16 sessions) is a standard intervention for Social anxiety disorder, severe (F40.10) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "HR-positive early breast cancer (C50.911)",
-          "Adjuvant abemaciclib with endocrine therapy"
+          "Social anxiety disorder, severe (F40.10)",
+          "Group cognitive behavioral therapy (16 sessions)"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Adjuvant abemacicl"
+          "Dear Member,\n\nWe received your provider's request on 07/09/2026 for Group cognit"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Adjuvant abemacicl"
+          "Dear Member,\n\nWe received your provider's request on 07/09/2026 for Group cognit"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Adjuvant abemacicl"
+          "Dear Member,\n\nWe received your provider's request on 07/09/2026 for Group cognit"
         ],
         "improvement": null
       },
@@ -207,18 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 5,
         "confidence": 0.8,
         "evidence_quotes": [
-          "references withdrawn MCG module"
+          "Exploitable flaw: denial rationale is generic with no patient-specific language",
+          "Exploitable flaw: no reference to submitted records, physician name, or clinical history"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "references withdrawn MCG module"
+          "Exploitable flaw: denial rationale is generic with no patient-specific language",
+          "Exploitable flaw: no reference to submitted records, physician name, or clinical history",
+          "Pattern anchor: algo_boilerplate_fingerprint",
+          "Pattern anchor: peer_to_peer_window_verbal_only"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: guideline_mis_cite."
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'guideline_mis_cite' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for UHC Medical Necessity / behavioral_health / sub_tactic=guideline_mis_cite. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: UHC Medical Necessity / behavioral_health / guideline_mis_cite. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: algo_boilerplate_fingerprint, peer_to_peer_window_verbal_only.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 5,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "references withdrawn MCG module"
+        "Exploitable flaw: denial rationale is generic with no patient-specific language",
+        "Exploitable flaw: no reference to submitted records, physician name, or clinical history",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: peer_to_peer_window_verbal_only"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: guideline_mis_cite."
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'guideline_mis_cite' is reflected in the stated rationale."
       ]
     }
   }

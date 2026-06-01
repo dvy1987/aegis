@@ -47,9 +47,10 @@ Configs:
 
 Run: `cd backend && uv run python -m app.case_generator.cli --count <N> --split {train|test}`.
 
-### Manual benchmark-200 (2026-06-01)
+### Manual benchmark-200 (2026-06-01, schema v1.1.0)
 
-Cases `case_11` through `case_210` in `eval/cases/drafts/benchmark-200/` were produced by the **manual swarm** (`backend/app/case_generator/manual_batches/`) using Cursor agent intelligence — **not** Vertex Gemini. Each case runs P1–P5 producers plus all stage critics, final panel, and deterministic safety/PHI gates. `synthetic_provenance.generator_model` = `cursor-manual-agent-2026-06-01`.
+Cases `case_11` through `case_210` in `eval/cases/drafts/benchmark-200/` were rebuilt by the **A+ manual pipeline** (`backend/app/case_generator/aplus/`) — prompt-faithful P1–P5, specialty-aligned clinical stories, pattern-ID flaw injection, word-count gates (P2: 200–500 words, P3: 80–250 words). **Not** Vertex Gemini. `generator_model` = `cursor-manual-agent-aplus-v2`, `schema_version` = `1.1.0`.
 
-Regenerate a batch: `cd backend && uv run python scripts/run_manual_case_batch.py --batch <1-20>`.
-Validate: `uv run python scripts/validate_manual_batch.py --batch <N>`.
+Rebuild all: `cd backend && uv run python scripts/upgrade_benchmark_aplus.py`.
+
+**Gumloop** evaluation is a separate step — do not use generator prompts to imitate Gumloop before running the real swarm.

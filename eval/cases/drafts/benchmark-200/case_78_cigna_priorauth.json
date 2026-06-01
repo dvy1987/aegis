@@ -3,24 +3,24 @@
   "insurer": "Cigna",
   "denial_type": "Prior Authorization",
   "patient_profile": {
-    "age": 35,
+    "age": 27,
     "gender": "F",
-    "diagnosis": "Stage IV endometriosis (N80.4)",
-    "treatment_requested": "Excision of endometriosis with specialist (out-of-network)",
+    "diagnosis": "Menorrhagia due to adenomyosis (N80.0)",
+    "treatment_requested": "Endometrial ablation",
     "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "experimental_despite_fda_approval: ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis",
-    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates"
+    "superseded_guideline: AHIP 2022 Coverage Policy Review; documented in multiple Cigna litigation cases 2021\u20132023",
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719"
   ],
-  "denial_letter_text": "Dear Plan Member,\n\nWe have completed our review of the request for Excision of endometriosis with specialist (out-of-network) related to Stage IV endometriosis (N80.4).\n\nAfter clinical review using Cigna Medical Coverage Policies and MCG Care Guidelines, we are unable to approve coverage at this time.\n\nDetermination summary: No gap exception; in-network surgeon available. Our records were reviewed against the applicable utilization-management criteria for prior authorization determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Out-of-network provider used without gap exception.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Excision of endometriosis with specialist (out-of-network). If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nCigna Health Care Management",
-  "clinical_context": "The 35-year-old member carries a documented diagnosis of Stage IV endometriosis (N80.4). She has been under continuous care with treating specialists who recommended Excision of endometriosis with specialist (out-of-network) as the next appropriate step.\n\nOnly specialist has 200+ excision cases; in-network lacks expertise. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on out of network no authorization without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2025-02-23T14:22:00Z",
-  "denial_timestamp": "2025-02-37T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 09/15/2026 for Endometrial ablation related to Menorrhagia due to adenomyosis (N80.0). After review, we cannot approve this request.\n\nOur review applied Cigna Medical Coverage Policies and Milliman Care Guidelines (MCG). The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Endometrial ablation with an out-of-network provider is not covered without a gap exception. In-network alternatives are available.\n\nSpecifically, the information provided does not satisfy the MCG Care Guidelines (edition not specified) and utilization-management requirements associated with out of network no authorization. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination through our internal appeals process. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nCigna Health Care Management\n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.",
+  "clinical_context": "The 27-year-old member has Menorrhagia due to adenomyosis (N80.0). She has been treated under commercial coverage with Endometrial ablation recommended as the next appropriate step. Hgb 10.1; failed tranexamic acid and OCP; no fibroid on MRI. This directly contradicts the insurer's position that out of network no authorization bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b07-20260601-160329-84171",
-    "generated_at": "2026-06-01T16:03:29Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "Cigna",
       "denial_type": "Prior Authorization",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Cigna / womens_health cell and executes sub_tactic 'out_of_network_no_authorization' with a clinically appropriate Stage IV endometriosis (N80.4) \u2192 Excision of endometriosis with specialist (out-of-network) pair.",
+        "reasoning": "The brief matches the assigned Cigna / womens_health cell and executes sub_tactic 'out_of_network_no_authorization' with a clinically appropriate Menorrhagia due to adenomyosis (N80.0) \u2192 Endometrial ablation pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Stage IV endometriosis (N80.4)",
-          "Excision of endometriosis with specialist (out-of-network)",
+          "Menorrhagia due to adenomyosis (N80.0)",
+          "Endometrial ablation",
           "out_of_network_no_authorization"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Stage IV endometriosis (N80.4)",
-          "Excision of endometriosis with specialist (out-of-network)"
+          "Menorrhagia due to adenomyosis (N80.0)",
+          "Endometrial ablation"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Excision of endometriosis with specialist (out-of-network)"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 09/15/2026 for Endometri"
         ],
         "improvement": null
       },
@@ -95,7 +95,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Excision of endometriosis with specialist (out-of-network)"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 09/15/2026 for Endometri"
         ],
         "improvement": null
       },
@@ -105,18 +105,18 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 35-year-old member carries a documented diagnosis of Stage IV endometriosis (N80.4). She has been under continuous c"
+          "The 27-year-old member has Menorrhagia due to adenomyosis (N80.0). She has been treated under commercial coverage with E"
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Excision of endometriosis with specialist (out-of-network) is a standard intervention for Stage IV endometriosis (N80.4) in US commercial practice.",
+        "reasoning": "Endometrial ablation is a standard intervention for Menorrhagia due to adenomyosis (N80.0) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Stage IV endometriosis (N80.4)",
-          "Excision of endometriosis with specialist (out-of-network)"
+          "Menorrhagia due to adenomyosis (N80.0)",
+          "Endometrial ablation"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Excision of e"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Excision of e"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Excision of e"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -207,18 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 1,
         "confidence": 0.8,
         "evidence_quotes": [
-          "missing financial liability details"
+          "Exploitable flaw: cites outdated InterQual version",
+          "Exploitable flaw: references withdrawn MCG module"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "missing financial liability details"
+          "Exploitable flaw: cites outdated InterQual version",
+          "Exploitable flaw: references withdrawn MCG module",
+          "Pattern anchor: superseded_guideline",
+          "Pattern anchor: missing_iro_notice"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: out_of_network_no_authorization."
+          "Denial cites Cigna policy framework and 180-day appeal window.",
+          "Sub-tactic 'out_of_network_no_authorization' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Cigna Prior Authorization / womens_health / sub_tactic=out_of_network_no_authorization. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Cigna Prior Authorization / womens_health / out_of_network_no_authorization. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: superseded_guideline, missing_iro_notice.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 1,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "missing financial liability details"
+        "Exploitable flaw: cites outdated InterQual version",
+        "Exploitable flaw: references withdrawn MCG module",
+        "Pattern anchor: superseded_guideline",
+        "Pattern anchor: missing_iro_notice"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: out_of_network_no_authorization."
+        "Denial cites Cigna policy framework and 180-day appeal window.",
+        "Sub-tactic 'out_of_network_no_authorization' is reflected in the stated rationale."
       ]
     }
   }

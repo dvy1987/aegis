@@ -3,24 +3,24 @@
   "insurer": "UHC",
   "denial_type": "Prior Authorization",
   "patient_profile": {
-    "age": 65,
+    "age": 61,
     "gender": "F",
-    "diagnosis": "Psoriatic arthritis (L40.50)",
-    "treatment_requested": "Secukinumab (Cosentyx) refill \u2014 continuation of care",
+    "diagnosis": "Chronic migraine without aura (G43.709)",
+    "treatment_requested": "Erenumab (Aimovig) preventive therapy",
     "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719",
-    "circular_medical_necessity: ProPublica 'Uncovered' Series 2023"
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials"
   ],
-  "denial_letter_text": "Dear Member,\n\nWe have completed our review of the request for Secukinumab (Cosentyx) refill \u2014 continuation of care related to Psoriatic arthritis (L40.50).\n\nAfter clinical review using UnitedHealthcare Medical Policies and Optum clinical criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Prior authorization lapsed; new auth required. Our records were reviewed against the applicable utilization-management criteria for prior authorization determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Continuing therapy denied for missing re-auth (e.g., Humira refill).\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Secukinumab (Cosentyx) refill \u2014 continuation of care. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination through our internal appeals process. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
-  "clinical_context": "The 65-year-old member carries a documented diagnosis of Psoriatic arthritis (L40.50). She has been under continuous care with treating specialists who recommended Secukinumab (Cosentyx) refill \u2014 continuation of care as the next appropriate step.\n\nStable 14 months; lapse was insurer portal error. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on continuation of care lapsed without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2026-06-08T14:22:00Z",
-  "denial_timestamp": "2026-06-22T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nWe received your provider's request on 04/08/2026 for Erenumab (Aimovig) preventive therapy related to Chronic migraine without aura (G43.709). After review, we cannot approve this request.\n\nOur review applied UnitedHealthcare Medical Management Guidelines and Optum clinical criteria. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Continuation of Erenumab (Aimovig) preventive therapy requires an active prior authorization; the prior auth lapsed. A new authorization must be submitted.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with continuation of care lapsed. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
+  "clinical_context": "The 61-year-old member has Chronic migraine without aura (G43.709). She has been treated under commercial coverage with Erenumab (Aimovig) preventive therapy recommended as the next appropriate step. 15 headache days/month; failed topiramate 100 mg, propranolol 80 mg, and three triptans. This directly contradicts the insurer's position that continuation of care lapsed bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b20-20260601-160338-7f1c2",
-    "generated_at": "2026-06-01T16:03:38Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:10Z",
     "matrix_cell": {
       "insurer": "UHC",
       "denial_type": "Prior Authorization",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned UHC / neurology cell and executes sub_tactic 'continuation_of_care_lapsed' with a clinically appropriate Psoriatic arthritis (L40.50) \u2192 Secukinumab (Cosentyx) refill \u2014 continuation of care pair.",
+        "reasoning": "The brief matches the assigned UHC / neurology cell and executes sub_tactic 'continuation_of_care_lapsed' with a clinically appropriate Chronic migraine without aura (G43.709) \u2192 Erenumab (Aimovig) preventive therapy pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Psoriatic arthritis (L40.50)",
-          "Secukinumab (Cosentyx) refill \u2014 continuation of care",
+          "Chronic migraine without aura (G43.709)",
+          "Erenumab (Aimovig) preventive therapy",
           "continuation_of_care_lapsed"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Psoriatic arthritis (L40.50)",
-          "Secukinumab (Cosentyx) refill \u2014 continuation of care"
+          "Chronic migraine without aura (G43.709)",
+          "Erenumab (Aimovig) preventive therapy"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Secukinumab (Cosentyx) refill \u2014 continuation of care relat"
+          "Dear Member,\n\nWe received your provider's request on 04/08/2026 for Erenumab (Aimovig) preventive therapy related to Chr"
         ],
         "improvement": null
       },
@@ -95,28 +95,28 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Secukinumab (Cosentyx) refill \u2014 continuation of care relat"
+          "Dear Member,\n\nWe received your provider's request on 04/08/2026 for Erenumab (Aimovig) preventive therapy related to Chr"
         ],
         "improvement": null
       },
       "clinical_realism": {
         "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
-        "score": 3,
+        "reasoning": "Clinical context cites measurable treatments, durations, or scores appropriate to the specialty.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 65-year-old member carries a documented diagnosis of Psoriatic arthritis (L40.50). She has been under continuous car"
+          "15 headache days/month; failed topiramate 100 mg, propranolol 80 mg, and three triptans."
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Secukinumab (Cosentyx) refill \u2014 continuation of care is a standard intervention for Psoriatic arthritis (L40.50) in US commercial practice.",
+        "reasoning": "Erenumab (Aimovig) preventive therapy is a standard intervention for Chronic migraine without aura (G43.709) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Psoriatic arthritis (L40.50)",
-          "Secukinumab (Cosentyx) refill \u2014 continuation of care"
+          "Chronic migraine without aura (G43.709)",
+          "Erenumab (Aimovig) preventive therapy"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Secukinumab (Cosen"
+          "Dear Member,\n\nWe received your provider's request on 04/08/2026 for Erenumab (Ai"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Secukinumab (Cosen"
+          "Dear Member,\n\nWe received your provider's request on 04/08/2026 for Erenumab (Ai"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Secukinumab (Cosen"
+          "Dear Member,\n\nWe received your provider's request on 04/08/2026 for Erenumab (Ai"
         ],
         "improvement": null
       },
@@ -207,18 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 5,
         "confidence": 0.8,
         "evidence_quotes": [
-          "missing external review right"
+          "Exploitable flaw: denial rationale is generic with no patient-specific language",
+          "Exploitable flaw: no reference to submitted records, physician name, or clinical history"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "missing external review right"
+          "Exploitable flaw: denial rationale is generic with no patient-specific language",
+          "Exploitable flaw: no reference to submitted records, physician name, or clinical history",
+          "Pattern anchor: algo_boilerplate_fingerprint",
+          "Pattern anchor: incorrect_demographic_guideline"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: continuation_of_care_lapsed."
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'continuation_of_care_lapsed' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for UHC Prior Authorization / neurology / sub_tactic=continuation_of_care_lapsed. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: UHC Prior Authorization / neurology / continuation_of_care_lapsed. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: algo_boilerplate_fingerprint, incorrect_demographic_guideline.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 5,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "missing external review right"
+        "Exploitable flaw: denial rationale is generic with no patient-specific language",
+        "Exploitable flaw: no reference to submitted records, physician name, or clinical history",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: incorrect_demographic_guideline"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: continuation_of_care_lapsed."
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'continuation_of_care_lapsed' is reflected in the stated rationale."
       ]
     }
   }

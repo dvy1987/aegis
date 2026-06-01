@@ -3,24 +3,24 @@
   "insurer": "Cigna",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 77,
+    "age": 72,
     "gender": "nonbinary",
-    "diagnosis": "Type 2 diabetes mellitus with labile glucose (E11.65)",
-    "treatment_requested": "Continuous glucose monitor (Dexcom G7)",
+    "diagnosis": "Obesity with BMI 42 and prediabetes (E66.01)",
+    "treatment_requested": "GLP-1 receptor agonist (semaglutide 2.4 mg)",
     "plan_funding_type": "fully_insured"
   },
   "denial_pattern_sources": [
-    "unreasonable_documentation_deadline: DOL ERISA Claims Procedure Regulations 29 CFR \u00a7 2560.503-1(g); AMA 2023 Prior Authorization Survey",
-    "missing_cost_liability: No Surprises Act Compliance Audit 2024"
+    "step_therapy_vague_mcg: KFF 2023 Survey of Consumer Experiences with Health Insurance",
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
   ],
-  "denial_letter_text": "Dear Member,\n\nThis letter confirms the outcome of our review of the request for Continuous glucose monitor (Dexcom G7) related to Type 2 diabetes mellitus with labile glucose (E11.65).\n\nAfter clinical review using Cigna Medical Coverage Policies and MCG Care Guidelines, we are unable to approve coverage at this time.\n\nThis determination applies to your employer-sponsored commercial benefit while still actively employed as a senior consultant on an employer-sponsored PPO.\n\nDetermination summary: CGM not evidence-based for Type 2 without intensive insulin per policy. Our records were reviewed against the applicable utilization-management criteria for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer cites lack of RCT evidence or non-coverage for indication.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Continuous glucose monitor (Dexcom G7). If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nCigna Health Care Management",
-  "clinical_context": "The 77-year-old member carries a documented diagnosis of Type 2 diabetes mellitus with labile glucose (E11.65). The member is still actively employed as a senior consultant on an employer-sponsored PPO. They has been under continuous care with treating specialists who recommended Continuous glucose monitor (Dexcom G7) as the next appropriate step.\n\nPatient on basal-bolus with nocturnal hypoglycemia despite fingersticks. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on not evidence based without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2025-02-11T14:22:00Z",
-  "denial_timestamp": "2025-02-25T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 07/15/2026 for GLP-1 receptor agonist (semaglutide 2.4 mg) related to Obesity with BMI 42 and prediabetes (E66.01). After review, we cannot approve this request.\n\nOur review applied Cigna Medical Coverage Policies and Milliman Care Guidelines (MCG). The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. GLP-1 receptor agonist (semaglutide 2.4 mg) is not considered evidence-based for Obesity with BMI 42 and prediabetes (E66.01) under current medical policy. Published criteria do not support authorization.\n\nSpecifically, the information provided does not satisfy the MCG Care Guidelines (edition not specified) and utilization-management requirements associated with not evidence based. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nThis determination applies to your employer-sponsored commercial benefit while you remain covered under an active group plan (still actively employed as a senior professional on a large-group employer-sponsored commercial PPO).\n\nSincerely,\n\nCigna Health Care Management",
+  "clinical_context": "The 72-year-old member has Obesity with BMI 42 and prediabetes (E66.01). The member is still actively employed as a senior professional on a large-group employer-sponsored commercial PPO. They has been treated under commercial coverage with GLP-1 receptor agonist (semaglutide 2.4 mg) recommended as the next appropriate step. BMI 42; HbA1c 6.2%; failed structured lifestyle program 6 months. This directly contradicts the insurer's position that not evidence based bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if their care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b16-20260601-160334-1f09c",
-    "generated_at": "2026-06-01T16:03:34Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:10Z",
     "matrix_cell": {
       "insurer": "Cigna",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Cigna / endocrine cell and executes sub_tactic 'not_evidence_based' with a clinically appropriate Type 2 diabetes mellitus with labile glucose (E11.65) \u2192 Continuous glucose monitor (Dexcom G7) pair.",
+        "reasoning": "The brief matches the assigned Cigna / endocrine cell and executes sub_tactic 'not_evidence_based' with a clinically appropriate Obesity with BMI 42 and prediabetes (E66.01) \u2192 GLP-1 receptor agonist (semaglutide 2.4 mg) pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Type 2 diabetes mellitus with labile glucose (E11.65)",
-          "Continuous glucose monitor (Dexcom G7)",
+          "Obesity with BMI 42 and prediabetes (E66.01)",
+          "GLP-1 receptor agonist (semaglutide 2.4 mg)",
           "not_evidence_based"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Type 2 diabetes mellitus with labile glucose (E11.65)",
-          "Continuous glucose monitor (Dexcom G7)"
+          "Obesity with BMI 42 and prediabetes (E66.01)",
+          "GLP-1 receptor agonist (semaglutide 2.4 mg)"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Continuous glucose monitor (Dexcom G7) related to Type 2 d"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 07/15/2026 for GLP-1 rec"
         ],
         "improvement": null
       },
@@ -95,28 +95,28 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Continuous glucose monitor (Dexcom G7) related to Type 2 d"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 07/15/2026 for GLP-1 rec"
         ],
         "improvement": null
       },
       "clinical_realism": {
         "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
-        "score": 3,
+        "reasoning": "Clinical context cites measurable treatments, durations, or scores appropriate to the specialty.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 77-year-old member carries a documented diagnosis of Type 2 diabetes mellitus with labile glucose (E11.65). The memb"
+          "BMI 42; HbA1c 6.2%; failed structured lifestyle program 6 months."
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Continuous glucose monitor (Dexcom G7) is a standard intervention for Type 2 diabetes mellitus with labile glucose (E11.65) in US commercial practice.",
+        "reasoning": "GLP-1 receptor agonist (semaglutide 2.4 mg) is a standard intervention for Obesity with BMI 42 and prediabetes (E66.01) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Type 2 diabetes mellitus with labile glucose (E11.65)",
-          "Continuous glucose monitor (Dexcom G7)"
+          "Obesity with BMI 42 and prediabetes (E66.01)",
+          "GLP-1 receptor agonist (semaglutide 2.4 mg)"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -210,15 +210,19 @@
         "score": 3,
         "confidence": 0.8,
         "evidence_quotes": [
-          "cites outdated InterQual version"
+          "Exploitable flaw: vague guideline citation",
+          "Exploitable flaw: no specific edition number"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "cites outdated InterQual version"
+          "Exploitable flaw: vague guideline citation",
+          "Exploitable flaw: no specific edition number",
+          "Pattern anchor: step_therapy_vague_mcg",
+          "Pattern anchor: algo_boilerplate_fingerprint"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: not_evidence_based."
+          "Denial cites Cigna policy framework and 180-day appeal window.",
+          "Sub-tactic 'not_evidence_based' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Cigna Medical Necessity / endocrine / sub_tactic=not_evidence_based. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Cigna Medical Necessity / endocrine / not_evidence_based. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: step_therapy_vague_mcg, algo_boilerplate_fingerprint.",
     "appeal_difficulty": {
       "score": 3,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "cites outdated InterQual version"
+        "Exploitable flaw: vague guideline citation",
+        "Exploitable flaw: no specific edition number",
+        "Pattern anchor: step_therapy_vague_mcg",
+        "Pattern anchor: algo_boilerplate_fingerprint"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: not_evidence_based."
+        "Denial cites Cigna policy framework and 180-day appeal window.",
+        "Sub-tactic 'not_evidence_based' is reflected in the stated rationale."
       ]
     }
   }

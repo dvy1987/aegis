@@ -5,22 +5,22 @@
   "patient_profile": {
     "age": 34,
     "gender": "M",
-    "diagnosis": "Pelvic floor dysfunction postpartum (N81.9)",
-    "treatment_requested": "Pelvic floor physical therapy (12 visits)",
-    "plan_funding_type": "self_funded"
+    "diagnosis": "Trigger finger, ring finger (M65.30)",
+    "treatment_requested": "A1 pulley release",
+    "plan_funding_type": "fully_insured"
   },
   "denial_pattern_sources": [
-    "peer_to_peer_window_verbal_only: AMA 2023 Prior Authorization Physician Survey; documented in multiple state PA reform laws (TX HB 2002, VA SB 1272)",
-    "circular_medical_necessity: ProPublica 'Uncovered' Series 2023"
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719",
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials"
   ],
-  "denial_letter_text": "Dear Member,\n\nThis letter confirms the outcome of our review of the request for Pelvic floor physical therapy (12 visits) related to Pelvic floor dysfunction postpartum (N81.9).\n\nAfter clinical review using UnitedHealthcare Medical Policies and Optum clinical criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Home exercise booklet is sufficient. Our records were reviewed against the applicable utilization-management criteria for prior authorization determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer demands a cheaper modality (HSAT vs in-lab sleep study; oral vs infusion).\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Pelvic floor physical therapy (12 visits). If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
-  "clinical_context": "The 34-year-old member carries a documented diagnosis of Pelvic floor dysfunction postpartum (N81.9). He has been under continuous care with treating specialists who recommended Pelvic floor physical therapy (12 visits) as the next appropriate step.\n\nPrior vaginal delivery with levator tear on ultrasound. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on modality substitution without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2026-11-20T14:22:00Z",
-  "denial_timestamp": "2026-11-34T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nWe received your provider's request on 06/24/2026 for A1 pulley release related to Trigger finger, ring finger (M65.30). After review, we cannot approve this request.\n\nOur review applied UnitedHealthcare Medical Management Guidelines and Optum clinical criteria. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. A less costly modality is appropriate before A1 pulley release for Trigger finger, ring finger (M65.30). Plan policy requires step-down diagnostic or therapeutic approach.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with modality substitution. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination through our internal appeals process. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
+  "clinical_context": "The 34-year-old member has Trigger finger, ring finger (M65.30). He has been treated under commercial coverage with A1 pulley release recommended as the next appropriate step. Locking daily; failed steroid injection twice. This directly contradicts the insurer's position that modality substitution bars coverage: the chart documents dates, doses, and objective findings (including dated scale scores in the chart) that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b17-20260601-160335-cf49d",
-    "generated_at": "2026-06-01T16:03:35Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:10Z",
     "matrix_cell": {
       "insurer": "UHC",
       "denial_type": "Prior Authorization",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned UHC / surgical cell and executes sub_tactic 'modality_substitution' with a clinically appropriate Pelvic floor dysfunction postpartum (N81.9) \u2192 Pelvic floor physical therapy (12 visits) pair.",
+        "reasoning": "The brief matches the assigned UHC / surgical cell and executes sub_tactic 'modality_substitution' with a clinically appropriate Trigger finger, ring finger (M65.30) \u2192 A1 pulley release pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Pelvic floor dysfunction postpartum (N81.9)",
-          "Pelvic floor physical therapy (12 visits)",
+          "Trigger finger, ring finger (M65.30)",
+          "A1 pulley release",
           "modality_substitution"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Pelvic floor dysfunction postpartum (N81.9)",
-          "Pelvic floor physical therapy (12 visits)"
+          "Trigger finger, ring finger (M65.30)",
+          "A1 pulley release"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Pelvic floor physical therapy (12 visits) related to Pelvi"
+          "Dear Member,\n\nWe received your provider's request on 06/24/2026 for A1 pulley release related to Trigger finger, ring fi"
         ],
         "improvement": null
       },
@@ -95,7 +95,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Pelvic floor physical therapy (12 visits) related to Pelvi"
+          "Dear Member,\n\nWe received your provider's request on 06/24/2026 for A1 pulley release related to Trigger finger, ring fi"
         ],
         "improvement": null
       },
@@ -105,18 +105,18 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 34-year-old member carries a documented diagnosis of Pelvic floor dysfunction postpartum (N81.9). He has been under "
+          "The 34-year-old member has Trigger finger, ring finger (M65.30). He has been treated under commercial coverage with A1 p"
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Pelvic floor physical therapy (12 visits) is a standard intervention for Pelvic floor dysfunction postpartum (N81.9) in US commercial practice.",
+        "reasoning": "A1 pulley release is a standard intervention for Trigger finger, ring finger (M65.30) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Pelvic floor dysfunction postpartum (N81.9)",
-          "Pelvic floor physical therapy (12 visits)"
+          "Trigger finger, ring finger (M65.30)",
+          "A1 pulley release"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nWe received your provider's request on 06/24/2026 for A1 pulley re"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nWe received your provider's request on 06/24/2026 for A1 pulley re"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nWe received your provider's request on 06/24/2026 for A1 pulley re"
         ],
         "improvement": null
       },
@@ -210,15 +210,19 @@
         "score": 3,
         "confidence": 0.8,
         "evidence_quotes": [
-          "modality substitution without safety rationale"
+          "Exploitable flaw: no mention of IRO process",
+          "Exploitable flaw: only internal appeal described"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "modality substitution without safety rationale"
+          "Exploitable flaw: no mention of IRO process",
+          "Exploitable flaw: only internal appeal described",
+          "Pattern anchor: missing_iro_notice",
+          "Pattern anchor: incorrect_demographic_guideline"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: modality_substitution."
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'modality_substitution' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for UHC Prior Authorization / surgical / sub_tactic=modality_substitution. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: UHC Prior Authorization / surgical / modality_substitution. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: missing_iro_notice, incorrect_demographic_guideline.",
     "appeal_difficulty": {
       "score": 3,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "modality substitution without safety rationale"
+        "Exploitable flaw: no mention of IRO process",
+        "Exploitable flaw: only internal appeal described",
+        "Pattern anchor: missing_iro_notice",
+        "Pattern anchor: incorrect_demographic_guideline"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: modality_substitution."
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'modality_substitution' is reflected in the stated rationale."
       ]
     }
   }

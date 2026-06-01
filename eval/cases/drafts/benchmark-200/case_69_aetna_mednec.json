@@ -3,24 +3,24 @@
   "insurer": "Aetna",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 55,
+    "age": 49,
     "gender": "M",
-    "diagnosis": "Severe alcohol use disorder (F10.20)",
-    "treatment_requested": "Intensive outpatient program (IOP) for AUD",
+    "diagnosis": "Shoulder instability MRI (M25.311)",
+    "treatment_requested": "MRI shoulder without contrast",
     "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "algo_reviewer_no_credentials: ERISA 29 U.S.C. \u00a7 1133; MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Hansens v. Cigna (D. Conn. 2023)",
-    "experimental_despite_fda_approval: ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis"
+    "experimental_despite_fda_approval: ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis",
+    "superseded_guideline: AHIP 2022 Coverage Policy Review; documented in multiple Cigna litigation cases 2021\u20132023"
   ],
-  "denial_letter_text": "Dear Plan Member,\n\nWe have completed our review of the request for Intensive outpatient program (IOP) for AUD related to Severe alcohol use disorder (F10.20).\n\nAfter clinical review using Aetna Clinical Policy Bulletins (CPBs) and InterQual criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Outpatient counseling is sufficient; IOP level not medically necessary. Our records were reviewed against the applicable utilization-management criteria for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer claims a lower level of care suffices (IOP\u2192outpatient, inpatient\u2192IOP).\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Intensive outpatient program (IOP) for AUD. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nAetna Medical Management",
-  "clinical_context": "The 55-year-old member carries a documented diagnosis of Severe alcohol use disorder (F10.20). He has been under continuous care with treating specialists who recommended Intensive outpatient program (IOP) for AUD as the next appropriate step.\n\nASAM criteria met for IOP; outpatient alone failed twice. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on level of care too high without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2026-04-14T14:22:00Z",
-  "denial_timestamp": "2026-04-28T09:15:00Z",
+  "denial_letter_text": "Dear Plan Member,\n\nWe received your provider's request on 10/06/2026 for MRI shoulder without contrast related to Shoulder instability MRI (M25.311). After review, we cannot approve this request.\n\nOur review applied Aetna Clinical Policy Bulletin (CPB) criteria and InterQual review standards. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. A lower level of care is appropriate for Shoulder instability MRI (M25.311); MRI shoulder without contrast exceeds what is required. Outpatient management has not been exhausted per clinical guidelines.\n\nSpecifically, the information provided does not satisfy the MCG Care Guidelines (edition not specified) and utilization-management requirements associated with level of care too high. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nAetna Medical Management",
+  "clinical_context": "The 49-year-old member has Shoulder instability MRI (M25.311). He has been treated under commercial coverage with MRI shoulder without contrast recommended as the next appropriate step. Recurrent subluxation; exam apprehension positive. This directly contradicts the insurer's position that level of care too high bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b06-20260601-160329-a4e69",
-    "generated_at": "2026-06-01T16:03:29Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "Aetna",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Aetna / imaging cell and executes sub_tactic 'level_of_care_too_high' with a clinically appropriate Severe alcohol use disorder (F10.20) \u2192 Intensive outpatient program (IOP) for AUD pair.",
+        "reasoning": "The brief matches the assigned Aetna / imaging cell and executes sub_tactic 'level_of_care_too_high' with a clinically appropriate Shoulder instability MRI (M25.311) \u2192 MRI shoulder without contrast pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Severe alcohol use disorder (F10.20)",
-          "Intensive outpatient program (IOP) for AUD",
+          "Shoulder instability MRI (M25.311)",
+          "MRI shoulder without contrast",
           "level_of_care_too_high"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Severe alcohol use disorder (F10.20)",
-          "Intensive outpatient program (IOP) for AUD"
+          "Shoulder instability MRI (M25.311)",
+          "MRI shoulder without contrast"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Intensive outpatient program (IOP) for AUD related to Seve"
+          "Dear Plan Member,\n\nWe received your provider's request on 10/06/2026 for MRI shoulder without contrast related to Should"
         ],
         "improvement": null
       },
@@ -95,7 +95,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Intensive outpatient program (IOP) for AUD related to Seve"
+          "Dear Plan Member,\n\nWe received your provider's request on 10/06/2026 for MRI shoulder without contrast related to Should"
         ],
         "improvement": null
       },
@@ -105,18 +105,18 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 55-year-old member carries a documented diagnosis of Severe alcohol use disorder (F10.20). He has been under continu"
+          "The 49-year-old member has Shoulder instability MRI (M25.311). He has been treated under commercial coverage with MRI sh"
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Intensive outpatient program (IOP) for AUD is a standard intervention for Severe alcohol use disorder (F10.20) in US commercial practice.",
+        "reasoning": "MRI shoulder without contrast is a standard intervention for Shoulder instability MRI (M25.311) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Severe alcohol use disorder (F10.20)",
-          "Intensive outpatient program (IOP) for AUD"
+          "Shoulder instability MRI (M25.311)",
+          "MRI shoulder without contrast"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Intensive out"
+          "Dear Plan Member,\n\nWe received your provider's request on 10/06/2026 for MRI sho"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Intensive out"
+          "Dear Plan Member,\n\nWe received your provider's request on 10/06/2026 for MRI sho"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Intensive out"
+          "Dear Plan Member,\n\nWe received your provider's request on 10/06/2026 for MRI sho"
         ],
         "improvement": null
       },
@@ -207,18 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 1,
         "confidence": 0.8,
         "evidence_quotes": [
-          "uses proprietary criteria more restrictive than ASAM"
+          "Exploitable flaw: coverage policy last reviewed 2+ years ago",
+          "Exploitable flaw: FDA approval or NCCN Category 1 designation not reflected"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "uses proprietary criteria more restrictive than ASAM"
+          "Exploitable flaw: coverage policy last reviewed 2+ years ago",
+          "Exploitable flaw: FDA approval or NCCN Category 1 designation not reflected",
+          "Pattern anchor: experimental_despite_fda_approval",
+          "Pattern anchor: superseded_guideline"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: level_of_care_too_high."
+          "Denial cites Aetna policy framework and 180-day appeal window.",
+          "Sub-tactic 'level_of_care_too_high' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Aetna Medical Necessity / imaging / sub_tactic=level_of_care_too_high. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Aetna Medical Necessity / imaging / level_of_care_too_high. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: experimental_despite_fda_approval, superseded_guideline.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 1,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "uses proprietary criteria more restrictive than ASAM"
+        "Exploitable flaw: coverage policy last reviewed 2+ years ago",
+        "Exploitable flaw: FDA approval or NCCN Category 1 designation not reflected",
+        "Pattern anchor: experimental_despite_fda_approval",
+        "Pattern anchor: superseded_guideline"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: level_of_care_too_high."
+        "Denial cites Aetna policy framework and 180-day appeal window.",
+        "Sub-tactic 'level_of_care_too_high' is reflected in the stated rationale."
       ]
     }
   }

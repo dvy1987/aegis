@@ -3,24 +3,24 @@
   "insurer": "Aetna",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 69,
+    "age": 63,
     "gender": "M",
-    "diagnosis": "Rotator cuff tear, partial (M75.101)",
-    "treatment_requested": "Arthroscopic rotator cuff repair",
+    "diagnosis": "Restless legs syndrome, refractory (G25.81)",
+    "treatment_requested": "Pramipexole titration",
     "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
-    "plan_exclusion_overrides_state_mandate: NCSL State Health Insurance Mandates Database 2024; documented in CA, NJ, IL enforcement actions"
+    "ignored_physician_letter: AMA 2023 Prior Authorization Physician Survey",
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719"
   ],
-  "denial_letter_text": "Dear Member,\n\nThis letter confirms the outcome of our review of the request for Arthroscopic rotator cuff repair related to Rotator cuff tear, partial (M75.101).\n\nAfter clinical review using Aetna Clinical Policy Bulletins (CPBs) and InterQual criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Requires 3 months conservative care including PT. Our records were reviewed against the applicable utilization-management criteria for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer demands documented conservative treatment (e.g., 6 mo PT, 6 mo diet) first.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Arthroscopic rotator cuff repair. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nAetna Medical Management\n\nPlease note that standard criteria apply regardless of prior submissions.",
-  "clinical_context": "The 69-year-old member carries a documented diagnosis of Rotator cuff tear, partial (M75.101). He has been under continuous care with treating specialists who recommended Arthroscopic rotator cuff repair as the next appropriate step.\n\nSixteen PT visits plus NSAIDs; MRI shows full-thickness tear. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on conservative treatment required without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2026-05-08T14:22:00Z",
-  "denial_timestamp": "2026-05-22T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nWe received your provider's request on 04/18/2026 for Pramipexole titration related to Restless legs syndrome, refractory (G25.81). After review, we cannot approve this request.\n\nOur review applied Aetna Clinical Policy Bulletin (CPB) criteria and InterQual review standards. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Coverage requires a defined course of conservative therapy before Pramipexole titration. Documentation does not show the required duration or type of conservative care.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with conservative treatment required. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination through our internal appeals process. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nAetna Medical Management\n\nStandard criteria apply regardless of information previously sent to the plan.",
+  "clinical_context": "The 63-year-old member has Restless legs syndrome, refractory (G25.81). He has been treated under commercial coverage with Pramipexole titration recommended as the next appropriate step. Ferritin 45 ng/mL; failed gabapentin 300 mg TID. This directly contradicts the insurer's position that conservative treatment required bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b10-20260601-160331-b17fb",
-    "generated_at": "2026-06-01T16:03:31Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "Aetna",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Aetna / neurology cell and executes sub_tactic 'conservative_treatment_required' with a clinically appropriate Rotator cuff tear, partial (M75.101) \u2192 Arthroscopic rotator cuff repair pair.",
+        "reasoning": "The brief matches the assigned Aetna / neurology cell and executes sub_tactic 'conservative_treatment_required' with a clinically appropriate Restless legs syndrome, refractory (G25.81) \u2192 Pramipexole titration pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Rotator cuff tear, partial (M75.101)",
-          "Arthroscopic rotator cuff repair",
+          "Restless legs syndrome, refractory (G25.81)",
+          "Pramipexole titration",
           "conservative_treatment_required"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Rotator cuff tear, partial (M75.101)",
-          "Arthroscopic rotator cuff repair"
+          "Restless legs syndrome, refractory (G25.81)",
+          "Pramipexole titration"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Arthroscopic rotator cuff repair related to Rotator cuff t"
+          "Dear Member,\n\nWe received your provider's request on 04/18/2026 for Pramipexole titration related to Restless legs syndr"
         ],
         "improvement": null
       },
@@ -95,28 +95,28 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Arthroscopic rotator cuff repair related to Rotator cuff t"
+          "Dear Member,\n\nWe received your provider's request on 04/18/2026 for Pramipexole titration related to Restless legs syndr"
         ],
         "improvement": null
       },
       "clinical_realism": {
         "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
-        "score": 3,
+        "reasoning": "Clinical context cites measurable treatments, durations, or scores appropriate to the specialty.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 69-year-old member carries a documented diagnosis of Rotator cuff tear, partial (M75.101). He has been under continu"
+          "Ferritin 45 ng/mL; failed gabapentin 300 mg TID."
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Arthroscopic rotator cuff repair is a standard intervention for Rotator cuff tear, partial (M75.101) in US commercial practice.",
+        "reasoning": "Pramipexole titration is a standard intervention for Restless legs syndrome, refractory (G25.81) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Rotator cuff tear, partial (M75.101)",
-          "Arthroscopic rotator cuff repair"
+          "Restless legs syndrome, refractory (G25.81)",
+          "Pramipexole titration"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nWe received your provider's request on 04/18/2026 for Pramipexole "
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nWe received your provider's request on 04/18/2026 for Pramipexole "
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Member,\n\nWe received your provider's request on 04/18/2026 for Pramipexole "
         ],
         "improvement": null
       },
@@ -210,15 +210,19 @@
         "score": 3,
         "confidence": 0.8,
         "evidence_quotes": [
-          "boilerplate ignores prior auth context"
+          "Exploitable flaw: boilerplate ignores prior auth context",
+          "Exploitable flaw: makes no reference to submitted evidence"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "boilerplate ignores prior auth context"
+          "Exploitable flaw: boilerplate ignores prior auth context",
+          "Exploitable flaw: makes no reference to submitted evidence",
+          "Pattern anchor: ignored_physician_letter",
+          "Pattern anchor: missing_iro_notice"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: conservative_treatment_required."
+          "Denial cites Aetna policy framework and 180-day appeal window.",
+          "Sub-tactic 'conservative_treatment_required' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Aetna Medical Necessity / neurology / sub_tactic=conservative_treatment_required. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Aetna Medical Necessity / neurology / conservative_treatment_required. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: ignored_physician_letter, missing_iro_notice.",
     "appeal_difficulty": {
       "score": 3,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "boilerplate ignores prior auth context"
+        "Exploitable flaw: boilerplate ignores prior auth context",
+        "Exploitable flaw: makes no reference to submitted evidence",
+        "Pattern anchor: ignored_physician_letter",
+        "Pattern anchor: missing_iro_notice"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: conservative_treatment_required."
+        "Denial cites Aetna policy framework and 180-day appeal window.",
+        "Sub-tactic 'conservative_treatment_required' is reflected in the stated rationale."
       ]
     }
   }

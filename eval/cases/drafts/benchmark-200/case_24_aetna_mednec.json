@@ -3,24 +3,24 @@
   "insurer": "Aetna",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 37,
+    "age": 27,
     "gender": "F",
-    "diagnosis": "Paroxysmal atrial fibrillation (I48.0)",
-    "treatment_requested": "Catheter ablation for symptomatic AFib",
-    "plan_funding_type": "self_funded"
+    "diagnosis": "Lumbar disc herniation, suspected (M51.26)",
+    "treatment_requested": "MRI lumbar spine without contrast",
+    "plan_funding_type": "fully_insured"
   },
   "denial_pattern_sources": [
-    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials",
-    "algo_reviewer_no_credentials: ERISA 29 U.S.C. \u00a7 1133; MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Hansens v. Cigna (D. Conn. 2023)"
+    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
+    "plan_exclusion_overrides_state_mandate: NCSL State Health Insurance Mandates Database 2024; documented in CA, NJ, IL enforcement actions"
   ],
-  "denial_letter_text": "Dear Plan Member,\n\nWe have completed our review of the request for Catheter ablation for symptomatic AFib related to Paroxysmal atrial fibrillation (I48.0).\n\nAfter clinical review using Aetna Clinical Policy Bulletins (CPBs) and InterQual criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Insurer requires failure of two class III antiarrhythmics before ablation. Our records were reviewed against the applicable utilization-management criteria (MCG guidelines, current edition not specified) for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer says patient must try cheaper alternative X first.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Catheter ablation for symptomatic AFib. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nAetna Medical Management\n\nPlease note that standard criteria apply regardless of prior submissions.",
-  "clinical_context": "The 37-year-old member carries a documented diagnosis of Paroxysmal atrial fibrillation (I48.0). She has been under continuous care with treating specialists who recommended Catheter ablation for symptomatic AFib as the next appropriate step.\n\nPatient failed dofetilide and sotalol with documented rhythm logs. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on step therapy missing without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2025-03-09T14:22:00Z",
-  "denial_timestamp": "2025-03-23T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nWe received your provider's request on 05/05/2026 for MRI lumbar spine without contrast related to Lumbar disc herniation, suspected (M51.26). After review, we cannot approve this request.\n\nOur review applied Aetna Clinical Policy Bulletin (CPB) criteria and InterQual review standards. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Aetna medical policy requires documented failure of prerequisite therapies before MRI lumbar spine without contrast. Submitted records do not establish failure of required lower-cost options for Lumbar disc herniation, suspected (M51.26).\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with step therapy missing. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nAetna Medical Management",
+  "clinical_context": "The 27-year-old member has Lumbar disc herniation, suspected (M51.26). She has been treated under commercial coverage with MRI lumbar spine without contrast recommended as the next appropriate step. Radicular pain 6 weeks; failed PT; straight-leg raise positive. This directly contradicts the insurer's position that step therapy missing bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b02-20260601-160327-d6d29",
-    "generated_at": "2026-06-01T16:03:27Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "Aetna",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Aetna / imaging cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Paroxysmal atrial fibrillation (I48.0) \u2192 Catheter ablation for symptomatic AFib pair.",
+        "reasoning": "The brief matches the assigned Aetna / imaging cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Lumbar disc herniation, suspected (M51.26) \u2192 MRI lumbar spine without contrast pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Paroxysmal atrial fibrillation (I48.0)",
-          "Catheter ablation for symptomatic AFib",
+          "Lumbar disc herniation, suspected (M51.26)",
+          "MRI lumbar spine without contrast",
           "step_therapy_missing"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Paroxysmal atrial fibrillation (I48.0)",
-          "Catheter ablation for symptomatic AFib"
+          "Lumbar disc herniation, suspected (M51.26)",
+          "MRI lumbar spine without contrast"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Catheter ablation for symptomatic AFib related to Paroxysm"
+          "Dear Member,\n\nWe received your provider's request on 05/05/2026 for MRI lumbar spine without contrast related to Lumbar "
         ],
         "improvement": null
       },
@@ -95,28 +95,28 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Catheter ablation for symptomatic AFib related to Paroxysm"
+          "Dear Member,\n\nWe received your provider's request on 05/05/2026 for MRI lumbar spine without contrast related to Lumbar "
         ],
         "improvement": null
       },
       "clinical_realism": {
         "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
-        "score": 3,
+        "reasoning": "Clinical context cites measurable treatments, durations, or scores appropriate to the specialty.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 37-year-old member carries a documented diagnosis of Paroxysmal atrial fibrillation (I48.0). She has been under cont"
+          "Radicular pain 6 weeks; failed PT; straight-leg raise positive."
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Catheter ablation for symptomatic AFib is a standard intervention for Paroxysmal atrial fibrillation (I48.0) in US commercial practice.",
+        "reasoning": "MRI lumbar spine without contrast is a standard intervention for Lumbar disc herniation, suspected (M51.26) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Paroxysmal atrial fibrillation (I48.0)",
-          "Catheter ablation for symptomatic AFib"
+          "Lumbar disc herniation, suspected (M51.26)",
+          "MRI lumbar spine without contrast"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Catheter abla"
+          "Dear Member,\n\nWe received your provider's request on 05/05/2026 for MRI lumbar s"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Catheter abla"
+          "Dear Member,\n\nWe received your provider's request on 05/05/2026 for MRI lumbar s"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Catheter abla"
+          "Dear Member,\n\nWe received your provider's request on 05/05/2026 for MRI lumbar s"
         ],
         "improvement": null
       },
@@ -207,20 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 1,
         "confidence": 0.8,
         "evidence_quotes": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: missing external review right",
+          "Exploitable flaw: missing civil action right"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: missing external review right",
+          "Exploitable flaw: missing civil action right",
+          "Pattern anchor: missing_erisa_disclosures",
+          "Pattern anchor: plan_exclusion_overrides_state_mandate"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: step_therapy_missing."
+          "Denial cites Aetna policy framework and 180-day appeal window.",
+          "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -240,17 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Aetna Medical Necessity / imaging / sub_tactic=step_therapy_missing. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Aetna Medical Necessity / imaging / step_therapy_missing. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: missing_erisa_disclosures, plan_exclusion_overrides_state_mandate.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 1,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "vague guideline citation",
-        "ignored prior treatment failure"
+        "Exploitable flaw: missing external review right",
+        "Exploitable flaw: missing civil action right",
+        "Pattern anchor: missing_erisa_disclosures",
+        "Pattern anchor: plan_exclusion_overrides_state_mandate"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: step_therapy_missing."
+        "Denial cites Aetna policy framework and 180-day appeal window.",
+        "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
       ]
     }
   }

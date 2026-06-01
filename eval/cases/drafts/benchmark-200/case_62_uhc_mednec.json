@@ -3,24 +3,24 @@
   "insurer": "UHC",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 67,
+    "age": 62,
     "gender": "M",
-    "diagnosis": "Rheumatoid arthritis, seropositive (M06.9)",
-    "treatment_requested": "Upadacitinib (Rinvoq) after methotrexate",
+    "diagnosis": "Stable angina with positive stress test (I20.9)",
+    "treatment_requested": "Coronary CT angiography",
     "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "peer_to_peer_window_verbal_only: AMA 2023 Prior Authorization Physician Survey; documented in multiple state PA reform laws (TX HB 2002, VA SB 1272)",
-    "circular_medical_necessity: ProPublica 'Uncovered' Series 2023"
+    "contraindication_to_step_therapy: AMA 2023 Prior Authorization Physician Survey; State step-therapy exception laws (NY, TX, IL)",
+    "peer_to_peer_window_verbal_only: AMA 2023 Prior Authorization Physician Survey; documented in multiple state PA reform laws (TX HB 2002, VA SB 1272)"
   ],
-  "denial_letter_text": "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinvoq) after methotrexate related to Rheumatoid arthritis, seropositive (M06.9).\n\nAfter clinical review using UnitedHealthcare Medical Policies and Optum clinical criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Requires trial of two DMARDs including methotrexate. Our records were reviewed against the applicable utilization-management criteria (MCG guidelines, current edition not specified) for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer says patient must try cheaper alternative X first.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Upadacitinib (Rinvoq) after methotrexate. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nUnitedHealthcare Utilization Management\n\nPlease note that standard criteria apply regardless of prior submissions.",
-  "clinical_context": "The 67-year-old member carries a documented diagnosis of Rheumatoid arthritis, seropositive (M06.9). He has been under continuous care with treating specialists who recommended Upadacitinib (Rinvoq) after methotrexate as the next appropriate step.\n\nMethotrexate and sulfasalazine failed with DAS28 > 5.1. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on step therapy missing without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2025-08-07T14:22:00Z",
-  "denial_timestamp": "2025-08-21T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 03/21/2026 for Coronary CT angiography related to Stable angina with positive stress test (I20.9). After review, we cannot approve this request.\n\nOur review applied UnitedHealthcare Medical Management Guidelines and Optum clinical criteria. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. UHC medical policy requires documented failure of prerequisite therapies before Coronary CT angiography. Submitted records do not establish failure of required lower-cost options for Stable angina with positive stress test (I20.9).\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with step therapy missing. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the verbal timeframe communicated to office staff (not confirmed in this letter).\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
+  "clinical_context": "The 62-year-old member has Stable angina with positive stress test (I20.9). He has been treated under commercial coverage with Coronary CT angiography recommended as the next appropriate step. Typical angina class II; stress ECG with 2 mm ST depression at 7 METs. This directly contradicts the insurer's position that step therapy missing bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b06-20260601-160329-a4e69",
-    "generated_at": "2026-06-01T16:03:29Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "UHC",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned UHC / cardiology cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Rheumatoid arthritis, seropositive (M06.9) \u2192 Upadacitinib (Rinvoq) after methotrexate pair.",
+        "reasoning": "The brief matches the assigned UHC / cardiology cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Stable angina with positive stress test (I20.9) \u2192 Coronary CT angiography pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Rheumatoid arthritis, seropositive (M06.9)",
-          "Upadacitinib (Rinvoq) after methotrexate",
+          "Stable angina with positive stress test (I20.9)",
+          "Coronary CT angiography",
           "step_therapy_missing"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Rheumatoid arthritis, seropositive (M06.9)",
-          "Upadacitinib (Rinvoq) after methotrexate"
+          "Stable angina with positive stress test (I20.9)",
+          "Coronary CT angiography"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinvoq) after methotrexate related to Rheuma"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 03/21/2026 for Coronary "
         ],
         "improvement": null
       },
@@ -95,7 +95,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinvoq) after methotrexate related to Rheuma"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 03/21/2026 for Coronary "
         ],
         "improvement": null
       },
@@ -105,18 +105,18 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 67-year-old member carries a documented diagnosis of Rheumatoid arthritis, seropositive (M06.9). He has been under c"
+          "The 62-year-old member has Stable angina with positive stress test (I20.9). He has been treated under commercial coverag"
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Upadacitinib (Rinvoq) after methotrexate is a standard intervention for Rheumatoid arthritis, seropositive (M06.9) in US commercial practice.",
+        "reasoning": "Coronary CT angiography is a standard intervention for Stable angina with positive stress test (I20.9) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Rheumatoid arthritis, seropositive (M06.9)",
-          "Upadacitinib (Rinvoq) after methotrexate"
+          "Stable angina with positive stress test (I20.9)",
+          "Coronary CT angiography"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinv"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinv"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinv"
+          "Dear Member,\n\nThis letter advises you of our determination regarding your provid"
         ],
         "improvement": null
       },
@@ -207,20 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 5,
         "confidence": 0.8,
         "evidence_quotes": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: demands step therapy despite documented allergy or adverse reaction in chart",
+          "Exploitable flaw: ignores prior treatment failure"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: demands step therapy despite documented allergy or adverse reaction in chart",
+          "Exploitable flaw: ignores prior treatment failure",
+          "Pattern anchor: contraindication_to_step_therapy",
+          "Pattern anchor: peer_to_peer_window_verbal_only"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: step_therapy_missing."
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -240,17 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for UHC Medical Necessity / cardiology / sub_tactic=step_therapy_missing. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: UHC Medical Necessity / cardiology / step_therapy_missing. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: contraindication_to_step_therapy, peer_to_peer_window_verbal_only.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 5,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "vague guideline citation",
-        "ignored prior treatment failure"
+        "Exploitable flaw: demands step therapy despite documented allergy or adverse reaction in chart",
+        "Exploitable flaw: ignores prior treatment failure",
+        "Pattern anchor: contraindication_to_step_therapy",
+        "Pattern anchor: peer_to_peer_window_verbal_only"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: step_therapy_missing."
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
       ]
     }
   }

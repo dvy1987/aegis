@@ -5,22 +5,22 @@
   "patient_profile": {
     "age": 42,
     "gender": "F",
-    "diagnosis": "Rheumatoid arthritis, seropositive (M06.9)",
-    "treatment_requested": "Upadacitinib (Rinvoq) after methotrexate",
-    "plan_funding_type": "self_funded"
+    "diagnosis": "Breast hypertrophy with macromastia symptoms (N62)",
+    "treatment_requested": "Reduction mammaplasty",
+    "plan_funding_type": "fully_insured"
   },
   "denial_pattern_sources": [
-    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
-    "appeal_closed_as_withdrawn: State Insurance Commissioner complaint logs (CA DOI 2022, NY DFS 2023)"
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "experimental_despite_fda_approval: ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis"
   ],
-  "denial_letter_text": "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinvoq) after methotrexate related to Rheumatoid arthritis, seropositive (M06.9).\n\nAfter clinical review using Aetna Clinical Policy Bulletins (CPBs) and InterQual criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Requires trial of two DMARDs including methotrexate. Our records were reviewed against the applicable utilization-management criteria (MCG guidelines, current edition not specified) for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer says patient must try cheaper alternative X first.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Upadacitinib (Rinvoq) after methotrexate. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nAetna Medical Management\n\nPlease note that standard criteria apply regardless of prior submissions.",
-  "clinical_context": "The 42-year-old member carries a documented diagnosis of Rheumatoid arthritis, seropositive (M06.9). She has been under continuous care with treating specialists who recommended Upadacitinib (Rinvoq) after methotrexate as the next appropriate step.\n\nMethotrexate and sulfasalazine failed with DAS28 > 5.1. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on step therapy missing without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2025-09-05T14:22:00Z",
-  "denial_timestamp": "2025-09-19T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nWe received your provider's request on 01/11/2026 for Reduction mammaplasty related to Breast hypertrophy with macromastia symptoms (N62). After review, we cannot approve this request.\n\nOur review applied Aetna Clinical Policy Bulletin (CPB) criteria and InterQual review standards. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Aetna medical policy requires documented failure of prerequisite therapies before Reduction mammaplasty. Submitted records do not establish failure of required lower-cost options for Breast hypertrophy with macromastia symptoms (N62).\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with step therapy missing. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nAetna Medical Management",
+  "clinical_context": "The 42-year-old member has Breast hypertrophy with macromastia symptoms (N62). She has been treated under commercial coverage with Reduction mammaplasty recommended as the next appropriate step. Shoulder grooving, intertrigo; 6 months PT for neck pain failed. This directly contradicts the insurer's position that step therapy missing bars coverage: the chart documents dates, doses, and objective findings (including dated scale scores in the chart) that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b13-20260601-160333-7a50a",
-    "generated_at": "2026-06-01T16:03:33Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "Aetna",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Aetna / surgical cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Rheumatoid arthritis, seropositive (M06.9) \u2192 Upadacitinib (Rinvoq) after methotrexate pair.",
+        "reasoning": "The brief matches the assigned Aetna / surgical cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Breast hypertrophy with macromastia symptoms (N62) \u2192 Reduction mammaplasty pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Rheumatoid arthritis, seropositive (M06.9)",
-          "Upadacitinib (Rinvoq) after methotrexate",
+          "Breast hypertrophy with macromastia symptoms (N62)",
+          "Reduction mammaplasty",
           "step_therapy_missing"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Rheumatoid arthritis, seropositive (M06.9)",
-          "Upadacitinib (Rinvoq) after methotrexate"
+          "Breast hypertrophy with macromastia symptoms (N62)",
+          "Reduction mammaplasty"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinvoq) after methotrexate related to Rheuma"
+          "Dear Member,\n\nWe received your provider's request on 01/11/2026 for Reduction mammaplasty related to Breast hypertrophy "
         ],
         "improvement": null
       },
@@ -95,7 +95,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinvoq) after methotrexate related to Rheuma"
+          "Dear Member,\n\nWe received your provider's request on 01/11/2026 for Reduction mammaplasty related to Breast hypertrophy "
         ],
         "improvement": null
       },
@@ -105,18 +105,18 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 42-year-old member carries a documented diagnosis of Rheumatoid arthritis, seropositive (M06.9). She has been under "
+          "The 42-year-old member has Breast hypertrophy with macromastia symptoms (N62). She has been treated under commercial cov"
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Upadacitinib (Rinvoq) after methotrexate is a standard intervention for Rheumatoid arthritis, seropositive (M06.9) in US commercial practice.",
+        "reasoning": "Reduction mammaplasty is a standard intervention for Breast hypertrophy with macromastia symptoms (N62) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Rheumatoid arthritis, seropositive (M06.9)",
-          "Upadacitinib (Rinvoq) after methotrexate"
+          "Breast hypertrophy with macromastia symptoms (N62)",
+          "Reduction mammaplasty"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinv"
+          "Dear Member,\n\nWe received your provider's request on 01/11/2026 for Reduction ma"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinv"
+          "Dear Member,\n\nWe received your provider's request on 01/11/2026 for Reduction ma"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Upadacitinib (Rinv"
+          "Dear Member,\n\nWe received your provider's request on 01/11/2026 for Reduction ma"
         ],
         "improvement": null
       },
@@ -207,20 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 5,
         "confidence": 0.8,
         "evidence_quotes": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: denial rationale is generic with no patient-specific language",
+          "Exploitable flaw: no reference to submitted records, physician name, or clinical history"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: denial rationale is generic with no patient-specific language",
+          "Exploitable flaw: no reference to submitted records, physician name, or clinical history",
+          "Pattern anchor: algo_boilerplate_fingerprint",
+          "Pattern anchor: experimental_despite_fda_approval"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: step_therapy_missing."
+          "Denial cites Aetna policy framework and 180-day appeal window.",
+          "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -240,17 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Aetna Medical Necessity / surgical / sub_tactic=step_therapy_missing. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Aetna Medical Necessity / surgical / step_therapy_missing. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: algo_boilerplate_fingerprint, experimental_despite_fda_approval.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 5,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "vague guideline citation",
-        "ignored prior treatment failure"
+        "Exploitable flaw: denial rationale is generic with no patient-specific language",
+        "Exploitable flaw: no reference to submitted records, physician name, or clinical history",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: experimental_despite_fda_approval"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: step_therapy_missing."
+        "Denial cites Aetna policy framework and 180-day appeal window.",
+        "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
       ]
     }
   }

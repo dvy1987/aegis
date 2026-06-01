@@ -3,24 +3,24 @@
   "insurer": "Aetna",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 75,
+    "age": 72,
     "gender": "F",
-    "diagnosis": "Moderate plaque psoriasis (L40.0)",
-    "treatment_requested": "Adalimumab (Humira) for psoriasis",
+    "diagnosis": "Knee osteoarthritis, severe medial compartment (M17.11)",
+    "treatment_requested": "Unicompartmental knee arthroplasty",
     "plan_funding_type": "fully_insured"
   },
   "denial_pattern_sources": [
-    "experimental_despite_fda_approval: ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis",
-    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "ignored_physician_letter: AMA 2023 Prior Authorization Physician Survey"
   ],
-  "denial_letter_text": "Dear Member,\n\nThis letter confirms the outcome of our review of the request for Adalimumab (Humira) for psoriasis related to Moderate plaque psoriasis (L40.0).\n\nAfter clinical review using Aetna Clinical Policy Bulletins (CPBs) and InterQual criteria, we are unable to approve coverage at this time.\n\nThis determination applies to your employer-sponsored commercial benefit while still actively employed as a senior consultant on an employer-sponsored PPO.\n\nDetermination summary: Step therapy demands methotrexate trial before biologic. Our records were reviewed against the applicable utilization-management criteria (MCG guidelines, current edition not specified) for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer says patient must try cheaper alternative X first.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Adalimumab (Humira) for psoriasis. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nAetna Medical Management\n\nPlease note that standard criteria apply regardless of prior submissions.",
-  "clinical_context": "The 75-year-old member carries a documented diagnosis of Moderate plaque psoriasis (L40.0). The member is still actively employed as a senior consultant on an employer-sponsored PPO. She has been under continuous care with treating specialists who recommended Adalimumab (Humira) for psoriasis as the next appropriate step.\n\nMethotrexate stopped for hepatotoxicity; documentation submitted. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on step therapy missing without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2026-04-22T14:22:00Z",
-  "denial_timestamp": "2026-04-36T09:15:00Z",
+  "denial_letter_text": "Dear Plan Member,\n\nWe received your provider's request on 08/06/2026 for Unicompartmental knee arthroplasty related to Knee osteoarthritis, severe medial compartment (M17.11). After review, we cannot approve this request.\n\nOur review applied Aetna Clinical Policy Bulletin (CPB) criteria and InterQual review standards. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Aetna medical policy requires documented failure of prerequisite therapies before Unicompartmental knee arthroplasty. Submitted records do not establish failure of required lower-cost options for Knee osteoarthritis, severe medial compartment (M17.11).\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with step therapy missing. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nThis determination applies to your employer-sponsored commercial benefit while you remain covered under an active group plan (still actively employed as a senior professional on a large-group employer-sponsored commercial PPO).\n\nSincerely,\n\nAetna Medical Management\n\nStandard criteria apply regardless of information previously sent to the plan.",
+  "clinical_context": "The 72-year-old member has Knee osteoarthritis, severe medial compartment (M17.11). The member is still actively employed as a senior professional on a large-group employer-sponsored commercial PPO. She has been treated under commercial coverage with Unicompartmental knee arthroplasty recommended as the next appropriate step. BMI 27; failed NSAIDs, injections \u00d73, and 12 weeks PT; varus alignment. This directly contradicts the insurer's position that step therapy missing bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b15-20260601-160334-92991",
-    "generated_at": "2026-06-01T16:03:34Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "Aetna",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Aetna / msk cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Moderate plaque psoriasis (L40.0) \u2192 Adalimumab (Humira) for psoriasis pair.",
+        "reasoning": "The brief matches the assigned Aetna / msk cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Knee osteoarthritis, severe medial compartment (M17.11) \u2192 Unicompartmental knee arthroplasty pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Moderate plaque psoriasis (L40.0)",
-          "Adalimumab (Humira) for psoriasis",
+          "Knee osteoarthritis, severe medial compartment (M17.11)",
+          "Unicompartmental knee arthroplasty",
           "step_therapy_missing"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Moderate plaque psoriasis (L40.0)",
-          "Adalimumab (Humira) for psoriasis"
+          "Knee osteoarthritis, severe medial compartment (M17.11)",
+          "Unicompartmental knee arthroplasty"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Adalimumab (Humira) for psoriasis related to Moderate plaq"
+          "Dear Plan Member,\n\nWe received your provider's request on 08/06/2026 for Unicompartmental knee arthroplasty related to K"
         ],
         "improvement": null
       },
@@ -95,28 +95,28 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Adalimumab (Humira) for psoriasis related to Moderate plaq"
+          "Dear Plan Member,\n\nWe received your provider's request on 08/06/2026 for Unicompartmental knee arthroplasty related to K"
         ],
         "improvement": null
       },
       "clinical_realism": {
         "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
-        "score": 3,
+        "reasoning": "Clinical context cites measurable treatments, durations, or scores appropriate to the specialty.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 75-year-old member carries a documented diagnosis of Moderate plaque psoriasis (L40.0). The member is still actively"
+          "BMI 27; failed NSAIDs, injections \u00d73, and 12 weeks PT; varus alignment."
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Adalimumab (Humira) for psoriasis is a standard intervention for Moderate plaque psoriasis (L40.0) in US commercial practice.",
+        "reasoning": "Unicompartmental knee arthroplasty is a standard intervention for Knee osteoarthritis, severe medial compartment (M17.11) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Moderate plaque psoriasis (L40.0)",
-          "Adalimumab (Humira) for psoriasis"
+          "Knee osteoarthritis, severe medial compartment (M17.11)",
+          "Unicompartmental knee arthroplasty"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Plan Member,\n\nWe received your provider's request on 08/06/2026 for Unicomp"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Plan Member,\n\nWe received your provider's request on 08/06/2026 for Unicomp"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Plan Member,\n\nWe received your provider's request on 08/06/2026 for Unicomp"
         ],
         "improvement": null
       },
@@ -210,17 +210,19 @@
         "score": 3,
         "confidence": 0.8,
         "evidence_quotes": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: denial rationale is generic with no patient-specific language",
+          "Exploitable flaw: no reference to submitted records, physician name, or clinical history"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "vague guideline citation",
-          "ignored prior treatment failure"
+          "Exploitable flaw: denial rationale is generic with no patient-specific language",
+          "Exploitable flaw: no reference to submitted records, physician name, or clinical history",
+          "Pattern anchor: algo_boilerplate_fingerprint",
+          "Pattern anchor: ignored_physician_letter"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: step_therapy_missing."
+          "Denial cites Aetna policy framework and 180-day appeal window.",
+          "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -240,17 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Aetna Medical Necessity / msk / sub_tactic=step_therapy_missing. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Aetna Medical Necessity / msk / step_therapy_missing. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: algo_boilerplate_fingerprint, ignored_physician_letter.",
     "appeal_difficulty": {
       "score": 3,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "vague guideline citation",
-        "ignored prior treatment failure"
+        "Exploitable flaw: denial rationale is generic with no patient-specific language",
+        "Exploitable flaw: no reference to submitted records, physician name, or clinical history",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: ignored_physician_letter"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: step_therapy_missing."
+        "Denial cites Aetna policy framework and 180-day appeal window.",
+        "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
       ]
     }
   }

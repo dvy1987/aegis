@@ -3,24 +3,24 @@
   "insurer": "UHC",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 24,
+    "age": 19,
     "gender": "M",
-    "diagnosis": "Severe alcohol use disorder (F10.20)",
-    "treatment_requested": "Intensive outpatient program (IOP) for AUD",
-    "plan_funding_type": "self_funded"
+    "diagnosis": "Polycystic ovary syndrome with infertility (E28.2)",
+    "treatment_requested": "Letrozole ovulation induction",
+    "plan_funding_type": "fully_insured"
   },
   "denial_pattern_sources": [
-    "step_therapy_vague_mcg: KFF 2023 Survey of Consumer Experiences with Health Insurance",
-    "algo_time_delta: ProPublica + Capitol Forum Cigna Investigation 2023; Senate Finance Committee UHC Investigation 2024"
+    "non_specialist_reviewer: MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Cal. Health & Safety Code \u00a7 1374.72",
+    "step_therapy_vague_mcg: KFF 2023 Survey of Consumer Experiences with Health Insurance"
   ],
-  "denial_letter_text": "Dear Plan Member,\n\nWe have completed our review of the request for Intensive outpatient program (IOP) for AUD related to Severe alcohol use disorder (F10.20).\n\nAfter clinical review using UnitedHealthcare Medical Policies and Optum clinical criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Outpatient counseling is sufficient; IOP level not medically necessary. Our records were reviewed against the applicable utilization-management criteria for medical necessity determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Insurer claims a lower level of care suffices (IOP\u2192outpatient, inpatient\u2192IOP).\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Intensive outpatient program (IOP) for AUD. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nUnitedHealthcare Utilization Management",
-  "clinical_context": "The 24-year-old member carries a documented diagnosis of Severe alcohol use disorder (F10.20). He has been under continuous care with treating specialists who recommended Intensive outpatient program (IOP) for AUD as the next appropriate step.\n\nASAM criteria met for IOP; outpatient alone failed twice. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on level of care too high without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2025-05-05T14:22:00Z",
-  "denial_timestamp": "2025-05-19T09:15:00Z",
+  "denial_letter_text": "Dear Member,\n\nWe received your provider's request on 01/07/2026 for Letrozole ovulation induction related to Polycystic ovary syndrome with infertility (E28.2). After review, we cannot approve this request.\n\nOur review applied UnitedHealthcare Medical Management Guidelines and Optum clinical criteria. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. A lower level of care is appropriate for Polycystic ovary syndrome with infertility (E28.2); Letrozole ovulation induction exceeds what is required. Outpatient management has not been exhausted per clinical guidelines.\n\nSpecifically, the information provided does not satisfy the MCG Care Guidelines (edition not specified) and utilization-management requirements associated with level of care too high. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nUnitedHealthcare Utilization Management\n\nThis determination was made by Dr. J. Smith, Medical Director.",
+  "clinical_context": "The 19-year-old member has Polycystic ovary syndrome with infertility (E28.2). He has been treated under commercial coverage with Letrozole ovulation induction recommended as the next appropriate step. Anovulatory cycles; failed clomiphene 100 mg \u00d73 cycles. This directly contradicts the insurer's position that level of care too high bars coverage: the chart documents dates, doses, and objective findings (including dated scale scores in the chart) that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b17-20260601-160335-cf49d",
-    "generated_at": "2026-06-01T16:03:35Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:10Z",
     "matrix_cell": {
       "insurer": "UHC",
       "denial_type": "Medical Necessity",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned UHC / womens_health cell and executes sub_tactic 'level_of_care_too_high' with a clinically appropriate Severe alcohol use disorder (F10.20) \u2192 Intensive outpatient program (IOP) for AUD pair.",
+        "reasoning": "The brief matches the assigned UHC / womens_health cell and executes sub_tactic 'level_of_care_too_high' with a clinically appropriate Polycystic ovary syndrome with infertility (E28.2) \u2192 Letrozole ovulation induction pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Severe alcohol use disorder (F10.20)",
-          "Intensive outpatient program (IOP) for AUD",
+          "Polycystic ovary syndrome with infertility (E28.2)",
+          "Letrozole ovulation induction",
           "level_of_care_too_high"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Severe alcohol use disorder (F10.20)",
-          "Intensive outpatient program (IOP) for AUD"
+          "Polycystic ovary syndrome with infertility (E28.2)",
+          "Letrozole ovulation induction"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Intensive outpatient program (IOP) for AUD related to Seve"
+          "Dear Member,\n\nWe received your provider's request on 01/07/2026 for Letrozole ovulation induction related to Polycystic "
         ],
         "improvement": null
       },
@@ -95,28 +95,28 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Intensive outpatient program (IOP) for AUD related to Seve"
+          "Dear Member,\n\nWe received your provider's request on 01/07/2026 for Letrozole ovulation induction related to Polycystic "
         ],
         "improvement": null
       },
       "clinical_realism": {
         "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
-        "score": 3,
+        "reasoning": "Clinical context cites measurable treatments, durations, or scores appropriate to the specialty.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 24-year-old member carries a documented diagnosis of Severe alcohol use disorder (F10.20). He has been under continu"
+          "Anovulatory cycles; failed clomiphene 100 mg \u00d73 cycles."
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Intensive outpatient program (IOP) for AUD is a standard intervention for Severe alcohol use disorder (F10.20) in US commercial practice.",
+        "reasoning": "Letrozole ovulation induction is a standard intervention for Polycystic ovary syndrome with infertility (E28.2) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Severe alcohol use disorder (F10.20)",
-          "Intensive outpatient program (IOP) for AUD"
+          "Polycystic ovary syndrome with infertility (E28.2)",
+          "Letrozole ovulation induction"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Intensive out"
+          "Dear Member,\n\nWe received your provider's request on 01/07/2026 for Letrozole ov"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Intensive out"
+          "Dear Member,\n\nWe received your provider's request on 01/07/2026 for Letrozole ov"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Plan Member,\n\nWe have completed our review of the request for Intensive out"
+          "Dear Member,\n\nWe received your provider's request on 01/07/2026 for Letrozole ov"
         ],
         "improvement": null
       },
@@ -207,18 +207,22 @@
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 3,
+        "score": 1,
         "confidence": 0.8,
         "evidence_quotes": [
-          "uses proprietary criteria more restrictive than ASAM"
+          "Exploitable flaw: reviewer credential not listed",
+          "Exploitable flaw: MD specialty not matching clinical area"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "uses proprietary criteria more restrictive than ASAM"
+          "Exploitable flaw: reviewer credential not listed",
+          "Exploitable flaw: MD specialty not matching clinical area",
+          "Pattern anchor: non_specialist_reviewer",
+          "Pattern anchor: step_therapy_vague_mcg"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: level_of_care_too_high."
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'level_of_care_too_high' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for UHC Medical Necessity / womens_health / sub_tactic=level_of_care_too_high. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: UHC Medical Necessity / womens_health / level_of_care_too_high. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: non_specialist_reviewer, step_therapy_vague_mcg.",
     "appeal_difficulty": {
-      "score": 3,
+      "score": 1,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "uses proprietary criteria more restrictive than ASAM"
+        "Exploitable flaw: reviewer credential not listed",
+        "Exploitable flaw: MD specialty not matching clinical area",
+        "Pattern anchor: non_specialist_reviewer",
+        "Pattern anchor: step_therapy_vague_mcg"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: level_of_care_too_high."
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'level_of_care_too_high' is reflected in the stated rationale."
       ]
     }
   }

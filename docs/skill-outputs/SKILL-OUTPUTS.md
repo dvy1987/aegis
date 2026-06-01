@@ -70,3 +70,5 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-01 18:42 | memory-startup | (read-only) | Session 27 cold start; bounded context load |
 | 2026-06-01 18:42 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session 27 handoff — Cloud Run deploy scripts + Track B smoke + Vertex-latency finding |
 | 2026-06-01 20:38 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end handoff — Part B swarm Phases 1–3 DONE + evolution-integrity hardening (173 unit green) |
+| 2026-06-01 21:15 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/project-index.md | Post-commit session-end handoff — Phases 1–4 DONE (`0454022`, `27537ef`), 192 unit green, 2 commits ahead |
+| 2026-06-01 | feature-spec | docs/specs/2026-06-01-aegis-v1-cloud-corpus-surgical-discovery-feature-spec.md | Updated spec: Search Planner, 5 fetches, Layer 3 live polish (Draft; CL-1 open) |

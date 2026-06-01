@@ -3,24 +3,24 @@
   "insurer": "Aetna",
   "denial_type": "Prior Authorization",
   "patient_profile": {
-    "age": 30,
+    "age": 34,
     "gender": "F",
-    "diagnosis": "Major depressive disorder, recurrent (F33.1)",
-    "treatment_requested": "Additional outpatient psychotherapy visits",
-    "plan_funding_type": "fully_insured"
+    "diagnosis": "Pulmonary embolism, suspected low-intermediate risk (I26.99)",
+    "treatment_requested": "CT pulmonary angiography",
+    "plan_funding_type": "self_funded"
   },
   "denial_pattern_sources": [
-    "ignored_physician_letter: AMA 2023 Prior Authorization Physician Survey",
-    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719",
+    "algo_reviewer_no_credentials: ERISA 29 U.S.C. \u00a7 1133; MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Hansens v. Cigna (D. Conn. 2023)"
   ],
-  "denial_letter_text": "Dear Member,\n\nThis letter confirms the outcome of our review of the request for Additional outpatient psychotherapy visits related to Major depressive disorder, recurrent (F33.1).\n\nAfter clinical review using Aetna Clinical Policy Bulletins (CPBs) and InterQual criteria, we are unable to approve coverage at this time.\n\nDetermination summary: Annual 20-visit behavioral health cap exceeded. Our records were reviewed against the applicable utilization-management criteria for prior authorization determinations. Specifically, this review evaluated whether the requested service meets the plan's definition of medical necessity and whether required administrative steps were completed. Annual visit cap (PT, chiro, mental health) exceeded.\n\nClinical review notes indicate the documentation submitted does not satisfy the criteria required to authorize Additional outpatient psychotherapy visits. If you believe additional information was not considered, you may request a peer-to-peer discussion with a medical director; however, any such discussion must occur within the timeframe stated in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, submit a written request with supporting medical records within 180 days of the date of this letter. Include your member identification, provider information, and any letters of medical necessity.\n\nSincerely,\n\nAetna Medical Management",
-  "clinical_context": "The 30-year-old member carries a documented diagnosis of Major depressive disorder, recurrent (F33.1). She has been under continuous care with treating specialists who recommended Additional outpatient psychotherapy visits as the next appropriate step.\n\nParity: no analogous cap on cardiology follow-ups. Treating clinicians submitted office notes, medication trials with dates and doses, and objective findings supporting medical necessity. The insurer's letter instead relies on visit limit exceeded without engaging the specific evidence already on file.\n\nContrary to the denial narrative, the chart shows prior therapies were attempted for adequate duration and failed or were contraindicated. The appeal should emphasize documented step-therapy exceptions where applicable, correct application of specialty-appropriate guidelines, and any procedural defects in the notice (for example vague policy edition citations or incomplete appeal rights). The member remains symptomatic and faces delay-related harm if the requested service is further postponed.",
-  "submission_timestamp": "2026-08-18T14:22:00Z",
-  "denial_timestamp": "2026-08-32T09:15:00Z",
+  "denial_letter_text": "Dear Plan Member,\n\nWe received your provider's request on 04/10/2026 for CT pulmonary angiography related to Pulmonary embolism, suspected low-intermediate risk (I26.99). After review, we cannot approve this request.\n\nOur review applied Aetna Clinical Policy Bulletin (CPB) criteria and InterQual review standards. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Annual visit limit for services treating Pulmonary embolism, suspected low-intermediate risk (I26.99) has been exceeded. Additional visits are not a covered benefit this plan year.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with visit limit exceeded. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination through our internal appeals process. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nAetna Medical Management",
+  "clinical_context": "The 34-year-old member has Pulmonary embolism, suspected low-intermediate risk (I26.99). She has been treated under commercial coverage with CT pulmonary angiography recommended as the next appropriate step. Wells score 4.5; hypoxia 91% on room air; D-dimer elevated. This directly contradicts the insurer's position that visit limit exceeded bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "cursor-manual-agent-2026-06-01",
-    "run_id": "manual-b07-20260601-160329-84171",
-    "generated_at": "2026-06-01T16:03:29Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-v2-20260601-162608-35441",
+    "generated_at": "2026-06-01T16:26:09Z",
     "matrix_cell": {
       "insurer": "Aetna",
       "denial_type": "Prior Authorization",
@@ -53,17 +53,17 @@
       "c_citation_traceability": "1.0.0"
     },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
       "matrix_coverage": {
         "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Aetna / imaging cell and executes sub_tactic 'visit_limit_exceeded' with a clinically appropriate Major depressive disorder, recurrent (F33.1) \u2192 Additional outpatient psychotherapy visits pair.",
+        "reasoning": "The brief matches the assigned Aetna / imaging cell and executes sub_tactic 'visit_limit_exceeded' with a clinically appropriate Pulmonary embolism, suspected low-intermediate risk (I26.99) \u2192 CT pulmonary angiography pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Major depressive disorder, recurrent (F33.1)",
-          "Additional outpatient psychotherapy visits",
+          "Pulmonary embolism, suspected low-intermediate risk (I26.99)",
+          "CT pulmonary angiography",
           "visit_limit_exceeded"
         ],
         "improvement": null
@@ -74,8 +74,8 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Major depressive disorder, recurrent (F33.1)",
-          "Additional outpatient psychotherapy visits"
+          "Pulmonary embolism, suspected low-intermediate risk (I26.99)",
+          "CT pulmonary angiography"
         ],
         "improvement": null
       },
@@ -85,7 +85,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Additional outpatient psychotherapy visits related to Majo"
+          "Dear Plan Member,\n\nWe received your provider's request on 04/10/2026 for CT pulmonary angiography related to Pulmonary e"
         ],
         "improvement": null
       },
@@ -95,28 +95,28 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nWe have completed our review of the request for Additional outpatient psychotherapy visits related to Majo"
+          "Dear Plan Member,\n\nWe received your provider's request on 04/10/2026 for CT pulmonary angiography related to Pulmonary e"
         ],
         "improvement": null
       },
       "clinical_realism": {
         "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
-        "score": 3,
+        "reasoning": "Clinical context cites measurable treatments, durations, or scores appropriate to the specialty.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 30-year-old member carries a documented diagnosis of Major depressive disorder, recurrent (F33.1). She has been unde"
+          "Wells score 4.5; hypoxia 91% on room air; D-dimer elevated."
         ],
         "improvement": null
       },
       "diagnosis_treatment_match": {
         "dimension": "diagnosis_treatment_match",
-        "reasoning": "Additional outpatient psychotherapy visits is a standard intervention for Major depressive disorder, recurrent (F33.1) in US commercial practice.",
+        "reasoning": "CT pulmonary angiography is a standard intervention for Pulmonary embolism, suspected low-intermediate risk (I26.99) in US commercial practice.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Major depressive disorder, recurrent (F33.1)",
-          "Additional outpatient psychotherapy visits"
+          "Pulmonary embolism, suspected low-intermediate risk (I26.99)",
+          "CT pulmonary angiography"
         ],
         "improvement": null
       },
@@ -126,7 +126,7 @@
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Plan Member,\n\nWe received your provider's request on 04/10/2026 for CT pulm"
         ],
         "improvement": null
       },
@@ -136,7 +136,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Plan Member,\n\nWe received your provider's request on 04/10/2026 for CT pulm"
         ],
         "improvement": null
       },
@@ -146,7 +146,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Dear Member,\n\nThis letter confirms the outcome of our review of the request for "
+          "Dear Plan Member,\n\nWe received your provider's request on 04/10/2026 for CT pulm"
         ],
         "improvement": null
       },
@@ -210,15 +210,19 @@
         "score": 3,
         "confidence": 0.8,
         "evidence_quotes": [
-          "visit limit not disclosed in plain language"
+          "Exploitable flaw: no mention of IRO process",
+          "Exploitable flaw: only internal appeal described"
         ],
         "improvement": null,
         "exploitable_weaknesses": [
-          "visit limit not disclosed in plain language"
+          "Exploitable flaw: no mention of IRO process",
+          "Exploitable flaw: only internal appeal described",
+          "Pattern anchor: missing_iro_notice",
+          "Pattern anchor: algo_reviewer_no_credentials"
         ],
         "strong_defenses": [
-          "Insurer cites formal policy language and standard appeal window.",
-          "Denial aligns with declared sub_tactic: visit_limit_exceeded."
+          "Denial cites Aetna policy framework and 180-day appeal window.",
+          "Sub-tactic 'visit_limit_exceeded' is reflected in the stated rationale."
         ]
       },
       "safety_redactor": {
@@ -238,16 +242,19 @@
         "improvement": null
       }
     },
-    "human_summary": "Manual swarm case for Aetna Prior Authorization / imaging / sub_tactic=visit_limit_exceeded. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "human_summary": "A+ manual pipeline case: Aetna Prior Authorization / imaging / visit_limit_exceeded. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: missing_iro_notice, algo_reviewer_no_credentials.",
     "appeal_difficulty": {
       "score": 3,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "visit limit not disclosed in plain language"
+        "Exploitable flaw: no mention of IRO process",
+        "Exploitable flaw: only internal appeal described",
+        "Pattern anchor: missing_iro_notice",
+        "Pattern anchor: algo_reviewer_no_credentials"
       ],
       "strong_defenses": [
-        "Insurer cites formal policy language and standard appeal window.",
-        "Denial aligns with declared sub_tactic: visit_limit_exceeded."
+        "Denial cites Aetna policy framework and 180-day appeal window.",
+        "Sub-tactic 'visit_limit_exceeded' is reflected in the stated rationale."
       ]
     }
   }
