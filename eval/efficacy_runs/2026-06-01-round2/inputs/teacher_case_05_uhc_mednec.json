@@ -1,0 +1,45 @@
+{
+  "case_id": "case_05_uhc_mednec",
+  "insurer": "UHC",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 55,
+    "gender": "M",
+    "diagnosis": "Type 2 Diabetes Mellitus with poor glycemic control",
+    "treatment_requested": "Continuous Glucose Monitor (CGM) - Dexcom G7",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request from your provider for a Continuous Glucose Monitor (CGM) and related supplies. Based on UnitedHealthcare's Medical Management Guidelines for Diabetic Supply Coverage, we are denying this request.\n\nThe clinical information provided indicates you have Type 2 Diabetes. Our guidelines state that CGMs are only considered medically necessary for patients with Type 2 Diabetes if they are on an intensive insulin regimen (defined as 3 or more daily injections of insulin) or use an insulin pump. Your records indicate you are currently managed on oral medications (Metformin) and only one daily dose of basal insulin. Therefore, the requested equipment is not considered medically necessary. You may appeal this decision within 180 days.",
+  "clinical_context": "Patient has highly erratic blood sugar levels that drop dangerously low at night (hypoglycemic unawareness). Finger-stick testing is insufficient because the drops happen during sleep. Provider requested the CGM specifically for its continuous nighttime alarms to prevent a diabetic coma.",
+  "matrix_cell": {
+    "insurer": "UHC",
+    "denial_type": "Medical Necessity",
+    "patient_age_band": "unknown",
+    "patient_gender": "M",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Ignored the primary clinical rationale for the request (hypoglycemic unawareness).",
+    "Failed to address why standard finger-stick testing is insufficient for this specific patient's nighttime drops.",
+    "Rigid application of baseline criteria without considering medical necessity exceptions for life-threatening conditions."
+  ],
+  "exploitable_weaknesses": [
+    "Ignored the primary clinical rationale for the request (hypoglycemic unawareness).",
+    "Failed to address why standard finger-stick testing is insufficient for this specific patient's nighttime drops.",
+    "Rigid application of baseline criteria without considering medical necessity exceptions for life-threatening conditions."
+  ],
+  "strong_defenses": [
+    "The patient objectively does not meet the strict text of the cited UHC guideline requiring 3 or more daily injections."
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

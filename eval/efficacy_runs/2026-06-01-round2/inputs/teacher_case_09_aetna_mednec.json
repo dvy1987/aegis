@@ -1,0 +1,43 @@
+{
+  "case_id": "case_09_aetna_mednec",
+  "insurer": "Aetna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 31,
+    "gender": "F",
+    "diagnosis": "Macromastia with chronic back/neck pain",
+    "treatment_requested": "Bilateral Reduction Mammaplasty",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request from your provider for a Bilateral Reduction Mammaplasty (breast reduction). Based on Aetna Clinical Policy Bulletin 0017, we are denying this request.\n\nThe clinical information provided does not demonstrate that conservative treatment has been exhausted. Our policy requires documentation of at least three (3) consecutive months of conservative therapy, such as medically supervised physical therapy, chiropractic care, or specialized support garments, which have failed to relieve your symptoms. The records provided only mention the use of over-the-counter NSAIDs. Therefore, the requested surgery is considered cosmetic and not medically necessary. You may appeal within 180 days.",
+  "clinical_context": "Patient suffers from severe grooving in the shoulders, chronic upper back pain, and recurring rashes under the breasts. She has been going to a massage therapist for 6 months and wearing custom bras, but the doctor's office failed to include the receipts or clinical notes for these conservative treatments in the prior auth submission.",
+  "matrix_cell": {
+    "insurer": "Aetna",
+    "denial_type": "Medical Necessity",
+    "patient_age_band": "unknown",
+    "patient_gender": "F",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "The denial rests entirely on missing documentation rather than a clinical failure to meet criteria.",
+    "The patient actually exceeds the 3-month conservative therapy requirement, making the appeal a simple matter of submitting omitted records."
+  ],
+  "exploitable_weaknesses": [
+    "The denial rests entirely on missing documentation rather than a clinical failure to meet criteria.",
+    "The patient actually exceeds the 3-month conservative therapy requirement, making the appeal a simple matter of submitting omitted records."
+  ],
+  "strong_defenses": [
+    "The insurer correctly applied the clinical guideline (Aetna CPB 0017) based strictly on the incomplete records initially provided."
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

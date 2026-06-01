@@ -1,0 +1,43 @@
+{
+  "case_id": "case_04_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 35,
+    "gender": "F",
+    "diagnosis": "Severe Rheumatoid Arthritis",
+    "treatment_requested": "Adalimumab (Humira) Injection",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have received a claim for the administration of Adalimumab (Humira) on 04/30/2026. We are denying coverage for this medication because prior authorization was not obtained before the drug was dispensed.\n\nAccording to your plan documents, specialty biologic medications require prior authorization from Aetna's Pharmacy Benefit Manager to confirm the medication is clinically appropriate and that step-therapy protocols have been met. Because your provider did not submit a prior authorization request prior to the date of service, the claim is denied. You are responsible for the full cost of the medication.",
+  "clinical_context": "Patient was previously on Humira under a different insurance plan and was stable. She changed jobs and insurance to Aetna. Her doctor continued the prescription during the transition period to prevent a severe joint flare-up, failing to realize the new Aetna plan required a fresh prior authorization.",
+  "matrix_cell": {
+    "insurer": "Aetna",
+    "denial_type": "Prior Authorization",
+    "patient_age_band": "unknown",
+    "patient_gender": "F",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Complete omission of ERISA appeal rights, timeframes, and instructions in the denial letter.",
+    "Failure to account for transition of care/continuity of care policies for a new enrollee stable on a biologic."
+  ],
+  "exploitable_weaknesses": [
+    "Complete omission of ERISA appeal rights, timeframes, and instructions in the denial letter.",
+    "Failure to account for transition of care/continuity of care policies for a new enrollee stable on a biologic."
+  ],
+  "strong_defenses": [
+    "The provider technically violated the plan's administrative requirement by failing to submit a PA prior to the date of service."
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

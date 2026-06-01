@@ -1,0 +1,28 @@
+{
+  "case_id": "case_07_cigna_mednec",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "Claims rest only on case facts; no corpus or external citations are available in this run, so grounding is capped at 3 despite faithful use of the record.",
+    "appeal_vector_capture": "Names the precise stated criterion and attacks both the rigid application of the timeline given urgent clinical danger and the reviewer's failure to weigh the specialist's expedited order; does not skirt the requirement.",
+    "case_specific_clinical_rebuttal": "Rebuts using this patient's documented specifics (BMI, the comorbidities, the specialist's expedited directive and the cardiac-strain rationale) directly against the exact months-completed criterion the denial cites.",
+    "evidence_completeness": "Checklist is complete and well-targeted: specialist's written rationale, diagnostic confirmation of comorbidities, dated supervision records, the expedited order, the cited policy with any exception provisions, and procedural-rights confirmation.",
+    "persuasive_coherence": "Calm, well-structured, concedes the factual gap then pivots to the necessity argument; no filler or padding."
+  },
+  "improvement_notes": {
+    "grounding": "Where a citable policy or evidence corpus is available, anchor each assertion to a specific cited source rather than to narrative facts alone; quote the exact policy clause and any exception language by section reference.",
+    "appeal_vector_capture": "Continue to name the denial's exact stated threshold and attack it head-on rather than around it; identifying the precise decisional flaw and pairing it with the strongest unaddressed clinical factor is the right move.",
+    "case_specific_clinical_rebuttal": "Maintain the practice of mapping each of the patient's documented clinical findings directly onto the specific criterion the denial invoked; tie urgency claims to concrete, dated provider directives.",
+    "evidence_completeness": "Keep flagging both supportive records to submit and the documents that would prove any exception pathway; consider noting expected dates/authorship for each item so the reviewer can verify completeness.",
+    "persuasive_coherence": "Keep the concede-then-pivot structure tight; lead with the criterion, acknowledge the gap briefly, and devote the body to the necessity argument without restating points."
+  }
+}

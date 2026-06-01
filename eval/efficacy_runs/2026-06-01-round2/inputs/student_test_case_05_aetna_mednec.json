@@ -1,0 +1,5 @@
+{
+  "case_id": "test_case_05_aetna_mednec",
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for outpatient speech therapy. Based on Aetna's Clinical Policy Bulletin for Speech Therapy, this request is denied.\n\nYour plan only covers speech therapy when it is restorative in nature—meaning it is required to restore speech that was lost due to an illness, injury, or stroke (such as a traumatic brain injury). The clinical records indicate you have had a stutter since childhood, making this a developmental condition. Developmental speech therapy is excluded under your adult medical benefit. Therefore, the services are not covered.",
+  "clinical_context": "The patient did have a stutter as a child but had fully overcome it. He was recently in a severe car accident (trauma) and the stutter returned intensely, affecting his ability to work. The denial incorrectly categorizes it as purely developmental rather than a trauma-induced relapse needing restorative therapy."
+}

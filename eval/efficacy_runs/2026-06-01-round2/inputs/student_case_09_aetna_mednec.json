@@ -1,0 +1,5 @@
+{
+  "case_id": "case_09_aetna_mednec",
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request from your provider for a Bilateral Reduction Mammaplasty (breast reduction). Based on Aetna Clinical Policy Bulletin 0017, we are denying this request.\n\nThe clinical information provided does not demonstrate that conservative treatment has been exhausted. Our policy requires documentation of at least three (3) consecutive months of conservative therapy, such as medically supervised physical therapy, chiropractic care, or specialized support garments, which have failed to relieve your symptoms. The records provided only mention the use of over-the-counter NSAIDs. Therefore, the requested surgery is considered cosmetic and not medically necessary. You may appeal within 180 days.",
+  "clinical_context": "Patient suffers from severe grooving in the shoulders, chronic upper back pain, and recurring rashes under the breasts. She has been going to a massage therapist for 6 months and wearing custom bras, but the doctor's office failed to include the receipts or clinical notes for these conservative treatments in the prior auth submission."
+}

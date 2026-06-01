@@ -1,0 +1,5 @@
+{
+  "case_id": "case_07_cigna_mednec",
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for a Roux-en-Y Gastric Bypass. Based on Cigna's Medical Coverage Policy for Bariatric Surgery, this request is denied.\n\nWhile your BMI of 41 meets the initial criteria for bariatric surgery, the clinical information provided does not show that you have actively participated in a medically supervised weight loss program for at least six (6) consecutive months immediately prior to the surgery request, as required by our policy. Your records only show four months of documented dietary counseling. Therefore, the requested surgery is not considered medically necessary at this time. You may appeal this decision within 180 days.",
+  "clinical_context": "Patient has a BMI of 41 with life-threatening sleep apnea and hypertension. She participated in a weight loss program for 4 months but her cardiologist ordered the surgery to be expedited because the sleep apnea is causing severe right heart strain, making a 6-month delay clinically dangerous."
+}

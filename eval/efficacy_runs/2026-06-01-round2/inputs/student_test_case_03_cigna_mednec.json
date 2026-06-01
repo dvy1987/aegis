@@ -1,0 +1,5 @@
+{
+  "case_id": "test_case_03_cigna_mednec",
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed your provider's request for Semaglutide (Wegovy). We are denying this request because it does not meet Cigna's coverage criteria.\n\nWhile Wegovy is FDA-approved for weight management, your specific employer-sponsored pharmacy benefit plan has a strict exclusion for all weight-loss medications. Additionally, you do not have a diagnosis of Type 2 Diabetes, which would be required for coverage of similar GLP-1 medications (like Ozempic) under your medical benefit. Therefore, this request is denied as a plan exclusion and is not medically necessary.",
+  "clinical_context": "Patient has struggled with weight and is on the verge of developing full-blown Type 2 Diabetes. The doctor prescribed Wegovy to prevent the onset of diabetes. The denial relies on a hard employer plan exclusion for 'weight loss drugs', forcing an appeal to argue the preventative medical necessity rather than cosmetic weight loss."
+}

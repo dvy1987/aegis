@@ -1,0 +1,28 @@
+{
+  "case_id": "case_05_uhc_mednec",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "No corpus or external citations available in this run; letter is grounded solely in the denial text and clinical facts, which caps the score at 3. No fabricated grounding.",
+    "appeal_vector_capture": "Squarely identifies and attacks each core flaw in the denial: the omitted primary clinical rationale, the failure to address why routine testing is inadequate for this patient, and the rigid mechanical application of a threshold without considering an individualized exception for a life-threatening risk.",
+    "case_specific_clinical_rebuttal": "Rebuts using this patient's specific documented facts (erratic levels, dangerous nighttime lows during sleep, inability to self-detect, device's nighttime alarm function) directly against the exact numeric criterion the denial relied on, reframing the criterion's safety purpose.",
+    "evidence_completeness": "Marshals the right available evidence and flags precisely the missing items: provider necessity letter, glucose logs documenting the lows, prior event records, the full guideline text including any exception provision, written appeal instructions, and the current treatment plan.",
+    "persuasive_coherence": "Tight, calm, logically ordered (criterion -> concession -> purpose-based reframing -> evidence -> procedural point -> request). No padding or filler, consistently professional tone."
+  },
+  "improvement_notes": {
+    "grounding": "Where a citation corpus or policy library is available, anchor each asserted standard to a specific quoted source rather than relying on case narration alone; absent sources, keep claims explicitly tied to the denial's own wording.",
+    "appeal_vector_capture": "Continue to name the decision's specific reasoning gaps and attack each one explicitly rather than restating the diagnosis generically; tie every challenge back to what the decision did or failed to do.",
+    "case_specific_clinical_rebuttal": "Maintain the pattern of mapping this individual's concrete documented facts directly against the exact criterion quoted in the decision; avoid generic clinical assertions that could apply to any patient.",
+    "evidence_completeness": "Keep distinguishing evidence already in hand from evidence still needed, and request the full text of any internally cited policy so any exception or individualized-review pathway can be invoked precisely.",
+    "persuasive_coherence": "Preserve the lean, logically sequenced structure and neutral tone; resist adding length, and lead with a brief concession of any undisputed fact before pivoting to the substantive argument."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "case_id": "case_01_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 32,
+    "gender": "F",
+    "diagnosis": "Severe Obsessive-Compulsive Disorder (F42.2)",
+    "treatment_requested": "Transcranial Magnetic Stimulation (TMS)"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe are writing to inform you of a decision regarding your recent request for medical services. On October 5, 2026, we received a prior authorization request from your provider for Transcranial Magnetic Stimulation (TMS) for the diagnosis of Severe Obsessive-Compulsive Disorder (F42.2).\n\nAfter careful consideration, we have denied coverage for this requested treatment.\n\nAll requests for care are evaluated using Aetna Clinical Policy Bulletin (CPB) 0469 for Transcranial Magnetic Stimulation and MCG Care Guidelines to ensure the requested services are medically necessary and appropriate. During the initial clinical review of your case, our medical team determined that the submitted clinical notes did not sufficiently document the failure of two distinct classes of medication. This documentation is a prerequisite under the relevant CPB to establish the medical necessity for Transcranial Magnetic Stimulation (TMS).\n\nTo resolve this gap in clinical information, your provider was notified of the opportunity to conduct a peer-to-peer (P2P) review with an Aetna medical director. Under our procedural guidelines, this peer-to-peer discussion must be completed within a strict 5-business-day window following the initial clinical review determination. This timeframe ensures the timely processing of authorization requests while allowing providers to supply missing clinical context verbally.\n\nThe 5-business-day window for this request expired on October 12, 2026. Because your treating provider did not complete the mandatory peer-to-peer discussion before this administrative deadline, we cannot verify that the clinical criteria for this treatment have been met. Therefore, the prior authorization request has been administratively closed and formally denied under the plan's procedural guidelines.\n\nYou have the right to appeal this decision. If you disagree with this determination, you or your authorized representative may file a standard appeal within 180 days of the date of this letter. When submitting an appeal, please include a letter from your provider and any additional medical records that clearly document your complete medication history and prior treatment outcomes.\n\nSincerely,\n\nAetna Medical Management",
+  "clinical_context": "The 32-year-old patient has a long-standing diagnosis of severe Obsessive-Compulsive Disorder (OCD) that has proven highly treatment-resistant. To manage her debilitating symptoms, her treating psychiatrist initiated an extended trial of fluvoxamine titrated to 300 mg/day beginning in March 2023. When this failed to yield significant clinical improvement, the provider transitioned her to clomipramine, a tricyclic antidepressant, in November 2024. Both medication trials lasted over twelve weeks at therapeutic dosages, yet her Yale-Brown Obsessive Compulsive Scale (Y-BOCS) scores remained persistently elevated at 28 and 31 across two consecutive quarterly assessments. In addition to failing these two distinct pharmacological classes, the patient has actively participated in intensive Exposure and Response Prevention (ERP) therapy since early 2025. Because her severe OCD remains refractory to these standard interventions, the provider determined that Transcranial Magnetic Stimulation (TMS) is the clinically appropriate next step. Contrary to the insurer's denial claim that medication failure was undocumented, comprehensive clinical notes detailing these specific trials were included in the initial October 2026 authorization request. Furthermore, the provider's office made three documented attempts to schedule the required peer-to-peer review within the strict five-day window. Unfortunately, the insurer's scheduling portal experienced a documented outage, and phone representatives were unable to provide an appointment time before the administrative deadline, making the closure procedurally unjustified.",
+  "matrix_cell": {
+    "insurer": "Aetna",
+    "denial_type": "Prior Authorization",
+    "patient_age_band": "26-40",
+    "patient_gender": "F",
+    "specialty": "behavioral_health",
+    "sub_tactic": "missing_peer_to_peer"
+  },
+  "denial_pattern_sources": [],
+  "expected_appeal_vectors": [],
+  "exploitable_weaknesses": [],
+  "strong_defenses": [],
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet"
+  ]
+}

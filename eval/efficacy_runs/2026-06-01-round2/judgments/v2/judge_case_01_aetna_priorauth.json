@@ -1,0 +1,28 @@
+{
+  "case_id": "case_01_aetna_priorauth",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "All claims are tied to facts present in the denial_letter_text and clinical_context; no fabricated authorities or citations (CPB 0469 and the 5-business-day window are both quoted from the denial). With no corpus/citations available in this run, grounding is capped at 3.",
+    "appeal_vector_capture": "Squarely identifies and attacks both flaws the case turns on: (1) the denial's central documentation-gap claim is directly contradicted by the clinical record, and the letter states the notes detailing the two medication trials were in fact submitted with the October 2026 request; (2) the administrative closure for the missed peer-to-peer is attacked as procedurally unjustified because the provider's good-faith scheduling attempts were thwarted by the insurer's own portal outage. Both lines mirror the documented facts precisely.",
+    "case_specific_clinical_rebuttal": "Rebuts the medical-necessity criterion using this patient's exact documented facts: fluvoxamine 300 mg/day from March 2023, transition to clomipramine (a distinct TCA class) November 2024, both >12 weeks at therapeutic dose, Y-BOCS 28 and 31 across two quarterly assessments, plus ERP since early 2025. Maps these directly to the denial's 'two distinct medication classes' prerequisite. Fully case-specific.",
+    "evidence_completeness": "Marshals the available record and provides an accurate, targeted missing-evidence checklist: the original October notes with dosages/durations/Y-BOCS, provider letter of medical necessity, dated logs of the three P2P scheduling attempts, portal-outage documentation, ERP records, and confirmation of the denial date for the 180-day filing deadline. Complete and on-point.",
+    "persuasive_coherence": "Tight, calm, well-structured: states the two grounds, addresses each in turn against the documented facts, and closes with a clear primary request plus a reasonable alternative (reopen and complete a fair review). No padding, no overpromising, no exclamation marks; disclaimer present."
+  },
+  "improvement_notes": {
+    "grounding": "Where a citation corpus is available, anchor each factual assertion to a specific cited source so grounding can exceed a record-only ceiling; absent citations, continue tying every claim strictly to the denial text and clinical record.",
+    "appeal_vector_capture": "Continue isolating the exact ground(s) the denial relied on and attacking each on its own terms; quote the denial's stated criterion and procedural rule verbatim and show, point by point, why the record already meets it.",
+    "case_specific_clinical_rebuttal": "Keep mapping the patient's documented specifics (agents, doses, durations, validated symptom-scale scores, dates) directly onto each named coverage criterion rather than asserting necessity generically.",
+    "evidence_completeness": "Maintain a precise checklist that distinguishes evidence already submitted from evidence to gather, and tie each item to the specific gap or deadline it addresses (e.g., dated proof of procedural attempts, the source documents behind each clinical claim, and filing-deadline confirmation).",
+    "persuasive_coherence": "Preserve the structure of restating each denial ground, rebutting it, then making a clear primary ask with a fallback; keep the tone measured, avoid filler and overpromising, and retain the required disclaimer."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "train": [
+    "case_01_aetna_priorauth",
+    "case_01_cigna_mednec",
+    "case_02_cigna_priorauth",
+    "case_03_aetna_mednec",
+    "case_04_aetna_priorauth",
+    "case_05_uhc_mednec",
+    "case_06_uhc_priorauth",
+    "case_07_cigna_mednec",
+    "case_08_cigna_priorauth",
+    "case_09_aetna_mednec",
+    "case_10_uhc_priorauth"
+  ],
+  "holdout": [
+    "test_case_01_uhc_mednec",
+    "test_case_02_aetna_priorauth",
+    "test_case_03_cigna_mednec",
+    "test_case_04_uhc_priorauth",
+    "test_case_05_aetna_mednec",
+    "test_case_06_cigna_priorauth",
+    "test_case_07_uhc_mednec",
+    "test_case_08_aetna_priorauth",
+    "test_case_09_cigna_mednec",
+    "test_case_10_uhc_priorauth"
+  ]
+}

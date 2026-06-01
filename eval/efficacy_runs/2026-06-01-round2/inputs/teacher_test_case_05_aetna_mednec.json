@@ -1,0 +1,45 @@
+{
+  "case_id": "test_case_05_aetna_mednec",
+  "insurer": "Aetna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 31,
+    "gender": "M",
+    "diagnosis": "Developmental stuttering exacerbated by recent trauma",
+    "treatment_requested": "Outpatient Speech Therapy (20 sessions)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for outpatient speech therapy. Based on Aetna's Clinical Policy Bulletin for Speech Therapy, this request is denied.\n\nYour plan only covers speech therapy when it is restorative in nature—meaning it is required to restore speech that was lost due to an illness, injury, or stroke (such as a traumatic brain injury). The clinical records indicate you have had a stutter since childhood, making this a developmental condition. Developmental speech therapy is excluded under your adult medical benefit. Therefore, the services are not covered.",
+  "clinical_context": "The patient did have a stutter as a child but had fully overcome it. He was recently in a severe car accident (trauma) and the stutter returned intensely, affecting his ability to work. The denial incorrectly categorizes it as purely developmental rather than a trauma-induced relapse needing restorative therapy.",
+  "matrix_cell": {
+    "insurer": "Aetna",
+    "denial_type": "Medical Necessity",
+    "patient_age_band": "unknown",
+    "patient_gender": "M",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Factual error: Reviewer ignored the recent car accident (trauma) causing the relapse.",
+    "Clinical weakness: The patient perfectly meets the plan's stated criteria for restorative therapy due to injury.",
+    "Procedural weakness: Missing ERISA appeal rights and timeframe disclosures in the letter."
+  ],
+  "exploitable_weaknesses": [
+    "Factual error: Reviewer ignored the recent car accident (trauma) causing the relapse.",
+    "Clinical weakness: The patient perfectly meets the plan's stated criteria for restorative therapy due to injury.",
+    "Procedural weakness: Missing ERISA appeal rights and timeframe disclosures in the letter."
+  ],
+  "strong_defenses": [
+    "The plan's exclusion of purely developmental speech therapy for adults is a valid policy, though misapplied here."
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

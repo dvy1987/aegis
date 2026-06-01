@@ -1,0 +1,45 @@
+{
+  "case_id": "test_case_07_uhc_mednec",
+  "insurer": "UHC",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 19,
+    "gender": "F",
+    "diagnosis": "Anorexia Nervosa, restrictive type",
+    "treatment_requested": "Intensive Outpatient Program (IOP) for Eating Disorders",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for an Eating Disorder Intensive Outpatient Program (IOP). Based on UnitedHealthcare's Medical Necessity Guidelines and the APA practice guidelines, we are denying this request.\n\nThe clinical information indicates you are currently at 88% of your ideal body weight (IBW) and your vital signs are stable without severe bradycardia. Our guidelines require a patient to either be below 85% of IBW or exhibit acute medical instability (such as severe electrolyte imbalance) to qualify for an intensive eating disorder program. Because you do not meet these criteria, you can be safely managed in standard weekly outpatient therapy.",
+  "clinical_context": "The patient is medically stable only because her parents force-feed her, causing severe daily panic attacks. While her weight is technically 88% of IBW, she is actively losing 2-3 lbs a week and restricting heavily. Standard weekly therapy is failing to stop the rapid weight loss trajectory.",
+  "matrix_cell": {
+    "insurer": "UHC",
+    "denial_type": "Medical Necessity",
+    "patient_age_band": "unknown",
+    "patient_gender": "F",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Rigid application of IBW threshold ignoring rapid weight loss trajectory",
+    "Ignores failure of the recommended lower level of care (standard outpatient)",
+    "Omission of ERISA appeal rights and deadlines"
+  ],
+  "exploitable_weaknesses": [
+    "Rigid application of IBW threshold ignoring rapid weight loss trajectory",
+    "Ignores failure of the recommended lower level of care (standard outpatient)",
+    "Omission of ERISA appeal rights and deadlines"
+  ],
+  "strong_defenses": [
+    "Patient technically does not meet the strict <85% IBW or acute medical instability criteria cited in the specific UHC guideline"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

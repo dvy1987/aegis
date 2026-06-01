@@ -1,0 +1,44 @@
+{
+  "case_id": "case_10_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 48,
+    "gender": "M",
+    "diagnosis": "Obstructive Sleep Apnea (OSA)",
+    "treatment_requested": "In-lab Polysomnography (Sleep Study)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the prior authorization request for an in-lab polysomnography (sleep study). We are denying this request.\n\nUnder UnitedHealthcare's evidence-based guidelines, an in-lab sleep study is not covered as a first-line diagnostic tool for uncomplicated suspected Obstructive Sleep Apnea. Patients must first undergo a Home Sleep Apnea Test (HSAT). An in-lab study is only authorized if the HSAT is inconclusive, or if the patient has significant comorbid conditions (such as severe heart failure or neuromuscular disease) that make a home test unsafe or inaccurate. Because you do not meet these criteria, the requested in-lab study is denied.",
+  "clinical_context": "Patient has suspected sleep apnea, but also has severe COPD which causes nighttime oxygen desaturation. A home sleep study cannot accurately differentiate between apnea events and COPD-related desaturation, necessitating the in-lab monitored study. The provider did not adequately highlight the COPD in the initial submission.",
+  "matrix_cell": {
+    "insurer": "UHC",
+    "denial_type": "Prior Authorization",
+    "patient_age_band": "unknown",
+    "patient_gender": "M",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Patient clinically meets the payer's stated exception for comorbidities making HSAT inaccurate (severe COPD).",
+    "Complete omission of ERISA appeal rights, deadlines, and instructions in the denial letter."
+  ],
+  "exploitable_weaknesses": [
+    "Patient clinically meets the payer's stated exception for comorbidities making HSAT inaccurate (severe COPD).",
+    "Complete omission of ERISA appeal rights, deadlines, and instructions in the denial letter."
+  ],
+  "strong_defenses": [
+    "The denial was factually correct based on the incomplete initial submission by the provider.",
+    "The step-therapy guideline requiring HSAT for uncomplicated OSA is a standard, well-documented clinical threshold."
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

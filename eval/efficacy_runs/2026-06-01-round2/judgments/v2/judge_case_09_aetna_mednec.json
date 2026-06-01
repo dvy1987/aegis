@@ -1,0 +1,28 @@
+{
+  "case_id": "case_09_aetna_mednec",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "Claims rest only on case facts; no corpus or citations available in this run, so grounding is capped per rubric. No fabricated grounding.",
+    "appeal_vector_capture": "Squarely identifies and attacks the core flaw: the denial turns on an incomplete record, not a true failure to meet criteria, and frames the remedy as supplying the omitted documentation that already satisfies the stated threshold.",
+    "case_specific_clinical_rebuttal": "Rebuts using this patient's specific documented facts (multi-month course of named conservative measures plus three persistent documented symptoms) directly against the policy's conservative-therapy criterion.",
+    "evidence_completeness": "Marshals available evidence and flags the precise missing items (therapy notes, garment receipts/fitting records, treating-physician symptom documentation, linkage to the threshold, and the appeal-submission instructions).",
+    "persuasive_coherence": "Tight, calm, logically ordered, and free of padding; states the denial basis, the rebuttal, the clinical facts, and the ask cleanly."
+  },
+  "improvement_notes": {
+    "grounding": "Where a citable policy or evidence corpus is available, tie each assertion to a specific cited source rather than narrative alone; absent a corpus, keep claims anchored strictly to the record.",
+    "appeal_vector_capture": "Continue diagnosing whether the denial hinges on a records gap versus a substantive criteria failure, and pitch the appeal accordingly; this letter does this well.",
+    "case_specific_clinical_rebuttal": "Keep pairing each criterion the denial cites with the patient's concrete documented facts; consider adding specific dates or durations as they become available to sharpen the match.",
+    "evidence_completeness": "Maintain the practice of naming each missing document with the detail it must contain; optionally note who holds each item and a target date for submission.",
+    "persuasive_coherence": "Preserve the lean, sectioned structure; avoid restating the same point across paragraphs and keep the closing ask single and direct."
+  }
+}

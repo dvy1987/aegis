@@ -1,0 +1,45 @@
+{
+  "case_id": "test_case_10_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 78,
+    "gender": "F",
+    "diagnosis": "Post-operative hip replacement, advanced age",
+    "treatment_requested": "Home Health Care (Skilled Nursing and PT, weeks 3-4)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe received a claim for continued Home Health Care services (nursing and physical therapy) from 05/14/2026 to 05/28/2026. We are denying these services because they were not prior authorized.\n\nYour plan approved an initial two (2) week episode of Home Health Care following your hospital discharge. Any continued care beyond the initial episode requires a new prior authorization request with updated clinical notes demonstrating that you remain 'homebound' and require intermittent skilled care. We did not receive a request to extend these services before they were provided. Therefore, the continued visits are denied.",
+  "clinical_context": "The patient is 78, lives alone, and developed a minor wound infection requiring daily dressing changes by a nurse, preventing her from traveling to an outpatient clinic. The home health agency missed the deadline to file for the 3rd-week extension, but the services were absolutely critical to prevent sepsis and hospital readmission.",
+  "matrix_cell": {
+    "insurer": "UHC",
+    "denial_type": "Prior Authorization",
+    "patient_age_band": "unknown",
+    "patient_gender": "F",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Complete lack of ERISA disclosures and appeal rights in the denial letter",
+    "Denial is purely administrative despite clear clinical necessity",
+    "Provider administrative error (missed deadline) can often be overturned with retrospective authorization when clinical need is high"
+  ],
+  "exploitable_weaknesses": [
+    "Complete lack of ERISA disclosures and appeal rights in the denial letter",
+    "Denial is purely administrative despite clear clinical necessity",
+    "Provider administrative error (missed deadline) can often be overturned with retrospective authorization when clinical need is high"
+  ],
+  "strong_defenses": [
+    "The plan correctly noted that the extension required a prior authorization request before services were provided"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "case_id": "test_case_01_uhc_mednec",
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for a Bariatric Surgery Revision. Based on UnitedHealthcare's Medical Management Guidelines, this request is denied.\n\nWhile we recognize you are experiencing severe acid reflux following a previous gastric sleeve procedure, the clinical information provided does not demonstrate that maximum medical management (such as high-dose proton pump inhibitors and lifestyle modifications) has been attempted and failed for at least 6 months. Therefore, surgical revision is not considered medically necessary at this time as a first-line treatment for your reflux.",
+  "clinical_context": "Patient had a gastric sleeve 5 years ago. Now experiencing severe GERD causing esophageal strictures and Barrett's esophagus (pre-cancerous changes). The surgeon notes that PPIs will not fix the anatomical issue causing the bile reflux, making conservative therapy useless and dangerous."
+}

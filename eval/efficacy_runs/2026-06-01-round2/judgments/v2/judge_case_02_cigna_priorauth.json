@@ -1,0 +1,28 @@
+{
+  "case_id": "case_02_cigna_priorauth",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "Claims rest only on the provided denial and clinical facts; no corpus or citations exist in this run, so grounding is capped at 3. No fabricated grounding.",
+    "appeal_vector_capture": "Squarely identifies and attacks the specific flaws this denial exposes: the absence of procedural appeal-rights/disclosure information, the failure to recognize an emergency exception to the advance-authorization requirement, and the standard-of-care basis for immediate imaging given acute trauma and neurological deficit.",
+    "case_specific_clinical_rebuttal": "Rebuts the denial's stated advance-authorization criterion using this patient's documented facts (post-accident sudden left-arm numbness/weakness, ER physician ordering to rule out spinal cord injury, no time for the standard authorization window). Precise and case-specific.",
+    "evidence_completeness": "Checklist marshals the right corroborating records (ER order/notes, ED visit timeline, MRI report, accident documentation/date) and flags the right missing procedural and plan-language items (emergency-imaging authorization provisions, appeal deadline and filing instructions).",
+    "persuasive_coherence": "Tight, calm, logically ordered: states the denial's basis, applies it to the facts, raises the procedural gap, then requests specific relief. No padding or filler."
+  },
+  "improvement_notes": {
+    "grounding": "Where the record permits, anchor each assertion to a specific, identifiable source (a named document, dated record, or quoted plan provision) rather than to general narrative, so a reviewer can verify every claim. Avoid asserting anything not traceable to a provided document.",
+    "appeal_vector_capture": "Continue isolating the precise basis the decision relies on and attacking it on its own terms, while also scanning the decision for procedural or disclosure omissions that independently support reconsideration. Pairing the substantive and procedural angles is strong practice.",
+    "case_specific_clinical_rebuttal": "Maintain the discipline of mapping each specific documented clinical fact directly against the exact criterion the decision invokes, showing why the facts satisfy or excuse that criterion rather than arguing in generalities.",
+    "evidence_completeness": "Keep distinguishing evidence the member can supply from information the decision-maker must provide, and tie each listed item to the specific point it would prove. Consider noting which items are most decisive to help prioritize.",
+    "persuasive_coherence": "Preserve the lean structure: basis, application to facts, procedural gap, specific relief requested. Keep tone measured and avoid restating the same point in multiple paragraphs."
+  }
+}

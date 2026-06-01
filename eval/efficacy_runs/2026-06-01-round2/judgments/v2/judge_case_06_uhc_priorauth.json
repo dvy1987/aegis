@@ -1,0 +1,28 @@
+{
+  "case_id": "case_06_uhc_priorauth",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "Claims are anchored only in the case facts; no external corpus or citations exist in this run (citations_used empty), so grounding is capped at 3. No fabricated grounding.",
+    "appeal_vector_capture": "Squarely identifies and attacks the central flaw: the denial conflates a general procedure category with the specific procedure actually required, and the letter turns the denial's own stated capability standard against it. Captures the full set of available angles.",
+    "case_specific_clinical_rebuttal": "Rebuts using this patient's specific documented facts (disease extent, prior treatment failures, contraindication, the limited scope of the listed providers) directly against the criterion the denial itself states.",
+    "evidence_completeness": "Checklist is complete and accurate: prior-treatment records, a treating-provider contraindication letter, documentation of the listed providers' actual scope, the plan's own criteria language, and the missing procedural/deadline information.",
+    "persuasive_coherence": "Tight, calm, well-structured, no padding; opens by naming the request, restates the criterion, applies the facts, and closes with a specific remedy."
+  },
+  "improvement_notes": {
+    "grounding": "Where a citation corpus or plan-document excerpts are available, quote the controlling standard verbatim and cite it; absent any source, keep claims tied strictly to the record so nothing reads as unsupported.",
+    "appeal_vector_capture": "Continue to isolate the single logical gap in the denial's reasoning and attack it head-on rather than arguing around it; naming the precise mismatch between what was denied and what was actually requested is the strongest move.",
+    "case_specific_clinical_rebuttal": "Maintain the practice of pairing each stated denial criterion with the specific documented facts that satisfy or defeat it, rather than offering generic assertions.",
+    "evidence_completeness": "Keep the checklist concrete and tied to each contested point; where possible, distinguish evidence already in the record from items the member still needs to obtain.",
+    "persuasive_coherence": "Preserve the lean structure: state the request, mirror the decision-maker's own standard, apply facts, and ask for a specific remedy; avoid adding rhetorical filler that does not advance an argument."
+  }
+}

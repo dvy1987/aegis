@@ -1,0 +1,28 @@
+{
+  "case_id": "case_10_uhc_priorauth",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "Claims rest only on the denial text and case clinical facts; no corpus or external citations are available in this run, so grounding is capped per rubric.",
+    "appeal_vector_capture": "Identifies and attacks both of the denial's actual openings: the patient fits the payer's own stated exception, and the denial omits required appeal-process information.",
+    "case_specific_clinical_rebuttal": "Maps the patient's specific documented condition and its physiologic effect directly against the denial's stated coverage criterion, arguing it falls inside the exception rather than outside it.",
+    "evidence_completeness": "Provides an accurate, well-targeted checklist of the documents needed to substantiate the comorbidity argument and correctly flags the under-documented initial submission.",
+    "persuasive_coherence": "Tight, calm, well-structured; addresses the criterion head-on without padding or filler."
+  },
+  "improvement_notes": {
+    "grounding": "When no citation corpus is available, keep anchoring each claim to the denial's own language and the patient record; if a corpus becomes available, cite the specific guideline provisions relied on to lift grounding above the cap.",
+    "appeal_vector_capture": "Continue pinpointing the exact decision rule the denial states and showing where the patient lands relative to it, while also auditing the denial for any procedural information it failed to provide.",
+    "case_specific_clinical_rebuttal": "Maintain the practice of quoting the denial's precise criterion and answering it with the patient's named clinical findings rather than general assertions; where possible, tie each finding to why it satisfies the rule.",
+    "evidence_completeness": "Keep the checklist tied to exactly what would prove each contested point; consider noting which items are most decisive so the reader prioritizes them.",
+    "persuasive_coherence": "Preserve the lean, criterion-first structure; avoid adding restatement or hedging that does not advance the argument."
+  }
+}

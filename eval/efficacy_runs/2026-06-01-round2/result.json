@@ -1,0 +1,35 @@
+{
+  "round": 2,
+  "baseline_version": "v2",
+  "split_scored": "train (full 11-case case_* split \u2014 2.75x Run #1's 4 train cases)",
+  "train_composite": 0.8764,
+  "per_dimension_means": {
+    "grounding": 3.0,
+    "appeal_vector_capture": 5.0,
+    "case_specific_clinical_rebuttal": 5.0,
+    "evidence_completeness": 5.0,
+    "persuasive_coherence": 4.818
+  },
+  "hard_gate_pass": {
+    "case_01_aetna_priorauth": true,
+    "case_01_cigna_mednec": true,
+    "case_02_cigna_priorauth": true,
+    "case_03_aetna_mednec": true,
+    "case_04_aetna_priorauth": true,
+    "case_05_uhc_mednec": true,
+    "case_06_uhc_priorauth": true,
+    "case_07_cigna_mednec": true,
+    "case_08_cigna_priorauth": true,
+    "case_09_aetna_mednec": true,
+    "case_10_uhc_priorauth": true
+  },
+  "weakest_promptable_dimension": "persuasive_coherence",
+  "weakest_promptable_mean": 4.818,
+  "ceiling_anchor": 4.8,
+  "corpus_bound_dimensions": [
+    "grounding"
+  ],
+  "offline_ceiling_reached": true,
+  "decision": "no_promotion",
+  "reason": "No promptable offline headroom: every prompt-movable dimension is at the offline ceiling on the full 11-case train signal (weakest promptable = persuasive_coherence @ 4.818 >= 4.8). The only sub-ceiling dimension is grounding @ 3.0, which is corpus-bound (no retrieved citations in offline runs) and cannot be moved by a prompt edit. Remaining gains require live corpus retrieval (Tier 1) or harder cases. drafter_v2 stays active; no v3 manufactured (honest-result clause)."
+}

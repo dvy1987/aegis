@@ -1,0 +1,44 @@
+{
+  "case_id": "case_07_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 42,
+    "gender": "F",
+    "diagnosis": "Morbid Obesity with Severe Sleep Apnea",
+    "treatment_requested": "Roux-en-Y Gastric Bypass Surgery",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for a Roux-en-Y Gastric Bypass. Based on Cigna's Medical Coverage Policy for Bariatric Surgery, this request is denied.\n\nWhile your BMI of 41 meets the initial criteria for bariatric surgery, the clinical information provided does not show that you have actively participated in a medically supervised weight loss program for at least six (6) consecutive months immediately prior to the surgery request, as required by our policy. Your records only show four months of documented dietary counseling. Therefore, the requested surgery is not considered medically necessary at this time. You may appeal this decision within 180 days.",
+  "clinical_context": "Patient has a BMI of 41 with life-threatening sleep apnea and hypertension. She participated in a weight loss program for 4 months but her cardiologist ordered the surgery to be expedited because the sleep apnea is causing severe right heart strain, making a 6-month delay clinically dangerous.",
+  "matrix_cell": {
+    "insurer": "Cigna",
+    "denial_type": "Medical Necessity",
+    "patient_age_band": "unknown",
+    "patient_gender": "F",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Rigid application of conservative management timeline ignoring imminent clinical danger",
+    "Failure to address the cardiologist's expedited order and documentation of severe right heart strain"
+  ],
+  "exploitable_weaknesses": [
+    "Rigid application of conservative management timeline ignoring imminent clinical danger",
+    "Failure to address the cardiologist's expedited order and documentation of severe right heart strain"
+  ],
+  "strong_defenses": [
+    "Clear policy requirement of 6 months of supervised weight loss",
+    "Accurate factual statement that only 4 months of the program were completed"
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

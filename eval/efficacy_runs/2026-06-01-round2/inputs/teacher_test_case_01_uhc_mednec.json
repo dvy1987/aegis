@@ -1,0 +1,45 @@
+{
+  "case_id": "test_case_01_uhc_mednec",
+  "insurer": "UHC",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 49,
+    "gender": "F",
+    "diagnosis": "Complications of prior gastric bypass with severe reflux",
+    "treatment_requested": "Bariatric Surgery Revision (Conversion to Roux-en-Y)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for a Bariatric Surgery Revision. Based on UnitedHealthcare's Medical Management Guidelines, this request is denied.\n\nWhile we recognize you are experiencing severe acid reflux following a previous gastric sleeve procedure, the clinical information provided does not demonstrate that maximum medical management (such as high-dose proton pump inhibitors and lifestyle modifications) has been attempted and failed for at least 6 months. Therefore, surgical revision is not considered medically necessary at this time as a first-line treatment for your reflux.",
+  "clinical_context": "Patient had a gastric sleeve 5 years ago. Now experiencing severe GERD causing esophageal strictures and Barrett's esophagus (pre-cancerous changes). The surgeon notes that PPIs will not fix the anatomical issue causing the bile reflux, making conservative therapy useless and dangerous.",
+  "matrix_cell": {
+    "insurer": "UHC",
+    "denial_type": "Medical Necessity",
+    "patient_age_band": "unknown",
+    "patient_gender": "F",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Failure to account for severe complications (Barrett's esophagus, strictures) that clinically contraindicate a 6-month delay for step-therapy.",
+    "Misapplication of generic GERD guidelines to an anatomical post-bariatric complication (bile reflux).",
+    "Complete omission of ERISA disclosures, appeal rights, and appeal window information."
+  ],
+  "exploitable_weaknesses": [
+    "Failure to account for severe complications (Barrett's esophagus, strictures) that clinically contraindicate a 6-month delay for step-therapy.",
+    "Misapplication of generic GERD guidelines to an anatomical post-bariatric complication (bile reflux).",
+    "Complete omission of ERISA disclosures, appeal rights, and appeal window information."
+  ],
+  "strong_defenses": [
+    "The denial clearly states the specific missing criteria (6 months of maximum medical management) based on standard guidelines for uncomplicated reflux."
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

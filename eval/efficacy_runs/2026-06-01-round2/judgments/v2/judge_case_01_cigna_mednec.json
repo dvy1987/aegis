@@ -1,0 +1,28 @@
+{
+  "case_id": "case_01_cigna_mednec",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "Claims are tied accurately to the denial's stated rationale and the documented case facts; with no corpus or external citations available, grounding is capped at 3. No fabricated grounding.",
+    "appeal_vector_capture": "Names and attacks each specific flaw in the denial's reasoning: the unaddressed prior failure of the lower level of care, the inaccurate characterization of functioning, and the unaddressed provider basis for the step up.",
+    "case_specific_clinical_rebuttal": "Rebuts the denial's specific stated criterion using this patient's documented severity and functional facts (duration of daily symptoms, loss of employment, inability to leave home) directly against the stability/ADL finding.",
+    "evidence_completeness": "Marshals the available facts and lists an accurate, well-targeted set of missing documents, including provider rationale, prior-treatment records, the exact applied criteria, and the appeal-process instructions.",
+    "persuasive_coherence": "Tight, calm, logically ordered ground-by-ground structure; no padding or filler; closes with a clear request and offer to supplement."
+  },
+  "improvement_notes": {
+    "grounding": "Where a citable evidence corpus or guideline source is available, anchor each asserted clinical or policy claim to a specific source reference rather than relying on narrative alone; this is the main lever to move grounding above the no-corpus ceiling.",
+    "appeal_vector_capture": "Strong as written; continue isolating each distinct line of the denial's reasoning and rebutting it on its own terms rather than blending them.",
+    "case_specific_clinical_rebuttal": "Strong as written; where possible, quote the denial's exact criterion phrasing and place the contradicting documented fact immediately beside it to sharpen the mismatch.",
+    "evidence_completeness": "Strong as written; consider noting which listed items are already in the record versus still to be obtained, so the reviewer can distinguish enclosed evidence from requested supplementation.",
+    "persuasive_coherence": "Strong as written; maintain the concise ground-by-ground structure and avoid adding length that does not add argumentative value."
+  }
+}

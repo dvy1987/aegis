@@ -1,0 +1,28 @@
+{
+  "case_id": "case_03_aetna_mednec",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "Claims rest entirely on the provided denial text and clinical facts; no external citations or corpus available in this run, which caps grounding at 3. No fabricated authorities.",
+    "appeal_vector_capture": "Names and attacks the precise flaws: the denial overlooking documented findings, the misapplication of the cited level-of-care standard to a patient with escalation risk, and the missing procedural/disclosure detail.",
+    "case_specific_clinical_rebuttal": "Directly contrasts the denial's stated threshold (no DTs/seizures, stable vitals) against this patient's documented perceptual disturbance, severity score, and individualized prior-history-based progression risk.",
+    "evidence_completeness": "Checklist marshals the supporting records and flags the right gaps: corroborating clinical documentation, prior-history substantiation, provider necessity statement, serial reassessments, the appeal process materials, and the criteria text itself.",
+    "persuasive_coherence": "Tight, calm structure: restates the standard, applies the facts, adds a fallback exception argument, then a clean procedural ask. Minimal padding for the content covered."
+  },
+  "improvement_notes": {
+    "grounding": "When no source corpus is supplied, keep anchoring to the denial's own words and the record; if authoritative external standards are referenced, cite them only when their text is actually in hand rather than asserting their content.",
+    "appeal_vector_capture": "Continue isolating each distinct defect in the denial and rebutting it as a labeled point; pairing a substantive clinical defect with a procedural/disclosure gap broadens leverage.",
+    "case_specific_clinical_rebuttal": "Maintain the technique of quoting the denial's exact decision criterion and mapping each named patient finding against it; emphasize why a point-in-time observation does not foreclose a documented escalation risk.",
+    "evidence_completeness": "Keep separating evidence already in the record from evidence still needed, and request the decision-maker's own governing criteria text so the standard can be tested against the facts.",
+    "persuasive_coherence": "Strong as is: lead with the standard, apply facts, offer a fallback ask, close with a specific procedural request. Guard against restating the same fact in multiple sections to keep length disciplined."
+  }
+}

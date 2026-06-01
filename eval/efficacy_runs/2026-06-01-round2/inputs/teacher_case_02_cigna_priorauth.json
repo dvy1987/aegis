@@ -1,0 +1,45 @@
+{
+  "case_id": "case_02_cigna_priorauth",
+  "insurer": "Cigna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 52,
+    "gender": "M",
+    "diagnosis": "Cervical Radiculopathy",
+    "treatment_requested": "MRI of Cervical Spine without contrast",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have received a claim for an MRI of the Cervical Spine performed on 04/22/2026. We are denying coverage for this service because prior authorization was not obtained before the procedure was performed.\n\nAccording to your plan documents, advanced imaging (such as MRI, CT, and PET scans) requires prior authorization from Cigna to confirm the service is medically appropriate. Because your provider did not submit a prior authorization request prior to the date of service, the claim is denied. You are responsible for the full cost of the procedure.",
+  "clinical_context": "Patient experienced sudden, severe numbness and weakness in left arm following a minor car accident. The ER doctor ordered the MRI immediately to rule out a spinal cord injury. There was no time to wait for a standard 72-hour prior authorization window.",
+  "matrix_cell": {
+    "insurer": "Cigna",
+    "denial_type": "Prior Authorization",
+    "patient_age_band": "unknown",
+    "patient_gender": "M",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Complete lack of ERISA appeal rights and disclosures in the denial letter.",
+    "Failure to account for emergency medical exceptions to prior authorization requirements.",
+    "Patient clearly met standard of care for immediate imaging due to acute trauma and neurological deficits."
+  ],
+  "exploitable_weaknesses": [
+    "Complete lack of ERISA appeal rights and disclosures in the denial letter.",
+    "Failure to account for emergency medical exceptions to prior authorization requirements.",
+    "Patient clearly met standard of care for immediate imaging due to acute trauma and neurological deficits."
+  ],
+  "strong_defenses": [
+    "Plan documents do generally require prior authorization for advanced imaging like MRIs."
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

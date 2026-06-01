@@ -1,0 +1,43 @@
+{
+  "case_id": "test_case_09_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 26,
+    "gender": "M",
+    "diagnosis": "Severe Maxillofacial Skeletal Deformity (Class III Malocclusion)",
+    "treatment_requested": "Orthognathic Surgery (Jaw alignment)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for Orthognathic Surgery (Bilateral Sagittal Split Osteotomy). Based on Cigna's Medical Coverage Policies, we are denying this request.\n\nThe clinical information provided indicates you have a malocclusion (bite misalignment). However, our guidelines consider orthognathic surgery to be cosmetic and not medically necessary unless there is evidence of significant functional impairment, such as documented malnutrition, severe sleep apnea, or an inability to chew/swallow that has caused documented weight loss. The records provided only note difficulty chewing and jaw pain, which does not meet the threshold for functional impairment.",
+  "clinical_context": "Patient has a severe underbite causing chronic TMJ pain, daily headaches, and difficulty chewing solid foods, which has caused him to adopt a liquid diet. The provider's initial submission did not explicitly include his weight logs or diet restrictions, leading Cigna to label the surgery 'cosmetic'.",
+  "matrix_cell": {
+    "insurer": "Cigna",
+    "denial_type": "Medical Necessity",
+    "patient_age_band": "unknown",
+    "patient_gender": "M",
+    "specialty": "unknown",
+    "sub_tactic": "unknown"
+  },
+  "denial_pattern_sources": [
+    "Legacy manual generation"
+  ],
+  "expected_appeal_vectors": [
+    "Patient's actual clinical status (liquid diet) directly meets the denial's functional impairment criteria once documented.",
+    "Missing ERISA disclosures, appeal windows, and patient rights in the denial letter."
+  ],
+  "exploitable_weaknesses": [
+    "Patient's actual clinical status (liquid diet) directly meets the denial's functional impairment criteria once documented.",
+    "Missing ERISA disclosures, appeal windows, and patient rights in the denial letter."
+  ],
+  "strong_defenses": [
+    "The denial correctly applied the guideline based strictly on the initially submitted, incomplete records."
+  ],
+  "submission_timestamp": "2026-09-01T10:00:00Z",
+  "denial_timestamp": "2026-09-15T14:00:00Z",
+  "corpus_excerpts": [],
+  "risk_flags": [
+    "weak_teacher_packet",
+    "legacy_case_provenance"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "case_id": "case_04_aetna_priorauth",
+  "prompt_version": "v2",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 3
+  },
+  "reasoning": {
+    "grounding": "Claims rest on the denial text and case facts only; no corpus or citations are available in this run, so grounding is capped. No fabricated sourcing.",
+    "appeal_vector_capture": "Squarely identifies and attacks both of the denial's specific vulnerabilities: the procedural-process gaps in the denial notice and the failure to account for the enrollee's mid-treatment plan transition. Not a generic restatement.",
+    "case_specific_clinical_rebuttal": "Directly counters the stated criterion using this patient's documented facts (prior stabilization on the same therapy, the insurance transition, physician-directed continuation to avoid a flare), distinguishing a procedural gap from a clinical one.",
+    "evidence_completeness": "Marshals the right available evidence and flags the correct missing items: prior-stability records, transition dates, medical-necessity letter, prior approvals, plan transition provisions, and the dispensing/claim record.",
+    "persuasive_coherence": "Calm, structured, and on-point, but several paragraphs restate the same ask ('I ask the plan to...') with overlapping framing, adding mild redundancy that loosens an otherwise tight letter."
+  },
+  "improvement_notes": {
+    "grounding": "When a citation corpus is available, anchor each factual and procedural assertion to a specific source; absent that, keep claims tethered to the denial's own wording and the documented record, and never imply external authority you cannot show.",
+    "appeal_vector_capture": "Continue pinpointing the precise basis the denial rests on and the procedural or policy gaps in the notice itself, then attack each one explicitly rather than restating the denial.",
+    "case_specific_clinical_rebuttal": "Maintain the practice of mapping the patient's individual documented history point-by-point against the exact criterion cited, and sharpen the distinction between an administrative/procedural shortfall and clinical appropriateness.",
+    "evidence_completeness": "Keep the checklist tied to the specific records that would close each gap; consider grouping items by what each one proves (eligibility, medical necessity, continuity) so the reviewer sees the evidentiary chain.",
+    "persuasive_coherence": "Consolidate repeated requests into a single clear ask and let each paragraph advance one distinct point; trim restated framing so the argument reads tightly without losing the calm, respectful tone."
+  }
+}
