@@ -310,6 +310,28 @@ All 12 tasks green; commits `9f048f7..53f1eaf`. Now in code:
   - **Tier 1 (live, credential-gated):** [`docs/plans/2026-05-31-learning-coordinator-live-gcp-companion-plan.md`](../plans/2026-05-31-learning-coordinator-live-gcp-companion-plan.md) — the submission thesis: live `phoenix_mcp_lookup` (T4.1), `LivePhoenixLearningStore`, live Gemini+Phoenix coordinator, the **MCP-off counterfactual** demo, κ≥0.6 judge calibration. Offline cores are TDD'd against fixtures; network calls gated behind `_creds_available()`.
   - Runbook + order (Tier 2 first) + the MCP-auth critical path are in [`session-25-execution-handoff.md`](session-25-execution-handoff.md).
 
+## Tier 2 EXECUTED — offline efficacy hardened (Session 25, 2026-06-01)
+Tier 2 ran end-to-end, subagent-driven, fully offline (no GCP/API key), commits `1ae716e..ef04cda`.
+Evidence: [`docs/evals/2026-06-01-coordinator-efficacy-run2.md`](../evals/2026-06-01-coordinator-efficacy-run2.md).
+- **Task 1 — `efficacy_io` extracted + tested.** The throwaway Phase-2 scripts are now the reusable,
+  unit-tested `backend/app/learning/efficacy_io.py` (firewall packet prep + composite scoring +
+  weakest-promptable selection + lift/veto reporting), pinned to the Run #1 fixtures; the Run #1 scripts
+  import it and re-emit a byte-identical `result.json`. (4 new tests.)
+- **Task 2 — Round 2 on the FULL 11-case train split → offline ceiling reached, NO promotion.**
+  `drafter_v2` scores at the promptable ceiling on every prompt-movable dimension (avc/cscr/evidence =
+  5.0, persuasive_coherence = 4.82 ≥ 4.8); only corpus-bound `grounding` (3.0) stays low and is
+  unmovable offline. Honest-result clause invoked: no `drafter_v3` manufactured; `drafter_v2` stays
+  active. This confirms Run #1's +20.5% was not a 4-case artifact. Replay regression extended.
+- **Task 3 — reflection meta-prompt A/B → `base` wins.** Added a tested `variant` param to
+  `build_reflection_prompt` (+`critique_plus`). On the fixed v1→appeal_vector_capture task (4-case
+  held-out): base 0.88 (+20.5%, 129 added words) beat critique_plus 0.835 (+14.4%, 40 added words) —
+  the minimal edit was 3.2× tighter but under-captured on held-out. `base` stays default; `critique_plus`
+  retained (tested) for Tier-1 re-evaluation.
+- **Tests:** full `tests/unit` **97 passed** offline; no test makes a cloud/API call.
+- **Net:** offline prompt optimization has reached its ceiling on all promptable dims; the remaining
+  headroom (`grounding`) and the cross-model efficacy read both require **Tier 1 (live GCP/Phoenix)** —
+  now the clear next step. `drafter_v2` + the `base` meta-prompt are Tier 1's starting point.
+
 ## Next recommended action
 
 **Updated 2026-05-28 (Session 18):** Before any feature work, the next agent must resolve the inconsistencies identified in the audit. PM wants to review each issue individually — see Session 18 handoff in `agent-handoffs.md` for the full 16-item table with recommendations.
