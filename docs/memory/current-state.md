@@ -1,7 +1,14 @@
 # Current State — Aegis
 
-**Updated:** 2026-05-31 (Session 24)
+**Updated:** 2026-06-01 (Session 26)
 **Phase:** **Execution — Phase 1.** Phase 0 setup complete. Backend wired up into a 3-service logical topology (v1, swarm, and generator job) to properly isolate Phoenix traces. Generator uses ADC, dev launcher spins up 3 processes. Firewall logic designed for eval scoring. 
+
+### Session 26 (Frontend two-surface reimagining — built)
+- ✅ **Reimagined the frontend** (was a lone landing page) into **two surfaces, one locked design language**: `/` + `/appeal` = the calm consumer flow (intake → working → mirror → draft → decide, never names the AI); `/showcase` = "How Aegis learns" (judge-facing v1/v3 + diff + memory-off counterfactual). Spec `docs/superpowers/specs/2026-06-01-aegis-frontend-design.md`, plan `docs/superpowers/plans/2026-06-01-aegis-frontend.md`.
+- ✅ **One `DataSource` seam** (`frontend/src/lib/data/`): **demo default** (bundled fixtures from the real 10 test cases + recorded efficacy run — fully clickable offline, no creds), flips to **live `/v1/appeal`** via `NEXT_PUBLIC_AEGIS_MODE=live` (+ `NEXT_PUBLIC_AEGIS_API`). Types mirror `appeal_api.py`/`schemas.py`; Zod validates fixtures at author time.
+- ✅ **Firewall (INV-2) extended to the frontend**: consumer fixtures carry only student-visible fields; `frontend/src/__tests__/firewall.test.ts` asserts no teacher answer-key keys leak. All 10 test cases selectable (PM picks live for the demo); cases 01–04 show **measured** v1/v3 numbers from `eval/efficacy_runs/2026-05-31`, 05–10 labeled illustrative.
+- ✅ **Quality:** 17 vitest tests green; `tsc`/`eslint` clean; `pnpm build` prerenders all 4 routes; copy audit clean (no AI/Phoenix/Gemini/ADK or exclamation marks on consumer surfaces); a11y + reduced-motion pass. Branch `feat/frontend-two-surface` (14 commits `d287666..fcdedfd`), **not merged to main, not pushed**.
+- ⏭️ Not run: browser-interaction smoke test (Chrome not installed for Playwright) — validated instead via route-200s + static prerender + data-layer unit tests. Noted backend follow-up: have `/v1/appeal` return `parsed_case` + `appeal_strategy` for a richer live Mirror.
 
 ---
 
