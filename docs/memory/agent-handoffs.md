@@ -1574,3 +1574,25 @@ PM flagged two ways the self-improvement claim could be "game-able". Fixed all t
 
 ### Working Tree
 - **Clean.** Branch **2 commits ahead** of `origin/main`.
+
+---
+
+## 2026-06-01 — Manual benchmark-200 casegen (batches 1–20 DONE)
+
+### Done
+- **200 new synthetic cases** (`case_11` … `case_210`) in `eval/cases/drafts/benchmark-200/`.
+- **Manual swarm pipeline** (no Vertex Gemini): `manual_producer.py` executes P1 ScenarioPlanner → P2 DenialDrafter → P3 ClinicalWriter → P4 RealisticFlawInjector → P5 StylisticDiversifier, plus critics: matrix_coverage, scenario_realism, insurer_voice, denial_logic, clinical_realism, diagnosis_treatment_match, contradiction_hunter, llm_tell_detector, overall_tone, financial_auditor, legal_auditor, demographic_validator, scope_guard, date_sanity, citation_traceability, appeal_difficulty, safety_redactor, phi_pii.
+- **All 20 batches × 10 cases** schema-validated (`validate_manual_batch.py`).
+
+### How to regenerate
+```bash
+cd backend && uv run python scripts/run_manual_case_batch.py --batch N
+uv run python scripts/validate_manual_batch.py --batch N
+```
+
+### Next
+- Run Gumloop second-opinion evaluator on drafts before `approved/`.
+- PM: split train/holdout from benchmark-200 when benchmark design is fixed.
+
+### Commits
+- 1 infra commit + 20 batch commits (cases 11–20, 21–30, … 201–210).
