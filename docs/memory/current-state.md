@@ -332,6 +332,23 @@ Evidence: [`docs/evals/2026-06-01-coordinator-efficacy-run2.md`](../evals/2026-0
   headroom (`grounding`) and the cross-model efficacy read both require **Tier 1 (live GCP/Phoenix)** —
   now the clear next step. `drafter_v2` + the `base` meta-prompt are Tier 1's starting point.
 
+## Tier 1 offline cores BUILT (Session 25 cont., 2026-06-01) — creds still required for the live thesis
+Built the credential-FREE parts of the Tier 1 plan (`docs/plans/2026-05-31-learning-coordinator-live-gcp-companion-plan.md`)
+ahead of GCP/Phoenix setup, TDD, commits `8a35860`,`5720eaf`. Full unit **103 passed**; integration skips clean offline.
+- **Task 1 `PanelJudgeAdapter`** (`backend/app/learning/judge_adapter.py`) — adapts the Part-A panel to the
+  `judge_client.score(case, appeal_letter)` contract; the deferred glue that makes `LiveExperimentRunner` runnable.
+- **Task 5 `counterfactual.run_counterfactual`** (`backend/app/learning/counterfactual.py`) — MCP-on-vs-off composite
+  delta harness (the load-bearing-MCP demo), pure over injected callables.
+- **Task 6 `calibration.cohens_kappa`/`calibration_report`** (`backend/app/evals/part_a/calibration.py`) — quadratic-weighted
+  Cohen's κ on the 1/3/5 scale + the κ≥0.6 gate.
+- **STILL NEEDS CREDS (next session, credentialed box):** **Task 0** (resolve Phoenix MCP auth + record real
+  `backend/tests/fixtures/phoenix/*` payloads — the critical path; fallback to `px.Client()` reads if MCP auth can't be
+  settled). **Tasks 2 & 3** (`LivePhoenixLearningStore` transforms + `phoenix_mcp_lookup` trace-summary) were deliberately
+  HELD because they parse real Phoenix payloads whose field names Task 0's fixtures pin — building them against guessed
+  schemas would be false-green. **Task 4** (`run_live.py` live coordinator), **Task 7** (demo capture), and all gated
+  smoke tests need `gcloud auth application-default login` (ADC) + `PHOENIX_API_KEY`
+  (+ likely `PHOENIX_CLIENT_HEADERS="api_key=$PHOENIX_API_KEY"`, `PHOENIX_HOST`, `PHOENIX_PROJECT=aegis-hackathon`).
+
 ## Next recommended action
 
 **Updated 2026-05-28 (Session 18):** Before any feature work, the next agent must resolve the inconsistencies identified in the audit. PM wants to review each issue individually — see Session 18 handoff in `agent-handoffs.md` for the full 16-item table with recommendations.
