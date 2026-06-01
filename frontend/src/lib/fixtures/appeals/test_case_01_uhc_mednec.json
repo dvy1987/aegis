@@ -1,0 +1,74 @@
+{
+  "run_id": "demo_test_case_01_uhc_mednec",
+  "appeal_letter": "Dear UnitedHealthcare Appeals Review,\n\nI am writing to appeal the denial of Bariatric Surgery Revision for [Member Name], dated [date]. The denial states that maximum medical management — specifically high-dose proton pump inhibitors and lifestyle modifications — has not been attempted and failed for at least six months. This appeal asks you to review the anatomical record of this case, which shows that PPI therapy cannot address the cause of the reflux.\n\nThe treating surgeon has documented that the patient's GERD following gastric sleeve surgery is caused by bile reflux — an anatomical consequence of the sleeve procedure itself. Unlike acid reflux, bile reflux is not responsive to proton pump inhibitors, which work by reducing acid production and do not affect bile content. Requiring a six-month PPI trial as a precondition is therefore clinically inappropriate: the treatment being required is contraindicated for the documented mechanism of disease.\n\nMoreover, the clinical record documents that this reflux has already caused esophageal strictures and Barrett's esophagus, a pre-cancerous condition. Delaying surgical intervention to pursue therapy that cannot work exposes the member to a risk of esophageal cancer that is both foreseeable and documented in the treating physician's notes.\n\nWe respectfully ask that the medical reviewer consider the surgeon's operative record and the pathology findings alongside UHC's own guidelines, which do not require futile therapy as a precondition when the mechanism of disease makes such therapy ineffective.\n\nWe request a full clinical review and reversal. Please confirm receipt and the deadline for any further submission.\n\nThis letter is a draft for your review.",
+  "outcome": {
+    "verdict": "APPROVE",
+    "score": 0.88,
+    "threshold": 0.7,
+    "feature_scores": [
+      {
+        "feature": "grounding",
+        "anchor": 5,
+        "weight": 0.3,
+        "must_have": false,
+        "evidence": "Cites the specific mechanism (bile reflux vs acid reflux) and why PPIs cannot address it."
+      },
+      {
+        "feature": "appeal_vector_capture",
+        "anchor": 5,
+        "weight": 0.25,
+        "must_have": true,
+        "evidence": "Names the core vector: required conservative therapy is contraindicated for the documented disease mechanism."
+      },
+      {
+        "feature": "case_specific_clinical_rebuttal",
+        "anchor": 5,
+        "weight": 0.25,
+        "must_have": false,
+        "evidence": "Barrett's esophagus and strictures cited as documented escalation risk requiring timely intervention."
+      }
+    ],
+    "gaps": [],
+    "critique": "Well-grounded rebuttal that directly addresses the mechanism mismatch between the denial rationale and the clinical record.",
+    "rationale": [
+      "The letter correctly identifies that bile reflux is not amenable to PPI therapy, making the six-month trial requirement clinically inapplicable.",
+      "Barrett's esophagus adds an urgency grounding that supports waiving the step-therapy requirement."
+    ]
+  },
+  "risk_flags": [
+    "Step-therapy denials are often upheld on appeal; a surgeon's declaration of futility strengthens but does not guarantee reversal."
+  ],
+  "trace_metadata": {
+    "case_id": "test_case_01_uhc_mednec",
+    "insurer": "UHC",
+    "denial_type": "medical_necessity",
+    "plan_type": "commercial",
+    "state": "unknown",
+    "prompt_version": "aegis_v2",
+    "playbook_version": "drafter_v2",
+    "dataset_split": "holdout",
+    "run_mode": "benchmark"
+  },
+  "mirror": {
+    "insurer": "UHC",
+    "what_was_denied": "Coverage for Bariatric Surgery Revision (surgical correction of bile reflux following prior gastric sleeve).",
+    "why_they_said_no": "They say maximum conservative therapy — high-dose PPIs and lifestyle changes — has not been tried for at least six months first.",
+    "deadline_note": "Check your denial letter for the appeal filing deadline and submit before that date.",
+    "strongest_angle": "PPIs treat acid, not bile — the type of reflux documented here cannot respond to the therapy UHC is requiring as a precondition."
+  },
+  "citations_used": [
+    {
+      "title": "Denial letter",
+      "quote": "maximum medical management (such as high-dose proton pump inhibitors and lifestyle modifications) has been attempted and failed for at least 6 months"
+    },
+    {
+      "title": "Surgeon's clinical note (referenced)",
+      "quote": "PPIs will not fix the anatomical issue causing the bile reflux"
+    }
+  ],
+  "missing_evidence_checklist": [
+    "Surgeon's operative note documenting bile reflux as the mechanism",
+    "Pathology report confirming Barrett's esophagus and esophageal strictures",
+    "Brief written statement from surgeon explaining why PPI therapy is contraindicated for this presentation"
+  ]
+}

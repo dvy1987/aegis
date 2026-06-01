@@ -1,0 +1,70 @@
+{
+  "run_id": "demo_test_case_02_aetna_priorauth",
+  "appeal_letter": "Dear Aetna Appeals Review,\n\nI am writing to appeal the denial of coverage for a wrist MRI performed on 06/02/2026, for [Member Name]. The denial states that prior authorization was not obtained for an out-of-network service, and that the situation was not a life-threatening emergency. This appeal asks you to review the clinical circumstances, which meet the standard for urgent medical care requiring immediate action.\n\nThe patient presented to urgent care following a fall with acute wrist pain. Plain X-rays were negative, but the treating physician identified clinical signs consistent with a suspected scaphoid fracture. A scaphoid fracture is a recognized orthopedic emergency: if missed and untreated, avascular necrosis of the scaphoid bone is a well-documented consequence, resulting in permanent disability. The standard of care for suspected scaphoid fracture with negative X-rays is immediate advanced imaging — MRI is the preferred modality.\n\nThe treating physician referred the patient directly to the adjacent imaging center based on immediate clinical need. The patient and the urgent care physician had no practical opportunity to obtain a Network Exception authorization in the time available, and no in-network imaging was available on the same day in proximity.\n\nAetna's own guidelines recognize that the prior authorization requirement does not apply when delay of care would result in an adverse clinical outcome. We ask that the denial be reconsidered under that standard.\n\nWe request full coverage of the MRI and reversal of this denial. Please confirm receipt and the deadline for any further submission.\n\nThis letter is a draft for your review.",
+  "outcome": {
+    "verdict": "APPROVE",
+    "score": 0.88,
+    "threshold": 0.7,
+    "feature_scores": [
+      {
+        "feature": "grounding",
+        "anchor": 5,
+        "weight": 0.3,
+        "must_have": false,
+        "evidence": "Cites the scaphoid fracture mechanism and the avascular necrosis risk with specificity."
+      },
+      {
+        "feature": "appeal_vector_capture",
+        "anchor": 5,
+        "weight": 0.25,
+        "must_have": true,
+        "evidence": "Correctly frames this as urgent (not elective), invoking the urgency exception to the prior auth requirement."
+      },
+      {
+        "feature": "case_specific_clinical_rebuttal",
+        "anchor": 5,
+        "weight": 0.25,
+        "must_have": false,
+        "evidence": "Notes the absence of in-network same-day availability and the physician's immediate referral decision."
+      }
+    ],
+    "gaps": [],
+    "critique": "Strong urgency framing with specific clinical consequence (avascular necrosis) that directly undercuts the denial's characterization.",
+    "rationale": [
+      "Scaphoid fracture risk of avascular necrosis establishes urgency that overrides the prior auth requirement.",
+      "The practical unavailability of prior auth in the timeframe is documented."
+    ]
+  },
+  "risk_flags": [
+    "Aetna may still contest 'life-threatening' threshold; the stronger argument is urgent/time-sensitive rather than strictly life-threatening."
+  ],
+  "trace_metadata": {
+    "case_id": "test_case_02_aetna_priorauth",
+    "insurer": "Aetna",
+    "denial_type": "prior_authorization",
+    "plan_type": "commercial",
+    "state": "unknown",
+    "prompt_version": "aegis_v2",
+    "playbook_version": "drafter_v2",
+    "dataset_split": "holdout",
+    "run_mode": "benchmark"
+  },
+  "mirror": {
+    "insurer": "Aetna",
+    "what_was_denied": "Coverage for an out-of-network wrist MRI performed without prior authorization.",
+    "why_they_said_no": "They say prior authorization was required for out-of-network imaging and this was not a life-threatening emergency.",
+    "deadline_note": "Check your denial letter for the appeal filing deadline and submit before that date.",
+    "strongest_angle": "A suspected scaphoid fracture with negative X-rays is a time-sensitive orthopedic emergency — delaying the MRI risks permanent bone death, which meets the urgency exception to prior authorization."
+  },
+  "citations_used": [
+    {
+      "title": "Denial letter",
+      "quote": "Because this was not a life-threatening emergency, you are responsible for the out-of-network charges"
+    }
+  ],
+  "missing_evidence_checklist": [
+    "Urgent care physician's note documenting suspected scaphoid fracture and immediate MRI referral decision",
+    "Documentation that no in-network imaging was available same-day within reasonable proximity",
+    "MRI report confirming or ruling out the fracture"
+  ]
+}

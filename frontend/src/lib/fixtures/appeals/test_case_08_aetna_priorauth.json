@@ -1,0 +1,76 @@
+{
+  "run_id": "demo_test_case_08_aetna_priorauth",
+  "appeal_letter": "Dear Aetna Appeals Review,\n\nI am writing to appeal the denial of BRCA1 and BRCA2 genetic testing for [Member Name], performed on 05/20/2026. The denial states that prior authorization was not obtained and that the required pre-test genetic counseling documentation was not submitted. This appeal asks you to review the medical necessity of this test and to consider a retroactive authorization based on the complete clinical picture.\n\nThe patient has a significant family history: her mother and sister both died of breast cancer before the age of 50. Under USPSTF guidelines, this family history meets the threshold for BRCA testing recommendation without additional preconditions. The test is medically necessary and clinically appropriate.\n\nThe prior authorization was not obtained because the ordering physician — the patient's OB/GYN — ordered the test as part of her annual examination without being aware that Aetna required a separate genetic counseling consultation before authorization. This was a gap in the administrative process, not a clinical one. The physician's intent to provide standard preventive care was appropriate and consistent with current clinical guidelines.\n\nAetna's own policy and USPSTF guidelines recognize BRCA testing as a covered preventive service for patients with the qualifying family history this patient presents. We ask Aetna to grant retroactive authorization based on the clinical merits and to consider waiving the procedural requirement given that the underlying care was appropriate.\n\nWe request reversal and full coverage of the genetic testing claim. Please confirm receipt and the deadline for any further submission.\n\nThis letter is a draft for your review.",
+  "outcome": {
+    "verdict": "APPROVE",
+    "score": 0.78,
+    "threshold": 0.7,
+    "feature_scores": [
+      {
+        "feature": "grounding",
+        "anchor": 5,
+        "weight": 0.3,
+        "must_have": false,
+        "evidence": "USPSTF guideline cited as an independent standard supporting coverage."
+      },
+      {
+        "feature": "appeal_vector_capture",
+        "anchor": 3,
+        "weight": 0.25,
+        "must_have": true,
+        "evidence": "Frames this as a procedural denial of a medically appropriate service; retroactive authorization request is well-targeted."
+      },
+      {
+        "feature": "case_specific_clinical_rebuttal",
+        "anchor": 3,
+        "weight": 0.25,
+        "must_have": false,
+        "evidence": "Family history is cited but the specific USPSTF qualifying criteria (two first-degree relatives) could be made more explicit."
+      }
+    ],
+    "gaps": [
+      "moderate: appeal_vector_capture (anchor 3) — could more explicitly request the genetic counseling be conducted retroactively to satisfy the procedural requirement"
+    ],
+    "critique": "Good preventive-care and USPSTF framing; the retroactive counseling path could be named as an alternative resolution.",
+    "rationale": [
+      "USPSTF recommendation for BRCA testing with this family history is a strong independent grounding.",
+      "Retroactive authorization on clinical merits is the standard remedy for good-faith administrative errors."
+    ]
+  },
+  "risk_flags": [
+    "Aetna may insist on the genetic counseling requirement; offering to complete counseling retroactively may open a path to coverage."
+  ],
+  "trace_metadata": {
+    "case_id": "test_case_08_aetna_priorauth",
+    "insurer": "Aetna",
+    "denial_type": "prior_authorization",
+    "plan_type": "commercial",
+    "state": "unknown",
+    "prompt_version": "aegis_v2",
+    "playbook_version": "drafter_v2",
+    "dataset_split": "holdout",
+    "run_mode": "benchmark"
+  },
+  "mirror": {
+    "insurer": "Aetna",
+    "what_was_denied": "Coverage for BRCA1 and BRCA2 genetic testing performed on 05/20/2026.",
+    "why_they_said_no": "They say prior authorization was not obtained and the required pre-test genetic counseling documentation was not submitted.",
+    "deadline_note": "Check your denial letter for the appeal filing deadline and submit before that date.",
+    "strongest_angle": "The test is medically necessary under USPSTF guidelines for this family history — the denial is procedural, not clinical, and retroactive authorization is the appropriate remedy."
+  },
+  "citations_used": [
+    {
+      "title": "Denial letter",
+      "quote": "your provider did not submit a prior authorization request with documentation of the required pre-test genetic counseling session"
+    },
+    {
+      "title": "USPSTF Recommendation (referenced)",
+      "quote": "USPSTF recommends referral for genetic counseling and BRCA testing for women with a family history that may be associated with an increased risk"
+    }
+  ],
+  "missing_evidence_checklist": [
+    "Physician's note documenting the family history and clinical rationale for ordering BRCA testing",
+    "Documentation that the ordering provider was unaware of the prior auth requirement",
+    "Offer to complete genetic counseling retroactively if required by Aetna"
+  ]
+}
