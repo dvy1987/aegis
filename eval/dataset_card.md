@@ -46,3 +46,10 @@ Configs:
 - JSON Schema: `eval/case_schema.json`
 
 Run: `cd backend && uv run python -m app.case_generator.cli --count <N> --split {train|test}`.
+
+### Manual benchmark-200 (2026-06-01)
+
+Cases `case_11` through `case_210` in `eval/cases/drafts/benchmark-200/` were produced by the **manual swarm** (`backend/app/case_generator/manual_batches/`) using Cursor agent intelligence — **not** Vertex Gemini. Each case runs P1–P5 producers plus all stage critics, final panel, and deterministic safety/PHI gates. `synthetic_provenance.generator_model` = `cursor-manual-agent-2026-06-01`.
+
+Regenerate a batch: `cd backend && uv run python scripts/run_manual_case_batch.py --batch <1-20>`.
+Validate: `uv run python scripts/validate_manual_batch.py --batch <N>`.

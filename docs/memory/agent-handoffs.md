@@ -1531,3 +1531,46 @@ PM flagged two ways the self-improvement claim could be "game-able". Fixed all t
 | `AEGIS_VERTEX_DISCOVERY=true` | Grounded search client (still needs `CORPUS_DISCOVERY_ENABLED`) |
 | `CORPUS_DISCOVERY_ENABLED=true` | Allow autonomous ingest |
 | `AEGIS_SWARM_TRACE_MODE=memory` | Offline tests / no OTel export |
+
+---
+
+## 2026-06-01 21:15 — Session-end Handoff (Cursor) — Part B swarm Phases 1–4 DONE, committed
+
+### Done
+- **Phases 0–4 of Part B swarm runtime, offline-first, all green (192 unit).** Pure core in `swarm_pipeline`; no orchestration fork in ADK/HTTP layers.
+- **Phase 4 (this commit `27537ef`):** ADK `run_swarm_appeal` tool + `POST /v1/swarm/appeal`; `VertexSearchCorpusStore` + `build_corpus_store()`; `VertexGroundedDiscoveryClient` + thin-retrieval `corpus_search_with_discovery` hook; `OtelSwarmTraceRecorder` per-agent spans; `swarm_config` live/stub dial.
+- **Phases 1–3 (`0454022`):** 5-researcher fan-out, LiteratureDiscovery fakes, 3 weak baselines, evolution-integrity hardening (targets quarantine, no meta in prompts).
+
+### Debated
+- **Vertex store falls back to local BM25 on misconfig/API failure** — same “never crash mid-run” posture as `GeminiSwarmClient` stub-fallback. Live lift only when Vertex actually returns hits.
+- **Discovery stays OFF by default** even with live client wired — budget cap + safety; two env vars required (`AEGIS_VERTEX_DISCOVERY` + `CORPUS_DISCOVERY_ENABLED`).
+
+### Decisions
+- **One tool, one pipeline:** ADK agent does not re-implement Triage→Drafter; it calls `run_swarm_pipeline` only.
+- **Appeal API uses FastAPI Depends** for stack/trace/simulator — testable like Part A `appeal_api`.
+- **Default Gemini location `us-central1`** in `swarm_config` (Session 27 global-latency finding).
+
+### Deferred
+- **Phase 5:** Learning Coordinator re-point for swarm agents + eval-layer judge grading (not in orchestrator).
+- **Phase 6:** Autonomous promotion, autonomy ladder, 100-case benchmark (FR-2/3/4).
+- **Tier 1 live Phoenix MCP** (Part A path): still needs ADC + `PHOENIX_API_KEY` + MCP auth fix.
+- **`deploy-swarm.sh`:** not written yet (mirror `deploy-v1.sh` when PM wants swarm on Cloud Run).
+
+### Next Agent Should Know
+- Run offline: `cd backend && AEGIS_SWARM_TRACE_MODE=memory uv run pytest tests/unit -q`
+- Run swarm API locally: `uv run uvicorn app.main_swarm:app --port 8002` → `POST /v1/swarm/appeal`
+- Live stack: `AEGIS_SWARM_MODE=live` + `GOOGLE_CLOUD_LOCATION=us-central1` + Vertex env vars (see cheat sheet above).
+- **Optimizer integrity:** seeds only `registry.current_version` (`v1_weak`); never `load_target_reference()` in mutation path.
+- Ruff not installed in venv (lint skipped).
+
+### Revisit Triggers
+- Track B still slow after `us-central1` → demo stays Track A; defer live thesis.
+- Phase 4 Vertex Search returns empty → check data store indexing + `domain` struct fields on documents.
+- Day 10: <50% credible swarm prompts → escalate leaner topology (PRD revisit trigger).
+
+### Commits (on `main`, not pushed)
+- `0454022` — feat(swarm): Phases 1–3 offline + evolution-integrity guardrails
+- `27537ef` — feat(swarm): Phase 4 live surfaces (Vertex, discovery hook, Phoenix spans)
+
+### Working Tree
+- **Clean.** Branch **2 commits ahead** of `origin/main`.
