@@ -34,3 +34,14 @@ def test_reflection_prompt_is_critique_first_and_firewalled():
 def test_cloud_backends_construct_without_calls():
     assert GeminiReflectionClient().name == "gemini_reflection"
     assert AnthropicReflectionClient().name == "anthropic_reflection"
+
+
+def test_build_reflection_prompt_supports_named_variant():
+    comp = Component(component_id="drafter_system_prompt", kind="prompt", text="Draft.")
+    sig = DimensionSignal(component_id="drafter_system_prompt", weakest_dimension="appeal_vector_capture",
+                          failing_cases=[], notes={"appeal_vector_capture": ["missed the specific flaw"]})
+    base = build_reflection_prompt(component=comp, signal=sig, minibatch=[])
+    v2 = build_reflection_prompt(component=comp, signal=sig, minibatch=[], variant="critique_plus")
+    assert "CRITIQUE" in v2.upper()
+    assert v2 != base                       # the variant changes the instruction
+    assert "exploitable_weaknesses" not in v2  # firewall still holds in the variant

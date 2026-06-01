@@ -13,9 +13,24 @@ _REFLECTION_CONSTRAINTS = (
     "laundered improvement notes — never an answer key."
 )
 
+# Named meta-prompt variants (the optimizer's OWN instruction — A/B'd in Tier 2 Task 3).
+# "base" = the original critique-first instruction. "critique_plus" = a stricter framing that
+# forces an explicit, named single-flaw diagnosis before a minimal edit (less diffuse, less padding).
+_VARIANT_PREAMBLES = {
+    "base": "",
+    "critique_plus": (
+        "BEFORE any edit, write a 2-sentence DIAGNOSIS naming the single most important "
+        "specific flaw on the weakest dimension. THEN propose the MINIMAL edit that fixes "
+        "exactly that flaw — do not exceed ~200 added tokens, add no new section unless it "
+        "is the smallest change that closes the gap, and keep every safety rule intact.\n\n"
+    ),
+}
+
 
 def build_reflection_prompt(*, component: Component, signal: DimensionSignal,
-                            minibatch: list[ScoredRun]) -> str:
+                            minibatch: list[ScoredRun], variant: str = "base") -> str:
+    if variant not in _VARIANT_PREAMBLES:
+        raise ValueError(f"unknown reflection meta-prompt variant: {variant!r}")
     notes = "\n".join(f"- {n}" for n in signal.notes.get(signal.weakest_dimension, []))
     current = component.text if component.kind == "prompt" else str(component.playbook)
     cases = "\n".join(
@@ -24,7 +39,7 @@ def build_reflection_prompt(*, component: Component, signal: DimensionSignal,
     )
     return f"""You are improving one component of an appeal-drafting system.
 
-FIRST CRITIQUE, THEN EDIT. Diagnose why the component underperforms on the weakest
+{_VARIANT_PREAMBLES[variant]}FIRST CRITIQUE, THEN EDIT. Diagnose why the component underperforms on the weakest
 quality dimension before proposing a change.
 
 Weakest dimension to improve: {signal.weakest_dimension}

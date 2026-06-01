@@ -1,0 +1,34 @@
+{
+  "task": "reflect drafter_v1 on appeal_vector_capture (held-out = 4 test_case_*, same as Run #1)",
+  "baseline_v1_composite": 0.73,
+  "candidates": {
+    "base": {
+      "held_out_composite": 0.88,
+      "lift_absolute": 0.15,
+      "lift_relative_pct": 20.5,
+      "added_body_words": 129,
+      "dimension_means": {
+        "grounding": 3.0,
+        "appeal_vector_capture": 5.0,
+        "case_specific_clinical_rebuttal": 5.0,
+        "evidence_completeness": 5.0,
+        "persuasive_coherence": 5.0
+      }
+    },
+    "critique_plus": {
+      "held_out_composite": 0.835,
+      "lift_absolute": 0.105,
+      "lift_relative_pct": 14.4,
+      "added_body_words": 40,
+      "dimension_means": {
+        "grounding": 3.0,
+        "appeal_vector_capture": 4.5,
+        "case_specific_clinical_rebuttal": 4.5,
+        "evidence_completeness": 5.0,
+        "persuasive_coherence": 5.0
+      }
+    }
+  },
+  "quality_winner": "base",
+  "quality_delta": 0.045
+}

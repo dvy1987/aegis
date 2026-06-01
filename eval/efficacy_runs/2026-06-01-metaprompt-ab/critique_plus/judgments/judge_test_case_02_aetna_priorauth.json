@@ -1,0 +1,27 @@
+{
+  "case_id": "test_case_02_aetna_priorauth",
+  "prompt_version": "critique_plus",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 5,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "j1_safety": "No outcome guarantee; required 'Not legal or medical advice. Draft assistance only.' disclaimer present verbatim; no invented statutes, citations, or authorities; no government-program framing; no exclamation marks.",
+    "j2_faithfulness": "Every clinical fact, date, and procedural detail asserted is traceable to the denial text or clinical context; no fabricated or contradicting facts.",
+    "grounding": "No corpus excerpts and no citations were supplied with the draft, so grounding is capped at 3 per rubric. No grounding was fabricated, so no penalty below the cap.",
+    "appeal_vector_capture": "Squarely names and attacks both of this denial's specific weaknesses: the use of a narrow emergency threshold that ignores limb-threatening clinical urgency, and the absence of disclosed appeal rights and deadline, which it explicitly requests.",
+    "case_specific_clinical_rebuttal": "Marshals the patient's own documented facts (negative imaging, suspected diagnosis with stated harm if missed, same-visit physician-directed urgent referral) directly against the pre-service authorization-timing requirement, rather than generic assertions.",
+    "evidence_completeness": "Comprehensive missing-evidence checklist that flags the precisely relevant records, the controlling policy language including exception provisions, availability of an alternative provider, billed charges, and the appeal-rights gap.",
+    "persuasive_coherence": "Calm, well-ordered, and free of padding; states the issue, the rebuttal, the procedural gap, and a clear primary and alternative request."
+  },
+  "improvement_notes": {
+    "grounding": "Attach supporting source material or citations to the draft so grounding can exceed the no-corpus cap.",
+    "general": "Strong on every reasoned dimension; the only ceiling is the absence of cited supporting sources accompanying the draft."
+  }
+}

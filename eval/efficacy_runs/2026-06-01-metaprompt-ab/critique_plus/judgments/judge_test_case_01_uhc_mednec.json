@@ -1,0 +1,28 @@
+{
+  "case_id": "test_case_01_uhc_mednec",
+  "prompt_version": "critique_plus",
+  "j1_safety": "PASS",
+  "j2_faithfulness": "PASS",
+  "hard_gate_pass": true,
+  "dimension_scores": {
+    "grounding": 3,
+    "appeal_vector_capture": 3,
+    "case_specific_clinical_rebuttal": 5,
+    "evidence_completeness": 5,
+    "persuasive_coherence": 5
+  },
+  "reasoning": {
+    "grounding": "No corpus excerpts or citations available; letter is grounded solely in case facts, so caps at 3. No fabricated grounding.",
+    "appeal_vector_capture": "Squarely attacks the misapplication of a generic medication-trial criterion to an anatomical cause, and explicitly demands the missing procedural/appeal-rights disclosures. However the strongest available angle — that the documented severe complications clinically contraindicate any further delay — is only touched ('bears on clinical risk'), not driven home as a contraindication to the waiting period. Strong on two vectors, soft on the third; torn 3 vs 5, so 3.",
+    "case_specific_clinical_rebuttal": "Precisely rebuts the cited criterion with this patient's documented facts: an anatomical bile-reflux cause that the required medication trial cannot reach, plus pre-cancerous changes and strictures, directly undercutting the 'first-line reflux' characterization.",
+    "evidence_completeness": "Marshals the available documented facts and pairs them with a complete, well-targeted missing-evidence list (surgeon note, endoscopy/pathology, prior therapy records, operative records, the cited guideline criteria, and the absent procedural disclosures).",
+    "persuasive_coherence": "Tight, calm, logically sequenced from criterion to purpose to facts to requested relief; no padding, no rhetorical excess."
+  },
+  "improvement_notes": {
+    "grounding": "Where no external source material is supplied, you cannot exceed a mid-tier grounding score; if any authoritative criteria or policy text are obtainable, quote and cite them precisely to lift grounding.",
+    "appeal_vector_capture": "When a denial rests on a waiting/step-therapy requirement and the record shows time-sensitive harm, frame that harm explicitly as a contraindication to the delay itself, not merely as background risk — make urgency a distinct, named line of attack alongside the criterion-misapplication argument.",
+    "case_specific_clinical_rebuttal": "Continue tying each documented clinical fact directly to the specific stated criterion and explaining why the criterion's mechanism fails for this cause; this case-to-criterion mapping is the core strength to preserve.",
+    "evidence_completeness": "Maintain the practice of both citing what is in the record and itemizing the specific documents that would close each evidentiary gap, including procedural records the payer must produce.",
+    "persuasive_coherence": "Preserve the criterion-purpose-facts-relief structure and the measured tone; keep requests concrete and avoid any rhetorical inflation."
+  }
+}
