@@ -5,6 +5,7 @@
 
 ### Session (Part A v1 librarian + frontend product model)
 - ✅ **Built Part A library path (offline-tested):** Search Planner + pre-flight `prepare_library_context` (cloud store seam, up to 5 trust-gated discovery fetches, Layer 3 query refinement stub). Spec **Approved**: `docs/specs/2026-06-01-aegis-v1-cloud-corpus-surgical-discovery-feature-spec.md`.
+- ✅ **PM decision applied (cloud-only, transparent failure):** v1 does **not** store corpus locally; when Vertex AI Search isn’t configured, runs are best-effort but **ungrounded** (no citations) with an explicit `library_unavailable_no_cloud_index` risk flag. If `discovery_enabled=true` without cloud library, API returns **503** (no silent toggles).
 - ✅ **Frontend aligned to PM model:** `/appeal` = **always live** (`consumerSource`); `/showcase` = **recorded** judge evidence (`showcaseSource`). Removed consumer “practice mode” default — was a misread of demo vs product.
 - ✅ **Settings:** backend URL + connection check + discovery toggle (default on). `docs/demo-cheatsheet-pm.md` for PM demo flow.
 - ⏭️ **Not committed.** Next: commit when PM asks; record Devpost video (live appeal → showcase); optional ADK agent pre-flight parity.
@@ -433,6 +434,13 @@ ahead of GCP/Phoenix setup, TDD, commits `8a35860`,`5720eaf`. Full unit **103 pa
   schemas would be false-green. **Task 4** (`run_live.py` live coordinator), **Task 7** (demo capture), and all gated
   smoke tests need `gcloud auth application-default login` (ADC) + `PHOENIX_API_KEY`
   (+ likely `PHOENIX_CLIENT_HEADERS="api_key=$PHOENIX_API_KEY"`, `PHOENIX_HOST`, `PHOENIX_PROJECT=aegis-hackathon`).
+
+## 2026-06-02 — v1 librarian + consumer UX wiring (uncommitted)
+
+- **Status:** v1 librarian/discovery flow runs end-to-end; backend unit tests green.
+- **Defaults:** Gemini `location=global`, model `gemini-3.1-pro-preview` (verified available in this project).
+- **UX:** top-nav shows a green dot when the backend is connected (next to Settings).
+- **Still pending:** commit scope (repo has a very large dirty tree under `eval/cases/` + other unrelated WIP).
 
 ## Next recommended action
 

@@ -86,6 +86,8 @@ class GeminiSimulatorClient:
     name = "gemini_simulator"
 
     def __init__(self, model: str | None = None, location: str | None = None) -> None:
+        # Prefer the newest stable name when available, but allow graceful fallback
+        # in projects/regions that don't have access yet.
         self.model = model or os.environ.get("AEGIS_SIMULATOR_MODEL", "gemini-3.1-pro-preview")
         self.location = location or os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
 
@@ -114,15 +116,30 @@ class GeminiSimulatorClient:
         prompt = _build_assess_prompt(denial_text, clinical_context, appeal_letter)
         try:
             client = genai.Client(vertexai=True, location=self.location)
-            response = client.models.generate_content(
-                model=self.model,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    response_schema=_Assessment,
-                    temperature=0.2,
-                ),
-            )
+            try:
+                response = client.models.generate_content(
+                    model=self.model,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        response_schema=_Assessment,
+                        temperature=0.2,
+                    ),
+                )
+            except Exception as e:
+                msg = str(e)
+                if ("404" in msg or "NOT_FOUND" in msg) and "gemini-3.1" in self.model:
+                    response = client.models.generate_content(
+                        model="gemini-2.5-pro",
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            response_mime_type="application/json",
+                            response_schema=_Assessment,
+                            temperature=0.2,
+                        ),
+                    )
+                else:
+                    raise
             data = json.loads(response.text)
             return FeatureAssessment(
                 critique=data.get("critique", ""),

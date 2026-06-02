@@ -1828,3 +1828,68 @@ cd backend && uv run pytest tests/unit/aegis_v1 -q
 cd backend && uv run pytest tests/unit -q
 ```
 and check `git status` carefully because there is a huge dirty tree under `eval/cases/`.
+
+---
+
+## 2026-06-02 13:10 — Session-end Handoff (Cursor) — Cloud-only library + explicit discovery error (no silent toggles)
+
+### Done
+- **Cloud-only library posture (PM decision):** v1 no longer falls back to local BM25 corpus. If Vertex AI Search isn’t configured/available, retrieval returns **0 hits** and the run carries a clear signal.
+- **Explicit error instead of silent behavior:** if `POST /v1/appeal` is called with `discovery_enabled=true` while the cloud library is unavailable, the API now returns **503** with an actionable message (no background “force discovery off” behavior).
+- **Telemetry for UX/Phoenix:** added `library_available` to v1 trace metadata so the UI can show “Library unavailable; cannot ground citations.”
+- **Tests:** `cd backend && uv run pytest tests/unit -q` → **231 passed**.
+
+### Debated
+- Whether to “auto-disable discovery” when cloud isn’t configured. **Rejected** — PM wants explicit errors and best-effort drafting without hidden switches.
+
+### Decisions
+- **No local corpus storage** for v1: corpus content must live in GCS + Vertex AI Search index; offline/no-creds runs should be transparent about not being grounded.
+
+### Deferred
+- **Build the actual cloud library**: GCS bucket + Vertex AI Search data store schema + ingestion pipeline + populate initial ~500 docs (gov/regulatory, insurer policies, OA peer-reviewed, etc.).
+
+### Next Agent Should Know
+- Cloud-only entrypoints changed in:
+  - `backend/app/aegis_swarm/corpus_store.py` (`UnavailableCorpusStore`)
+  - `backend/app/aegis_swarm/vertex_search.py` (`build_cloud_only_corpus_store`)
+  - `backend/app/aegis_v1/v1_config.py` (v1 uses cloud-only store)
+  - `backend/app/aegis_v1/library_context.py` (risk flag `library_unavailable_no_cloud_index`, metadata `library_available`)
+  - `backend/app/aegis_v1/appeal_api.py` (503 when discovery requested but cloud unavailable)
+- Behavior contract:
+  - `discovery_enabled=false` + no Vertex configured → **best-effort draft**, **no citations**, risk flag indicates library unavailable.
+  - `discovery_enabled=true` + no Vertex configured → **503 error** (explicit).
+
+### Revisit Triggers
+- If later you want an offline demo mode, implement it explicitly (fixtures), not via silent local-corpus fallback.
+
+### Working Tree
+- **Dirty** (not committed): v1 cloud-only + API error wiring; plus unrelated corpus/case/frontend files. Run `git status --short` before scoping any commit.
+
+---
+
+## 2026-06-02 16:41 — Session-end Handoff (Cursor) — Nav “connected” green dot + v1 model/location consistency
+
+### Done
+- **UX:** added an always-visible **connection status dot** in the top nav next to **Settings** (green when backend `/health` returns ok; non-green otherwise). Updates on settings changes.
+- **v1 smoke + tests:** confirmed `POST /v1/appeal` works with `discovery_enabled=true` and discovery runs (fetch count >0). Backend unit tests green after model/location work.
+- **Model/location consistency:** verified `gemini-3.1-pro-preview` works in **Vertex `location=global`** for this project; aligned v1 defaults to **model `gemini-3.1-pro-preview` + location `global`**.
+
+### Debated
+- Region confusion: `gemini-3.1-pro-preview` was **NOT_FOUND** in `us-central1` but **works in `global`**. The correct default for this repo is `global`.
+
+### Decisions
+- Keep **default** Gemini model as `gemini-3.1-pro-preview` and **default** location as `global` for v1.
+
+### Deferred
+- **Commit** (PM did not request). Working tree still includes large unrelated churn (eval drafts, casegen, swarm WIP).
+
+### Next Agent Should Know
+- Nav dot uses existing `checkBackendHealth(getApiBase())` and listens to `SETTINGS_CHANGED_EVENT`.
+- To verify locally: run backend `./scripts/dev.sh v1`, open frontend, confirm dot turns green, then draft an appeal on `/appeal`.
+
+### Revisit Triggers
+- If backend health endpoint changes from `/health`, update the frontend `checkBackendHealth()` helper.
+
+### Working Tree
+- `frontend/src/components/Nav.tsx` (status dot), `frontend/src/lib/data/live.ts` (typed getShowcase), `frontend/src/components/SettingsPanel.tsx` (lint rule suppression)
+- Backend v1 model/location tweaks (`backend/app/aegis_v1/{agent,drafter_client,simulator_client}.py`) + unit tests updates

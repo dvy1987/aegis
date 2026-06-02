@@ -75,3 +75,5 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-01 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/project-index.md | Session-end handoff — Part B swarm Phase 5 committed (`5bab203`), 207 unit green |
 | 2026-06-02 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md | Session-end — 500-case corpus, A+ pipeline web refs + letter enhancements |
 | 2026-06-02 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Part B swarm Phase 6 committed (Learning Coordinator re-point, 228 unit green) |
+| 2026-06-02 13:10 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Cloud-only library posture + explicit discovery error (no silent toggles); tests 231 passed |
+| 2026-06-02 16:41 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Nav connected dot + v1 model/location consistency; backend tests green |

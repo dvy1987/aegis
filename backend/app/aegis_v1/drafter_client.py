@@ -69,6 +69,8 @@ class GeminiDrafterClient:
     name = "gemini"
 
     def __init__(self, model: str | None = None, location: str | None = None) -> None:
+        # Prefer the newest stable name when available, but allow graceful fallback
+        # in projects/regions that don't have access yet.
         self.model = model or os.environ.get("AEGIS_DRAFTER_MODEL", "gemini-3.1-pro-preview")
         self.location = location or os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
 
@@ -77,9 +79,23 @@ class GeminiDrafterClient:
         from google.genai import types
 
         client = genai.Client(vertexai=True, location=self.location)
-        response = client.models.generate_content(
-            model=self.model,
-            contents=_build_contents(prompt, parsed_case, citations, playbook, phoenix_summary),
-            config=types.GenerateContentConfig(temperature=0.3),
-        )
+        contents = _build_contents(prompt, parsed_case, citations, playbook, phoenix_summary)
+        try:
+            response = client.models.generate_content(
+                model=self.model,
+                contents=contents,
+                config=types.GenerateContentConfig(temperature=0.3),
+            )
+        except Exception as e:
+            # If the preferred model isn't available in this project/location,
+            # retry once with a known-available fallback.
+            msg = str(e)
+            if ("404" in msg or "NOT_FOUND" in msg) and "gemini-3.1" in self.model:
+                response = client.models.generate_content(
+                    model="gemini-2.5-pro",
+                    contents=contents,
+                    config=types.GenerateContentConfig(temperature=0.3),
+                )
+            else:
+                raise
         return response.text or ""

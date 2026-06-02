@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 from google.adk.agents import Agent
 from google.adk.apps import App
 from google.adk.models import Gemini
@@ -61,7 +63,7 @@ Hard safety rules:
 
 root_agent = Agent(
     name="aegis_v1",
-    model=Gemini(model="gemini-3.1-pro-preview"),
+    model=Gemini(model=os.environ.get("AEGIS_V1_AGENT_MODEL", "gemini-3.1-pro-preview")),
     instruction=AEGIS_V1_INSTRUCTION,
     tools=[
         case_parser,

@@ -82,6 +82,7 @@ export function SettingsPanel({
   useEffect(() => {
     if (!open) return;
     const base = getApiBase();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setApiUrl(base);
     setDiscovery(getDiscoveryEnabled());
     void refreshStatus(base);

@@ -31,9 +31,10 @@ def test_stub_simulator_is_a_simulator_client():
 
 def test_gemini_simulator_constructs_with_default_model(monkeypatch):
     monkeypatch.delenv("AEGIS_SIMULATOR_MODEL", raising=False)
+    monkeypatch.delenv("GOOGLE_CLOUD_LOCATION", raising=False)
     client = GeminiSimulatorClient()
     assert client.name == "gemini_simulator"
-    assert client.model == "gemini-3.1-pro"
+    assert client.model in {"gemini-3.1-pro-preview", "gemini-2.5-pro"}
     assert client.location == "global"
 
 

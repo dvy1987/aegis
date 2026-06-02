@@ -27,6 +27,8 @@ Quick navigation for agents picking up this project.
 
 | Date | Session | Handoff file |
 |---|---|---|
+| 2026-06-02 | Session (Nav connected dot + v1 model/location consistency) | [agent-handoffs.md](agent-handoffs.md#2026-06-02-1641--session-end-handoff-cursor--nav-connected-green-dot--v1-modellocation-consistency) |
+| 2026-06-02 | Session (cloud-only library + explicit discovery error) | [agent-handoffs.md](agent-handoffs.md#2026-06-02-1310--session-end-handoff-cursor--cloud-only-library--explicit-discovery-error-no-silent-toggles) |
 | 2026-05-28 | Session 12 (aegis_v1 ADK agent) | [agent-handoffs.md](agent-handoffs.md#2026-05-28-0755---handoff) |
 | 2026-05-24 | Session 1 (Amp) | [agent-handoffs.md](agent-handoffs.md#2026-05-24--session-1-handoff-amp) |
 | 2026-05-25 | Session 2 (Amp) | [agent-handoffs.md](agent-handoffs.md#2026-05-25--session-2-handoff-amp) |
