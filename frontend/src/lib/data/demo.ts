@@ -3,7 +3,7 @@ import type { AppealRequest, AppealFixture, ShowcaseBundle } from "@/lib/types";
 import { CASES } from "@/lib/fixtures/cases";
 import { parseAppealFixture } from "@/lib/schema";
 
-const FALLBACK = "test_case_03_cigna_mednec";
+const FALLBACK = "case_13_cigna_mednec";
 
 export const demoSource: DataSource = {
   async listCases() {

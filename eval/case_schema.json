@@ -44,10 +44,29 @@
       "minItems": 1,
       "description": "P4 output: each entry SHOULD start with a denial_patterns.json pattern id (e.g. 'missing_iro_notice: <source citation>')."
     },
+    "denial_letter_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ref_id", "title", "url", "source_type", "relevance"],
+        "properties": {
+          "ref_id": { "type": "string", "minLength": 4 },
+          "title": { "type": "string", "minLength": 8 },
+          "url": { "type": "string", "format": "uri", "minLength": 12 },
+          "source_type": {
+            "type": "string",
+            "enum": ["federal", "state", "insurer", "research", "journalism"]
+          },
+          "relevance": { "type": "string", "minLength": 20 }
+        }
+      },
+      "description": "P2: public exemplars used to calibrate denial-letter surface realism (not copied verbatim)."
+    },
     "denial_letter_text": {
       "type": "string",
       "minLength": 1000,
-      "maxLength": 3200,
+      "maxLength": 4500,
       "description": "P2: insurer-voice denial letter, roughly 200-500 words (not character-count gaming)."
     },
     "clinical_context": {

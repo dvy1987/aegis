@@ -32,6 +32,7 @@ def run_appeal_with_outcome(
     run_mode: Literal["interactive", "benchmark", "autonomous_promotion"] = "interactive",
     drafter_client: "DrafterLLMClient | None" = None,
     simulator_client: "SimulatorClient | None" = None,
+    library_stack: dict | None = None,
 ) -> AppealRunResult:
     """Run the Student, then the Outcome Simulator, and return both.
 
@@ -48,6 +49,7 @@ def run_appeal_with_outcome(
         dataset_split=dataset_split,
         run_mode=run_mode,
         drafter_client=drafter_client,
+        library_stack=library_stack,
     )
     outcome = simulator(
         parsed_case=appeal_package["parsed_case"],

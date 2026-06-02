@@ -9,7 +9,7 @@ describe("demoSource", () => {
     const r = await demoSource.draftAppeal({
       denial_text: "x",
       clinical_context: "",
-      case_id: "test_case_03_cigna_mednec",
+      case_id: "case_13_cigna_mednec",
     });
     expect(r.outcome.verdict === "APPROVE" || r.outcome.verdict === "DENY").toBe(true);
     expect(r.appeal_letter.length).toBeGreaterThan(50);
@@ -23,7 +23,7 @@ describe("demoSource", () => {
     expect(r.appeal_letter.length).toBeGreaterThan(50);
   });
   it("returns a showcase bundle", async () => {
-    const s = await demoSource.getShowcase("test_case_03_cigna_mednec");
+    const s = await demoSource.getShowcase("case_13_cigna_mednec");
     expect(s.lift_relative_pct).toBeGreaterThan(0);
   });
 });

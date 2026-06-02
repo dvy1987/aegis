@@ -2,8 +2,23 @@ import type { DataSource } from "./source";
 import { demoSource } from "./demo";
 import { liveSource } from "./live";
 
-// Demo is the default so the app is always clickable offline. Set
-// NEXT_PUBLIC_AEGIS_MODE=live (and optionally NEXT_PUBLIC_AEGIS_API) to call the backend.
+/**
+ * Consumer flow (`/appeal`): always the real backend. You are the customer;
+ * every draft is a live run.
+ */
+export const consumerSource: DataSource = liveSource;
+
+/**
+ * Judge / behind-the-scenes flow (`/showcase`): recorded v1/v3 evidence from
+ * eval runs — not generated live during the demo.
+ */
+export const showcaseSource: DataSource = {
+  listCases: demoSource.listCases,
+  getShowcase: demoSource.getShowcase,
+  draftAppeal: liveSource.draftAppeal,
+};
+
+/** @deprecated Use consumerSource or showcaseSource. */
 export function getDataSource(): DataSource {
-  return process.env.NEXT_PUBLIC_AEGIS_MODE === "live" ? liveSource : demoSource;
+  return consumerSource;
 }

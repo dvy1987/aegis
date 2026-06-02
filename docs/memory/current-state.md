@@ -1,7 +1,13 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-02 (Session 29 — 500-case eval corpus)
-**Phase:** **Execution — Part B swarm + eval corpus at scale.** Swarm Phases 0–6 code-complete; **500 synthetic draft cases** ready for Gumloop.
+**Updated:** 2026-06-02 (Session — Part A librarian + frontend model fix)
+**Phase:** **Execution — Part B swarm + eval corpus at scale; Part A v1 librarian built (uncommitted).**
+
+### Session (Part A v1 librarian + frontend product model)
+- ✅ **Built Part A library path (offline-tested):** Search Planner + pre-flight `prepare_library_context` (cloud store seam, up to 5 trust-gated discovery fetches, Layer 3 query refinement stub). Spec **Approved**: `docs/specs/2026-06-01-aegis-v1-cloud-corpus-surgical-discovery-feature-spec.md`.
+- ✅ **Frontend aligned to PM model:** `/appeal` = **always live** (`consumerSource`); `/showcase` = **recorded** judge evidence (`showcaseSource`). Removed consumer “practice mode” default — was a misread of demo vs product.
+- ✅ **Settings:** backend URL + connection check + discovery toggle (default on). `docs/demo-cheatsheet-pm.md` for PM demo flow.
+- ⏭️ **Not committed.** Next: commit when PM asks; record Devpost video (live appeal → showcase); optional ADK agent pre-flight parity.
 
 ### Session 29 (500-case eval corpus + A+ pipeline integration)
 - ✅ **`eval/cases/drafts/`:** **500** cases (`case_01`–`case_500`) — ERISA-style letters, web-cache references, claim-file / P2P enhancements.

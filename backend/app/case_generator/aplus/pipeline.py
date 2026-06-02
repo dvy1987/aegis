@@ -7,15 +7,21 @@ from typing import Any
 
 from app.case_generator import config
 from app.case_generator.manual_assemble import assemble_case, new_run_id
-from app.case_generator.manual_batches.manual_producer import neighbour_summary
+from app.case_generator.manual_batches.neighbour import neighbour_summary
 from app.case_generator.prompts import PROMPT_VERSIONS
 
 from .clinical import draft_clinical_context
 from .flaws import inject_flaws, verify_flaws_present
+from .letter_enhancements import enhance_denial_letter
 from .letters import draft_denial_letter
 from .scenarios import build_scenario_brief
 from .style import diversify
-from .text_metrics import context_words_ok, letter_words_ok
+from .text_metrics import (
+    context_words_ok,
+    fit_letter_word_budget,
+    letter_words_ok,
+    repair_denial_letter_artifacts,
+)
 from .critics import build_all_critics
 
 GENERATOR_MODEL = "cursor-manual-agent-aplus-v2"
@@ -28,6 +34,8 @@ def build_aplus_case(
     run_id: str,
     neighbour_summaries: list[str],
     seed: int = 20260601,
+    case_id: str | None = None,
+    use_web_research: bool = True,
 ) -> dict[str, Any]:
     rng = random.Random(seed + index)
     patterns = config.sample_denial_patterns(rng, cell["insurer"], cell["specialty"])
@@ -36,8 +44,19 @@ def build_aplus_case(
 
     brief = build_scenario_brief(index, cell, patterns)
     brief["_patterns"] = patterns
+    pattern_ids = [p.get("id", "") for p in patterns[:3] if p.get("id")]
 
-    letter = draft_denial_letter(brief, cell, index)
+    letter, letter_refs = draft_denial_letter(
+        brief, cell, index, use_web_research=use_web_research
+    )
+    letter = enhance_denial_letter(
+        letter,
+        insurer=cell["insurer"],
+        denial_type=cell["denial_type"],
+        cell=cell,
+        pattern_ids=pattern_ids,
+        fit_budget=False,
+    )
     ctx = draft_clinical_context(brief, cell)
 
     assembled = {
@@ -55,8 +74,10 @@ def build_aplus_case(
         index=index,
     )
     stylized = diversify(perturbed, index, neighbour_summaries)
+    stylized["denial_letter_text"] = fit_letter_word_budget(
+        repair_denial_letter_artifacts(stylized["denial_letter_text"])
+    )
 
-    pattern_ids = [p.get("id", "") for p in patterns[:3] if p.get("id")]
     missing = verify_flaws_present(
         stylized["denial_letter_text"],
         pattern_ids,
@@ -75,12 +96,7 @@ def build_aplus_case(
     letter_f = stylized["denial_letter_text"]
     ctx_f = stylized["clinical_context"]
     if not letter_words_ok(letter_f):
-        letter_f += (
-            " Additional plan language regarding experimental/investigational "
-            "definitions, network status, and member cost-sharing may apply and "
-            "is available upon request. This determination is based solely on "
-            "the information available at the time of review."
-        )
+        letter_f = fit_letter_word_budget(repair_denial_letter_artifacts(letter_f))
         stylized["denial_letter_text"] = letter_f
     if not context_words_ok(ctx_f):
         ctx_f += (
@@ -113,8 +129,10 @@ def build_aplus_case(
         denial_letter_text=stylized["denial_letter_text"],
         clinical_context=stylized["clinical_context"],
         denial_pattern_sources=stylized["denial_pattern_sources"],
+        denial_letter_references=letter_refs,
         critic_verdicts=critics,
         run_id=run_id,
+        case_id=case_id,
         submission_timestamp=stylized.get("submission_timestamp"),
         denial_timestamp=stylized.get("denial_timestamp"),
     )
@@ -122,11 +140,18 @@ def build_aplus_case(
     prov["generator_model"] = GENERATOR_MODEL
     prov["schema_version"] = "1.1.0"
     prov["prompt_versions"] = PROMPT_VERSIONS
+    web_note = (
+        " denial_letter_references include URLs from agent web research "
+        "(eval/references/web-research-cache-2026-06-02.json)."
+        if use_web_research
+        else " denial_letter_references from static catalog only."
+    )
     prov["human_summary"] = (
         f"A+ manual pipeline case: {cell['insurer']} {cell['denial_type']} / "
         f"{cell['specialty']} / {cell['sub_tactic']}. "
         f"P1–P5 executed prompt-faithfully; specialty-aligned clinical story; "
-        f"flaws: {', '.join(pattern_ids) or 'procedural'}."
+        f"flaws: {', '.join(pattern_ids) or 'procedural'}.{web_note} "
+        "Letter includes claim-file and peer-to-peer disclosures (public-source realism pass)."
     )
     return case
 

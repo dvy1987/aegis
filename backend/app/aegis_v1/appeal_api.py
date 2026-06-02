@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
 from app.aegis_v1.appeal_orchestrator import run_appeal_with_outcome
+from app.aegis_v1.v1_config import build_v1_library_stack
 
 router = APIRouter(prefix="/v1", tags=["appeal"])
 
@@ -14,6 +15,7 @@ class AppealRequest(BaseModel):
     denial_text: str
     clinical_context: str = ""
     case_id: str = "interactive_case"
+    discovery_enabled: bool = False
 
 
 class AppealResponse(BaseModel):
@@ -46,12 +48,14 @@ def create_appeal(
 ) -> AppealResponse:
     """Draft an appeal and return it together with the insurer Outcome Simulator
     verdict — the artifact the UX shows per appeal run."""
+    library_stack = build_v1_library_stack(discovery_enabled=req.discovery_enabled)
     result = run_appeal_with_outcome(
         denial_text=req.denial_text,
         clinical_context=req.clinical_context,
         case_id=req.case_id,
         drafter_client=drafter_client,
         simulator_client=simulator_client,
+        library_stack=library_stack,
     )
     pkg = result.appeal_package
     return AppealResponse(

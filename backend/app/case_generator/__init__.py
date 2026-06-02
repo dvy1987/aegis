@@ -1,9 +1,10 @@
-"""Synthetic case generator swarm for Aegis.
+"""Synthetic case generator for Aegis.
 
-AlphaEval-aligned, per-stage independent-critic pipeline. Produces denial
-cases for ``eval/cases/drafts/part-a/{train,test}/``.
+Default path: A+ pipeline (``app.case_generator.aplus``) — see ``GENERATION.md``.
 
-Run with: ``uv run python -m app.case_generator.cli --help``.
+Run: ``cd backend && uv run python -m app.case_generator.cli --help``
+
+Legacy Gemini swarm: ``old_pipeline.py`` / ``old_agents.py`` (not default).
 """
 
 from __future__ import annotations

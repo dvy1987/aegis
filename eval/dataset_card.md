@@ -1,56 +1,56 @@
 # Aegis Dataset Card (eval/cases/)
 
-**Description:** This dataset contains the synthetic calibration and benchmark cases used to evaluate the Aegis multi-agent system. 
+**Description:** Synthetic denial cases for evaluating the Aegis multi-agent system.
 
 ## Strict PHI Policy
-As mandated by `AGENTS.md`, **NO REAL PROTECTED HEALTH INFORMATION (PHI)** is present in this dataset. Every case is 100% synthetically generated. 
 
-## Provenance
-- `case_01_cigna_mednec.json`: Cigna - Medical Necessity (OCD Intensive Outpatient Program).
-- `case_02_cigna_priorauth.json`: Cigna - Prior Authorization (Cervical Spine MRI in ER).
-- `case_03_aetna_mednec.json`: Aetna - Medical Necessity (Inpatient Detox for Alcohol Use).
-- `case_04_aetna_priorauth.json`: Aetna - Prior Authorization (Humira continuation without new auth).
-- `case_05_uhc_mednec.json`: UHC - Medical Necessity (CGM for Type 2 Diabetes without intensive insulin).
-- `case_06_uhc_priorauth.json`: UHC - Prior Authorization (Out-of-network gap exception for endometriosis excision).
-- `case_07_cigna_mednec.json`: Cigna - Medical Necessity (Bariatric Surgery, missing 6-month diet rule).
-- `case_08_cigna_priorauth.json`: Cigna - Prior Authorization (Physical Therapy beyond 20 visits).
-- `case_09_aetna_mednec.json`: Aetna - Medical Necessity (Breast reduction, missing conservative therapy).
-- `case_10_uhc_priorauth.json`: UHC - Prior Authorization (In-lab sleep study over HSAT).
+As mandated by `AGENTS.md`, **no real PHI** is in this dataset. Every case is 100% synthetically generated.
 
-## Lifecycle & Splits
-This dataset follows a strict lifecycle where cases begin as Drafts and must pass the Gumloop/Frontier Model evaluator swarm before being distributed.
+## Lifecycle (source of truth)
 
-**Current Locations:**
-- **Drafts (`eval/cases/drafts/`):** All newly drafted synthetic cases (both train and test) go here in a flat structure awaiting evaluation.
-- **Approved (`eval/cases/approved/`):** Cases that pass evaluation go here in a flat structure. 
+1. **Draft** — all new cases live in `eval/cases/drafts/` as `case_<NN>_<insurer>_<denial>.json` (flat folder).
+2. **Gumloop** — independent evaluator swarm (`gumloop/`); outcomes: APPROVE → move to `approved/`, REVISE (fix in drafts), or DISCARD.
+3. **Approved** — `eval/cases/approved/` holds only Gumloop-passed cases (flat until further organization).
+4. **Train / test split** — **after** approval, PM assigns cases to holdout vs training (e.g. under `part-a/train/` and `part-a/test/`). **Not** done at draft time.
 
-*Note: Once a case is in the Approved folder, it will be distributed to specific `part-a/train`, `part-a/test`, etc., splits.*
+The Gumloop swarm must not be imitated from generator prompts before the real review pass.
 
-## Generation Pipeline
+## What is in `drafts/` today (2026-06-02)
 
-Cases prefixed `case_NN_<insurer>_<denial>.json` (new naming) are produced by the AlphaEval-aligned generator swarm at `backend/app/case_generator/`:
+| ID range | Count | Role |
+|----------|-------|------|
+| `case_01` … `case_20` | 20 | Early calibration set (A+ pipeline, `cursor-manual-agent-aplus-v2`) |
+| `case_21` … `case_210` | 190 | Benchmark matrix continuation |
+| `case_211` … `case_220` | 10 | Benchmark matrix batch 1 (renumbered from 11–20 to avoid ID clash with calibration) |
+
+**Total:** 500 files in a single flat `drafts/` directory (`case_01`–`case_500`). No train/test subfolders in drafts.
+
+Rebuild commands:
+
+- Calibration `case_01`–`case_20`: `cd backend && uv run python scripts/upgrade_calibration_aplus.py`
+- Benchmark `case_21`–`case_220`: `cd backend && uv run python scripts/upgrade_benchmark_aplus.py`
+- Extension `case_221`–`case_420`: `cd backend && uv run python scripts/generate_cases_221_420.py`
+- Extension `case_421`–`case_500`: `cd backend && uv run python scripts/generate_cases_421_500.py`
+- In-place letter + ref upgrade on existing drafts: `cd backend && uv run python scripts/upgrade_cases_01_220_web.py` (supports `--start` / `--end`)
+
+**Default generation** (`build_aplus_case`): web-research cache + catalog references, claim-file / peer-to-peer letter enhancements, 200–500 word letter budget. See `backend/app/case_generator/GENERATION.md`.
+- Frontend demo copy (optional, uses `case_11`–`case_20` student fields): `uv run python scripts/sync_frontend_test_fixtures.py`
+
+## Generation pipeline
+
+Cases are produced by the AlphaEval-aligned generator at `backend/app/case_generator/`:
 
 ```
 ScenarioPlanner → DenialDrafter → ClinicalContextWriter → AdversarialDiversifier
-  → SafetyRedactor (deterministic + LLM) → SchemaValidator
-  → FinalAssemblyMiniPanel (Contradiction · LLM-Tell · Tone · Financial · Legal · Demographic · Scope · DateSanity · CitationTraceability)
+  → SafetyRedactor → SchemaValidator → critic mini-panel
 ```
 
-Per-stage **independent** critics enforce AlphaEval rules: forced 1/3/5 anchors on weighted dimensions, binary PASS/FAIL hard gates that short-circuit, CoT-before-score, no mega-prompts. Every critic verdict is captured in `synthetic_provenance.critic_verdicts` for auditability.
+Configs: `eval/diversity_matrix.json`, `eval/banned_topics.json`, `eval/case_schema.json` (v1.1.0).
 
-The Gumloop swarm in `gumloop/` is an **independent second-opinion evaluator** — cases move from `drafts/` to `approved/` only on Gumloop `APPROVE`.
+Default CLI: `cd backend && uv run python -m app.case_generator.cli --count <N>` → A+ pipeline → `eval/cases/drafts/`. See `backend/app/case_generator/GENERATION.md`. Legacy: `old_pipeline.py`, `old_run_manual_case_batch.py`.
 
-Configs:
-- Diversity matrix (weighted sampling): `eval/diversity_matrix.json`
-- Banned-topic hard-gate list: `eval/banned_topics.json`
-- JSON Schema: `eval/case_schema.json`
+### Manual A+ pipeline (2026-06-01)
 
-Run: `cd backend && uv run python -m app.case_generator.cli --count <N> --split {train|test}`.
+`backend/app/case_generator/aplus/` — prompt-faithful P1–P5, specialty-aligned stories, flaw injection from `eval/denial_patterns.json`, word-count gates (P2: 200–500 words, P3: 80–250 words). Not Vertex Gemini.
 
-### Manual benchmark-200 (2026-06-01, schema v1.1.0)
-
-Cases `case_11` through `case_210` in `eval/cases/drafts/benchmark-200/` were rebuilt by the **A+ manual pipeline** (`backend/app/case_generator/aplus/`) — prompt-faithful P1–P5, specialty-aligned clinical stories, pattern-ID flaw injection, word-count gates (P2: 200–500 words, P3: 80–250 words). **Not** Vertex Gemini. `generator_model` = `cursor-manual-agent-aplus-v2`, `schema_version` = `1.1.0`.
-
-Rebuild all: `cd backend && uv run python scripts/upgrade_benchmark_aplus.py`.
-
-**Gumloop** evaluation is a separate step — do not use generator prompts to imitate Gumloop before running the real swarm.
+Matrix index 11–20 maps to public IDs `case_211`–`case_220` via `benchmark_public_number()` so `case_11`–`case_20` stay available for calibration.

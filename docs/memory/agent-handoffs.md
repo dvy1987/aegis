@@ -1603,7 +1603,7 @@ cd backend && uv run python scripts/run_swarm_learning_offline.py --dimension ap
 
 ### Commits (swarm line, on `main`, not pushed)
 - Prior: `0454022` Phases 1–3 · `27537ef` Phase 4 · `5bab203` Phase 5
-- This session: Phase 6 Learning Coordinator re-point (see `git log -1`)
+- This session: `0ac95ed` — Phase 6 Learning Coordinator re-point
 
 ### Swarm runtime
 **Phases 0–6 complete.** Part B offline learning loop closes: credit map → `SwarmLearningCoordinator` → holdout lift → HITL/autonomy promotion.
@@ -1767,3 +1767,64 @@ cd backend && uv run python -m app.case_generator.cli --count 1 --dry-run
 
 ### Working Tree
 - **Dirty:** ~500 `eval/cases/drafts/case_*.json`, `backend/app/case_generator/aplus/*`, scripts, docs; plus pre-existing swarm/v1 WIP — verify `git status` before commit scope.
+
+---
+
+## 2026-06-02 — Session-end Handoff (Cursor) — Part A v1 librarian + frontend product model fix
+
+### Done
+- **Spec (Approved):** `docs/specs/2026-06-01-aegis-v1-cloud-corpus-surgical-discovery-feature-spec.md` — GCS/Vertex library, per-case surgical discovery (max **5** fetches), **Library Search Planner** (Layers 1–3), CL-1 junk hits = thin. Coordinator does **not** gate discovery.
+- **Backend (v1, uncommitted):** `search_planner.py`, `library_context.py`, `corpus_bridge.py`, `v1_config.py`, `planner_refinement_client.py`, `retrieval_context.py`; pipeline + `appeal_api` wire `discovery_enabled` per request; **37** new/updated v1 unit tests green.
+- **Frontend (uncommitted):** Settings panel (connection check, discovery toggle); then **PM correction:** `/appeal` → `consumerSource` **always live**; `/showcase` → `showcaseSource` **recorded evidence only**; removed “practice mode” / “Use live Aegis” toggle. `docs/demo-cheatsheet-pm.md` rewritten for PM’s two-surface model.
+
+### Debated / resolved
+- **Practice mode confused the PM.** It was builder convenience (offline fixtures on appeal path), not the product. **Consumer UI = real customer every time.** **Showcase = judges’ behind-the-scenes** (recorded v1/v3). Devpost video = screen-record that flow, not “run practice mode.”
+- **Discovery:** on by default when connected (Settings can turn off); sent as `discovery_enabled` on `POST /v1/appeal` — no `CORPUS_DISCOVERY_ENABLED` env required for UI demos.
+
+### Decisions
+- Librarian runs in orchestrator pre-flight (not a 7th ADK tool). Author agent keeps 6 tools; controlled `corpus_retrieval` ignores model query when pre-set.
+- Thin library includes mismatched/junk hits (CL-1 yes).
+
+### Deferred
+- Commit (PM did not request). Wire ADK playground to same pre-flight as `/v1/appeal` if needed. Default `deploy` frontend to live API URL. Layer 2 planner promotion via Learning Coordinator.
+
+### Next Agent Should Know
+- **Demo script:** backend up → Settings → Connected → **Draft an appeal** (real) → **How Aegis learns** (recorded) → record video.
+- Run v1 tests: `cd backend && uv run pytest tests/unit/aegis_v1 -q`
+- Swarm + 500-case corpus dirty tree may still be present — check `git status` before commit.
+
+### Working Tree (this session’s slice, likely uncommitted)
+- `backend/app/aegis_v1/{search_planner,library_context,corpus_bridge,v1_config,planner_refinement_client,retrieval_context,prompts/search_planner_v1.md}` + pipeline/tools/appeal_api/schemas changes
+- `backend/tests/unit/aegis_v1/*`
+- `frontend/src/lib/{settings,data/*}` + `SettingsPanel.tsx` + `Nav.tsx` + appeal/showcase pages
+- `docs/specs/2026-06-01-aegis-v1-cloud-corpus-surgical-discovery-feature-spec.md`, `docs/demo-cheatsheet-pm.md`
+
+---
+
+## 2026-06-02 11:32 — Session-end Handoff (Cursor) — Lock consumer UI to real backend; keep judges view recorded
+
+### Done
+- **Frontend product model corrected (PM intent):**
+  - `/appeal` is the **real customer experience** and now **always runs live** (calls backend every time; no “practice mode” fallback).
+  - `/showcase` is the **judges’ view** and stays **recorded evidence** (fixtures), so the improvement story is stable and replayable.
+- **Settings simplified for demos:** Settings now only covers (a) backend address + connection check and (b) trusted source lookup. The earlier “Use live Aegis” toggle was removed because `/appeal` is always live.
+- **Discovery toggle behavior (demo-focused):** trusted source lookup is **on by default** when connected; it can be turned off in Settings for a faster run. The toggle is sent per request (`discovery_enabled`) to `POST /v1/appeal`.
+- **Docs updated:** `docs/demo-cheatsheet-pm.md` rewritten to match the two-surface model.
+
+### Tests
+- Backend unit tests were kept green while implementing librarian + per-request discovery flag.
+- Frontend tests are currently blocked in this environment by a pnpm supply-chain policy (`minimumReleaseAge` / `vite@8.0.15`). The code changes are small and isolated; run frontend tests once pnpm policy allows installs.
+
+### Working Tree (uncommitted)
+- **Backend (v1 librarian + API):** `backend/app/aegis_v1/*` additions + changes (planner, library preflight, controlled retrieval, trace metadata, `/v1/appeal` accepts `discovery_enabled`) + `backend/tests/unit/aegis_v1/*`.
+- **Frontend:** `frontend/src/lib/data/index.ts` (consumer vs showcase sources), `frontend/src/app/{appeal,showcase}/page.tsx`, `frontend/src/components/{Nav,SettingsPanel}.tsx`, `frontend/src/lib/{settings.ts,types.ts}` plus fixture churn already present in repo.
+- **Large unrelated dirty tree** also exists (500+ eval case JSON). Verify commit scope carefully.
+
+### Next agent should know
+- The PM’s desired demo flow is now literally: **Draft an appeal** (real run) → **How Aegis learns** (recorded). No “practice mode” in the consumer path.
+- Before any commit, run:
+```bash
+cd backend && uv run pytest tests/unit/aegis_v1 -q
+cd backend && uv run pytest tests/unit -q
+```
+and check `git status` carefully because there is a huge dirty tree under `eval/cases/`.

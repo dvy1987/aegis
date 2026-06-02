@@ -1,0 +1,142 @@
+{
+  "version": "1.0.0",
+  "description": "Public exemplars and regulatory templates used to calibrate synthetic commercial denial-letter surface realism. No verbatim insurer proprietary text. Used by backend/app/case_generator/aplus/letter_references.py.",
+  "usage_policy": "Style and structure only. Synthetic member IDs, claim numbers, and policy bulletin numbers in cases are fictional.",
+  "exemplars": [
+    {
+      "ref_id": "cms-abd-model-2011",
+      "title": "Model Notice of Adverse Benefit Determination (ACA/ERISA)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "borrowed_elements": [
+        "Adverse benefit determination header",
+        "Case-details block (member ID, claim #, DOS, provider)",
+        "Denial code field",
+        "Explanation of basis section",
+        "Appeal rights on reverse/attachment"
+      ]
+    },
+    {
+      "ref_id": "cms-final-iabd-2025",
+      "title": "Model Notice of Final Internal Adverse Benefit Determination",
+      "url": "https://www.cms.gov/cciio/resources/files/downloads/final_iabd_model_notice_1.pdf",
+      "source_type": "federal",
+      "borrowed_elements": [
+        "Final determination wording",
+        "Documents-reviewed list pattern",
+        "External review request form reference"
+      ]
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "ERISA Claims Procedure — adverse benefit determination content (29 CFR § 2560.503-1)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "borrowed_elements": [
+        "Specific reasons for denial",
+        "Reference to plan provisions",
+        "Description of additional information needed",
+        "Appeal procedures and civil-action rights"
+      ]
+    },
+    {
+      "ref_id": "aca-2719-29-cfr-147-136",
+      "title": "Internal claims and appeals — diagnosis/treatment codes (29 CFR § 2590.715-2719)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2590.715-2719",
+      "source_type": "federal",
+      "borrowed_elements": [
+        "Claim identification (DOS, provider, amount)",
+        "Denial code with plain-language meaning",
+        "Availability of diagnosis/treatment codes on request"
+      ]
+    },
+    {
+      "ref_id": "wa-oic-mednec-templates",
+      "title": "Washington OIC — medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "borrowed_elements": [
+        "Insurer cites internal medical policies with criteria member must meet",
+        "IRO available after internal appeal"
+      ]
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "borrowed_elements": [
+        "Vague guideline citations without edition",
+        "Confusing appeal rights language"
+      ]
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica — Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "borrowed_elements": [
+        "Circular medical-necessity boilerplate",
+        "Minimal clinical specificity in denial narrative"
+      ]
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "borrowed_elements": [
+        "Ignored submitted clinical records",
+        "Unreasonable documentation deadlines"
+      ]
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "borrowed_elements": [
+        "CPB number citation in medical-necessity denials",
+        "InterQual cross-reference in commercial UM"
+      ]
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "borrowed_elements": [
+        "Milliman Care Guidelines (MCG) reference",
+        "Coverage policy number in denial rationale"
+      ]
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "borrowed_elements": [
+        "CDG number as authoritative criterion (distinct from generic InterQual-only wording)",
+        "Medical Policy Bulletin framing"
+      ]
+    },
+    {
+      "ref_id": "dol-ebsa-2011-01",
+      "title": "DOL EBSA Technical Release 2011-01 (ACA claims and appeals)",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/faqs/aca-implementation-faq-part-49.pdf",
+      "source_type": "federal",
+      "borrowed_elements": [
+        "Missing ERISA disclosure patterns in legacy templates"
+      ]
+    }
+  ],
+  "insurer_affinity": {
+    "Aetna": ["aetna-cpb-public", "cms-abd-model-2011", "erisa-29-cfr-2560-503-1"],
+    "Cigna": ["cigna-coverage-policies", "kff-2023-consumer-survey", "aca-2719-29-cfr-147-136"],
+    "UHC": ["uhc-cdg-provider", "propublica-uncovered-2023", "ama-2023-prior-auth-survey"]
+  },
+  "denial_type_affinity": {
+    "Medical Necessity": ["wa-oic-mednec-templates", "propublica-uncovered-2023"],
+    "Prior Authorization": ["ama-2023-prior-auth-survey", "erisa-29-cfr-2560-503-1"]
+  }
+}

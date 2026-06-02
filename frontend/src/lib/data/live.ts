@@ -1,25 +1,24 @@
 import type { DataSource } from "./source";
 import type { AppealRequest, AppealFixture } from "@/lib/types";
 import { parseAppealResponse } from "@/lib/schema";
+import { getApiBase, getDiscoveryEnabled } from "@/lib/settings";
 import { demoSource } from "./demo";
 
-const BASE = process.env.NEXT_PUBLIC_AEGIS_API ?? "http://localhost:8001";
-
-// Live mode calls the FastAPI backend for drafting. listCases / getShowcase reuse the
-// bundled artifacts — the showcase is always recorded evidence, never live-generated.
 export const liveSource: DataSource = {
   listCases: demoSource.listCases,
   getShowcase: demoSource.getShowcase,
   async draftAppeal(req: AppealRequest): Promise<AppealFixture> {
-    const res = await fetch(`${BASE}/v1/appeal`, {
+    const base = getApiBase();
+    const res = await fetch(`${base}/v1/appeal`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(req),
+      body: JSON.stringify({
+        ...req,
+        discovery_enabled: req.discovery_enabled ?? getDiscoveryEnabled(),
+      }),
     });
     if (!res.ok) throw new Error(`appeal failed: ${res.status}`);
     const data = parseAppealResponse(await res.json());
-    // The live API does not return parsed_case / appeal_strategy (spec section 6.1),
-    // so synthesize a lighter Mirror from what the response does carry.
     return {
       ...data,
       mirror: {

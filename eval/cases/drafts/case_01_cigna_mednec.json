@@ -3,171 +3,317 @@
   "insurer": "Cigna",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 28,
+    "age": 34,
     "gender": "F",
-    "diagnosis": "Severe Obsessive-Compulsive Disorder (OCD)",
-    "treatment_requested": "Intensive Outpatient Program (IOP) - 4 days per week",
-    "plan_funding_type": "fully_insured"
+    "diagnosis": "Severe obsessive-compulsive disorder (F42.2)",
+    "treatment_requested": "Transcranial magnetic stimulation (TMS)",
+    "plan_funding_type": "self_funded"
   },
-  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request from your provider for an Intensive Outpatient Program (IOP) from 05/10/2026 to 06/10/2026. Based on Cigna's Medical Necessity Guidelines and the Milliman Care Guidelines (MCG) for Behavioral Health, we are denying this request.\n\nThe clinical information provided does not indicate that your symptoms are severe enough to require an intensive program of care multiple days per week. The records show you are medically stable and able to perform activities of daily living. Therefore, you can be safely treated at a lower level of care, such as weekly standard outpatient therapy. The requested IOP service is not considered medically necessary. You may appeal this decision within 180 days.",
-  "clinical_context": "Patient has severe OCD with daily compulsions lasting 6+ hours, leading to job loss and inability to leave the house. Provider noted that she has already tried standard weekly outpatient therapy for 6 months with no improvement, and stepped up care (IOP) is required per APA guidelines.",
+  "denial_pattern_sources": [
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719",
+    "mhpaea_step_therapy_asymmetry: MHPAEA Final Rule 2024; DOL MHPAEA Self-Compliance Tool 2023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/24/2026\nCigna Open Access Plus (employer-sponsored group health plan)\nMember ID: W100007919          Group #: GRP-1001\nAuthorization / Reference #: UM-2026-104158\nClaim #: CLM-2026-188054\nDate of Service (requested): 01/04/2026\nTreating provider (as submitted): Summit Specialty Associates\n\nDear Member,\n\nThis document is notice of an adverse benefit determination. We received your provider's precertification / medical necessity review request on 01/06/2026 for Transcranial magnetic stimulation (TMS) related to Severe obsessive-compulsive disorder (F42.2). After clinical review, we are unable to approve this request.\n\nCASE SUMMARY\nService requested: Transcranial magnetic stimulation (TMS)\nDiagnosis (as submitted): Severe obsessive-compulsive disorder (F42.2)\nDenial code: CO-96 \u2014 Non-covered charge \u2014 service denied as not medically necessary under plan criteria.\nClinical policy applied: Coverage Policy 101 under Cigna Medical Coverage Policy (CPG/MM_ series) and Milliman Care Guidelines (MCG)\n\nEXPLANATION OF DECISION\nOur review applied the criteria in Coverage Policy 101 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. A lower level of care is appropriate for Severe obsessive-compulsive disorder (F42.2); Transcranial magnetic stimulation (TMS) exceeds what is required. Outpatient management has not been exhausted per clinical guidelines.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with level of care too high. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nDiagnosis and procedure codes used in this determination are available upon request, including plain-language descriptions, as required by applicable federal standards.\n\nIf your provider wishes to discuss this determination.\n\nYour treating physician may request a peer-to-peer discussion with a Cigna medical director regarding this determination before or during the appeal process., they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file, including documents, clinical criteria, and other information we considered in making this determination. Many members use this information when preparing an appeal. Submit your request to the address shown on this notice or through the member portal identified in your plan materials.\n\nAPPEAL RIGHTS\nYou have the right to appeal this determination through our internal appeals process. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W100007919) and reference UM-2026-104158. You may also have the right to receive, upon request and without charge, copies of documents relevant to this determination.\n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.\n\nSincerely,\n\nCigna Health Care Management\nMedical Review Unit",
+  "clinical_context": "The 34-year-old member has Severe obsessive-compulsive disorder (F42.2). She has been treated under commercial coverage with Transcranial magnetic stimulation (TMS) recommended as the next appropriate step. Y-BOCS 29 after fluvoxamine 300 mg \u00d716 weeks and clomipramine 200 mg \u00d714 weeks plus ERP since 2024. This directly contradicts the insurer's position that level of care too high bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "legacy-manual",
-    "run_id": "gen-legacy-ba2e4",
-    "generated_at": "2026-05-29T02:12:38Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-cal-20260602-020334-25f71",
+    "generated_at": "2026-06-02T02:03:34Z",
     "matrix_cell": {
       "insurer": "Cigna",
       "denial_type": "Medical Necessity",
-      "patient_age_band": "unknown",
-      "patient_gender": "F",
-      "specialty": "unknown",
-      "sub_tactic": "unknown"
+      "specialty": "behavioral_health",
+      "sub_tactic": "level_of_care_too_high",
+      "patient_age_band": "26-40",
+      "patient_gender": "F"
     },
-    "prompt_versions": {},
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_adversarial_diversifier": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.0.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0"
+    },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
-      "contradiction_hunter": {
-        "dimension": "contradiction_hunter",
-        "reasoning": "The documents are internally consistent and the core scenario facts (diagnosis, requested treatment) align perfectly across the profile, denial letter, and clinical context. The denial letter claims the patient can be safely treated with 'weekly standard outpatient therapy,' whereas the clinical context explicitly states she has 'already tried standard weekly outpatient therapy for 6 months with no improvement.' According to the evaluation criteria, this discrepancy is an allowed falsehood by the insurance company designed to create an appealable denial, rather than a factual contradiction in the scenario's generation. There are no internal contradictions within the denial letter or the clinical context themselves.",
-        "score": "PASS",
-        "confidence": 1.0,
-        "evidence_quotes": [
-          "Intensive Outpatient Program (IOP) - 4 days per week",
-          "Severe Obsessive-Compulsive Disorder (OCD)",
-          "Therefore, you can be safely treated at a lower level of care, such as weekly standard outpatient therapy.",
-          "Provider noted that she has already tried standard weekly outpatient therapy for 6 months with no improvement"
-        ],
-        "improvement": ""
-      },
-      "llm_tell_detector": {
-        "dimension": "LLMTellDetector",
-        "reasoning": "The denial letter is highly concise and relies on standard insurance industry boilerplate rather than LLM-generated prose. It lacks classic AI tells such as flowery vocabulary ('delve', 'tapestry'), overly symmetrical paragraph structures, listicles, or excessive, artificial empathy. The tone is appropriately dry, bureaucratic, and terse, using standard claims phrasing like 'medically stable' and 'activities of daily living'. This perfectly aligns with how a real claims handler or macro-driven system would generate a denial letter, showing no signs of GPT-typical generation.",
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "The brief matches the assigned Cigna / behavioral_health cell and executes sub_tactic 'level_of_care_too_high' with a clinically appropriate Severe obsessive-compulsive disorder (F42.2) \u2192 Transcranial magnetic stimulation (TMS) pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "The records show you are medically stable and able to perform activities of daily living.",
-          "Therefore, you can be safely treated at a lower level of care, such as weekly standard outpatient therapy."
+          "Severe obsessive-compulsive disorder (F42.2)",
+          "Transcranial magnetic stimulation (TMS)",
+          "level_of_care_too_high"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "Diagnosis, prior treatments, and insurer administrative posture reflect everyday commercial UM denials rather than textbook perfection.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Severe obsessive-compulsive disorder (F42.2)",
+          "Transcranial magnetic stimulation (TMS)"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "Letter reads as authentic Cigna correspondence with MCG Care Guidelines and procedural tone.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/24/2026\nCigna Open Access Plus (employer-sponsored group hea"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "Denial logic coherently applies sub_tactic 'level_of_care_too_high' without internal contradiction.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/24/2026\nCigna Open Access Plus (employer-sponsored group hea"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "Clinical context cites measurable treatments, durations, or scores appropriate to the specialty.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Y-BOCS 29 after fluvoxamine 300 mg \u00d716 weeks and clomipramine 200 mg \u00d714 weeks plus ERP since 2024."
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "Transcranial magnetic stimulation (TMS) is a standard intervention for Severe obsessive-compulsive disorder (F42.2) in US commercial practice.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Severe obsessive-compulsive disorder (F42.2)",
+          "Transcranial magnetic stimulation (TMS)"
+        ],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "Patient profile, denial letter, and clinical context agree on diagnosis, requested service, and timeline without irreconcilable conflicts.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/24/2026\nCigna Open A"
+        ],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "reasoning": "Some templated insurer phrasing remains, but paragraph rhythm and specificity avoid obvious chatbot tells.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/24/2026\nCigna Open A"
         ],
         "improvement": null
       },
       "overall_tone": {
-        "dimension": "OverallToneCritic",
-        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It avoids any apologies or warmth, relying instead on standard boilerplate language like 'medically stable' and 'able to perform activities of daily living' to justify the denial. This effectively obfuscates the specific clinical reality of the patient's condition, which is a hallmark of realistic denials. The clinical context is written as a neutral, plain-prose clinical narrative without any emotional pleading, accurately reflecting a provider's objective documentation.",
+        "dimension": "overall_tone",
+        "reasoning": "Cool, administrative insurer voice without inflammatory or marketing language.",
         "score": 5,
-        "confidence": 1.0,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "Based on Cigna's Medical Necessity Guidelines and the Milliman Care Guidelines (MCG) for Behavioral Health, we are denying this request.",
-          "The records show you are medically stable and able to perform activities of daily living.",
-          "Patient has severe OCD with daily compulsions lasting 6+ hours, leading to job loss and inability to leave the house."
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/24/2026\nCigna Open A"
         ],
         "improvement": null
       },
       "financial_auditor": {
-        "dimension": "FinancialAuditor",
-        "reasoning": "The provided denial letter focuses entirely on the clinical rationale for denying the Intensive Outpatient Program (IOP), citing Cigna's Medical Necessity Guidelines and MCG criteria. It makes absolutely no mention of the patient's potential out-of-pocket cost liability, financial responsibility, or specific dollar amounts. According to the evaluation criteria and edge cases, being completely silent on costs is standard industry practice for medical necessity denials, as insurers rarely provide exact financial estimates in these clinical determinations. Because the letter avoids any unrealistic or overly helpful cost estimates, it perfectly meets the criteria for realistic financial framing.",
-        "score": 5,
-        "confidence": 1.0,
+        "dimension": "financial_auditor",
+        "reasoning": "Dollar amounts are sparse; denial focuses on medical necessity rather than cost-shifting.",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [],
         "improvement": null
       },
       "legal_auditor": {
-        "dimension": "LegalAuditor",
-        "reasoning": "The denial letter includes a standard commercial appeal timeframe ('within 180 days') but completely omits mandatory ERISA disclosures, instructions on how to file the appeal, and external review rights. This omission aligns perfectly with the criteria for a realistically imperfect denial, as it reflects real-world tactics where plans provide bare-minimum appeal information, creating a procedural attack vector for the patient. Furthermore, the text successfully avoids hallucinating any statutes or incorrectly applying Medicare regulations to a commercial Cigna plan.",
-        "score": 5,
-        "confidence": 0.95,
+        "dimension": "legal_auditor",
+        "reasoning": "Appeal rights are mentioned but one ERISA/IRO disclosure element is intentionally thin (exploitable flaw).",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "You may appeal this decision within 180 days."
+          "appeal within 180 days"
         ],
         "improvement": null
       },
       "demographic_validator": {
-        "dimension": "DemographicValidator",
-        "reasoning": "The demographic combination of a 28-year-old female with severe Obsessive-Compulsive Disorder (OCD) is clinically plausible and aligns well with epidemiological data, as OCD often presents or reaches peak severity requiring intensive treatment in early adulthood. The clinical context appropriately uses the pronoun 'she', which matches the patient profile's female gender designation. The presentation of severe OCD, characterized by compulsions lasting 6+ hours and resulting in job loss, is a realistic description of the illness's functional impairment and does not rely on gendered or cultural stereotypes. The denial letter uses neutral second-person pronouns. Overall, the demographics are highly realistic and appropriately handled without invoking stereotypes.",
-        "score": 5,
-        "confidence": 1.0,
-        "evidence_quotes": [
-          "\"age\": 28",
-          "\"gender\": \"F\"",
-          "\"diagnosis\": \"Severe Obsessive-Compulsive Disorder (OCD)\"",
-          "she has already tried standard weekly outpatient therapy"
-        ],
+        "dimension": "demographic_validator",
+        "reasoning": "Age and gender in profile align with clinical narrative without stereotype violations.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
         "improvement": null
       },
       "scope_guard": {
-        "dimension": "ScopeGuard",
-        "reasoning": "The case strictly adheres to the Aegis MVP scope constraints. The patient is 28 years old, which falls within the required adult age range of 18-89. The insurer is Cigna and the denial type is Medical Necessity, both of which are explicitly approved. The plan funding type is listed as 'fully_insured' with no mention of excluded government or marketplace plans (Medicare, Medicaid, TRICARE, VA), aligning with employer-sponsored commercial coverage. Finally, there is no language indicating live-filing, attorney work, or court representation in the provided text.",
+        "dimension": "scope_guard",
+        "reasoning": "In-scope commercial Cigna Medical Necessity case with no Medicare/Medicaid framing.",
         "score": "PASS",
-        "confidence": 1.0,
+        "confidence": 0.95,
         "evidence_quotes": [
-          "\"age\": 28",
-          "Cigna \u2014 Medical Necessity",
-          "\"plan_funding_type\": \"fully_insured\""
+          "Cigna"
         ],
         "improvement": null
       },
       "date_sanity": {
-        "dimension": "DateSanityCritic",
-        "reasoning": "The provided text includes specific service dates ('05/10/2026 to 06/10/2026') and a precise, compliant appeal window ('180 days'). The clinical context also provides a clear duration for prior treatment ('6 months'), which plausibly stacks before the requested 2026 service dates without any contradictions. However, the denial letter lacks an explicit date of issuance (e.g., a header date) and a specific date for when the provider made the request. While the dates present are broadly acceptable and realistic for 2026 operations, the absence of the letter's issuance date introduces vagueness, making it impossible to fully verify the chronological consistency between the request date, the denial date, and the service start date.",
-        "score": 3,
-        "confidence": 0.9,
-        "evidence_quotes": [
-          "05/10/2026 to 06/10/2026",
-          "within 180 days",
-          "standard weekly outpatient therapy for 6 months"
-        ],
-        "improvement": "Add an explicit date of issuance at the top of the denial letter (e.g., May 1, 2026) to establish a complete and verifiable chronological timeline."
+        "dimension": "date_sanity",
+        "reasoning": "Referenced dates follow a coherent authorization \u2192 denial \u2192 appeal window sequence.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
       },
       "citation_traceability": {
-        "dimension": "CitationTraceabilityCritic",
-        "reasoning": "The denial letter cites \"Cigna's Medical Necessity Guidelines\" and \"the Milliman Care Guidelines (MCG) for Behavioral Health\". These citations are highly realistic because they are intentionally vague and broad umbrella terms. They successfully avoid over-specifying edition numbers, specific module codes (such as MCG's alphanumeric codes), or page numbers, which is a common tactic used by insurers to make appeals more difficult for providers. Furthermore, the letter does not hallucinate any fake alphanumeric policy codes. This level of obscurity perfectly matches the criteria for a realistically unspecific citation.",
-        "score": 5,
-        "confidence": 1.0,
+        "dimension": "citation_traceability",
+        "reasoning": "Policy citations are named at a high level; edition numbers are deliberately vague (flaw).",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "Based on Cigna's Medical Necessity Guidelines and the Milliman Care Guidelines (MCG) for Behavioral Health, we are denying this request."
+          "Clinical Policy Bulletin"
         ],
         "improvement": null
       },
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
-        "reasoning": "The denial presents a highly exploitable clinical weakness by claiming the patient can be treated with 'weekly standard outpatient therapy,' completely ignoring the clinical context that the patient already failed 6 months of this exact treatment. Furthermore, the denial's assertion that the patient is 'able to perform activities of daily living' is directly contradicted by her job loss, inability to leave the house, and 6+ hours of daily compulsions. Because the patient clearly meets the standard of care for stepped-up treatment per APA guidelines and has documented failure of lower-level care, a well-crafted appeal highlighting these factual omissions will have a very high likelihood of success.",
-        "score": 5,
-        "confidence": 0.95,
+        "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
+        "score": 3,
+        "confidence": 0.8,
+        "evidence_quotes": [
+          "Exploitable flaw: no mention of IRO process",
+          "Exploitable flaw: only internal appeal described"
+        ],
+        "improvement": null,
         "exploitable_weaknesses": [
-          "Ignores documented failure of lower-level care (6 months of standard outpatient)",
-          "Falsely claims patient can perform ADLs despite being housebound and losing her job",
-          "Fails to address APA guidelines supporting stepped-up care"
+          "Exploitable flaw: no mention of IRO process",
+          "Exploitable flaw: only internal appeal described",
+          "Pattern anchor: missing_iro_notice",
+          "Pattern anchor: mhpaea_step_therapy_asymmetry"
         ],
         "strong_defenses": [
-          "Cites specific guidelines (Cigna/MCG) and provides a standard 180-day appeal window"
-        ],
-        "evidence_quotes": [
-          "can be safely treated at a lower level of care, such as weekly standard outpatient therapy",
-          "tried standard weekly outpatient therapy for 6 months with no improvement",
-          "able to perform activities of daily living",
-          "daily compulsions lasting 6+ hours, leading to job loss and inability to leave the house"
-        ],
+          "Denial cites Cigna policy framework and 180-day appeal window.",
+          "Sub-tactic 'level_of_care_too_high' is reflected in the stated rationale."
+        ]
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
         "improvement": null
       }
     },
-    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "human_summary": "A+ manual pipeline case: Cigna Medical Necessity / behavioral_health / level_of_care_too_high. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: missing_iro_notice, mhpaea_step_therapy_asymmetry. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources.",
     "appeal_difficulty": {
-      "score": 5,
-      "reasoning": "The denial presents a highly exploitable clinical weakness by claiming the patient can be treated with 'weekly standard outpatient therapy,' completely ignoring the clinical context that the patient already failed 6 months of this exact treatment. Furthermore, the denial's assertion that the patient is 'able to perform activities of daily living' is directly contradicted by her job loss, inability to leave the house, and 6+ hours of daily compulsions. Because the patient clearly meets the standard of care for stepped-up treatment per APA guidelines and has documented failure of lower-level care, a well-crafted appeal highlighting these factual omissions will have a very high likelihood of success.",
+      "score": 3,
+      "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "Ignores documented failure of lower-level care (6 months of standard outpatient)",
-        "Falsely claims patient can perform ADLs despite being housebound and losing her job",
-        "Fails to address APA guidelines supporting stepped-up care"
+        "Exploitable flaw: no mention of IRO process",
+        "Exploitable flaw: only internal appeal described",
+        "Pattern anchor: missing_iro_notice",
+        "Pattern anchor: mhpaea_step_therapy_asymmetry"
       ],
       "strong_defenses": [
-        "Cites specific guidelines (Cigna/MCG) and provides a standard 180-day appeal window"
+        "Denial cites Cigna policy framework and 180-day appeal window.",
+        "Sub-tactic 'level_of_care_too_high' is reflected in the stated rationale."
       ]
     }
-  },
-  "denial_pattern_sources": [
-    "Legacy manual generation"
-  ],
-  "submission_timestamp": "2026-09-01T10:00:00Z",
-  "denial_timestamp": "2026-09-15T14:00:00Z"
+  }
 }

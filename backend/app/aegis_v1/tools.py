@@ -186,7 +186,16 @@ def case_parser(
 
 
 def corpus_retrieval(query: str, top_k: int = 3) -> dict[str, Any]:
-    """Retrieve traceable local-corpus citations with BM25 over markdown files."""
+    """Retrieve traceable local-corpus citations with BM25 over markdown files.
+
+    When the orchestrator sets a controlled retrieval (cloud + planner path), the
+    model-supplied ``query`` is ignored and the pre-flight result is returned.
+    """
+    from app.aegis_v1.retrieval_context import get_controlled_retrieval
+
+    controlled = get_controlled_retrieval()
+    if controlled is not None:
+        return controlled
 
     documents = _load_corpus()
     if not documents:

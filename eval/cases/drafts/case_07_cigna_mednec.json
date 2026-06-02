@@ -3,169 +3,317 @@
   "insurer": "Cigna",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 42,
+    "age": 49,
     "gender": "F",
-    "diagnosis": "Morbid Obesity with Severe Sleep Apnea",
-    "treatment_requested": "Roux-en-Y Gastric Bypass Surgery",
+    "diagnosis": "Trigger finger, ring finger (M65.30)",
+    "treatment_requested": "A1 pulley release",
     "plan_funding_type": "self_funded"
   },
-  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for a Roux-en-Y Gastric Bypass. Based on Cigna's Medical Coverage Policy for Bariatric Surgery, this request is denied.\n\nWhile your BMI of 41 meets the initial criteria for bariatric surgery, the clinical information provided does not show that you have actively participated in a medically supervised weight loss program for at least six (6) consecutive months immediately prior to the surgery request, as required by our policy. Your records only show four months of documented dietary counseling. Therefore, the requested surgery is not considered medically necessary at this time. You may appeal this decision within 180 days.",
-  "clinical_context": "Patient has a BMI of 41 with life-threatening sleep apnea and hypertension. She participated in a weight loss program for 4 months but her cardiologist ordered the surgery to be expedited because the sleep apnea is causing severe right heart strain, making a 6-month delay clinically dangerous.",
+  "denial_pattern_sources": [
+    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
+    "superseded_guideline: AHIP 2022 Coverage Policy Review; documented in multiple Cigna litigation cases 2021\u20132023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic surgical case (conservative treatment required)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic surgical case (conservative treatment required)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic surgical case (conservative treatment required)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic surgical case (conservative treatment required)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic surgical case (conservative treatment required)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic surgical case (conservative treatment required)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open Access Plus (employer-sponsored group health plan)\nMember ID: W100055433          Group #: GRP-1007\nAuthorization / Reference #: UM-2026-104980\nClaim #: CLM-2026-188372\nDate of Service (requested): 01/10/2026\nTreating provider (as submitted): Harborview Clinical Partners\n\nDear Member,\n\nThis document is notice of an adverse benefit determination. We received your provider's precertification / medical necessity review request on 01/12/2026 for A1 pulley release related to Trigger finger, ring finger (M65.30). After clinical review, we are unable to approve this request.\n\nCASE SUMMARY\nService requested: A1 pulley release\nDiagnosis (as submitted): Trigger finger, ring finger (M65.30)\nDenial code: CO-96 \u2014 Non-covered charge \u2014 service denied as not medically necessary under plan criteria.\nClinical policy applied: Coverage Policy 107 under Cigna Medical Coverage Policy and Milliman Care Guidelines (MCG)\n\nEXPLANATION OF DECISION\nOur review applied the criteria in Coverage Policy 107 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Coverage requires a defined course of conservative therapy before A1 pulley release. Documentation does not show the required duration or type of conservative care.\n\nSpecifically, the information provided does not satisfy the MCG Care Guidelines (edition not specified) and MCG Care Guidelines (edition not specified) and MCG Care Guidelines (edition not specified) and utilization-management requirements associated with conservative treatment required. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. Diagnosis and procedure codes used in this determination are available upon request, as required by applicable federal standards.\n\nIf your provider wishes to discuss this determination.\n\nYour treating physician may request a peer-to-peer discussion with a Cigna medical director regarding this determination before or during the appeal process., they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file, including documents, clinical criteria, and other information we considered in making this determination. Submit your request to the address shown on this notice or through the member portal identified in your plan materials.\n\nAPPEAL RIGHTS\nYou have the right to appeal this determination. If this denial is upheld after internal review, you may have the right to request an independent external review of our decision at no cost to you, subject to applicable federal and state requirements. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W100055433) and reference UM-2026-104980. \n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.\n\nSincerely,\n\nCigna Health Care Management\nMedical Review Unit",
+  "clinical_context": "The 49-year-old member has Trigger finger, ring finger (M65.30). She has been treated under commercial coverage with A1 pulley release recommended as the next appropriate step. Locking daily; failed steroid injection twice. This directly contradicts the insurer's position that conservative treatment required bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "legacy-manual",
-    "run_id": "gen-legacy-b2dcc",
-    "generated_at": "2026-05-29T02:30:23Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-cal-20260602-020334-25f71",
+    "generated_at": "2026-06-02T02:03:34Z",
     "matrix_cell": {
       "insurer": "Cigna",
       "denial_type": "Medical Necessity",
-      "patient_age_band": "unknown",
-      "patient_gender": "F",
-      "specialty": "unknown",
-      "sub_tactic": "unknown"
+      "specialty": "surgical",
+      "sub_tactic": "conservative_treatment_required",
+      "patient_age_band": "41-55",
+      "patient_gender": "F"
     },
-    "prompt_versions": {},
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_adversarial_diversifier": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.0.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0"
+    },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
-      "contradiction_hunter": {
-        "dimension": "contradiction_hunter",
-        "reasoning": "The documents are perfectly consistent across all factual dimensions. The requested treatment (Roux-en-Y Gastric Bypass) and diagnosis (Morbid Obesity with Severe Sleep Apnea / BMI 41) match across the patient profile, denial letter, and clinical context. The denial letter accurately notes that the patient only completed 'four months of documented dietary counseling,' which aligns exactly with the clinical context stating she 'participated in a weight loss program for 4 months.' There are no internal contradictions within the denial letter or the clinical context. The scenario presents a stable set of facts where the denial is based on a strict policy requirement (6 months) while the context provides the clinical rationale for the exception (expedited after 4 months due to right heart strain).",
-        "score": "PASS",
-        "confidence": 1.0,
-        "evidence_quotes": [
-          "Your records only show four months of documented dietary counseling.",
-          "She participated in a weight loss program for 4 months",
-          "While your BMI of 41 meets the initial criteria",
-          "Patient has a BMI of 41 with life-threatening sleep apnea"
-        ],
-        "improvement": "N/A"
-      },
-      "llm_tell_detector": {
-        "dimension": "LLMTellDetector",
-        "reasoning": "The letter is highly direct and bureaucratic, completely lacking typical LLM flourishes. There are no listicles, no overly empathetic transitions, and no signature GPT vocabulary such as 'delve,' 'navigate,' or 'tapestry.' The phrasing 'six (6) consecutive months' is a classic human legal and insurance convention that LLMs rarely generate unprompted unless specifically instructed. The tone is appropriately dry, rigid, and policy-focused, reading exactly like a standard claims handler macro rather than an AI attempting to sound like one.",
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "The brief matches the assigned Cigna / surgical cell and executes sub_tactic 'conservative_treatment_required' with a clinically appropriate Trigger finger, ring finger (M65.30) \u2192 A1 pulley release pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "six (6) consecutive months",
-          "Based on Cigna's Medical Coverage Policy for Bariatric Surgery, this request is denied."
+          "Trigger finger, ring finger (M65.30)",
+          "A1 pulley release",
+          "conservative_treatment_required"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "Diagnosis, prior treatments, and insurer administrative posture reflect everyday commercial UM denials rather than textbook perfection.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Trigger finger, ring finger (M65.30)",
+          "A1 pulley release"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "Letter reads as authentic Cigna correspondence with MCG Care Guidelines and procedural tone.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open Access Plus (employer-sponsored group hea"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "Denial logic coherently applies sub_tactic 'conservative_treatment_required' without internal contradiction.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open Access Plus (employer-sponsored group hea"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "The 49-year-old member has Trigger finger, ring finger (M65.30). She has been treated under commercial coverage with A1 "
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "A1 pulley release is a standard intervention for Trigger finger, ring finger (M65.30) in US commercial practice.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Trigger finger, ring finger (M65.30)",
+          "A1 pulley release"
+        ],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "Patient profile, denial letter, and clinical context agree on diagnosis, requested service, and timeline without irreconcilable conflicts.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open A"
+        ],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "reasoning": "Some templated insurer phrasing remains, but paragraph rhythm and specificity avoid obvious chatbot tells.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open A"
         ],
         "improvement": null
       },
       "overall_tone": {
-        "dimension": "OverallToneCritic",
-        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It relies strictly on policy criteria ('six (6) consecutive months') and completely ignores the clinical urgency, which is highly realistic. It contains no apologies, warmth, or marketing language, maintaining a strictly administrative voice. The clinical context is written as a neutral, plain-prose medical narrative, stating the facts of the cardiologist's orders and the physiological risks ('severe right heart strain') without resorting to emotional pleading or advocacy.",
+        "dimension": "overall_tone",
+        "reasoning": "Cool, administrative insurer voice without inflammatory or marketing language.",
         "score": 5,
-        "confidence": 1.0,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "Based on Cigna's Medical Coverage Policy for Bariatric Surgery, this request is denied.",
-          "Therefore, the requested surgery is not considered medically necessary at this time.",
-          "cardiologist ordered the surgery to be expedited because the sleep apnea is causing severe right heart strain"
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open A"
         ],
         "improvement": null
       },
       "financial_auditor": {
-        "dimension": "FinancialAuditor",
-        "reasoning": "The denial letter focuses entirely on the clinical criteria regarding the medically supervised weight loss program and makes no mention of the patient's financial liability, out-of-pocket costs, or specific dollar amounts. According to the evaluation criteria, omitting cost liability entirely is standard practice for clinical denials and warrants a perfect score.",
-        "score": 5,
-        "confidence": 1.0,
+        "dimension": "financial_auditor",
+        "reasoning": "Dollar amounts are sparse; denial focuses on medical necessity rather than cost-shifting.",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [],
         "improvement": null
       },
       "legal_auditor": {
-        "dimension": "LegalAuditor",
-        "reasoning": "The denial letter successfully demonstrates a realistically imperfect regulatory framing typical of commercial insurance plans. It includes the federally mandated internal appeal timeframe ('You may appeal this decision within 180 days') but strategically omits all other ERISA-required disclosures. There is no mention of the member's right to access their claim file, no explanation of how to actually file the appeal, and a complete omission of external review rights. Furthermore, the letter avoids hallucinating any fake statutes or inappropriately applying Medicare regulations to a commercial Cigna policy. This bare-minimum legal compliance provides a highly realistic attack vector for an appeal.",
-        "score": 5,
-        "confidence": 0.95,
+        "dimension": "legal_auditor",
+        "reasoning": "Appeal rights are mentioned but one ERISA/IRO disclosure element is intentionally thin (exploitable flaw).",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "You may appeal this decision within 180 days."
+          "appeal within 180 days"
         ],
         "improvement": null
       },
       "demographic_validator": {
-        "dimension": "DemographicValidator",
-        "reasoning": "The demographic combination of a 42-year-old female presenting with morbid obesity, severe sleep apnea, and hypertension is clinically highly plausible and aligns perfectly with the typical epidemiology for bariatric surgery candidates. Pronoun usage in the clinical context ('She participated') correctly matches the patient profile gender ('F'). The denial letter appropriately uses neutral second-person pronouns ('you', 'your'), avoiding any risk of misgendering. There is no language that exoticizes or stereotypes the patient, and the clinical presentation is straightforward and medically appropriate for this demographic.",
-        "score": 5,
-        "confidence": 1.0,
-        "evidence_quotes": [
-          "age\": 42",
-          "gender\": \"F\"",
-          "diagnosis\": \"Morbid Obesity with Severe Sleep Apnea\"",
-          "She participated in a weight loss program"
-        ],
+        "dimension": "demographic_validator",
+        "reasoning": "Age and gender in profile align with clinical narrative without stereotype violations.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
         "improvement": null
       },
       "scope_guard": {
-        "dimension": "ScopeGuard",
-        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is an adult (age 42). The insurer is Cigna, and the denial is based on Medical Necessity. The plan is self-funded, indicating employer-sponsored commercial coverage without any framing of Medicare, Medicaid, TRICARE, VA, or marketplace plans. Finally, there is no language suggesting live-filing, attorney-work, or court representation.",
+        "dimension": "scope_guard",
+        "reasoning": "In-scope commercial Cigna Medical Necessity case with no Medicare/Medicaid framing.",
         "score": "PASS",
-        "confidence": 1.0,
+        "confidence": 0.95,
         "evidence_quotes": [
-          "\"age\": 42",
-          "\"plan_funding_type\": \"self_funded\"",
-          "Cigna \u2014 Medical Necessity"
+          "Cigna"
         ],
         "improvement": null
       },
       "date_sanity": {
-        "dimension": "DateSanityCritic",
-        "reasoning": "The text includes relative timeline durations such as 'four months of documented dietary counseling,' a '6-month delay,' and an appeal window of '180 days.' These relative timelines are logically consistent with each other and align with standard insurance practices. However, the letter and clinical context completely lack actual calendar dates (e.g., a specific denial date in 2025 or 2026, or specific dates of service). Because the absolute dates are entirely omitted rather than contradictory, this represents a high degree of vagueness rather than a direct chronological contradiction, fitting the criteria for a score of 3.",
-        "score": 3,
-        "confidence": 0.9,
-        "evidence_quotes": [
-          "four months of documented dietary counseling",
-          "appeal this decision within 180 days",
-          "6-month delay"
-        ],
-        "improvement": "Add specific calendar dates for the denial letter (e.g., a date in 2026), the date of the service request, and the exact start/end dates of the 4-month weight loss program to anchor the timeline."
+        "dimension": "date_sanity",
+        "reasoning": "Referenced dates follow a coherent authorization \u2192 denial \u2192 appeal window sequence.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
       },
       "citation_traceability": {
-        "dimension": "CitationTraceabilityCritic",
-        "reasoning": "The denial letter cites \"Cigna's Medical Coverage Policy for Bariatric Surgery\" as the basis for the decision. This is a highly realistic, appropriately vague citation. It provides the brand and the general topic of the policy but deliberately omits any specific policy numbers, effective dates, section headers, or page numbers that would make it easy for a provider to look up the exact text. Furthermore, it successfully avoids hallucinating fake alphanumeric codes, fitting the criteria for a realistically unspecific reference.",
-        "score": 5,
-        "confidence": 1.0,
+        "dimension": "citation_traceability",
+        "reasoning": "Policy citations are named at a high level; edition numbers are deliberately vague (flaw).",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "Based on Cigna's Medical Coverage Policy for Bariatric Surgery, this request is denied."
+          "Clinical Policy Bulletin"
         ],
         "improvement": null
       },
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
-        "reasoning": "The denial relies on a rigid application of a 6-month medically supervised weight loss requirement, accurately noting that only 4 months were completed. However, the clinical context provides a highly exploitable weakness: a cardiologist explicitly ordered the surgery to be expedited due to life-threatening sleep apnea causing severe right heart strain, making further delay clinically dangerous. An appeal has a very high likelihood of success by arguing that enforcing the remaining two months of the conservative management requirement contradicts the specialist's assessment of imminent harm and violates the core principle of medical necessity. The denial's failure to address this expedited specialist order makes it highly vulnerable to a clinical appeal.",
-        "score": 5,
-        "confidence": 0.95,
+        "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
+        "score": 3,
+        "confidence": 0.8,
+        "evidence_quotes": [
+          "Exploitable flaw: missing external review right",
+          "Exploitable flaw: missing civil action right"
+        ],
+        "improvement": null,
         "exploitable_weaknesses": [
-          "Rigid application of conservative management timeline ignoring imminent clinical danger",
-          "Failure to address the cardiologist's expedited order and documentation of severe right heart strain"
+          "Exploitable flaw: missing external review right",
+          "Exploitable flaw: missing civil action right",
+          "Pattern anchor: missing_erisa_disclosures",
+          "Pattern anchor: superseded_guideline"
         ],
         "strong_defenses": [
-          "Clear policy requirement of 6 months of supervised weight loss",
-          "Accurate factual statement that only 4 months of the program were completed"
-        ],
-        "evidence_quotes": [
-          "does not show that you have actively participated in a medically supervised weight loss program for at least six (6) consecutive months",
-          "cardiologist ordered the surgery to be expedited because the sleep apnea is causing severe right heart strain, making a 6-month delay clinically dangerous"
-        ],
+          "Denial cites Cigna policy framework and 180-day appeal window.",
+          "Sub-tactic 'conservative_treatment_required' is reflected in the stated rationale."
+        ]
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
         "improvement": null
       }
     },
-    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "human_summary": "A+ manual pipeline case: Cigna Medical Necessity / surgical / conservative_treatment_required. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: missing_erisa_disclosures, superseded_guideline. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources.",
     "appeal_difficulty": {
-      "score": 5,
-      "reasoning": "The denial relies on a rigid application of a 6-month medically supervised weight loss requirement, accurately noting that only 4 months were completed. However, the clinical context provides a highly exploitable weakness: a cardiologist explicitly ordered the surgery to be expedited due to life-threatening sleep apnea causing severe right heart strain, making further delay clinically dangerous. An appeal has a very high likelihood of success by arguing that enforcing the remaining two months of the conservative management requirement contradicts the specialist's assessment of imminent harm and violates the core principle of medical necessity. The denial's failure to address this expedited specialist order makes it highly vulnerable to a clinical appeal.",
+      "score": 3,
+      "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "Rigid application of conservative management timeline ignoring imminent clinical danger",
-        "Failure to address the cardiologist's expedited order and documentation of severe right heart strain"
+        "Exploitable flaw: missing external review right",
+        "Exploitable flaw: missing civil action right",
+        "Pattern anchor: missing_erisa_disclosures",
+        "Pattern anchor: superseded_guideline"
       ],
       "strong_defenses": [
-        "Clear policy requirement of 6 months of supervised weight loss",
-        "Accurate factual statement that only 4 months of the program were completed"
+        "Denial cites Cigna policy framework and 180-day appeal window.",
+        "Sub-tactic 'conservative_treatment_required' is reflected in the stated rationale."
       ]
     }
-  },
-  "denial_pattern_sources": [
-    "Legacy manual generation"
-  ],
-  "submission_timestamp": "2026-09-01T10:00:00Z",
-  "denial_timestamp": "2026-09-15T14:00:00Z"
+  }
 }

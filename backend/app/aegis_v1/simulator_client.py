@@ -85,9 +85,9 @@ class GeminiSimulatorClient:
 
     name = "gemini_simulator"
 
-    def __init__(self, model: str | None = None, location: str = "global") -> None:
-        self.model = model or os.environ.get("AEGIS_SIMULATOR_MODEL", "gemini-3.1-pro")
-        self.location = location
+    def __init__(self, model: str | None = None, location: str | None = None) -> None:
+        self.model = model or os.environ.get("AEGIS_SIMULATOR_MODEL", "gemini-3.1-pro-preview")
+        self.location = location or os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
 
     def assess(self, denial_text: str, clinical_context: str, appeal_letter: str) -> FeatureAssessment:
         from google import genai

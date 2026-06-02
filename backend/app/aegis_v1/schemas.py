@@ -128,6 +128,16 @@ class TraceMetadata(BaseModel):
     run_mode: Literal["interactive", "benchmark", "autonomous_promotion"] = (
         "interactive"
     )
+    search_planner_version: str = "search_planner_v1"
+    library_search_query: str = ""
+    cloud_library_used: bool = False
+    discovery_enabled: bool = False
+    discovery_ran: bool = False
+    discovery_fetch_count: int = 0
+    discovery_queries: list[str] = Field(default_factory=list)
+    discovery_ingested_count: int = 0
+    discovery_rejected_count: int = 0
+    layer3_refinement_ran: bool = False
 
 
 class AppealPackage(BaseModel):

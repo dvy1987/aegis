@@ -28,9 +28,16 @@ def inject_flaws(
     letter_out = letter
     notes: list[str] = []
 
+    _iro_external = (
+        " If this denial is upheld after internal review, you may have the right to "
+        "request an independent external review of our decision at no cost to you, "
+        "subject to applicable federal and state requirements."
+    )
     if "missing_iro_notice" in pattern_ids or any(
         "iro" in f.lower() for f in brief.get("intended_flaw_types", [])
     ):
+        if _iro_external in letter_out:
+            letter_out = letter_out.replace(_iro_external, "")
         letter_out = letter_out.replace(
             "You have the right to appeal this determination.",
             "You have the right to appeal this determination through our internal appeals process.",
@@ -48,12 +55,17 @@ def inject_flaws(
         )
         notes.append("Inserted vague MCG reference without edition/module.")
 
+    _ignored_boiler = (
+        "\n\nStandard criteria apply regardless of information previously sent to the plan."
+    )
     if "ignored_physician_letter" in pattern_ids:
-        if "submitted" not in letter_out.lower() or "letter of medical necessity" not in letter_out.lower():
-            letter_out += (
-                "\n\nStandard criteria apply regardless of information previously sent to the plan."
-            )
-            notes.append("Boilerplate ignores physician letter and submitted records.")
+        if _ignored_boiler.strip() not in letter_out:
+            if (
+                "submitted" not in letter_out.lower()
+                or "letter of medical necessity" not in letter_out.lower()
+            ):
+                letter_out += _ignored_boiler
+                notes.append("Boilerplate ignores physician letter and submitted records.")
 
     if "circular_medical_necessity" in pattern_ids:
         letter_out = letter_out.replace(
@@ -86,10 +98,9 @@ def inject_flaws(
         )
         notes.append("P2P window verbal-only flaw.")
 
-    if "non_specialist_reviewer" in pattern_ids:
-        letter_out += (
-            "\n\nThis determination was made by Dr. J. Smith, Medical Director."
-        )
+    _reviewer_line = "\n\nThis determination was made by Dr. J. Smith, Medical Director."
+    if "non_specialist_reviewer" in pattern_ids and _reviewer_line.strip() not in letter_out:
+        letter_out += _reviewer_line
         notes.append("Reviewer named without specialty or credentials.")
 
     return {

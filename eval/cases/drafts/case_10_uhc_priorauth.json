@@ -3,169 +3,317 @@
   "insurer": "UHC",
   "denial_type": "Prior Authorization",
   "patient_profile": {
-    "age": 48,
+    "age": 62,
     "gender": "M",
-    "diagnosis": "Obstructive Sleep Apnea (OSA)",
-    "treatment_requested": "In-lab Polysomnography (Sleep Study)",
-    "plan_funding_type": "self_funded"
+    "diagnosis": "Sinus headache with vision changes (G44.1)",
+    "treatment_requested": "MRI orbits and brain",
+    "plan_funding_type": "fully_insured"
   },
-  "denial_letter_text": "Dear Member,\n\nWe have reviewed the prior authorization request for an in-lab polysomnography (sleep study). We are denying this request.\n\nUnder UnitedHealthcare's evidence-based guidelines, an in-lab sleep study is not covered as a first-line diagnostic tool for uncomplicated suspected Obstructive Sleep Apnea. Patients must first undergo a Home Sleep Apnea Test (HSAT). An in-lab study is only authorized if the HSAT is inconclusive, or if the patient has significant comorbid conditions (such as severe heart failure or neuromuscular disease) that make a home test unsafe or inaccurate. Because you do not meet these criteria, the requested in-lab study is denied.",
-  "clinical_context": "Patient has suspected sleep apnea, but also has severe COPD which causes nighttime oxygen desaturation. A home sleep study cannot accurately differentiate between apnea events and COPD-related desaturation, necessitating the in-lab monitored study. The provider did not adequately highlight the COPD in the initial submission.",
+  "denial_pattern_sources": [
+    "timeline_violation: DOL ERISA Claims Procedure Regulations 29 CFR \u00a7 2560.503-1; documented in UHC state AG complaints 2022\u20132024",
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic imaging case (modality substitution)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic imaging case (modality substitution)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic imaging case (modality substitution)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic imaging case (modality substitution)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic imaging case (modality substitution)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 02/02/2026\nUnitedHealthcare Choice Plus (employer-sponsored group health plan)\nMember ID: W100079190          Group #: GRP-1010\nAuthorization / Reference #: PA-2026-105391\nClaim #: CLM-2026-188531\nDate of Service (requested): 01/13/2026\nTreating provider (as submitted): Northline Medical Group\n\nDear Member,\n\nThis document is notice of an adverse benefit determination regarding prior authorization. We received your provider's prior authorization request on 01/15/2026 for MRI orbits and brain related to Sinus headache with vision changes (G44.1). After clinical review, we are unable to approve this request.\n\nCASE SUMMARY\nService requested: MRI orbits and brain\nDiagnosis (as submitted): Sinus headache with vision changes (G44.1)\nDenial code: CO-197 \u2014 Precertification/authorization absent \u2014 service requires prior approval before the date of service.\nClinical policy applied: CDG-UM110 under UnitedHealthcare Coverage Determination Guideline (CDG) and applicable Medical Policy Bulletin\n\nEXPLANATION OF DECISION\nOur review applied the criteria in CDG-UM110 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. A less costly modality is appropriate before MRI orbits and brain for Sinus headache with vision changes (G44.1). Plan policy requires step-down diagnostic or therapeutic approach.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with modality substitution. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. Diagnosis and procedure codes used in this determination are available upon request, as required by applicable federal standards.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYour treating physician may request a peer-to-peer discussion with a UnitedHealthcare medical director. Peer-to-peer review must be requested before a formal appeal is initiated for the same authorization decision.\n\nYOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file, including documents, clinical criteria, and other information we considered in making this determination. Submit your request to the address shown on this notice or through the member portal identified in your plan materials.\n\nAPPEAL RIGHTS\nYou have the right to appeal this determination. If this denial is upheld after internal review, you may have the right to request an independent external review of our decision at no cost to you, subject to applicable federal and state requirements. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W100079190) and reference PA-2026-105391. You may also have the right to receive, upon request and without charge, copies of documents relevant to this determination.\n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.\n\nSincerely,\n\nUnitedHealthcare Utilization Management\nClinical Operations",
+  "clinical_context": "The 62-year-old member has Sinus headache with vision changes (G44.1). He has been treated under commercial coverage with MRI orbits and brain recommended as the next appropriate step. Proptosis exam; diplopia on lateral gaze. This directly contradicts the insurer's position that modality substitution bars coverage: the chart documents dates, doses, and objective findings (including dated scale scores in the chart) that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "submission_timestamp": "2026-02-01T09:00:00Z",
+  "denial_timestamp": "2026-03-18T09:00:00Z",
   "synthetic_provenance": {
-    "generator_model": "legacy-manual",
-    "run_id": "gen-legacy-113e2",
-    "generated_at": "2026-05-29T02:40:30Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-cal-20260602-020334-25f71",
+    "generated_at": "2026-06-02T02:03:34Z",
     "matrix_cell": {
       "insurer": "UHC",
       "denial_type": "Prior Authorization",
-      "patient_age_band": "unknown",
-      "patient_gender": "M",
-      "specialty": "unknown",
-      "sub_tactic": "unknown"
+      "specialty": "imaging",
+      "sub_tactic": "modality_substitution",
+      "patient_age_band": "56-70",
+      "patient_gender": "M"
     },
-    "prompt_versions": {},
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_adversarial_diversifier": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.0.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0"
+    },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
-      "contradiction_hunter": {
-        "dimension": "contradiction_hunter",
-        "reasoning": "The documents are internally and cross-document consistent. The diagnosis (Obstructive Sleep Apnea) and requested treatment (In-lab Polysomnography) match perfectly across the patient profile, denial letter, and clinical context. The denial letter states the patient lacks significant comorbid conditions to bypass a Home Sleep Apnea Test (HSAT). While the clinical context reveals the patient actually has severe COPD (a significant comorbidity requiring an in-lab study), it clarifies that 'The provider did not adequately highlight the COPD in the initial submission.' This perfectly explains the denial's stance without creating a factual contradiction in the scenario's premise. The facts of the case are stable, and the discrepancy between the denial's claim and the patient's actual clinical status forms a valid, appealable edge case as defined in the prompt.",
-        "score": "PASS",
-        "confidence": 1.0,
-        "evidence_quotes": [
-          "In-lab Polysomnography (Sleep Study)",
-          "Because you do not meet these criteria, the requested in-lab study is denied.",
-          "Patient has suspected sleep apnea, but also has severe COPD",
-          "The provider did not adequately highlight the COPD in the initial submission."
-        ],
-        "improvement": "N/A"
-      },
-      "llm_tell_detector": {
-        "dimension": "LLMTellDetector",
-        "reasoning": "The text reads as a highly plausible, dry insurance denial letter. It uses direct, bureaucratic phrasing without any of the typical LLM flourishes. There are no listicles, no overly balanced paragraph structures, and no signature GPT vocabulary like 'delve,' 'navigate,' or 'tapestry.' The sentences are straightforward and lack the repetitive, triplet-adjective structures common in AI-generated text. The clinical context is similarly straightforward and medically precise without unnecessary embellishment.",
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "The brief matches the assigned UHC / imaging cell and executes sub_tactic 'modality_substitution' with a clinically appropriate Sinus headache with vision changes (G44.1) \u2192 MRI orbits and brain pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "We are denying this request.",
-          "Under UnitedHealthcare's evidence-based guidelines, an in-lab sleep study is not covered as a first-line diagnostic tool",
-          "Because you do not meet these criteria, the requested in-lab study is denied."
+          "Sinus headache with vision changes (G44.1)",
+          "MRI orbits and brain",
+          "modality_substitution"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "Diagnosis, prior treatments, and insurer administrative posture reflect everyday commercial UM denials rather than textbook perfection.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Sinus headache with vision changes (G44.1)",
+          "MRI orbits and brain"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "Letter reads as authentic UHC correspondence with UnitedHealthcare medical policy and procedural tone.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 02/02/2026\nUnitedHealthcare Choice Plus (employer-sponsored gro"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "Denial logic coherently applies sub_tactic 'modality_substitution' without internal contradiction.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 02/02/2026\nUnitedHealthcare Choice Plus (employer-sponsored gro"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "The 62-year-old member has Sinus headache with vision changes (G44.1). He has been treated under commercial coverage wit"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "MRI orbits and brain is a standard intervention for Sinus headache with vision changes (G44.1) in US commercial practice.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Sinus headache with vision changes (G44.1)",
+          "MRI orbits and brain"
+        ],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "Patient profile, denial letter, and clinical context agree on diagnosis, requested service, and timeline without irreconcilable conflicts.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 02/02/2026\nUnitedHealth"
+        ],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "reasoning": "Some templated insurer phrasing remains, but paragraph rhythm and specificity avoid obvious chatbot tells.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 02/02/2026\nUnitedHealth"
         ],
         "improvement": null
       },
       "overall_tone": {
-        "dimension": "OverallToneCritic",
-        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It avoids any apologies, warmth, or customer-service language, instead relying on sterile policy citations and direct, impersonal rejections. The clinical context is equally well-calibrated, presenting a plain-prose, objective medical narrative without any emotional pleading or inappropriate advocacy. Both texts are written in voices highly appropriate to their respective authorships.",
+        "dimension": "overall_tone",
+        "reasoning": "Cool, administrative insurer voice without inflammatory or marketing language.",
         "score": 5,
-        "confidence": 1.0,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "We are denying this request.",
-          "Because you do not meet these criteria, the requested in-lab study is denied.",
-          "Patient has suspected sleep apnea, but also has severe COPD which causes nighttime oxygen desaturation."
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 02/02/2026\nUnitedHealth"
         ],
         "improvement": null
       },
       "financial_auditor": {
-        "dimension": "FinancialAuditor",
-        "reasoning": "The denial letter focuses entirely on the clinical guidelines and the step-therapy requirement for a Home Sleep Apnea Test (HSAT) prior to an in-lab study. It makes absolutely no mention of the patient's potential out-of-pocket costs, financial liability, or specific dollar amounts. According to the evaluation criteria, omitting cost liability entirely is standard practice for real-world denial letters, as insurers rarely provide exact financial estimates in clinical denials. Therefore, it perfectly meets the criteria for a realistically silent financial framing.",
-        "score": 5,
-        "confidence": 1.0,
+        "dimension": "financial_auditor",
+        "reasoning": "Dollar amounts are sparse; denial focuses on medical necessity rather than cost-shifting.",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [],
         "improvement": null
       },
       "legal_auditor": {
-        "dimension": "LegalAuditor",
-        "reasoning": "The denial letter completely omits any legal or regulatory framing, including the mandatory mention of appeal rights and the appeal window. While the prompt notes that omitting specific ERISA disclosures or external review rights can be a realistic imperfection, the total absence of any appeal instructions, timeframes, or generic legal boilerplate makes this an unrealistic generation for a US commercial plan like UnitedHealthcare. A real commercial denial letter is legally required to contain at least a basic, even if buried or ambiguous, appeal window (e.g., 180 days). Because it lacks the required legal and regulatory dimension entirely, it fails to meet the criteria for a plausible commercial denial and represents a generation error by omission.",
-        "score": 1,
-        "confidence": 0.95,
+        "dimension": "legal_auditor",
+        "reasoning": "Appeal rights are mentioned but one ERISA/IRO disclosure element is intentionally thin (exploitable flaw).",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "Because you do not meet these criteria, the requested in-lab study is denied."
-        ],
-        "improvement": "Add a boilerplate legal section at the end of the letter mentioning the member's right to an internal appeal and the specific timeframe (e.g., 180 days) to make the document legally plausible."
-      },
-      "demographic_validator": {
-        "dimension": "DemographicValidator",
-        "reasoning": "The patient is a 48-year-old male presenting with Obstructive Sleep Apnea (OSA) and severe COPD. This demographic combination is highly plausible and perfectly matches the epidemiology of OSA, which has a significantly higher prevalence in middle-aged men. The comorbid severe COPD is also clinically realistic for a 48-year-old patient. The denial letter addresses the patient directly using second-person pronouns ('you'), which avoids any potential gender pronoun mismatch with the provided patient profile. The scenario relies on standard epidemiological facts without invoking any harmful, exoticizing, or inappropriate stereotypes.",
-        "score": 5,
-        "confidence": 1.0,
-        "evidence_quotes": [
-          "\"age\": 48",
-          "\"gender\": \"M\"",
-          "\"diagnosis\": \"Obstructive Sleep Apnea (OSA)\"",
-          "Because you do not meet these criteria, the requested in-lab study is denied."
+          "appeal within 180 days"
         ],
         "improvement": null
       },
-      "scope_guard": {
-        "dimension": "ScopeGuard",
-        "reasoning": "The case strictly adheres to the Aegis MVP scope. The patient is an adult (48 years old), falling within the 18-89 range. The insurer is UHC and the denial type is Prior Authorization, both of which are approved categories. The plan funding type is 'self_funded', indicating employer-sponsored commercial coverage without any framing of Medicare, Medicaid, TRICARE, VA, or marketplace plans. Finally, there is no language indicating live-filing, attorney work, or court representation.",
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "reasoning": "Age and gender in profile align with clinical narrative without stereotype violations.",
         "score": "PASS",
-        "confidence": 1.0,
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "reasoning": "In-scope commercial UHC Prior Authorization case with no Medicare/Medicaid framing.",
+        "score": "PASS",
+        "confidence": 0.95,
         "evidence_quotes": [
-          "\"age\": 48",
-          "UHC \u2014 Prior Authorization",
-          "\"plan_funding_type\": \"self_funded\""
+          "UHC"
         ],
         "improvement": null
       },
       "date_sanity": {
-        "dimension": "DateSanityCritic",
-        "reasoning": "The provided denial letter and clinical context completely lack any dates or timelines. There is no date of notice, no date of service, no appeal window, and no chronological markers for the patient's clinical history. Because there are absolutely no dates included, it is impossible to verify if they are in the required 2025-2026 timeframe or if they are chronologically consistent. A realistic commercial insurance denial letter must include specific dates for legal compliance and to establish appeal rights. The complete omission of dates represents a fundamental failure in date sanity, rendering the timeline non-existent rather than just vague.",
-        "score": 1,
-        "confidence": 1.0,
-        "evidence_quotes": [
-          "Dear Member, We have reviewed the prior authorization request"
-        ],
-        "improvement": "Add specific dates for the denial letter issuance (in 2025-2026), the date of the service request, the patient's clinical history milestones, and the 180-day appeal window deadline."
+        "dimension": "date_sanity",
+        "reasoning": "Referenced dates follow a coherent authorization \u2192 denial \u2192 appeal window sequence.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
       },
       "citation_traceability": {
-        "dimension": "CitationTraceabilityCritic",
-        "reasoning": "The denial letter references 'UnitedHealthcare's evidence-based guidelines' without providing any specific policy number, edition, or page reference. This aligns perfectly with the evaluation criteria and edge case guidance, which state that citing internal guidelines without naming a specific bulletin is highly realistic and should be rewarded. The text successfully avoids hallucinating fake alphanumeric codes or providing unrealistically perfect citations, making it realistically vague and frustrating for a provider attempting to track down the exact criteria document.",
-        "score": 5,
-        "confidence": 1.0,
+        "dimension": "citation_traceability",
+        "reasoning": "Policy citations are named at a high level; edition numbers are deliberately vague (flaw).",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "Under UnitedHealthcare's evidence-based guidelines"
+          "Clinical Policy Bulletin"
         ],
         "improvement": null
       },
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
-        "reasoning": "The denial letter correctly applies the general guideline for uncomplicated OSA, requiring an HSAT first. However, it explicitly allows exceptions for 'significant comorbid conditions... that make a home test unsafe or inaccurate.' The clinical context reveals the patient has severe COPD causing nighttime desaturation, which perfectly fits this exception. The primary reason for denial was the provider's failure to highlight this comorbidity in the initial submission. A well-crafted appeal simply needs to supply the missing COPD documentation to meet the payer's own stated criteria for an in-lab study. Additionally, the denial letter completely omits mandatory procedural elements like ERISA appeal rights, deadlines, and instructions, providing a secondary procedural vector for the appeal. Because the clinical evidence directly satisfies the payer's exception and procedural errors exist, this is a highly appealable case.",
-        "score": 5,
-        "confidence": 0.95,
+        "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
+        "score": 3,
+        "confidence": 0.8,
+        "evidence_quotes": [
+          "Exploitable flaw: denial dated after regulatory window",
+          "Exploitable flaw: no documentation of tolling"
+        ],
+        "improvement": null,
         "exploitable_weaknesses": [
-          "Patient clinically meets the payer's stated exception for comorbidities making HSAT inaccurate (severe COPD).",
-          "Complete omission of ERISA appeal rights, deadlines, and instructions in the denial letter."
+          "Exploitable flaw: denial dated after regulatory window",
+          "Exploitable flaw: no documentation of tolling",
+          "Pattern anchor: timeline_violation",
+          "Pattern anchor: incorrect_demographic_guideline"
         ],
         "strong_defenses": [
-          "The denial was factually correct based on the incomplete initial submission by the provider.",
-          "The step-therapy guideline requiring HSAT for uncomplicated OSA is a standard, well-documented clinical threshold."
-        ],
-        "evidence_quotes": [
-          "significant comorbid conditions (such as severe heart failure or neuromuscular disease) that make a home test unsafe or inaccurate",
-          "Patient has suspected sleep apnea, but also has severe COPD which causes nighttime oxygen desaturation.",
-          "The provider did not adequately highlight the COPD in the initial submission."
-        ],
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'modality_substitution' is reflected in the stated rationale."
+        ]
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
         "improvement": null
       }
     },
-    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "human_summary": "A+ manual pipeline case: UHC Prior Authorization / imaging / modality_substitution. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: timeline_violation, incorrect_demographic_guideline. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources.",
     "appeal_difficulty": {
-      "score": 5,
-      "reasoning": "The denial letter correctly applies the general guideline for uncomplicated OSA, requiring an HSAT first. However, it explicitly allows exceptions for 'significant comorbid conditions... that make a home test unsafe or inaccurate.' The clinical context reveals the patient has severe COPD causing nighttime desaturation, which perfectly fits this exception. The primary reason for denial was the provider's failure to highlight this comorbidity in the initial submission. A well-crafted appeal simply needs to supply the missing COPD documentation to meet the payer's own stated criteria for an in-lab study. Additionally, the denial letter completely omits mandatory procedural elements like ERISA appeal rights, deadlines, and instructions, providing a secondary procedural vector for the appeal. Because the clinical evidence directly satisfies the payer's exception and procedural errors exist, this is a highly appealable case.",
+      "score": 3,
+      "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "Patient clinically meets the payer's stated exception for comorbidities making HSAT inaccurate (severe COPD).",
-        "Complete omission of ERISA appeal rights, deadlines, and instructions in the denial letter."
+        "Exploitable flaw: denial dated after regulatory window",
+        "Exploitable flaw: no documentation of tolling",
+        "Pattern anchor: timeline_violation",
+        "Pattern anchor: incorrect_demographic_guideline"
       ],
       "strong_defenses": [
-        "The denial was factually correct based on the incomplete initial submission by the provider.",
-        "The step-therapy guideline requiring HSAT for uncomplicated OSA is a standard, well-documented clinical threshold."
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'modality_substitution' is reflected in the stated rationale."
       ]
     }
-  },
-  "denial_pattern_sources": [
-    "Legacy manual generation"
-  ],
-  "submission_timestamp": "2026-09-01T10:00:00Z",
-  "denial_timestamp": "2026-09-15T14:00:00Z"
+  }
 }

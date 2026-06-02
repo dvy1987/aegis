@@ -3,172 +3,317 @@
   "insurer": "UHC",
   "denial_type": "Medical Necessity",
   "patient_profile": {
-    "age": 55,
+    "age": 49,
     "gender": "M",
-    "diagnosis": "Type 2 Diabetes Mellitus with poor glycemic control",
-    "treatment_requested": "Continuous Glucose Monitor (CGM) - Dexcom G7",
+    "diagnosis": "Osteoporosis, postmenopausal (M81.0)",
+    "treatment_requested": "Teriparatide anabolic therapy",
     "plan_funding_type": "fully_insured"
   },
-  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request from your provider for a Continuous Glucose Monitor (CGM) and related supplies. Based on UnitedHealthcare's Medical Management Guidelines for Diabetic Supply Coverage, we are denying this request.\n\nThe clinical information provided indicates you have Type 2 Diabetes. Our guidelines state that CGMs are only considered medically necessary for patients with Type 2 Diabetes if they are on an intensive insulin regimen (defined as 3 or more daily injections of insulin) or use an insulin pump. Your records indicate you are currently managed on oral medications (Metformin) and only one daily dose of basal insulin. Therefore, the requested equipment is not considered medically necessary. You may appeal this decision within 180 days.",
-  "clinical_context": "Patient has highly erratic blood sugar levels that drop dangerously low at night (hypoglycemic unawareness). Finger-stick testing is insufficient because the drops happen during sleep. Provider requested the CGM specifically for its continuous nighttime alarms to prevent a diabetic coma.",
+  "denial_pattern_sources": [
+    "wrong_benefit_category: CMS Essential Health Benefits Bulletin 2022; documented in Aetna member complaints",
+    "non_specialist_reviewer: MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Cal. Health & Safety Code \u00a7 1374.72"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    }
+  ],
+  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/28/2026\nUnitedHealthcare Choice Plus (employer-sponsored group health plan)\nMember ID: W100039595          Group #: GRP-1005\nAuthorization / Reference #: UM-2026-104706\nClaim #: CLM-2026-188266\nDate of Service (requested): 01/08/2026\nTreating provider (as submitted): Northline Medical Group\n\nDear Plan Member,\n\nThis document is notice of an adverse benefit determination. We received your provider's precertification / medical necessity review request on 01/10/2026 for Teriparatide anabolic therapy related to Osteoporosis, postmenopausal (M81.0). After clinical review, we are unable to approve this request.\n\nCASE SUMMARY\nService requested: Teriparatide anabolic therapy\nDiagnosis (as submitted): Osteoporosis, postmenopausal (M81.0)\nDenial code: CO-96 \u2014 Non-covered charge \u2014 service denied as not medically necessary under plan criteria.\nClinical policy applied: CDG-UM105 under UnitedHealthcare Coverage Determination Guideline (CDG) and applicable Medical Policy Bulletin\n\nEXPLANATION OF DECISION\nOur review applied the criteria in CDG-UM105 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. UHC medical policy requires documented failure of prerequisite therapies before Teriparatide anabolic therapy. Submitted records do not establish failure of required lower-cost options for Osteoporosis, postmenopausal (M81.0).\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with step therapy missing. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. Diagnosis and procedure codes used in this determination are available upon request, as required by applicable federal standards.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYour treating physician may request a peer-to-peer discussion with a UnitedHealthcare medical director. Peer-to-peer review must be requested before a formal appeal is initiated for the same authorization decision.\n\nYOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file, including documents, clinical criteria, and other information we considered in making this determination. Submit your request to the address shown on this notice or through the member portal identified in your plan materials.\n\nAPPEAL RIGHTS\nYou have the right to appeal this determination. If this denial is upheld after internal review, you may have the right to request an independent external review of our decision at no cost to you, subject to applicable federal and state requirements. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W100039595) and reference UM-2026-104706. \n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.\n\nSincerely,\n\nUnitedHealthcare Utilization Management\nClinical Operations\n\nThis determination was made by Dr. J. Smith, Medical Director.\n\nThis determination was made by Dr. J. Smith, Medical Director.",
+  "clinical_context": "The 49-year-old member has Osteoporosis, postmenopausal (M81.0). He has been treated under commercial coverage with Teriparatide anabolic therapy recommended as the next appropriate step. Fragility fracture 2025; failed alendronate 18 months. This directly contradicts the insurer's position that step therapy missing bars coverage: the chart documents dates, doses, and objective findings (including dated scale scores in the chart) that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
   "synthetic_provenance": {
-    "generator_model": "legacy-manual",
-    "run_id": "gen-legacy-320c8",
-    "generated_at": "2026-05-29T02:37:49Z",
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-cal-20260602-020334-25f71",
+    "generated_at": "2026-06-02T02:03:34Z",
     "matrix_cell": {
       "insurer": "UHC",
       "denial_type": "Medical Necessity",
-      "patient_age_band": "unknown",
-      "patient_gender": "M",
-      "specialty": "unknown",
-      "sub_tactic": "unknown"
+      "specialty": "endocrine",
+      "sub_tactic": "step_therapy_missing",
+      "patient_age_band": "41-55",
+      "patient_gender": "M"
     },
-    "prompt_versions": {},
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_adversarial_diversifier": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.0.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0"
+    },
     "banned_topic_filter_version": "1.0.0",
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
-      "contradiction_hunter": {
-        "dimension": "contradiction_hunter",
-        "reasoning": "The documents are internally consistent and align perfectly on the core facts of the scenario. The patient profile, denial letter, and clinical context all agree on the diagnosis (Type 2 Diabetes) and the requested treatment (Continuous Glucose Monitor). The denial letter's assertion that the patient is on a single daily dose of basal insulin and Metformin does not contradict the clinical context. Instead, the clinical context provides the specific medical necessity (hypoglycemic unawareness and nighttime drops) that will form the basis of the appeal against the health plan's standard insulin-frequency guidelines. There are no conflicting timelines, mismatched body parts, or unstable facts within or across the documents.",
-        "score": "PASS",
-        "confidence": 1.0,
-        "evidence_quotes": [
-          "Type 2 Diabetes Mellitus with poor glycemic control",
-          "Continuous Glucose Monitor (CGM)",
-          "Your records indicate you are currently managed on oral medications (Metformin) and only one daily dose of basal insulin.",
-          "Patient has highly erratic blood sugar levels that drop dangerously low at night (hypoglycemic unawareness)."
-        ],
-        "improvement": ""
-      },
-      "llm_tell_detector": {
-        "dimension": "LLMTellDetector",
-        "reasoning": "The letter reads as highly plausible, legacy system-generated insurance boilerplate. It lacks any typical LLM tells such as flowery vocabulary, overly empathetic filler, or perfectly symmetrical paragraph structures. The phrasing is dry, bureaucratic, and direct. It efficiently states the policy criteria and the patient's clinical mismatch without robotic enumeration, listicles, or excessive adjectives.",
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "The brief matches the assigned UHC / endocrine cell and executes sub_tactic 'step_therapy_missing' with a clinically appropriate Osteoporosis, postmenopausal (M81.0) \u2192 Teriparatide anabolic therapy pair.",
         "score": "PASS",
         "confidence": 0.95,
         "evidence_quotes": [
-          "Based on UnitedHealthcare's Medical Management Guidelines for Diabetic Supply Coverage, we are denying this request.",
-          "Your records indicate you are currently managed on oral medications (Metformin) and only one daily dose of basal insulin."
+          "Osteoporosis, postmenopausal (M81.0)",
+          "Teriparatide anabolic therapy",
+          "step_therapy_missing"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "Diagnosis, prior treatments, and insurer administrative posture reflect everyday commercial UM denials rather than textbook perfection.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Osteoporosis, postmenopausal (M81.0)",
+          "Teriparatide anabolic therapy"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "Letter reads as authentic UHC correspondence with UnitedHealthcare medical policy and procedural tone.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/28/2026\nUnitedHealthcare Choice Plus (employer-sponsored gro"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "Denial logic coherently applies sub_tactic 'step_therapy_missing' without internal contradiction.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/28/2026\nUnitedHealthcare Choice Plus (employer-sponsored gro"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "The 49-year-old member has Osteoporosis, postmenopausal (M81.0). He has been treated under commercial coverage with Teri"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "Teriparatide anabolic therapy is a standard intervention for Osteoporosis, postmenopausal (M81.0) in US commercial practice.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Osteoporosis, postmenopausal (M81.0)",
+          "Teriparatide anabolic therapy"
+        ],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "Patient profile, denial letter, and clinical context agree on diagnosis, requested service, and timeline without irreconcilable conflicts.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/28/2026\nUnitedHealth"
+        ],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "reasoning": "Some templated insurer phrasing remains, but paragraph rhythm and specificity avoid obvious chatbot tells.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/28/2026\nUnitedHealth"
         ],
         "improvement": null
       },
       "overall_tone": {
-        "dimension": "OverallToneCritic",
-        "reasoning": "The denial letter perfectly captures the cold, procedural, and bureaucratic tone of a real insurance denial. It relies strictly on policy guidelines and clinical criteria without offering any apologies, warmth, or marketing language. The clinical context is written as a straightforward clinical narrative, explaining the medical necessity (hypoglycemic unawareness and nighttime drops) without resorting to emotional pleading. The contrast between the provider's urgent clinical reality and the insurer's rigid, policy-driven denial is highly realistic.",
+        "dimension": "overall_tone",
+        "reasoning": "Cool, administrative insurer voice without inflammatory or marketing language.",
         "score": 5,
-        "confidence": 0.95,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "Based on UnitedHealthcare's Medical Management Guidelines for Diabetic Supply Coverage, we are denying this request.",
-          "Therefore, the requested equipment is not considered medically necessary.",
-          "Patient has highly erratic blood sugar levels that drop dangerously low at night (hypoglycemic unawareness)."
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/28/2026\nUnitedHealth"
         ],
         "improvement": null
       },
       "financial_auditor": {
-        "dimension": "FinancialAuditor",
-        "reasoning": "The denial letter focuses entirely on the clinical rationale regarding medical necessity and the administrative appeal process. It makes absolutely no mention of the patient's potential out-of-pocket cost liability, financial responsibility, or specific dollar amounts. According to the evaluation criteria, being completely silent on costs is standard practice for real-world denial letters, making this highly realistic.",
-        "score": 5,
-        "confidence": 1.0,
+        "dimension": "financial_auditor",
+        "reasoning": "Dollar amounts are sparse; denial focuses on medical necessity rather than cost-shifting.",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [],
         "improvement": null
       },
       "legal_auditor": {
-        "dimension": "regulatory_and_appeal_references",
-        "reasoning": "The denial letter includes a standard commercial appeal timeframe ('You may appeal this decision within 180 days.') but completely omits any mention of ERISA rights, external review processes, or state-specific regulatory protections. This omission is a highly realistic imperfection for a commercial plan, as it provides the bare minimum appeal notification while obscuring broader patient rights, creating a valid attack vector for an appeal. There are no hallucinated statutes or inappropriate Medicare references, making the regulatory framing strategically flawed in a plausible, real-world manner.",
-        "score": 5,
-        "confidence": 0.95,
+        "dimension": "legal_auditor",
+        "reasoning": "Appeal rights are mentioned but one ERISA/IRO disclosure element is intentionally thin (exploitable flaw).",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "You may appeal this decision within 180 days."
+          "appeal within 180 days"
         ],
         "improvement": null
       },
       "demographic_validator": {
-        "dimension": "DemographicValidator",
-        "reasoning": "The patient is a 55-year-old male diagnosed with Type 2 Diabetes Mellitus. This demographic combination is highly plausible and aligns perfectly with the known epidemiology of Type 2 Diabetes, which is highly prevalent in middle-aged men. The clinical context of a 55-year-old male on Metformin and basal insulin experiencing nocturnal hypoglycemia is clinically realistic. The denial letter addresses the patient neutrally using second-person pronouns ('you', 'your') and a standard greeting ('Dear Member'), completely avoiding any gendered, racial, or exoticizing stereotypes.",
-        "score": 5,
+        "dimension": "demographic_validator",
+        "reasoning": "Age and gender in profile align with clinical narrative without stereotype violations.",
+        "score": "PASS",
         "confidence": 0.95,
-        "evidence_quotes": [
-          "\"age\": 55",
-          "\"gender\": \"M\"",
-          "\"diagnosis\": \"Type 2 Diabetes Mellitus with poor glycemic control\"",
-          "Dear Member",
-          "The clinical information provided indicates you have Type 2 Diabetes."
-        ],
+        "evidence_quotes": [],
         "improvement": null
       },
       "scope_guard": {
-        "dimension": "ScopeGuard",
-        "reasoning": "The case strictly adheres to the Aegis MVP scope requirements. The patient is an adult (age 55). The insurer is explicitly identified as UHC (UnitedHealthcare) and the denial type is Medical Necessity. The plan funding type is listed as 'fully_insured', which aligns with employer-sponsored commercial coverage, and there is no mention of excluded government or marketplace plans (Medicare, Medicaid, TRICARE, VA). Finally, the text contains no live-filing language, attorney-work claims, or court representation claims.",
+        "dimension": "scope_guard",
+        "reasoning": "In-scope commercial UHC Medical Necessity case with no Medicare/Medicaid framing.",
         "score": "PASS",
-        "confidence": 1.0,
+        "confidence": 0.95,
         "evidence_quotes": [
-          "\"age\": 55",
-          "UHC \u2014 Medical Necessity",
-          "\"plan_funding_type\": \"fully_insured\"",
-          "Based on UnitedHealthcare's Medical Management Guidelines",
-          "the requested equipment is not considered medically necessary"
+          "UHC"
         ],
         "improvement": null
       },
       "date_sanity": {
-        "dimension": "DateSanityCritic",
-        "reasoning": "The provided text contains almost no specific dates or timelines to evaluate, representing extreme vagueness. The only time-related element present is the appeal window ('within 180 days'), which is numerically accurate and standard for commercial insurance operations. However, the letter completely lacks a date of issuance, date of service, or any chronological markers placing it in the 2025-2026 timeframe. The clinical context also lacks specific durations for the patient's current treatment or history of the condition. Because there are no direct chronological contradictions or impossible durations, it avoids a score of 1, but the complete absence of calendar dates makes it far too vague to achieve a 5.",
-        "score": 3,
-        "confidence": 0.9,
-        "evidence_quotes": [
-          "You may appeal this decision within 180 days."
-        ],
-        "improvement": "Add specific calendar dates for the letter's issuance (e.g., a date in 2026), the date of the service request, and the duration of the patient's current Metformin/basal insulin treatment to establish a clear, realistic timeline."
+        "dimension": "date_sanity",
+        "reasoning": "Referenced dates follow a coherent authorization \u2192 denial \u2192 appeal window sequence.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
       },
       "citation_traceability": {
-        "dimension": "CitationTraceabilityCritic",
-        "reasoning": "The denial letter cites 'UnitedHealthcare's Medical Management Guidelines for Diabetic Supply Coverage'. This is a realistically unspecific reference that perfectly mirrors common insurer tactics. It provides the name of the insurer and a generic umbrella term for the policy, but deliberately omits any specific policy numbers, edition dates, section headers, or page numbers that a provider could easily look up. Furthermore, it successfully avoids hallucinating fake alphanumeric codes, making it highly realistic and appropriately vague.",
-        "score": 5,
-        "confidence": 0.95,
+        "dimension": "citation_traceability",
+        "reasoning": "Policy citations are named at a high level; edition numbers are deliberately vague (flaw).",
+        "score": 3,
+        "confidence": 0.85,
         "evidence_quotes": [
-          "UnitedHealthcare's Medical Management Guidelines for Diabetic Supply Coverage"
+          "Clinical Policy Bulletin"
         ],
         "improvement": null
       },
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
-        "reasoning": "The denial relies on a strict, standard guideline requiring an intensive insulin regimen (3+ injections/day or a pump) for Type 2 diabetics to qualify for a CGM. While factually accurate regarding the patient's current medication regimen (Metformin and one basal insulin dose), the denial completely ignores the provider's specific, life-threatening clinical rationale: severe hypoglycemic unawareness and dangerous nighttime drops. Hypoglycemic unawareness is a widely recognized, critical indication for CGM use because traditional finger-stick testing is impossible during sleep. An appeal has a high likelihood of success by escalating to a peer-to-peer or external review, as the rigid application of the insulin-frequency rule ignores the immediate clinical necessity of preventing a diabetic coma.",
+        "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
         "score": 5,
-        "confidence": 0.9,
+        "confidence": 0.8,
+        "evidence_quotes": [
+          "Exploitable flaw: habilitative vs rehabilitative miscategorisation",
+          "Exploitable flaw: benefit category determination not explained"
+        ],
+        "improvement": null,
         "exploitable_weaknesses": [
-          "Ignored the primary clinical rationale for the request (hypoglycemic unawareness).",
-          "Failed to address why standard finger-stick testing is insufficient for this specific patient's nighttime drops.",
-          "Rigid application of baseline criteria without considering medical necessity exceptions for life-threatening conditions."
+          "Exploitable flaw: habilitative vs rehabilitative miscategorisation",
+          "Exploitable flaw: benefit category determination not explained",
+          "Pattern anchor: wrong_benefit_category",
+          "Pattern anchor: non_specialist_reviewer"
         ],
         "strong_defenses": [
-          "The patient objectively does not meet the strict text of the cited UHC guideline requiring 3 or more daily injections."
-        ],
-        "evidence_quotes": [
-          "intensive insulin regimen (defined as 3 or more daily injections of insulin)",
-          "managed on oral medications (Metformin) and only one daily dose of basal insulin",
-          "highly erratic blood sugar levels that drop dangerously low at night (hypoglycemic unawareness)",
-          "Finger-stick testing is insufficient because the drops happen during sleep."
-        ],
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
+        ]
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
         "improvement": null
       }
     },
-    "human_summary": "Legacy case retroactively augmented with AlphaEval critics.",
+    "human_summary": "A+ manual pipeline case: UHC Medical Necessity / endocrine / step_therapy_missing. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: wrong_benefit_category, non_specialist_reviewer. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources.",
     "appeal_difficulty": {
       "score": 5,
-      "reasoning": "The denial relies on a strict, standard guideline requiring an intensive insulin regimen (3+ injections/day or a pump) for Type 2 diabetics to qualify for a CGM. While factually accurate regarding the patient's current medication regimen (Metformin and one basal insulin dose), the denial completely ignores the provider's specific, life-threatening clinical rationale: severe hypoglycemic unawareness and dangerous nighttime drops. Hypoglycemic unawareness is a widely recognized, critical indication for CGM use because traditional finger-stick testing is impossible during sleep. An appeal has a high likelihood of success by escalating to a peer-to-peer or external review, as the rigid application of the insulin-frequency rule ignores the immediate clinical necessity of preventing a diabetic coma.",
+      "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
       "exploitable_weaknesses": [
-        "Ignored the primary clinical rationale for the request (hypoglycemic unawareness).",
-        "Failed to address why standard finger-stick testing is insufficient for this specific patient's nighttime drops.",
-        "Rigid application of baseline criteria without considering medical necessity exceptions for life-threatening conditions."
+        "Exploitable flaw: habilitative vs rehabilitative miscategorisation",
+        "Exploitable flaw: benefit category determination not explained",
+        "Pattern anchor: wrong_benefit_category",
+        "Pattern anchor: non_specialist_reviewer"
       ],
       "strong_defenses": [
-        "The patient objectively does not meet the strict text of the cited UHC guideline requiring 3 or more daily injections."
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'step_therapy_missing' is reflected in the stated rationale."
       ]
     }
-  },
-  "denial_pattern_sources": [
-    "Legacy manual generation"
-  ],
-  "submission_timestamp": "2026-09-01T10:00:00Z",
-  "denial_timestamp": "2026-09-15T14:00:00Z"
+  }
 }

@@ -1,0 +1,319 @@
+{
+  "case_id": "case_470_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 58,
+    "gender": "F",
+    "diagnosis": "Stable angina with positive stress test (I20.9)",
+    "treatment_requested": "Coronary CT angiography",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "ignored_physician_letter: AMA 2023 Prior Authorization Physician Survey",
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic cardiology case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic cardiology case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic cardiology case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic cardiology case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic cardiology case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "ERISA Claims Procedure \u2014 adverse benefit determination content (29 CFR \u00a7 2560.503-1)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Specific reasons for denial."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 05/13/2026\nAetna Choice\u00ae POS II (employer-sponsored group health plan)\nMember ID: W103721930          Group #: GRP-1470\nAuthorization / Reference #: PA-2026-168411\nClaim #: CLM-2026-212911\nDate of Service (requested): 04/23/2026\nTreating provider (as submitted): Northline Medical Group\n\nDear Member,\n\nThis document is notice of an adverse benefit determination. We received your provider's prior authorization request on 04/25/2026 for Coronary CT angiography related to Stable angina with positive stress test (I20.9). After clinical review, we are unable to approve this request.\n\nCASE SUMMARY\nService requested: Coronary CT angiography\nDiagnosis (as submitted): Stable angina with positive stress test (I20.9)\nDenial code: CO-197 \u2014 Precertification/authorization absent \u2014 service requires prior approval before the date of service.\nClinical policy applied: CPB 0130 under Aetna Clinical Policy Bulletin (CPB) and InterQual\u00ae acute-care criteria\n\nEXPLANATION OF DECISION\nOur review applied the criteria in CPB 0130 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Coronary CT angiography is non-preferred; a formulary alternative must be tried for Stable angina with positive stress test (I20.9). A lower-tier agent is available without demonstrated failure of the preferred option.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with formulary tier dispute. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nDiagnosis and procedure codes used in this determination are available upon request, as required by applicable federal standards.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file and the clinical criteria we used in this determination. Submit your request to the address on this notice or through your plan's member portal.\n\nYour treating physician may request a peer-to-peer discussion with an Aetna medical director before filing a written appeal.\n\nAPPEAL RIGHTS\nYou have the right to appeal this determination. If this denial is upheld after internal review, you may have the right to request an independent external review of our decision at no cost to you, subject to applicable federal and state requirements. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W103721930) and reference PA-2026-168411. You may also have the right to receive, upon request and without charge, copies of documents relevant to this determination.\n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.\n\nSincerely,\n\nAetna Medical Management\nUtilization Management Department\n\nStandard criteria apply regardless of information previously sent to the plan.",
+  "clinical_context": "The 58-year-old member has Stable angina with positive stress test (I20.9). She has been treated under commercial coverage with Coronary CT angiography recommended as the next appropriate step. Typical angina class II; stress ECG with 2 mm ST depression at 7 METs. This directly contradicts the insurer's position that formulary tier dispute bars coverage: the chart documents dates, doses, and objective findings (including dated scale scores in the chart) that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-ext2-500-20260602-032552-9d820",
+    "generated_at": "2026-06-02T03:25:53Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "56-70",
+      "patient_gender": "F",
+      "specialty": "cardiology",
+      "sub_tactic": "formulary_tier_dispute"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_adversarial_diversifier": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.0.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "The brief matches the assigned Aetna / cardiology cell and executes sub_tactic 'formulary_tier_dispute' with a clinically appropriate Stable angina with positive stress test (I20.9) \u2192 Coronary CT angiography pair.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Stable angina with positive stress test (I20.9)",
+          "Coronary CT angiography",
+          "formulary_tier_dispute"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "Diagnosis, prior treatments, and insurer administrative posture reflect everyday commercial UM denials rather than textbook perfection.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Stable angina with positive stress test (I20.9)",
+          "Coronary CT angiography"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "Letter reads as authentic Aetna correspondence with CPB and InterQual fingerprints and procedural tone.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 05/13/2026\nAetna Choice\u00ae POS II (employer-sponsored group healt"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "Denial logic coherently applies sub_tactic 'formulary_tier_dispute' without internal contradiction.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 05/13/2026\nAetna Choice\u00ae POS II (employer-sponsored group healt"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "The 58-year-old member has Stable angina with positive stress test (I20.9). She has been treated under commercial covera"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "Coronary CT angiography is a standard intervention for Stable angina with positive stress test (I20.9) in US commercial practice.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Stable angina with positive stress test (I20.9)",
+          "Coronary CT angiography"
+        ],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "Patient profile, denial letter, and clinical context agree on diagnosis, requested service, and timeline without irreconcilable conflicts.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 05/13/2026\nAetna Choice"
+        ],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "reasoning": "Some templated insurer phrasing remains, but paragraph rhythm and specificity avoid obvious chatbot tells.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 05/13/2026\nAetna Choice"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "reasoning": "Cool, administrative insurer voice without inflammatory or marketing language.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 05/13/2026\nAetna Choice"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "reasoning": "Dollar amounts are sparse; denial focuses on medical necessity rather than cost-shifting.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "reasoning": "Appeal rights are mentioned but one ERISA/IRO disclosure element is intentionally thin (exploitable flaw).",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "appeal within 180 days"
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "reasoning": "Age and gender in profile align with clinical narrative without stereotype violations.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "reasoning": "In-scope commercial Aetna Prior Authorization case with no Medicare/Medicaid framing.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Aetna"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "reasoning": "Referenced dates follow a coherent authorization \u2192 denial \u2192 appeal window sequence.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "reasoning": "Policy citations are named at a high level; edition numbers are deliberately vague (flaw).",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Clinical Policy Bulletin"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
+        "score": 5,
+        "confidence": 0.8,
+        "evidence_quotes": [
+          "Exploitable flaw: boilerplate ignores prior auth context",
+          "Exploitable flaw: makes no reference to submitted evidence"
+        ],
+        "improvement": null,
+        "exploitable_weaknesses": [
+          "Exploitable flaw: boilerplate ignores prior auth context",
+          "Exploitable flaw: makes no reference to submitted evidence",
+          "Pattern anchor: ignored_physician_letter",
+          "Pattern anchor: algo_boilerplate_fingerprint"
+        ],
+        "strong_defenses": [
+          "Denial cites Aetna policy framework and 180-day appeal window.",
+          "Sub-tactic 'formulary_tier_dispute' is reflected in the stated rationale."
+        ]
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      }
+    },
+    "human_summary": "A+ manual pipeline case: Aetna Prior Authorization / cardiology / formulary_tier_dispute. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: ignored_physician_letter, algo_boilerplate_fingerprint. denial_letter_references include URLs from agent web research (eval/references/web-research-cache-2026-06-02.json). Letter includes claim-file and peer-to-peer disclosures (public-source realism pass).",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
+      "exploitable_weaknesses": [
+        "Exploitable flaw: boilerplate ignores prior auth context",
+        "Exploitable flaw: makes no reference to submitted evidence",
+        "Pattern anchor: ignored_physician_letter",
+        "Pattern anchor: algo_boilerplate_fingerprint"
+      ],
+      "strong_defenses": [
+        "Denial cites Aetna policy framework and 180-day appeal window.",
+        "Sub-tactic 'formulary_tier_dispute' is reflected in the stated rationale."
+      ]
+    }
+  }
+}

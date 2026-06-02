@@ -3,7 +3,7 @@
 | Setting | Value |
 |---------|--------|
 | Method | Cursor manual swarm (`manual_producer.py`) — **no Vertex Gemini** |
-| Output dir | `eval/cases/drafts/benchmark-200/` |
+| Output dir | `eval/cases/drafts/` (flat; `benchmark-200/` deprecated) |
 | Batch size | 10 cases |
 | Batches | 20 (batch 1 = cases 11–20 … batch 20 = 201–210) |
 | CLI | `cd backend && uv run python scripts/run_manual_case_batch.py --batch N` |

@@ -2,8 +2,9 @@
 import { useEffect, useReducer, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { flowReducer, initialFlow, type FlowStep } from "@/lib/flow/reducer";
-import { getDataSource } from "@/lib/data";
+import { consumerSource } from "@/lib/data";
 import type { AppealRequest, CaseSummary } from "@/lib/types";
+import { getDiscoveryEnabled, SETTINGS_CHANGED_EVENT } from "@/lib/settings";
 import { Nav } from "@/components/Nav";
 import { ProgressHairline } from "@/components/ui/ProgressHairline";
 import { IntakePanel } from "@/components/flow/IntakePanel";
@@ -23,18 +24,29 @@ const STEP_RATIO: Record<FlowStep, number> = {
 export default function AppealPage() {
   const [state, dispatch] = useReducer(flowReducer, initialFlow);
   const [cases, setCases] = useState<CaseSummary[]>([]);
+  const [settingsTick, setSettingsTick] = useState(0);
   const reduced = useReducedMotion();
-  const ds = getDataSource();
+  const ds = consumerSource;
 
   useEffect(() => {
     ds.listCases().then(setCases);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settingsTick]);
+
+  useEffect(() => {
+    const onSettings = () => setSettingsTick((n) => n + 1);
+    window.addEventListener(SETTINGS_CHANGED_EVENT, onSettings);
+    return () => window.removeEventListener(SETTINGS_CHANGED_EVENT, onSettings);
   }, []);
 
   async function submit(req: AppealRequest) {
-    dispatch({ type: "SUBMIT", req });
+    const withSettings: AppealRequest = {
+      ...req,
+      discovery_enabled: getDiscoveryEnabled(),
+    };
+    dispatch({ type: "SUBMIT", req: withSettings });
     try {
-      dispatch({ type: "RESULT", result: await ds.draftAppeal(req) });
+      dispatch({ type: "RESULT", result: await ds.draftAppeal(withSettings) });
     } catch {
       dispatch({ type: "ERROR", error: "Something's not working on our side. Try again, or come back later." });
     }

@@ -13,7 +13,7 @@ PROMPT_DIR = Path(__file__).resolve().parent
 
 PROMPT_VERSIONS: dict[str, str] = {
     "p1_scenario_planner": "1.0.0",
-    "p2_denial_drafter": "1.0.0",
+    "p2_denial_drafter": "1.1.0",
     "p3_clinical_writer": "1.0.0",
     "p4_adversarial_diversifier": "1.0.0",
     "c_matrix_coverage": "1.0.0",

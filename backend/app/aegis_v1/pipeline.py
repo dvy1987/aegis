@@ -3,6 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Literal
 from uuid import uuid4
 
+from app.aegis_v1.library_context import prepare_library_context
+from app.aegis_v1.retrieval_context import reset_controlled_retrieval, set_controlled_retrieval
 from app.aegis_v1.schemas import AppealPackage
 from app.aegis_v1.schemas import Playbook
 from app.aegis_v1.schemas import TraceMetadata
@@ -14,6 +16,7 @@ from app.aegis_v1.tools import (
     playbook_loader,
     self_check,
 )
+from app.aegis_v1.v1_config import build_v1_library_stack
 
 if TYPE_CHECKING:
     from app.aegis_v1.drafter_client import DrafterLLMClient
@@ -28,6 +31,7 @@ def run_aegis_v1_pipeline(
         "interactive"
     ),
     drafter_client: "DrafterLLMClient | None" = None,
+    library_stack: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Run the six-tool v1 Student flow. The Outcome Simulator is no longer part
     of the Student — it runs in the eval layer (`run_evaluated_case`)."""
@@ -37,16 +41,26 @@ def run_aegis_v1_pipeline(
         clinical_context=clinical_context,
         case_id=case_id,
     )
-    query = " ".join(
-        [
-            parsed["insurer"],
-            parsed["denial_type"],
-            parsed["service_or_procedure"],
-            parsed["diagnosis_summary"],
-            parsed["cited_denial_reason"],
-        ]
+
+    stack = library_stack or build_v1_library_stack()
+    lib_ctx = prepare_library_context(
+        parsed,
+        case_id=parsed["case_id"],
+        corpus_store=stack["corpus_store"],
+        discovery=stack.get("discovery"),
+        refinement_client=stack.get("refinement_client"),
+        cloud_library_used=bool(stack.get("uses_vertex_store")),
     )
-    retrieval = corpus_retrieval(query=query, top_k=3)
+
+    token = set_controlled_retrieval(lib_ctx.retrieval)
+    try:
+        retrieval = corpus_retrieval(
+            query=lib_ctx.metadata.library_search_query,
+            top_k=3,
+        )
+    finally:
+        reset_controlled_retrieval(token)
+
     phoenix = phoenix_mcp_lookup(
         insurer=parsed["insurer"],
         denial_type=parsed["denial_type"],
@@ -75,9 +89,11 @@ def run_aegis_v1_pipeline(
             + check.get("risk_flags", [])
             + phoenix.get("risk_flags", [])
             + playbook.get("risk_flags", [])
+            + lib_ctx.risk_flags
         )
     )
     loaded_playbook = Playbook.model_validate(playbook)
+    prep = lib_ctx.metadata
     package = AppealPackage(
         run_id=f"aegis-v1-{uuid4().hex[:8]}",
         parsed_case=parsed,
@@ -93,6 +109,16 @@ def run_aegis_v1_pipeline(
             playbook_version=loaded_playbook.version,
             dataset_split=dataset_split,
             run_mode=run_mode,
+            search_planner_version=prep.search_planner_version,
+            library_search_query=prep.library_search_query,
+            cloud_library_used=prep.cloud_library_used,
+            discovery_enabled=prep.discovery_enabled,
+            discovery_ran=prep.discovery_ran,
+            discovery_fetch_count=prep.discovery_fetch_count,
+            discovery_queries=prep.discovery_queries,
+            discovery_ingested_count=prep.discovery_ingested_count,
+            discovery_rejected_count=prep.discovery_rejected_count,
+            layer3_refinement_ran=prep.layer3_refinement_ran,
         ),
     )
     return package.model_dump()

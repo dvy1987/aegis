@@ -37,6 +37,8 @@ export interface AppealRequest {
   denial_text: string;
   clinical_context: string;
   case_id: string;
+  /** When true (live mode only), backend may fetch up to 5 trusted sources if library is thin. */
+  discovery_enabled?: boolean;
 }
 
 // The live /v1/appeal response.

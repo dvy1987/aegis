@@ -1,11 +1,20 @@
 import os
+import socket
 
-from fastapi import FastAPI
-from google.adk.cli.fast_api import get_fast_api_app
+# --- Startup patches (must run before any Google SDK imports) ---
 
-from app.aegis_swarm.appeal_api import router as swarm_appeal_router
-from app.app_utils.telemetry import setup_telemetry
+_orig_getaddrinfo = socket.getaddrinfo
 
+
+def _ipv4_first_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
+    if family == 0:
+        return _orig_getaddrinfo(host, port, socket.AF_INET, type, proto, flags)
+    return _orig_getaddrinfo(host, port, family, type, proto, flags)
+
+
+socket.getaddrinfo = _ipv4_first_getaddrinfo
+
+os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
 os.environ.setdefault("PHOENIX_PROJECT_NAME", "aegis-swarm")
 setup_telemetry()
 

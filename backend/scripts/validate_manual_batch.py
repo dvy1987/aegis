@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-OUT_DIR = REPO / "eval" / "cases" / "drafts" / "benchmark-200"
+OUT_DIR = REPO / "eval" / "cases" / "drafts"
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 

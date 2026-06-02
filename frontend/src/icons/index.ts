@@ -17,6 +17,7 @@ import {
   Download,
   Pencil,
   Search,
+  Settings,
   X,
 } from "lucide-react";
 
@@ -31,4 +32,5 @@ export const CopyIcon = tuneLucide(Copy);
 export const DownloadIcon = tuneLucide(Download);
 export const PencilIcon = tuneLucide(Pencil);
 export const SearchIcon = tuneLucide(Search);
+export const SettingsIcon = tuneLucide(Settings);
 export const CloseIcon = tuneLucide(X);

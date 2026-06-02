@@ -11,6 +11,7 @@ from datetime import UTC, datetime
 from typing import Any
 
 from . import config
+from .manual_batches.matrix_planner import benchmark_public_number
 from .prompts import PROMPT_VERSIONS
 from .safety import scan_banned, scan_phi
 from .validator import validate_case
@@ -23,9 +24,10 @@ def new_run_id(batch: int) -> str:
     return f"manual-b{batch:02d}-{stamp}-{uuid.uuid4().hex[:5]}"
 
 
-def _case_id_for(insurer: str, denial_type: str, index: int) -> str:
+def _case_id_for(insurer: str, denial_type: str, index: int, *, matrix_index: int | None = None) -> str:
     short = "mednec" if denial_type == "Medical Necessity" else "priorauth"
-    return f"case_{index:02d}_{insurer.lower()}_{short}"
+    pub = benchmark_public_number(matrix_index) if matrix_index is not None else index
+    return f"case_{pub:02d}_{insurer.lower()}_{short}"
 
 
 def _phi_verdict(denial_letter_text: str, clinical_context: str) -> dict[str, Any]:
@@ -83,8 +85,10 @@ def assemble_case(
     denial_letter_text: str,
     clinical_context: str,
     denial_pattern_sources: list[str],
+    denial_letter_references: list[dict[str, str]] | None = None,
     critic_verdicts: dict[str, dict[str, Any]],
     run_id: str,
+    case_id: str | None = None,
     submission_timestamp: str | None = None,
     denial_timestamp: str | None = None,
 ) -> dict[str, Any]:
@@ -122,11 +126,18 @@ def assemble_case(
         },
     }
     case_obj = {
-        "case_id": _case_id_for(matrix_cell["insurer"], matrix_cell["denial_type"], index),
+        "case_id": case_id
+        or _case_id_for(
+            matrix_cell["insurer"],
+            matrix_cell["denial_type"],
+            index,
+            matrix_index=index,
+        ),
         "insurer": matrix_cell["insurer"],
         "denial_type": matrix_cell["denial_type"],
         "patient_profile": patient_profile,
         "denial_pattern_sources": denial_pattern_sources,
+        "denial_letter_references": denial_letter_references or [],
         "denial_letter_text": denial_letter_text,
         "clinical_context": clinical_context,
         "submission_timestamp": submission_timestamp,

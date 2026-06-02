@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getDataSource } from "@/lib/data";
+import { showcaseSource } from "@/lib/data";
 import type { CaseSummary, ShowcaseBundle } from "@/lib/types";
 import { Nav } from "@/components/Nav";
 import { CasePicker } from "@/components/showcase/CasePicker";
@@ -9,10 +9,10 @@ import { DiffCard } from "@/components/showcase/DiffCard";
 import { CounterfactualCard } from "@/components/showcase/CounterfactualCard";
 import { ArrowUpRightIcon } from "@/icons";
 
-const DEFAULT_CASE = "test_case_03_cigna_mednec";
+const DEFAULT_CASE = "case_13_cigna_mednec";
 
 export default function ShowcasePage() {
-  const ds = getDataSource();
+  const ds = showcaseSource;
   const [cases, setCases] = useState<CaseSummary[]>([]);
   const [sel, setSel] = useState(DEFAULT_CASE);
   const [bundle, setBundle] = useState<ShowcaseBundle | null>(null);

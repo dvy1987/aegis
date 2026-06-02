@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-OUT = REPO / "eval" / "cases" / "drafts" / "benchmark-200"
+OUT = REPO / "eval" / "cases" / "drafts"
 LEGACY = REPO / "eval" / "cases" / "drafts"
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -18,7 +18,7 @@ from app.case_generator.aplus.pipeline import build_aplus_case  # noqa: E402
 from app.case_generator.aplus.text_metrics import context_words_ok, letter_words_ok  # noqa: E402
 from app.case_generator.manual_assemble import new_run_id  # noqa: E402
 from app.case_generator.manual_batches.matrix_planner import planned_cells  # noqa: E402
-from app.case_generator.manual_batches.manual_producer import neighbour_summary  # noqa: E402
+from app.case_generator.manual_batches.neighbour import neighbour_summary  # noqa: E402
 from app.case_generator.validator import validate_case  # noqa: E402
 from app.case_generator.safety import scan_banned, scan_phi  # noqa: E402
 

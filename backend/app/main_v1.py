@@ -1,4 +1,27 @@
 import os
+import socket
+
+# --- Startup patches (must run before any Google SDK imports) ---
+
+# Force IPv4: macOS resolves Google APIs to IPv6 first, but IPv6 is
+# unreachable on this machine, causing every Python HTTP call to hang
+# (curl works because it falls back to IPv4 automatically).
+_orig_getaddrinfo = socket.getaddrinfo
+
+
+def _ipv4_first_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
+    if family == 0:
+        return _orig_getaddrinfo(host, port, socket.AF_INET, type, proto, flags)
+    return _orig_getaddrinfo(host, port, family, type, proto, flags)
+
+
+socket.getaddrinfo = _ipv4_first_getaddrinfo
+
+# Fix Vertex AI location: "global" causes 155s+ latency or hangs;
+# us-central1 is the regional endpoint that actually responds.
+os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
+
+os.environ.setdefault("PHOENIX_PROJECT_NAME", "aegis-hackathon")
 
 from fastapi import FastAPI
 from google.adk.cli.fast_api import get_fast_api_app
@@ -6,7 +29,6 @@ from google.adk.cli.fast_api import get_fast_api_app
 from app.aegis_v1.appeal_api import router as appeal_router
 from app.app_utils.telemetry import setup_telemetry
 
-os.environ.setdefault("PHOENIX_PROJECT_NAME", "default")
 setup_telemetry()
 
 allow_origins = (

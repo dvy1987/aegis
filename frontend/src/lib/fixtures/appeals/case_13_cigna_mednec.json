@@ -1,0 +1,66 @@
+{
+  "run_id": "demo_case_13_cigna_mednec",
+  "appeal_letter": "Dear Cigna Appeals Review,\n\nI am writing to appeal the denial of Semaglutide (Wegovy) for [Member Name], dated [date]. The denial cites a pharmacy-benefit exclusion for weight-loss medications and the absence of a Type 2 Diabetes diagnosis. This appeal asks you to review the request as preventive medical care, not weight management.\n\nThe prescribing physician documents pre-diabetes with a documented progression risk toward Type 2 Diabetes. Wegovy was prescribed to prevent that onset \u2014 a recognized medical purpose distinct from cosmetic weight loss. The plan's exclusion addresses weight-loss treatment; it does not speak to preventive treatment of a metabolic condition with imminent clinical risk.\n\nThe denial also conflates two separate grounds \u2014 a contractual exclusion and a medical-necessity judgment. We ask that the medical-necessity determination be reviewed on its own record, with the attached clinical notes.\n\nWe request a full clinical review and reversal. Please confirm receipt and the deadline for any further submission.\n\nThis letter is a draft for your review.",
+  "outcome": {
+    "verdict": "DENY",
+    "score": 0.66,
+    "threshold": 0.7,
+    "feature_scores": [
+      {
+        "feature": "grounding",
+        "anchor": 3,
+        "weight": 0.3,
+        "must_have": false,
+        "evidence": "Cites the plan exclusion and clinical context, but no policy document quoted."
+      },
+      {
+        "feature": "appeal_vector_capture",
+        "anchor": 3,
+        "weight": 0.25,
+        "must_have": true,
+        "evidence": "Names the preventive-care vector but does not fully separate the contractual ground."
+      }
+    ],
+    "gaps": [
+      "weak: grounding (anchor 3)",
+      "weak: appeal_vector_capture (anchor 3)"
+    ],
+    "critique": "Strong preventive-care framing; would be stronger with a quoted plan provision and a cleaner split of the two denial grounds.",
+    "rationale": [
+      "Strong preventive-care framing; would be stronger with a quoted plan provision and a cleaner split of the two denial grounds."
+    ]
+  },
+  "risk_flags": [
+    "Plan exclusion is a hard contractual barrier; outcome is uncertain."
+  ],
+  "trace_metadata": {
+    "case_id": "case_13_cigna_mednec",
+    "insurer": "Cigna",
+    "denial_type": "medical_necessity",
+    "plan_type": "commercial",
+    "state": "unknown",
+    "prompt_version": "aegis_v1_weak",
+    "playbook_version": "cold-start",
+    "dataset_split": "interactive",
+    "run_mode": "interactive"
+  },
+  "mirror": {
+    "insurer": "Cigna",
+    "what_was_denied": "Coverage for Semaglutide (Wegovy).",
+    "why_they_said_no": "They point to a plan exclusion for weight-loss medications, and note there is no Type 2 Diabetes diagnosis.",
+    "deadline_note": "Check your letter for the appeal deadline and file before that date.",
+    "strongest_angle": "This was prescribed to prevent diabetes, not for weight loss \u2014 that is preventive medical care, which the exclusion does not cover."
+  },
+  "citations_used": [
+    {
+      "title": "Plan denial letter",
+      "quote": "strict exclusion for all weight-loss medications"
+    }
+  ],
+  "missing_evidence_checklist": [
+    "Recent labs showing pre-diabetes (A1c)",
+    "Physician note stating the preventive purpose",
+    "The plan's medical-necessity criteria, if you can obtain them"
+  ],
+  "case_id": "case_13_cigna_mednec"
+}

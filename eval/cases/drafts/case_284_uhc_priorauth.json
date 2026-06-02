@@ -1,0 +1,319 @@
+{
+  "case_id": "case_284_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 27,
+    "gender": "M",
+    "diagnosis": "Abdominal aortic aneurysm surveillance (I71.4)",
+    "treatment_requested": "Surveillance abdominal ultrasound",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials",
+    "wrong_benefit_category: CMS Essential Health Benefits Bulletin 2022; documented in Aetna member complaints"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic imaging case (missing peer to peer)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic imaging case (missing peer to peer)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic imaging case (missing peer to peer)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic imaging case (missing peer to peer)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic imaging case (missing peer to peer)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 03/08/2026\nUnitedHealthcare Choice Plus (employer-sponsored group health plan)\nMember ID: W102248996          Group #: GRP-1284\nAuthorization / Reference #: PA-2026-142929\nClaim #: CLM-2026-203053\nDate of Service (requested): 02/16/2026\nTreating provider (as submitted): Central States Medical Associates\n\nDear Member,\n\nThis document is notice of an adverse benefit determination. We received your provider's prior authorization request on 02/18/2026 for Surveillance abdominal ultrasound related to Abdominal aortic aneurysm surveillance (I71.4). After clinical review, we are unable to approve this request.\n\nCASE SUMMARY\nService requested: Surveillance abdominal ultrasound\nDiagnosis (as submitted): Abdominal aortic aneurysm surveillance (I71.4)\nDenial code: CO-197 \u2014 Precertification/authorization absent \u2014 service requires prior approval before the date of service.\nClinical policy applied: CDG-UM104 under UnitedHealthcare Coverage Determination Guideline (CDG) and applicable Medical Policy Bulletin\n\nEXPLANATION OF DECISION\nOur review applied the criteria in CDG-UM104 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Prior authorization for Surveillance abdominal ultrasound is denied because a required peer-to-peer review was not completed in the allowed window. Clinical information may be discussed during appeal submission.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with missing peer to peer. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nThis review used clinical criteria from our designated utilization-management program; the criteria document is available upon request.\n\nDiagnosis and procedure codes used in this determination are available upon request, including plain-language descriptions, as required by applicable federal standards.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file and the clinical criteria we used in this determination. Submit your request to the address on this notice or through your plan's member portal.\n\nAPPEAL RIGHTS\nYou have the right to appeal this determination. If this denial is upheld after internal review, you may have the right to request an independent external review of our decision at no cost to you, subject to applicable federal and state requirements. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W102248996) and reference PA-2026-142929. You may also have the right to receive, upon request and without charge, copies of documents relevant to this determination.\n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.\n\nSincerely,\n\nUnitedHealthcare Utilization Management\nClinical Operations",
+  "clinical_context": "The 27-year-old member has Abdominal aortic aneurysm surveillance (I71.4). He has been treated under commercial coverage with Surveillance abdominal ultrasound recommended as the next appropriate step. Known 4.8 cm AAA; prior scan 6 months ago at 4.5 cm. This directly contradicts the insurer's position that missing peer to peer bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "cursor-manual-agent-aplus-v2",
+    "run_id": "aplus-web-ext-20260602-022435-a4772",
+    "generated_at": "2026-06-02T02:24:36Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "26-40",
+      "patient_gender": "M",
+      "specialty": "imaging",
+      "sub_tactic": "missing_peer_to_peer"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_adversarial_diversifier": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.0.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "The brief matches the assigned UHC / imaging cell and executes sub_tactic 'missing_peer_to_peer' with a clinically appropriate Abdominal aortic aneurysm surveillance (I71.4) \u2192 Surveillance abdominal ultrasound pair.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Abdominal aortic aneurysm surveillance (I71.4)",
+          "Surveillance abdominal ultrasound",
+          "missing_peer_to_peer"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "Diagnosis, prior treatments, and insurer administrative posture reflect everyday commercial UM denials rather than textbook perfection.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Abdominal aortic aneurysm surveillance (I71.4)",
+          "Surveillance abdominal ultrasound"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "Letter reads as authentic UHC correspondence with UnitedHealthcare medical policy and procedural tone.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 03/08/2026\nUnitedHealthcare Choice Plus (employer-sponsored gro"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "Denial logic coherently applies sub_tactic 'missing_peer_to_peer' without internal contradiction.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 03/08/2026\nUnitedHealthcare Choice Plus (employer-sponsored gro"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "The 27-year-old member has Abdominal aortic aneurysm surveillance (I71.4). He has been treated under commercial coverage"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "Surveillance abdominal ultrasound is a standard intervention for Abdominal aortic aneurysm surveillance (I71.4) in US commercial practice.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Abdominal aortic aneurysm surveillance (I71.4)",
+          "Surveillance abdominal ultrasound"
+        ],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "Patient profile, denial letter, and clinical context agree on diagnosis, requested service, and timeline without irreconcilable conflicts.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 03/08/2026\nUnitedHealth"
+        ],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "reasoning": "Some templated insurer phrasing remains, but paragraph rhythm and specificity avoid obvious chatbot tells.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 03/08/2026\nUnitedHealth"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "reasoning": "Cool, administrative insurer voice without inflammatory or marketing language.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 03/08/2026\nUnitedHealth"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "reasoning": "Dollar amounts are sparse; denial focuses on medical necessity rather than cost-shifting.",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "reasoning": "Appeal rights are mentioned but one ERISA/IRO disclosure element is intentionally thin (exploitable flaw).",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "appeal within 180 days"
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "reasoning": "Age and gender in profile align with clinical narrative without stereotype violations.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "reasoning": "In-scope commercial UHC Prior Authorization case with no Medicare/Medicaid framing.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "UHC"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "reasoning": "Referenced dates follow a coherent authorization \u2192 denial \u2192 appeal window sequence.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "reasoning": "Policy citations are named at a high level; edition numbers are deliberately vague (flaw).",
+        "score": 3,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Clinical Policy Bulletin"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
+        "score": 5,
+        "confidence": 0.8,
+        "evidence_quotes": [
+          "Exploitable flaw: wrong age band for guideline",
+          "Exploitable flaw: inflexible template logic"
+        ],
+        "improvement": null,
+        "exploitable_weaknesses": [
+          "Exploitable flaw: wrong age band for guideline",
+          "Exploitable flaw: inflexible template logic",
+          "Pattern anchor: incorrect_demographic_guideline",
+          "Pattern anchor: wrong_benefit_category"
+        ],
+        "strong_defenses": [
+          "Denial cites UHC policy framework and 180-day appeal window.",
+          "Sub-tactic 'missing_peer_to_peer' is reflected in the stated rationale."
+        ]
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      }
+    },
+    "human_summary": "A+ manual pipeline case: UHC Prior Authorization / imaging / missing_peer_to_peer. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: incorrect_demographic_guideline, wrong_benefit_category. denial_letter_references include URLs from agent web research (see eval/references/web-research-cache-2026-06-02.json). Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
+      "exploitable_weaknesses": [
+        "Exploitable flaw: wrong age band for guideline",
+        "Exploitable flaw: inflexible template logic",
+        "Pattern anchor: incorrect_demographic_guideline",
+        "Pattern anchor: wrong_benefit_category"
+      ],
+      "strong_defenses": [
+        "Denial cites UHC policy framework and 180-day appeal window.",
+        "Sub-tactic 'missing_peer_to_peer' is reflected in the stated rationale."
+      ]
+    }
+  }
+}

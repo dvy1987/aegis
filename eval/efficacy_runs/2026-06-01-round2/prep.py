@@ -1,13 +1,16 @@
-"""Round-2 efficacy run — input prep (full 10/10 split, firewall enforcement).
+"""Round-2 efficacy run — input prep (interim 10/10 ID split, firewall enforcement).
 
-Emits firewall-clean student packets + teacher answer-key packets for ALL cases
-(train = case_*, held-out = test_case_*) via app.learning.efficacy_io.build_run_inputs.
+**Note:** Production workflow keeps all cases in flat ``drafts/`` until Gumloop →
+``approved/``; train/holdout folders come later. This script uses ``case_01``–``10``
+vs ``case_11``–``20`` only for the frozen 2026-06-01 efficacy experiment.
+
 Run from backend/:
   env UV_CACHE_DIR=/tmp/uv-cache uv run python ../eval/efficacy_runs/2026-06-01-round2/prep.py
 """
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from app.learning.efficacy_io import build_run_inputs
@@ -15,8 +18,16 @@ from app.learning.efficacy_io import build_run_inputs
 RUN_DIR = Path(__file__).resolve().parent
 REPO = RUN_DIR.parents[2]
 CASES = REPO / "eval" / "cases" / "drafts"
-TRAIN = [p.stem for p in sorted(CASES.glob("case_*.json"))]
-HOLDOUT = [p.stem for p in sorted(CASES.glob("test_case_*.json"))]
+
+
+def _num(stem: str) -> int:
+    m = re.match(r"case_(\d+)_", stem)
+    return int(m.group(1)) if m else -1
+
+
+_stems = sorted((p.stem for p in CASES.glob("case_*.json")), key=_num)
+TRAIN = [s for s in _stems if 1 <= _num(s) <= 10]
+HOLDOUT = [s for s in _stems if 11 <= _num(s) <= 20]
 
 
 def main() -> None:

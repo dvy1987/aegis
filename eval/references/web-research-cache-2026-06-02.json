@@ -1,0 +1,150 @@
+{
+  "version": "1.0.0",
+  "researched_at": "2026-06-02",
+  "research_note": "Agent web search during case_221–420 generation. Public URLs only; case narratives remain synthetic.",
+  "sources": {
+    "propublica-evicore-2024": {
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage — ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "search_query": "ProPublica EviCore prior authorization denials Aetna Cigna UHC"
+    },
+    "propublica-claim-file-helper": {
+      "title": "Claim File Helper — ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "search_query": "ProPublica insurance denial claim file request appeal"
+    },
+    "propublica-external-review": {
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal — ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "search_query": "health insurance denial external review buried appeal rights letter"
+    },
+    "aetna-appeal-cpb-muni": {
+      "title": "Aetna Appeal Letter Template — CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "search_query": "Aetna clinical policy bulletin medical necessity denial appeal commercial"
+    },
+    "aetna-denial-codes-muni": {
+      "title": "How to Appeal Aetna Denials — denial codes B7/CO-96 (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-aetna-denials-2025",
+      "source_type": "research",
+      "search_query": "Aetna denial code medical necessity appeal letter"
+    },
+    "cigna-appeal-pdf": {
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "search_query": "Cigna medical appeal request form denial"
+    },
+    "cigna-coverage-policy-rxcheckup": {
+      "title": "How to Appeal a Cigna Prior Authorization Denial — Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "search_query": "Cigna prior authorization denial Coverage Policy appeal"
+    },
+    "cigna-mednec-muni": {
+      "title": "Cigna Medical Necessity Letter — CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "search_query": "Cigna medical necessity denial letter MCG CPG"
+    },
+    "uhc-co96-appealtemplates": {
+      "title": "CO-96 Denial Code — non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "search_query": "CO-96 denial code medical necessity appeal UnitedHealthcare"
+    },
+    "uhc-appeal-cdg-muni": {
+      "title": "How to Appeal UHC Denials — CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "search_query": "UnitedHealthcare CO-96 coverage determination guideline appeal"
+    },
+    "uhc-peer-to-peer-form": {
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "search_query": "UnitedHealthcare peer to peer prior authorization denial"
+    },
+    "erisa-dol-employer-guide": {
+      "title": "DOL — An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "search_query": "ERISA adverse benefit determination denial notice commercial plan"
+    },
+    "erisa-29-cfr-2560-503-1": {
+      "title": "29 CFR § 2560.503-1 — Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "search_query": "ERISA 29 CFR 2560.503-1 adverse benefit determination notice"
+    },
+    "wa-oic-mednec": {
+      "title": "Washington OIC — medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "search_query": "state insurance commissioner medical necessity denial letter example"
+    },
+    "cms-abd-model": {
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "search_query": "CMS model adverse benefit determination notice commercial"
+    },
+    "propublica-claim-file-helper": {
+      "title": "Claim File Helper — ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "search_query": "ProPublica claim file request before insurance appeal"
+    }
+  },
+  "pools": {
+    "Aetna|Medical Necessity": [
+      "aetna-appeal-cpb-muni",
+      "aetna-denial-codes-muni",
+      "propublica-evicore-2024",
+      "propublica-claim-file-helper",
+      "cms-abd-model",
+      "erisa-29-cfr-2560-503-1"
+    ],
+    "Aetna|Prior Authorization": [
+      "aetna-appeal-cpb-muni",
+      "propublica-evicore-2024",
+      "propublica-claim-file-helper",
+      "cms-abd-model",
+      "erisa-dol-employer-guide"
+    ],
+    "Cigna|Medical Necessity": [
+      "cigna-mednec-muni",
+      "cigna-appeal-pdf",
+      "cigna-coverage-policy-rxcheckup",
+      "propublica-evicore-2024",
+      "propublica-claim-file-helper",
+      "wa-oic-mednec"
+    ],
+    "Cigna|Prior Authorization": [
+      "cigna-coverage-policy-rxcheckup",
+      "cigna-appeal-pdf",
+      "propublica-evicore-2024",
+      "propublica-claim-file-helper",
+      "erisa-29-cfr-2560-503-1"
+    ],
+    "UHC|Medical Necessity": [
+      "uhc-co96-appealtemplates",
+      "uhc-appeal-cdg-muni",
+      "uhc-peer-to-peer-form",
+      "propublica-evicore-2024",
+      "propublica-claim-file-helper",
+      "cms-abd-model"
+    ],
+    "UHC|Prior Authorization": [
+      "uhc-appeal-cdg-muni",
+      "uhc-peer-to-peer-form",
+      "uhc-co96-appealtemplates",
+      "propublica-external-review",
+      "erisa-dol-employer-guide"
+    ]
+  }
+}
