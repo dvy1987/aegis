@@ -58,9 +58,12 @@ headroom. They were chosen to own **three distinct, non-overlapping dimensions**
 | `medical_necessity` | `case_specific_clinical_rebuttal` | 0.20 |
 
 `insurer_intelligence` is kept strong (its degradation story is the Phoenix-MCP-off
-counterfactual, not a weak prompt); `adversarial_reviewer` is kept strong (never
-weaken a safety gate). The weak set is a **dial** — non-weak agents still get
-re-pointed when the judges find their owned dimension is the bottleneck. The
+counterfactual, not a weak prompt); `adversarial_reviewer` is kept strong at
+**baseline** (never weaken a safety gate) but remains **evolvable** when the credit
+map routes a fix there under HITL/Apprentice. The weak set is a **dial** — every
+other pipeline agent (`triage`, `legal_researcher`, `policy_detective`, etc.) is
+re-pointed when the judges + trace signals attribute the bottleneck to that role
+(see `learning/credit_resolution.py`, Phase 6). The
 strong reference prompt lives in `prompts/targets/<role>.md` as a **human evaluation
 ceiling only** (`registry.load_target_reference`) — it is NOT a loadable version and
 NEVER an optimizer input (see Invariants). **Safety is never weakened — only quality.**

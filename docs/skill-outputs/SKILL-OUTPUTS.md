@@ -72,3 +72,6 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-01 20:38 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end handoff — Part B swarm Phases 1–3 DONE + evolution-integrity hardening (173 unit green) |
 | 2026-06-01 21:15 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/project-index.md | Post-commit session-end handoff — Phases 1–4 DONE (`0454022`, `27537ef`), 192 unit green, 2 commits ahead |
 | 2026-06-01 | feature-spec | docs/specs/2026-06-01-aegis-v1-cloud-corpus-surgical-discovery-feature-spec.md | Updated spec: Search Planner, 5 fetches, Layer 3 live polish (Draft; CL-1 open) |
+| 2026-06-01 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/project-index.md | Session-end handoff — Part B swarm Phase 5 committed (`5bab203`), 207 unit green |
+| 2026-06-02 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md | Session-end — 500-case corpus, A+ pipeline web refs + letter enhancements |
+| 2026-06-02 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Part B swarm Phase 6 committed (Learning Coordinator re-point, 228 unit green) |

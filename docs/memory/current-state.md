@@ -1,7 +1,23 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-01 (Session 27)
-**Phase:** **Execution — Part B swarm build (Phases 0–5 of 6 DONE), demo-prep.** Track A (no-creds demo) is ready; Track B (live thesis) blocked on a Vertex latency issue, not on code.
+**Updated:** 2026-06-02 (Session 29 — 500-case eval corpus)
+**Phase:** **Execution — Part B swarm + eval corpus at scale.** Swarm Phases 0–6 code-complete; **500 synthetic draft cases** ready for Gumloop.
+
+### Session 29 (500-case eval corpus + A+ pipeline integration)
+- ✅ **`eval/cases/drafts/`:** **500** cases (`case_01`–`case_500`) — ERISA-style letters, web-cache references, claim-file / P2P enhancements.
+- ✅ **`build_aplus_case`:** default `use_web_research=True`, `enhance_denial_letter`, `fit_letter_word_budget` (200–500w).
+- ✅ **Scripts:** `upgrade_cases_01_220_web.py` (in-place upgrade), `generate_cases_421_500.py` (80-case extension).
+- ⏭️ **Next:** Gumloop approve → `approved/`; optional web-cache refresh; commit when PM requests.
+
+### Session 28 (Part B swarm build — Phase 6: Learning Coordinator re-point DONE)
+- ✅ **Phase 6 complete, all tests green (228 unit).**
+- ✅ **Credit-map resolver:** `app/learning/credit_resolution.py` — any evolvable pipeline agent (`triage`, researchers, `strategist`, `drafter`, `adversarial_reviewer`, …); weak-v1 trio is starting baseline only; researcher override + corpus-gap paths.
+- ✅ **`SwarmLearningCoordinator`:** `app/learning/swarm_coordinator.py` — GEPA loop over full swarm seed; one component per child; `CorpusGapRecommendation` when retrieval dominates.
+- ✅ **`StubSwarmExperimentRunner`:** holdout scoring with injectable dimension bumps; `swarm_gates.evaluate_swarm_vetoes` (append-only diff cap).
+- ✅ **Autonomy ladder (FR-3):** `app/learning/autonomy_ladder.py` — Apprentice/Journeyman/Master + circuit breaker; Master cannot auto-promote `adversarial_reviewer`.
+- ✅ **Benchmark loader (FR-4):** `app/learning/benchmark_dataset.py` — deterministic 60/40 from `eval/cases/drafts/`.
+- ✅ **CLI:** `backend/scripts/run_swarm_learning_offline.py`
+- ⏭️ **Next:** wire live `PhoenixLearningStore` + `LiveSwarmExperimentRunner`; demo UI manual coordinator trigger; `deploy-swarm.sh`; push 26+ commits.
 
 ### Session 27 (Part B swarm build — Phase 5: eval harness + MCP counterfactual DONE)
 - ✅ **Phase 5 complete, all tests green (207 unit).**

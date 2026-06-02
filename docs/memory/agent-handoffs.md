@@ -1577,6 +1577,48 @@ PM flagged two ways the self-improvement claim could be "game-able". Fixed all t
 
 ---
 
+## 2026-06-02 — Session 28 Handoff (Cursor) — Part B swarm Phase 6 DONE (Learning Coordinator re-point)
+
+### Done (Phase 6 — committed this session)
+- **Plan:** `docs/plans/2026-06-02-swarm-phase-6-learning-coordinator-plan.md`
+- **Credit resolution:** `credit_resolution.py` — all pipeline agents evolvable except `orchestrator`; weak-v1 = demo starting point only.
+- **Coordinator:** `SwarmLearningCoordinator` + `StubSwarmExperimentRunner` + `swarm_gates` + `autonomy_ladder` + `benchmark_dataset`.
+- **Tests:** +21 unit (**228 total green**).
+
+### PM decision encoded
+- Three weak agents are **not** the only evolution targets — credit map routes to whichever agent owns the bottleneck (including `policy_detective`, `triage`, `legal_researcher`, etc.).
+
+### Run offline
+```bash
+cd backend && uv run pytest tests/unit -q
+cd backend && uv run python scripts/run_swarm_learning_offline.py --dimension appeal_vector_capture
+```
+
+### Next
+- Live Phoenix store + Gemini experiment runner; showcase UI coordinator button; `deploy-swarm.sh`.
+
+---
+
+## 2026-06-02 — Session-end Handoff (Cursor) — Phase 6 committed, session closed
+
+### Commits (swarm line, on `main`, not pushed)
+- Prior: `0454022` Phases 1–3 · `27537ef` Phase 4 · `5bab203` Phase 5
+- This session: Phase 6 Learning Coordinator re-point (see `git log -1`)
+
+### Swarm runtime
+**Phases 0–6 complete.** Part B offline learning loop closes: credit map → `SwarmLearningCoordinator` → holdout lift → HITL/autonomy promotion.
+
+### Dirty tree (do not assume clean)
+Unrelated WIP remains: case_generator, flat `eval/cases/drafts/` moves, v1 pipeline, frontend — not part of Phase 6 commit.
+
+### Run offline
+```bash
+cd backend && uv run pytest tests/unit -q
+cd backend && uv run python scripts/run_swarm_learning_offline.py
+```
+
+---
+
 ## 2026-06-01 — Session 27 Handoff (Cursor) — Part B swarm Phase 5 DONE (eval + counterfactual)
 
 ### Done (Phase 5)
@@ -1640,3 +1682,88 @@ cd backend && uv run python scripts/upgrade_benchmark_aplus.py
 2. Move APPROVE → `eval/cases/approved/`.
 3. **Do not** create train/test subfolders until PM splits approved set.
 4. Frozen efficacy runs (`eval/efficacy_runs/`) still use interim `case_01`–`10` vs `case_11`–`20` — historical only.
+
+---
+
+## 2026-06-01 — Session-end Handoff (Cursor) — Part B swarm Phase 5 DONE, committed
+
+### Done (this session)
+- **Explained Phase 5** to PM: eval harness + MCP counterfactual are explicit (tests/script), not auto on `/appeal` or swarm API.
+- **Wrote plan:** `docs/plans/2026-06-01-swarm-phase-5-eval-counterfactual-plan.md`
+- **Built Phase 5:** `run_evaluated_swarm_case`, `run_swarm_counterfactual`, injectable `phoenix_lookup`, stub tactic/memory propagation, offline script, +15 tests (**207 unit green**).
+- **Committed:** `5bab203` — `feat(swarm): add Phase 5 eval harness and Phoenix MCP counterfactual`
+
+### Swarm runtime status (Phases 0–5 of 7)
+| Phase | Status |
+|---|---|
+| 0–3 | Foundation, fan-out, weak baselines, evolution integrity (`0454022`) |
+| 4 | Live surfaces: ADK, `/v1/swarm/appeal`, Vertex, Phoenix spans (`27537ef`) |
+| 5 | Eval + MCP counterfactual (`5bab203`) |
+| 6 | Learning Coordinator re-point — **not started** |
+
+### Debated
+- **Eval does not run on product traffic** — by design (separation of powers + teacher answer key). Demo uses fixtures or pre-recorded counterfactual numbers unless PM runs the script.
+
+### Decisions
+- Grading stays in `app/evals/swarm/`, not in `swarm_orchestrator` or appeal API.
+- Counterfactual uses injectable `phoenix_lookup` (preferred over env mutation in tests).
+
+### Deferred
+- **Phase 6:** credit-map → `SwarmExperimentRunner` → `LearningCoordinator.optimize()` on resolved agent.
+- **`deploy-swarm.sh`**, Track B live demo (`GOOGLE_CLOUD_LOCATION=us-central1`), push to `origin/main` (26 commits ahead).
+
+### Next agent should know
+```bash
+cd backend && uv run pytest tests/unit -q
+cd backend && uv run python scripts/run_swarm_counterfactual_offline.py --cases 3
+```
+- Optimizer seeds only `registry.current_version` (`v1_weak`); never `load_target_reference()` in mutation path.
+- **Dirty tree:** large unrelated WIP (v1 library stack, case_generator, flat `eval/cases/drafts/` moves) — do not assume clean; Phase 5 commit is isolated.
+
+### Revisit triggers
+- Phase 6 before creds: can stub `SwarmExperimentRunner` offline like Part A efficacy harness.
+- If offline counterfactual delta → 0 after stub changes: check `StubSwarmClient` propagates insurer tactic + Phoenix memory into letter.
+
+### Commits (swarm line, on `main`, not pushed)
+- `0454022` Phases 1–3 · `27537ef` Phase 4 · `5bab203` Phase 5
+
+---
+
+## 2026-06-02 — Handoff (Cursor — 500-case eval corpus + A+ pipeline)
+
+### Done
+- **In-place upgrade** `case_01`–`case_420`: web-sourced `denial_letter_references` + claim-file / P2P letter enhancements via `backend/scripts/upgrade_cases_01_220_web.py` (`--start` / `--end` supported).
+- **Generated** `case_421`–`case_500` (80 cases): `backend/scripts/generate_cases_421_500.py` + `planned_cells_extension2()` in `matrix_planner.py`.
+- **Corpus:** **500** flat JSON files in `eval/cases/drafts/`; QA pass (≥5 refs, ≥1 `Web research (2026-06-02)` tag, 200–500w letters, claim-file block).
+- **Pipeline wired:** `build_aplus_case` now runs `enhance_denial_letter` → `inject_flaws` → `fit_letter_word_budget`; **`use_web_research=True` default**; CLI `--no-web-research` for catalog-only.
+- **Supporting code:** `letter_enhancements.py`, `text_metrics.repair_denial_letter_artifacts` / `fit_letter_word_budget`, idempotent flaw injection, `tests/unit/case_generator/test_aplus_pipeline.py` (2 tests).
+- **Docs:** `GENERATION.md`, `eval/dataset_card.md`, `eval/cases/README.md`.
+
+### Debated
+- **“Live internet search per case”** — clarified for PM: references come from **`eval/references/web-research-cache-2026-06-02.json`** (one agent research pass), not per-case HTTP at build time.
+
+### Decisions
+- **500-case target** = 20 cal + 200 benchmark + 200 ext-1 + 80 ext-2; extension-2 seed `20260604`.
+- **In-place upgrade** preferred over full rebuild (`upgrade_benchmark_aplus.py`) for existing 420 — preserves case identity/flaws.
+
+### Deferred
+- **Gumloop** `drafts/` → `approved/` (still **0** approved).
+- **Refresh web cache** + re-upgrade if URLs must be newer than 2026-06-02.
+- **Cosmetic:** duplicate `human_summary` “Upgraded 2026-06-02…” on some early cases from double upgrade run.
+- **Frontend fixtures:** `sync_frontend_test_fixtures.py` if demo needs refresh.
+
+### Next Agent Should Know
+```bash
+cd backend && uv run python scripts/generate_cases_421_500.py   # idempotent skip if exists
+cd backend && uv run python scripts/upgrade_cases_01_220_web.py --start 1 --end 500  # in-place letter/ref refresh
+cd backend && uv run python -m app.case_generator.cli --count 1 --dry-run
+```
+- New cases get full pipeline automatically; **no upgrade script** needed unless editing old JSON on disk.
+- **Not committed** this session unless PM asks — large dirty tree (case JSON + case_generator + unrelated swarm WIP).
+
+### Revisit Triggers
+- PM wants **live** per-case web fetch → new design (rate limits, provenance); do not imply current pipeline does that.
+- Letter budget failures after prompt changes → adjust `fit_letter_word_budget` trims in `text_metrics.py`.
+
+### Working Tree
+- **Dirty:** ~500 `eval/cases/drafts/case_*.json`, `backend/app/case_generator/aplus/*`, scripts, docs; plus pre-existing swarm/v1 WIP — verify `git status` before commit scope.

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -55,6 +55,8 @@ class ScoredRun(BaseModel):
     simulator_verdict: Literal["APPROVE", "DENY"] | None = None
     prompt_version: str = ""
     playbook_version: str = ""
+    # Firewall-safe per-agent trace snapshots (role, status, risk_flags, counts only).
+    swarm_trace_signals: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class DimensionSignal(BaseModel):
@@ -116,3 +118,10 @@ class PromotionProposal(BaseModel):
     @property
     def is_promotable(self) -> bool:
         return not self.vetoes and self.after.composite > self.before.composite
+
+
+class CorpusGapRecommendation(BaseModel):
+    """When retrieval gaps dominate, queue discovery instead of prompt mutation."""
+
+    weakest_dimension: str
+    reason: str

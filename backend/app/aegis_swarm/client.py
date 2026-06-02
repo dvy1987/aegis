@@ -381,9 +381,15 @@ class GeminiSwarmClient:
 
     name = "gemini_swarm"
 
-    def __init__(self, model: str | None = None, location: str = "global") -> None:
+    def __init__(
+        self,
+        model: str | None = None,
+        location: str = "global",
+        prompt_overrides: dict[str, str] | None = None,
+    ) -> None:
         self.model = model or os.environ.get("AEGIS_SWARM_MODEL", "gemini-3.1-pro")
         self.location = location
+        self.prompt_overrides = dict(prompt_overrides or {})
         self._fallback = StubSwarmClient()
 
     def _generate_json(self, role: str, schema: type, context: dict[str, Any]) -> Any:
@@ -395,7 +401,7 @@ class GeminiSwarmClient:
 
         from app.aegis_swarm.prompts.registry import load_prompt
 
-        prompt = load_prompt(role)
+        prompt = self.prompt_overrides.get(role) or load_prompt(role)
         contents = f"{prompt}\n\nCONTEXT JSON:\n{json.dumps(context, default=str)}"
         client = genai.Client(vertexai=True, location=self.location)
         response = client.models.generate_content(
