@@ -251,6 +251,11 @@ class StubSwarmClient:
         ]
         primary = list(dict.fromkeys(c.corpus_doc_id for c in all_citations))[:3]
         domains = list(dict.fromkeys(b.domain for b in briefs))
+        tactic_lead = ""
+        for brief in briefs:
+            if isinstance(brief, InsurerBrief) and brief.tactic:
+                tactic_lead = f"{brief.tactic} "
+                break
         # Degraded only when NO researcher produced any traceable finding (an
         # empty precedent brief is a legitimate "no match", not degradation).
         degraded = not any(b.findings for b in briefs)
@@ -261,8 +266,8 @@ class StubSwarmClient:
             archetype="clinical_evidence_led",
             lead_angle=StrategyAngle(
                 summary=(
-                    f"Rebut {insurer}'s denial of {service} using the documented "
-                    f"clinical record and the traceable corpus authorities."
+                    f"{tactic_lead}Rebut {insurer}'s denial of {service} using the "
+                    f"documented clinical record and the traceable corpus authorities."
                 ),
                 primary_citations=primary,
                 supporting_brief_refs=domains,
@@ -304,12 +309,25 @@ class StubSwarmClient:
         if critique is not None:
             fixes = "; ".join(f.fix for f in critique.findings if f.fix)
             revision = f" Revision addressing prior review: {fixes}" if fixes else ""
+        phoenix_clause = ""
+        phoenix_status = (phoenix_summary or {}).get("status", "unavailable")
+        if phoenix_status not in {"disabled", "unavailable"}:
+            patterns = list((phoenix_summary or {}).get("failure_patterns") or [])
+            if patterns:
+                phoenix_clause = (
+                    f" Prior appeals in this slice show: {patterns[0]}."
+                )
+            phoenix_clause += (
+                " I am appealing this denial and request a requested action "
+                "through a full and fair review."
+            )
         return (
             f"To the appeals reviewer: I write to appeal {insurer}'s denial of "
             f"{service}. The denial rests on: {reason}. {strategy.lead_angle.summary} "
-            f"Supporting authorities: {cites}. I request a full and fair review by a "
-            f"qualified reviewer who was not previously consulted on this claim, and a "
-            f"decision within the applicable deadline.{revision}\n\n{_DISCLAIMER}"
+            f"Supporting authorities: {cites}.{phoenix_clause} I request a full and "
+            f"fair review by a qualified reviewer who was not previously consulted on "
+            f"this claim, and a decision within the applicable deadline.{revision}"
+            f"\n\n{_DISCLAIMER}"
         )
 
     def critique(

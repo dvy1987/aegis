@@ -1577,6 +1577,28 @@ PM flagged two ways the self-improvement claim could be "game-able". Fixed all t
 
 ---
 
+## 2026-06-01 — Session 27 Handoff (Cursor) — Part B swarm Phase 5 DONE (eval + counterfactual)
+
+### Done (Phase 5)
+- **Plan:** `docs/plans/2026-06-01-swarm-phase-5-eval-counterfactual-plan.md`
+- **Eval harness:** `app/evals/swarm/evaluated_swarm_run.py` → `run_evaluated_swarm_case` (mirrors Part A; grading NOT on product API).
+- **MCP counterfactual:** `app/learning/swarm_counterfactual.py` → `run_swarm_counterfactual` (on/off Phoenix lookup per case).
+- **Pipeline:** optional `phoenix_lookup` inject on `run_swarm_pipeline`.
+- **Stub:** tactic + Phoenix memory clauses in strategy/draft for measurable offline delta.
+- **Script:** `backend/scripts/run_swarm_counterfactual_offline.py`
+- **Tests:** +15 unit (207 total green).
+
+### Next (Phase 6)
+- Credit-map resolution → `SwarmExperimentRunner` → `LearningCoordinator.optimize()` on resolved agent prompt; 100-case benchmark + autonomy ladder (FR-2/3/4).
+
+### Run offline
+```bash
+cd backend && uv run pytest tests/unit -q
+cd backend && uv run python scripts/run_swarm_counterfactual_offline.py --cases 3
+```
+
+---
+
 ## 2026-06-01 — Manual benchmark-200 A+ rebuild (schema v1.1.0) — DONE overnight
 
 ### Done
@@ -1598,3 +1620,23 @@ cd backend && uv run python scripts/upgrade_benchmark_aplus.py
 1. Run Gumloop swarm on `benchmark-200` (fresh read of `gumloop/` only at that step).
 2. Apply REVISE/DISCARD feedback; re-run upgrade only for affected case IDs if needed.
 3. PM: train/holdout split design for benchmark-200.
+
+---
+
+## 2026-06-02 — Flat drafts lifecycle (Gumloop before train/test split)
+
+### PM decision
+- All draft cases live in **flat** `eval/cases/drafts/` (`case_01`–`case_220`). Empty `benchmark-200/` subfolder is deprecated.
+- **Workflow:** drafts → Gumloop (APPROVE/REVISE/DISCARD) → `approved/` → **then** PM assigns train vs holdout folders. No train/test split in drafts.
+
+### Done (docs + tooling)
+- `eval/cases/README.md`, rewritten `eval/dataset_card.md`, `drafts/benchmark-200/README.md` (deprecated pointer).
+- Scripts write/read flat `drafts/`: `upgrade_benchmark_aplus.py`, `upgrade_calibration_aplus.py`, `run_manual_case_batch.py`, `validate_manual_batch.py`, `sync_frontend_test_fixtures.py`.
+- `calibration_specs` — removed holdout filesystem split; all `case_01`–`20` → flat drafts.
+- Benchmark matrix batch 1 public IDs: `case_211`–`case_220` (was `case_11`–`20` in benchmark folder).
+
+### Next agent
+1. **Gumloop** on all `eval/cases/drafts/case_*.json` (cold read `gumloop/` only when starting).
+2. Move APPROVE → `eval/cases/approved/`.
+3. **Do not** create train/test subfolders until PM splits approved set.
+4. Frozen efficacy runs (`eval/efficacy_runs/`) still use interim `case_01`–`10` vs `case_11`–`20` — historical only.

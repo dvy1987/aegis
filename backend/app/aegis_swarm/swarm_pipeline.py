@@ -16,6 +16,7 @@ The Outcome Simulator is NOT run here - it lives in the orchestration/eval layer
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from typing import TYPE_CHECKING, Any, Literal
 from uuid import uuid4
 
@@ -203,6 +204,7 @@ def run_swarm_pipeline(
     corpus_store: CorpusStore | None = None,
     discovery: "LiteratureDiscovery | None" = None,
     trace_recorder: "SwarmTraceRecorder | None" = None,
+    phoenix_lookup: Callable[[str, str, str], dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Run the swarm Student flow and return ``{"appeal_package", "artifacts"}``.
 
@@ -223,7 +225,8 @@ def run_swarm_pipeline(
     # are keyed that way); the manifest carries the swarm's classification.
     insurer = parsed["insurer"]
     pa_denial_type = parsed["denial_type"]
-    phoenix = swarm_phoenix_lookup(insurer, pa_denial_type, parsed["case_id"])
+    lookup = phoenix_lookup or swarm_phoenix_lookup
+    phoenix = lookup(insurer, pa_denial_type, parsed["case_id"])
     playbook = get_learned_playbook(insurer, pa_denial_type)
 
     manifest = active.triage(parsed)

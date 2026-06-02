@@ -1,7 +1,16 @@
 # Current State — Aegis
 
 **Updated:** 2026-06-01 (Session 27)
-**Phase:** **Execution — Part B swarm build (Phases 0–4 of 6 DONE), demo-prep.** Track A (no-creds demo) is ready; Track B (live thesis) blocked on a Vertex latency issue, not on code.
+**Phase:** **Execution — Part B swarm build (Phases 0–5 of 6 DONE), demo-prep.** Track A (no-creds demo) is ready; Track B (live thesis) blocked on a Vertex latency issue, not on code.
+
+### Session 27 (Part B swarm build — Phase 5: eval harness + MCP counterfactual DONE)
+- ✅ **Phase 5 complete, all tests green (207 unit).**
+- ✅ **`run_evaluated_swarm_case`:** `app/evals/swarm/evaluated_swarm_run.py` — swarm Student → Phoenix recorder → 7-judge panel → optional simulator → laundered annotations + firewall-safe swarm meta (`swarm_agent_trace_count`, `insurer_phoenix_unavailable`).
+- ✅ **Injectable `phoenix_lookup`** on `run_swarm_pipeline` for counterfactual/tests without env mutation.
+- ✅ **`run_swarm_counterfactual`:** `app/learning/swarm_counterfactual.py` — MCP on vs off per case, composite delta (offline stub: ~0.17 mean on 2 draft cases).
+- ✅ **Stub propagation:** `StubSwarmClient` weaves insurer tactic + Phoenix memory into strategy/letter so offline judges measure a real delta.
+- ✅ **Script:** `backend/scripts/run_swarm_counterfactual_offline.py` for demo recording.
+- ⏭️ **Next: Phase 6** — Learning Coordinator re-point + `SwarmExperimentRunner` (deferred FR-2/3/4).
 
 ### Session 27 (Part B swarm build — Phase 4: live surfaces DONE)
 - ✅ **Phase 4 complete, all tests green (88 swarm / 192 unit).**
