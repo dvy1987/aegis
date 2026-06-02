@@ -69,7 +69,7 @@ class GeminiDrafterClient:
     name = "gemini"
 
     def __init__(self, model: str | None = None, location: str | None = None) -> None:
-        self.model = model or os.environ.get("AEGIS_DRAFTER_MODEL", "gemini-3.1-pro-preview")
+        self.model = model or os.environ.get("AEGIS_DRAFTER_MODEL", "gemini-3.1-pro")
         self.location = location or os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
 
     def draft(self, prompt, parsed_case, citations, playbook, phoenix_summary) -> str:
