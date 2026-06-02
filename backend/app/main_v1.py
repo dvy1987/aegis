@@ -27,6 +27,7 @@ from fastapi import FastAPI
 from google.adk.cli.fast_api import get_fast_api_app
 
 from app.aegis_v1.appeal_api import router as appeal_router
+from app.aegis_v1.showcase_api import router as showcase_router
 from app.app_utils.telemetry import setup_telemetry
 
 setup_telemetry()
@@ -51,6 +52,7 @@ app.description = "Aegis V1 Agent API"
 # drafted letter together with the insurer APPROVE/DENY verdict. The simulator is
 # run by this orchestration layer, not as a Student tool (separation of powers).
 app.include_router(appeal_router)
+app.include_router(showcase_router)
 
 
 if __name__ == "__main__":

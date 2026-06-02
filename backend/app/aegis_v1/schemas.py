@@ -130,6 +130,7 @@ class TraceMetadata(BaseModel):
     )
     search_planner_version: str = "search_planner_v1"
     library_search_query: str = ""
+    library_available: bool = True
     cloud_library_used: bool = False
     discovery_enabled: bool = False
     discovery_ran: bool = False

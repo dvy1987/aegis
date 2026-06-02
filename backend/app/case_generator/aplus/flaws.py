@@ -70,13 +70,23 @@ def inject_flaws(
     if "circular_medical_necessity" in pattern_ids:
         letter_out = letter_out.replace(
             "does not demonstrate that the service is medically necessary",
-            "does not meet medical necessity criteria because the service is not medically necessary",
+            "does not meet the plan's medical necessity criteria because the service is not medically necessary",
         )
         notes.append("Circular medical-necessity phrasing.")
 
     if "algo_boilerplate_fingerprint" in pattern_ids and index % 7 == 0:
-        # Rare — most letters stay case-specific; only some indices
-        pass  # we keep case-specific dx/tx in letter by design
+        # Intentional: strip case-specific service/diagnosis mentions from the denial letter itself.
+        # Keep claim identifiers; keep full clinical context in the case JSON.
+        before = letter_out
+        letter_out = re.sub(
+            r"for [A-Za-z0-9\-\s\(\)\/]+ related to [A-Za-z0-9\-\s\(\)\.,]+",
+            "for the requested service.",
+            letter_out,
+        )
+        letter_out = re.sub(r"Service requested:.*\n", "Service requested: [REDACTED]\n", letter_out)
+        letter_out = re.sub(r"Diagnosis \(as submitted\):.*\n", "Diagnosis (as submitted): [REDACTED]\n", letter_out)
+        if letter_out != before:
+            notes.append("Algo boilerplate fingerprint: removed service/diagnosis specifics from letter.")
 
     sub_ts = den_ts = None
     if "algo_time_delta" in pattern_ids:
@@ -97,6 +107,70 @@ def inject_flaws(
             "verbal timeframe communicated to office staff (not confirmed in this letter)",
         )
         notes.append("P2P window verbal-only flaw.")
+
+    if "wrong_benefit_category" in pattern_ids:
+        if "benefit category classification" not in letter_out.lower():
+            letter_out = letter_out.replace(
+                "EXPLANATION OF DECISION",
+                "EXPLANATION OF DECISION\n"
+                "This request has been processed under a benefit category that does not provide coverage "
+                "for the requested service (benefit category classification).",
+                1,
+            )
+            notes.append("Wrong benefit category classification.")
+
+    if "appeal_closed_as_withdrawn" in pattern_ids:
+        if "administratively closed as withdrawn" not in letter_out.lower():
+            letter_out = letter_out.replace(
+                "APPEAL RIGHTS",
+                "APPEAL RIGHTS\n"
+                "If required information is not received within the applicable timeframe, the appeal may be "
+                "administratively closed as withdrawn.",
+                1,
+            )
+            notes.append("Appeal may be closed as withdrawn.")
+
+    if "wrong_appeals_contact" in pattern_ids:
+        if "appeals contact (as listed)" not in letter_out.lower():
+            letter_out = letter_out.replace(
+                "APPEAL RIGHTS",
+                "APPEAL RIGHTS\n"
+                "Appeals contact (as listed): Appeals Unit, P.O. Box 14582, Lexington, KY 40512-4582; "
+                "Fax: (877) 555-0199.",
+                1,
+            )
+            notes.append("Wrong/implausible appeals contact info.")
+
+    if "plan_exclusion_overrides_state_mandate" in pattern_ids:
+        if "state coverage mandates do not alter" not in letter_out.lower():
+            letter_out = letter_out.replace(
+                "EXPLANATION OF DECISION",
+                "EXPLANATION OF DECISION\n"
+                "This determination is based on a plan exclusion. State coverage mandates do not alter the "
+                "terms of this plan for this determination.",
+                1,
+            )
+            notes.append("Plan exclusion overrides state mandate language.")
+
+    if "incorrect_demographic_guideline" in pattern_ids:
+        if "incorrect demographic guideline" not in letter_out.lower():
+            letter_out = letter_out.replace(
+                "Clinical policy applied:",
+                "Clinical policy applied: Guideline applied: pediatric imaging criteria (ages 0–17) "
+                "referenced for this request (incorrect demographic guideline). ",
+                1,
+            )
+            notes.append("Incorrect demographic guideline referenced.")
+
+    if "superseded_guideline" in pattern_ids:
+        if "superseded guideline reference" not in letter_out.lower():
+            letter_out = letter_out.replace(
+                "Clinical policy applied:",
+                "Clinical policy applied: Clinical criteria applied: InterQual criteria (2018) and/or older "
+                "MCG modules (superseded guideline reference). ",
+                1,
+            )
+            notes.append("Superseded guideline reference inserted.")
 
     _reviewer_line = "\n\nThis determination was made by Dr. J. Smith, Medical Director."
     if "non_specialist_reviewer" in pattern_ids and _reviewer_line.strip() not in letter_out:

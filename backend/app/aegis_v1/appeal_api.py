@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from fastapi import APIRouter, Depends
+from fastapi import HTTPException
 from pydantic import BaseModel
 
 from app.aegis_v1.appeal_orchestrator import run_appeal_with_outcome
@@ -49,6 +50,15 @@ def create_appeal(
     """Draft an appeal and return it together with the insurer Outcome Simulator
     verdict — the artifact the UX shows per appeal run."""
     library_stack = build_v1_library_stack(discovery_enabled=req.discovery_enabled)
+    if req.discovery_enabled and not library_stack.get("uses_vertex_store"):
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "Discovery requested but the cloud library is unavailable. "
+                "Configure Vertex AI Search (VERTEX_SEARCH_* env vars + credentials) "
+                "and try again, or rerun with discovery_enabled=false."
+            ),
+        )
     result = run_appeal_with_outcome(
         denial_text=req.denial_text,
         clinical_context=req.clinical_context,

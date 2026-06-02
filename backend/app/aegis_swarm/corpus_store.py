@@ -133,6 +133,24 @@ class CorpusStore(Protocol):
     def list_domains(self) -> list[str]: ...
 
 
+class UnavailableCorpusStore:
+    """Cloud-only posture: no local corpus available.
+
+    Used when the cloud library (Vertex AI Search) is not configured or when
+    credentials are unavailable. Returns no hits and no domains so callers can
+    surface a clear "library unavailable" signal instead of silently falling
+    back to local disk.
+    """
+
+    def list_domains(self) -> list[str]:
+        return []
+
+    def search(
+        self, domain: ResearcherDomain, query: str, top_k: int = 3
+    ) -> list[CorpusHit]:
+        return []
+
+
 # --- Local backend (BM25 over files) ----------------------------------------
 
 _WORD_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9-]*")

@@ -96,10 +96,44 @@ class OtelPhoenixRecorder:
 
     def annotate(self, trace_ref, annotations) -> None:
         import pandas as pd
-        import phoenix as px
-        from phoenix.trace import SpanEvaluations
+        from phoenix.client import Client
 
-        df = pd.DataFrame([{"span_id": trace_ref, **annotations}])
-        px.Client().log_evaluations(
-            SpanEvaluations(eval_name="aegis_part_a_panel", dataframe=df)
+        # Phoenix Client API changes frequently; the stable surface is
+        # span annotations. We log the laundered eval signal as a CODE annotation
+        # so it is visible in the UI for demo + debugging.
+        verdict = str(annotations.get("verdict", ""))
+        weighted = annotations.get("weighted_quality")
+        try:
+            score = float(weighted) if weighted is not None else 0.0
+        except Exception:
+            score = 0.0
+
+        explanation = (
+            f"verdict={verdict} weighted_quality={weighted} "
+            f"hard_gate_failures={annotations.get('hard_gate_failures', [])}"
         )
+
+        df = pd.DataFrame(
+            [
+                {
+                    "label": verdict,
+                    "score": score,
+                    "explanation": explanation,
+                    **annotations,
+                }
+            ]
+        )
+        df.index = [trace_ref]
+        df.index.name = "span_id"
+        try:
+            Client().spans.log_span_annotations_dataframe(
+                dataframe=df,
+                annotator_kind="CODE",
+                annotation_name="aegis_part_a_panel",
+                sync=True,
+            )
+        except Exception:
+            # Best-effort: recording the span itself is the load-bearing demo artifact.
+            # Annotation upload depends on Phoenix client/endpoint wiring and must not
+            # fail the product or showcase path.
+            return

@@ -1,0 +1,70 @@
+[
+  {
+    "case_id": "case_01_cigna_mednec",
+    "changes": [
+      "removed external-review/IRO language (to satisfy missing_iro_notice)",
+      "added MHPAEA step-therapy asymmetry signal sentence",
+      "cleaned letter artifacts + fit word budget"
+    ]
+  },
+  {
+    "case_id": "case_02_cigna_priorauth",
+    "changes": []
+  },
+  {
+    "case_id": "case_03_aetna_mednec",
+    "changes": [
+      "added wrong benefit category statement"
+    ]
+  },
+  {
+    "case_id": "case_04_aetna_priorauth",
+    "changes": [
+      "added appeal-closed-as-withdrawn language",
+      "added superseded guideline signal sentence",
+      "cleaned letter artifacts + fit word budget"
+    ]
+  },
+  {
+    "case_id": "case_05_uhc_mednec",
+    "changes": [
+      "added wrong benefit category statement"
+    ]
+  },
+  {
+    "case_id": "case_06_uhc_priorauth",
+    "changes": [
+      "added wrong benefit category statement",
+      "added appeal-closed-as-withdrawn language",
+      "cleaned letter artifacts + fit word budget"
+    ]
+  },
+  {
+    "case_id": "case_07_cigna_mednec",
+    "changes": [
+      "added superseded guideline signal sentence"
+    ]
+  },
+  {
+    "case_id": "case_08_cigna_priorauth",
+    "changes": [
+      "added superseded guideline signal sentence",
+      "cleaned letter artifacts + fit word budget"
+    ]
+  },
+  {
+    "case_id": "case_09_aetna_mednec",
+    "changes": [
+      "added plan-exclusion-overrides-state-mandate language",
+      "added implausible/wrong appeals contact block",
+      "cleaned letter artifacts + fit word budget"
+    ]
+  },
+  {
+    "case_id": "case_10_uhc_priorauth",
+    "changes": [
+      "added incorrect demographic guideline reference",
+      "cleaned letter artifacts + fit word budget"
+    ]
+  }
+]

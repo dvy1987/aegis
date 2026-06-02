@@ -60,6 +60,26 @@
       "retrieved_at": "",
       "ingest_mode": "seed",
       "notes": "Hand-curated general reference on ACA 2719 external review; contains no specific case identifiers."
+    },
+    {
+      "doc_id": "disc-nih-review-of-medical-necessity-evidence-standards-pmcfake1.md",
+      "domain": "insurer",
+      "title": "NIH review of medical-necessity evidence standards",
+      "source_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMCFAKE1",
+      "source_tier": "peer_reviewed",
+      "retrieved_at": "2026-06-02",
+      "ingest_mode": "discovery",
+      "notes": "Autonomously ingested via trust-gated discovery (ADR-007)."
+    },
+    {
+      "doc_id": "disc-nih-review-of-medical-necessity-evidence-standards-pmcfake1-2.md",
+      "domain": "insurer",
+      "title": "NIH review of medical-necessity evidence standards",
+      "source_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMCFAKE1",
+      "source_tier": "peer_reviewed",
+      "retrieved_at": "2026-06-02",
+      "ingest_mode": "discovery",
+      "notes": "Autonomously ingested via trust-gated discovery (ADR-007)."
     }
   ]
 }

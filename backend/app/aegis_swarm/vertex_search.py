@@ -20,6 +20,7 @@ from app.aegis_swarm.corpus_store import (
     DOMAIN_SUBDIR,
     CorpusHit,
     LocalCorpusStore,
+    UnavailableCorpusStore,
     _best_quote,
     _title_for,
     _tokenize,
@@ -202,4 +203,27 @@ def build_corpus_store(corpus_dir=None) -> LocalCorpusStore | VertexSearchCorpus
     except ValueError:
         _LOG.warning("Vertex search misconfigured; using LocalCorpusStore")
         return fallback
+    return VertexSearchCorpusStore(backend, fallback=fallback, corpus_dir=root)
+
+
+def build_cloud_only_corpus_store(
+    corpus_dir=None,
+) -> UnavailableCorpusStore | VertexSearchCorpusStore:
+    """Cloud-only factory: Vertex store when configured; else Unavailable.
+
+    This avoids loading or relying on any local on-disk corpus. Callers should
+    treat an unavailable store as a non-grounded run and surface the signal to
+    the user.
+    """
+    root = corpus_dir or CORPUS_DIR
+    if not vertex_search_configured():
+        return UnavailableCorpusStore()
+    try:
+        backend = DiscoveryEngineVertexBackend.from_env()
+    except ValueError:
+        _LOG.warning("Vertex search misconfigured; corpus unavailable")
+        return UnavailableCorpusStore()
+    # Keep a fallback instance, but it will never be used for cloud-only callers
+    # because they should route through this factory instead of build_corpus_store().
+    fallback = LocalCorpusStore(root)
     return VertexSearchCorpusStore(backend, fallback=fallback, corpus_dir=root)

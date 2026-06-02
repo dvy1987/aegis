@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { showcaseSource } from "@/lib/data";
+import { liveSource } from "@/lib/data/live";
 import type { CaseSummary, ShowcaseBundle } from "@/lib/types";
 import { Nav } from "@/components/Nav";
 import { CasePicker } from "@/components/showcase/CasePicker";
@@ -16,6 +17,8 @@ export default function ShowcasePage() {
   const [cases, setCases] = useState<CaseSummary[]>([]);
   const [sel, setSel] = useState(DEFAULT_CASE);
   const [bundle, setBundle] = useState<ShowcaseBundle | null>(null);
+  const [running, setRunning] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
     ds.listCases().then(setCases);
@@ -25,6 +28,19 @@ export default function ShowcasePage() {
     ds.getShowcase(sel).then(setBundle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sel]);
+
+  async function runLive() {
+    setRunning(true);
+    setErr(null);
+    try {
+      const b = await liveSource.getShowcase(sel);
+      setBundle(b);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e));
+    } finally {
+      setRunning(false);
+    }
+  }
 
   return (
     <div className="flex min-h-dvh flex-col bg-surface-primary text-text-primary">
@@ -46,6 +62,21 @@ export default function ShowcasePage() {
         </header>
 
         <CasePicker cases={cases} selected={sel} onSelect={setSel} />
+
+        <div className="flex flex-col gap-3">
+          <button
+            type="button"
+            onClick={runLive}
+            disabled={running}
+            className="inline-flex w-fit items-center justify-center rounded-md border border-border-subtle bg-surface-secondary px-4 py-2 font-body text-sm text-text-primary hover:bg-surface-tertiary disabled:opacity-60"
+          >
+            {running ? "Running evaluation…" : "Run evaluation now (live)"}
+          </button>
+          {err && <p className="font-body text-sm text-text-secondary">Could not run live evaluation: {err}</p>}
+          <p className="font-body text-sm text-text-tertiary">
+            This runs the same case twice (baseline vs improved) and links to the Phoenix evidence.
+          </p>
+        </div>
 
         {bundle && (
           <>

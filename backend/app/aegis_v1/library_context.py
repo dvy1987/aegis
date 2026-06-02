@@ -25,6 +25,7 @@ from app.aegis_swarm.literature_discovery import LiteratureDiscovery
 class LibraryPrepMetadata(BaseModel):
     search_planner_version: str = CURRENT_SEARCH_PLANNER_VERSION
     library_search_query: str = ""
+    library_available: bool = True
     cloud_library_used: bool = False
     discovery_enabled: bool = False
     discovery_ran: bool = False
@@ -68,6 +69,9 @@ def prepare_library_context(
     meta.library_search_query = baseline
 
     hits = search_unified_library(corpus_store, baseline, top_k=3)
+    if not hits and not cloud_library_used:
+        meta.library_available = False
+        risk_flags.append("library_unavailable_no_cloud_index")
     retrieval = hits_to_retrieval(baseline, hits)
 
     if library_is_thin(case, _citation_hits(retrieval)):

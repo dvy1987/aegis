@@ -30,6 +30,7 @@ def run_evaluated_case(
     judge_client: JudgeClient | None = None,
     run_simulator: bool = True,
     simulator_client: "SimulatorClient | None" = None,
+    drafter_prompt_version: str | None = None,
 ) -> EvaluatedRun:
     """Student → record run → eval layer (judges [+ simulator]) → annotate trace."""
 
@@ -41,6 +42,7 @@ def run_evaluated_case(
         dataset_split=case_obj.get("dataset_split", "benchmark"),
         run_mode="benchmark",
         drafter_client=drafter_client,
+        drafter_prompt_version=drafter_prompt_version,
     )
 
     # 2. Record the run trace (tagged metadata) BEFORE evaluation.

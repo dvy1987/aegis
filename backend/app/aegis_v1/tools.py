@@ -342,6 +342,7 @@ def draft_appeal(
     playbook: dict[str, Any],
     phoenix_summary: dict[str, Any],
     client: "DrafterLLMClient | None" = None,
+    prompt_version: str | None = None,
 ) -> dict[str, Any]:
     """Injectable drafter core. The letter PROSE is produced by an evolvable LLM
     (or offline stub); structure, citations, and safety are deterministic. Tests
@@ -362,8 +363,15 @@ def draft_appeal(
     citations = retrieval.hits[:3]
 
     active: DrafterLLMClient = client or GeminiDrafterClient()
+    active_prompt_version = (
+        prompt_version
+        or os.environ.get("AEGIS_DRAFTER_PROMPT_VERSION")
+        or "drafter_v2"
+    )
     raw_body = active.draft(
-        prompt=load_drafter_prompt("drafter_v2"),  # promoted Session 24: +20.5% held-out appeal_vector_capture lift
+        # Default is the current promoted prompt. Eval/showcase can override it to
+        # produce a real before/after on the same case.
+        prompt=load_drafter_prompt(active_prompt_version),
         parsed_case=case.model_dump(),
         citations=[c.model_dump() for c in citations],
         playbook=loaded_playbook.model_dump(),
@@ -377,7 +385,11 @@ def draft_appeal(
     )
     tactic_text = " ".join(loaded_playbook.tactics[:2])
 
-    risk_flags = ["weak_prompt_v1"]
+    risk_flags = []
+    if active_prompt_version in {"drafter_v1", "drafter_v1_weak", "drafter_v1_weak.md"}:
+        risk_flags.append("weak_prompt_v1")
+    else:
+        risk_flags.append(f"prompt:{active_prompt_version}")
     risk_flags.extend(loaded_playbook.risk_flags)
     risk_flags.extend(
         flag for flag in phoenix.risk_flags if not flag.startswith("case_id:")

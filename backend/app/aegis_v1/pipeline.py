@@ -31,6 +31,7 @@ def run_aegis_v1_pipeline(
         "interactive"
     ),
     drafter_client: "DrafterLLMClient | None" = None,
+    drafter_prompt_version: str | None = None,
     library_stack: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Run the six-tool v1 Student flow. The Outcome Simulator is no longer part
@@ -76,6 +77,7 @@ def run_aegis_v1_pipeline(
         playbook=playbook,
         phoenix_summary=phoenix,
         client=drafter_client,
+        prompt_version=drafter_prompt_version,
     )
     check = self_check(
         parsed_case=parsed,
@@ -111,6 +113,7 @@ def run_aegis_v1_pipeline(
             run_mode=run_mode,
             search_planner_version=prep.search_planner_version,
             library_search_query=prep.library_search_query,
+            library_available=prep.library_available,
             cloud_library_used=prep.cloud_library_used,
             discovery_enabled=prep.discovery_enabled,
             discovery_ran=prep.discovery_ran,

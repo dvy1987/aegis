@@ -118,15 +118,8 @@ def enhance_denial_letter(
                 1,
             )
 
-    if "missing_cost_liability" in pattern_ids:
-        if "financial responsibility" not in low and "cost-sharing" in low:
-            out = out.replace(
-                "Please note that benefits are subject to all terms",
-                "If you proceed with the service, financial responsibility for non-covered "
-                "charges may apply under your plan. Please note that benefits are subject "
-                "to all terms",
-                1,
-            )
+    # IMPORTANT: if the intended flaw is `missing_cost_liability`, we must NOT add
+    # financial-liability disclosures. The omission is the feature.
 
     if fit_budget:
         out = fit_letter_word_budget(out)
