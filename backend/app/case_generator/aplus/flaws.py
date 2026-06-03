@@ -153,21 +153,21 @@ def inject_flaws(
             notes.append("Plan exclusion overrides state mandate language.")
 
     if "incorrect_demographic_guideline" in pattern_ids:
-        if "incorrect demographic guideline" not in letter_out.lower():
+        if "pediatric imaging criteria" not in letter_out.lower():
             letter_out = letter_out.replace(
                 "Clinical policy applied:",
-                "Clinical policy applied: Guideline applied: pediatric imaging criteria (ages 0–17) "
-                "referenced for this request (incorrect demographic guideline). ",
+                "Clinical policy applied: pediatric imaging criteria (ages 0–17) were applied in "
+                "reviewing this request. ",
                 1,
             )
             notes.append("Incorrect demographic guideline referenced.")
 
     if "superseded_guideline" in pattern_ids:
-        if "superseded guideline reference" not in letter_out.lower():
+        if "interqual 2018" not in letter_out.lower():
             letter_out = letter_out.replace(
                 "Clinical policy applied:",
-                "Clinical policy applied: Clinical criteria applied: InterQual criteria (2018) and/or older "
-                "MCG modules (superseded guideline reference). ",
+                "Clinical policy applied: InterQual 2018 acute-care criteria and prior-edition "
+                "MCG modules. ",
                 1,
             )
             notes.append("Superseded guideline reference inserted.")
