@@ -31,8 +31,6 @@ def _playbook_path(playbooks_dir: Path, component_id: str) -> Path:
                     e.g.  "playbook:Cigna:medical_necessity"
                           "playbook:Aetna:prior_authorization"
     """
-    # Strip leading "playbook:" prefix, then split on the first colon only so
-    # denial_type values that contain colons (unlikely but defensive) are kept whole.
     without_prefix = component_id.removeprefix("playbook:")
     parts = without_prefix.split(":", 1)
     if len(parts) != 2:
@@ -50,8 +48,7 @@ def _playbook_json(comp: Component) -> dict[str, Any]:
 
     playbook_loader reads these keys:
         insurer, denial_type, version, tactics, required_evidence, risk_flags
-    We write exactly those keys plus nothing else, so the file stays schema-stable
-    regardless of what extra fields the learning side attaches later.
+    We write exactly those keys plus nothing else.
     """
     raw: dict[str, Any] = comp.playbook or {}
     without_prefix = comp.component_id.removeprefix("playbook:")
@@ -68,18 +65,85 @@ def _playbook_json(comp: Component) -> dict[str, Any]:
     }
 
 
+def _panel_result_to_scored_run(result: dict[str, Any]) -> ScoredRun | None:
+    """Convert one entry from panel_report.json['results'] into a ScoredRun.
+
+    panel_report result shape (written by cli.py / evaluated_run.py):
+      {
+        "case_path": "...",
+        "appeal_package": {
+          "parsed_case": {"case_id": ..., "insurer": ..., "denial_type": ...},
+          "trace_metadata": {"prompt_version": ..., "playbook_version": ...},
+          ...
+        },
+        "panel_report": {
+          "verdict": "PASS"|"FAIL",
+          "weighted_quality": 0.72,
+          "dimension_scores": {"grounding": 3, ...},
+          "judge_results": {
+            "grounding": {"improvement": "...", ...},
+            ...
+          },
+          ...
+        }
+      }
+    """
+    try:
+        pkg = result.get("appeal_package", {})
+        report = result.get("panel_report", {})
+        parsed = pkg.get("parsed_case", {})
+        meta = pkg.get("trace_metadata", {})
+
+        case_id: str = parsed.get("case_id", "") or result.get("case_path", "unknown")
+        insurer: str = parsed.get("insurer", "unknown")
+        denial_type: str = parsed.get("denial_type", "unknown")
+        slice_key = f"{insurer}:{denial_type}"
+
+        dimension_scores: dict[str, int] = {
+            k: int(v) for k, v in (report.get("dimension_scores") or {}).items()
+        }
+        hard_gate_pass: bool = report.get("verdict", "FAIL") == "PASS"
+        weighted_quality: float = float(report.get("weighted_quality") or 0.0)
+        prompt_version: str = str(meta.get("prompt_version", ""))
+        playbook_version: str = str(meta.get("playbook_version", ""))
+
+        # Collect laundered improvement notes from judge results (safe strings only).
+        improvement_notes: dict[str, str] = {}
+        for dim, jr in (report.get("judge_results") or {}).items():
+            note = (jr or {}).get("improvement", "")
+            if note and isinstance(note, str):
+                improvement_notes[dim] = note
+
+        simulator_verdict = pkg.get("simulator_result", {})
+        if isinstance(simulator_verdict, dict):
+            sim_v = simulator_verdict.get("verdict")
+        else:
+            sim_v = None
+
+        return ScoredRun(
+            case_id=case_id,
+            slice=slice_key,
+            dimension_scores=dimension_scores,
+            hard_gate_pass=hard_gate_pass,
+            weighted_quality=weighted_quality,
+            improvement_notes=improvement_notes,
+            simulator_verdict=sim_v,
+            prompt_version=prompt_version,
+            playbook_version=playbook_version,
+        )
+    except Exception:
+        return None
+
+
 class FileSystemPhoenixLearningStore:
     """Production PhoenixLearningStore that persists promoted artefacts to disk.
 
-    Playbooks are written to ``playbooks_dir`` (default: repo-root/playbooks/) using
-    the same naming convention as playbook_loader so they are picked up automatically
-    on the next request — no restart required.
+    Playbooks are written to ``playbooks_dir`` using the same naming convention
+    as playbook_loader so they are picked up automatically on the next request.
 
-    Prompt versions are written to ``prompts_dir`` for audit purposes only;
-    playbook_loader does not read from there, so prompt writes are non-breaking.
-
-    Scored runs are kept in memory (this store is typically recreated per-session).
-    For a persistent run history, replace ``_runs`` with a Phoenix SDK read-back.
+    Scored runs are loaded from panel_report.json files written by the eval CLI
+    via ``load_panel_runs()``.  Call that once after each eval run before handing
+    the store to the LearningCoordinator.
     """
 
     name = "filesystem_learning_store"
@@ -97,6 +161,32 @@ class FileSystemPhoenixLearningStore:
         playbooks_dir.mkdir(parents=True, exist_ok=True)
         if prompts_dir is not None:
             prompts_dir.mkdir(parents=True, exist_ok=True)
+
+    # ------------------------------------------------------------------
+    # Load eval output into the store so the coordinator can read it
+    # ------------------------------------------------------------------
+
+    def load_panel_runs(self, panel_report_path: Path, dataset_split: str) -> int:
+        """Read a panel_report.json produced by the eval CLI and populate
+        ``_runs[dataset_split]`` with the resulting ScoredRun objects.
+
+        Returns the number of runs successfully loaded.
+
+        Call this once after each eval run, before passing the store to
+        LearningCoordinator.optimize():
+
+            store = FileSystemPhoenixLearningStore(playbooks_dir=PLAYBOOK_DIR)
+            store.load_panel_runs(panel_report_path, dataset_split="benchmark_train")
+            proposal = coordinator.optimize()
+        """
+        raw = json.loads(panel_report_path.read_text(encoding="utf-8"))
+        loaded = 0
+        for result in raw.get("results", []):
+            run = _panel_result_to_scored_run(result)
+            if run is not None:
+                self._runs.setdefault(dataset_split, []).append(run)
+                loaded += 1
+        return loaded
 
     # ------------------------------------------------------------------
     # PhoenixLearningStore protocol — read side
@@ -132,14 +222,8 @@ class FileSystemPhoenixLearningStore:
     # ------------------------------------------------------------------
 
     def register_promotion(self, candidate: Candidate, audit: PromotionAudit) -> None:
-        """Persist promoted components to disk and record the audit.
-
-        - Playbook components  → written as JSON to playbooks_dir.
-        - Prompt components    → written as plain text to prompts_dir (if set).
-        - Both are also cached in _versions for same-session read-back.
-        """
+        """Persist promoted components to disk and record the audit."""
         for comp in candidate.components.values():
-            # Update in-memory version cache (mirrors InMemoryPhoenixLearningStore).
             existing = self._versions.setdefault(comp.component_id, [])
             if not existing or existing[-1].version != comp.version:
                 existing.append(
