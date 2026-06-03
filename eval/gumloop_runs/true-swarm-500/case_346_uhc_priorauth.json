@@ -1,0 +1,45 @@
+{
+  "case_id": "case_346_uhc_priorauth",
+  "file": "eval/cases/drafts/case_346_uhc_priorauth.json",
+  "denial_pattern_sources": [
+    "missing_iro_notice",
+    "appeal_closed_as_withdrawn"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 5,
+          "verification_results": [
+            {
+              "pattern_id": "missing_iro_notice",
+              "status": "PRESENT",
+              "evidence": "No external review / IRO language in APPEAL RIGHTS."
+            },
+            {
+              "pattern_id": "appeal_closed_as_withdrawn",
+              "status": "PRESENT",
+              "evidence": "Appeal closed-as-withdrawn language present."
+            }
+          ],
+          "improvement": null
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_346_uhc_priorauth",
+        "evaluator": "Gumloop",
+        "verdict": "APPROVE",
+        "reason": "All Tier 1 gates pass; no Tier 2 failures.",
+        "tier_1_failures": [],
+        "tier_2_failures": [],
+        "suggested_revisions": []
+      }
+    }
+  ],
+  "revisions_applied": [],
+  "final_verdict": "APPROVE"
+}

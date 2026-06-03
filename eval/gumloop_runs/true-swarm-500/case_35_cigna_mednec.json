@@ -1,0 +1,45 @@
+{
+  "case_id": "case_35_cigna_mednec",
+  "file": "eval/cases/drafts/case_35_cigna_mednec.json",
+  "denial_pattern_sources": [
+    "step_therapy_vague_mcg",
+    "incorrect_demographic_guideline"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 5,
+          "verification_results": [
+            {
+              "pattern_id": "step_therapy_vague_mcg",
+              "status": "PRESENT",
+              "evidence": "Vague MCG/InterQual citation (no edition/module on guideline line, or edition not specified)."
+            },
+            {
+              "pattern_id": "incorrect_demographic_guideline",
+              "status": "PRESENT",
+              "evidence": "Pediatric guideline cited for adult case."
+            }
+          ],
+          "improvement": null
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_35_cigna_mednec",
+        "evaluator": "Gumloop",
+        "verdict": "APPROVE",
+        "reason": "All Tier 1 gates pass; no Tier 2 failures.",
+        "tier_1_failures": [],
+        "tier_2_failures": [],
+        "suggested_revisions": []
+      }
+    }
+  ],
+  "revisions_applied": [],
+  "final_verdict": "APPROVE"
+}

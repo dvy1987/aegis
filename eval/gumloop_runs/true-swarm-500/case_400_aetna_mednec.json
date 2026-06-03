@@ -1,0 +1,45 @@
+{
+  "case_id": "case_400_aetna_mednec",
+  "file": "eval/cases/drafts/case_400_aetna_mednec.json",
+  "denial_pattern_sources": [
+    "algo_boilerplate_fingerprint",
+    "missing_iro_notice"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 5,
+          "verification_results": [
+            {
+              "pattern_id": "algo_boilerplate_fingerprint",
+              "status": "PRESENT",
+              "evidence": "Generic boilerplate only \u2014 no diagnosis, treatment, provider name, or case-specific explanation."
+            },
+            {
+              "pattern_id": "missing_iro_notice",
+              "status": "PRESENT",
+              "evidence": "No external review / IRO language in APPEAL RIGHTS."
+            }
+          ],
+          "improvement": null
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_400_aetna_mednec",
+        "evaluator": "Gumloop",
+        "verdict": "APPROVE",
+        "reason": "All Tier 1 gates pass; no Tier 2 failures.",
+        "tier_1_failures": [],
+        "tier_2_failures": [],
+        "suggested_revisions": []
+      }
+    }
+  ],
+  "revisions_applied": [],
+  "final_verdict": "APPROVE"
+}

@@ -1,0 +1,45 @@
+{
+  "case_id": "case_199_uhc_mednec",
+  "file": "eval/cases/drafts/case_199_uhc_mednec.json",
+  "denial_pattern_sources": [
+    "circular_medical_necessity",
+    "step_therapy_vague_mcg"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 5,
+          "verification_results": [
+            {
+              "pattern_id": "circular_medical_necessity",
+              "status": "PRESENT",
+              "evidence": "Circular medical-necessity wording present."
+            },
+            {
+              "pattern_id": "step_therapy_vague_mcg",
+              "status": "PRESENT",
+              "evidence": "Vague MCG/InterQual citation (no edition/module on guideline line, or edition not specified)."
+            }
+          ],
+          "improvement": null
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_199_uhc_mednec",
+        "evaluator": "Gumloop",
+        "verdict": "APPROVE",
+        "reason": "All Tier 1 gates pass; no Tier 2 failures.",
+        "tier_1_failures": [],
+        "tier_2_failures": [],
+        "suggested_revisions": []
+      }
+    }
+  ],
+  "revisions_applied": [],
+  "final_verdict": "APPROVE"
+}

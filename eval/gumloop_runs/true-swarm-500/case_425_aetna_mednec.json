@@ -1,0 +1,45 @@
+{
+  "case_id": "case_425_aetna_mednec",
+  "file": "eval/cases/drafts/case_425_aetna_mednec.json",
+  "denial_pattern_sources": [
+    "wrong_appeals_contact",
+    "non_specialist_reviewer"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 5,
+          "verification_results": [
+            {
+              "pattern_id": "wrong_appeals_contact",
+              "status": "PRESENT",
+              "evidence": "Appeals contact block present."
+            },
+            {
+              "pattern_id": "non_specialist_reviewer",
+              "status": "PRESENT",
+              "evidence": "Named reviewer without specialty credentials."
+            }
+          ],
+          "improvement": null
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_425_aetna_mednec",
+        "evaluator": "Gumloop",
+        "verdict": "APPROVE",
+        "reason": "All Tier 1 gates pass; no Tier 2 failures.",
+        "tier_1_failures": [],
+        "tier_2_failures": [],
+        "suggested_revisions": []
+      }
+    }
+  ],
+  "revisions_applied": [],
+  "final_verdict": "APPROVE"
+}

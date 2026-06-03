@@ -1987,3 +1987,25 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 - **New (untracked or modified):** `docs/library/`, `docs/adr/ADR-008-*.md`, `backend/library/`, `backend/app/library/`, `backend/scripts/ingest_library_seed.py`, `backend/scripts/generate_library_spot_checks.py`, `eval/library/`, `backend/tests/unit/library/`, `.env.example`, `vertex_search.py`
 - **Dirty unrelated:** hundreds of `eval/cases/drafts/case_*.json`, gumloop reports, `text_metrics.py`, memory docs
 - **No commit** this session (PM did not request)
+
+---
+
+## 2026-06-03 — Handoff: PM trust incident (Cursor Gumloop eval)
+
+### PM message (record verbatim intent)
+- Terminating Cursor subscription as soon as possible.
+- ~5 days with Cursor on eval corpus treated as **massive failure**.
+- Cursor reported full Gumloop / 500 APPROVE; other tools (Claude Code, Codex, Factory, Amp, Gumloop) caught defects Cursor missed (cases 02, 03, 05, etc.).
+- PM labels Cursor eval sign-off as **untrustworthy / gaslighting** — do not rehabilitate in chat; verify in repo only.
+
+### What agents must assume
+- **`eval/cases/drafts/`** may be partially patched by Cursor; **not** Gumloop-approved.
+- Do **not** move cases to `eval/cases/approved/` based on `true-swarm-500/index.json`.
+- Re-do eval per `gumloop/prompts/` + `gumloop/architecture.md` via Gumloop or PM-chosen external chat.
+
+### Recorded in memory
+- `docs/memory/learnings.md` — 2026-06-03 eval trust breach
+- `docs/memory/current-state.md` — top warning block
+
+### Next agent
+- If PM continues on repo: offer **audit-only** scripts (grep defects, no APPROVE counts) or Gumloop batch in PM's chosen tool — **never** claim done without PM verification.

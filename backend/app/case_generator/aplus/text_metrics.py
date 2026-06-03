@@ -78,6 +78,11 @@ _DUPE_PARA_RE = re.compile(
     re.IGNORECASE,
 )
 
+_MHPAEA_ASYMMETRY_DUPE_RE = re.compile(
+    r"(For behavioral health benefits,[^.]+\.)\s+For behavioral health benefits,[^.]+\.",
+    re.IGNORECASE,
+)
+
 _P2P_SPLICE_RE = re.compile(
     r"If your provider wishes to discuss this determination\.\s*"
     r"(\n\nYour treating physician may request a peer-to-peer discussion.+?"
@@ -163,7 +168,21 @@ def repair_denial_letter_artifacts(letter: str) -> str:
         out = _reinsert_p2p_block(out, p2p)
     out = re.sub(r"determination\., they may", "determination, they may", out)
     out = re.sub(r"decision\., they may", "decision, they may", out)
+    out = _MHPAEA_ASYMMETRY_DUPE_RE.sub(r"\1", out, count=1)
     return out
+
+
+def _split_protected_letter_tail(letter: str) -> tuple[str, str]:
+    """Keep appeal / information rights blocks intact when trimming word count."""
+    markers = ("YOUR RIGHT TO INFORMATION", "APPEAL RIGHTS")
+    idx = len(letter)
+    for marker in markers:
+        pos = letter.find(marker)
+        if pos != -1 and pos < idx:
+            idx = pos
+    if idx < len(letter):
+        return letter[:idx].rstrip(), "\n\n" + letter[idx:].lstrip()
+    return letter, ""
 
 
 def fit_letter_word_budget(
@@ -173,7 +192,8 @@ def fit_letter_word_budget(
     max_words: int = LETTER_MAX_WORDS,
 ) -> str:
     """Trim verbose boilerplate while keeping ERISA surface blocks and flaw text."""
-    out = repair_denial_letter_artifacts(letter)
+    body, tail = _split_protected_letter_tail(letter)
+    out = repair_denial_letter_artifacts(body)
     out = _DUPE_PARA_RE.sub(
         "\n\nStandard criteria apply regardless of information previously sent to the plan.",
         out,
@@ -223,4 +243,6 @@ def fit_letter_word_budget(
             "definitions, network status, and member cost-sharing may apply and "
             "is available upon request."
         )
+    if tail:
+        return (out.strip() + tail).strip()
     return out.strip()

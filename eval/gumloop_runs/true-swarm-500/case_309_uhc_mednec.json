@@ -1,0 +1,45 @@
+{
+  "case_id": "case_309_uhc_mednec",
+  "file": "eval/cases/drafts/case_309_uhc_mednec.json",
+  "denial_pattern_sources": [
+    "timeline_violation",
+    "incorrect_demographic_guideline"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 5,
+          "verification_results": [
+            {
+              "pattern_id": "timeline_violation",
+              "status": "PRESENT",
+              "evidence": "Timeline gap timestamps: sub=2026-02-01T09:00:00Z, den=2026-03-18T09:00:00Z."
+            },
+            {
+              "pattern_id": "incorrect_demographic_guideline",
+              "status": "PRESENT",
+              "evidence": "Pediatric guideline cited for adult case."
+            }
+          ],
+          "improvement": null
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_309_uhc_mednec",
+        "evaluator": "Gumloop",
+        "verdict": "APPROVE",
+        "reason": "All Tier 1 gates pass; no Tier 2 failures.",
+        "tier_1_failures": [],
+        "tier_2_failures": [],
+        "suggested_revisions": []
+      }
+    }
+  ],
+  "revisions_applied": [],
+  "final_verdict": "APPROVE"
+}

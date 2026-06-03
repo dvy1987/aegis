@@ -1,0 +1,45 @@
+{
+  "case_id": "case_228_uhc_mednec",
+  "file": "eval/cases/drafts/case_228_uhc_mednec.json",
+  "denial_pattern_sources": [
+    "unreasonable_documentation_deadline",
+    "mhpaea_step_therapy_asymmetry"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 5,
+          "verification_results": [
+            {
+              "pattern_id": "unreasonable_documentation_deadline",
+              "status": "AMBIGUOUS",
+              "evidence": "Pattern not machine-verified; manual review if disputed."
+            },
+            {
+              "pattern_id": "mhpaea_step_therapy_asymmetry",
+              "status": "PRESENT",
+              "evidence": "MHPAEA-style behavioral-health step-therapy asymmetry language present."
+            }
+          ],
+          "improvement": null
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_228_uhc_mednec",
+        "evaluator": "Gumloop",
+        "verdict": "APPROVE",
+        "reason": "All Tier 1 gates pass; no Tier 2 failures.",
+        "tier_1_failures": [],
+        "tier_2_failures": [],
+        "suggested_revisions": []
+      }
+    }
+  ],
+  "revisions_applied": [],
+  "final_verdict": "APPROVE"
+}

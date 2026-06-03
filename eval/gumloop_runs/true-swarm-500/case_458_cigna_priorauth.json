@@ -1,0 +1,85 @@
+{
+  "case_id": "case_458_cigna_priorauth",
+  "file": "eval/cases/drafts/case_458_cigna_priorauth.json",
+  "denial_pattern_sources": [
+    "algo_boilerplate_fingerprint",
+    "plan_exclusion_overrides_state_mandate"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 1,
+          "verification_results": [
+            {
+              "pattern_id": "algo_boilerplate_fingerprint",
+              "status": "PRESENT",
+              "evidence": "Generic boilerplate only \u2014 no diagnosis, treatment, provider name, or case-specific explanation."
+            },
+            {
+              "pattern_id": "plan_exclusion_overrides_state_mandate",
+              "status": "ABSENT",
+              "evidence": "Plan exclusion overrides state mandate language present."
+            }
+          ],
+          "improvement": "MISSING FLAW: Pattern 'plan_exclusion_overrides_state_mandate' not verified in denial_letter_text."
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_458_cigna_priorauth",
+        "evaluator": "Gumloop",
+        "verdict": "REVISE",
+        "reason": "Tier 2 failure: Flaw Injection Verifier",
+        "tier_1_failures": [],
+        "tier_2_failures": [
+          "Flaw Injection Verifier"
+        ],
+        "suggested_revisions": [
+          "MISSING FLAW: Pattern 'plan_exclusion_overrides_state_mandate' not verified in denial_letter_text."
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 5,
+          "verification_results": [
+            {
+              "pattern_id": "algo_boilerplate_fingerprint",
+              "status": "PRESENT",
+              "evidence": "Generic boilerplate only \u2014 no diagnosis, treatment, provider name, or case-specific explanation."
+            },
+            {
+              "pattern_id": "plan_exclusion_overrides_state_mandate",
+              "status": "PRESENT",
+              "evidence": "Plan exclusion overrides state mandate language present."
+            }
+          ],
+          "improvement": null
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_458_cigna_priorauth",
+        "evaluator": "Gumloop",
+        "verdict": "APPROVE",
+        "reason": "All Tier 1 gates pass; no Tier 2 failures.",
+        "tier_1_failures": [],
+        "tier_2_failures": [],
+        "suggested_revisions": []
+      }
+    }
+  ],
+  "revisions_applied": [
+    "denial_letter_text: artifact repair + word budget",
+    "injected plan_exclusion_overrides_state_mandate anchor"
+  ],
+  "final_verdict": "APPROVE"
+}

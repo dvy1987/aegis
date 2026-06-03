@@ -1,0 +1,45 @@
+{
+  "case_id": "case_466_aetna_priorauth",
+  "file": "eval/cases/drafts/case_466_aetna_priorauth.json",
+  "denial_pattern_sources": [
+    "superseded_guideline",
+    "wrong_appeals_contact"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 5,
+          "verification_results": [
+            {
+              "pattern_id": "superseded_guideline",
+              "status": "PRESENT",
+              "evidence": "Superseded guideline reference present."
+            },
+            {
+              "pattern_id": "wrong_appeals_contact",
+              "status": "PRESENT",
+              "evidence": "Appeals contact block present."
+            }
+          ],
+          "improvement": null
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_466_aetna_priorauth",
+        "evaluator": "Gumloop",
+        "verdict": "APPROVE",
+        "reason": "All Tier 1 gates pass; no Tier 2 failures.",
+        "tier_1_failures": [],
+        "tier_2_failures": [],
+        "suggested_revisions": []
+      }
+    }
+  ],
+  "revisions_applied": [],
+  "final_verdict": "APPROVE"
+}

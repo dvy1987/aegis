@@ -1,0 +1,2512 @@
+{
+  "run_id": "2026-06-03T110212Z",
+  "mode": "faithful_gumloop_criteria_all_18_prompts",
+  "note": "Encodes Gumloop prompt criteria (tier gates, flaw injection guide, LLM tells, duplicates, templates). Fixes applied in-place in eval/cases/drafts/. Per-case JSON saved alongside.",
+  "final_verdicts": {
+    "APPROVE": 500,
+    "REVISE": 0,
+    "DISCARD": 0
+  },
+  "cases": [
+    {
+      "case_id": "case_01_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_01_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_02_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_02_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_03_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_03_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_04_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_04_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_05_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_05_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_06_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_06_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_07_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_07_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_08_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_08_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_09_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_09_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_10_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_10_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_11_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_11_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_12_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_12_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_13_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_13_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_14_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_14_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_15_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_15_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_16_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_16_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_17_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_17_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_18_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_18_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_19_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_19_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_20_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_20_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_21_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_21_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_22_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_22_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_23_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_23_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_24_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_24_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_25_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_25_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_26_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_26_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_27_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_27_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_28_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_28_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_29_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_29_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_30_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_30_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_31_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_31_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_32_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_32_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_33_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_33_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_34_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_34_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_35_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_35_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_36_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_36_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_37_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_37_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_38_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_38_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_39_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_39_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_40_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_40_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_41_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_41_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_42_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_42_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_43_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_43_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_44_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_44_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_45_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_45_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_46_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_46_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_47_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_47_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_48_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_48_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_49_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_49_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_50_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_50_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_51_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_51_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_52_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_52_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_53_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_53_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_54_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_54_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_55_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_55_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_56_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_56_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_57_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_57_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_58_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_58_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_59_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_59_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_60_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_60_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_61_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_61_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_62_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_62_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_63_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_63_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_64_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_64_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_65_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_65_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_66_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_66_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_67_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_67_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_68_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_68_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_69_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_69_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_70_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_70_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_71_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_71_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_72_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_72_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_73_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_73_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_74_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_74_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_75_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_75_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_76_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_76_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_77_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_77_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_78_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_78_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_79_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_79_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_80_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_80_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_81_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_81_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_82_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_82_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_83_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_83_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_84_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_84_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_85_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_85_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_86_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_86_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_87_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_87_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_88_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_88_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_89_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_89_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_90_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_90_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_91_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_91_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_92_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_92_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_93_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_93_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_94_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_94_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_95_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_95_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_96_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_96_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_97_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_97_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_98_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_98_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_99_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_99_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_100_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_100_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_101_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_101_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_102_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_102_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_103_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_103_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_104_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_104_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_105_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_105_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_106_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_106_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_107_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_107_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_108_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_108_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_109_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_109_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_110_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_110_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_111_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_111_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_112_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_112_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_113_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_113_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_114_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_114_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_115_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_115_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_116_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_116_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_117_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_117_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_118_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_118_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_119_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_119_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_120_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_120_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_121_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_121_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_122_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_122_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_123_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_123_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_124_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_124_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_125_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_125_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_126_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_126_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_127_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_127_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_128_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_128_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_129_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_129_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_130_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_130_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_131_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_131_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_132_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_132_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_133_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_133_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_134_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_134_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_135_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_135_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_136_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_136_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_137_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_137_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_138_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_138_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_139_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_139_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_140_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_140_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_141_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_141_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_142_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_142_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_143_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_143_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_144_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_144_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_145_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_145_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_146_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_146_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_147_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_147_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_148_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_148_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_149_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_149_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_150_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_150_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_151_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_151_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_152_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_152_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_153_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_153_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_154_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_154_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_155_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_155_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_156_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_156_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_157_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_157_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_158_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_158_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_159_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_159_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_160_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_160_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_161_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_161_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_162_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_162_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_163_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_163_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_164_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_164_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_165_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_165_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_166_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_166_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_167_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_167_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_168_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_168_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_169_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_169_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_170_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_170_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_171_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_171_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_172_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_172_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_173_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_173_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_174_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_174_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_175_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_175_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_176_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_176_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_177_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_177_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_178_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_178_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_179_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_179_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_180_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_180_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_181_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_181_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_182_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_182_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_183_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_183_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_184_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_184_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_185_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_185_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_186_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_186_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_187_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_187_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_188_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_188_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_189_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_189_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_190_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_190_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_191_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_191_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_192_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_192_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_193_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_193_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_194_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_194_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_195_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_195_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_196_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_196_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_197_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_197_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_198_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_198_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_199_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_199_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_200_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_200_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_201_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_201_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_202_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_202_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_203_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_203_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_204_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_204_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_205_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_205_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_206_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_206_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_207_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_207_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_208_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_208_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_209_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_209_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_210_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_210_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_211_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_211_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_212_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_212_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_213_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_213_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_214_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_214_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_215_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_215_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_216_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_216_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_217_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_217_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_218_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_218_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_219_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_219_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_220_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_220_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_221_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_221_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_222_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_222_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_223_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_223_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_224_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_224_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_225_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_225_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_226_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_226_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_227_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_227_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_228_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_228_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_229_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_229_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_230_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_230_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_231_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_231_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_232_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_232_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_233_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_233_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_234_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_234_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_235_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_235_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_236_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_236_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_237_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_237_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_238_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_238_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_239_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_239_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_240_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_240_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_241_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_241_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_242_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_242_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_243_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_243_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_244_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_244_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_245_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_245_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_246_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_246_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_247_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_247_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_248_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_248_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_249_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_249_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_250_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_250_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_251_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_251_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_252_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_252_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_253_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_253_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_254_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_254_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_255_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_255_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_256_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_256_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_257_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_257_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_258_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_258_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_259_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_259_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_260_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_260_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_261_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_261_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_262_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_262_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_263_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_263_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_264_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_264_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_265_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_265_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_266_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_266_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_267_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_267_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_268_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_268_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_269_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_269_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_270_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_270_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_271_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_271_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_272_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_272_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_273_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_273_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_274_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_274_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_275_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_275_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_276_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_276_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_277_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_277_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_278_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_278_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_279_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_279_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_280_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_280_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_281_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_281_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_282_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_282_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_283_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_283_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_284_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_284_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_285_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_285_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_286_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_286_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_287_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_287_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_288_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_288_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_289_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_289_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_290_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_290_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_291_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_291_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_292_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_292_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_293_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_293_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_294_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_294_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_295_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_295_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_296_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_296_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_297_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_297_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_298_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_298_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_299_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_299_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_300_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_300_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_301_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_301_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_302_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_302_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_303_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_303_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_304_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_304_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_305_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_305_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_306_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_306_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_307_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_307_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_308_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_308_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_309_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_309_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_310_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_310_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_311_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_311_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_312_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_312_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_313_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_313_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_314_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_314_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_315_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_315_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_316_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_316_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_317_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_317_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_318_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_318_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_319_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_319_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_320_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_320_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_321_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_321_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_322_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_322_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_323_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_323_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_324_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_324_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_325_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_325_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_326_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_326_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_327_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_327_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_328_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_328_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_329_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_329_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_330_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_330_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_331_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_331_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_332_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_332_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_333_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_333_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_334_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_334_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_335_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_335_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_336_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_336_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_337_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_337_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_338_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_338_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_339_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_339_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_340_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_340_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_341_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_341_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_342_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_342_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_343_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_343_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_344_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_344_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_345_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_345_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_346_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_346_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_347_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_347_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_348_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_348_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_349_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_349_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_350_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_350_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_351_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_351_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_352_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_352_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_353_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_353_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_354_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_354_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_355_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_355_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_356_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_356_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_357_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_357_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_358_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_358_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_359_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_359_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_360_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_360_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_361_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_361_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_362_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_362_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_363_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_363_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_364_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_364_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_365_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_365_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_366_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_366_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_367_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_367_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_368_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_368_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_369_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_369_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_370_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_370_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_371_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_371_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_372_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_372_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_373_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_373_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_374_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_374_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_375_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_375_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_376_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_376_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_377_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_377_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_378_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_378_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_379_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_379_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_380_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_380_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_381_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_381_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_382_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_382_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_383_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_383_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_384_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_384_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_385_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_385_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_386_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_386_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_387_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_387_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_388_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_388_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_389_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_389_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_390_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_390_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_391_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_391_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_392_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_392_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_393_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_393_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_394_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_394_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_395_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_395_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_396_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_396_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_397_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_397_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_398_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_398_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_399_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_399_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_400_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_400_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_401_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_401_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_402_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_402_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_403_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_403_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_404_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_404_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_405_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_405_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_406_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_406_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_407_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_407_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_408_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_408_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_409_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_409_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_410_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_410_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_411_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_411_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_412_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_412_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_413_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_413_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_414_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_414_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_415_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_415_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_416_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_416_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_417_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_417_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_418_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_418_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_419_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_419_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_420_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_420_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_421_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_421_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_422_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_422_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_423_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_423_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_424_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_424_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_425_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_425_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_426_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_426_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_427_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_427_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_428_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_428_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_429_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_429_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_430_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_430_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_431_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_431_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_432_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_432_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_433_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_433_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_434_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_434_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_435_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_435_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_436_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_436_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_437_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_437_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_438_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_438_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_439_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_439_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_440_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_440_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_441_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_441_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_442_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_442_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_443_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_443_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_444_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_444_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_445_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_445_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_446_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_446_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_447_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_447_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_448_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_448_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_449_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_449_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_450_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_450_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_451_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_451_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_452_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_452_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_453_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_453_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_454_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_454_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_455_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_455_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_456_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_456_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_457_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_457_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_458_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_458_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_459_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_459_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_460_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_460_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_461_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_461_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_462_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_462_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_463_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_463_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_464_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_464_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_465_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_465_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_466_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_466_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_467_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_467_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_468_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_468_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_469_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_469_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_470_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_470_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_471_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_471_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_472_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_472_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_473_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_473_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_474_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_474_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_475_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_475_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_476_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_476_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_477_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_477_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_478_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_478_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_479_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_479_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_480_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_480_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_481_uhc_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_481_uhc_mednec.json"
+    },
+    {
+      "case_id": "case_482_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_482_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_483_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_483_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_484_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_484_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_485_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_485_cigna_priorauth.json"
+    },
+    {
+      "case_id": "case_486_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_486_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_487_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_487_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_488_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_488_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_489_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_489_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_490_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_490_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_491_uhc_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_491_uhc_priorauth.json"
+    },
+    {
+      "case_id": "case_492_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_492_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_493_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_493_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_494_aetna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_494_aetna_priorauth.json"
+    },
+    {
+      "case_id": "case_495_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_495_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_496_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_496_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_497_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_497_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_498_cigna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_498_cigna_mednec.json"
+    },
+    {
+      "case_id": "case_499_aetna_mednec",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_499_aetna_mednec.json"
+    },
+    {
+      "case_id": "case_500_cigna_priorauth",
+      "final_verdict": "APPROVE",
+      "file": "eval/cases/drafts/case_500_cigna_priorauth.json"
+    }
+  ]
+}

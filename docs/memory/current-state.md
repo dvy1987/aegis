@@ -1,7 +1,14 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-03 (Session — Cloud library + Vertex index live)
+**Updated:** 2026-06-03 (PM trust incident — eval sign-off invalid)
 **Phase:** **Execution — Part B swarm + eval corpus at scale; cloud library v1 indexed (uncommitted).**
+
+### ⚠️ EVAL CORPUS — DO NOT TRUST CURSOR SIGN-OFF (2026-06-03)
+- PM reports **~5 days wasted** on false "full Gumloop / 500 APPROVE" claims from Cursor agent.
+- **`eval/gumloop_runs/true-swarm-500/`** and **`run_true_gumloop_all_500.py`** are **not** valid proof of Gumloop pass.
+- **Corpus readiness** = PM re-runs Gumloop (or trusted external chat) on samples + full set; see `docs/memory/learnings.md` (2026-06-03 eval trust breach).
+- Partial Cursor fixes may exist in `eval/cases/drafts/` (cases 02, 03, 05, algo batch, etc.) — **verify independently** before `approved/`.
+- PM intent: **terminate Cursor subscription**; future agents must not ask PM to trust prior Cursor eval statements.
 
 ### Session (2026-06-03 — Cloud library + Vertex AI Search)
 - ✅ **Library corpus IA:** metadata schema, ADR-008, runbook, controlled vocab, **66-entry** redistributable seed catalog.

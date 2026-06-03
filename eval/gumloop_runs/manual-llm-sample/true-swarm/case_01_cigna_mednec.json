@@ -1,0 +1,135 @@
+{
+  "case_id": "case_01_cigna_mednec",
+  "mode": "agent_manual_prompt_by_prompt",
+  "evaluator": "Cursor agent (no external API)",
+  "denial_pattern_sources": [
+    "missing_iro_notice",
+    "mhpaea_step_therapy_asymmetry"
+  ],
+  "critics": {
+    "01_clinical_critic": {
+      "dimension": "clinical_realism",
+      "score": 5,
+      "analysis": "Severe OCD (F42.2) with TMS after documented SSRI/clomipramine trials and Y-BOCS 29 is clinically coherent. Age 34 F is plausible.",
+      "improvement": null
+    },
+    "02_tone_critic": {
+      "dimension": "tone_authenticity",
+      "score": 3,
+      "analysis": "Denial letter reads as insurer bureaucratic. clinical_context second half still matches the batch humanization template ('Chart documentation with dates, doses... denial letter does not address those records') — reads like generation residue, not a specific chart note.",
+      "improvement": "In clinical_context, replace 'Chart documentation with dates, doses, and objective findings was submitted with the authorization request; the denial letter does not address those records.' with case-specific text, e.g.: 'Submitted records include Y-BOCS 29, fluvoxamine 300 mg ×16 weeks, clomipramine 200 mg ×14 weeks, and ERP since 2024; the denial cites level-of-care criteria but does not discuss these trial results.'"
+    },
+    "03_llm_tell_detector": {
+      "dimension": "llm_tell_detection",
+      "verdict": "FAIL",
+      "analysis": "clinical_context uses the same templated closing sentence used across hundreds of cases in this corpus pass — not case-specific physician voice.",
+      "improvement": "In clinical_context, replace the templated closing sentence with the case-specific replacement from Tone Critic (Y-BOCS and medication trials cited explicitly)."
+    },
+    "04_financial_auditor": {
+      "dimension": "financial_liability_surface",
+      "score": 5,
+      "analysis": "No inappropriate cost-liability language; no missing_cost_liability pattern required.",
+      "improvement": null
+    },
+    "05_legal_auditor": {
+      "dimension": "legal_disclosures_surface",
+      "score": 5,
+      "analysis": "Intended flaw missing_iro_notice: APPEAL RIGHTS describes internal appeals only — no independent external review / IRO language. Correct for pattern.",
+      "improvement": null
+    },
+    "06_contradiction_hunter": {
+      "dimension": "internal_contradiction",
+      "verdict": "PASS",
+      "analysis": "Age 34, diagnosis OCD, treatment TMS stable across profile, letter, and clinical_context.",
+      "improvement": null
+    },
+    "07_demographic_validator": {
+      "dimension": "demographic_plausibility",
+      "verdict": "PASS",
+      "analysis": "Female age 34 with severe OCD requesting TMS is plausible.",
+      "improvement": null
+    },
+    "11_dx_tx_match": {
+      "dimension": "diagnosis_treatment_match",
+      "verdict": "PASS",
+      "analysis": "TMS is a recognized intervention for treatment-resistant OCD.",
+      "improvement": null
+    },
+    "12_insurer_voice": {
+      "dimension": "insurer_voice_authenticity",
+      "score": 5,
+      "analysis": "Cold bureaucratic denial register; Cigna sign-off plausible.",
+      "improvement": null
+    },
+    "13_denial_logic": {
+      "dimension": "denial_logic_consistency",
+      "score": 5,
+      "analysis": "Vague level-of-care denial is intentional adversarial flaw, not internal contradiction.",
+      "improvement": null
+    },
+    "14_date_sanity": {
+      "dimension": "date_sanity",
+      "verdict": "PASS",
+      "analysis": "Notice 01/24/2026, request 01/06/2026, DOS 01/04/2026 — ordered plausibly.",
+      "improvement": null
+    },
+    "15_citation_traceability": {
+      "dimension": "citation_traceability",
+      "score": 5,
+      "analysis": "MCG cited without edition is acceptable surface vagueness for synthetic insurer letters.",
+      "improvement": null
+    },
+    "16_scope_guard": {
+      "dimension": "scope_guard",
+      "verdict": "PASS",
+      "analysis": "Commercial employer plan; no Medicare/Medicaid.",
+      "improvement": null
+    },
+    "17_safety_redactor": {
+      "dimension": "safety_redactor",
+      "verdict": "PASS",
+      "analysis": "Synthetic IDs only; no PHI patterns.",
+      "improvement": null
+    },
+    "18_flaw_injection_verifier": {
+      "dimension": "flaw_injection_verification",
+      "score": 5,
+      "verification_results": [
+        {
+          "pattern_id": "missing_iro_notice",
+          "status": "PRESENT",
+          "evidence": "APPEAL RIGHTS lists internal appeals only; no external review sentence."
+        },
+        {
+          "pattern_id": "mhpaea_step_therapy_asymmetry",
+          "status": "PRESENT",
+          "evidence": "Quote: 'For behavioral health benefits, plan step-therapy and documentation requirements may be applied more restrictively than comparable medical/surgical benefits for services of similar intensity.'"
+        }
+      ],
+      "improvement": null
+    },
+    "09_realism_assessor": {
+      "score": 4,
+      "note": "informational only"
+    },
+    "10_appeal_difficulty": {
+      "score": 3,
+      "note": "hidden from arbiter"
+    }
+  },
+  "arbiter": {
+    "case_id": "case_01_cigna_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "REVISE",
+    "reason": "LLM Tell Detector FAIL — clinical_context still uses batch template closing sentence.",
+    "tier_1_failures": [],
+    "tier_2_failures": [
+      "LLM Tell Detector",
+      "Tone Critic"
+    ],
+    "suggested_revisions": [
+      "In clinical_context, replace 'Chart documentation with dates, doses, and objective findings was submitted with the authorization request; the denial letter does not address those records.' with: 'Submitted records include Y-BOCS 29, fluvoxamine 300 mg ×16 weeks, clomipramine 200 mg ×14 weeks, and ERP since 2024; the denial cites level-of-care criteria but does not discuss these trial results.' [Source: LLM Tell Detector / Tone Critic]"
+    ]
+  },
+  "note": "Duplicate MHPAEA sentence was fixed before this pass. This evaluation is prompt-by-prompt agent judgment, not the batch script."
+}

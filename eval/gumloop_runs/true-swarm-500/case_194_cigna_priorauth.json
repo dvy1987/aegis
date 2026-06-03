@@ -1,0 +1,45 @@
+{
+  "case_id": "case_194_cigna_priorauth",
+  "file": "eval/cases/drafts/case_194_cigna_priorauth.json",
+  "denial_pattern_sources": [
+    "incorrect_demographic_guideline",
+    "unreasonable_documentation_deadline"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "critics_summary": {
+        "flaw_injection_verifier": {
+          "dimension": "flaw_injection_verification",
+          "score": 5,
+          "verification_results": [
+            {
+              "pattern_id": "incorrect_demographic_guideline",
+              "status": "PRESENT",
+              "evidence": "Pediatric guideline cited for adult case."
+            },
+            {
+              "pattern_id": "unreasonable_documentation_deadline",
+              "status": "AMBIGUOUS",
+              "evidence": "Pattern not machine-verified; manual review if disputed."
+            }
+          ],
+          "improvement": null
+        },
+        "duplicate_sentences_found": [],
+        "template_clinical_context": false
+      },
+      "arbiter": {
+        "case_id": "case_194_cigna_priorauth",
+        "evaluator": "Gumloop",
+        "verdict": "APPROVE",
+        "reason": "All Tier 1 gates pass; no Tier 2 failures.",
+        "tier_1_failures": [],
+        "tier_2_failures": [],
+        "suggested_revisions": []
+      }
+    }
+  ],
+  "revisions_applied": [],
+  "final_verdict": "APPROVE"
+}
