@@ -1,7 +1,16 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-02 (Session — Part A librarian + frontend model fix)
-**Phase:** **Execution — Part B swarm + eval corpus at scale; Part A v1 librarian built (uncommitted).**
+**Updated:** 2026-06-03 (Session — Cloud library + Vertex index live)
+**Phase:** **Execution — Part B swarm + eval corpus at scale; cloud library v1 indexed (uncommitted).**
+
+### Session (2026-06-03 — Cloud library + Vertex AI Search)
+- ✅ **Library corpus IA:** metadata schema, ADR-008, runbook, controlled vocab, **66-entry** redistributable seed catalog.
+- ✅ **Ingest pipeline:** download → stage → manifest → GCS upload script; priority-1 (**~29 docs**) in `gs://aegis-library-dm1oaz/library/v1/`.
+- ✅ **Vertex AI Search live:** data store `aegis-library-content-v1` (`CONTENT_REQUIRED`), engine `aegis-engine-content-v1`; live queries return GCS-linked hits.
+- ✅ **Spot-check queries:** `eval/library/spot_check_queries.json` (40 queries derived from 500 draft cases).
+- ✅ **`vertex_search.py`:** GCS URI → `corpus_doc_id` for citation paths when metadata lacks `doc_id`.
+- ⏭️ **Next:** wire `VERTEX_SEARCH_*` + `AEGIS_LIBRARY_BUCKET` into `.env`/Cloud Run; E2E `POST /v1/appeal` with grounded citations; expand to full 66-doc catalog; commit when PM asks.
+- 📁 **Local staging kept** at `/tmp/aegis-library-staging` (PM rule — do not delete without explicit OK).
 
 ### Session (Part A v1 librarian + frontend product model)
 - ✅ **Built Part A library path (offline-tested):** Search Planner + pre-flight `prepare_library_context` (cloud store seam, up to 5 trust-gated discovery fetches, Layer 3 query refinement stub). Spec **Approved**: `docs/specs/2026-06-01-aegis-v1-cloud-corpus-surgical-discovery-feature-spec.md`.
@@ -441,6 +450,20 @@ ahead of GCP/Phoenix setup, TDD, commits `8a35860`,`5720eaf`. Full unit **103 pa
 - **Defaults:** Gemini `location=global`, model `gemini-3.1-pro-preview` (verified available in this project).
 - **UX:** top-nav shows a green dot when the backend is connected (next to Settings).
 - **Still pending:** commit scope (repo has a very large dirty tree under `eval/cases/` + other unrelated WIP).
+
+## 2026-06-02 — Gumloop prompt-pass cleanup of draft denial cases (01–500)
+
+- **Goal:** run the full Gumloop prompt suite over synthetic denial-case drafts and apply revisions where needed.
+- **Outputs:**
+  - `eval/gumloop_runs/manual-llm-sample/01-10-full-swarm/swarm_report.json`
+  - `eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/index.json`
+  - Per-batch reports: `eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/<batch>/batch_report.json`
+  - One-page overview: `eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/SUMMARY.md`
+- **Key cleanup applied across drafts:**
+  - Removed the repeated template tail in `clinical_context` (“This directly contradicts…”) and replaced with schema-safe chart-note style text
+  - Repaired corrupted peer-to-peer sentence splices in `denial_letter_text`
+  - Fixed rare impossible demographics (male + postmenopausal osteoporosis)
+  - Normalized stray “age XX” artifacts when they contradicted `patient_profile.age`
 
 ## Next recommended action
 

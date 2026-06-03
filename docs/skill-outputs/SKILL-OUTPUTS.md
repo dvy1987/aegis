@@ -77,3 +77,4 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-02 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Part B swarm Phase 6 committed (Learning Coordinator re-point, 228 unit green) |
 | 2026-06-02 13:10 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Cloud-only library posture + explicit discovery error (no silent toggles); tests 231 passed |
 | 2026-06-02 16:41 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Nav connected dot + v1 model/location consistency; backend tests green |
+| 2026-06-02 17:59 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Gumloop prompt-pass on drafts (cases 01–500) + batch reports + SUMMARY.md |

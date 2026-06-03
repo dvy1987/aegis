@@ -1,0 +1,523 @@
+{
+  "generated_from": "/Users/divya/Projects/Building-apps/aegis/eval/cases/drafts",
+  "case_count": 500,
+  "query_count": 40,
+  "queries": [
+    {
+      "query": "Cigna Prior Authorization medical necessity appeal rights ERISA",
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 89,
+      "sample_case_glob": "case_*_cigna_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "Cigna prior authorization denial appeal documentation",
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 89,
+      "sample_case_glob": "case_*_cigna_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "MHPAEA parity Prior Authorization behavioral health step therapy",
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 89,
+      "sample_case_glob": "case_*_cigna_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "external review IRO adverse benefit determination ACA 2719",
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 89,
+      "sample_case_glob": "case_*_cigna_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "Cigna Medical Necessity medical necessity appeal rights ERISA",
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 86,
+      "sample_case_glob": "case_*_cigna_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "Cigna prior authorization denial appeal documentation",
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 86,
+      "sample_case_glob": "case_*_cigna_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "MHPAEA parity Medical Necessity behavioral health step therapy",
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 86,
+      "sample_case_glob": "case_*_cigna_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "external review IRO adverse benefit determination ACA 2719",
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 86,
+      "sample_case_glob": "case_*_cigna_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "Aetna Prior Authorization medical necessity appeal rights ERISA",
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 84,
+      "sample_case_glob": "case_*_aetna_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "Aetna prior authorization denial appeal documentation",
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 84,
+      "sample_case_glob": "case_*_aetna_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "MHPAEA parity Prior Authorization behavioral health step therapy",
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 84,
+      "sample_case_glob": "case_*_aetna_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "external review IRO adverse benefit determination ACA 2719",
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 84,
+      "sample_case_glob": "case_*_aetna_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "Aetna Medical Necessity medical necessity appeal rights ERISA",
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 83,
+      "sample_case_glob": "case_*_aetna_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "Aetna prior authorization denial appeal documentation",
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 83,
+      "sample_case_glob": "case_*_aetna_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "MHPAEA parity Medical Necessity behavioral health step therapy",
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 83,
+      "sample_case_glob": "case_*_aetna_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "external review IRO adverse benefit determination ACA 2719",
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 83,
+      "sample_case_glob": "case_*_aetna_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "UHC Prior Authorization medical necessity appeal rights ERISA",
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 80,
+      "sample_case_glob": "case_*_uhc_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "UHC prior authorization denial appeal documentation",
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 80,
+      "sample_case_glob": "case_*_uhc_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "MHPAEA parity Prior Authorization behavioral health step therapy",
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 80,
+      "sample_case_glob": "case_*_uhc_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "external review IRO adverse benefit determination ACA 2719",
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "case_slice_count": 80,
+      "sample_case_glob": "case_*_uhc_priorauth",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "UHC Medical Necessity medical necessity appeal rights ERISA",
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 78,
+      "sample_case_glob": "case_*_uhc_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "UHC prior authorization denial appeal documentation",
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 78,
+      "sample_case_glob": "case_*_uhc_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "MHPAEA parity Medical Necessity behavioral health step therapy",
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 78,
+      "sample_case_glob": "case_*_uhc_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "external review IRO adverse benefit determination ACA 2719",
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 78,
+      "sample_case_glob": "case_*_uhc_mednec",
+      "expected_domains": [
+        "legal",
+        "insurer",
+        "clinical",
+        "precedent"
+      ],
+      "min_hits": 1
+    },
+    {
+      "query": "Transcranial magnetic stimulation (TMS) medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 9,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Manipulation under anesthesia medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 9,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Intensive outpatient program (IOP) for depression medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 9,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Teprotumumab for thyroid eye disease medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 8,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Additional psychotherapy visits beyond plan annual limit medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 8,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Adult ADHD coaching plus medication management extension medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 7,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Endometrial ablation medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 7,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Inpatient medical detoxification (3\u20135 days) medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 7,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Adjunct lisdexamfetamine for BED medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 7,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Group cognitive behavioral therapy (16 sessions) medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 7,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Carpal tunnel release medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 7,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "Kyphoplasty medical necessity clinical evidence guideline",
+      "insurer": "",
+      "denial_type": "Medical Necessity",
+      "case_slice_count": 7,
+      "expected_domains": [
+        "clinical"
+      ],
+      "min_hits": 1,
+      "topic": "clinical_depth"
+    },
+    {
+      "query": "prior authorization utilization management evicore medical necessity denial",
+      "denial_pattern": "algo_boilerplate_fingerprint",
+      "case_slice_count": 83,
+      "expected_domains": [
+        "legal",
+        "precedent",
+        "insurer"
+      ],
+      "min_hits": 1,
+      "topic": "denial_pattern"
+    },
+    {
+      "query": "independent review organization external review notice adverse benefit determination",
+      "denial_pattern": "missing_iro_notice",
+      "case_slice_count": 61,
+      "expected_domains": [
+        "legal",
+        "precedent",
+        "insurer"
+      ],
+      "min_hits": 1,
+      "topic": "denial_pattern"
+    },
+    {
+      "query": "ERISA 29 CFR 2560.503 claims procedure appeal deadline documentation",
+      "denial_pattern": "unreasonable_documentation_deadline",
+      "case_slice_count": 55,
+      "expected_domains": [
+        "legal",
+        "precedent",
+        "insurer"
+      ],
+      "min_hits": 1,
+      "topic": "denial_pattern"
+    },
+    {
+      "query": "prior authorization utilization management evicore medical necessity denial",
+      "denial_pattern": "algo_time_delta",
+      "case_slice_count": 51,
+      "expected_domains": [
+        "legal",
+        "precedent",
+        "insurer"
+      ],
+      "min_hits": 1,
+      "topic": "denial_pattern"
+    }
+  ]
+}

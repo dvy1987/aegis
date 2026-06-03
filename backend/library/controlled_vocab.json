@@ -1,0 +1,48 @@
+{
+  "domains": ["clinical", "legal", "insurer", "precedent"],
+  "trust_tiers": [
+    "gov_regulatory",
+    "state_doi_iro",
+    "peer_reviewed",
+    "specialty_society",
+    "journalism",
+    "insurer_public"
+  ],
+  "licenses_allowed": [
+    "us_gov_public_domain",
+    "cc_by_4",
+    "cc_by_nc_4",
+    "insurer_public_terms",
+    "journalism_fair_use_summary"
+  ],
+  "insurers": ["Aetna", "Cigna", "UHC"],
+  "denial_types": ["Medical Necessity", "Prior Authorization"],
+  "topics": [
+    "appeals_rights",
+    "external_review",
+    "erisa_claims",
+    "mhpaea_parity",
+    "prior_authorization",
+    "medical_necessity",
+    "utilization_management",
+    "behavioral_health",
+    "step_therapy",
+    "experimental_investigational",
+    "claim_file_request",
+    "iro_precedent",
+    "evicore_um",
+    "documentation_deadlines",
+    "tms_ocd",
+    "migraine_preventive",
+    "adhd_treatment",
+    "ptsd_therapy",
+    "depression_iop",
+    "substance_use",
+    "orthopedic_surgery",
+    "bariatric",
+    "endocrine",
+    "pain_management",
+    "gynecologic",
+    "hematology"
+  ]
+}

@@ -1,0 +1,1111 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-06-02",
+  "description": "Redistributable-safe seed corpus for Aetna/Cigna/UHC mednec+priorauth (500-case benchmark). Ingest with backend/scripts/ingest_library_seed.py; upload only at demo.",
+  "entries": [
+    {
+      "id": "ecfr-45-cfr-147-136",
+      "title": "45 CFR 147.136 \u2014 Internal claims and appeals and external review",
+      "source_url": "https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-B/part-147/section-147.136",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "appeals_rights",
+        "external_review"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "eCFR",
+      "priority": 1
+    },
+    {
+      "id": "ecfr-29-cfr-2560-503-1",
+      "title": "29 CFR 2560.503-1 \u2014 ERISA benefit claims procedure",
+      "source_url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XXV/subchapter-G/part-2560/section-2560.503-1",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "erisa_claims",
+        "documentation_deadlines"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "eCFR",
+      "priority": 1
+    },
+    {
+      "id": "cms-internal-claims-appeals-guide",
+      "title": "CMS \u2014 Internal claims and appeals (marketplace TA)",
+      "source_url": "https://www.cms.gov/marketplace/technical-assistance-resources/internal-claims-and-appeals.pdf",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "pdf",
+      "topics": [
+        "appeals_rights",
+        "external_review"
+      ],
+      "source_org": "CMS",
+      "priority": 1
+    },
+    {
+      "id": "cms-external-appeals-overview",
+      "title": "CMS \u2014 Affordable Care Act: external appeals overview",
+      "source_url": "https://www.cms.gov/CCIIO/Resources/Files/external_appeals",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "external_review",
+        "appeals_rights"
+      ],
+      "source_org": "CMS",
+      "priority": 1
+    },
+    {
+      "id": "cms-ferp-external-review-guidance",
+      "title": "CMS \u2014 HHS-administered federal external review process guidance",
+      "source_url": "https://www.cms.gov/CCIIO/Resources/Regulations-and-Guidance/Downloads/FERP-Guidance_Final4_01-11-17-MM-508.pdf",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "pdf",
+      "topics": [
+        "external_review"
+      ],
+      "source_org": "CMS",
+      "priority": 1
+    },
+    {
+      "id": "cms-nsa-external-review-guidance",
+      "title": "CMS \u2014 External review / No Surprises Act guidance",
+      "source_url": "https://www.cms.gov/cciio/resources/regulations-and-guidance/downloads/nsa-guidance.pdf",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "pdf",
+      "topics": [
+        "external_review"
+      ],
+      "source_org": "CMS",
+      "priority": 2
+    },
+    {
+      "id": "cms-market-rules-checklist",
+      "title": "CMS \u2014 Federal market reforms checklist (2719 appeals)",
+      "source_url": "https://www.cms.gov/files/document/market-rules-checklist-nongrandfathered.pdf",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "pdf",
+      "topics": [
+        "appeals_rights"
+      ],
+      "source_org": "CMS",
+      "priority": 2
+    },
+    {
+      "id": "cms-mhpaea-faqs-31",
+      "title": "CMS \u2014 ACA FAQs Part 31 (MHPAEA implementation)",
+      "source_url": "https://www.cms.gov/cciio/resources/fact-sheets-and-faqs/downloads/faqs-31_final-4-20-16.pdf",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "pdf",
+      "topics": [
+        "mhpaea_parity",
+        "medical_necessity"
+      ],
+      "denial_types": [
+        "Medical Necessity"
+      ],
+      "source_org": "CMS",
+      "priority": 1
+    },
+    {
+      "id": "cms-mhpaea-faqs-17",
+      "title": "CMS \u2014 ACA FAQs Set 17 (MHPAEA disclosure / claim files)",
+      "source_url": "https://www.cms.gov/cciio/resources/fact-sheets-and-faqs/aca_implementation_faqs17",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "mhpaea_parity",
+        "claim_file_request"
+      ],
+      "source_org": "CMS",
+      "priority": 1
+    },
+    {
+      "id": "cms-mhpaea-nqtl-presentation",
+      "title": "CMS \u2014 MHPAEA NQTL comparative analysis (issuer presentation)",
+      "source_url": "https://www.cms.gov/files/document/mhpaea-nqtl-presentation-health-insurance-issuers.pdf",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "pdf",
+      "topics": [
+        "mhpaea_parity",
+        "utilization_management"
+      ],
+      "source_org": "CMS",
+      "priority": 2
+    },
+    {
+      "id": "dol-erisa-claims-regulation",
+      "title": "DOL \u2014 ERISA benefit claims procedure regulation (29 CFR 2560.503-1)",
+      "source_url": "https://www.dol.gov/node/63361",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "erisa_claims"
+      ],
+      "source_org": "DOL",
+      "priority": 1
+    },
+    {
+      "id": "dol-mhpaea-self-compliance-tool",
+      "title": "DOL \u2014 MHPAEA Self-Compliance Tool",
+      "source_url": "https://www.dol.gov/sites/dolgov/files/EBSA/laws-and-regulations/laws/mental-health-parity/mhpaea-self-compliance-tool.pdf",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "pdf",
+      "topics": [
+        "mhpaea_parity",
+        "step_therapy"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "DOL",
+      "priority": 1
+    },
+    {
+      "id": "govinfo-29-cfr-2560-503-1-pdf",
+      "title": "GovInfo \u2014 29 CFR 2560.503-1 (PDF)",
+      "source_url": "https://www.govinfo.gov/content/pkg/CFR-2022-title29-vol9/pdf/CFR-2022-title29-vol9-sec2560-503-1.pdf",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "pdf",
+      "topics": [
+        "erisa_claims"
+      ],
+      "source_org": "GovInfo",
+      "priority": 2
+    },
+    {
+      "id": "wa-oic-appeal-how-to",
+      "title": "WA OIC \u2014 How to appeal a health insurance denial",
+      "source_url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/how-appeal-health-insurance-denial",
+      "domain": "precedent",
+      "trust_tier": "state_doi_iro",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "appeals_rights",
+        "iro_precedent",
+        "medical_necessity"
+      ],
+      "source_org": "WA OIC",
+      "priority": 1
+    },
+    {
+      "id": "wa-oic-mednec-appeal-letters",
+      "title": "WA OIC \u2014 Medically necessary denial appeal examples",
+      "source_url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "domain": "precedent",
+      "trust_tier": "state_doi_iro",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "medical_necessity",
+        "appeals_rights"
+      ],
+      "denial_types": [
+        "Medical Necessity"
+      ],
+      "source_org": "WA OIC",
+      "priority": 1
+    },
+    {
+      "id": "wa-oic-appeals-guide-pdf",
+      "title": "WA OIC \u2014 Appeals guide (PDF)",
+      "source_url": "https://www.insurance.wa.gov/sites/default/files/2024-10/appeals-guide.pdf",
+      "domain": "precedent",
+      "trust_tier": "state_doi_iro",
+      "license": "us_gov_public_domain",
+      "fetch_format": "pdf",
+      "topics": [
+        "appeals_rights",
+        "iro_precedent"
+      ],
+      "source_org": "WA OIC",
+      "priority": 1
+    },
+    {
+      "id": "wa-oic-glossary-appeals",
+      "title": "WA OIC \u2014 Consumer insurance glossary (appeals)",
+      "source_url": "https://www.insurance.wa.gov/insurance-resources/consumers-insurance-glossary",
+      "domain": "precedent",
+      "trust_tier": "state_doi_iro",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "appeals_rights"
+      ],
+      "source_org": "WA OIC",
+      "priority": 2
+    },
+    {
+      "id": "cigna-customer-appeal-pdf",
+      "title": "Cigna \u2014 Customer Appeal Request (PDF)",
+      "source_url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "pdf",
+      "insurers": [
+        "Cigna"
+      ],
+      "topics": [
+        "appeals_rights"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "Cigna",
+      "priority": 1
+    },
+    {
+      "id": "cigna-appeals-grievances",
+      "title": "Cigna \u2014 Appeals and grievances (members)",
+      "source_url": "https://www.cigna.com/individuals-families/member-guide/appeals-grievances",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "Cigna"
+      ],
+      "topics": [
+        "appeals_rights",
+        "external_review"
+      ],
+      "source_org": "Cigna",
+      "priority": 1
+    },
+    {
+      "id": "cigna-provider-appeals-disputes",
+      "title": "Cigna \u2014 Provider appeals and disputes",
+      "source_url": "https://www.cigna.com/health-care-providers/coverage-and-claims/appeals-disputes",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "Cigna"
+      ],
+      "topics": [
+        "appeals_rights",
+        "prior_authorization"
+      ],
+      "source_org": "Cigna",
+      "priority": 1
+    },
+    {
+      "id": "cigna-coverage-policies-index",
+      "title": "Cigna \u2014 Coverage policies for providers",
+      "source_url": "https://www.cigna.com/health-care-providers/coverage-and-claims/policies",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "Cigna"
+      ],
+      "topics": [
+        "medical_necessity",
+        "utilization_management"
+      ],
+      "denial_types": [
+        "Medical Necessity"
+      ],
+      "source_org": "Cigna",
+      "priority": 1
+    },
+    {
+      "id": "cigna-precertification-policies",
+      "title": "Cigna \u2014 Precertification and prior authorization",
+      "source_url": "https://www.cigna.com/health-care-providers/coverage-and-claims/precertification",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "Cigna"
+      ],
+      "topics": [
+        "prior_authorization"
+      ],
+      "denial_types": [
+        "Prior Authorization"
+      ],
+      "source_org": "Cigna",
+      "priority": 1
+    },
+    {
+      "id": "cigna-hcp-payment-review-pdf",
+      "title": "Cigna \u2014 HCP payment / appeal review form",
+      "source_url": "https://www.cigna.com/static/www-cigna-com/docs/appeal-request-others.pdf",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "pdf",
+      "insurers": [
+        "Cigna"
+      ],
+      "topics": [
+        "prior_authorization",
+        "appeals_rights"
+      ],
+      "source_org": "Cigna",
+      "priority": 2
+    },
+    {
+      "id": "aetna-provider-appeal-pdf",
+      "title": "Aetna \u2014 Provider complaint and appeal request (PDF)",
+      "source_url": "https://www.aetna.com/content/dam/aetna/pdfs/aetnacom/healthcare-professionals/documents-forms/provider-complaint-appeal-request.pdf",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "pdf",
+      "insurers": [
+        "Aetna"
+      ],
+      "topics": [
+        "appeals_rights"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "Aetna",
+      "priority": 1
+    },
+    {
+      "id": "aetna-disputes-appeals-overview",
+      "title": "Aetna \u2014 Disputes and appeals overview (providers)",
+      "source_url": "https://www.aetna.com/health-care-professionals/disputes-appeals/disputes-appeals-overview.html",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "Aetna"
+      ],
+      "topics": [
+        "appeals_rights",
+        "prior_authorization"
+      ],
+      "source_org": "Aetna",
+      "priority": 1
+    },
+    {
+      "id": "aetna-dispute-process-members",
+      "title": "Aetna \u2014 Dispute process (members)",
+      "source_url": "https://www.aetna.com/insights/dispute-process.html",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "Aetna"
+      ],
+      "topics": [
+        "appeals_rights"
+      ],
+      "source_org": "Aetna",
+      "priority": 1
+    },
+    {
+      "id": "aetna-disputes-faq",
+      "title": "Aetna \u2014 Disputes and appeals FAQs",
+      "source_url": "https://www.aetna.com/faqs-health-insurance/health-care-professionals-dispute-process-faqs.html",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "Aetna"
+      ],
+      "topics": [
+        "appeals_rights",
+        "documentation_deadlines"
+      ],
+      "source_org": "Aetna",
+      "priority": 2
+    },
+    {
+      "id": "uhc-appeals-grievances-overview",
+      "title": "UHC \u2014 Appeals and grievances (member form)",
+      "source_url": "https://memberforms.uhc.com/Memberappealsandgrievances.html",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "UHC"
+      ],
+      "topics": [
+        "appeals_rights",
+        "claim_file_request",
+        "erisa_claims"
+      ],
+      "source_org": "UHC",
+      "priority": 1
+    },
+    {
+      "id": "uhc-wa-appeals-process",
+      "title": "UHC \u2014 WA appeals and grievances process (PDF)",
+      "source_url": "https://www.uhc.com/communityplan/assets/plandocuments/faq/WA-Appeals-Griev-Proces.pdf",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "pdf",
+      "insurers": [
+        "UHC"
+      ],
+      "topics": [
+        "appeals_rights",
+        "claim_file_request"
+      ],
+      "source_org": "UHC",
+      "priority": 2
+    },
+    {
+      "id": "uhc-medicare-appeals-overview",
+      "title": "UHC \u2014 Medicare appeals overview",
+      "source_url": "https://www.uhc.com/medicare/resources/ma-pdp-information-forms/medicare-appeal.html",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "UHC"
+      ],
+      "topics": [
+        "appeals_rights"
+      ],
+      "source_org": "UHC",
+      "priority": 2
+    },
+    {
+      "id": "propublica-evicore-denials",
+      "title": "ProPublica \u2014 EviCore and insurer prior authorization denials",
+      "source_url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "domain": "precedent",
+      "trust_tier": "journalism",
+      "license": "journalism_fair_use_summary",
+      "fetch_format": "html",
+      "insurers": [
+        "Aetna",
+        "Cigna",
+        "UHC"
+      ],
+      "topics": [
+        "evicore_um",
+        "prior_authorization",
+        "utilization_management"
+      ],
+      "denial_types": [
+        "Prior Authorization",
+        "Medical Necessity"
+      ],
+      "source_org": "ProPublica",
+      "priority": 1
+    },
+    {
+      "id": "propublica-claim-file-helper",
+      "title": "ProPublica \u2014 Claim File Helper",
+      "source_url": "https://projects.propublica.org/claimfile/",
+      "domain": "precedent",
+      "trust_tier": "journalism",
+      "license": "journalism_fair_use_summary",
+      "fetch_format": "html",
+      "topics": [
+        "claim_file_request"
+      ],
+      "source_org": "ProPublica",
+      "priority": 1
+    },
+    {
+      "id": "ama-prior-auth-research",
+      "title": "AMA \u2014 Prior authorization research and reports",
+      "source_url": "https://www.ama-assn.org/practice-management/prior-authorization/prior-authorization-research-reports",
+      "domain": "clinical",
+      "trust_tier": "specialty_society",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "topics": [
+        "prior_authorization"
+      ],
+      "source_org": "AMA",
+      "priority": 2
+    },
+    {
+      "id": "ama-prior-auth-serious-adverse",
+      "title": "AMA \u2014 Prior auth and serious adverse events",
+      "source_url": "https://www.ama-assn.org/practice-management/prior-authorization/1-3-doctors-has-seen-prior-auth-lead-serious-adverse-event",
+      "domain": "clinical",
+      "trust_tier": "specialty_society",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "topics": [
+        "prior_authorization"
+      ],
+      "source_org": "AMA",
+      "priority": 2
+    },
+    {
+      "id": "pmc-tms-ocd-meta-analysis",
+      "title": "PMC \u2014 TMS for OCD systematic review and meta-analysis",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10381766/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "tms_ocd",
+        "behavioral_health",
+        "medical_necessity"
+      ],
+      "denial_types": [
+        "Medical Necessity"
+      ],
+      "source_org": "PMC",
+      "priority": 1
+    },
+    {
+      "id": "pmc-rtms-guidelines-update",
+      "title": "PubMed \u2014 rTMS evidence-based guidelines update (2014-2018)",
+      "source_url": "https://pubmed.ncbi.nlm.nih.gov/31901449/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_nc_4",
+      "fetch_format": "html",
+      "topics": [
+        "tms_ocd",
+        "behavioral_health"
+      ],
+      "source_org": "PubMed",
+      "priority": 2
+    },
+    {
+      "id": "pmc-migraine-preventive-nma",
+      "title": "PMC \u2014 Migraine preventive drugs network meta-analysis",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10197489/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "migraine_preventive",
+        "medical_necessity"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "PMC",
+      "priority": 1
+    },
+    {
+      "id": "pmc-cgrp-mabs-episodic-migraine",
+      "title": "PMC \u2014 CGRP mAbs for episodic migraine systematic review",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7023812/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "migraine_preventive"
+      ],
+      "source_org": "PMC",
+      "priority": 1
+    },
+    {
+      "id": "pmc-erenumab-systematic-review",
+      "title": "PMC \u2014 Erenumab efficacy systematic review (GRADE)",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11938773/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "migraine_preventive"
+      ],
+      "source_org": "PMC",
+      "priority": 1
+    },
+    {
+      "id": "pmc-erenumab-vs-topiramate",
+      "title": "PMC \u2014 Erenumab vs topiramate phase 4 trial",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8793299/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "migraine_preventive"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-guidelines-industry-independence",
+      "title": "PMC \u2014 Medical guidelines and commercial interests",
+      "source_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10337729/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "medical_necessity",
+        "utilization_management"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-cpg-industry",
+      "title": "PMC \u2014 Clinical practice guidelines and industry",
+      "source_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3192394/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "medical_necessity"
+      ],
+      "source_org": "PMC",
+      "priority": 3
+    },
+    {
+      "id": "pmc-pns-chronic-pain-guidelines",
+      "title": "PMC \u2014 Peripheral nerve stimulation consensus guidelines",
+      "source_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12614495/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "pain_management",
+        "medical_necessity"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-medicare-lcd-medical-necessity",
+      "title": "PMC \u2014 Medicare LCDs and medical necessity (methods paper)",
+      "source_url": "https://ncbi.nlm.nih.gov/pmc/articles/PMC2517278/pdf/hesr0043-1285.pdf",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "pdf",
+      "topics": [
+        "medical_necessity",
+        "utilization_management"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-pad-guideline-2024",
+      "title": "PMC \u2014 2024 PAD management guideline (ACC/AHA)",
+      "source_url": "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC12782132",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "orthopedic_surgery",
+        "medical_necessity"
+      ],
+      "source_org": "PMC",
+      "priority": 3
+    },
+    {
+      "id": "healthcare-gov-appeal-decision",
+      "title": "HealthCare.gov \u2014 Appealing a health plan decision",
+      "source_url": "https://www.healthcare.gov/appeal-insurance-company-decision/",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "appeals_rights",
+        "external_review"
+      ],
+      "source_org": "CMS/HealthCare.gov",
+      "priority": 1
+    },
+    {
+      "id": "dol-mhpaea-enforcement-fact-sheet",
+      "title": "DOL \u2014 MHPAEA enforcement fact sheet",
+      "source_url": "https://www.dol.gov/agencies/ebsa/laws-and-regulations/laws/mental-health-parity/mhpaea-enforcement-2023",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "mhpaea_parity"
+      ],
+      "source_org": "DOL",
+      "priority": 1
+    },
+    {
+      "id": "hhs-mhpaea-fact-sheet",
+      "title": "HHS \u2014 MHPAEA fact sheet",
+      "source_url": "https://www.hhs.gov/sites/default/files/mental-health-parity-fact-sheet.pdf",
+      "domain": "legal",
+      "trust_tier": "gov_regulatory",
+      "license": "us_gov_public_domain",
+      "fetch_format": "pdf",
+      "topics": [
+        "mhpaea_parity"
+      ],
+      "source_org": "HHS",
+      "priority": 2
+    },
+    {
+      "id": "ca-dmhc-appeals",
+      "title": "California DMHC \u2014 How to file an appeal",
+      "source_url": "https://www.dmhc.ca.gov/fileacomplaint/healthplancomplaints.aspx",
+      "domain": "precedent",
+      "trust_tier": "state_doi_iro",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "appeals_rights",
+        "iro_precedent"
+      ],
+      "source_org": "CA DMHC",
+      "priority": 2
+    },
+    {
+      "id": "ny-dfs-appeals",
+      "title": "NY DFS \u2014 Health insurance appeals",
+      "source_url": "https://www.dfs.ny.gov/consumers/health_insurance/your_rights_to_appeal",
+      "domain": "precedent",
+      "trust_tier": "state_doi_iro",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "appeals_rights"
+      ],
+      "source_org": "NY DFS",
+      "priority": 2
+    },
+    {
+      "id": "tx-tdi-appeals",
+      "title": "Texas TDI \u2014 Medical necessity appeals",
+      "source_url": "https://www.tdi.texas.gov/consumer/appeals.html",
+      "domain": "precedent",
+      "trust_tier": "state_doi_iro",
+      "license": "us_gov_public_domain",
+      "fetch_format": "html",
+      "topics": [
+        "medical_necessity",
+        "appeals_rights"
+      ],
+      "source_org": "TX TDI",
+      "priority": 2
+    },
+    {
+      "id": "cigna-behavioral-appeals",
+      "title": "Cigna \u2014 Behavioral health appeals (member forms)",
+      "source_url": "https://www.cigna.com/individuals-families/member-guide/customer-forms/",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "Cigna"
+      ],
+      "topics": [
+        "behavioral_health",
+        "appeals_rights"
+      ],
+      "source_org": "Cigna",
+      "priority": 2
+    },
+    {
+      "id": "aetna-coverage-determinations",
+      "title": "Aetna \u2014 Coverage determinations (providers)",
+      "source_url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "Aetna"
+      ],
+      "topics": [
+        "medical_necessity",
+        "utilization_management"
+      ],
+      "denial_types": [
+        "Medical Necessity"
+      ],
+      "source_org": "Aetna",
+      "priority": 2
+    },
+    {
+      "id": "uhc-provider-prior-auth",
+      "title": "UHC \u2014 Prior authorization (providers)",
+      "source_url": "https://www.uhcprovider.com/en/prior-auth-advance-notification.html",
+      "domain": "insurer",
+      "trust_tier": "insurer_public",
+      "license": "insurer_public_terms",
+      "fetch_format": "html",
+      "insurers": [
+        "UHC"
+      ],
+      "topics": [
+        "prior_authorization"
+      ],
+      "denial_types": [
+        "Prior Authorization"
+      ],
+      "source_org": "UHC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-trd-guidelines-quality",
+      "title": "PMC \u2014 TRD treatment guidelines quality systematic review",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9901785/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "depression_iop",
+        "behavioral_health"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-ptsd-pe-dose-response",
+      "title": "PMC \u2014 PTSD PE dose-response and dropout",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10527917/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "ptsd_therapy"
+      ],
+      "source_org": "PMC",
+      "priority": 3
+    },
+    {
+      "id": "pmc-adhd-psychosocial-longterm",
+      "title": "PMC \u2014 Adult ADHD psychosocial treatments long-term meta-analysis",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5946687/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "adhd_treatment"
+      ],
+      "source_org": "PMC",
+      "priority": 3
+    },
+    {
+      "id": "pmc-trd-antidepressant-nma",
+      "title": "PMC \u2014 Treatment-resistant depression: network meta-analysis",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12032262/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "depression_iop",
+        "behavioral_health",
+        "tms_ocd"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-trd-augmentation-nma",
+      "title": "PMC \u2014 TRD augmentation strategies network meta-analysis",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9328668/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "depression_iop",
+        "behavioral_health"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-ptsd-psychotherapy-meta",
+      "title": "PMC \u2014 PTSD psychotherapies meta-analysis (PE vs others)",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4962479/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "ptsd_therapy",
+        "behavioral_health"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-ptsd-pe-contraindications",
+      "title": "PMC \u2014 Prolonged exposure for PTSD: contraindications review",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3406222/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "ptsd_therapy"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-ptsd-wet-vs-pe",
+      "title": "PMC \u2014 Written exposure therapy vs prolonged exposure for PTSD",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10448372/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "ptsd_therapy"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-adhd-adult-treatments-review",
+      "title": "PMC \u2014 Recent treatments for adults with ADHD",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10730462/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "adhd_treatment",
+        "behavioral_health"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-adhd-pharmacotherapy-nma",
+      "title": "PMC \u2014 Adult ADHD pharmacotherapy network meta-analysis",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7577505/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "adhd_treatment"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-carpal-tunnel-systematic-review",
+      "title": "PMC \u2014 Carpal tunnel release open vs endoscopic review",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8207842/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "orthopedic_surgery"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    },
+    {
+      "id": "pmc-carpal-tunnel-meta-rct",
+      "title": "PMC \u2014 Open vs endoscopic CTR meta-analysis of RCTs",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7187537/",
+      "domain": "clinical",
+      "trust_tier": "peer_reviewed",
+      "license": "cc_by_4",
+      "fetch_format": "html",
+      "topics": [
+        "orthopedic_surgery"
+      ],
+      "denial_types": [
+        "Medical Necessity",
+        "Prior Authorization"
+      ],
+      "source_org": "PMC",
+      "priority": 2
+    }
+  ]
+}

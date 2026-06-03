@@ -1,0 +1,446 @@
+{
+  "run_id": "2026-06-02T114254Z",
+  "batches": [
+    {
+      "batch": "011-020",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/011-020/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "021-030",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/021-030/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "031-040",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/031-040/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "041-050",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/041-050/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "051-060",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/051-060/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "061-070",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/061-070/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "071-080",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/071-080/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "081-090",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/081-090/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "091-100",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/091-100/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "101-110",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/101-110/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "111-120",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/111-120/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "121-130",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/121-130/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "131-140",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/131-140/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "141-150",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/141-150/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "151-160",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/151-160/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "161-170",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/161-170/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "171-180",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/171-180/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "181-190",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/181-190/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "191-200",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/191-200/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "201-210",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/201-210/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "211-220",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/211-220/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "221-230",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/221-230/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "231-240",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/231-240/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "241-250",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/241-250/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "251-260",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/251-260/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "261-270",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/261-270/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "271-280",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/271-280/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "281-290",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/281-290/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "291-300",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/291-300/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "301-310",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/301-310/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "311-320",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/311-320/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "321-330",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/321-330/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "331-340",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/331-340/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "341-350",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/341-350/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "351-360",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/351-360/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "361-370",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/361-370/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "371-380",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/371-380/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "381-390",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/381-390/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "391-400",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/391-400/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "401-410",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/401-410/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "411-420",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/411-420/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "421-430",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/421-430/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "431-440",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/431-440/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "441-450",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/441-450/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "451-460",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/451-460/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "461-470",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/461-470/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "471-480",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/471-480/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "481-490",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/481-490/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    },
+    {
+      "batch": "491-500",
+      "report": "eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/491-500/batch_report.json",
+      "round_2": {
+        "APPROVE": 10,
+        "REVISE": 0,
+        "DISCARD": 0
+      }
+    }
+  ]
+}

@@ -85,6 +85,37 @@ _P2P_SPLICE_RE = re.compile(
     re.DOTALL | re.IGNORECASE,
 )
 
+_P2P_SPLICE_INLINE_RE = re.compile(
+    r"If your provider wishes to discuss this determination\.\s+"
+    r"(Your treating physician may request a peer-to-peer discussion.+?"
+    r"(?:authorization decision|appeal process)\.), they may contact our physician review line\.",
+    re.DOTALL | re.IGNORECASE,
+)
+
+_P2P_SPLICE_APPEAL_COMMA_RE = re.compile(
+    r"If your provider wishes to discuss this determination\.\s*"
+    r"(\n\nYour treating physician may request a peer-to-peer discussion.+?"
+    r"written appeal\.), they may contact our physician review line\.",
+    re.DOTALL | re.IGNORECASE,
+)
+
+_P2P_SPLICE_APPEAL_COMMA_INLINE_RE = re.compile(
+    r"If your provider wishes to discuss this determination\.\s+"
+    r"(Your treating physician may request a peer-to-peer discussion.+?"
+    r"written appeal\.), they may contact our physician review line\.",
+    re.DOTALL | re.IGNORECASE,
+)
+
+
+def _reinsert_p2p_block(out: str, p2p: str) -> str:
+    if "YOUR RIGHT TO INFORMATION" in out and p2p.lower() not in out.lower():
+        return out.replace(
+            "\n\nYOUR RIGHT TO INFORMATION",
+            f"\n\n{p2p}\n\nYOUR RIGHT TO INFORMATION",
+            1,
+        )
+    return out
+
 
 def repair_denial_letter_artifacts(letter: str) -> str:
     """Fix known corruption from an earlier P2P splice into the provider-discussion sentence."""
@@ -98,12 +129,38 @@ def repair_denial_letter_artifacts(letter: str) -> str:
             out,
             count=1,
         )
-        if "YOUR RIGHT TO INFORMATION" in out and p2p.lower() not in out.lower():
-            out = out.replace(
-                "\n\nYOUR RIGHT TO INFORMATION",
-                f"\n\n{p2p}\n\nYOUR RIGHT TO INFORMATION",
-                1,
-            )
+        out = _reinsert_p2p_block(out, p2p)
+    m_inline = _P2P_SPLICE_INLINE_RE.search(out)
+    if m_inline:
+        p2p = m_inline.group(1).strip()
+        p2p = re.sub(r"process\.\s*$", "process.", p2p)
+        out = _P2P_SPLICE_INLINE_RE.sub(
+            "If your provider wishes to discuss this determination, they may contact "
+            "our physician review line.",
+            out,
+            count=1,
+        )
+        out = _reinsert_p2p_block(out, p2p)
+    m_appeal = _P2P_SPLICE_APPEAL_COMMA_RE.search(out)
+    if m_appeal:
+        p2p = m_appeal.group(1).strip()
+        out = _P2P_SPLICE_APPEAL_COMMA_RE.sub(
+            "If your provider wishes to discuss this determination, they may contact "
+            "our physician review line.",
+            out,
+            count=1,
+        )
+        out = _reinsert_p2p_block(out, p2p)
+    m_appeal_inline = _P2P_SPLICE_APPEAL_COMMA_INLINE_RE.search(out)
+    if m_appeal_inline:
+        p2p = m_appeal_inline.group(1).strip()
+        out = _P2P_SPLICE_APPEAL_COMMA_INLINE_RE.sub(
+            "If your provider wishes to discuss this determination, they may contact "
+            "our physician review line.",
+            out,
+            count=1,
+        )
+        out = _reinsert_p2p_block(out, p2p)
     out = re.sub(r"determination\., they may", "determination, they may", out)
     out = re.sub(r"decision\., they may", "decision, they may", out)
     return out

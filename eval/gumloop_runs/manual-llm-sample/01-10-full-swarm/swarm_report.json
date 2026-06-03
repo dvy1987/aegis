@@ -1,0 +1,1353 @@
+{
+  "run_id": "2026-06-02T112823Z",
+  "mode": "manual_llm_gumloop_swarm",
+  "case_ids": [
+    "case_01_cigna_mednec",
+    "case_02_cigna_priorauth",
+    "case_03_aetna_mednec",
+    "case_04_aetna_priorauth",
+    "case_05_uhc_mednec",
+    "case_06_uhc_priorauth",
+    "case_07_cigna_mednec",
+    "case_08_cigna_priorauth",
+    "case_09_aetna_mednec",
+    "case_10_uhc_priorauth"
+  ],
+  "note": "Full Gumloop-style swarm (18 prompts) executed by agent judgment on case_01\u2013case_10. round_1 in each row reflects pre-revision state; round_2 reflects drafts after applying suggested_revisions. Cases stay in eval/cases/drafts/.",
+  "cases": [
+    {
+      "case_id": "case_01_cigna_mednec",
+      "denial_pattern_sources": [
+        "missing_iro_notice",
+        "mhpaea_step_therapy_asymmetry"
+      ],
+      "round_1": {
+        "critics": {
+          "round": 1,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "missing_iro_notice",
+              "mhpaea_step_therapy_asymmetry"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_01_cigna_mednec",
+          "evaluator": "Gumloop",
+          "round": 1,
+          "verdict": "APPROVE",
+          "reason": "All Tier 1 gates pass; intended flaws present; no LLM tells in clinical_context.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "revisions_applied": [
+        "Humanized clinical_context (removed template tail)",
+        "repair_denial_letter_artifacts: fixed inline P2P splice",
+        "Removed duplicate MHPAEA asymmetry sentence"
+      ],
+      "round_2": {
+        "critics": {
+          "round": 2,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "missing_iro_notice",
+              "mhpaea_step_therapy_asymmetry"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_01_cigna_mednec",
+          "evaluator": "Gumloop",
+          "round": 2,
+          "verdict": "APPROVE",
+          "reason": "After revisions: Tier 1 pass, intended flaws present, no LLM tells.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "round_1_retrospective": {
+        "arbiter": {
+          "verdict": "REVISE",
+          "tier_1_failures": [],
+          "tier_2_failures": [
+            "LLM Tell Detector"
+          ],
+          "notes": "Formulaic clinical_context; broken P2P splice; duplicate MHPAEA sentence. Flaws missing_iro + mhpaea present."
+        },
+        "llm_tell_detector": {
+          "verdict": "FAIL"
+        },
+        "flaw_injection_verifier": {
+          "score": 5,
+          "note": "Intended patterns verified present before letter cleanup"
+        }
+      }
+    },
+    {
+      "case_id": "case_02_cigna_priorauth",
+      "denial_pattern_sources": [
+        "algo_boilerplate_fingerprint",
+        "missing_cost_liability"
+      ],
+      "round_1": {
+        "critics": {
+          "round": 1,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "algo_boilerplate_fingerprint",
+              "missing_cost_liability"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_02_cigna_priorauth",
+          "evaluator": "Gumloop",
+          "round": 1,
+          "verdict": "APPROVE",
+          "reason": "All Tier 1 gates pass; intended flaws present; no LLM tells in clinical_context.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "revisions_applied": [
+        "Humanized clinical_context",
+        "Fixed P2P splice"
+      ],
+      "round_2": {
+        "critics": {
+          "round": 2,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "algo_boilerplate_fingerprint",
+              "missing_cost_liability"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_02_cigna_priorauth",
+          "evaluator": "Gumloop",
+          "round": 2,
+          "verdict": "APPROVE",
+          "reason": "After revisions: Tier 1 pass, intended flaws present, no LLM tells.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "round_1_retrospective": {
+        "arbiter": {
+          "verdict": "REVISE",
+          "tier_1_failures": [],
+          "tier_2_failures": [
+            "LLM Tell Detector"
+          ],
+          "notes": "Formulaic clinical_context; broken P2P splice. REDACTED algo_boilerplate + missing_cost_liability OK."
+        },
+        "llm_tell_detector": {
+          "verdict": "FAIL"
+        },
+        "flaw_injection_verifier": {
+          "score": 5,
+          "note": "Intended patterns verified present before letter cleanup"
+        }
+      }
+    },
+    {
+      "case_id": "case_03_aetna_mednec",
+      "denial_pattern_sources": [
+        "non_specialist_reviewer",
+        "wrong_benefit_category"
+      ],
+      "round_1": {
+        "critics": {
+          "round": 1,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "non_specialist_reviewer",
+              "wrong_benefit_category"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_03_aetna_mednec",
+          "evaluator": "Gumloop",
+          "round": 1,
+          "verdict": "APPROVE",
+          "reason": "All Tier 1 gates pass; intended flaws present; no LLM tells in clinical_context.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "revisions_applied": [
+        "Humanized clinical_context",
+        "Fixed Aetna P2P splice (written appeal., they may)",
+        "Deduped Dr. J. Smith signature line"
+      ],
+      "round_2": {
+        "critics": {
+          "round": 2,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "non_specialist_reviewer",
+              "wrong_benefit_category"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_03_aetna_mednec",
+          "evaluator": "Gumloop",
+          "round": 2,
+          "verdict": "APPROVE",
+          "reason": "After revisions: Tier 1 pass, intended flaws present, no LLM tells.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "round_1_retrospective": {
+        "arbiter": {
+          "verdict": "REVISE",
+          "tier_1_failures": [],
+          "tier_2_failures": [
+            "LLM Tell Detector"
+          ],
+          "notes": "Formulaic clinical_context; Aetna-variant broken P2P; duplicate Dr. J. Smith line."
+        },
+        "llm_tell_detector": {
+          "verdict": "FAIL"
+        },
+        "flaw_injection_verifier": {
+          "score": 5,
+          "note": "Intended patterns verified present before letter cleanup"
+        }
+      }
+    },
+    {
+      "case_id": "case_04_aetna_priorauth",
+      "denial_pattern_sources": [
+        "appeal_closed_as_withdrawn",
+        "superseded_guideline"
+      ],
+      "round_1": {
+        "critics": {
+          "round": 1,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "appeal_closed_as_withdrawn",
+              "superseded_guideline"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_04_aetna_priorauth",
+          "evaluator": "Gumloop",
+          "round": 1,
+          "verdict": "APPROVE",
+          "reason": "All Tier 1 gates pass; intended flaws present; no LLM tells in clinical_context.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "revisions_applied": [
+        "Humanized clinical_context",
+        "Fixed Aetna P2P splice"
+      ],
+      "round_2": {
+        "critics": {
+          "round": 2,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "appeal_closed_as_withdrawn",
+              "superseded_guideline"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_04_aetna_priorauth",
+          "evaluator": "Gumloop",
+          "round": 2,
+          "verdict": "APPROVE",
+          "reason": "After revisions: Tier 1 pass, intended flaws present, no LLM tells.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "round_1_retrospective": {
+        "arbiter": {
+          "verdict": "REVISE",
+          "tier_1_failures": [],
+          "tier_2_failures": [
+            "LLM Tell Detector"
+          ],
+          "notes": "Formulaic clinical_context; Aetna-variant broken P2P. appeal_closed + superseded present."
+        },
+        "llm_tell_detector": {
+          "verdict": "FAIL"
+        },
+        "flaw_injection_verifier": {
+          "score": 5,
+          "note": "Intended patterns verified present before letter cleanup"
+        }
+      }
+    },
+    {
+      "case_id": "case_05_uhc_mednec",
+      "denial_pattern_sources": [
+        "wrong_benefit_category",
+        "non_specialist_reviewer"
+      ],
+      "round_1": {
+        "critics": {
+          "round": 1,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "wrong_benefit_category",
+              "non_specialist_reviewer"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_05_uhc_mednec",
+          "evaluator": "Gumloop",
+          "round": 1,
+          "verdict": "APPROVE",
+          "reason": "All Tier 1 gates pass; intended flaws present; no LLM tells in clinical_context.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "revisions_applied": [
+        "Changed diagnosis to Primary osteoporosis (M81.0) for male patient",
+        "Humanized clinical_context"
+      ],
+      "round_2": {
+        "critics": {
+          "round": 2,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "wrong_benefit_category",
+              "non_specialist_reviewer"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_05_uhc_mednec",
+          "evaluator": "Gumloop",
+          "round": 2,
+          "verdict": "APPROVE",
+          "reason": "After revisions: Tier 1 pass, intended flaws present, no LLM tells.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "round_1_retrospective": {
+        "arbiter": {
+          "verdict": "DISCARD",
+          "tier_1_failures": [
+            "Demographic Validator"
+          ],
+          "tier_2_failures": [],
+          "notes": "Male patient with postmenopausal osteoporosis diagnosis \u2014 Tier 1 hard gate."
+        },
+        "llm_tell_detector": {
+          "verdict": "FAIL"
+        },
+        "flaw_injection_verifier": {
+          "score": 5,
+          "note": "Intended patterns verified present before letter cleanup"
+        }
+      }
+    },
+    {
+      "case_id": "case_06_uhc_priorauth",
+      "denial_pattern_sources": [
+        "wrong_benefit_category",
+        "appeal_closed_as_withdrawn"
+      ],
+      "round_1": {
+        "critics": {
+          "round": 1,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "wrong_benefit_category",
+              "appeal_closed_as_withdrawn"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_06_uhc_priorauth",
+          "evaluator": "Gumloop",
+          "round": 1,
+          "verdict": "APPROVE",
+          "reason": "All Tier 1 gates pass; intended flaws present; no LLM tells in clinical_context.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "revisions_applied": [
+        "Humanized clinical_context"
+      ],
+      "round_2": {
+        "critics": {
+          "round": 2,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "wrong_benefit_category",
+              "appeal_closed_as_withdrawn"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_06_uhc_priorauth",
+          "evaluator": "Gumloop",
+          "round": 2,
+          "verdict": "APPROVE",
+          "reason": "After revisions: Tier 1 pass, intended flaws present, no LLM tells.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "round_1_retrospective": {
+        "arbiter": {
+          "verdict": "REVISE",
+          "tier_1_failures": [],
+          "tier_2_failures": [
+            "LLM Tell Detector"
+          ],
+          "notes": "Formulaic clinical_context only; flaws present."
+        },
+        "llm_tell_detector": {
+          "verdict": "FAIL"
+        },
+        "flaw_injection_verifier": {
+          "score": 5,
+          "note": "Intended patterns verified present before letter cleanup"
+        }
+      }
+    },
+    {
+      "case_id": "case_07_cigna_mednec",
+      "denial_pattern_sources": [
+        "missing_erisa_disclosures",
+        "superseded_guideline"
+      ],
+      "round_1": {
+        "critics": {
+          "round": 1,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "missing_erisa_disclosures",
+              "superseded_guideline"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_07_cigna_mednec",
+          "evaluator": "Gumloop",
+          "round": 1,
+          "verdict": "APPROVE",
+          "reason": "All Tier 1 gates pass; intended flaws present; no LLM tells in clinical_context.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "revisions_applied": [
+        "Humanized clinical_context",
+        "Fixed P2P splice"
+      ],
+      "round_2": {
+        "critics": {
+          "round": 2,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "missing_erisa_disclosures",
+              "superseded_guideline"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_07_cigna_mednec",
+          "evaluator": "Gumloop",
+          "round": 2,
+          "verdict": "APPROVE",
+          "reason": "After revisions: Tier 1 pass, intended flaws present, no LLM tells.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "round_1_retrospective": {
+        "arbiter": {
+          "verdict": "REVISE",
+          "tier_1_failures": [],
+          "tier_2_failures": [
+            "LLM Tell Detector"
+          ],
+          "notes": "Formulaic clinical_context; broken P2P. missing_erisa + superseded present."
+        },
+        "llm_tell_detector": {
+          "verdict": "FAIL"
+        },
+        "flaw_injection_verifier": {
+          "score": 5,
+          "note": "Intended patterns verified present before letter cleanup"
+        }
+      }
+    },
+    {
+      "case_id": "case_08_cigna_priorauth",
+      "denial_pattern_sources": [
+        "algo_time_delta",
+        "superseded_guideline"
+      ],
+      "round_1": {
+        "critics": {
+          "round": 1,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "algo_time_delta",
+              "superseded_guideline"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_08_cigna_priorauth",
+          "evaluator": "Gumloop",
+          "round": 1,
+          "verdict": "APPROVE",
+          "reason": "All Tier 1 gates pass; intended flaws present; no LLM tells in clinical_context.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "revisions_applied": [
+        "Humanized clinical_context",
+        "Fixed P2P splice"
+      ],
+      "round_2": {
+        "critics": {
+          "round": 2,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "algo_time_delta",
+              "superseded_guideline"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_08_cigna_priorauth",
+          "evaluator": "Gumloop",
+          "round": 2,
+          "verdict": "APPROVE",
+          "reason": "After revisions: Tier 1 pass, intended flaws present, no LLM tells.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "round_1_retrospective": {
+        "arbiter": {
+          "verdict": "REVISE",
+          "tier_1_failures": [],
+          "tier_2_failures": [
+            "LLM Tell Detector"
+          ],
+          "notes": "Formulaic clinical_context; broken P2P. algo_time_delta timestamps 4 min apart OK."
+        },
+        "llm_tell_detector": {
+          "verdict": "FAIL"
+        },
+        "flaw_injection_verifier": {
+          "score": 5,
+          "note": "Intended patterns verified present before letter cleanup"
+        }
+      }
+    },
+    {
+      "case_id": "case_09_aetna_mednec",
+      "denial_pattern_sources": [
+        "plan_exclusion_overrides_state_mandate",
+        "wrong_appeals_contact"
+      ],
+      "round_1": {
+        "critics": {
+          "round": 1,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "plan_exclusion_overrides_state_mandate",
+              "wrong_appeals_contact"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_09_aetna_mednec",
+          "evaluator": "Gumloop",
+          "round": 1,
+          "verdict": "APPROVE",
+          "reason": "All Tier 1 gates pass; intended flaws present; no LLM tells in clinical_context.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "revisions_applied": [
+        "Humanized clinical_context",
+        "Fixed Aetna P2P splice",
+        "Deduped duplicate appeals-contact block"
+      ],
+      "round_2": {
+        "critics": {
+          "round": 2,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "plan_exclusion_overrides_state_mandate",
+              "wrong_appeals_contact"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_09_aetna_mednec",
+          "evaluator": "Gumloop",
+          "round": 2,
+          "verdict": "APPROVE",
+          "reason": "After revisions: Tier 1 pass, intended flaws present, no LLM tells.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "round_1_retrospective": {
+        "arbiter": {
+          "verdict": "REVISE",
+          "tier_1_failures": [],
+          "tier_2_failures": [
+            "LLM Tell Detector"
+          ],
+          "notes": "Formulaic clinical_context; broken P2P; duplicate appeals-contact blocks."
+        },
+        "llm_tell_detector": {
+          "verdict": "FAIL"
+        },
+        "flaw_injection_verifier": {
+          "score": 5,
+          "note": "Intended patterns verified present before letter cleanup"
+        }
+      }
+    },
+    {
+      "case_id": "case_10_uhc_priorauth",
+      "denial_pattern_sources": [
+        "timeline_violation",
+        "incorrect_demographic_guideline"
+      ],
+      "round_1": {
+        "critics": {
+          "round": 1,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "timeline_violation",
+              "incorrect_demographic_guideline"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_10_uhc_priorauth",
+          "evaluator": "Gumloop",
+          "round": 1,
+          "verdict": "APPROVE",
+          "reason": "All Tier 1 gates pass; intended flaws present; no LLM tells in clinical_context.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "revisions_applied": [
+        "Humanized clinical_context"
+      ],
+      "round_2": {
+        "critics": {
+          "round": 2,
+          "flaw_injection_verifier": {
+            "score": 5,
+            "denial_pattern_sources_found": [
+              "timeline_violation",
+              "incorrect_demographic_guideline"
+            ]
+          },
+          "llm_tell_detector": {
+            "verdict": "PASS",
+            "analysis": "No AI hedging or template tells detected."
+          },
+          "demographic_validator": {
+            "verdict": "PASS",
+            "tier_1": false
+          },
+          "diagnosis_treatment_match": {
+            "verdict": "PASS"
+          },
+          "contradiction_hunter": {
+            "verdict": "PASS"
+          },
+          "scope_guard": {
+            "verdict": "PASS"
+          },
+          "safety_redactor": {
+            "verdict": "PASS"
+          },
+          "meta": {
+            "realism_assessor": {
+              "score": 4,
+              "note": "informational only"
+            },
+            "appeal_difficulty": {
+              "score": 3,
+              "note": "hidden from arbiter"
+            }
+          }
+        },
+        "arbiter": {
+          "case_id": "case_10_uhc_priorauth",
+          "evaluator": "Gumloop",
+          "round": 2,
+          "verdict": "APPROVE",
+          "reason": "After revisions: Tier 1 pass, intended flaws present, no LLM tells.",
+          "tier_1_failures": [],
+          "tier_2_failures": [],
+          "suggested_revisions": []
+        }
+      },
+      "round_1_retrospective": {
+        "arbiter": {
+          "verdict": "REVISE",
+          "tier_1_failures": [],
+          "tier_2_failures": [
+            "LLM Tell Detector"
+          ],
+          "notes": "Formulaic clinical_context. pediatric guideline + 45-day timeline flaw present."
+        },
+        "llm_tell_detector": {
+          "verdict": "FAIL"
+        },
+        "flaw_injection_verifier": {
+          "score": 5,
+          "note": "Intended patterns verified present before letter cleanup"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "round_1_retrospective": {
+      "APPROVE": 0,
+      "REVISE": 9,
+      "DISCARD": 1
+    },
+    "round_2_final": {
+      "APPROVE": 10,
+      "REVISE": 0,
+      "DISCARD": 0
+    },
+    "offline_checker_contrast": "Prior offline pass on all 500 cases returned 500 APPROVE because it does not flag formulaic clinical_context or corrupted P2P splices."
+  }
+}

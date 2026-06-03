@@ -126,12 +126,23 @@ class DiscoveryEngineVertexBackend:
             struct = dict(doc.struct_data) if doc.struct_data else {}
             derived = dict(doc.derived_struct_data) if doc.derived_struct_data else {}
             merged = {**derived, **struct}
+            uri = str(merged.get("uri", "") or "")
+            # When documents are imported as unstructured "content", Discovery Engine
+            # does not guarantee a stable human-readable document ID. Prefer the
+            # GCS object path (relative to our library prefix) so citations remain
+            # traceable (e.g. "legal/ecfr-45-cfr-147-136.md").
+            uri_doc_id = ""
+            if uri.startswith("gs://"):
+                parts = uri.split("/library/v1/", 1)
+                if len(parts) == 2:
+                    uri_doc_id = parts[1].lstrip("/")
             doc_id = (
                 merged.get("doc_id")
                 or merged.get("corpus_doc_id")
+                or uri_doc_id
                 or (doc.name.rsplit("/", 1)[-1] if doc.name else "unknown.md")
             )
-            if not str(doc_id).endswith(".md"):
+            if not str(doc_id).endswith((".md", ".pdf")):
                 doc_id = f"{doc_id}.md"
             body = merged.get("snippet") or merged.get("content") or merged.get("extractive_answers", "")
             if isinstance(body, list):
@@ -141,9 +152,7 @@ class DiscoveryEngineVertexBackend:
             score = float(getattr(result, "ranking_score", 0.0) or 0.0)
             hit_domain = merged.get("domain", domain)
             resolved_domain = hit_domain if hit_domain in DOMAIN_SUBDIR else domain
-            if str(doc_id).startswith(subdir) or f"/{subdir}/" in str(
-                merged.get("uri", "")
-            ):
+            if str(doc_id).startswith(subdir) or f"/{subdir}/" in uri:
                 resolved_domain = domain
             hits.append(
                 CorpusHit(
