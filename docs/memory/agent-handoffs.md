@@ -2009,3 +2009,42 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Next agent
 - If PM continues on repo: offer **audit-only** scripts (grep defects, no APPROVE counts) or Gumloop batch in PM's chosen tool — **never** claim done without PM verification.
+
+---
+
+## 2026-06-03 — Handoff (Cursor) — CRITICAL: library + judges + Phoenix improvement path
+
+### PM direction (record verbatim intent)
+- **Stop shortcuts.** Do not paper over missing judge-panel scores with simulator scores in `/showcase` — that is not the product story and does not prove Phoenix-driven improvement.
+- **Judges exist to make the product better**, not as a beauty contest. If the librarian pipeline cannot supply sources and judges cannot grade grounded drafts, **fix the pipeline** — do not bypass it.
+- **PM is building the library first** — agents should not race ahead of that; runtime wiring and eval come after library is ready.
+
+### Root cause found (why judge panel showed 0 / nothing)
+- Live `run_aegis_v1_pipeline` returned **`citations_used: 0`** with risk flags: `library_unavailable_no_cloud_index`, `library_thin_no_discovery`, `no_corpus_citations`, `phoenix_mcp_cold_start`.
+- **Judge panel needs traceable citations** (`citation_precheck` in `app/evals/part_a/deterministic_gates.py`) — no corpus hits → no citations → panel cannot produce a meaningful weighted quality score.
+- **Local corpus path mismatch (if ever used):** `tools.py` uses `CORPUS_DIR = backend/app/corpus` but on-disk corpus is **`backend/corpus/`**. v1 posture is **cloud-only** (ADR/spec) — real fix is **Vertex Search wired in `.env`/Cloud Run**, not shimming local paths alone.
+
+### Phoenix + improvement (plain)
+- **Tracing works** (OTEL → Phoenix collector) for live runs.
+- **`phoenix_mcp_lookup()` is still a stub** (`cold_start`) — drafts do **not** read prior Phoenix traces yet. Simulator feedback does **not** go to Phoenix MCP; improvement demo must be **eval traces + optional MCP memory on**, not simulator-as-Phoenix.
+- Partial work: `/v1/showcase/evaluate` + UI button "Run evaluation now (live)" — blocked until library + citations work; Phoenix span **annotation** upload hit HTTP 405 on Cloud path (best-effort now).
+
+### 🔴 CRITICAL TODO (in order — do not skip)
+1. **PM: finish building / indexing the library** (GCS + Vertex `aegis-library-content-v1` per 2026-06-03 session — see handoff above for env vars).
+2. **Wire library into runtime:** `VERTEX_SEARCH_*` + `AEGIS_LIBRARY_BUCKET` in `.env` and Cloud Run; verify `POST /v1/appeal` returns **non-zero `citations_used`** and no `library_unavailable_no_cloud_index`.
+3. **Verify librarian when thin:** with `discovery_enabled=true`, discovery ingest + re-search must run per `prepare_library_context` / `LiteratureDiscovery` (trust-gated rules in spec — runtime additions must stay reliable).
+4. **Only then:** judge panel + `/showcase` live eval — baseline `drafter_v1` vs candidate `drafter_v2`; scores must come from **panel**, not simulator fallback.
+5. **Wire Phoenix MCP reads** into `phoenix_mcp_lookup` so "memory on vs off" counterfactual is real (not cold_start stub).
+6. **Do not** claim "improvement because of Phoenix" until (4)+(5) pass on at least one measured case.
+
+### Deferred (explicit)
+- Simulator-score fallback for showcase (rejected by PM).
+- Treating recorded `/showcase` fixtures as proof of live improvement without re-run after library wired.
+
+### Next agent should know
+- User-facing draft (`/appeal` + live API) can work without library; **grounded citations + judge scores + Phoenix improvement story cannot**.
+- Cloud library build may exist in repo but **is not the same as product using it** until env wired and E2E citation check passes.
+
+### Revisit triggers
+- `citations_used > 0` on a standard test denial → proceed to judge/showcase/MCP.
+- If panel still null with citations present → debug teacher packet / denial_type labels vs `safety_scope_gate` insurer enums.

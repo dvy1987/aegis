@@ -1,7 +1,13 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-03 (PM trust incident — eval sign-off invalid)
+**Updated:** 2026-06-03 (CRITICAL: library → judges → Phoenix improvement)
 **Phase:** **Execution — Part B swarm + eval corpus at scale; cloud library v1 indexed (uncommitted).**
+
+### 🔴 CRITICAL TODO — library before judges / showcase / Phoenix improvement
+- **PM is building the library first.** Do not bypass judge panel with simulator scores.
+- **Blocker:** live v1 runs return `citations_used: 0` until Vertex library env is wired (`VERTEX_SEARCH_*` in `.env`/Cloud Run). Judges need citations; panel score stays empty without them.
+- **`phoenix_mcp_lookup` still stub** (cold_start) — traces land in Phoenix but memory does not improve drafts yet.
+- **Order:** (1) library indexed → (2) runtime wired + citations on `/v1/appeal` → (3) librarian when thin → (4) judge panel + live `/showcase` eval → (5) Phoenix MCP reads. See latest handoff in `agent-handoffs.md` (2026-06-03 CRITICAL).
 
 ### ⚠️ EVAL CORPUS — DO NOT TRUST CURSOR SIGN-OFF (2026-06-03)
 - PM reports **~5 days wasted** on false "full Gumloop / 500 APPROVE" claims from Cursor agent.
