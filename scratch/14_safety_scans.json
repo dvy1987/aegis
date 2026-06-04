@@ -1,0 +1,5 @@
+{
+  "safety_redactor": "PASS",
+  "contradiction_hunter": "PASS",
+  "notes": "Automated regex scans for banned topics and PHI found zero hits. Core factual alignment verified deterministically."
+}

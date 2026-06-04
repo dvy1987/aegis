@@ -1,0 +1,22 @@
+{
+  "matrix_cell": {
+    "insurer": "Aetna",
+    "denial_type": "Prior Authorization",
+    "specialty": "msk",
+    "patient_age_band": "41-55",
+    "patient_gender": "M",
+    "sub_tactic": "modality_substitution"
+  },
+  "diagnosis": "Chronic Achilles tendinopathy (M76.60)",
+  "treatment_requested": "Platelet-rich plasma (PRP) injection",
+  "denial_rationale_seed": "Aetna medical policy considers PRP experimental and investigational for Achilles tendinopathy. Furthermore, a less costly modality is appropriate. Plan policy requires a step-down therapeutic approach, such as a localized corticosteroid injection, prior to authorization.",
+  "rebuttal_seed": "Corticosteroid injection is contraindicated for this patient due to an elevated risk of Achilles tendon rupture. Patient factors make the substituted modality unsafe.",
+  "patient_age": 48,
+  "patient_gender": "M",
+  "plan_funding_type": "self_funded",
+  "intended_flaw_types": [
+    "missing_erisa_disclosures",
+    "algo_reviewer_no_credentials"
+  ],
+  "intended_appeal_difficulty": 5
+}

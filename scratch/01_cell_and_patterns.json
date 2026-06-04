@@ -1,0 +1,34 @@
+{
+  "cell": {
+    "insurer": "Aetna",
+    "denial_type": "Prior Authorization",
+    "specialty": "msk",
+    "patient_age_band": "41-55",
+    "patient_gender": "M",
+    "sub_tactic": "modality_substitution"
+  },
+  "patterns": [
+    {
+      "id": "missing_erisa_disclosures",
+      "category": "procedural_disclosure",
+      "description": "Denial letter omits some or all legally required ERISA disclosure rights",
+      "source": "DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
+      "insurer_affinity": ["Aetna", "Cigna"],
+      "realistic_flaws": ["missing external review right", "missing civil action right"],
+      "appeal_vector": "Procedural violation under 29 U.S.C. § 1133"
+    },
+    {
+      "id": "algo_reviewer_no_credentials",
+      "category": "algorithmic_ai_denial",
+      "description": "Denial names a reviewing physician but lists no specialty, credentials, or license number. Filer can cross-check the named physician against state medical board records to verify specialty mismatch or implausible review volume.",
+      "source": "ERISA 29 U.S.C. § 1133; MHPAEA Final Rule 2024 (29 CFR § 2590.712); Hansens v. Cigna (D. Conn. 2023)",
+      "insurer_affinity": ["Cigna", "Aetna"],
+      "realistic_flaws": ["reviewer listed by name only, no specialty or credentials", "reviewer specialty does not match the clinical area of the denied service"],
+      "appeal_vector": "Invoke ERISA right to reviewer credentials; request the reviewing physician's name, specialty, license number, and time spent on this case. If credentials are missing or specialty mismatched, the denial review was procedurally defective."
+    }
+  ],
+  "pattern_ids_list": [
+    "missing_erisa_disclosures",
+    "algo_reviewer_no_credentials"
+  ]
+}

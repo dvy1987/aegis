@@ -1,0 +1,26 @@
+{
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Used for CPB citation framing and standard Aetna experimental/investigational boilerplate."
+    },
+    {
+      "ref_id": "cms-abd-model-2011",
+      "title": "Model Notice of Adverse Benefit Determination (ACA/ERISA)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Used for standard header, denial code framing, and explanation of basis sections."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "ERISA Claims Procedure — adverse benefit determination content (29 CFR § 2560.503-1)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Used as the anti-pattern: the generated letter intentionally violates this by omitting ERISA disclosures (civil action/external review) and omitting reviewer credentials."
+    }
+  ],
+  "denial_letter_text": "AETNA\nPO Box 14079\nLexington, KY 40512\n\nDate: June 4, 2026\nMember Name: John Doe\nMember ID: W123456789\nClaim/Authorization Number: AUTH-987654321\nProvider: Precision Orthopedics and Sports Medicine\nService Requested: Platelet-Rich Plasma (PRP) Injection, Achilles Tendon (CPT 0232T)\nDate(s) of Service: TBD\n\nNOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDear John Doe,\n\nWe received a prior authorization request for a Platelet-Rich Plasma (PRP) injection. We have reviewed the clinical information provided by your physician.\n\nYour request is denied. This service is not medically necessary under your plan.\n\nAetna Clinical Policy Bulletin (CPB) considers PRP experimental and investigational for Achilles tendinopathy. The submitted records do not meet CPB criteria for coverage.\n\nFurthermore, a less costly modality is appropriate. Plan policy requires a step-down therapeutic approach. A localized corticosteroid injection is required prior to authorization. The documentation provided does not show that you have tried and failed a localized corticosteroid injection.\n\nTherefore, we cannot approve the requested PRP injection.\n\nReviewing Medical Director:\nDr. Smith\n\nAPPEAL RIGHTS\nIf you disagree with this decision, you have the right to appeal. You or your authorized representative must submit your internal appeal in writing within 180 days of receiving this notice. Please include any additional medical records or documentation that you believe supports your request.\n\nPlease send your written appeal to:\nAetna Appeals Department\nPO Box 14463\nLexington, KY 40512\n\nIf you have any questions regarding this notice, please contact Member Services at the number on the back of your ID card."
+}

@@ -1,0 +1,11 @@
+{
+  "letter_words": 236,
+  "letter_ok": true,
+  "context_words": 153,
+  "context_ok": true,
+  "denial_pattern_sources_formatted": [
+    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
+    "algo_reviewer_no_credentials: ERISA 29 U.S.C. § 1133; MHPAEA Final Rule 2024 (29 CFR § 2590.712); Hansens v. Cigna (D. Conn. 2023)"
+  ],
+  "trims_applied": []
+}

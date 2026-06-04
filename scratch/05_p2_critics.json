@@ -1,0 +1,12 @@
+{
+  "InsurerVoiceCritic": {
+    "score": 5,
+    "confidence": 0.9,
+    "reasoning": "The letter effectively captures Aetna's cool, procedural tone with short, fact-bare paragraphs..."
+  },
+  "DenialLogicCritic": {
+    "score": 3,
+    "confidence": 0.9,
+    "reasoning": "The letter cites a plausible guideline ('Aetna Clinical Policy Bulletin') and successfully mimics real-world shoddiness by combining contradictory denial reasons... The explicit reliance on the prompt's wording makes the overall logic plausible but generic."
+  }
+}

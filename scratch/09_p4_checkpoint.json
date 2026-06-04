@@ -1,0 +1,14 @@
+{
+  "by_pattern": {
+    "missing_erisa_disclosures": "present",
+    "algo_reviewer_no_credentials": "needs_llm"
+  },
+  "present": [
+    "missing_erisa_disclosures"
+  ],
+  "absent": [],
+  "needs_llm": [
+    "algo_reviewer_no_credentials"
+  ],
+  "aligned": true
+}

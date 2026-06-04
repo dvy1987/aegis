@@ -1,0 +1,12 @@
+{
+  "InsurerVoiceCritic": {
+    "score": 1,
+    "confidence": 0.9,
+    "reasoning": "The letter correctly references the 'Aetna Clinical Policy Bulletin'. However, it heavily exhibits Cigna's specific style fingerprints..."
+  },
+  "DenialLogicCritic": {
+    "score": 5,
+    "confidence": 0.9,
+    "reasoning": "The denial letter exhibits authentically shoddy logic by presenting a contradictory rationale typical of real-world insurers..."
+  }
+}
