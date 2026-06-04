@@ -71,7 +71,7 @@
       "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
     }
   ],
-  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open Access Plus (employer-sponsored group health plan)\nMember ID: W100055433          Group #: GRP-1007\nAuthorization / Reference #: UM-2026-104980\nClaim #: CLM-2026-188372\nDate of Service (requested): 01/10/2026\nTreating provider (as submitted): Harborview Clinical Partners\n\nDear Member,\n\nThis document is notice of an adverse benefit determination. We received your provider's precertification / medical necessity review request on 01/12/2026 for A1 pulley release related to Trigger finger, ring finger (M65.30). After clinical review, we are unable to approve this request.\n\nCASE SUMMARY\nService requested: A1 pulley release\nDiagnosis (as submitted): Trigger finger, ring finger (M65.30)\nDenial code: CO-96 \u2014 Non-covered charge \u2014 service denied as not medically necessary under plan criteria.\nClinical policy applied:\n\nClinical criteria applied: InterQual criteria (2018) and/or older MCG modules (superseded guideline reference).\n\nClinical policy applied includes superseded criteria (e.g., older InterQual/MCG modules) that may not reflect current standards. Coverage Policy 107 under Cigna Medical Coverage Policy and Milliman Care Guidelines (MCG)\n\nEXPLANATION OF DECISION\nOur review applied the criteria in Coverage Policy 107 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Coverage requires a defined course of conservative therapy before A1 pulley release. Documentation does not show the required duration or type of conservative care.\n\nSpecifically, the information provided does not satisfy the MCG Care Guidelines (edition not specified) and utilization-management requirements associated with conservative treatment required. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. Diagnosis and procedure codes used in this determination are available upon request, as required by applicable federal standards.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYour treating physician may request a peer-to-peer discussion with a Cigna medical director regarding this determination before or during the appeal process.\n\nYOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file, including documents, clinical criteria, and other information we considered in making this determination. Submit your request to the address shown on this notice or through the member portal identified in your plan materials.\n\nAPPEAL RIGHTS\nYou have the right to appeal this determination. If this denial is upheld after internal review, you may have the right to request an independent external review of our decision at no cost to you, subject to applicable federal and state requirements. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W100055433) and reference UM-2026-104980. \n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.\n\nSincerely,\n\nCigna Health Care Management\nMedical Review Unit",
+  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open Access Plus (employer-sponsored group health plan)\nMember ID: W100055433          Group #: GRP-1007\nAuthorization / Reference #: UM-2026-104980\nClaim #: CLM-2026-188372\nDate of Service (requested): 01/10/2026\nTreating provider (as submitted): Harborview Clinical Partners\n\nDear Member,\n\nThis document is notice of an adverse benefit determination. We received your provider's precertification / medical necessity review request on 01/12/2026 for A1 pulley release related to Trigger finger, ring finger (M65.30). After clinical review, we are unable to approve this request.\n\nCASE SUMMARY\nService requested: A1 pulley release\nDiagnosis (as submitted): Trigger finger, ring finger (M65.30)\nDenial code: CO-96 \u2014 Non-covered charge \u2014 service denied as not medically necessary under plan criteria.\nClinical policy applied: Coverage Policy 107 under Cigna Medical Coverage Policy and Milliman Care Guidelines (MCG), 2018 edition.\n\nEXPLANATION OF DECISION\nOur review applied the criteria in Coverage Policy 107 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Coverage requires a defined course of conservative therapy before A1 pulley release. Documentation does not show the required duration or type of conservative care.\n\nSpecifically, the information provided does not satisfy the MCG Care Guidelines, 2018 edition, and utilization-management requirements associated with conservative treatment required. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. Diagnosis and procedure codes used in this determination are available upon request, as required by applicable federal standards.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYour treating physician may request a peer-to-peer discussion with a Cigna medical director regarding this determination before or during the appeal process.\n\nYOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file, including documents, clinical criteria, and other information we considered in making this determination. Submit your request to the address shown on this notice or through the member portal identified in your plan materials.\n\nAPPEAL RIGHTS\nYou have the right to appeal this determination. If this denial is upheld after internal review, you may have the right to request an independent external review of our decision at no cost to you, subject to applicable federal and state requirements. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W100055433) and reference UM-2026-104980. \n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.\n\nSincerely,\n\nCigna Health Care Management\nMedical Review Unit",
   "clinical_context": "The 49-year-old member has Trigger finger, ring finger (M65.30). She has been treated under commercial coverage with A1 pulley release recommended as the next appropriate step. Locking daily; failed steroid injection twice. Submitted documentation supports medical necessity for A1 pulley release in the setting of Trigger finger, ring finger (M65.30); the denial letter does not discuss those records or cite the objective findings in the file.",
   "submission_timestamp": null,
   "denial_timestamp": null,
@@ -114,206 +114,40 @@
     "schema_version": "1.1.0",
     "diversity_matrix_version": "1.0.0",
     "critic_verdicts": {
-      "matrix_coverage": {
-        "dimension": "matrix_coverage",
-        "reasoning": "The brief matches the assigned Cigna / surgical cell and executes sub_tactic 'conservative_treatment_required' with a clinically appropriate Trigger finger, ring finger (M65.30) \u2192 A1 pulley release pair.",
-        "score": "PASS",
-        "confidence": 0.95,
-        "evidence_quotes": [
-          "Trigger finger, ring finger (M65.30)",
-          "A1 pulley release",
-          "conservative_treatment_required"
-        ],
-        "improvement": null
-      },
-      "scenario_realism": {
-        "dimension": "scenario_realism",
-        "reasoning": "Diagnosis, prior treatments, and insurer administrative posture reflect everyday commercial UM denials rather than textbook perfection.",
-        "score": 5,
-        "confidence": 0.85,
-        "evidence_quotes": [
-          "Trigger finger, ring finger (M65.30)",
-          "A1 pulley release"
-        ],
-        "improvement": null
-      },
-      "insurer_voice": {
-        "dimension": "insurer_voice",
-        "reasoning": "Letter reads as authentic Cigna correspondence with MCG Care Guidelines and procedural tone.",
-        "score": 5,
-        "confidence": 0.85,
-        "evidence_quotes": [
-          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open Access Plus (employer-sponsored group hea"
-        ],
-        "improvement": null
-      },
-      "denial_logic": {
-        "dimension": "denial_logic",
-        "reasoning": "Denial logic coherently applies sub_tactic 'conservative_treatment_required' without internal contradiction.",
-        "score": 5,
-        "confidence": 0.85,
-        "evidence_quotes": [
-          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open Access Plus (employer-sponsored group hea"
-        ],
-        "improvement": null
-      },
-      "clinical_realism": {
-        "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
-        "score": 3,
-        "confidence": 0.85,
-        "evidence_quotes": [
-          "The 49-year-old member has Trigger finger, ring finger (M65.30). She has been treated under commercial coverage with A1 "
-        ],
-        "improvement": null
-      },
-      "diagnosis_treatment_match": {
-        "dimension": "diagnosis_treatment_match",
-        "reasoning": "A1 pulley release is a standard intervention for Trigger finger, ring finger (M65.30) in US commercial practice.",
-        "score": "PASS",
-        "confidence": 0.95,
-        "evidence_quotes": [
-          "Trigger finger, ring finger (M65.30)",
-          "A1 pulley release"
-        ],
-        "improvement": null
-      },
-      "contradiction_hunter": {
-        "dimension": "contradiction_hunter",
-        "reasoning": "Patient profile, denial letter, and clinical context agree on diagnosis, requested service, and timeline without irreconcilable conflicts.",
-        "score": "PASS",
-        "confidence": 0.95,
-        "evidence_quotes": [
-          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open A"
-        ],
-        "improvement": null
-      },
-      "llm_tell_detector": {
-        "dimension": "llm_tell_detector",
-        "reasoning": "Some templated insurer phrasing remains, but paragraph rhythm and specificity avoid obvious chatbot tells.",
-        "score": 3,
-        "confidence": 0.85,
-        "evidence_quotes": [
-          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open A"
-        ],
-        "improvement": null
-      },
-      "overall_tone": {
-        "dimension": "overall_tone",
-        "reasoning": "Cool, administrative insurer voice without inflammatory or marketing language.",
-        "score": 5,
-        "confidence": 0.85,
-        "evidence_quotes": [
-          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/30/2026\nCigna Open A"
-        ],
-        "improvement": null
-      },
-      "financial_auditor": {
-        "dimension": "financial_auditor",
-        "reasoning": "Dollar amounts are sparse; denial focuses on medical necessity rather than cost-shifting.",
-        "score": 3,
-        "confidence": 0.85,
-        "evidence_quotes": [],
-        "improvement": null
-      },
-      "legal_auditor": {
-        "dimension": "legal_auditor",
-        "reasoning": "Appeal rights are mentioned but one ERISA/IRO disclosure element is intentionally thin (exploitable flaw).",
-        "score": 3,
-        "confidence": 0.85,
-        "evidence_quotes": [
-          "appeal within 180 days"
-        ],
-        "improvement": null
-      },
-      "demographic_validator": {
-        "dimension": "demographic_validator",
-        "reasoning": "Age and gender in profile align with clinical narrative without stereotype violations.",
-        "score": "PASS",
-        "confidence": 0.95,
-        "evidence_quotes": [],
-        "improvement": null
-      },
-      "scope_guard": {
-        "dimension": "scope_guard",
-        "reasoning": "In-scope commercial Cigna Medical Necessity case with no Medicare/Medicaid framing.",
-        "score": "PASS",
-        "confidence": 0.95,
-        "evidence_quotes": [
-          "Cigna"
-        ],
-        "improvement": null
-      },
-      "date_sanity": {
-        "dimension": "date_sanity",
-        "reasoning": "Referenced dates follow a coherent authorization \u2192 denial \u2192 appeal window sequence.",
-        "score": "PASS",
-        "confidence": 0.95,
-        "evidence_quotes": [],
-        "improvement": null
-      },
-      "citation_traceability": {
-        "dimension": "citation_traceability",
-        "reasoning": "Policy citations are named at a high level; edition numbers are deliberately vague (flaw).",
-        "score": 3,
-        "confidence": 0.85,
-        "evidence_quotes": [
-          "Clinical Policy Bulletin"
-        ],
-        "improvement": null
-      },
+      "matrix_coverage": {"dimension": "matrix_coverage", "reasoning": "The brief matches the assigned Cigna / surgical cell and executes sub_tactic 'conservative_treatment_required' with a clinically appropriate Trigger finger, ring finger (M65.30) \u2192 A1 pulley release pair.", "score": "PASS", "confidence": 0.95, "evidence_quotes": ["Trigger finger, ring finger (M65.30)", "A1 pulley release", "conservative_treatment_required"], "improvement": null},
+      "scenario_realism": {"dimension": "scenario_realism", "reasoning": "Diagnosis, prior treatments, and insurer administrative posture reflect everyday commercial UM denials rather than textbook perfection.", "score": 5, "confidence": 0.85, "evidence_quotes": ["Trigger finger, ring finger (M65.30)", "A1 pulley release"], "improvement": null},
+      "insurer_voice": {"dimension": "insurer_voice", "reasoning": "Letter reads as authentic Cigna correspondence with MCG Care Guidelines and procedural tone.", "score": 5, "confidence": 0.85, "evidence_quotes": ["NOTICE OF ADVERSE BENEFIT DETERMINATION"], "improvement": null},
+      "denial_logic": {"dimension": "denial_logic", "reasoning": "Denial logic coherently applies sub_tactic 'conservative_treatment_required' without internal contradiction.", "score": 5, "confidence": 0.85, "evidence_quotes": ["NOTICE OF ADVERSE BENEFIT DETERMINATION"], "improvement": null},
+      "clinical_realism": {"dimension": "clinical_realism", "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.", "score": 3, "confidence": 0.85, "evidence_quotes": ["Locking daily; failed steroid injection twice"], "improvement": null},
+      "diagnosis_treatment_match": {"dimension": "diagnosis_treatment_match", "reasoning": "A1 pulley release is a standard intervention for Trigger finger, ring finger (M65.30) in US commercial practice.", "score": "PASS", "confidence": 0.95, "evidence_quotes": ["Trigger finger, ring finger (M65.30)", "A1 pulley release"], "improvement": null},
+      "contradiction_hunter": {"dimension": "contradiction_hunter", "reasoning": "Patient profile, denial letter, and clinical context agree on diagnosis, requested service, and timeline without irreconcilable conflicts.", "score": "PASS", "confidence": 0.95, "evidence_quotes": ["NOTICE OF ADVERSE BENEFIT DETERMINATION"], "improvement": null},
+      "llm_tell_detector": {"dimension": "llm_tell_detector", "reasoning": "Meta-text '(edition not specified)' removed from letter body; edition reference now consistent with Case Summary.", "score": 4, "confidence": 0.85, "evidence_quotes": ["MCG Care Guidelines, 2018 edition"], "improvement": null},
+      "overall_tone": {"dimension": "overall_tone", "reasoning": "Cool, administrative insurer voice without inflammatory or marketing language.", "score": 5, "confidence": 0.85, "evidence_quotes": ["NOTICE OF ADVERSE BENEFIT DETERMINATION"], "improvement": null},
+      "financial_auditor": {"dimension": "financial_auditor", "reasoning": "Dollar amounts are sparse; denial focuses on medical necessity rather than cost-shifting.", "score": 3, "confidence": 0.85, "evidence_quotes": [], "improvement": null},
+      "legal_auditor": {"dimension": "legal_auditor", "reasoning": "Appeal rights are mentioned but one ERISA/IRO disclosure element is intentionally thin (exploitable flaw).", "score": 3, "confidence": 0.85, "evidence_quotes": ["appeal within 180 days"], "improvement": null},
+      "demographic_validator": {"dimension": "demographic_validator", "reasoning": "Age and gender in profile align with clinical narrative without stereotype violations.", "score": "PASS", "confidence": 0.95, "evidence_quotes": [], "improvement": null},
+      "scope_guard": {"dimension": "scope_guard", "reasoning": "In-scope commercial Cigna Medical Necessity case with no Medicare/Medicaid framing.", "score": "PASS", "confidence": 0.95, "evidence_quotes": ["Cigna"], "improvement": null},
+      "date_sanity": {"dimension": "date_sanity", "reasoning": "Referenced dates follow a coherent authorization \u2192 denial \u2192 appeal window sequence.", "score": "PASS", "confidence": 0.95, "evidence_quotes": [], "improvement": null},
+      "citation_traceability": {"dimension": "citation_traceability", "reasoning": "Policy citations are named at a high level; edition numbers are deliberately vague (flaw).", "score": 3, "confidence": 0.85, "evidence_quotes": ["Clinical Policy Bulletin"], "improvement": null},
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
         "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
         "score": 3,
         "confidence": 0.8,
-        "evidence_quotes": [
-          "Exploitable flaw: missing external review right",
-          "Exploitable flaw: missing civil action right"
-        ],
+        "evidence_quotes": ["Exploitable flaw: missing external review right", "Exploitable flaw: missing civil action right"],
         "improvement": null,
-        "exploitable_weaknesses": [
-          "Exploitable flaw: missing external review right",
-          "Exploitable flaw: missing civil action right",
-          "Pattern anchor: missing_erisa_disclosures",
-          "Pattern anchor: superseded_guideline"
-        ],
-        "strong_defenses": [
-          "Denial cites Cigna policy framework and 180-day appeal window.",
-          "Sub-tactic 'conservative_treatment_required' is reflected in the stated rationale."
-        ]
+        "exploitable_weaknesses": ["Exploitable flaw: missing external review right", "Exploitable flaw: missing civil action right", "Pattern anchor: missing_erisa_disclosures", "Pattern anchor: superseded_guideline"],
+        "strong_defenses": ["Denial cites Cigna policy framework and 180-day appeal window.", "Sub-tactic 'conservative_treatment_required' is reflected in the stated rationale."]
       },
-      "safety_redactor": {
-        "dimension": "safety_redactor",
-        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
-        "score": "PASS",
-        "confidence": 0.95,
-        "evidence_quotes": [],
-        "improvement": null
-      },
-      "phi_pii": {
-        "dimension": "phi_pii",
-        "reasoning": "No deterministic PHI patterns detected.",
-        "score": "PASS",
-        "confidence": 1.0,
-        "evidence_quotes": [],
-        "improvement": null
-      }
+      "safety_redactor": {"dimension": "safety_redactor", "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.", "score": "PASS", "confidence": 0.95, "evidence_quotes": [], "improvement": null},
+      "phi_pii": {"dimension": "phi_pii", "reasoning": "No deterministic PHI patterns detected.", "score": "PASS", "confidence": 1.0, "evidence_quotes": [], "improvement": null}
     },
-    "human_summary": "A+ manual pipeline case: Cigna Medical Necessity / surgical / conservative_treatment_required. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: missing_erisa_disclosures, superseded_guideline. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources.",
+    "human_summary": "A+ manual pipeline case: Cigna Medical Necessity / surgical / conservative_treatment_required. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: missing_erisa_disclosures, superseded_guideline. Reviewed 2026-06-03: removed '(edition not specified)' meta-text from letter body, MCG edition reference now consistently '2018 edition' throughout.",
     "appeal_difficulty": {
       "score": 3,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-      "exploitable_weaknesses": [
-        "Exploitable flaw: missing external review right",
-        "Exploitable flaw: missing civil action right",
-        "Pattern anchor: missing_erisa_disclosures",
-        "Pattern anchor: superseded_guideline"
-      ],
-      "strong_defenses": [
-        "Denial cites Cigna policy framework and 180-day appeal window.",
-        "Sub-tactic 'conservative_treatment_required' is reflected in the stated rationale."
-      ]
+      "exploitable_weaknesses": ["Exploitable flaw: missing external review right", "Exploitable flaw: missing civil action right", "Pattern anchor: missing_erisa_disclosures", "Pattern anchor: superseded_guideline"],
+      "strong_defenses": ["Denial cites Cigna policy framework and 180-day appeal window.", "Sub-tactic 'conservative_treatment_required' is reflected in the stated rationale."]
     }
   }
 }

@@ -1,1 +1,463 @@
-
+[
+  {
+    "case_id": "case_01_cigna_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "All intended flaws present and naturally injected; prior issues resolved in fix commit 03b9aa9.",
+    "patterns_intended": [
+      "missing_iro_notice",
+      "mhpaea_step_therapy_asymmetry"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_02_cigna_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "All intended flaws present and naturally injected; prior issues resolved in fix commit 03b9aa9.",
+    "patterns_intended": [
+      "algo_boilerplate_fingerprint",
+      "missing_cost_liability"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_03_aetna_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "All intended flaws present and naturally injected; prior issues resolved in fix commit 03b9aa9.",
+    "patterns_intended": [
+      "non_specialist_reviewer",
+      "wrong_benefit_category"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_04_aetna_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "All intended flaws present and naturally injected; prior issues resolved in fix commit 03b9aa9.",
+    "patterns_intended": [
+      "appeal_closed_as_withdrawn",
+      "superseded_guideline"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_05_uhc_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "All intended flaws present and naturally injected; prior issues resolved in fix commit 03b9aa9.",
+    "patterns_intended": [
+      "wrong_benefit_category",
+      "non_specialist_reviewer"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_06_uhc_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "All intended flaws present and naturally injected; prior issues resolved in fix commit 03b9aa9.",
+    "patterns_intended": [
+      "wrong_benefit_category",
+      "appeal_closed_as_withdrawn"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_07_cigna_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "All intended flaws present and naturally injected; prior issues resolved in fix commit 03b9aa9.",
+    "patterns_intended": [
+      "missing_erisa_disclosures",
+      "superseded_guideline"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_08_cigna_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "All intended flaws present and naturally injected; prior issues resolved in fix commit 03b9aa9.",
+    "patterns_intended": [
+      "algo_time_delta",
+      "superseded_guideline"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_09_aetna_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "All intended flaws present and naturally injected; prior issues resolved in fix commit 03b9aa9.",
+    "patterns_intended": [
+      "plan_exclusion_overrides_state_mandate",
+      "wrong_appeals_contact"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_10_uhc_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "All intended flaws present and naturally injected; prior issues resolved in fix commit 03b9aa9.",
+    "patterns_intended": [
+      "timeline_violation",
+      "incorrect_demographic_guideline"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_11_uhc_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "Endovenous-ablation case is clinically sound; circular medical-necessity logic and appeal-closed-as-withdrawn flaws are both present and authentic.",
+    "patterns_intended": [
+      "circular_medical_necessity",
+      "appeal_closed_as_withdrawn"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "critic_scores": {
+      "flaw_injection": 5,
+      "clinical": 5,
+      "tone": 5,
+      "llm_tell": "PASS",
+      "insurer_voice": 5,
+      "denial_logic": 5,
+      "legal": 5,
+      "contradiction": "PASS",
+      "demographic": "PASS",
+      "dx_tx": "PASS",
+      "scope": "PASS",
+      "safety": "PASS",
+      "date": "PASS",
+      "citation": 5,
+      "realism": 5,
+      "appeal_difficulty": 5
+    },
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_12_aetna_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "Both intended flaws present (ignored physician letter, missing IRO notice); unusual 19-year-old male breast-lump demographic is justified by the palpable mass + family history in clinical context.",
+    "patterns_intended": [
+      "ignored_physician_letter",
+      "missing_iro_notice"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "critic_scores": {
+      "flaw_injection": 5,
+      "clinical": 5,
+      "tone": 5,
+      "llm_tell": "PASS",
+      "insurer_voice": 5,
+      "denial_logic": 5,
+      "legal": 5,
+      "contradiction": "PASS",
+      "demographic": "PASS",
+      "dx_tx": "PASS",
+      "scope": "PASS",
+      "safety": "PASS",
+      "date": "PASS",
+      "citation": 5,
+      "realism": 3,
+      "appeal_difficulty": 5
+    },
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_13_cigna_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "REVISE",
+    "reason": "Intended flaw 'unreasonable_documentation_deadline' is not present \u2014 the letter contains no short documentation deadline. (missing_iro_notice is correctly present.)",
+    "patterns_intended": [
+      "unreasonable_documentation_deadline",
+      "missing_iro_notice"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [
+      "flaw_injection_verifier (score 1)"
+    ],
+    "critic_scores": {
+      "flaw_injection": 1,
+      "clinical": 5,
+      "tone": 5,
+      "llm_tell": "PASS",
+      "insurer_voice": 5,
+      "denial_logic": 5,
+      "legal": 3,
+      "contradiction": "PASS",
+      "demographic": "PASS",
+      "dx_tx": "PASS",
+      "scope": "PASS",
+      "safety": "PASS",
+      "date": "PASS",
+      "citation": 5,
+      "realism": 3,
+      "appeal_difficulty": 5
+    },
+    "suggested_revisions": [
+      "MISSING FLAW: Pattern 'unreasonable_documentation_deadline' is listed in denial_pattern_sources but no short documentation deadline appears in denial_letter_text. To inject it, add a sentence in the EXPLANATION such as: 'Any additional clinical records must be received within 72 hours of the date of this notice; no extension will be granted.'"
+    ]
+  },
+  {
+    "case_id": "case_14_uhc_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "Incorrect-demographic-guideline (pediatric criteria for a 57-year-old) and algo_time_delta (4-min gap) flaws both present; injection is now clean post-fix.",
+    "patterns_intended": [
+      "incorrect_demographic_guideline",
+      "algo_time_delta"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "critic_scores": {
+      "flaw_injection": 5,
+      "clinical": 5,
+      "tone": 5,
+      "llm_tell": "PASS",
+      "insurer_voice": 5,
+      "denial_logic": 5,
+      "legal": 5,
+      "contradiction": "PASS",
+      "demographic": "PASS",
+      "dx_tx": "PASS",
+      "scope": "PASS",
+      "safety": "PASS",
+      "date": "PASS",
+      "citation": 5,
+      "realism": 5,
+      "appeal_difficulty": 5
+    },
+    "suggested_revisions": [
+      "ADVISORY (non-gating): Letter narrative dates (Notice 05/07/2026, received 04/19/2026) differ from the structured submission/denial timestamps (2026-03-10) where algo_time_delta lives; align for internal consistency."
+    ]
+  },
+  {
+    "case_id": "case_15_aetna_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "algo_boilerplate_fingerprint and ignored_physician_letter flaws both present; the boilerplate now reads naturally with no [REDACTED] artifacts post-fix.",
+    "patterns_intended": [
+      "ignored_physician_letter",
+      "algo_boilerplate_fingerprint"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "critic_scores": {
+      "flaw_injection": 5,
+      "clinical": 5,
+      "tone": 5,
+      "llm_tell": "PASS",
+      "insurer_voice": 5,
+      "denial_logic": 5,
+      "legal": 5,
+      "contradiction": "PASS",
+      "demographic": "PASS",
+      "dx_tx": "PASS",
+      "scope": "PASS",
+      "safety": "PASS",
+      "date": "PASS",
+      "citation": 5,
+      "realism": 5,
+      "appeal_difficulty": 5
+    },
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_16_cigna_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "REVISE",
+    "reason": "Intended flaw 'unreasonable_documentation_deadline' is absent \u2014 no short documentation deadline in the letter. (missing_iro_notice is present.)",
+    "patterns_intended": [
+      "unreasonable_documentation_deadline",
+      "missing_iro_notice"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [
+      "flaw_injection_verifier (score 1)"
+    ],
+    "critic_scores": {
+      "flaw_injection": 1,
+      "clinical": 5,
+      "tone": 5,
+      "llm_tell": "PASS",
+      "insurer_voice": 5,
+      "denial_logic": 5,
+      "legal": 3,
+      "contradiction": "PASS",
+      "demographic": "PASS",
+      "dx_tx": "PASS",
+      "scope": "PASS",
+      "safety": "PASS",
+      "date": "PASS",
+      "citation": 5,
+      "realism": 3,
+      "appeal_difficulty": 5
+    },
+    "suggested_revisions": [
+      "MISSING FLAW: Pattern 'unreasonable_documentation_deadline' listed in denial_pattern_sources but not present in denial_letter_text. Inject e.g.: 'Any supporting documentation must be submitted within 48 hours of this notice; late submissions will not be considered.'"
+    ]
+  },
+  {
+    "case_id": "case_17_uhc_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "Non-specialist reviewer and timeline_violation (~45 days vs 30-day standard) flaws both present and verified.",
+    "patterns_intended": [
+      "non_specialist_reviewer",
+      "timeline_violation"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "critic_scores": {
+      "flaw_injection": 5,
+      "clinical": 5,
+      "tone": 5,
+      "llm_tell": "PASS",
+      "insurer_voice": 5,
+      "denial_logic": 5,
+      "legal": 5,
+      "contradiction": "PASS",
+      "demographic": "PASS",
+      "dx_tx": "PASS",
+      "scope": "PASS",
+      "safety": "PASS",
+      "date": "PASS",
+      "citation": 5,
+      "realism": 5,
+      "appeal_difficulty": 5
+    },
+    "suggested_revisions": [
+      "ADVISORY (non-gating): Letter dates (Notice 05/10/2026, received 04/22/2026) differ from structured timestamps (2026-02-01 / 2026-03-18) where the timeline_violation lives; align for consistency."
+    ]
+  },
+  {
+    "case_id": "case_18_aetna_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "Incorrect-demographic-guideline (pediatric criteria for a 42-year-old) and plan-exclusion-overrides-state-mandate (exploitable on a fully-insured plan) flaws both present.",
+    "patterns_intended": [
+      "incorrect_demographic_guideline",
+      "plan_exclusion_overrides_state_mandate"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "critic_scores": {
+      "flaw_injection": 5,
+      "clinical": 5,
+      "tone": 5,
+      "llm_tell": "PASS",
+      "insurer_voice": 5,
+      "denial_logic": 5,
+      "legal": 5,
+      "contradiction": "PASS",
+      "demographic": "PASS",
+      "dx_tx": "PASS",
+      "scope": "PASS",
+      "safety": "PASS",
+      "date": "PASS",
+      "citation": 3,
+      "realism": 3,
+      "appeal_difficulty": 5
+    },
+    "suggested_revisions": [
+      "ADVISORY (non-gating): The incorrect_demographic_guideline template inserts 'pediatric imaging criteria' for a non-imaging fertility drug (letrozole). Consider making the template service-aware (e.g. 'pediatric dosing criteria') so the wrong-demographic flaw fits non-imaging services."
+    ]
+  },
+  {
+    "case_id": "case_19_cigna_mednec",
+    "evaluator": "Gumloop",
+    "verdict": "APPROVE",
+    "reason": "Wrong-appeals-contact (out-of-state KY PO box) and plan-exclusion-overrides-state-mandate (exploitable on fully-insured) flaws both present; letter is clean.",
+    "patterns_intended": [
+      "wrong_appeals_contact",
+      "plan_exclusion_overrides_state_mandate"
+    ],
+    "tier_1_failures": [],
+    "tier_2_failures": [],
+    "critic_scores": {
+      "flaw_injection": 5,
+      "clinical": 5,
+      "tone": 5,
+      "llm_tell": "PASS",
+      "insurer_voice": 5,
+      "denial_logic": 5,
+      "legal": 5,
+      "contradiction": "PASS",
+      "demographic": "PASS",
+      "dx_tx": "PASS",
+      "scope": "PASS",
+      "safety": "PASS",
+      "date": "PASS",
+      "citation": 5,
+      "realism": 5,
+      "appeal_difficulty": 5
+    },
+    "suggested_revisions": []
+  },
+  {
+    "case_id": "case_20_uhc_priorauth",
+    "evaluator": "Gumloop",
+    "verdict": "REVISE",
+    "reason": "Two issues: 'unreasonable_documentation_deadline' flaw is absent, and the plan funding type is contradictory (patient_profile says fully_insured but the letter says 'self-funded group arrangement').",
+    "patterns_intended": [
+      "missing_iro_notice",
+      "unreasonable_documentation_deadline"
+    ],
+    "tier_1_failures": [
+      "contradiction_hunter (plan funding type: profile 'fully_insured' vs letter 'self-funded')"
+    ],
+    "tier_2_failures": [
+      "flaw_injection_verifier (score 1 - unreasonable_documentation_deadline absent)"
+    ],
+    "critic_scores": {
+      "flaw_injection": 1,
+      "clinical": 5,
+      "tone": 5,
+      "llm_tell": "PASS",
+      "insurer_voice": 5,
+      "denial_logic": 5,
+      "legal": 1,
+      "contradiction": "FAIL",
+      "demographic": "PASS",
+      "dx_tx": "PASS",
+      "scope": "PASS",
+      "safety": "PASS",
+      "date": "PASS",
+      "citation": 5,
+      "realism": 3,
+      "appeal_difficulty": 5
+    },
+    "suggested_revisions": [
+      "CONTRADICTION FIX: patient_profile.plan_funding_type is 'fully_insured' but denial_letter_text states 'This determination applies under your employer's self-funded group arrangement' (and clinical_context echoes it). Align them: either change plan_funding_type to 'self_funded' or change the letter/clinical_context to 'fully-insured large-group employer-sponsored commercial PPO'. (Note: state mandates apply to fully-insured plans but are ERISA-preempted for self-funded \u2014 keep the funding type consistent for legal coherence.)",
+      "MISSING FLAW: Pattern 'unreasonable_documentation_deadline' listed in denial_pattern_sources but no short documentation deadline appears. Inject e.g.: 'Additional records must be received within 72 hours of this notice; no extension will be granted.'"
+    ]
+  }
+]

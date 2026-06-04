@@ -71,7 +71,7 @@
       "relevance": "Calibrated P2 letter surface: Claim identification (DOS, provider, amount)."
     }
   ],
-  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/31/2026\nCigna Open Access Plus (employer-sponsored group health plan)\nMember ID: W100063352          Group #: GRP-1008\nAuthorization / Reference #: PA-2026-105117\nClaim #: CLM-2026-188425\nDate of Service (requested): 01/11/2026\nTreating provider (as submitted): Ridgeway Physician Services\n\nDear Member,\n\nThis document is notice of an adverse benefit determination regarding prior authorization. We received your provider's prior authorization request on 01/13/2026 for Manipulation under anesthesia related to Frozen shoulder (M75.00). After clinical review, we are unable to approve this request.\n\nCASE SUMMARY\nService requested: Manipulation under anesthesia\nDiagnosis (as submitted): Frozen shoulder (M75.00)\nDenial code: CO-197 \u2014 Precertification/authorization absent \u2014 service requires prior approval before the date of service.\nClinical policy applied:\n\nClinical criteria applied: InterQual criteria (2018) and/or older MCG modules (superseded guideline reference).\n\nClinical policy applied includes superseded criteria (e.g., older InterQual/MCG modules) that may not reflect current standards. Coverage Policy 108 under Cigna Medical Coverage Policy and Milliman Care Guidelines (MCG)\n\nEXPLANATION OF DECISION\nOur review applied the criteria in Coverage Policy 108 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Annual visit limit for services treating Frozen shoulder (M75.00) has been exceeded. Additional visits are not a covered benefit this plan year.\n\nSpecifically, the information provided does not satisfy the MCG Care Guidelines (edition not specified) and utilization-management requirements associated with visit limit exceeded. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. Diagnosis and procedure codes used in this determination are available upon request, as required by applicable federal standards.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYour treating physician may request a peer-to-peer discussion with a Cigna medical director regarding this determination before or during the appeal process.\n\nYOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file, including documents, clinical criteria, and other information we considered in making this determination. Submit your request to the address shown on this notice or through the member portal identified in your plan materials.\n\nAPPEAL RIGHTS\nYou have the right to appeal this determination. If this denial is upheld after internal review, you may have the right to request an independent external review of our decision at no cost to you, subject to applicable federal and state requirements. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W100063352) and reference PA-2026-105117. \n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.\n\nSincerely,\n\nCigna Health Care Management\nMedical Review Unit",
+  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/31/2026\nCigna Open Access Plus (employer-sponsored group health plan)\nMember ID: W100063352          Group #: GRP-1008\nAuthorization / Reference #: PA-2026-105117\nClaim #: CLM-2026-188425\nDate of Service (requested): 01/11/2026\nTreating provider (as submitted): Ridgeway Physician Services\n\nDear Member,\n\nThis document is notice of an adverse benefit determination regarding prior authorization. We received your provider's prior authorization request on 01/13/2026 for Manipulation under anesthesia related to Frozen shoulder (M75.00). After clinical review, we are unable to approve this request.\n\nCASE SUMMARY\nService requested: Manipulation under anesthesia\nDiagnosis (as submitted): Frozen shoulder (M75.00)\nDenial code: CO-96 \u2014 Non-covered charge \u2014 service denied as not covered under current plan-year benefit limits.\nClinical policy applied: Coverage Policy 108 under Cigna Medical Coverage Policy and Milliman Care Guidelines (MCG), 2018 edition.\n\nEXPLANATION OF DECISION\nOur review applied the criteria in Coverage Policy 108 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. Based on the clinical information on file, the plan benefit limit for services addressing Frozen shoulder (M75.00) has been reached for this plan year. Additional visits or procedures under this benefit category are not covered until the plan year renews.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with the annual benefit limit applicable to this service. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. Diagnosis and procedure codes used in this determination are available upon request, as required by applicable federal standards.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYour treating physician may request a peer-to-peer discussion with a Cigna medical director regarding this determination before or during the appeal process.\n\nYOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file, including documents, clinical criteria, and other information we considered in making this determination. Submit your request to the address shown on this notice or through the member portal identified in your plan materials.\n\nAPPEAL RIGHTS\nYou have the right to appeal this determination. If this denial is upheld after internal review, you may have the right to request an independent external review of our decision at no cost to you, subject to applicable federal and state requirements. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W100063352) and reference PA-2026-105117.\n\nPlease note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above.\n\nSincerely,\n\nCigna Health Care Management\nMedical Review Unit",
   "clinical_context": "The 61-year-old member has Frozen shoulder (M75.00). He has been treated under commercial coverage with Manipulation under anesthesia recommended as the next appropriate step. ROM flexion 90\u00b0 after 5 months PT and intra-articular steroid. Submitted documentation supports medical necessity for Manipulation under anesthesia in the setting of Frozen shoulder (M75.00); the denial letter does not discuss those records or cite the objective findings in the file.",
   "submission_timestamp": "2026-03-10T14:00:00Z",
   "denial_timestamp": "2026-03-10T14:04:00Z",
@@ -97,6 +97,7 @@
       "c_insurer_voice": "1.0.0",
       "c_denial_logic": "1.0.0",
       "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
       "c_diagnosis_treatment_match": "1.0.0",
       "c_diversity_delta": "1.0.0",
       "c_safety_redactor": "1.0.0",
@@ -143,7 +144,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/31/2026\nCigna Open Access Plus (employer-sponsored group hea"
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/31/2026\nCigna Open Access Plus"
         ],
         "improvement": null
       },
@@ -153,7 +154,7 @@
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/31/2026\nCigna Open Access Plus (employer-sponsored group hea"
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION\n\nDate of Notice: 01/31/2026\nCigna Open Access Plus"
         ],
         "improvement": null
       },
@@ -163,7 +164,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "The 61-year-old member has Frozen shoulder (M75.00). He has been treated under commercial coverage with Manipulation und"
+          "The 61-year-old member has Frozen shoulder (M75.00)."
         ],
         "improvement": null
       },
@@ -210,7 +211,7 @@
       },
       "financial_auditor": {
         "dimension": "financial_auditor",
-        "reasoning": "Dollar amounts are sparse; denial focuses on medical necessity rather than cost-shifting.",
+        "reasoning": "Dollar amounts are sparse; denial focuses on benefit limits rather than cost-shifting.",
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [],
@@ -258,7 +259,7 @@
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
-          "Clinical Policy Bulletin"
+          "Coverage Policy 108"
         ],
         "improvement": null
       },
@@ -300,7 +301,7 @@
         "improvement": null
       }
     },
-    "human_summary": "A+ manual pipeline case: Cigna Prior Authorization / msk / visit_limit_exceeded. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: algo_time_delta, superseded_guideline. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources.",
+    "human_summary": "A+ manual pipeline case: Cigna Prior Authorization / msk / visit_limit_exceeded. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: algo_time_delta, superseded_guideline. Reviewed 2026-06-03: fixed CO-197 to CO-96 (visit-limit denial, auth was obtained); removed meta-text leak from letter body.",
     "appeal_difficulty": {
       "score": 5,
       "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
