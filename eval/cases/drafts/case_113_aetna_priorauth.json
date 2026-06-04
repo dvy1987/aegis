@@ -1,0 +1,315 @@
+{
+  "case_id": "case_113_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 22,
+    "gender": "M",
+    "diagnosis": "Non-arthritic right hip pain, suspected acetabular labral tear / femoroacetabular impingement (M25.551)",
+    "treatment_requested": "MR arthrography of the right hip (MRI with intra-articular gadolinium-based contrast)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "wrong_benefit_category: CMS Essential Health Benefits Bulletin 2022; documented in Aetna member complaints",
+    "algo_reviewer_no_credentials: ERISA 29 U.S.C. \u00a7 1133; MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Hansens v. Cigna (D. Conn. 2023)"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic imaging case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic imaging case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic imaging case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic imaging case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic imaging case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "ERISA Claims Procedure \u2014 adverse benefit determination content (29 CFR \u00a7 2560.503-1)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Specific reasons for denial."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nAetna has completed its review of the prior authorization request submitted by your provider and received at our office on July 6, 2026. This letter constitutes our coverage determination dated July 8, 2026.\n\nAfter review under the applicable Aetna Clinical Policy Bulletin, we are unable to approve the requested study as submitted. The gadolinium-based contrast agent specified for this study is classified as non-preferred under your plan's formulary; coverage requires that a preferred, lower-tier contrast agent be used, and the records do not establish that the non-preferred agent is required over the preferred formulary alternative.\n\nThe contrast agent was adjudicated under the pharmacy benefit category, and coverage in that benefit category is subject to the preferred-product requirements described in your plan documents.\n\nThis determination was made by Dr. R. Patel.\n\nIf you disagree with this decision, you have the right to file an internal appeal within 180 days of the date of this letter, and you may request an external review by an independent review organization. Appeals may be submitted in writing to Aetna Appeals, P.O. Box 14463, Lexington, KY 40512, or by calling the number on your ID card.\n\nWe understand this decision may be disappointing. This determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nAetna Radiology Management",
+  "clinical_context": "The patient is a 22-year-old man, a competitive soccer player, with four months of right groin and hip pain that limits sprinting and pivoting and has not settled with activity modification and physical therapy. Plain radiographs of the hip and pelvis are normal. On examination he has a positive anterior impingement (FADIR) test with restricted internal rotation, findings that point to intra-articular pathology such as an acetabular labral tear or femoroacetabular impingement. His orthopaedic surgeon ordered MR arthrography of the right hip, an MRI performed after intra-articular injection of a gadolinium-based contrast agent, which is the most sensitive study for detecting a labral tear and is the appropriate diagnostic test for this symptomatic joint. The contrast agent is an integral component of this diagnostic imaging study, administered in the radiology suite, not a separately dispensed pharmacy medication. The submitted records document the failed conservative course, the normal radiographs, and the positive impingement signs.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260604-181811-eb0eb",
+    "generated_at": "2026-06-04T18:18:11Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "18-25",
+      "patient_gender": "M",
+      "specialty": "imaging",
+      "sub_tactic": "formulary_tier_dispute"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.85,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field; MR arthrography is imaging; the leading rationale is a genuine formulary tier dispute over the non-preferred contrast agent.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "MR arthrogram is the gold-standard labral study; classifying integral gadolinium contrast as a non-preferred formulary drug adjudicated under pharmacy benefit is a realistic category-confusion denial with a built-in exploitable rebuttal.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Correct Aetna CPB citation, Lexington KY appeals address, Radiology Management sign-off, cool procedural cadence; no cross-insurer tells.",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Genuine formulary_tier_dispute over the non-preferred gadolinium contrast agent with a preferred lower-tier alternative demanded; circular burden-shifting 'records do not establish'; authentically shoddy, not airtight.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "22M soccer player, FADIR-positive, normal radiographs, MR arthrography correctly described as the most sensitive labral study; intra-articular gadolinium accurate.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "MR arthrography is the guideline-supported imaging standard for suspected acetabular labral tear/FAI; clean match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "No neighbour shares the hip, MR arthrography, or formulary_tier_dispute; clinical content and modality distinct.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['wrong_benefit_category']; needs_llm=['algo_reviewer_no_credentials']; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['wrong_benefit_category']; needs_llm=['algo_reviewer_no_credentials']; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.209 (nearest=case_108_aetna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "No banned topics; sports injury; adult 22M (no gender-dysphoria framing); in-scope commercial plan.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Gender, diagnosis, laterality, treatment, dates stable; the pharmacy-benefit classification is the disputed payer position the appeal targets, an appealable falsehood, not an unstable scenario fact.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Formal insurer boilerplate and dense human-style chart prose; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural Aetna register with realistic obfuscation; no apology; neutral clinical narrative.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Only formulary/tier framing, no exact out-of-pocket figure; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 3,
+        "confidence": 0.62,
+        "reasoning": "No invented statutes or Medicare framing, but appeal window and external-review rights are cleanly granted rather than strategically imperfect; generic legal language.",
+        "improvement": "Could omit external review or bury the appeal deadline for a more realistic attack vector."
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "22M competitive soccer player with FAI/labral suspicion is a textbook demographic; consistent male pronouns; no stereotype.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Aetna in-scope, self-funded employer-sponsored commercial, adult 22, no live-filing/representation language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Received Jul 6 / determined Jul 8 2026 in correct order; 180-day window standard; four-month symptom duration stacks plausibly.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Generic Aetna CPB / formulary umbrella references with no fabricated codes/edition; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Contrast misclassified under pharmacy benefit as a non-preferred formulary drug when it is integral imaging, plus a named reviewer with no credentials, against a clear MR-arthrogram indication. Easy appeal.",
+        "exploitable_weaknesses": [
+          "Factual misclassification: integral intra-articular MR-arthrography contrast adjudicated under the pharmacy benefit as a non-preferred formulary product rather than as part of the diagnostic imaging service",
+          "Inapplicable formulary logic: requiring a 'preferred, lower-tier contrast agent' treats non-interchangeable arthrography contrast as a fungible formulary tier, and the denial cites no specific CPB criterion the records fail despite failed conservative care, normal radiographs, and positive FADIR",
+          "Reviewer named ('Dr. R. Patel') with no specialty, credentials, or license, supporting an ERISA reviewer-credential challenge and specialty-matched re-review"
+        ],
+        "strong_defenses": [
+          "The procedural disclosures are correct and complete \u2014 a defined 180-day internal appeal window, written-submission address, and external review by an independent review organization \u2014 leaving no procedural vulnerability on the member-rights side"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Prior Authorization / imaging / sub_tactic=formulary_tier_dispute. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Contrast misclassified under pharmacy benefit as a non-preferred formulary drug when it is integral imaging, plus a named reviewer with no credentials, against a clear MR-arthrogram indication. Easy appeal.",
+      "exploitable_weaknesses": [
+        "Factual misclassification: integral intra-articular MR-arthrography contrast adjudicated under the pharmacy benefit as a non-preferred formulary product rather than as part of the diagnostic imaging service",
+        "Inapplicable formulary logic: requiring a 'preferred, lower-tier contrast agent' treats non-interchangeable arthrography contrast as a fungible formulary tier, and the denial cites no specific CPB criterion the records fail despite failed conservative care, normal radiographs, and positive FADIR",
+        "Reviewer named ('Dr. R. Patel') with no specialty, credentials, or license, supporting an ERISA reviewer-credential challenge and specialty-matched re-review",
+        "Pattern anchor: wrong_benefit_category",
+        "Pattern anchor: algo_reviewer_no_credentials"
+      ],
+      "strong_defenses": [
+        "The procedural disclosures are correct and complete \u2014 a defined 180-day internal appeal window, written-submission address, and external review by an independent review organization \u2014 leaving no procedural vulnerability on the member-rights side"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "wrong_benefit_category",
+        "algo_reviewer_no_credentials"
+      ],
+      "deterministic_present": [
+        "wrong_benefit_category"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}
