@@ -1,0 +1,316 @@
+{
+  "case_id": "case_116_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 62,
+    "gender": "M",
+    "diagnosis": "Lumbar radiculopathy with neurogenic claudication (M54.16)",
+    "treatment_requested": "Continuation of a supervised physical therapy program (additional eight-week block)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "missing_cost_liability: No Surprises Act Compliance Audit 2024"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nCigna has completed a medical necessity review of the request submitted on your behalf. After applying the plan's standard utilization criteria, we are unable to approve the requested service.\n\nThe duration of the requested service exceeds the limits applicable to services of this type under your plan. Coverage of additional sessions beyond the standard course requires updated clinical documentation supporting continued treatment. The documentation required to extend coverage was not received, and on that basis the request does not meet the plan's criteria for continued coverage of the requested service.\n\nThis determination applies the same standard criteria to all requests of this type and does not reflect any review of the member's diagnosis, the ordering provider, or the individual clinical records associated with this request. The decision reflects the applicable benefit limits for the requested service.\n\nIf you disagree with this determination, you may file an internal appeal under the procedures described in your plan documents by contacting the number on your member ID card. You may also request an external review by an independent review organization once your internal appeal rights are exhausted.\n\nThis letter addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nCigna Utilization Management",
+  "clinical_context": "The patient is a 62-year-old man with lumbar radiculopathy and neurogenic claudication (M54.16). MRI shows a central disc herniation contacting the traversing nerve root, correlating with his radicular leg pain and reduced walking tolerance. He has completed 18 supervised physical therapy sessions over 14 weeks, and the treating physiatrist has documented measurable gains: standing tolerance improved from 5 to 20 minutes and walking distance from one to four blocks. The physiatrist recommends continuing the structured program to consolidate progress before any surgical consideration. On May 4, 2026 the physiatrist's office submitted updated progress notes, a repeat neurologic examination, and an outcome-measure summary supporting an additional eight-week block of therapy. The patient continued attending the scheduled sessions while awaiting the plan's decision, so several visits in the requested block have already been delivered; he has asked his provider whether he will owe for those already-rendered sessions but has received no statement of any liability. There is no documentation of clinical deterioration, non-adherence, or a functional plateau that would justify stopping therapy at the standard cap.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260604-183728-24a28",
+    "generated_at": "2026-06-04T18:37:28Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "56-70",
+      "patient_gender": "M",
+      "specialty": "msk",
+      "sub_tactic": "duration_excessive"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field; M54.16 is msk; continued PT is realistic; rationale instantiates duration_excessive; age 62 in band.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Continued PT for lumbar radiculopathy denied on a duration cap is a routine UM battleground; boilerplate mass-denial and silence on liability for already-rendered sessions are authentic exploitable defects.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Cigna bureaucratic cadence and conservative-treatment framing, no wrong-insurer tells, but criteria left generic ('plan's standard utilization criteria') rather than naming Cigna MCG.",
+        "improvement": "Name Cigna Medical Necessity Guidelines / MCG."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentic shoddy duration_excessive loop (exceeds limit -> need docs -> docs not received -> denied) with no named cap or threshold; vague and appealable, no hallucinated guideline.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Central disc herniation contacting the traversing root, 18 PT sessions/14 weeks, measurable standing/walking-tolerance gains, conservative-before-surgery sequencing; a physiatrist would not wince.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Supervised PT is guideline-endorsed conservative care for lumbar radiculopathy; clean match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Unique conservative-therapy continuation denied for duration_excessive; M54.16 spine dx and PT-continuation trajectory shared by no neighbour (all surgical/procedural).",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['algo_boilerplate_fingerprint', 'missing_cost_liability']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['algo_boilerplate_fingerprint', 'missing_cost_liability']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.094 (nearest=case_115_uhc_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "No banned topics; adult 62M msk rehab; commercial Cigna plan, no government-payer framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Diagnosis, treatment, gender, dates stable; the 'documentation not received' vs May 4 submission is an appealable falsehood the record rebuts, not an unstable scenario fact.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Formal insurer boilerplate and dense human-style chart prose; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural Cigna register with obfuscatory no-individual-review language; clinical context plain and factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Letter silent on cost liability (standard practice); no dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "No invented statutes, no Medicare framing; appeal window vague and ERISA disclosures omitted as realistic attackable imperfection.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "62M with lumbar radiculopathy/neurogenic claudication is epidemiologically apt; consistent male pronouns; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.96,
+        "reasoning": "Cigna in-scope, fully-insured commercial, adult 62, member-facing appeal rights only, no live-filing/representation language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.7,
+        "reasoning": "May 4 2026 submission realistic; 18 sessions/14 weeks plausible; no impossible durations or contradictions.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No named guideline/edition and no hallucinated codes; realistically vague umbrella references to plan criteria.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Factually false 'documentation not received' premise rebutted by May 4 submission; documented functional gains; boilerplate disclaims individual review; already-rendered sessions add procedural leverage. Easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Factually false premise: denial claims required documentation 'was not received,' but provider submitted progress notes, repeat neuro exam, and outcome-measure summary on May 4, 2026",
+          "Patient clearly meets continued-care standard with documented functional gains and no plateau/deterioration/non-adherence, while the letter admits it did not review individual clinical records",
+          "Boilerplate denial shows no engagement with the individual claim, failing the ERISA full-and-fair-review standard; silence on liability for already-rendered sessions"
+        ],
+        "strong_defenses": [
+          "The plan's stated duration/benefit limit for this service type is a facially valid contractual cap the insurer can assert independent of medical necessity"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / msk / sub_tactic=duration_excessive. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Factually false 'documentation not received' premise rebutted by May 4 submission; documented functional gains; boilerplate disclaims individual review; already-rendered sessions add procedural leverage. Easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Factually false premise: denial claims required documentation 'was not received,' but provider submitted progress notes, repeat neuro exam, and outcome-measure summary on May 4, 2026",
+        "Patient clearly meets continued-care standard with documented functional gains and no plateau/deterioration/non-adherence, while the letter admits it did not review individual clinical records",
+        "Boilerplate denial shows no engagement with the individual claim, failing the ERISA full-and-fair-review standard; silence on liability for already-rendered sessions",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: missing_cost_liability"
+      ],
+      "strong_defenses": [
+        "The plan's stated duration/benefit limit for this service type is a facially valid contractual cap the insurer can assert independent of medical necessity"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_boilerplate_fingerprint",
+        "missing_cost_liability"
+      ],
+      "deterministic_present": [
+        "algo_boilerplate_fingerprint",
+        "missing_cost_liability"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

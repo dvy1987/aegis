@@ -1,0 +1,316 @@
+{
+  "case_id": "case_120_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 62,
+    "gender": "M",
+    "diagnosis": "Major depressive disorder, recurrent, severe (F33.2)",
+    "treatment_requested": "Vortioxetine (Trintellix)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "algo_time_delta: ProPublica + Capitol Forum Cigna Investigation 2023; Senate Finance Committee UHC Investigation 2024",
+    "contraindication_to_step_therapy: AMA 2023 Prior Authorization Physician Survey; State step-therapy exception laws (NY, TX, IL)"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic behavioral health case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic behavioral health case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic behavioral health case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic behavioral health case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic behavioral health case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Mr. Member,\n\nUnitedHealthcare has reviewed the prior authorization request submitted by your prescriber for Trintellix (vortioxetine). The request was received on June 2, 2026 at 11:02 AM, and this determination was issued the same day at 11:06 AM.\n\nWe are unable to approve coverage of the requested medication at this time. Trintellix is a non-preferred agent on your plan's formulary. Under the plan's step-therapy and formulary requirements, a preferred-tier alternative must be tried before a non-preferred agent will be authorized. A preferred selective serotonin reuptake inhibitor \u2014 for example, citalopram or sertraline \u2014 is available at a lower tier, and our records do not establish that a preferred option has been tried and found ineffective. On that basis, the requested non-preferred medication does not meet the plan's criteria for coverage.\n\nTo obtain authorization, your prescriber may submit documentation that a preferred formulary alternative was tried and failed, or may prescribe a preferred-tier agent in place of the requested medication.\n\nIf you disagree with this determination, you may file an internal appeal by contacting the number on your member identification card, and you may request an external review by an independent review organization. You may also have the right to bring a civil action under ERISA section 502(a) after your internal appeal rights are exhausted.\n\nThis determination concerns coverage under your plan only and is not medical advice.\n\nSincerely,\nUnitedHealthcare Pharmacy Utilization Management",
+  "clinical_context": "The patient is a 62-year-old man with recurrent, severe major depressive disorder (F33.2) and a current major depressive episode, with a PHQ-9 of 22 and marked functional decline. He has atrial fibrillation managed with amiodarone, and a baseline ECG shows a prolonged QTc of 495 ms. Citalopram and escitalopram are contraindicated for him because of their dose-dependent QT-prolonging effect on an already prolonged QTc, a risk compounded by amiodarone. He previously completed an adequate trial of sertraline 200 mg daily for 12 weeks without response. His psychiatrist prescribed vortioxetine, which has a comparatively favorable QT profile, as the appropriate next-line antidepressant. The prior authorization request included the ECG report, the cardiology note documenting the contraindication, and the sertraline trial history. The denial was issued four minutes after the request was received, at 11:06 AM the same morning, a turnaround too short for any reviewer to have considered the submitted ECG and medication history.",
+  "submission_timestamp": "2026-06-02T11:02:00",
+  "denial_timestamp": "2026-06-02T11:06:00",
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260604-190117-b7d13",
+    "generated_at": "2026-06-04T19:01:17Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "56-70",
+      "patient_gender": "M",
+      "specialty": "behavioral_health",
+      "sub_tactic": "formulary_tier_dispute"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field; F33.2 MDD is behavioral_health; vortioxetine realistic; rationale instantiates formulary_tier_dispute; age 62 in band.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "UHC placing vortioxetine non-preferred and demanding a preferred SSRI is textbook; the QT-contraindicated/already-failed preferred agents and 4-minute turnaround are authentic exploitable defects.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Branded UnitedHealthcare with formulary cadence and no wrong-insurer named guideline, but generic 'plan's criteria' framing without UHC-specific tells.",
+        "improvement": "Add UHC/Optum-specific guideline references."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy formulary_tier_dispute on a genuine non-preferred drug; circular 'preferred not tried -> non-preferred denied' with vague thresholds; appealable, no hallucinated guideline.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Sertraline 200 mg x12 weeks adequate trial; citalopram/escitalopram QT contraindication on amiodarone with QTc 495; vortioxetine favorable QT profile; PHQ-9 22 maps to severe MDD. No biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Vortioxetine is FDA-approved for MDD; clean match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Named oral-antidepressant formulary-tier dispute is unique among neighbours (programs/therapies/esketamine/TMS); distinct drug, payer, trajectory.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['algo_time_delta', 'contraindication_to_step_therapy']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['algo_time_delta', 'contraindication_to_step_therapy']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.113 (nearest=case_119_cigna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "No banned topics; severe MDD without SI; adult 62M; self-funded commercial plan, no government-payer framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Gender, diagnosis, drug, timestamps stable; 'preferred not tried' vs documented sertraline failure is the appealable falsehood, not an unstable fact; internally consistent.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural UHC formulary register, no apology/marketing; clinical context plain factual, timing stated neutrally.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability; tier terms are coverage not quantified cost; no dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.6,
+        "reasoning": "Accurate ERISA 502(a) citation, no hallucinated statutes, no Medicare framing; appeal window left ambiguous as a realistic imperfection.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "62M with recurrent severe MDD and afib on amiodarone is epidemiologically apt; consistent male pronouns and 'Mr.' salutation; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "UHC in-scope, self-funded commercial ERISA, adult 62, member-facing appeal rights only, no live-filing/representation language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "June 2 2026 11:02 AM received / 11:06 AM issued consistent and same-day; sertraline 12-week trial concrete and precedes denial; no contradictions.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Generic un-named formulary/step-therapy references, no hallucinated alphanumeric codes; ERISA 502(a) is a real statute; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.93,
+        "reasoning": "Four-minute sham review; false 'preferred not tried' premise rebutted by documented sertraline failure; demanded preferred SSRIs QT-contraindicated. Easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Sham/pretextual review: denial issued four minutes after submission, too fast to have considered the submitted ECG, cardiology note, and sertraline trial history",
+          "Factually false premise \u2014 the denial claims no preferred agent was tried, but a documented 12-week sertraline 200 mg failure was submitted, satisfying step therapy",
+          "Preferred-tier exemplars (citalopram/escitalopram) are medically contraindicated by the 495 ms QTc plus amiodarone, so the suggested alternatives are not viable"
+        ],
+        "strong_defenses": [
+          "The plan's step-therapy/non-preferred formulary rule is a facially legitimate, generally enforceable coverage criterion that places an initial documentation burden on the prescriber"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / behavioral_health / sub_tactic=formulary_tier_dispute. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Four-minute sham review; false 'preferred not tried' premise rebutted by documented sertraline failure; demanded preferred SSRIs QT-contraindicated. Easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Sham/pretextual review: denial issued four minutes after submission, too fast to have considered the submitted ECG, cardiology note, and sertraline trial history",
+        "Factually false premise \u2014 the denial claims no preferred agent was tried, but a documented 12-week sertraline 200 mg failure was submitted, satisfying step therapy",
+        "Preferred-tier exemplars (citalopram/escitalopram) are medically contraindicated by the 495 ms QTc plus amiodarone, so the suggested alternatives are not viable",
+        "Pattern anchor: algo_time_delta",
+        "Pattern anchor: contraindication_to_step_therapy"
+      ],
+      "strong_defenses": [
+        "The plan's step-therapy/non-preferred formulary rule is a facially legitimate, generally enforceable coverage criterion that places an initial documentation burden on the prescriber"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_time_delta",
+        "contraindication_to_step_therapy"
+      ],
+      "deterministic_present": [
+        "algo_time_delta",
+        "contraindication_to_step_therapy"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

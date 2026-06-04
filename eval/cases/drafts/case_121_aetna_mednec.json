@@ -1,0 +1,316 @@
+{
+  "case_id": "case_121_aetna_mednec",
+  "insurer": "Aetna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 21,
+    "gender": "M",
+    "diagnosis": "Major depressive disorder, recurrent, severe, treatment-resistant (F33.2)",
+    "treatment_requested": "Transcranial magnetic stimulation (TMS), standard 36-session acute course",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials",
+    "experimental_despite_fda_approval: ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic behavioral health case (duration excessive)."
+    },
+    {
+      "ref_id": "aetna-denial-codes-muni",
+      "title": "How to Appeal Aetna Denials \u2014 denial codes B7/CO-96 (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-aetna-denials-2025",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna denial code medical necessity appeal letter. Calibrated to this synthetic behavioral health case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic behavioral health case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic behavioral health case (duration excessive)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic behavioral health case (duration excessive)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic behavioral health case (duration excessive)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "wa-oic-mednec-templates",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Calibrated P2 letter surface: Insurer cites internal medical policies with criteria member must meet."
+    }
+  ],
+  "denial_letter_text": "Dear Mr. Member,\n\nAetna has completed a medical necessity review of the request submitted by your psychiatrist for a course of transcranial magnetic stimulation (TMS) and is unable to approve it as requested.\n\nThe duration of the requested treatment exceeds the plan's limits. Under the applicable behavioral health technology assessment policy, the authorized course is capped, and the requested number of sessions exceeds that maximum; continuation beyond the standard course requires updated clinical documentation, which was not received. On that basis the requested duration does not meet the plan's criteria for coverage.\n\nThe same policy classifies transcranial magnetic stimulation as experimental or investigational for this member, and the appropriateness criteria it applies are characterized in the adult population ages 22 to 68. The request does not satisfy those threshold requirements.\n\nTo request authorization, your psychiatrist may submit additional clinical documentation or a revised treatment plan that falls within the plan's limits.\n\nIf you disagree with this determination, you may file an internal appeal by contacting the number on your member identification card, and you may request an external review by an independent review organization once internal appeal rights are exhausted.\n\nThis determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nAetna Behavioral Health Utilization Management",
+  "clinical_context": "The patient is a 21-year-old man with treatment-resistant major depressive disorder, recurrent and severe, with a PHQ-9 of 23 and persistent symptoms despite adequate trials of two antidepressants (sertraline 200 mg for 14 weeks and venlafaxine XR 225 mg for 12 weeks) and an adequate course of psychotherapy. His psychiatrist recommended a standard acute course of transcranial magnetic stimulation, 36 sessions over six weeks, which is the FDA-cleared treatment protocol for major depressive disorder. TMS is FDA-cleared as an adjunct treatment for major depressive disorder in patients aged 15 and older, including young adults of his age; it is neither experimental nor restricted to patients aged 22 and older. A 36-session acute course is the standard, evidence-based course length, not an excess beyond it. The clinical records documenting the medication failures, the symptom severity, and the proposed protocol were submitted with the request. He has no seizure history or other safety concern that would preclude TMS.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260604-190553-c0769",
+    "generated_at": "2026-06-04T19:05:53Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "18-25",
+      "patient_gender": "M",
+      "specialty": "behavioral_health",
+      "sub_tactic": "duration_excessive"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "matrix_cell matches field-for-field; F33.2 MDD is behavioral_health; TMS realistic; rationale leads with duration_excessive; age 21 in 18-25 band.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Aetna TMS session-cap duration denial layered with a stale technology policy mislabeling TMS experimental and applying adult ages-22-68 criteria is authentically shoddy; the 2024 FDA 15+ clearance cleanly rebuts both flaws.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Branded Aetna behavioral-health UM with experimental/investigational CPB-flavored phrasing and no wrong-insurer tells, but no named Aetna CPB / InterQual.",
+        "improvement": "Name an Aetna CPB / InterQual."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy duration_excessive: vague uncited cap, circular 'does not meet criteria', unspecified 'updated documentation not received'; stacked experimental/age clause adds vagueness; no hallucinated named guideline.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Sertraline 200 mg x14 wk and venlafaxine XR 225 mg x12 wk adequate trials, PHQ-9 23 = severe, 36-session TMS course standard, seizure screen; correct stepped care, no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "TMS is FDA-cleared, guideline-endorsed for treatment-resistant MDD; 36-session acute course standard; clean match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.82,
+        "reasoning": "TMS appears once elsewhere (UHC/OCD/step_therapy); this MDD + TMS + duration_excessive + Aetna combination and treatment-resistant F33.2 trajectory are distinct; no near-duplicate.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['incorrect_demographic_guideline', 'experimental_despite_fda_approval']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['incorrect_demographic_guideline', 'experimental_despite_fda_approval']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.109 (nearest=case_116_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "No banned topics; severe MDD without SI framing; adult 21M; Aetna commercial, no government-payer framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Gender, diagnosis, treatment stable; experimental/age/duration claims are denial-side falsehoods the record rebuts (appealable core), not unstable facts; internally consistent.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural Aetna register with bureaucratic hedging; clinical context plain factual narrative, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability; no dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal/external review rights present, no hallucinated statutes, no Medicare framing; ERISA specifics and concrete appeal window omitted as realistic attackable imperfection.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "21M with treatment-resistant MDD is epidemiologically sound; consistent male pronouns and 'Mr.' salutation; the 22-68 band is a coverage-criteria flaw, not a demographic stereotype.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Aetna in-scope, fully-insured commercial, adult 21, member-facing appeal rights only, no live-filing/representation language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No explicit calendar dates; relative trial durations stack plausibly with no contradictions, but no anchored 2025-2026 dates.",
+        "improvement": "Add a determination date and dated trial ranges."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Generic un-named 'technology assessment policy' references, no hallucinated alphanumeric codes; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Every load-bearing ground is factually wrong: FDA-cleared TMS mislabeled experimental and age-floored at 22 when cleared 15+; 36 sessions is the standard course not an excess; documentation was submitted. Easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Misclassifies FDA-cleared TMS as experimental/investigational and imposes a false age-22 floor when it is cleared for ages 15+, which the 21-year-old satisfies",
+          "Falsely claims requested duration exceeds limits when 36 sessions is the standard FDA-cleared acute protocol, and falsely claims documentation was not received when records were submitted",
+          "Applies an adult ages-22-68 criteria band as the wrong age-group module for a 21-year-old"
+        ],
+        "strong_defenses": [
+          "The denial preserves internal and external (IRO) appeal rights, and a session cap tied to 'continuation beyond the standard course' is a facially legitimate plan-design lever if reframed around true plan limits"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Medical Necessity / behavioral_health / sub_tactic=duration_excessive. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Every load-bearing ground is factually wrong: FDA-cleared TMS mislabeled experimental and age-floored at 22 when cleared 15+; 36 sessions is the standard course not an excess; documentation was submitted. Easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Misclassifies FDA-cleared TMS as experimental/investigational and imposes a false age-22 floor when it is cleared for ages 15+, which the 21-year-old satisfies",
+        "Falsely claims requested duration exceeds limits when 36 sessions is the standard FDA-cleared acute protocol, and falsely claims documentation was not received when records were submitted",
+        "Applies an adult ages-22-68 criteria band as the wrong age-group module for a 21-year-old",
+        "Pattern anchor: incorrect_demographic_guideline",
+        "Pattern anchor: experimental_despite_fda_approval"
+      ],
+      "strong_defenses": [
+        "The denial preserves internal and external (IRO) appeal rights, and a session cap tied to 'continuation beyond the standard course' is a facially legitimate plan-design lever if reframed around true plan limits"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "incorrect_demographic_guideline",
+        "experimental_despite_fda_approval"
+      ],
+      "deterministic_present": [
+        "incorrect_demographic_guideline",
+        "experimental_despite_fda_approval"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}
