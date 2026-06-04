@@ -280,18 +280,87 @@ def playbook_loader(insurer: str, denial_type: str) -> dict[str, Any]:
     ).model_dump()
 
 
+_LAUNDERED_FORBIDDEN = (
+    "expected_appeal_vectors",
+    "exploitable_weaknesses",
+    "strong_defenses",
+    "matrix_cell",
+    "denial_pattern_sources",
+)
+
+
+def _summarize_traces(
+    traces: list[dict[str, Any]],
+    *,
+    insurer: str,
+    denial_type: str,
+    query: str,
+) -> PhoenixSummary:
+    """Pure transform: laundered trace dicts -> PhoenixSummary.
+
+    Reads ONLY the laundered annotation fields (`dimensions[<name>].score` and
+    `.improvement`). Teacher-only answer-key fields are stripped defensively
+    even if a malformed trace ever rides one along (INV-2).
+    """
+    if not traces:
+        return PhoenixSummary(
+            status="cold_start",
+            query=query,
+            similar_trace_count=0,
+            failure_patterns=[
+                "No promoted Phoenix trace pattern is available for this slice yet."
+            ],
+            success_traits=[
+                "Use local corpus citations and clearly mark missing evidence."
+            ],
+            risk_flags=["phoenix_mcp_cold_start"],
+        )
+
+    failure_patterns: list[str] = []
+    success_traits: list[str] = []
+    for trace in traces:
+        dims = trace.get("dimensions") or {}
+        if not isinstance(dims, dict):
+            continue
+        for dim_name, record in dims.items():
+            if not isinstance(record, dict):
+                continue
+            score = record.get("score")
+            improvement = (record.get("improvement") or "").strip()
+            if any(forbidden in dim_name for forbidden in _LAUNDERED_FORBIDDEN):
+                continue
+            if score == 1 and improvement:
+                failure_patterns.append(improvement)
+            elif score == 5:
+                success_traits.append(f"strong {dim_name}")
+
+    failure_patterns = list(dict.fromkeys(failure_patterns))[:5]
+    success_traits = list(dict.fromkeys(success_traits))[:5]
+    return PhoenixSummary(
+        status="available",
+        query=query,
+        similar_trace_count=len(traces),
+        failure_patterns=failure_patterns,
+        success_traits=success_traits,
+        risk_flags=["phoenix_mcp_live"],
+    )
+
+
 def phoenix_mcp_lookup(
     insurer: str,
     denial_type: str,
     case_id: str = "interactive_case",
 ) -> dict[str, Any]:
-    """Return Phoenix-memory context for a slice; T4 wires this to live MCP traces."""
+    """Return Phoenix-memory context for a slice. T4.1 wires this to live MCP
+    traces; the disabled/cold_start fallbacks remain so the MCP-off
+    counterfactual demo (`PHOENIX_MCP_ENABLED=false`) still works."""
 
     normalized_type = _normalize_denial_type(denial_type.replace("_", " "))
     if normalized_type == "unknown":
         normalized_type = _slug(denial_type)
+    project = os.environ.get("PHOENIX_PROJECT_NAME", "default")
     query = (
-        "traces where project='default' "
+        f"traces where project='{project}' "
         f"and insurer='{insurer}' and denial_type='{normalized_type}'"
     )
 
@@ -302,18 +371,24 @@ def phoenix_mcp_lookup(
             risk_flags=["phoenix_mcp_disabled"],
         ).model_dump()
 
-    return PhoenixSummary(
-        status="cold_start",
-        query=query,
-        similar_trace_count=0,
-        failure_patterns=[
-            "No promoted Phoenix trace pattern is available for this slice yet."
-        ],
-        success_traits=[
-            "Use local corpus citations and clearly mark missing evidence."
-        ],
-        risk_flags=["phoenix_mcp_cold_start", f"case_id:{case_id}"],
-    ).model_dump()
+    try:
+        from app.aegis_v1.phoenix_mcp import fetch_slice_traces
+
+        traces = fetch_slice_traces(
+            insurer=insurer,
+            denial_type=normalized_type,
+            project=project,
+            limit=20,
+        )
+    except Exception:
+        traces = []
+
+    summary = _summarize_traces(
+        traces, insurer=insurer, denial_type=normalized_type, query=query
+    )
+    if summary.status == "cold_start":
+        summary.risk_flags = ["phoenix_mcp_cold_start", f"case_id:{case_id}"]
+    return summary.model_dump()
 
 
 def drafter(
