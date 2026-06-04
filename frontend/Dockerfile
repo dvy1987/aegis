@@ -10,13 +10,13 @@
 
 FROM node:20-bookworm-slim AS deps
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10 --activate
 COPY package.json pnpm-lock.yaml .npmrc* ./
 RUN pnpm install --frozen-lockfile --prod=false
 
 FROM node:20-bookworm-slim AS builder
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10 --activate
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # Demo mode is the default. To deploy in live mode, pass:
