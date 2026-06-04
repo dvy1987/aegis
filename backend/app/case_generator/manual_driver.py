@@ -153,6 +153,34 @@ def _artifacts(producers: dict, inputs: dict) -> dict[str, str]:
     }
 
 
+def cmd_predraft(producers_path: str) -> None:
+    """Emit the PRE-DRAFT consistency gate prompt from the brief alone (before P2-P5 exist).
+
+    Run this right after authoring run_scenario_planner and BEFORE drafting the letter/clinical:
+    dispatch one isolated subagent on critics/pre_draft_consistency.txt. FAIL → revise the brief
+    per 'improvement' and re-run. PASS → use the per-flaw framing in 'reasoning' to draft P2-P5,
+    and carry the verdict into critics.json under key 'pre_draft_consistency'.
+    """
+    inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
+    producers = json.loads(Path(producers_path).read_text(encoding="utf-8"))
+    brief = producers["run_scenario_planner"]
+    cell = inputs["cell"]
+    flaw_defs = [{"id": p["id"], "description": p["description"], "appeal_vector": p["appeal_vector"]}
+                 for p in inputs["patterns"]]
+    cdir = RUN_DIR / "critics"
+    cdir.mkdir(parents=True, exist_ok=True)
+    filled = _fmt(load_prompt("c_pre_draft_consistency"), envelope=ENVELOPE,
+                  sub_tactic=cell["sub_tactic"], sub_tactic_definition=inputs["sub_tactic_definition"],
+                  scenario_brief_json=json.dumps(brief, indent=2),
+                  intended_flaws_json=json.dumps(flaw_defs, indent=2))
+    (cdir / "pre_draft_consistency.txt").write_text(filled, encoding="utf-8")
+    print("Wrote PRE-DRAFT gate prompt -> /tmp/manual_run/critics/pre_draft_consistency.txt")
+    print("Dispatch ONE isolated subagent on it (brief + intended flaws only — no letter exists yet).")
+    print("FAIL → revise run_scenario_planner per 'improvement', re-run predraft. "
+          "PASS → draft P2-P5 using the per-flaw framing in 'reasoning'; add the verdict to "
+          "critics.json under 'pre_draft_consistency'.")
+
+
 def cmd_bundles(producers_path: str) -> None:
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     producers = json.loads(Path(producers_path).read_text(encoding="utf-8"))
@@ -236,6 +264,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="manual_driver")
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("prep"); p.add_argument("--index", type=int, required=True); p.add_argument("--seed", type=int, required=True)
+    pd = sub.add_parser("predraft"); pd.add_argument("--producers", required=True)
     b = sub.add_parser("bundles"); b.add_argument("--producers", required=True)
     r = sub.add_parser("run")
     r.add_argument("--index", type=int, required=True); r.add_argument("--seed", type=int, required=True)
@@ -243,6 +272,8 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
     if args.cmd == "prep":
         cmd_prep(args.index, args.seed); return 0
+    if args.cmd == "predraft":
+        cmd_predraft(args.producers); return 0
     if args.cmd == "bundles":
         cmd_bundles(args.producers); return 0
     return cmd_run(args.index, args.seed, args.producers, args.critics, args.flaws)

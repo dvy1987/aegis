@@ -1,0 +1,318 @@
+{
+  "case_id": "case_112_cigna_priorauth",
+  "insurer": "Cigna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 48,
+    "gender": "M",
+    "diagnosis": "Refractory internal derangement of the temporomandibular joint (M26.63)",
+    "treatment_requested": "Temporomandibular joint arthroscopy (lysis, lavage, and disc repositioning)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "wrong_appeals_contact: State Insurance Commissioner complaint logs (CA, NY, TX) 2023",
+    "plan_exclusion_overrides_state_mandate: NCSL State Health Insurance Mandates Database 2024; documented in CA, NJ, IL enforcement actions"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic surgical case (modality substitution)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic surgical case (modality substitution)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic surgical case (modality substitution)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic surgical case (modality substitution)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic surgical case (modality substitution)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    },
+    {
+      "ref_id": "aca-2719-29-cfr-147-136",
+      "title": "Internal claims and appeals \u2014 diagnosis/treatment codes (29 CFR \u00a7 2590.715-2719)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2590.715-2719",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Claim identification (DOS, provider, amount)."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nCigna has completed its review of the prior authorization request submitted by your provider and received at our office on June 22, 2026. This letter constitutes our coverage determination dated June 24, 2026.\n\nAfter review under the applicable Cigna Medical Coverage Policy, we are unable to approve the requested surgical procedure. Plan policy requires that a less costly therapeutic modality be attempted before the requested procedure; a step-down approach using a lower-cost modality is considered appropriate before surgical intervention for this condition, and the records do not establish that this approach has been completed.\n\nThis determination also rests on a plan exclusion: your benefit plan excludes coverage for surgical treatment of temporomandibular joint disorders, and that exclusion applies to the requested service.\n\nIf you disagree with this decision, you may appeal. Appeals must be submitted to the Cigna Claims Service Center, P.O. Box 5555, Scranton, PA 18505, or by fax to 1-800-555-0143, within the time permitted under your plan.\n\nWe understand this decision may be disappointing. This determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nCigna Medical Review\n\nAdditional plan language regarding experimental/investigational definitions, network status, and member cost-sharing may apply and is available upon request.",
+  "clinical_context": "The patient is a 48-year-old man with refractory internal derangement of the right temporomandibular joint (M26.63): chronic jaw pain, mouth opening limited to 22 mm, and joint locking, on a background of nocturnal bruxism and a remote mandibular injury. MRI shows anterior disc displacement without reduction. He is covered by a fully-insured employer plan issued in his state of residence, which by statute mandates coverage of temporomandibular joint disorders on the same basis as other joint conditions. Step-down therapy has already failed: a stabilization splint worn for six months, physical therapy, scheduled NSAIDs, and two arthrocentesis (joint lavage) procedures, none of which restored opening or relieved the locking. His oral and maxillofacial surgeon then requested TMJ arthroscopy. The practice's first appeal, mailed to the appeals address printed on the denial letter, was returned marked 'wrong department,' which delayed the appeal past the window the letter allowed.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260604-141714-b6d67",
+    "generated_at": "2026-06-04T14:17:14Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "surgical",
+      "sub_tactic": "modality_substitution"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_adversarial_diversifier": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field; M26.63/TMJ arthroscopy is surgical; rationale instantiates modality_substitution.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cigna TMJ step-down denial, a plan TMJ exclusion preempted by a state mandate, and a wrong-department appeals contact are all authentic, exploitable real-world defects; conservative ladder already exhausted.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correct Cigna branding and step-therapy lean and Medical Coverage Policy reference, but does not name MCG/Medical Necessity Guidelines; generic-but-not-wrong.",
+        "improvement": "Could name Cigna Medical Necessity Guidelines / MCG."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.7,
+        "reasoning": "Vague modality-substitution logic citing an unnamed Cigna Medical Coverage Policy with no thresholds and burden-shifting 'records do not establish'; authentically shoddy, fits modality_substitution.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "22 mm opening, MRI anterior disc displacement without reduction, correct conservative ladder (splint, PT, NSAIDs, two arthrocentesis) before arthroscopy; bruxism/trauma etiology.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "TMJ arthroscopy is guideline-supported for refractory internal derangement; clean match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "No neighbour shares TMJ, arthroscopy, or modality_substitution; only the Cigna/PA/surgical axis overlaps, clinical content distinct.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['wrong_appeals_contact', 'plan_exclusion_overrides_state_mandate']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['wrong_appeals_contact', 'plan_exclusion_overrides_state_mandate']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.132 (nearest=case_109_aetna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "No banned topics; remote single-event trauma acceptable; adult 48M; in-scope fully-insured commercial plan.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Gender, diagnosis, treatment, laterality, dates stable; the step-down-not-completed and TMJ-exclusion claims are appealable falsehoods the record rebuts, not unstable scenario facts.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Formal bureaucratic boilerplate and dense human-style chart prose; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural Cigna register with realistic obfuscation ('lower-cost modality'), no apology; neutral clinical narrative.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Only abstract 'lower-cost modality' step-therapy language; no out-of-pocket figure; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "No invented statutes, no Medicare framing; ERISA/external-review disclosures strategically omitted and appeal window left vague \u2014 realistically imperfect with an attack vector.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "48M with refractory TMJ internal derangement is epidemiologically plausible (bruxism/trauma etiology); consistent male pronouns; no stereotype.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cigna in-scope, fully-insured employer-sponsored commercial, adult 48, no live-filing/representation language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Received Jun 22 / determined Jun 24 2026 consistent; clinical durations plausible; minor vagueness \u2014 letter says 'within the time permitted under your plan' with no explicit number while clinical references 'the window the letter allowed'.",
+        "improvement": "Could state an explicit appeal window in the letter."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Generic un-named Cigna Medical Coverage Policy / plan-exclusion references with no fabricated codes/edition; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "State TMJ mandate voids the cited plan exclusion on a fully-insured plan, the step-down basis is factually false (splint/PT/NSAIDs/two arthrocentesis failed), and the misrouted appeal was returned. Easy appeal.",
+        "exploitable_weaknesses": [
+          "State mandate requires TMJ coverage on parity with other joints, voiding the cited plan exclusion for this fully-insured plan",
+          "Step-therapy basis is factually false: splint, PT, NSAIDs, and two arthrocenteses already failed without restoring function",
+          "Wrong-department appeals contact returned the timely first appeal 'wrong department', supporting a defective-notice deadline extension",
+          "Objective medical-necessity evidence (22 mm opening, locking, MRI disc displacement without reduction) was ignored"
+        ],
+        "strong_defenses": [
+          "The plan can argue arthroscopy is itself a surgical TMJ procedure and that a still-lower-cost modality remained, framing the request as premature surgical escalation under the step-down policy"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Prior Authorization / surgical / sub_tactic=modality_substitution. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "State TMJ mandate voids the cited plan exclusion on a fully-insured plan, the step-down basis is factually false (splint/PT/NSAIDs/two arthrocentesis failed), and the misrouted appeal was returned. Easy appeal.",
+      "exploitable_weaknesses": [
+        "State mandate requires TMJ coverage on parity with other joints, voiding the cited plan exclusion for this fully-insured plan",
+        "Step-therapy basis is factually false: splint, PT, NSAIDs, and two arthrocenteses already failed without restoring function",
+        "Wrong-department appeals contact returned the timely first appeal 'wrong department', supporting a defective-notice deadline extension",
+        "Objective medical-necessity evidence (22 mm opening, locking, MRI disc displacement without reduction) was ignored",
+        "Pattern anchor: wrong_appeals_contact",
+        "Pattern anchor: plan_exclusion_overrides_state_mandate"
+      ],
+      "strong_defenses": [
+        "The plan can argue arthroscopy is itself a surgical TMJ procedure and that a still-lower-cost modality remained, framing the request as premature surgical escalation under the step-down policy"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "wrong_appeals_contact",
+        "plan_exclusion_overrides_state_mandate"
+      ],
+      "deterministic_present": [
+        "wrong_appeals_contact",
+        "plan_exclusion_overrides_state_mandate"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

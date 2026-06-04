@@ -1,0 +1,315 @@
+{
+  "case_id": "case_106_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 58,
+    "gender": "M",
+    "diagnosis": "Alcohol use disorder, severe (F10.20)",
+    "treatment_requested": "Inpatient medical detoxification (3\u20135 days) for medically managed alcohol withdrawal",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719",
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic behavioral health case (missing peer to peer)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic behavioral health case (missing peer to peer)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic behavioral health case (missing peer to peer)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic behavioral health case (missing peer to peer)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic behavioral health case (missing peer to peer)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nUnitedHealthcare has reviewed the prior authorization request submitted on your behalf by the requesting facility and received at our office on March 12, 2026. This notice constitutes our coverage determination dated March 13, 2026.\n\nAfter review by an Optum behavioral health reviewer, we are unable to authorize the requested service. A required peer-to-peer review was not completed within the timeframe allowed under our utilization management process, and authorization cannot be issued where that step has not been completed. Accordingly, the request is denied.\n\nThis determination was made in accordance with UnitedHealthcare Medical Management Guidelines and the applicable Coverage Determination Guideline (CDG), using the standard criteria applied to requests of this type. Based on the information available, the documentation does not support authorization at this time. No individualized clinical review of the submitted records was conducted, as the procedural requirement above was not met.\n\nYou or the requesting facility may request a copy of the claim file and the specific clinical criteria applied to this determination at no charge by contacting the number on your member ID card. A peer-to-peer discussion may be arranged through Provider Services in connection with a future submission if requested.\n\nIf you disagree with this decision, you have the right to file an internal appeal within 180 days of the date of this letter. Appeals may be submitted in writing to UnitedHealthcare Appeals, P.O. Box 740816, Atlanta, GA 30374, or by calling the number on your member ID card. You may submit additional information for our review with your appeal.\n\nWe understand this decision may be disappointing. This determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nUnitedHealthcare Utilization Management",
+  "clinical_context": "The patient is a 58-year-old man with severe alcohol use disorder (F10.20) and a history of complicated withdrawal. He presented to the emergency department with a CIWA-Ar score peaking at 17, accompanied by tremor, diaphoresis, and tachycardia (heart rate 112). The evaluating emergency physician documented that outpatient detoxification would be unsafe given his withdrawal severity, a prior alcohol-withdrawal seizure, and the absence of a reliable support person at home. Inpatient medical detoxification (3\u20135 days) was requested to permit a monitored benzodiazepine taper and cardiac monitoring. The ordering psychiatrist submitted the clinical record, including serial vital signs, the CIWA-Ar trend, an elevated GGT, and a blood alcohol level of 240 mg/dL on arrival. The treating team attempted to arrange the peer-to-peer review but documented that United did not return the scheduling call within the offered window. The submitted documentation establishes that the requested level of care meets ASAM criteria for medically managed inpatient withdrawal management.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260604-131605-ffe87",
+    "generated_at": "2026-06-04T13:16:05Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "56-70",
+      "patient_gender": "M",
+      "specialty": "behavioral_health",
+      "sub_tactic": "missing_peer_to_peer"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_adversarial_diversifier": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.0.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field; diagnosis F10.20 is behavioral_health; treatment is inpatient detox; rationale instantiates missing_peer_to_peer.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Inpatient alcohol-detox PA denial on a procedural peer-to-peer gap is a very common UHC fight; payer-caused P2P failure and omitted external-review notice are authentic exploitable defects.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "UnitedHealthcare branding, Optum behavioral-health reviewer, UnitedHealthcare Medical Management Guidelines + CDG, 'documentation does not support' cadence; no cross-insurer tells.",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Circular procedural bootstrap (denied because the P2P step was not completed) with vague 'standard criteria of this type'; not airtight, fits missing_peer_to_peer precisely.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "CIWA-Ar 17 with congruent autonomic findings, prior withdrawal seizure, GGT/BAL 240, 3-5 day monitored benzodiazepine taper, correct ASAM level-of-care framing.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Medically managed inpatient withdrawal (ASAM 3.7/4-WM) is standard of care for severe AUD; clean match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "No neighbour shares the substance-use diagnosis or inpatient-detox trajectory; only the payer+tag triple overlaps, clinical content is unique in the run.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['missing_iro_notice', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['missing_iro_notice', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.141 (nearest=case_101_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Substance use without SI is allowed; no banned topics; in-scope commercial UHC/Optum plan.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Gender, diagnosis, treatment, dates consistent across documents; the payer-caused P2P narrative is an allowed appealable rebuttal, not a contradiction.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.78,
+        "reasoning": "Authentic UM-template prose and dense clinical detail; no GPT tells, listicles, or symmetric rhythm.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural insurer register, realistic vagueness, no apology; plain objective clinical narrative.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability (standard practice); 'at no charge' refers to claim-file copy, not patient exposure; no invented dollar figures.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Real UHC policy families, concrete 180-day internal window, strategic omission of external-review/ERISA disclosures; no invented statutes.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "58-year-old man with severe AUD is epidemiologically apt; consistent male pronouns; non-judgmental clinical framing.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.85,
+        "reasoning": "UHC in-scope, self-funded employer-sponsored commercial, adult 58, no forbidden automation/representation language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Received Mar 12 / determined Mar 13 2026 in correct order; 180-day window standard; acute clinical timeline stacks plausibly.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Brand-accurate UHC MMG + CDG kept at umbrella level with no fabricated codes or over-specified edition strings; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Procedural denial on a payer-caused peer-to-peer gap with no individualized clinical review, against documentation that clearly meets ASAM criteria. Easy appeal.",
+        "exploitable_weaknesses": [
+          "Denial rests entirely on an unmet peer-to-peer requirement, yet the record shows the provider attempted it and United did not return the scheduling call within the offered window, placing fault on the payer",
+          "No individualized clinical review was performed, so the denial ignores documentation that the care meets ASAM criteria for medically managed inpatient withdrawal",
+          "Appeal-rights notice omits any independent external-review (IRO) pathway, a procedural defect that can restart the appeal clock"
+        ],
+        "strong_defenses": [
+          "A genuine utilization-management procedural step (peer-to-peer) was not completed, giving the payer a facially valid administrative basis for non-authorization"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / behavioral_health / sub_tactic=missing_peer_to_peer. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Procedural denial on a payer-caused peer-to-peer gap with no individualized clinical review, against documentation that clearly meets ASAM criteria. Easy appeal.",
+      "exploitable_weaknesses": [
+        "Denial rests entirely on an unmet peer-to-peer requirement, yet the record shows the provider attempted it and United did not return the scheduling call within the offered window, placing fault on the payer",
+        "No individualized clinical review was performed, so the denial ignores documentation that the care meets ASAM criteria for medically managed inpatient withdrawal",
+        "Appeal-rights notice omits any independent external-review (IRO) pathway, a procedural defect that can restart the appeal clock",
+        "Pattern anchor: missing_iro_notice",
+        "Pattern anchor: algo_boilerplate_fingerprint"
+      ],
+      "strong_defenses": [
+        "A genuine utilization-management procedural step (peer-to-peer) was not completed, giving the payer a facially valid administrative basis for non-authorization"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "missing_iro_notice",
+        "algo_boilerplate_fingerprint"
+      ],
+      "deterministic_present": [
+        "missing_iro_notice",
+        "algo_boilerplate_fingerprint"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

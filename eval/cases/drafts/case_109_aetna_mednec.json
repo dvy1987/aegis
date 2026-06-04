@@ -1,0 +1,316 @@
+{
+  "case_id": "case_109_aetna_mednec",
+  "insurer": "Aetna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 22,
+    "gender": "M",
+    "diagnosis": "Brugada syndrome (I49.8)",
+    "treatment_requested": "Implantable cardioverter-defibrillator (ICD) for primary prevention of sudden cardiac death",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic cardiology case (guideline mis cite)."
+    },
+    {
+      "ref_id": "aetna-denial-codes-muni",
+      "title": "How to Appeal Aetna Denials \u2014 denial codes B7/CO-96 (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-aetna-denials-2025",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna denial code medical necessity appeal letter. Calibrated to this synthetic cardiology case (guideline mis cite)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic cardiology case (guideline mis cite)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic cardiology case (guideline mis cite)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic cardiology case (guideline mis cite)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic cardiology case (guideline mis cite)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "wa-oic-mednec-templates",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Calibrated P2 letter surface: Insurer cites internal medical policies with criteria member must meet."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nAetna has completed its medical necessity review of the prior authorization request submitted by your provider and received at our office on May 18, 2026. This letter constitutes our coverage determination dated May 20, 2026.\n\nAfter review against our utilization management criteria, we are unable to approve the requested service. Our cardiac device coverage criteria require documentation of ischemic cardiomyopathy with a left ventricular ejection fraction of 35 percent or less before an implantable defibrillator is considered medically necessary. The information available does not establish that this threshold is met, and the requested service therefore does not satisfy the applicable criteria in effect.\n\nThis determination was made under our standard medical necessity criteria for cardiac devices. No review of the member's specific diagnosis or the individual clinical records submitted with the request was performed; the determination rests solely on the coverage criterion described above.\n\nIf you disagree with this decision, you may request an appeal by contacting Member Services at the number on your ID card within the time permitted under your plan.\n\nWe understand this decision may be disappointing. This determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nAetna Medical Review\n\nAdditional plan language regarding experimental/investigational definitions, network status, and member cost-sharing may apply and is available upon request.",
+  "clinical_context": "The patient is a 22-year-old man with Brugada syndrome confirmed by a spontaneous type 1 Brugada pattern on resting ECG. He was referred after an episode of arrhythmic syncope without prodrome while at rest, and ambulatory monitoring captured a brief run of polymorphic ventricular ectopy. His father died suddenly at age 38, and genetic testing identified a pathogenic SCN5A variant. A transthoracic echocardiogram showed a structurally normal heart with a left ventricular ejection fraction of 62 percent, and coronary anatomy is normal for age, excluding ischemic cardiomyopathy. His electrophysiologist recommended an implantable cardioverter-defibrillator for prevention of sudden cardiac death, citing Heart Rhythm Society expert-consensus criteria, under which a spontaneous type 1 pattern with arrhythmic syncope and a family history of sudden death is a high-risk indication independent of ejection fraction. The prior authorization submission documented the ECG, the syncopal event, the family history, the SCN5A result, and the normal echocardiogram. Ejection-fraction-based criteria developed for ischemic cardiomyopathy do not apply to this channelopathy, in which sudden-death risk is arrhythmic rather than related to ventricular systolic function.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260604-135934-ab494",
+    "generated_at": "2026-06-04T13:59:34Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "18-25",
+      "patient_gender": "M",
+      "specialty": "cardiology",
+      "sub_tactic": "guideline_mis_cite"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_adversarial_diversifier": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.0.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field; Brugada is cardiology; ICD is realistic; rationale instantiates guideline_mis_cite.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Brugada in a 22M with type-1 ECG, syncope, SCN5A and family SCD is textbook; misapplying ischemic EF<=35% ICD criteria to a channelopathy is a real exploitable payer error; case-blind boilerplate + omitted ERISA disclosures are authentic.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.8,
+        "reasoning": "Correct Aetna procedural cadence and Medical Review sign-off, but no explicit CPB/InterQual citation (intentionally generic for the algo_boilerplate flaw), keeping it short of 5.",
+        "improvement": "Optionally cite an Aetna CPB for ICDs to make it unmistakably Aetna."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.82,
+        "reasoning": "Cites a real-flavored EF<=35% ischemic criterion applied with authentic shoddiness; never names the member's EF, admits no individualized review; vague and exploitable, not airtight; no hallucinated named guideline.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Spontaneous type 1 Brugada ECG, arrhythmic rest syncope, pathogenic SCN5A, structurally normal heart EF 62%, HRS expert-consensus ICD indication independent of EF.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "ICD is the cornerstone guideline-endorsed therapy for high-risk Brugada; clean match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "No neighbour shares Brugada, an ICD, or guideline_mis_cite; channelopathy-ICD trajectory unique in the run.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['missing_erisa_disclosures', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['missing_erisa_disclosures', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.101 (nearest=case_108_aetna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "No banned topics; sudden-cardiac-death prevention is preventive cardiology, not suicide/end-of-life; family SCD is history not self-harm; in-scope commercial plan; adult 22.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Gender, diagnosis, device, dates stable across documents; the EF<=35% ischemic-criteria citation is an appealable wrong-criteria assertion the record rebuts (EF 62%, channelopathy), not an unstable scenario fact.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.85,
+        "reasoning": "Plausible insurer boilerplate; no GPT vocabulary, listicles, triplets, or symmetric redundancy after removing the duplicated criterion restatement; clinical context dense and specific.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Largely cold/procedural; the standard 'we understand this may be disappointing' line and the candid 'no individualized review' admission soften it slightly, but voice is correct for authorship.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability (standard practice); no dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "No invented statutes, no Medicare framing; appeal rights stated only vaguely with ERISA/external-review disclosures strategically omitted \u2014 realistically imperfect.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Brugada has strong male predominance with events in the 3rd-4th decade; 22M is textbook-apt; consistent male pronouns; no stereotype.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Aetna in-scope, self-funded employer-sponsored commercial, adult 22, no live-filing/representation language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Received May 18 / determined May 20 2026 in correct order; clinical context carries no conflicting dates; coherent timeline.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Generic un-named criteria references with no fabricated codes; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Wrong (ischemic EF<=35%) criteria applied to a channelopathy with EF 62%, plus admitted no individualized review, against a record meeting HRS high-risk ICD criteria. Easy appeal.",
+        "exploitable_weaknesses": [
+          "Wrong guideline cited: ischemic-cardiomyopathy EF<=35% threshold applied to a Brugada channelopathy where EF is irrelevant to arrhythmic sudden-death risk",
+          "Admission that no review of the member's diagnosis or individual records was performed, ignoring the type-1 ECG, syncope, SCN5A variant, and family history that meet HRS high-risk ICD criteria",
+          "Appeal notice omits ERISA-required disclosures (right to documents, civil-action right, external review)"
+        ],
+        "strong_defenses": [
+          "The member's LVEF of 62 percent does not meet the stated EF<=35% threshold, so on the literal face of the cited criterion the request fails \u2014 the insurer can argue the written criterion was applied as worded"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Medical Necessity / cardiology / sub_tactic=guideline_mis_cite. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Wrong (ischemic EF<=35%) criteria applied to a channelopathy with EF 62%, plus admitted no individualized review, against a record meeting HRS high-risk ICD criteria. Easy appeal.",
+      "exploitable_weaknesses": [
+        "Wrong guideline cited: ischemic-cardiomyopathy EF<=35% threshold applied to a Brugada channelopathy where EF is irrelevant to arrhythmic sudden-death risk",
+        "Admission that no review of the member's diagnosis or individual records was performed, ignoring the type-1 ECG, syncope, SCN5A variant, and family history that meet HRS high-risk ICD criteria",
+        "Appeal notice omits ERISA-required disclosures (right to documents, civil-action right, external review)",
+        "Pattern anchor: missing_erisa_disclosures",
+        "Pattern anchor: algo_boilerplate_fingerprint"
+      ],
+      "strong_defenses": [
+        "The member's LVEF of 62 percent does not meet the stated EF<=35% threshold, so on the literal face of the cited criterion the request fails \u2014 the insurer can argue the written criterion was applied as worded"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "missing_erisa_disclosures",
+        "algo_boilerplate_fingerprint"
+      ],
+      "deterministic_present": [
+        "missing_erisa_disclosures",
+        "algo_boilerplate_fingerprint"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}
