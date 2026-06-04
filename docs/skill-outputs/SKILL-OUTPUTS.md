@@ -82,3 +82,5 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-04 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md | Session-end note — case 12 training-data fix verified with backend eval-path tests |
 | 2026-06-04 | debug-and-fix | backend/app/evals/part_a/teacher_packet.py, backend/tests/unit/evals/test_part_a_judge_panel.py | Fixed judge expected-vector parsing for Gumloop-style `pattern_id: source` entries |
 | 2026-06-04 | eval-pipeline | docs/evals/2026-06-04-case-generation-eval-pipeline.md | Three-layer AlphaEval alignment for the LLM case generator |
+
+- memory-handoff: docs/memory/agent-handoffs.md

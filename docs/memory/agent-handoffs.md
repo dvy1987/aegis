@@ -2099,3 +2099,29 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - Clean (all uncommitted changes to project rules reverted).
+
+## 2026-06-04 23:13 - Session Handoff (Antigravity)
+
+### Done
+- Successfully generated synthetic cases 103, 104, and 105 sequentially per the user's strict state-machine protocol, using `harness_io.py`.
+- Adhered rigidly to step-by-step execution for `stage1_prep`, `stage1_eval`, `stage1_predraft_eval`, `stage2_eval`, `stage3_eval`, `stage4_det_check`, `stage5_eval`, `final_panel`, and `assemble` without any unauthorized automation, cloud token use, or skip-logic.
+- Manually formulated and supplied JSON payloads for `brief`, `letter`, `context`, `p4`, and `critics` matching exactly what the generator stages expected.
+
+### Debated
+- User explicitly disabled any automation or optimization to prevent LLM hallucinations, rogue script creation, or cloud token waste. I accepted the strict one-line-at-a-time protocol without argument.
+
+### Decisions
+- Strictly execute `harness_io.py` offline generation stages without trying to build scripts around it.
+
+### Deferred
+- No immediate items deferred; the targeted scope (cases 103, 104, 105) is complete.
+
+### Next Agent Should Know
+- If asked to generate more cases, strictly follow the manual `harness_io.py` subcommands sequentially as demonstrated in this session.
+- Do not attempt to bypass `harness_io.py` or write Python wrapper scripts to do the case generation if the user is in "STRICT EXECUTION PROTOCOL" mode.
+
+### Revisit Triggers
+- Generating additional cases beyond 105.
+
+### Working Tree
+- Dirty: Generated `/tmp/harness/inputs.json` and various `.json` outputs for the cases. Assembled output cases reside wherever `harness_io.py assemble` placed them.
