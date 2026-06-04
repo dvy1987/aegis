@@ -79,24 +79,22 @@ def run_scenario_planner(
 
 
 def run_denial_drafter(
-    scenario_brief: dict[str, Any], *, framing_guidance: str = "", model: str | None = None
+    scenario_brief: dict[str, Any], *, model: str | None = None
 ) -> dict[str, Any]:
     prompt = _format_prompt(
         load_prompt("p2_denial_drafter"),
         scenario_brief_json=json.dumps(scenario_brief, indent=2),
-        framing_guidance=framing_guidance,
     )
     return _generate_json(prompt, model=model, temperature=0.75)
 
 
 def run_clinical_writer(
-    scenario_brief: dict[str, Any], denial_letter_text: str, *, framing_guidance: str = "", model: str | None = None
+    scenario_brief: dict[str, Any], denial_letter_text: str, *, model: str | None = None
 ) -> dict[str, Any]:
     prompt = _format_prompt(
         load_prompt("p3_clinical_writer"),
         scenario_brief_json=json.dumps(scenario_brief, indent=2),
         denial_letter_text=denial_letter_text,
-        framing_guidance=framing_guidance,
     )
     return _generate_json(prompt, model=model, temperature=0.8)
 
@@ -106,7 +104,6 @@ def run_realistic_flaw_injector(
     intended_flaw_types: list[str],
     patterns: list[dict[str, Any]],
     *,
-    framing_guidance: str = "",
     model: str | None = None,
 ) -> dict[str, Any]:
     prompt = _format_prompt(
@@ -114,7 +111,6 @@ def run_realistic_flaw_injector(
         assembled_case_json=json.dumps(assembled_case, indent=2),
         intended_flaw_types=json.dumps(intended_flaw_types, indent=2),
         patterns_json=json.dumps(patterns, indent=2) if patterns else "[]",
-        framing_guidance=framing_guidance,
     )
     return _generate_json(prompt, model=model, temperature=0.85)
 
