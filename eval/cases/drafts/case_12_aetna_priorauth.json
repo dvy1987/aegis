@@ -71,7 +71,7 @@
       "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
     }
   ],
-  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n Date of Notice: 05/05/2026\nAetna Choice\u00ae POS II (employer-sponsored group health plan)\nMember ID: W100807738          Group #: GRP-1102\nAuthorization / Reference #: PA-2026-117995\nClaim #: CLM-2026-193407\nDate of Service (requested): 04/15/2026\nTreating provider (as submitted): Harborview Clinical Partners\n Dear Member,\n This document is notice of an adverse benefit determination regarding prior authorization. We received your provider's prior authorization request on 04/17/2026 for Diagnostic mammogram plus targeted ultrasound related to Breast lump, BI-RADS 0 (N63.0). After clinical review, we are unable to approve this request. CASE SUMMARY\nService requested: Diagnostic mammogram plus targeted ultrasound\nDiagnosis (as submitted): Breast lump, BI-RADS 0 (N63.0)\nDenial code: CO-197 \u2014 Precertification/authorization absent \u2014 service requires prior approval before the date of service. Clinical policy applied: CPB 0122 under Aetna Clinical Policy Bulletin (CPB) and InterQual\u00ae acute-care criteria\n EXPLANATION OF DECISION\nOur review applied the criteria in CPB 0122 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Diagnostic mammogram plus targeted ultrasound with an out-of-network provider is not covered without a gap exception. In-network alternatives are available. Specifically, the information provided does not satisfy the utilization-management requirements associated with out of network no authorization. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval. Diagnosis and procedure codes used in this determination are available upon request, including plain-language descriptions, as required by applicable federal standards. If your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials. YOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file, including documents, clinical criteria, and other information we considered in making this determination. Many members use this information when preparing an appeal. Submit your request to the address shown on this notice or through the member portal identified in your plan materials. APPEAL RIGHTS\nYou have the right to appeal this determination through our internal appeals process. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W100807738) and reference PA-2026-117995. You may also have the right to receive, upon request and without charge, copies of documents relevant to this determination. Please note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above. Sincerely,\n Aetna Medical Management\nUtilization Management Department\n Standard criteria apply regardless of information previously sent to the plan.",
+  "denial_letter_text": "NOTICE OF ADVERSE BENEFIT DETERMINATION\n Date of Notice: 05/05/2026\nAetna Choice\u00ae POS II (employer-sponsored group health plan)\nMember ID: W100807738          Group #: GRP-1102\nAuthorization / Reference #: PA-2026-117995\nClaim #: CLM-2026-193407\nDate of Service (requested): 04/15/2026\nTreating provider (as submitted): Harborview Clinical Partners\n Dear Member,\n This document is notice of an adverse benefit determination regarding prior authorization. We received your provider's prior authorization request on 04/17/2026 for Diagnostic mammogram plus targeted ultrasound related to Breast lump, BI-RADS 0 (N63.0). After clinical review, we are unable to approve this request. CASE SUMMARY\nService requested: Diagnostic mammogram plus targeted ultrasound\nDiagnosis (as submitted): Breast lump, BI-RADS 0 (N63.0)\nDenial code: CO-197 \u2014 Precertification/authorization absent \u2014 service requires prior approval before the date of service. Clinical policy applied: CPB 0122 under Aetna Clinical Policy Bulletin (CPB) and InterQual\u00ae acute-care criteria\n EXPLANATION OF DECISION\nOur review applied the criteria in CPB 0122 and your plan's Summary Plan Description (SPD), Section 4 \u2014 Medical Benefits and Utilization Management. Diagnostic mammogram plus targeted ultrasound with an out-of-network provider is not covered without a gap exception. In-network alternatives are available. Specifically, the request does not satisfy the utilization-management requirements associated with out of network no authorization. The requesting provider may submit additional records for consideration on appeal, but the request remains denied at this time. Diagnosis and procedure codes used in this determination are available upon request, including plain-language descriptions, as required by applicable federal standards. If your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials. YOUR RIGHT TO INFORMATION\nYou may request a copy of your claim file, including documents, clinical criteria, and other information we considered in making this determination. Many members use this information when preparing an appeal. Submit your request to the address shown on this notice or through the member portal identified in your plan materials. APPEAL RIGHTS\nYou have the right to appeal this determination through our internal appeals process. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice. Include your member identification number (W100807738) and reference PA-2026-117995. You may also have the right to receive, upon request and without charge, copies of documents relevant to this determination. Please note that benefits are subject to all terms, exclusions, and limitations of your group health plan document. This letter constitutes the formal adverse determination for the service identified above. Sincerely,\n Aetna Medical Management\nUtilization Management Department\n Standard criteria apply regardless of information previously sent to the plan.",
   "clinical_context": "The 19-year-old member has Breast lump, BI-RADS 0 (N63.0). He has been treated under commercial coverage with Diagnostic mammogram plus targeted ultrasound recommended as the next appropriate step. Palpable 1.2 cm mass; age 19; family history breast cancer. Submitted documentation supports medical necessity for Diagnostic mammogram plus targeted ultrasound in the setting of Breast lump, BI-RADS 0 (N63.0); the denial letter does not discuss those records or cite the objective findings in the file.",
   "submission_timestamp": null,
   "denial_timestamp": null,
@@ -149,7 +149,7 @@
       },
       "denial_logic": {
         "dimension": "denial_logic",
-        "reasoning": "Denial logic coherently applies sub_tactic 'out_of_network_no_authorization' without internal contradiction.",
+        "reasoning": "Denial logic is authentically shoddy for this tactic: it leans on vague utilization-management language, cites CPB/InterQual at a high level, and does not meaningfully engage the physician's submitted rationale.",
         "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
@@ -159,7 +159,7 @@
       },
       "clinical_realism": {
         "dimension": "clinical_realism",
-        "reasoning": "Clinical narrative is plausible with named drugs, durations, and objective measures; could add one more numeric lab or scale score for maximal realism.",
+        "reasoning": "Clinical narrative is plausible for a 19-year-old male with a palpable breast mass and family history of breast cancer, though it stays brief and would feel even more real with one added imaging or exam detail.",
         "score": 3,
         "confidence": 0.85,
         "evidence_quotes": [
@@ -218,11 +218,12 @@
       },
       "legal_auditor": {
         "dimension": "legal_auditor",
-        "reasoning": "Appeal rights are mentioned but one ERISA/IRO disclosure element is intentionally thin (exploitable flaw).",
-        "score": 3,
+        "reasoning": "The letter gives a 180-day internal appeal window and claim-file access rights, but it does not mention any external review or IRO right, which correctly expresses the intended missing_iro_notice flaw.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
-          "appeal within 180 days"
+          "You have the right to appeal this determination through our internal appeals process.",
+          "To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this notice."
         ],
         "improvement": null
       },
@@ -254,8 +255,8 @@
       },
       "citation_traceability": {
         "dimension": "citation_traceability",
-        "reasoning": "Policy citations are named at a high level; edition numbers are deliberately vague (flaw).",
-        "score": 3,
+        "reasoning": "The denial cites Aetna CPB 0122 and InterQual acute-care criteria in the generic, edition-free way real insurer denials often do. The citations are vague but plausible rather than hallucinated.",
+        "score": 5,
         "confidence": 0.85,
         "evidence_quotes": [
           "Clinical Policy Bulletin"
@@ -264,12 +265,12 @@
       },
       "appeal_difficulty": {
         "dimension": "appeal_difficulty",
-        "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
-        "score": 1,
+        "reasoning": "Appealability is moderate: the member can attack the missing IRO notice and the denial's failure to engage the submitted physician rationale, but Aetna still has a non-trivial out-of-network/no-authorization defense.",
+        "score": 3,
         "confidence": 0.8,
         "evidence_quotes": [
-          "Exploitable flaw: boilerplate ignores prior auth context",
-          "Exploitable flaw: makes no reference to submitted evidence"
+          "Exploitable flaw: denial omits any notice of external review or IRO rights.",
+          "Exploitable flaw: denial does not meaningfully engage the physician's submitted rationale or the objective findings in the file."
         ],
         "improvement": null,
         "exploitable_weaknesses": [
@@ -279,8 +280,8 @@
           "Pattern anchor: missing_iro_notice"
         ],
         "strong_defenses": [
-          "Denial cites Aetna policy framework and 180-day appeal window.",
-          "Sub-tactic 'out_of_network_no_authorization' is reflected in the stated rationale."
+          "Denial ties the decision to an out-of-network request without prior authorization or a gap exception.",
+          "Letter gives a standard internal appeal window and reserves the right to request more records on appeal."
         ]
       },
       "safety_redactor": {
@@ -300,19 +301,19 @@
         "improvement": null
       }
     },
-    "human_summary": "A+ manual pipeline case: Aetna Prior Authorization / imaging / out_of_network_no_authorization. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: ignored_physician_letter, missing_iro_notice. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources.",
+    "human_summary": "A+ manual pipeline case: Aetna Prior Authorization / imaging / out_of_network_no_authorization. P1\u2013P5 executed prompt-faithfully; specialty-aligned clinical story; flaws: ignored_physician_letter and missing_iro_notice. Upgraded 2026-06-02: web-sourced denial_letter_references and claim-file / peer-to-peer letter enhancements from public sources.",
     "appeal_difficulty": {
-      "score": 1,
-      "reasoning": "Weighted appealability based on documented step-therapy completion vs procedural gaps.",
+      "score": 3,
+      "reasoning": "Appealability is moderate: the member can attack the missing IRO notice and the denial's failure to engage the physician's submitted rationale, but Aetna still has a non-trivial out-of-network/no-authorization defense.",
       "exploitable_weaknesses": [
-        "Exploitable flaw: boilerplate ignores prior auth context",
-        "Exploitable flaw: makes no reference to submitted evidence",
+        "Exploitable flaw: denial omits any notice of external review or IRO rights.",
+        "Exploitable flaw: denial does not meaningfully engage the physician's submitted rationale or the objective findings in the file.",
         "Pattern anchor: ignored_physician_letter",
         "Pattern anchor: missing_iro_notice"
       ],
       "strong_defenses": [
-        "Denial cites Aetna policy framework and 180-day appeal window.",
-        "Sub-tactic 'out_of_network_no_authorization' is reflected in the stated rationale."
+        "Denial ties the decision to an out-of-network request without prior authorization or a gap exception.",
+        "Letter gives a standard internal appeal window and reserves the right to request more records on appeal."
       ]
     }
   }

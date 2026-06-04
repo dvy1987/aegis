@@ -478,6 +478,15 @@ ahead of GCP/Phoenix setup, TDD, commits `8a35860`,`5720eaf`. Full unit **103 pa
   - Fixed rare impossible demographics (male + postmenopausal osteoporosis)
   - Normalized stray “age XX” artifacts when they contradicted `patient_profile.age`
 
+## 2026-06-04 — Case 12 draft repaired for Gumloop/teacher-packet alignment
+
+- **Fixed** `eval/cases/drafts/case_12_aetna_priorauth.json` after manual 17-critic review.
+- **Root cause:** the denial letter claimed `ignored_physician_letter` in `denial_pattern_sources` but also explicitly referenced submitted documentation/clinical notes, so the intended flaw was not actually present.
+- **Also corrected** stale `synthetic_provenance` text that described a different case (`step-therapy` / named-drug language) and would have polluted the teacher packet’s hidden appeal vectors.
+- **Judge-path alignment checked:** narrowed the hidden `appeal_difficulty` vectors to the two declared pattern anchors only, so `J6 appeal_vector_capture` and any downstream learning signal stay aligned with `denial_pattern_sources`.
+- **System fix:** `build_teacher_grading_packet()` now parses Gumloop-style `pattern_id: source` entries before matching `eval/denial_patterns.json`; this makes source-of-truth expected vectors come from the declared Gumloop flaw IDs instead of relying on fallback hidden metadata.
+- **Verification:** JSON parsed cleanly; `build_teacher_grading_packet()` now emits coherent `expected_appeal_vectors` with no `risk_flags`; backend eval-path tests passed under Python 3.11 from `backend/`.
+
 ## Next recommended action
 
 **Updated 2026-05-28 (Session 18):** Before any feature work, the next agent must resolve the inconsistencies identified in the audit. PM wants to review each issue individually — see Session 18 handoff in `agent-handoffs.md` for the full 16-item table with recommendations.

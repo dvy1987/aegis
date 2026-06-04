@@ -85,6 +85,19 @@ def test_teacher_packet_includes_answer_key() -> None:
     assert teacher.matrix_cell["sub_tactic"] == "level_of_care_too_high"
 
 
+def test_teacher_packet_parses_pattern_id_prefixes() -> None:
+    case = _case_obj()
+    case["denial_pattern_sources"] = [
+        "ignored_physician_letter: AMA 2023 Prior Authorization Physician Survey",
+        "missing_iro_notice: CMS External Appeal Regulations 45 CFR § 147.136; ACA § 2719",
+    ]
+
+    teacher = build_teacher_grading_packet(case, _appeal_package("x"))
+
+    assert any("ignored evidence" in v for v in teacher.expected_appeal_vectors)
+    assert any("IRO notice" in v for v in teacher.expected_appeal_vectors)
+
+
 def test_safety_scope_gate_fails_missing_disclaimer() -> None:
     teacher = build_teacher_grading_packet(_case_obj(), _appeal_package("x"))
     result = safety_scope_gate(_appeal_package("This appeal will win."), teacher)

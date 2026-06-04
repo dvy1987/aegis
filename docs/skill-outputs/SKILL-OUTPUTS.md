@@ -78,3 +78,6 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-02 13:10 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Cloud-only library posture + explicit discovery error (no silent toggles); tests 231 passed |
 | 2026-06-02 16:41 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Nav connected dot + v1 model/location consistency; backend tests green |
 | 2026-06-02 17:59 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session-end — Gumloop prompt-pass on drafts (cases 01–500) + batch reports + SUMMARY.md |
+| 2026-06-04 | debug-and-fix | eval/cases/drafts/case_12_aetna_priorauth.json | Repaired case 12 denial-flaw mismatch and corrected hidden teacher-packet provenance |
+| 2026-06-04 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md | Session-end note — case 12 training-data fix verified with backend eval-path tests |
+| 2026-06-04 | debug-and-fix | backend/app/evals/part_a/teacher_packet.py, backend/tests/unit/evals/test_part_a_judge_panel.py | Fixed judge expected-vector parsing for Gumloop-style `pattern_id: source` entries |

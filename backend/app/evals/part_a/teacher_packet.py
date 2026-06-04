@@ -22,6 +22,7 @@ def _load_denial_patterns() -> list[dict[str, Any]]:
 
 def _pattern_matches_source(pattern: dict[str, Any], source: str) -> bool:
     source_norm = source.strip().lower()
+    source_id = source_norm.split(":", 1)[0].strip()
     if not source_norm:
         return False
     candidates = [
@@ -30,7 +31,11 @@ def _pattern_matches_source(pattern: dict[str, Any], source: str) -> bool:
         pattern.get("description", ""),
         pattern.get("category", ""),
     ]
-    return any(source_norm == str(candidate).strip().lower() for candidate in candidates)
+    return any(
+        source_norm == str(candidate).strip().lower()
+        or source_id == str(candidate).strip().lower()
+        for candidate in candidates
+    )
 
 
 def _expected_vectors_for_sources(sources: list[str]) -> list[str]:

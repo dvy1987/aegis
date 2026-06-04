@@ -2048,3 +2048,29 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 ### Revisit triggers
 - `citations_used > 0` on a standard test denial → proceed to judge/showcase/MCP.
 - If panel still null with citations present → debug teacher packet / denial_type labels vs `safety_scope_gate` insurer enums.
+
+---
+
+## 2026-06-04 — Handoff (Codex) — case_12 draft repaired for training correctness
+
+### Done
+- Fixed `eval/cases/drafts/case_12_aetna_priorauth.json` so the denial letter now actually expresses the intended `ignored_physician_letter` flaw instead of acknowledging submitted documentation and clinical notes.
+- Corrected stale `synthetic_provenance` metadata that had been copied from a different case: removed `step-therapy`/named-drug language from `critic_verdicts`, updated `legal_auditor`/`citation_traceability` to match the actual denial, and rewrote hidden `appeal_difficulty` vectors/defenses so the teacher packet is coherent.
+
+### Root cause
+- The case declared `ignored_physician_letter` and `missing_iro_notice`, but only the second flaw was truly present.
+- Hidden provenance also contained mismatched evaluator text, which matters because `teacher_packet.py` consumes `synthetic_provenance.appeal_difficulty` when constructing teacher-only grading context.
+
+### Verification
+- JSON parse/assertions passed for the edited case.
+- `python3.11` teacher-packet smoke check passed: `expected_appeal_vectors` now align with the actual case and `risk_flags` is empty.
+- Backend tests passed from `backend/` under the correct interpreter:
+  `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_part_a_judge_panel.py tests/unit/evals/test_firewall.py tests/unit/evals/test_evaluated_run.py -q`
+  Result: `10 passed`.
+- Follow-up alignment check: `J6` reads both `expected_appeal_vectors` and `exploitable_weaknesses`, so the hidden `appeal_difficulty` packet was further narrowed to the two declared flaw vectors only. `uv run pytest tests/unit/evals/test_part_a_judge_panel.py -q` → `6 passed`.
+- System fix added after re-check: `backend/app/evals/part_a/teacher_packet.py` now parses `pattern_id: source` prefixes in `denial_pattern_sources`, so judge expected vectors are generated from `eval/denial_patterns.json` for draft cases. Added regression coverage in `backend/tests/unit/evals/test_part_a_judge_panel.py`.
+- Final verification: case 12 student packet has no answer-key fields; teacher packet expected vectors are exactly `ignored_physician_letter` + `missing_iro_notice` source-of-truth vectors; learning firewall tests still pass.
+
+### Next agent should know
+- For draft-case QA, do not trust embedded `synthetic_provenance.critic_verdicts` blindly; at least one case had recycled text from a different scenario.
+- If more draft cases are reviewed, validate both the visible denial-letter flaw injection and the hidden `appeal_difficulty` packet, because both influence learning quality.
