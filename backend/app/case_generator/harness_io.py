@@ -21,9 +21,20 @@ from .safety import banned_topic_briefs, scan_banned, scan_phi
 from .text_metrics import fit_letter_word_budget, repair_denial_letter_artifacts
 from .manual_assemble import assemble_case
 
+from .manual_assemble import assemble_case
+
 RUN_DIR = Path("/tmp/harness")
 DRAFTS = config.REPO_ROOT / "eval" / "cases" / "drafts"
+STATE_FILE = RUN_DIR / "state.json"
 ENVELOPE = load_prompt("_critic_envelope")
+
+def load_state() -> dict[str, Any]:
+    if STATE_FILE.exists():
+        return json.loads(STATE_FILE.read_text(encoding="utf-8"))
+    return {"scenario_retries": 0, "stage1_retries": 0, "stage2_retries": 0, "stage3_retries": 0, "p4_retries": 0, "seed": 0}
+
+def save_state(st: dict[str, Any]) -> None:
+    STATE_FILE.write_text(json.dumps(st, indent=2), encoding="utf-8")
 
 def _fmt(template: str, **kw: Any) -> str:
     for k, v in kw.items():
@@ -31,8 +42,18 @@ def _fmt(template: str, **kw: Any) -> str:
     return template
 
 def _sample(seed: int) -> tuple[dict[str, str], list[dict[str, Any]]]:
+    accepted_cells = set()
+    for p in DRAFTS.glob("case_*.json"):
+        try:
+            c = json.loads(p.read_text(encoding="utf-8"))
+            mc = c.get("synthetic_provenance", {}).get("matrix_cell", {})
+            if mc:
+                accepted_cells.add((mc.get("insurer"), mc.get("denial_type"), mc.get("specialty"), mc.get("sub_tactic")))
+        except Exception:
+            continue
+            
     rng = random.Random(seed)
-    cell = config.sample_matrix_cell(rng, forbid_cells=set())
+    cell = config.sample_matrix_cell(rng, forbid_cells=accepted_cells)
     patterns = config.sample_denial_patterns(rng, cell["insurer"], cell["specialty"])
     return cell, patterns
 
@@ -60,9 +81,17 @@ def write_prompts(stage_name: str, prompts: dict[str, str]) -> None:
 
 # --- STAGE COMMANDS ---
 
-def cmd_stage1_prep(index: int, seed: int) -> None:
-    cell, patterns = _sample(seed)
+def cmd_stage1_prep(index: int, seed: int, is_retry: bool = False) -> None:
     RUN_DIR.mkdir(parents=True, exist_ok=True)
+    st = load_state() if is_retry else {"scenario_retries": 0, "stage1_retries": 0, "stage2_retries": 0, "stage3_retries": 0, "p4_retries": 0, "seed": seed}
+    
+    if st["scenario_retries"] >= 4:
+        print("HARD FAIL: Max scenario retries (4) exceeded. Giving up on this case entirely.")
+        sys.exit(1)
+        
+    actual_seed = st["seed"] + st["scenario_retries"]
+    cell, patterns = _sample(actual_seed)
+    
     neighbours = _neighbour_summaries(cell["specialty"])
     inputs = {
         "index": index, "seed": seed, "cell": cell,
@@ -71,11 +100,37 @@ def cmd_stage1_prep(index: int, seed: int) -> None:
         "neighbour_summaries": neighbours,
         "sub_tactic_definition": config.sub_tactic_definition(cell["denial_type"], cell["sub_tactic"]),
         "rationale_seed": clinical_kb.rationale_seed(cell["sub_tactic"]),
+        "grounding_block": clinical_kb.grounding_block(cell["specialty"]),
         "specialty_examples": config.specialty_examples(cell["specialty"]),
         "joint_constraints": config.joint_constraints_text()
     }
     (RUN_DIR / "inputs.json").write_text(json.dumps(inputs, indent=2), encoding="utf-8")
-    print(f"=== PREP case_{index} (seed={seed}) ===\nInputs written to {RUN_DIR}/inputs.json\nAgent should now run P1.")
+    save_state(st)
+    print(f"=== PREP case_{index} (seed={actual_seed}, attempt={st['scenario_retries']+1}/4) ===\nInputs written to {RUN_DIR}/inputs.json\nAgent should now run P1.")
+
+def cmd_stage1_verify(critics_path: str) -> None:
+    critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
+    st = load_state()
+    inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
+    
+    s_mc = critics.get("matrix_coverage", {}).get("score")
+    s_sr = critics.get("scenario_realism", {}).get("score")
+    
+    if s_mc == 1 or s_sr == 1:
+        st["stage1_retries"] += 1
+        if st["stage1_retries"] >= 2:
+            print("STAGE 1 FAILED 2 RETRIES. Discarding scenario and re-rolling Phase 0...")
+            st["scenario_retries"] += 1
+            st["stage1_retries"] = 0
+            save_state(st)
+            cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
+            sys.exit(2)
+        else:
+            save_state(st)
+            print(f"STAGE 1 CRITIC FAILED (Score 1). Retry {st['stage1_retries']}/2. Agent must re-draft P1.")
+            sys.exit(3)
+    
+    print("STAGE 1 PASS. Proceed to P2.")
 
 def cmd_stage1_eval(brief_path: str) -> None:
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
@@ -111,6 +166,25 @@ def cmd_stage2_eval(brief_path: str, letter_path: str) -> None:
     }
     write_prompts("stage2", prompts)
 
+def cmd_stage2_verify(critics_path: str) -> None:
+    critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
+    st = load_state()
+    
+    s_iv = critics.get("insurer_voice", {}).get("score")
+    s_dl = critics.get("denial_logic", {}).get("score")
+    
+    if s_iv == 1 or s_dl == 1:
+        st["stage2_retries"] += 1
+        save_state(st)
+        if st["stage2_retries"] >= 2:
+            print("STAGE 2 FAILED 2 RETRIES. Reached max revisions, proceeding anyway (per pipeline rules). Proceed to P3.")
+            sys.exit(0)
+        else:
+            print(f"STAGE 2 CRITIC FAILED (Score 1). Retry {st['stage2_retries']}/2. Agent must re-draft P2.")
+            sys.exit(3)
+            
+    print("STAGE 2 PASS. Proceed to P3.")
+
 def cmd_stage3_eval(brief_path: str, context_path: str) -> None:
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
     ctx = json.loads(Path(context_path).read_text(encoding="utf-8"))["clinical_context"]
@@ -122,6 +196,25 @@ def cmd_stage3_eval(brief_path: str, context_path: str) -> None:
                                           diagnosis=brief["diagnosis"], treatment_requested=brief["treatment_requested"])
     }
     write_prompts("stage3", prompts)
+
+def cmd_stage3_verify(critics_path: str) -> None:
+    critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
+    st = load_state()
+    
+    s_cr = critics.get("clinical_realism", {}).get("score")
+    s_dtm = critics.get("diagnosis_treatment_match", {}).get("score")
+    
+    if s_cr == 1 or s_dtm == "FAIL":
+        st["stage3_retries"] += 1
+        save_state(st)
+        if st["stage3_retries"] >= 2:
+            print("STAGE 3 FAILED 2 RETRIES. Reached max revisions, proceeding anyway (per pipeline rules). Proceed to P4.")
+            sys.exit(0)
+        else:
+            print(f"STAGE 3 CRITIC FAILED (Score 1 / FAIL). Retry {st['stage3_retries']}/2. Agent must re-draft P3.")
+            sys.exit(3)
+            
+    print("STAGE 3 PASS. Proceed to P4.")
 
 def cmd_stage4_det_check(brief_path: str, p4_path: str) -> None:
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
@@ -144,7 +237,19 @@ def cmd_stage4_det_check(brief_path: str, p4_path: str) -> None:
     print(f"Needs LLM: {fv['needs_llm']}")
     print(f"Absent: {fv['absent']}")
     if fv["absent"]:
-        print("\nFAILURE: Flaws are absent deterministically. Agent MUST re-run P4 injection before P5.")
+        st = load_state()
+        st["p4_retries"] += 1
+        if st["p4_retries"] >= 2:
+            print("HARD FAIL: P4 failed 2 targeted re-injections. Discarding scenario and re-rolling Phase 0...")
+            st["scenario_retries"] += 1
+            st["p4_retries"] = 0
+            save_state(st)
+            cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
+            sys.exit(2)
+        else:
+            save_state(st)
+            print(f"\nHARD FAIL: Flaws are absent deterministically. Retry {st['p4_retries']}/2. Agent MUST re-run P4 injection.")
+            sys.exit(3)
     else:
         print("\nPASS: No deterministic flaws absent. Proceed to P5.")
 
@@ -166,23 +271,41 @@ def cmd_stage5_eval(brief_path: str, final_path: str) -> None:
     banned_hits = scan_banned(final["denial_letter_text"] + "\n" + final["clinical_context"])
     phi_hits = scan_phi(final["denial_letter_text"] + "\n" + final["clinical_context"])
     if banned_hits or phi_hits:
-        print("HARD FAIL: Deterministic Safety/PHI check failed. Re-roll scenario.")
-        sys.exit(1)
+        print("HARD FAIL: Deterministic Safety/PHI check failed. Discarding scenario and re-rolling Phase 0...")
+        st = load_state()
+        st["scenario_retries"] += 1
+        save_state(st)
+        cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
+        sys.exit(2)
         
     # Statistical Diversity Guard
     short = "mednec" if inputs["cell"]["denial_type"] == "Medical Necessity" else "priorauth"
     case_id = f"case_{inputs['index']:02d}_{inputs['cell']['insurer'].lower()}_{short}"
+    
+    neighbour_texts = []
+    for p in DRAFTS.glob("case_*.json"):
+        try:
+            c = json.loads(p.read_text(encoding="utf-8"))
+            if c.get("case_id") != case_id:
+                neighbour_texts.append(c.get("denial_letter_text", "") + "\n" + c.get("clinical_context", ""))
+        except Exception:
+            continue
+
     div_metrics = stats_evaluator.diversity_metrics(
         denial_letter_text=final["denial_letter_text"],
         clinical_context=final["clinical_context"],
-        neighbour_texts=[],
+        neighbour_texts=neighbour_texts,
         corpus=stats_evaluator.corpus_trigrams(DRAFTS),
         exclude_case_id=case_id
     )
     div_verdict = stats_evaluator.diversity_verdict(div_metrics)
     if div_verdict["score"] == 1:
-        print("HARD FAIL: Statistical Diversity check failed (duplicate case). Re-roll scenario.")
-        sys.exit(1)
+        print("HARD FAIL: Statistical Diversity check failed (duplicate case). Discarding scenario and re-rolling Phase 0...")
+        st = load_state()
+        st["scenario_retries"] += 1
+        save_state(st)
+        cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
+        sys.exit(2)
     
     summary = f"- [{inputs['cell']['insurer']} / {inputs['cell']['denial_type']} / {inputs['cell']['specialty']} / {inputs['cell']['sub_tactic']}] dx={final.get('diagnosis', brief['diagnosis'])}; tx={final.get('treatment_requested', brief['treatment_requested'])}"
     
@@ -292,10 +415,6 @@ def cmd_assemble(index: int, brief_path: str, final_path: str, all_critics_path:
         "absent": final_absent,
         "aligned": not final_absent
     }
-    
-    if final_absent:
-        print(f"HARD FAIL: Final flaw integrity failed! Missing flaws: {final_absent}")
-        sys.exit(1)
 
     try:
         final_case = assemble_case(
@@ -314,6 +433,14 @@ def cmd_assemble(index: int, brief_path: str, final_path: str, all_critics_path:
         print(f"Validation failed: {e}")
         sys.exit(1)
         
+    if final_absent:
+        print(f"HARD FAIL: Final flaw integrity failed! Missing flaws: {final_absent}. Discarding scenario and re-rolling Phase 0...")
+        st = load_state()
+        st["scenario_retries"] += 1
+        save_state(st)
+        cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
+        sys.exit(2)
+        
     out_path = DRAFTS / f"{final_case['case_id']}.json"
     out_path.write_text(json.dumps(final_case, indent=2), encoding="utf-8")
     print(f"SUCCESS: Case {final_case['case_id']} assembled and validated!")
@@ -329,13 +456,22 @@ def main(argv: list[str] | None = None) -> int:
     s1 = sub.add_parser("stage1_eval")
     s1.add_argument("--brief", required=True)
     
+    s1v = sub.add_parser("stage1_verify")
+    s1v.add_argument("--critics", required=True)
+    
     s2 = sub.add_parser("stage2_eval")
     s2.add_argument("--brief", required=True)
     s2.add_argument("--letter", required=True)
     
+    s2v = sub.add_parser("stage2_verify")
+    s2v.add_argument("--critics", required=True)
+    
     s3 = sub.add_parser("stage3_eval")
     s3.add_argument("--brief", required=True)
     s3.add_argument("--context", required=True)
+    
+    s3v = sub.add_parser("stage3_verify")
+    s3v.add_argument("--critics", required=True)
     
     s4_chk = sub.add_parser("stage4_det_check")
     s4_chk.add_argument("--brief", required=True)
@@ -358,8 +494,11 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
     if args.cmd == "stage1_prep": cmd_stage1_prep(args.index, args.seed)
     elif args.cmd == "stage1_eval": cmd_stage1_eval(args.brief)
+    elif args.cmd == "stage1_verify": cmd_stage1_verify(args.critics)
     elif args.cmd == "stage2_eval": cmd_stage2_eval(args.brief, args.letter)
+    elif args.cmd == "stage2_verify": cmd_stage2_verify(args.critics)
     elif args.cmd == "stage3_eval": cmd_stage3_eval(args.brief, args.context)
+    elif args.cmd == "stage3_verify": cmd_stage3_verify(args.critics)
     elif args.cmd == "stage4_det_check": cmd_stage4_det_check(args.brief, args.p4)
     elif args.cmd == "stage5_eval": cmd_stage5_eval(args.brief, args.final)
     elif args.cmd == "final_panel": cmd_final_panel(args.brief, args.final)
