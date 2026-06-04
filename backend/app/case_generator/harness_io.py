@@ -15,11 +15,10 @@ from typing import Any
 import uuid
 from datetime import UTC, datetime
 
-from . import clinical_kb, config, flaw_verifier, stats_evaluator
+from . import clinical_kb, config, flaw_verifier, stats_evaluator, references
 from .prompts import load_prompt
 from .safety import banned_topic_briefs, scan_banned, scan_phi
 from .text_metrics import fit_letter_word_budget, repair_denial_letter_artifacts
-from .manual_assemble import assemble_case
 
 from .manual_assemble import assemble_case
 
@@ -63,6 +62,12 @@ def _mark_stage(st: dict[str, Any], completed_stage: str) -> None:
 def _write_verdict(status: str, next_action: str) -> None:
     path = RUN_DIR / "last_verdict.json"
     path.write_text(json.dumps({"status": status, "next_action": next_action}, indent=2), encoding="utf-8")
+
+def save_critics(new_critics: dict[str, Any]) -> None:
+    p = RUN_DIR / "all_critics.json"
+    c = json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+    c.update(new_critics)
+    p.write_text(json.dumps(c, indent=2), encoding="utf-8")
 
 def _fmt(template: str, **kw: Any) -> str:
     for k, v in kw.items():
@@ -140,6 +145,7 @@ def cmd_stage1_prep(index: int, seed: int, is_retry: bool = False) -> None:
 
 def cmd_stage1_verify(critics_path: str) -> None:
     critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
+    save_critics(critics)
     st = load_state()
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     
@@ -181,6 +187,7 @@ def cmd_stage1_predraft_eval(brief_path: str) -> None:
 
 def cmd_stage1_predraft_verify(critics_path: str) -> None:
     critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
+    save_critics(critics)
     st = load_state()
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     
@@ -252,6 +259,7 @@ def cmd_stage2_eval(brief_path: str, letter_path: str) -> None:
 
 def cmd_stage2_verify(critics_path: str) -> None:
     critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
+    save_critics(critics)
     st = load_state()
     
     s_iv = critics.get("insurer_voice", {}).get("score")
@@ -292,6 +300,7 @@ def cmd_stage3_eval(brief_path: str, context_path: str) -> None:
 
 def cmd_stage3_verify(critics_path: str) -> None:
     critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
+    save_critics(critics)
     st = load_state()
     
     s_cr = critics.get("clinical_realism", {}).get("score")
@@ -416,6 +425,8 @@ def cmd_stage5_eval(brief_path: str, final_path: str) -> None:
         _write_verdict("FAIL", "HARD FAIL: Statistical Diversity check failed (duplicate case). Discarding scenario. Re-run stage1_prep.")
         cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
         sys.exit(2)
+    else:
+        save_critics({"diversity_statistical": div_verdict})
     
     summary = f"- [{inputs['cell']['insurer']} / {inputs['cell']['denial_type']} / {inputs['cell']['specialty']} / {inputs['cell']['sub_tactic']}] dx={final.get('diagnosis', brief['diagnosis'])}; tx={final.get('treatment_requested', brief['treatment_requested'])}"
     
@@ -455,6 +466,7 @@ def cmd_stage5_verify(brief_path: str, final_path: str, critics_path: str) -> No
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
     final = json.loads(Path(final_path).read_text(encoding="utf-8"))
     critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
+    save_critics(critics)
     st = load_state()
     
     # 1. Semantic Safety Check
@@ -545,7 +557,9 @@ def cmd_assemble(index: int, brief_path: str, final_path: str, all_critics_path:
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
     final = json.loads(Path(final_path).read_text(encoding="utf-8"))
-    critics = json.loads(Path(all_critics_path).read_text(encoding="utf-8"))
+    
+    critics = json.loads((RUN_DIR / "all_critics.json").read_text(encoding="utf-8"))
+    critics.update(json.loads(Path(all_critics_path).read_text(encoding="utf-8")))
     
     pp = {
         "age": brief["patient_age"], "gender": brief["patient_gender"],
@@ -592,6 +606,12 @@ def cmd_assemble(index: int, brief_path: str, final_path: str, all_critics_path:
             denial_letter_text=final["denial_letter_text"],
             clinical_context=final["clinical_context"],
             denial_pattern_sources=flaw_verifier.format_pattern_sources(inputs["patterns"]),
+            denial_letter_references=references.select_letter_references(
+                insurer=inputs["cell"]["insurer"],
+                denial_type=inputs["cell"]["denial_type"],
+                pattern_ids=pattern_ids,
+                cell=inputs["cell"]
+            ),
             critic_verdicts=critics,
             run_id=run_id,
             submission_timestamp=final.get("submission_timestamp"),

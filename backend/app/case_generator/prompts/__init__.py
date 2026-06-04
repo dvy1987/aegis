@@ -15,7 +15,7 @@ PROMPT_VERSIONS: dict[str, str] = {
     "p1_scenario_planner": "1.0.0",
     "p2_denial_drafter": "1.1.0",
     "p3_clinical_writer": "1.0.0",
-    "p4_adversarial_diversifier": "1.0.0",
+    "p4_realistic_flaw_injector": "1.0.0",
     "c_pre_draft_consistency": "1.0.0",
     "c_matrix_coverage": "1.0.0",
     "c_scenario_realism": "1.0.0",
