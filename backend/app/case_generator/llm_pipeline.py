@@ -1,6 +1,8 @@
-"""LEGACY Vertex/Gemini producer→critic swarm (not the default generator).
+"""Aegis LLM case generator — Vertex/Gemini producer→critic swarm (canonical pipeline).
 
-Default for new cases: ``app.case_generator.aplus.build_aplus_case``.
+Grounded on the curated clinical KB (clinical_kb), with a flaw-injection verifier
+(flaw_verifier) enforcing the J6 teacher-packet contract, deterministic sex guard,
+diversity critic, word-budget guard (text_metrics), and sourced denial_letter_references.
 Orchestrates the per-stage producer→critic generation swarm.
 
 AlphaEval rules enforced in this orchestrator:
@@ -19,10 +21,11 @@ import uuid
 from datetime import UTC, datetime
 from typing import Any
 
-from . import config
-from . import old_agents as agents
+from . import clinical_kb, config, flaw_verifier, references, stats_evaluator
+from . import llm_agents as agents
 from .prompts import PROMPT_VERSIONS
 from .safety import banned_topic_briefs, scan_banned, scan_phi
+from .text_metrics import fit_letter_word_budget, repair_denial_letter_artifacts
 from .validator import validate_case
 
 logger = logging.getLogger(__name__)
@@ -37,6 +40,7 @@ HARD_GATE_DIMS = {
     "contradiction_hunter",
     "llm_tell_detector",
     "scope_guard",
+    "flaw_injection",  # every intended flaw must be discoverable in student-visible text (J6 contract)
 }
 
 
@@ -82,6 +86,9 @@ def _scenario_planner_stage(
     sub_def = config.sub_tactic_definition(
         matrix_cell["denial_type"], matrix_cell["sub_tactic"]
     )
+    seed = clinical_kb.rationale_seed(matrix_cell["sub_tactic"])
+    if seed:
+        sub_def = f"{sub_def}\n\n{seed}"
     examples = config.specialty_examples(matrix_cell["specialty"])
     constraints = config.joint_constraints_text()
 
@@ -91,7 +98,19 @@ def _scenario_planner_stage(
         specialty_examples=examples,
         joint_constraints=constraints,
         patterns=patterns,
+        clinical_variants=clinical_kb.grounding_block(matrix_cell["specialty"]),
     )
+
+    # Deterministic SEX GUARD — root-cause fix for demographic mismatches. Forces
+    # patient_gender to match a sex-specific diagnosis regardless of the random matrix
+    # cell gender (the bug that produced "34M ovarian cyst").
+    req_sex = clinical_kb.required_sex(
+        brief.get("diagnosis", ""), brief.get("treatment_requested", "")
+    )
+    if req_sex and brief.get("patient_gender") != req_sex:
+        logger.info("sex guard: forcing patient_gender %s -> %s for dx=%s",
+                    brief.get("patient_gender"), req_sex, brief.get("diagnosis"))
+        brief["patient_gender"] = req_sex
 
     cov = agents.critic_matrix_coverage(brief, matrix_cell)
     realism = agents.critic_scenario_realism(brief)
@@ -173,7 +192,15 @@ def _stylistic_diversifier_stage(
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     ns_text = "\n".join(f"- {s}" for s in neighbour_summaries)
     stylized = agents.run_stylistic_diversifier(assembled, ns_text)
-    return stylized, {}
+    # Diversity critic (previously defined but never called) — gate near-duplicates.
+    merged = {**assembled, **stylized}
+    this_summary = _summary_for_neighbours(
+        {"matrix_cell": merged.get("matrix_cell", {}),
+         "diagnosis": merged.get("diagnosis", ""),
+         "treatment_requested": merged.get("treatment_requested", "")}
+    )
+    diversity = agents.critic_diversity_delta(this_summary, ns_text)
+    return stylized, {"diversity_delta": diversity}
 
 
 def _safety_stage(denial_letter_text: str, clinical_context: str) -> dict[str, Any]:
@@ -303,6 +330,174 @@ def _case_id_for(insurer: str, denial_type: str, index: int) -> str:
     return f"case_{index:02d}_{insurer.lower()}_{short}"
 
 
+def _verify_flaws_full(
+    *,
+    denial_letter_text: str,
+    clinical_context: str,
+    pattern_ids: list[str],
+    submission_timestamp: str | None,
+    denial_timestamp: str | None,
+    specialty: str | None,
+    plan_funding_type: str | None,
+    patterns: list[dict[str, Any]],
+    llm_all: bool = False,
+) -> tuple[list[str], dict[str, Any], list[str]]:
+    """Full deterministic + LLM flaw verification (NO mutation).
+
+    Returns (absent, det_result, llm_absent). ``absent`` = deterministic 'absent' ∪
+    LLM-confirmed-absent. With ``llm_all=False`` (mid-pipeline, cheaper) the LLM only
+    re-checks the semantic 'needs_llm' patterns; with ``llm_all=True`` (the FINAL gate) the
+    LLM independently re-checks EVERY intended flaw — catching deterministic false-positives
+    so no judge-facing flaw can slip through the finished case.
+    """
+    pat_by_id = {p.get("id"): p for p in patterns if p.get("id")}
+    fv = flaw_verifier.verify_flaws(
+        denial_letter_text=denial_letter_text,
+        clinical_context=clinical_context,
+        pattern_ids=pattern_ids,
+        submission_timestamp=submission_timestamp,
+        denial_timestamp=denial_timestamp,
+        specialty=specialty,
+        plan_funding_type=plan_funding_type,
+    )
+    llm_targets = list(pattern_ids) if llm_all else list(fv["needs_llm"])
+    llm_absent: list[str] = []
+    if llm_targets:
+        to_check = [
+            {"id": pid,
+             "description": pat_by_id.get(pid, {}).get("description", ""),
+             "appeal_vector": pat_by_id.get(pid, {}).get("appeal_vector", "")}
+            for pid in llm_targets
+        ]
+        try:
+            res = agents.critic_flaw_injection_verifier(
+                denial_letter_text, clinical_context, to_check,
+                submission_timestamp=submission_timestamp,
+                denial_timestamp=denial_timestamp,
+            )
+            llm_absent = [r.get("pattern_id") for r in res.get("verification_results", [])
+                          if str(r.get("status", "")).upper() == "ABSENT"]
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("LLM flaw verifier failed: %s", exc)
+    absent = sorted(set(fv["absent"]) | set(llm_absent))
+    return absent, fv, llm_absent
+
+
+def _post_p4_flaw_checkpoint(
+    assembled_p4: dict[str, Any],
+    pattern_ids: list[str],
+    cell: dict[str, str],
+    brief: dict[str, Any],
+    patterns: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """AlphaEval per-step checkpoint between P4 and P5 (cascade-dependency mitigation).
+
+    Runs the DETERMINISTIC flaw verifier on the P4 output and re-injects any absent flaws
+    in place, so the stylistic diversifier never builds on a flaw-broken letter. Cheap
+    (no LLM); the full deterministic+LLM gate still runs after P5. Informational verdict —
+    the post-P5 ``flaw_injection`` dim is the hard gate.
+    """
+    pat_by_id = {p.get("id"): p for p in patterns if p.get("id")}
+
+    def _det() -> dict[str, Any]:
+        return flaw_verifier.verify_flaws(
+            denial_letter_text=assembled_p4["denial_letter_text"],
+            clinical_context=assembled_p4["clinical_context"],
+            pattern_ids=pattern_ids,
+            submission_timestamp=assembled_p4.get("submission_timestamp"),
+            denial_timestamp=assembled_p4.get("denial_timestamp"),
+            specialty=cell["specialty"],
+            plan_funding_type=brief.get("plan_funding_type"),
+        )
+
+    fv = _det()
+    if fv["absent"]:
+        logger.info("post-P4 checkpoint: absent=%s — re-injecting before P5", fv["absent"])
+        try:
+            reinj = agents.run_realistic_flaw_injector(
+                dict(assembled_p4), fv["absent"],
+                [pat_by_id[a] for a in fv["absent"] if a in pat_by_id],
+            )
+            for k in ("denial_letter_text", "clinical_context",
+                      "submission_timestamp", "denial_timestamp"):
+                if reinj.get(k):
+                    assembled_p4[k] = reinj[k]
+            fv = _det()
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("post-P4 re-injection failed: %s", exc)
+
+    return {
+        "dimension": "flaw_injection_p4",
+        "reasoning": (f"post-P4 deterministic: present={fv['present']}; "
+                      f"needs_llm={fv['needs_llm']}; absent={fv['absent']}"),
+        "score": "PASS" if not fv["absent"] else "FAIL",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": (f"Inject before P5: {fv['absent']}" if fv["absent"] else None),
+    }
+
+
+def _flaw_injection_stage(
+    stylized: dict[str, Any],
+    pattern_ids: list[str],
+    cell: dict[str, str],
+    brief: dict[str, Any],
+    assembled_for_p5: dict[str, Any],
+    patterns: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Verify every intended flaw is discoverable in student-visible text (J6 contract).
+
+    Two layers: deterministic ``flaw_verifier`` for clear-signature patterns, and the LLM
+    ``critic_flaw_injection_verifier`` for the semantic ('needs_llm') ones. Their 'absent'
+    sets are unioned; one re-injection pass covers all; then a PASS/FAIL hard-gate verdict.
+    """
+    pat_by_id = {p.get("id"): p for p in patterns if p.get("id")}
+
+    def _absent_set() -> tuple[list[str], dict[str, Any]]:
+        absent, fv, _ = _verify_flaws_full(
+            denial_letter_text=stylized["denial_letter_text"],
+            clinical_context=stylized["clinical_context"],
+            pattern_ids=pattern_ids,
+            submission_timestamp=stylized.get("submission_timestamp"),
+            denial_timestamp=stylized.get("denial_timestamp"),
+            specialty=cell["specialty"],
+            plan_funding_type=brief.get("plan_funding_type"),
+            patterns=patterns,
+        )
+        return absent, fv
+
+    absent, fv = _absent_set()
+    if absent:
+        logger.info("flaw verifier: absent=%s — attempting targeted re-injection", absent)
+        try:
+            reinj = agents.run_realistic_flaw_injector(
+                {**assembled_for_p5, **stylized},
+                absent,
+                [pat_by_id[a] for a in absent if a in pat_by_id],
+            )
+            for k in ("denial_letter_text", "clinical_context",
+                      "submission_timestamp", "denial_timestamp"):
+                if reinj.get(k):
+                    stylized[k] = reinj[k]
+            stylized["denial_letter_text"] = fit_letter_word_budget(
+                repair_denial_letter_artifacts(stylized["denial_letter_text"])
+            )
+            absent, fv = _absent_set()
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("flaw re-injection failed: %s", exc)
+
+    return {
+        "dimension": "flaw_injection",
+        "reasoning": (f"discoverable={fv['present']}; needs_llm={fv['needs_llm']}; "
+                      f"absent_after_retry={absent}"),
+        "score": "PASS" if not absent else "FAIL",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": (f"Re-inject so discoverable in student-visible text: {absent}"
+                        if absent else None),
+    }
+
+
 def generate_one_case(
     *,
     index: int,
@@ -332,9 +527,44 @@ def generate_one_case(
             "denial_letter_text": letter,
             "clinical_context": ctx,
         }
+        pattern_ids_list = [p.get("id") for p in patterns if p.get("id")]
         perturbed, div_critics = _flaw_injector_stage(assembled, brief.get("intended_flaw_types", []), patterns)
         assembled_for_p5 = {**assembled, **perturbed}
+
+        # AlphaEval per-step checkpoint: validate P4's flaw injection BEFORE P5 diversifies it
+        # (cascade-dependency mitigation). Deterministic-only re-injection here is cheap; the
+        # full deterministic+LLM gate runs again after P5.
+        p4_v = _post_p4_flaw_checkpoint(
+            assembled_for_p5, pattern_ids_list, cell, brief, patterns
+        )
+
         stylized, style_critics = _stylistic_diversifier_stage(assembled_for_p5, neighbour_summaries)
+
+        # text_metrics guard: enforce P2/P3 word budget + repair splice artifacts.
+        stylized["denial_letter_text"] = fit_letter_word_budget(
+            repair_denial_letter_artifacts(stylized["denial_letter_text"])
+        )
+        # Judge-aligned denial_pattern_sources ("{id}: {source}" — teacher-packet-parseable).
+        stylized["denial_pattern_sources"] = flaw_verifier.format_pattern_sources(patterns)
+
+        # Flaw-injection verifier gate (mutates stylized via re-injection on absent flaws).
+        flaw_v = _flaw_injection_stage(
+            stylized, pattern_ids_list, cell, brief, assembled_for_p5, patterns
+        )
+
+        # Statistical evaluator layer (AlphaEval 3rd type): lexical near-duplicate vs the
+        # existing drafts corpus — "diversify based on existing cases".
+        case_id = _case_id_for(cell["insurer"], cell["denial_type"], index)
+        div_stat_v = stats_evaluator.diversity_verdict(
+            stats_evaluator.diversity_metrics(
+                denial_letter_text=stylized["denial_letter_text"],
+                clinical_context=stylized["clinical_context"],
+                neighbour_texts=[],
+                corpus=stats_evaluator.corpus_trigrams(
+                    config.REPO_ROOT / "eval" / "cases" / "drafts"),
+                exclude_case_id=case_id,
+            )
+        )
 
         safety_v = _safety_stage(
             stylized["denial_letter_text"], stylized["clinical_context"]
@@ -373,6 +603,10 @@ def generate_one_case(
             **drafter_critics,
             **writer_critics,
             **div_critics,
+            **style_critics,
+            "flaw_injection_p4": p4_v,
+            "flaw_injection": flaw_v,
+            "diversity_statistical": div_stat_v,
             "safety_redactor": safety_v,
             "phi_pii": phi_v,
             **final_critics,
@@ -387,7 +621,6 @@ def generate_one_case(
             )
             continue
 
-        case_id = _case_id_for(cell["insurer"], cell["denial_type"], index)
         provenance = {
             "generator_model": config.DEFAULT_MODEL,
             "run_id": run_id,
@@ -406,7 +639,10 @@ def generate_one_case(
             "appeal_difficulty": {
                 "score": final_critics["appeal_difficulty"].get("score", 3),
                 "reasoning": final_critics["appeal_difficulty"].get("reasoning", ""),
-                "exploitable_weaknesses": final_critics["appeal_difficulty"].get("exploitable_weaknesses", []),
+                "exploitable_weaknesses": (
+                    final_critics["appeal_difficulty"].get("exploitable_weaknesses", [])
+                    + [f"Pattern anchor: {pid}" for pid in pattern_ids_list]
+                ),
                 "strong_defenses": final_critics["appeal_difficulty"].get("strong_defenses", []),
             },
         }
@@ -416,6 +652,13 @@ def generate_one_case(
             "denial_type": cell["denial_type"],
             "patient_profile": patient_profile,
             "denial_pattern_sources": stylized.get("denial_pattern_sources", []),
+            "denial_letter_references": references.select_letter_references(
+                insurer=cell["insurer"],
+                denial_type=cell["denial_type"],
+                pattern_ids=pattern_ids_list,
+                cell=cell,
+                use_web_research=True,
+            ),
             "denial_letter_text": stylized["denial_letter_text"],
             "clinical_context": stylized["clinical_context"],
             "submission_timestamp": stylized.get("submission_timestamp"),
@@ -425,6 +668,39 @@ def generate_one_case(
         result = validate_case(case_obj)
         if not result.ok:
             logger.warning("schema validation failed: %s", result.errors)
+            continue
+
+        # FINAL FLAW-INTEGRITY CHECK (last step) — FULL deterministic + LLM verification on
+        # the FINISHED case_obj. This is the hard guarantee that every judge-facing flaw
+        # (the same patterns fed to the teacher packet via denial_pattern_sources +
+        # appeal_difficulty.exploitable_weaknesses) is still discoverable in the final
+        # letter/clinical text. If any is missing — clear-signature OR semantic — re-roll,
+        # so the judges never penalise the learner for a flaw the data fails to contain.
+        final_absent, final_fv, final_llm_absent = _verify_flaws_full(
+            denial_letter_text=case_obj["denial_letter_text"],
+            clinical_context=case_obj["clinical_context"],
+            pattern_ids=pattern_ids_list,
+            submission_timestamp=case_obj.get("submission_timestamp"),
+            denial_timestamp=case_obj.get("denial_timestamp"),
+            specialty=cell["specialty"],
+            plan_funding_type=brief.get("plan_funding_type"),
+            patterns=patterns,
+            llm_all=True,  # FINAL gate: LLM independently re-checks EVERY intended flaw.
+        )
+        case_obj["synthetic_provenance"]["final_flaw_integrity"] = {
+            "method": "deterministic+llm(all)",
+            "expected_flaws": pattern_ids_list,
+            "deterministic_present": final_fv["present"],
+            "llm_absent": final_llm_absent,
+            "absent": final_absent,
+            "aligned": not final_absent,
+        }
+        if final_absent:
+            logger.warning(
+                "case %d retry %d FINAL flaw-integrity FAIL (det+llm) — judge-facing flaw(s) "
+                "%s missing from the finished case; re-rolling",
+                index, retry, final_absent,
+            )
             continue
 
         accepted_cells.add(

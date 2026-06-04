@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "source": "harvested from aplus/scenarios.py _denial_seeds",
+    "use": "P1 grounding: sub_tactic-aligned denial rationale exemplars; {dx}/{tx}/{insurer} are placeholders"
+  },
+  "seeds": {
+    "step_therapy_missing": {
+      "denial_rationale": "{insurer} medical policy requires documented failure of prerequisite therapies before {tx}. Submitted records do not establish failure of required lower-cost options for {dx}.",
+      "rebuttal": "{rebuttal} {facts}"
+    },
+    "conservative_treatment_required": {
+      "denial_rationale": "Coverage requires a defined course of conservative therapy before {tx}. Documentation does not show the required duration or type of conservative care.",
+      "rebuttal": "{facts} The requested {tx} is appropriate after documented conservative failure."
+    },
+    "frequency_excessive": {
+      "denial_rationale": "The requested frequency exceeds plan guidelines for {dx}. Additional visits are not medically necessary at this cadence.",
+      "rebuttal": "{rebuttal} Clinical notes show worsening despite prior visits within guideline limits."
+    },
+    "level_of_care_too_high": {
+      "denial_rationale": "A lower level of care is appropriate for {dx}; {tx} exceeds what is required. Outpatient management has not been exhausted per clinical guidelines.",
+      "rebuttal": "{facts} Symptoms support the higher level of care requested."
+    },
+    "not_evidence_based": {
+      "denial_rationale": "{tx} is not considered evidence-based for {dx} under current medical policy. Published criteria do not support authorization.",
+      "rebuttal": "{rebuttal} Contemporary guidelines and trial data support use in this clinical context."
+    },
+    "duration_excessive": {
+      "denial_rationale": "The duration of {tx} exceeds plan limits without new clinical review. Continuation requires updated documentation not received.",
+      "rebuttal": "{facts} Ongoing treatment prevents relapse documented in chart."
+    },
+    "guideline_mis_cite": {
+      "denial_rationale": "Clinical criteria for {tx} are not met per the cited utilization guideline module for {dx}. The request does not satisfy threshold requirements in the referenced criteria set.",
+      "rebuttal": "The insurer applied the wrong guideline module; {rebuttal}"
+    },
+    "missing_peer_to_peer": {
+      "denial_rationale": "Prior authorization for {tx} is denied because a required peer-to-peer review was not completed in the allowed window. Clinical information may be discussed during appeal submission.",
+      "rebuttal": "Three scheduling attempts were documented; {facts}"
+    },
+    "formulary_tier_dispute": {
+      "denial_rationale": "{tx} is non-preferred; a formulary alternative must be tried for {dx}. A lower-tier agent is available without demonstrated failure of the preferred option.",
+      "rebuttal": "{facts} Prior biologic failure/contraindication supports exception."
+    },
+    "out_of_network_no_authorization": {
+      "denial_rationale": "{tx} with an out-of-network provider is not covered without a gap exception. In-network alternatives are available.",
+      "rebuttal": "No in-network surgeon performs high-volume specialized excision; {rebuttal}"
+    },
+    "continuation_of_care_lapsed": {
+      "denial_rationale": "Continuation of {tx} requires an active prior authorization; the prior auth lapsed. A new authorization must be submitted.",
+      "rebuttal": "Stable disease on therapy 12+ months; lapse was administrative, not clinical. {facts}"
+    },
+    "emergency_retroactive_auth": {
+      "denial_rationale": "Emergency imaging/treatment for {dx} is denied for lack of prior authorization. Retroactive authorization is not granted for non-emergent services.",
+      "rebuttal": "ED presentation met prudent layperson standard; {facts}"
+    },
+    "modality_substitution": {
+      "denial_rationale": "A less costly modality is appropriate before {tx} for {dx}. Plan policy requires step-down diagnostic or therapeutic approach.",
+      "rebuttal": "{rebuttal} Patient factors make substituted modality unsafe or inadequate."
+    },
+    "visit_limit_exceeded": {
+      "denial_rationale": "Annual visit limit for services treating {dx} has been exceeded. Additional visits are not a covered benefit this plan year.",
+      "rebuttal": "{rebuttal} Parity and medical necessity support continued visits."
+    }
+  }
+}

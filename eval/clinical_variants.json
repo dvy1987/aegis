@@ -1,0 +1,868 @@
+{
+  "_meta": {
+    "source": "harvested from aplus/scenarios.py SPECIALTY_VARIANTS",
+    "sex_constraint": "M|F|any \u2014 pipeline must set patient_gender to match when not 'any'"
+  },
+  "specialties": {
+    "behavioral_health": [
+      {
+        "diagnosis": "Major depressive disorder, recurrent, moderate (F33.1)",
+        "treatment_requested": "Intensive outpatient program (IOP) for depression",
+        "clinical_facts": "PHQ-9 scores 19 and 21 in Q4 2025 and Q1 2026; failed sertraline 200 mg \u00d714 weeks and bupropion XL 300 mg \u00d712 weeks.",
+        "rebuttal_core": "IOP is indicated after two adequate antidepressant trials with persistent functional impairment.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Generalized anxiety disorder (F41.1)",
+        "treatment_requested": "Additional psychotherapy visits beyond plan annual limit",
+        "clinical_facts": "GAD-7 remained 16 after 16 sessions; prior auth supported weekly therapy for acute worsening in March 2026.",
+        "rebuttal_core": "Visit-cap denials ignore MHPAEA parity when medical/surgical follow-ups are not similarly capped.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Severe obsessive-compulsive disorder (F42.2)",
+        "treatment_requested": "Transcranial magnetic stimulation (TMS)",
+        "clinical_facts": "Y-BOCS 29 after fluvoxamine 300 mg \u00d716 weeks and clomipramine 200 mg \u00d714 weeks plus ERP since 2024.",
+        "rebuttal_core": "TMS meets CPB criteria when two medication classes and ERP have failed with documented scores.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Bipolar II disorder, current depressed episode (F31.81)",
+        "treatment_requested": "Partial hospitalization program (PHP)",
+        "clinical_facts": "Quetiapine and lamotrigine trials with PHP referral after emergency department visit for severe functional decline.",
+        "rebuttal_core": "PHP is appropriate when outpatient care cannot stabilize mood symptoms.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Attention-deficit/hyperactivity disorder, combined (F90.2)",
+        "treatment_requested": "Adult ADHD coaching plus medication management extension",
+        "clinical_facts": "Documented workplace impairment; atomoxetine 80 mg daily trialed 10 weeks with partial response.",
+        "rebuttal_core": "Coaching paired with pharmacotherapy is standard when impairment persists.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Post-traumatic stress disorder, chronic (F43.12)",
+        "treatment_requested": "Prolonged exposure therapy beyond visit cap",
+        "clinical_facts": "CAPS-5 score 42; completed 12 sessions with minimal symptom change.",
+        "rebuttal_core": "Trauma-focused therapy requires sufficient visits to complete exposure hierarchy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Alcohol use disorder, severe (F10.20)",
+        "treatment_requested": "Inpatient medical detoxification (3\u20135 days)",
+        "clinical_facts": "CIWA-Ar peaked at 17 with tremor and tachycardia; outpatient detox deemed unsafe by ED physician.",
+        "rebuttal_core": "Inpatient detox is medically necessary when withdrawal risk is moderate-severe.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Binge-eating disorder (F50.81)",
+        "treatment_requested": "Adjunct lisdexamfetamine for BED",
+        "clinical_facts": "Failed topiramate 100 mg and structured behavioral program 20 weeks; BMI 36 with metabolic syndrome.",
+        "rebuttal_core": "Pharmacotherapy is guideline-supported after behavioral intervention failure.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Persistent depressive disorder (F34.1)",
+        "treatment_requested": "Spravato (esketamine) nasal therapy",
+        "clinical_facts": "Failed venlafaxine XR 225 mg and mirtazapine 30 mg; PHQ-9 \u226518 for nine months.",
+        "rebuttal_core": "Esketamine is indicated for treatment-resistant depression with documented trials.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Social anxiety disorder, severe (F40.10)",
+        "treatment_requested": "Group cognitive behavioral therapy (16 sessions)",
+        "clinical_facts": "Failed sertraline and escitalopram trials; avoids work due to panic symptoms in meetings.",
+        "rebuttal_core": "Structured CBT is first-line when pharmacotherapy insufficient.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Panic disorder with agoraphobia (F40.01)",
+        "treatment_requested": "Psychiatric partial hospitalization",
+        "clinical_facts": "Multiple ER visits in 2025; lorazepam taper completed; SSRIs partially effective only.",
+        "rebuttal_core": "Higher level of care warranted with recurrent ER utilization.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Insomnia disorder, chronic (G47.00)",
+        "treatment_requested": "Cognitive behavioral therapy for insomnia (CBT-I), 8 sessions",
+        "clinical_facts": "Sleep diary shows 4.2 hours/night average; failed zolpidem 10 mg with next-day impairment.",
+        "rebuttal_core": "CBT-I is preferred over chronic hypnotic use.",
+        "sex_constraint": "any"
+      }
+    ],
+    "cardiology": [
+      {
+        "diagnosis": "Paroxysmal atrial fibrillation (I48.0)",
+        "treatment_requested": "Catheter ablation for symptomatic AFib",
+        "clinical_facts": "Failed dofetilide and sotalol with Holter-documented burden 18%; CHA2DS2-VASc 2.",
+        "rebuttal_core": "Ablation appropriate after antiarrhythmic failure with symptomatic burden.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Heart failure with reduced ejection fraction (I50.20)",
+        "treatment_requested": "Cardiac resynchronization therapy (CRT-D)",
+        "clinical_facts": "LVEF 28% on optimal GDMT; LBBB QRS 152 ms despite sacubitril/valsartan and carvedilol.",
+        "rebuttal_core": "CRT indicated with EF \u226435% and wide QRS despite medical therapy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Refractory hypertension (I10)",
+        "treatment_requested": "Renal denervation referral",
+        "clinical_facts": "BP 168/104 on amlodipine, chlorthalidone, and losartan at maximized doses.",
+        "rebuttal_core": "Resistant hypertension defined after three agents including diuretic.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Stable angina with positive stress test (I20.9)",
+        "treatment_requested": "Coronary CT angiography",
+        "clinical_facts": "Typical angina class II; stress ECG with 2 mm ST depression at 7 METs.",
+        "rebuttal_core": "Non-invasive imaging warranted with intermediate pre-test probability.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Familial hypercholesterolemia (E78.01)",
+        "treatment_requested": "PCSK9 inhibitor (evolocumab)",
+        "clinical_facts": "LDL 196 mg/dL on high-intensity statin plus ezetimibe; ASCVD risk elevated.",
+        "rebuttal_core": "PCSK9 therapy indicated when LDL remains above goal on maximally tolerated statin.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Symptomatic aortic stenosis, moderate (I35.0)",
+        "treatment_requested": "Transcatheter aortic valve replacement (TAVR) evaluation",
+        "clinical_facts": "Syncope episode 2025; valve area 1.0 cm\u00b2 with mean gradient 38 mmHg.",
+        "rebuttal_core": "TAVR evaluation appropriate with symptoms and hemodynamically significant AS.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Recurrent vasovagal syncope (R55)",
+        "treatment_requested": "Implantable loop recorder",
+        "clinical_facts": "Three syncope events in 12 months; orthostatics and echo unrevealing.",
+        "rebuttal_core": "ILR indicated for recurrent unexplained syncope.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Long QT syndrome type 2 (I49.5)",
+        "treatment_requested": "Genetic cardiology consult and beta-blocker titration",
+        "clinical_facts": "QTc 498 ms on ECG; family history of sudden death.",
+        "rebuttal_core": "Specialist management required for inherited arrhythmia syndrome.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Pulmonary arterial hypertension, suspected (I27.0)",
+        "treatment_requested": "Right heart catheterization",
+        "clinical_facts": "Echo RVSP 48 mmHg with progressive dyspnea on exertion.",
+        "rebuttal_core": "Catheterization required to confirm PAH and guide therapy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Post-MI ventricular tachycardia (I25.2)",
+        "treatment_requested": "Subcutaneous ICD",
+        "clinical_facts": "Sustained VT episode 2025; EF 35% after anterior MI.",
+        "rebuttal_core": "ICD indicated for secondary prevention after sustained VT.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Hypertrophic cardiomyopathy (I42.2)",
+        "treatment_requested": "Septal myectomy evaluation",
+        "clinical_facts": "LVOT gradient 65 mmHg on stress echo with NYHA class III symptoms.",
+        "rebuttal_core": "Surgical myectomy considered when gradient and symptoms persist on medical therapy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Wolff-Parkinson-White pattern with SVT (I45.6)",
+        "treatment_requested": "Electrophysiology study with ablation",
+        "clinical_facts": "Monthly palpitation episodes; delta wave on resting ECG.",
+        "rebuttal_core": "EP study standard when symptomatic WPW present.",
+        "sex_constraint": "any"
+      }
+    ],
+    "endocrine": [
+      {
+        "diagnosis": "Type 2 diabetes mellitus with labile glucose (E11.65)",
+        "treatment_requested": "Continuous glucose monitor (Dexcom G7)",
+        "clinical_facts": "Basal-bolus regimen with nocturnal hypoglycemia to 48 mg/dL on fingersticks.",
+        "rebuttal_core": "CGM indicated with hypoglycemia unawareness on multi-dose insulin.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Hypothyroidism, inadequately controlled (E03.9)",
+        "treatment_requested": "Liothyronine (T3) adjunct therapy",
+        "clinical_facts": "TSH 6.8 mIU/L on levothyroxine 150 mcg; persistent fatigue and weight gain.",
+        "rebuttal_core": "Adjunct therapy considered when symptoms persist despite levothyroxine.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Polycystic ovary syndrome with hyperandrogenism (E28.2)",
+        "treatment_requested": "Spironolactone for androgenic symptoms",
+        "clinical_facts": "Failed OCP trial due to migraine aura; hirsutism score elevated.",
+        "rebuttal_core": "Anti-androgen therapy supported when OCP contraindicated.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Primary hyperparathyroidism (E21.0)",
+        "treatment_requested": "Parathyroidectomy",
+        "clinical_facts": "Calcium 11.4 mg/dL, PTH 128 pg/mL, kidney stones in 2024.",
+        "rebuttal_core": "Surgery indicated with symptomatic hypercalcemia or stones.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Cushing disease, suspected (E24.0)",
+        "treatment_requested": "Pituitary MRI with endocrinology referral",
+        "clinical_facts": "DEXA T-score -2.4, striae, glucose intolerance, elevated 24h urine cortisol.",
+        "rebuttal_core": "Workup warranted with biochemical hypercortisolism.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Type 1 diabetes mellitus (E10.9)",
+        "treatment_requested": "Insulin pump upgrade (automated delivery)",
+        "clinical_facts": "HbA1c 8.9% despite MDI; severe dawn phenomenon.",
+        "rebuttal_core": "Pump therapy appropriate when MDI fails glycemic targets.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Osteoporosis, postmenopausal (M81.0)",
+        "treatment_requested": "Teriparatide anabolic therapy",
+        "clinical_facts": "Fragility fracture 2025; failed alendronate 18 months.",
+        "rebuttal_core": "Anabolic agent indicated after bisphosphonate failure with fracture.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Adrenal insufficiency, primary (E27.1)",
+        "treatment_requested": "Hydrocortisone stress-dose education plus ACTH stim retest",
+        "clinical_facts": "Morning cortisol 2.1 mcg/dL; hyperpigmentation present.",
+        "rebuttal_core": "Replacement and diagnostic confirmation required.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Graves disease with ophthalmopathy (E05.00)",
+        "treatment_requested": "Teprotumumab for thyroid eye disease",
+        "clinical_facts": "CAS score 5/7 with diplopia; euthyroid on methimazole.",
+        "rebuttal_core": "Teprotumumab FDA-approved for active moderate-to-severe TED.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Male hypogonadism (E29.1)",
+        "treatment_requested": "Testosterone cypionate with monitoring",
+        "clinical_facts": "AM testosterone 198 ng/dL \u00d72; fatigue and low libido.",
+        "rebuttal_core": "Replacement when symptomatic with confirmed low morning levels.",
+        "sex_constraint": "M"
+      },
+      {
+        "diagnosis": "Diabetic gastroparesis (K31.84)",
+        "treatment_requested": "Gastric electrical stimulation evaluation",
+        "clinical_facts": "Gastric emptying study 180 min retention; recurrent vomiting on metoclopramide.",
+        "rebuttal_core": "Device therapy considered for refractory gastroparesis.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Obesity with BMI 42 and prediabetes (E66.01)",
+        "treatment_requested": "GLP-1 receptor agonist (semaglutide 2.4 mg)",
+        "clinical_facts": "BMI 42; HbA1c 6.2%; failed structured lifestyle program 6 months.",
+        "rebuttal_core": "Pharmacotherapy indicated per obesity guidelines after lifestyle trial.",
+        "sex_constraint": "any"
+      }
+    ],
+    "msk": [
+      {
+        "diagnosis": "Lumbar radiculopathy with neurogenic claudication (M54.16)",
+        "treatment_requested": "L4-L5 microdiscectomy",
+        "clinical_facts": "18 PT sessions over 14 weeks; MRI central disc herniation contacting traversing nerve root.",
+        "rebuttal_core": "Surgery appropriate after failed conservative care with correlating imaging.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Rotator cuff tear, full-thickness (M75.101)",
+        "treatment_requested": "Arthroscopic rotator cuff repair",
+        "clinical_facts": "Failed 14 weeks PT; MRI supraspinatus full-thickness tear 1.8 cm.",
+        "rebuttal_core": "Repair indicated with persistent weakness and full-thickness tear.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Knee osteoarthritis, severe medial compartment (M17.11)",
+        "treatment_requested": "Unicompartmental knee arthroplasty",
+        "clinical_facts": "BMI 27; failed NSAIDs, injections \u00d73, and 12 weeks PT; varus alignment.",
+        "rebuttal_core": "UKA for unicompartmental disease after conservative failure.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Cervical spondylosis with radiculopathy (M47.22)",
+        "treatment_requested": "Anterior cervical discectomy and fusion C5-6",
+        "clinical_facts": "Arm weakness 4/5; EMG active radiculopathy; 8 weeks PT failed.",
+        "rebuttal_core": "Fusion when myelopathy/radiculopathy correlates with level.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Plantar fasciitis, chronic (M72.2)",
+        "treatment_requested": "Extracorporeal shock wave therapy",
+        "clinical_facts": "6 months stretching, night splint, and podiatry care without relief.",
+        "rebuttal_core": "ESWT considered after prolonged conservative therapy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Hip labral tear (M24.151)",
+        "treatment_requested": "Hip arthroscopy with labral repair",
+        "clinical_facts": "Positive anterior impingement tests; MRI labral tear with paralabral cyst.",
+        "rebuttal_core": "Arthroscopy for symptomatic labral pathology.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Compression fracture T12, osteoporotic (M80.08XA)",
+        "treatment_requested": "Kyphoplasty",
+        "clinical_facts": "Pain 8/10 limiting ambulation; MRI acute fracture; failed brace 3 weeks.",
+        "rebuttal_core": "Vertebral augmentation for painful acute osteoporotic fracture.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Carpal tunnel syndrome, severe (G56.00)",
+        "treatment_requested": "Carpal tunnel release",
+        "clinical_facts": "EMG severe median neuropathy; thenar atrophy noted.",
+        "rebuttal_core": "Release indicated with severe electrodiagnostic findings.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Achilles tendinopathy, chronic (M76.60)",
+        "treatment_requested": "Platelet-rich plasma injection",
+        "clinical_facts": "Eccentric loading 16 weeks; ultrasound tendinosis with neovascularity.",
+        "rebuttal_core": "PRP sometimes covered after failed rehabilitation.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Frozen shoulder (M75.00)",
+        "treatment_requested": "Manipulation under anesthesia",
+        "clinical_facts": "ROM flexion 90\u00b0 after 5 months PT and intra-articular steroid.",
+        "rebuttal_core": "MUA for adhesive capsulitis refractory to therapy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Ankle instability, chronic lateral (M25.371)",
+        "treatment_requested": "Brostr\u00f6m ligament repair",
+        "clinical_facts": "Repeated inversion injuries; MRI ATFL attenuation.",
+        "rebuttal_core": "Surgical stabilization after failed bracing and PT.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Degenerative meniscal tear, medial (M23.205)",
+        "treatment_requested": "Partial meniscectomy",
+        "clinical_facts": "Mechanical locking symptoms; MRI horizontal tear not improving with PT.",
+        "rebuttal_core": "Arthroscopy for mechanical symptoms with correlating tear.",
+        "sex_constraint": "any"
+      }
+    ],
+    "oncology": [
+      {
+        "diagnosis": "HR-positive, HER2-negative early breast cancer (C50.911)",
+        "treatment_requested": "Adjuvant abemaciclib with endocrine therapy",
+        "clinical_facts": "Stage IIB, Ki-67 32%, four positive nodes on sentinel biopsy.",
+        "rebuttal_core": "CDK4/6 inhibitor supported in high-risk early breast cancer per NCCN.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Stage III colon adenocarcinoma (C18.9)",
+        "treatment_requested": "Adjuvant FOLFOX chemotherapy",
+        "clinical_facts": "Post-colectomy pathology T3N1; ECOG 0.",
+        "rebuttal_core": "Adjuvant chemo standard for node-positive colon cancer.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Diffuse large B-cell lymphoma (C83.30)",
+        "treatment_requested": "R-CHOP cycle continuation",
+        "clinical_facts": "PET interim Deauville 4; cycle 3 completed without dose-limiting toxicity.",
+        "rebuttal_core": "Completion of curative-intent chemoimmunotherapy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Metastatic castration-sensitive prostate cancer (C61)",
+        "treatment_requested": "Apalutamide plus androgen deprivation therapy",
+        "clinical_facts": "Rising PSA 18 ng/mL on ADT alone; bone scan negative.",
+        "rebuttal_core": "Intensification standard for high-risk biochemical recurrence pattern.",
+        "sex_constraint": "M"
+      },
+      {
+        "diagnosis": "Ovarian cancer, platinum-sensitive recurrence (C56.9)",
+        "treatment_requested": "Secondary cytoreductive surgery evaluation",
+        "clinical_facts": "CA-125 rise from 22 to 210 U/mL; CT localized pelvic recurrence.",
+        "rebuttal_core": "Surgery considered for isolated platinum-sensitive relapse.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Non-small cell lung cancer, stage IV EGFR+ (C34.90)",
+        "treatment_requested": "Osimertinib third-line after T790M-negative progression",
+        "clinical_facts": "Progression on erlotinib and carboplatin/pemetrexed; liquid biopsy pending.",
+        "rebuttal_core": "Targeted therapy sequencing per molecular profile.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Melanoma stage IIIB (C43.9)",
+        "treatment_requested": "Adjuvant pembrolizumab",
+        "clinical_facts": "BRAF wild-type; SLNB positive; wide excision completed.",
+        "rebuttal_core": "Adjuvant anti-PD-1 standard for stage III melanoma.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Multiple myeloma, relapsed (C90.00)",
+        "treatment_requested": "Carfilzomib-based triplet",
+        "clinical_facts": "Progressive M-spike after lenalidomide maintenance; creatinine stable.",
+        "rebuttal_core": "Salvage proteasome inhibitor regimen at relapse.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Chronic lymphocytic leukemia, symptomatic (C91.10)",
+        "treatment_requested": "Venetoclax plus obinutuzumab",
+        "clinical_facts": "WBC 85k, hemoglobin 10.2 g/dL, bulky nodes; Binet stage C symptoms.",
+        "rebuttal_core": "Systemic therapy indicated with symptomatic CLL.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Pancreatic adenocarcinoma, borderline resectable (C25.9)",
+        "treatment_requested": "Neoadjuvant FOLFIRINOX",
+        "clinical_facts": "CA 19-9 890 U/mL; encasement of SMV <180\u00b0 on CT.",
+        "rebuttal_core": "Neoadjuvant therapy to improve resectability.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Endometrial cancer, high-grade (C54.1)",
+        "treatment_requested": "Adjuvant vaginal brachytherapy",
+        "clinical_facts": "Stage IB grade 3; LVSI present on pathology.",
+        "rebuttal_core": "Brachytherapy reduces local recurrence in high-intermediate risk.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Renal cell carcinoma, metastatic clear cell (C64.9)",
+        "treatment_requested": "Nivolumab plus cabozantinib",
+        "clinical_facts": "Lung nodules new on CT; prior nephrectomy 2023.",
+        "rebuttal_core": "IO/TKI combination first-line for advanced RCC.",
+        "sex_constraint": "any"
+      }
+    ],
+    "surgical": [
+      {
+        "diagnosis": "Morbid obesity with BMI 43 (E66.01)",
+        "treatment_requested": "Roux-en-Y gastric bypass",
+        "clinical_facts": "BMI 43 with OSA (AHI 32) and fatty liver; supervised diet 6 months documented.",
+        "rebuttal_core": "Bariatric surgery after supervised weight-loss attempt per policy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Symptomatic uterine fibroids (D25.9)",
+        "treatment_requested": "Myomectomy for fertility preservation",
+        "clinical_facts": "Heavy bleeding Hgb 9.8; failed hormonal management; desires pregnancy.",
+        "rebuttal_core": "Myomectomy when fertility preservation is goal.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Deviated nasal septum with obstruction (J34.2)",
+        "treatment_requested": "Septoplasty",
+        "clinical_facts": "Failed intranasal steroids 4 months; CT septal deviation 80%.",
+        "rebuttal_core": "Surgery after failed medical management of obstruction.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Symptomatic cholelithiasis (K80.20)",
+        "treatment_requested": "Laparoscopic cholecystectomy",
+        "clinical_facts": "Recurrent biliary colic; ultrasound stones with gallbladder wall thickening.",
+        "rebuttal_core": "Cholecystectomy for symptomatic gallstones.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Ingrown toenail, recurrent (L60.0)",
+        "treatment_requested": "Partial nail matrixectomy",
+        "clinical_facts": "Three infections in 12 months; failed conservative podiatry care.",
+        "rebuttal_core": "Matrixectomy for recurrent ingrown nail.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Gynecomastia, persistent adolescent (N62)",
+        "treatment_requested": "Subcutaneous mastectomy",
+        "clinical_facts": "Tanner V, persistence 24 months, psychosocial impairment documented.",
+        "rebuttal_core": "Surgical correction when persistent after puberty.",
+        "sex_constraint": "M"
+      },
+      {
+        "diagnosis": "Varicose veins with CEAP C4 disease (I83.10)",
+        "treatment_requested": "Endovenous ablation",
+        "clinical_facts": "Venous stasis changes; failed compression 3 months; reflux on duplex.",
+        "rebuttal_core": "Ablation for symptomatic saphenous reflux.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Chronic tonsillitis (J35.01)",
+        "treatment_requested": "Tonsillectomy",
+        "clinical_facts": "Seven episodes in 12 months per ENT records.",
+        "rebuttal_core": "Tonsillectomy for recurrent strep-documented tonsillitis.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Trigger finger, ring finger (M65.30)",
+        "treatment_requested": "A1 pulley release",
+        "clinical_facts": "Locking daily; failed steroid injection twice.",
+        "rebuttal_core": "Release after failed injections.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Breast hypertrophy with macromastia symptoms (N62)",
+        "treatment_requested": "Reduction mammaplasty",
+        "clinical_facts": "Shoulder grooving, intertrigo; 6 months PT for neck pain failed.",
+        "rebuttal_core": "Reduction for symptomatic macromastia after conservative measures.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Chronic sinusitis (J32.9)",
+        "treatment_requested": "Functional endoscopic sinus surgery",
+        "clinical_facts": "CT opacification; failed saline, steroids, and antibiotic courses.",
+        "rebuttal_core": "FESS after maximal medical therapy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Pilonidal disease, recurrent (L05.01)",
+        "treatment_requested": "Excision with flap closure",
+        "clinical_facts": "Three flares in 18 months; failed wound care.",
+        "rebuttal_core": "Surgical excision for recurrent pilonidal disease.",
+        "sex_constraint": "any"
+      }
+    ],
+    "imaging": [
+      {
+        "diagnosis": "Cervical strain after fall; rule out cord injury (S13.4XXA)",
+        "treatment_requested": "MRI cervical spine without contrast",
+        "clinical_facts": "ED visit with paresthesias; midline tenderness; X-ray negative.",
+        "rebuttal_core": "MRI appropriate with neurologic symptoms after trauma.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Lumbar disc herniation, suspected (M51.26)",
+        "treatment_requested": "MRI lumbar spine without contrast",
+        "clinical_facts": "Radicular pain 6 weeks; failed PT; straight-leg raise positive.",
+        "rebuttal_core": "MRI when conservative care fails with radiculopathy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Pulmonary embolism, suspected low-intermediate risk (I26.99)",
+        "treatment_requested": "CT pulmonary angiography",
+        "clinical_facts": "Wells score 4.5; hypoxia 91% on room air; D-dimer elevated.",
+        "rebuttal_core": "CTA standard for suspected PE with elevated pre-test probability.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Headache with new neurologic deficit, subacute (R51.9)",
+        "treatment_requested": "MRI brain with and without contrast",
+        "clinical_facts": "New left facial numbness; migraine history but exam changed.",
+        "rebuttal_core": "MRI warranted with new focal neurologic findings.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Incidental adrenal nodule 2.8 cm (E27.8)",
+        "treatment_requested": "Adrenal protocol CT",
+        "clinical_facts": "Hypertension difficult to control; Hounsfield units indeterminate on prior CT.",
+        "rebuttal_core": "Adrenal CT characterization per incidentaloma guidelines.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Hip pain, non-arthritic suspicion (M25.551)",
+        "treatment_requested": "MRI hip without contrast",
+        "clinical_facts": "X-ray normal; groin pain with sport limitation 4 months.",
+        "rebuttal_core": "MRI sensitive for labral and soft-tissue hip pathology.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Renal colic, recurrent (N23)",
+        "treatment_requested": "Non-contrast CT abdomen/pelvis (CT KUB)",
+        "clinical_facts": "Three stone episodes; hematuria; ultrasound inconclusive.",
+        "rebuttal_core": "CT KUB gold standard for suspected nephrolithiasis.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Breast lump, BI-RADS 0 (N63.0)",
+        "treatment_requested": "Diagnostic mammogram plus targeted ultrasound",
+        "clinical_facts": "Palpable 1.2 cm mass; age 44; family history breast cancer.",
+        "rebuttal_core": "Diagnostic imaging required after inconclusive screening.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Scrotal pain, rule out torsion vs epididymitis (N50.9)",
+        "treatment_requested": "Scrotal ultrasound with Doppler",
+        "clinical_facts": "Acute onset pain 8 hours; UA negative; cremasteric reflex present.",
+        "rebuttal_core": "Ultrasound urgent for acute scrotum.",
+        "sex_constraint": "M"
+      },
+      {
+        "diagnosis": "Abdominal aortic aneurysm surveillance (I71.4)",
+        "treatment_requested": "Surveillance abdominal ultrasound",
+        "clinical_facts": "Known 4.8 cm AAA; prior scan 6 months ago at 4.5 cm.",
+        "rebuttal_core": "Surveillance imaging per AAA guidelines.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Shoulder instability MRI (M25.311)",
+        "treatment_requested": "MRI shoulder without contrast",
+        "clinical_facts": "Recurrent subluxation; exam apprehension positive.",
+        "rebuttal_core": "MRI defines labral/ligament injury pre-operatively.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Sinus headache with vision changes (G44.1)",
+        "treatment_requested": "MRI orbits and brain",
+        "clinical_facts": "Proptosis exam; diplopia on lateral gaze.",
+        "rebuttal_core": "Imaging rules out orbital apex pathology.",
+        "sex_constraint": "any"
+      }
+    ],
+    "infusion_specialty_rx": [
+      {
+        "diagnosis": "Crohn's disease, moderate to severe (K50.90)",
+        "treatment_requested": "Ustekinumab (Stelara) maintenance infusion",
+        "clinical_facts": "Anti-TNF failure (infliximab) with documented loss of response; calprotectin 420 mcg/g.",
+        "rebuttal_core": "Switch biologic class after anti-TNF failure.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Rheumatoid arthritis, seropositive (M06.9)",
+        "treatment_requested": "Upadacitinib (Rinvoq) after methotrexate",
+        "clinical_facts": "Methotrexate 20 mg weekly \u00d76 months; DAS28 5.4; sulfasalazine trial failed.",
+        "rebuttal_core": "JAK inhibitor after conventional DMARD failure.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Plaque psoriasis, moderate (L40.0)",
+        "treatment_requested": "Adalimumab (Humira)",
+        "clinical_facts": "BSA 12%; failed phototherapy 12 weeks and topical steroids.",
+        "rebuttal_core": "Biologic indicated with moderate BSA after topicals.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Relapsing multiple sclerosis (G35)",
+        "treatment_requested": "Ocrelizumab infusion",
+        "clinical_facts": "Two clinical relapses 2024\u20132025; MRI new T2 lesions despite teriflunomide.",
+        "rebuttal_core": "High-efficacy DMT after breakthrough on platform therapy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Psoriatic arthritis (L40.50)",
+        "treatment_requested": "Secukinumab (Cosentyx)",
+        "clinical_facts": "Swollen joints 8; failed methotrexate; psoriasis BSA 5%.",
+        "rebuttal_core": "IL-17 inhibitor for PsA after DMARD failure.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Systemic lupus erythematosus, active (M32.10)",
+        "treatment_requested": "Belimumab (Benlysta)",
+        "clinical_facts": "SLEDAI 10; arthritis and rash despite hydroxychloroquine and mycophenolate.",
+        "rebuttal_core": "Add-on biologic for active SLE on background therapy.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Myasthenia gravis, generalized (G70.00)",
+        "treatment_requested": "Eculizumab (Soliris)",
+        "clinical_facts": "Positive acetylcholine receptor antibodies; failed pyridostigmine and steroids.",
+        "rebuttal_core": "Complement inhibitor for refractory gMG.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Hereditary angioedema (D84.1)",
+        "treatment_requested": "Lanadelumab prophylaxis",
+        "clinical_facts": "Monthly attacks; C4 chronically low; failed androgens due to side effects.",
+        "rebuttal_core": "Prophylactic monoclonal standard for HAE.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Pemphigus vulgaris (L10.0)",
+        "treatment_requested": "Rituximab infusion",
+        "clinical_facts": "Failed high-dose prednisone taper attempts; mucosal erosions persist.",
+        "rebuttal_core": "Rituximab for refractory pemphigus.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Immune thrombocytopenia, chronic (D69.3)",
+        "treatment_requested": "Romiplostim (Nplate)",
+        "clinical_facts": "Platelets 18k despite steroids and IVIG trials.",
+        "rebuttal_core": "TPO agonist after first-line ITP therapies.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Osteoporosis with vertebral fracture (M80.08XA)",
+        "treatment_requested": "Denosumab (Prolia)",
+        "clinical_facts": "Failed oral bisphosphonate due to intolerance; T-score -3.0 spine.",
+        "rebuttal_core": "Denosumab when oral bisphosphonates not tolerated.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Dermatomyositis with weakness (M33.10)",
+        "treatment_requested": "IV immunoglobulin (IVIG)",
+        "clinical_facts": "CK 3200 U/L; proximal weakness; failed methotrexate.",
+        "rebuttal_core": "IVIG for refractory inflammatory myopathy.",
+        "sex_constraint": "any"
+      }
+    ],
+    "womens_health": [
+      {
+        "diagnosis": "Stage IV endometriosis (N80.4)",
+        "treatment_requested": "Laparoscopic excision of endometriosis",
+        "clinical_facts": "Dysmenorrhea 9/10; failed OCP and GnRH agonist trial 6 months.",
+        "rebuttal_core": "Excision for severe endometriosis after medical failure.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Polycystic ovary syndrome with infertility (E28.2)",
+        "treatment_requested": "Letrozole ovulation induction",
+        "clinical_facts": "Anovulatory cycles; failed clomiphene 100 mg \u00d73 cycles.",
+        "rebuttal_core": "Letrozole second-line for ovulation induction.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Pelvic floor dysfunction postpartum (N81.9)",
+        "treatment_requested": "Pelvic floor physical therapy (12 visits)",
+        "clinical_facts": "Stress incontinence postpartum; levator avulsion on ultrasound.",
+        "rebuttal_core": "PFPT first-line for postpartum pelvic floor symptoms.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Uterine prolapse, symptomatic (N81.2)",
+        "treatment_requested": "Pessary fitting plus surgical consult",
+        "clinical_facts": "Stage II prolapse; bulge symptoms; failed kegel program.",
+        "rebuttal_core": "Pessary or surgery for symptomatic prolapse.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Recurrent bacterial vaginosis (N76.0)",
+        "treatment_requested": "Extended suppressive metronidazole course",
+        "clinical_facts": "Four episodes in 12 months; failed single courses.",
+        "rebuttal_core": "Suppressive therapy for recurrent BV.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Primary dysmenorrhea, severe (N94.4)",
+        "treatment_requested": "Hormonal IUD (levonorgestrel 52 mg)",
+        "clinical_facts": "NSAIDs inadequate; absent secondary causes on ultrasound.",
+        "rebuttal_core": "IUD effective for dysmenorrhea.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Ovarian cyst, persistent 6 cm (N83.202)",
+        "treatment_requested": "Laparoscopic cystectomy",
+        "clinical_facts": "Simple cyst 6.2 cm persistent \u00d73 cycles; pain with intercourse.",
+        "rebuttal_core": "Surgery for persistent symptomatic cyst.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Menorrhagia due to adenomyosis (N80.0)",
+        "treatment_requested": "Endometrial ablation",
+        "clinical_facts": "Hgb 10.1; failed tranexamic acid and OCP; no fibroid on MRI.",
+        "rebuttal_core": "Ablation when fertility complete and medical therapy fails.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Vulvodynia, generalized (N94.818)",
+        "treatment_requested": "Vulvar vestibulitis physical therapy protocol",
+        "clinical_facts": "6 months topical therapy failed; Q-tip test positive.",
+        "rebuttal_core": "Multimodal therapy for vulvodynia.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Fibrocystic breast pain, severe (N60.19)",
+        "treatment_requested": "Diagnostic imaging and cyst aspiration if indicated",
+        "clinical_facts": "New focal pain; ultrasound recommended by PCP.",
+        "rebuttal_core": "Imaging excludes malignancy in focal breast pain.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Gestational diabetes on insulin (O24.414)",
+        "treatment_requested": "Continuous glucose monitoring during pregnancy",
+        "clinical_facts": "Postprandial glucose >140 mg/dL on insulin; hypoglycemia episodes.",
+        "rebuttal_core": "CGM improves glycemic control in insulin-requiring GDM.",
+        "sex_constraint": "F"
+      },
+      {
+        "diagnosis": "Chronic pelvic pain, suspected endometriosis (R10.2)",
+        "treatment_requested": "Diagnostic laparoscopy",
+        "clinical_facts": "Chronic pain 18 months; MRI inconclusive; failed NSAIDs and hormones.",
+        "rebuttal_core": "Diagnostic laparoscopy when imaging negative but suspicion high.",
+        "sex_constraint": "F"
+      }
+    ],
+    "neurology": [
+      {
+        "diagnosis": "Chronic migraine without aura (G43.709)",
+        "treatment_requested": "Erenumab (Aimovig) preventive therapy",
+        "clinical_facts": "15 headache days/month; failed topiramate 100 mg, propranolol 80 mg, and three triptans.",
+        "rebuttal_core": "CGRP inhibitor after multiple preventive failures.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Relapsing-remitting multiple sclerosis (G35)",
+        "treatment_requested": "Ocrelizumab continuation beyond policy duration cap",
+        "clinical_facts": "No relapses 14 months; stable MRI; prior breakthrough on dimethyl fumarate.",
+        "rebuttal_core": "Continuation standard when disease stable on effective DMT.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Focal epilepsy, drug-resistant (G40.019)",
+        "treatment_requested": "Lacosamide add-on therapy",
+        "clinical_facts": "Breakthrough seizures on levetiracetam and lamotrigine; EEG focal temporal spikes.",
+        "rebuttal_core": "Add-on AED when dual therapy inadequate.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Idiopathic intracranial hypertension (G93.2)",
+        "treatment_requested": "Optic nerve sheath fenestration",
+        "clinical_facts": "Papilledema grade III; visual field loss; failed acetazolamide 2 g.",
+        "rebuttal_core": "Surgical intervention when vision threatened.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Parkinson disease, motor fluctuations (G20)",
+        "treatment_requested": "Duopa pump evaluation",
+        "clinical_facts": "Off-time 6 hours daily despite optimized oral levodopa.",
+        "rebuttal_core": "Advanced therapy for motor fluctuations.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Amyotrophic lateral sclerosis (G12.21)",
+        "treatment_requested": "Riluzole and multidisciplinary ALS clinic",
+        "clinical_facts": "Progressive weakness; EMG active denervation in three regions.",
+        "rebuttal_core": "Riluzole and supportive care standard for ALS.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Trigeminal neuralgia, classic (G50.0)",
+        "treatment_requested": "Microvascular decompression referral",
+        "clinical_facts": "Carbamazepine 800 mg daily with breakthrough lancinating pain.",
+        "rebuttal_core": "MVD considered when medical therapy inadequate.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Normal pressure hydrocephalus, suspected (G91.2)",
+        "treatment_requested": "High-volume lumbar puncture trial",
+        "clinical_facts": "Gait apraxia, incontinence, cognitive slowing; Evans index >0.3.",
+        "rebuttal_core": "LP trial before ventricular shunting.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Restless legs syndrome, refractory (G25.81)",
+        "treatment_requested": "Pramipexole titration",
+        "clinical_facts": "Ferritin 45 ng/mL; failed gabapentin 300 mg TID.",
+        "rebuttal_core": "Dopamine agonist when alpha-2-delta ligand insufficient.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Carpal tunnel with neurology referral (G56.00)",
+        "treatment_requested": "Nerve conduction study and splinting",
+        "clinical_facts": "Nocturnal paresthesias; thenar numbness.",
+        "rebuttal_core": "NCS confirms diagnosis and guides surgery timing.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Post-concussion syndrome (G44.309)",
+        "treatment_requested": "Multidisciplinary concussion clinic program",
+        "clinical_facts": "Headache and dizziness 3 months post-MVA; vestibular therapy started.",
+        "rebuttal_core": "Structured rehab for persistent post-concussive symptoms.",
+        "sex_constraint": "any"
+      },
+      {
+        "diagnosis": "Small fiber neuropathy, idiopathic (G62.89)",
+        "treatment_requested": "Skin biopsy for intraepidermal nerve fiber density",
+        "clinical_facts": "Burning feet; normal large-fiber NCS; autonomic symptoms mild.",
+        "rebuttal_core": "Biopsy confirms small fiber diagnosis guiding treatment.",
+        "sex_constraint": "any"
+      }
+    ]
+  }
+}

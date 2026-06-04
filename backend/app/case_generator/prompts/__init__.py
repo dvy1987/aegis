@@ -33,6 +33,7 @@ PROMPT_VERSIONS: dict[str, str] = {
     "c_scope_guard": "1.0.0",
     "c_date_sanity": "1.0.0",
     "c_citation_traceability": "1.0.0",
+    "c_flaw_injection_verifier": "1.0.0",
 }
 
 

@@ -1,10 +1,12 @@
-"""CLI entrypoint for synthetic case generation (default: A+ pipeline).
+"""CLI entrypoint for synthetic case generation (LLM Gemini producer→critic swarm).
 
 Examples:
   cd backend && uv run python -m app.case_generator.cli --count 1 --dry-run
   cd backend && uv run python -m app.case_generator.cli --count 10
 
-Legacy Vertex/Gemini swarm: ``old_pipeline.py`` + ``old_agents.py`` (not used by default).
+Requires Vertex/Gemini credentials (AEGIS_CASEGEN_MODEL, ADC). The swarm samples a matrix
+cell, grounds on the curated clinical KB, drafts via P1–P5, and gates each case with the
+critic panel + flaw-injection verifier before writing.
 """
 
 from __future__ import annotations
@@ -16,8 +18,8 @@ import random
 import sys
 from pathlib import Path
 
-from .aplus.pipeline import build_aplus_case
-from .config import REPO_ROOT, sample_matrix_cell
+from .config import REPO_ROOT
+from .llm_pipeline import generate_one_case, new_run_id
 
 DEFAULT_OUT = REPO_ROOT / "eval" / "cases" / "drafts"
 
@@ -45,11 +47,6 @@ def _parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Generate but do not write to disk.",
     )
-    p.add_argument(
-        "--no-web-research",
-        action="store_true",
-        help="Use catalog-only denial_letter_references (skip web-research cache).",
-    )
     p.add_argument("-v", "--verbose", action="count", default=0)
     return p
 
@@ -65,13 +62,6 @@ def _next_free_index(out_dir: Path) -> int:
     return max(nums, default=0) + 1
 
 
-def _new_run_id() -> str:
-    from datetime import UTC, datetime
-    import uuid
-
-    return f"aplus-cli-{datetime.now(UTC).strftime('%Y%m%d-%H%M%S')}-{uuid.uuid4().hex[:5]}"
-
-
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     logging.basicConfig(
@@ -85,46 +75,35 @@ def main(argv: list[str] | None = None) -> int:
         args.start_index if args.start_index is not None else _next_free_index(out_dir)
     )
     rng = random.Random(args.seed)
-    run_id = _new_run_id()
+    run_id = new_run_id()
     print(
         f"run_id={run_id} out_dir={out_dir} start_index={start_index} "
-        f"count={args.count} [A+ default]"
+        f"count={args.count} [LLM swarm]"
     )
 
     accepted_cells: set[tuple[str, ...]] = set()
     neighbour_summaries: list[str] = []
     written = 0
-    seed = args.seed if args.seed is not None else 20260601
 
     for i in range(args.count):
         idx = start_index + i
-        cell = sample_matrix_cell(rng, forbid_cells=accepted_cells)
         try:
-            case = build_aplus_case(
+            # generate_one_case samples the cell, runs the swarm, and updates
+            # accepted_cells / neighbour_summaries in place.
+            case = generate_one_case(
                 index=idx,
-                cell=cell,
-                run_id=run_id,
+                rng=rng,
+                accepted_cells=accepted_cells,
                 neighbour_summaries=neighbour_summaries,
-                seed=seed,
-                use_web_research=not args.no_web_research,
+                run_id=run_id,
             )
         except Exception as exc:
             print(f"[{idx}] FAILED: {exc}")
             continue
 
-        accepted_cells.add(
-            (
-                cell["insurer"],
-                cell["denial_type"],
-                cell["specialty"],
-                cell["sub_tactic"],
-            )
-        )
-        neighbour_summaries.append(
-            f"- [{cell['insurer']} / {cell['denial_type']} / {cell['specialty']} / "
-            f"{cell['sub_tactic']}] dx={case['patient_profile']['diagnosis']}; "
-            f"tx={case['patient_profile']['treatment_requested']}"
-        )
+        if case is None:
+            print(f"[{idx}] discarded (exhausted scenario retries)")
+            continue
         if len(neighbour_summaries) > 12:
             neighbour_summaries.pop(0)
 

@@ -1,4 +1,4 @@
-"""LEGACY Gemini/Vertex LLM calls for ``old_pipeline.py`` only — not the default generator."""
+"""Gemini/Vertex LLM producer + critic calls for the canonical ``llm_pipeline.py``."""
 
 from __future__ import annotations
 
@@ -63,6 +63,7 @@ def run_scenario_planner(
     joint_constraints: str,
     patterns: list[dict[str, Any]],
     *,
+    clinical_variants: str = "",
     model: str | None = None,
 ) -> dict[str, Any]:
     prompt = _format_prompt(
@@ -71,6 +72,7 @@ def run_scenario_planner(
         matrix_cell_json=json.dumps(matrix_cell, indent=2),
         sub_tactic_definition=sub_tactic_definition,
         specialty_examples=", ".join(specialty_examples) or "(none listed)",
+        clinical_variants=clinical_variants or "(no curated variants; use real-world knowledge)",
         patterns_json=json.dumps(patterns, indent=2) if patterns else "[]",
     )
     return _generate_json(prompt, model=model, temperature=0.9)
@@ -335,3 +337,26 @@ def critic_appeal_difficulty(
         denial_letter_text=denial_letter_text,
         clinical_context=clinical_context,
     )
+
+
+def critic_flaw_injection_verifier(
+    denial_letter_text: str,
+    clinical_context: str,
+    patterns_to_check: list[dict[str, Any]],
+    *,
+    submission_timestamp: str | None = None,
+    denial_timestamp: str | None = None,
+) -> dict[str, Any]:
+    """LLM check that each semantic ('needs_llm') flaw is discoverable in student-visible text.
+
+    Returns {"verification_results": [{pattern_id, status, evidence}], "absent": [...]}.
+    """
+    prompt = _format_prompt(
+        load_prompt("c_flaw_injection_verifier"),
+        denial_letter_text=denial_letter_text,
+        clinical_context=clinical_context,
+        patterns_to_check=json.dumps(patterns_to_check, indent=2),
+        submission_timestamp=submission_timestamp or "null",
+        denial_timestamp=denial_timestamp or "null",
+    )
+    return _generate_json(prompt, model=_critic_model(), temperature=0.2)

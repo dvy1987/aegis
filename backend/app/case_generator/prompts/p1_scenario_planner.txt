@@ -10,6 +10,7 @@ HARD RULES (no exceptions):
 - Use no PHI patterns: no SSN, no MRN, no real provider names, no real plan member numbers. Synthetic only.
 - BANNED TOPICS: no suicide, no self-harm, no child abuse, no intimate partner violence, no end-of-life decisions, no gender-affirming care for minors, no violence against insurers.
 - If the randomly sampled denial patterns include a State Mandate pattern (or any coverage interpretation requiring state laws), plan_funding_type MUST be "fully_insured". Otherwise default to "self_funded".
+- SEX CONSISTENCY (hard): if the diagnosis or treatment is sex-specific (ovarian/uterine/cervix/endometrial/pregnancy/PCOS/menorrhagia → female; prostate/testicular/gynecomastia/male hypogonadism → male), patient_gender MUST match it. OVERRIDE the matrix cell's patient_gender when it conflicts with a sex-specific diagnosis.
 - Deliberately decide the intended appeal difficulty (1=hard to appeal, 3=medium, 5=easy) and the intended flaw types (what realistic imperfections to inject later) to ensure benchmark diversity.
 
 JOINT CONSTRAINTS:
@@ -23,6 +24,9 @@ SUB-TACTIC DEFINITION (read carefully — the denial rationale must align with t
 
 SPECIALTY EXAMPLES (pick from or near these unless a better real-world option exists):
 {specialty_examples}
+
+CURATED CLINICAL VARIANTS (STRONGLY PREFER one of these dx/tx pairs and reuse its specific clinical facts — they are validated for clinical realism; only stray if none fit the cell. Respect each variant's [sex: ...] tag):
+{clinical_variants}
 
 RANDOMLY SAMPLED DENIAL PATTERNS FOR THIS CASE:
 {patterns_json}

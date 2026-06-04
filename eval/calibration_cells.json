@@ -1,0 +1,118 @@
+{
+  "_meta": {
+    "source": "harvested from aplus/calibration_specs.py; build_index dropped (aplus-RNG-specific)",
+    "use": "reproducible calibration subset of fixed matrix cells for LLM regeneration"
+  },
+  "cells": [
+    {
+      "case_id": "case_01_cigna_mednec",
+      "cell": {
+        "insurer": "Cigna",
+        "denial_type": "Medical Necessity",
+        "specialty": "behavioral_health",
+        "sub_tactic": "level_of_care_too_high",
+        "patient_age_band": "26-40",
+        "patient_gender": "F"
+      }
+    },
+    {
+      "case_id": "case_02_cigna_priorauth",
+      "cell": {
+        "insurer": "Cigna",
+        "denial_type": "Prior Authorization",
+        "specialty": "imaging",
+        "sub_tactic": "emergency_retroactive_auth",
+        "patient_age_band": "41-55",
+        "patient_gender": "M"
+      }
+    },
+    {
+      "case_id": "case_03_aetna_mednec",
+      "cell": {
+        "insurer": "Aetna",
+        "denial_type": "Medical Necessity",
+        "specialty": "behavioral_health",
+        "sub_tactic": "level_of_care_too_high",
+        "patient_age_band": "41-55",
+        "patient_gender": "M"
+      }
+    },
+    {
+      "case_id": "case_04_aetna_priorauth",
+      "cell": {
+        "insurer": "Aetna",
+        "denial_type": "Prior Authorization",
+        "specialty": "infusion_specialty_rx",
+        "sub_tactic": "continuation_of_care_lapsed",
+        "patient_age_band": "26-40",
+        "patient_gender": "F"
+      }
+    },
+    {
+      "case_id": "case_05_uhc_mednec",
+      "cell": {
+        "insurer": "UHC",
+        "denial_type": "Medical Necessity",
+        "specialty": "endocrine",
+        "sub_tactic": "step_therapy_missing",
+        "patient_age_band": "41-55",
+        "patient_gender": "M"
+      }
+    },
+    {
+      "case_id": "case_06_uhc_priorauth",
+      "cell": {
+        "insurer": "UHC",
+        "denial_type": "Prior Authorization",
+        "specialty": "womens_health",
+        "sub_tactic": "out_of_network_no_authorization",
+        "patient_age_band": "26-40",
+        "patient_gender": "F"
+      }
+    },
+    {
+      "case_id": "case_07_cigna_mednec",
+      "cell": {
+        "insurer": "Cigna",
+        "denial_type": "Medical Necessity",
+        "specialty": "surgical",
+        "sub_tactic": "conservative_treatment_required",
+        "patient_age_band": "41-55",
+        "patient_gender": "F"
+      }
+    },
+    {
+      "case_id": "case_08_cigna_priorauth",
+      "cell": {
+        "insurer": "Cigna",
+        "denial_type": "Prior Authorization",
+        "specialty": "msk",
+        "sub_tactic": "visit_limit_exceeded",
+        "patient_age_band": "56-70",
+        "patient_gender": "M"
+      }
+    },
+    {
+      "case_id": "case_09_aetna_mednec",
+      "cell": {
+        "insurer": "Aetna",
+        "denial_type": "Medical Necessity",
+        "specialty": "surgical",
+        "sub_tactic": "conservative_treatment_required",
+        "patient_age_band": "41-55",
+        "patient_gender": "F"
+      }
+    },
+    {
+      "case_id": "case_10_uhc_priorauth",
+      "cell": {
+        "insurer": "UHC",
+        "denial_type": "Prior Authorization",
+        "specialty": "imaging",
+        "sub_tactic": "modality_substitution",
+        "patient_age_band": "56-70",
+        "patient_gender": "M"
+      }
+    }
+  ]
+}

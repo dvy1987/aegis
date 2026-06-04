@@ -14,6 +14,14 @@ REQUIRED STRUCTURE (rough; do not literally label sections):
 - Your letter should be realistically imperfect — not an idealized version of what a denial SHOULD say. Follow the intended flaw types if provided.
 - Mention the appeal window (180 days is standard for commercial), unless omitting it is one of your realistic flaws.
 
+REALISM SURFACES (include where natural, in insurer voice — harvested from real-letter analysis):
+- A "claim file / right to information" line: the member may request a copy of the claim file and the clinical criteria used.
+- An insurer-appropriate peer-to-peer line (Aetna/Cigna/UHC medical director) — UNLESS missing_peer_to_peer or peer_to_peer_window_verbal_only is an intended flaw.
+- Insurer-specific guideline labels: Aetna → "Clinical Policy Bulletin (CPB)"; Cigna → "Medical Coverage Policy (CPG)" + MCG for behavioral health; UHC → "Coverage Determination Guideline (CDG)".
+
+CRITICAL — DO NOT NEGATE AN INTENDED "MISSING" FLAW:
+- If intended_flaw_types includes a "missing_*" flaw, you MUST OMIT the thing it says is missing. E.g. missing_cost_liability → do NOT state the member's financial liability; missing_iro_notice → do NOT mention external/independent review; missing_erisa_disclosures → omit civil-action / plan-document rights. The omission IS the feature.
+
 HARD RULES:
 - Length: 200–500 words.
 - NO real patient names, MRN, SSN, or provider names — keep it impersonal ("your provider", "the requesting facility").

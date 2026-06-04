@@ -1,10 +1,11 @@
 """Synthetic case generator for Aegis.
 
-Default path: A+ pipeline (``app.case_generator.aplus``) — see ``GENERATION.md``.
+Canonical path: LLM Gemini producer→critic swarm (``llm_pipeline.py`` / ``llm_agents.py``),
+grounded on the clinical KB and gated by the flaw-injection verifier (J6 contract).
 
 Run: ``cd backend && uv run python -m app.case_generator.cli --help``
 
-Legacy Gemini swarm: ``old_pipeline.py`` / ``old_agents.py`` (not default).
+Deprecated (retained, not wired): ``aplus/`` deterministic templates + manual swarm.
 """
 
 from __future__ import annotations
