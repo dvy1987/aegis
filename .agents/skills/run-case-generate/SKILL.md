@@ -166,7 +166,9 @@ requires state mandates (e.g., `plan_exclusion_overrides_state_mandate`), force
 **READ:** `backend/app/case_generator/prompts/p2_denial_drafter.txt`
 
 **DO (replicates `_denial_drafter_stage` → `agents.run_denial_drafter`):**
-1. Fill the P2 prompt with `{scenario_brief_json}` = the brief from Step 2.
+1. Fill the P2 prompt with:
+   - `{scenario_brief_json}` = the brief from Step 2.
+   - `{framing_guidance}` = the `framing_guidance` string from `inputs.json` (saved during Pre-Draft stage). If none exists, use `""`.
 2. Roleplay the DenialLetterDrafter agent. Produce:
    ```json
    {"denial_letter_text": "Dear Member,...", "denial_pattern_sources": ["source1", "source2"]}
@@ -210,6 +212,7 @@ revisions, proceed with what you have (the pipeline does the same).
 1. Fill P3 prompt with:
    - `{scenario_brief_json}` = the brief
    - `{denial_letter_text}` = the letter from Step 4
+   - `{framing_guidance}` = from `inputs.json`
 2. Roleplay the ClinicalContextWriter. Produce:
    ```json
    {"clinical_context": "The 42-year-old member has..."}
@@ -261,6 +264,7 @@ revisions, proceed with what you have (the pipeline does the same).
    - `{assembled_case_json}` = the assembled case
    - `{intended_flaw_types}` = from the brief
    - `{patterns_json}` = the sampled patterns
+   - `{framing_guidance}` = from `inputs.json`
 3. Roleplay the RealisticFlawInjector. Produce:
    ```json
    {

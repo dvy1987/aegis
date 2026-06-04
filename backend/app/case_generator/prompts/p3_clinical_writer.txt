@@ -22,5 +22,8 @@ INPUT — ScenarioBrief:
 INPUT — DenialLetter just drafted:
 {denial_letter_text}
 
+INPUT — Framing Guidance (from pre-draft validator):
+{framing_guidance}
+
 OUTPUT — return raw JSON (no markdown):
 {{"clinical_context": "..."}}

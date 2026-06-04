@@ -34,5 +34,8 @@ HARD RULES:
 INPUT — ScenarioBrief:
 {scenario_brief_json}
 
+INPUT — Framing Guidance (from pre-draft validator):
+{framing_guidance}
+
 OUTPUT — return raw JSON (no markdown):
 {{"denial_letter_text": "Dear Member,\\n\\n...", "denial_pattern_sources": ["<source 1>", "<source 2>"]}}

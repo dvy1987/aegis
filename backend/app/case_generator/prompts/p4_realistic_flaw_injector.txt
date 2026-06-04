@@ -19,6 +19,9 @@ HARD RULES:
 INPUT — already-drafted artifacts:
 {assembled_case_json}
 
+INPUT — Framing Guidance (from pre-draft validator):
+{framing_guidance}
+
 OUTPUT — return raw JSON (no markdown):
 {{
   "denial_letter_text": "...",
