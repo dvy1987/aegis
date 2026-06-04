@@ -1,0 +1,409 @@
+{
+  "case_id": "case_104_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 32,
+    "gender": "F",
+    "diagnosis": "Suspected pulmonary embolism, intermediate risk (I26.99)",
+    "treatment_requested": "CT pulmonary angiography (CTPA)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "incorrect_demographic_guideline: published utilization-management research",
+    "algo_boilerplate_fingerprint: published utilization-management research"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic imaging case (emergency retroactive auth)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic imaging case (emergency retroactive auth)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic imaging case (emergency retroactive auth)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic imaging case (emergency retroactive auth)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic imaging case (emergency retroactive auth)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "UNITED HEALTHCARE UTILIZATION MANAGEMENT DETERMINATION\n\nDate of Notice: 03/14/2026\nClaim Reference: UHC-2026-TX-89412\nGroup Policy: EMP-PPO-7741\n\nDear Member,\n\nThis communication is to inform you that the request for imaging services has been reviewed and is not approved.\n\nThe requested service requires prior authorization under your benefit plan. Our records indicate that authorization was not obtained prior to the date of service. Retroactive authorization requests are reviewed under the plan's retrospective review guidelines and are not granted for services that are determined to be non-emergent in nature.\n\nPer UnitedHealthcare Clinical Policy RAD-0417 (Pediatric Imaging Utilization Thresholds), advanced cross-sectional imaging for chest complaints in the relevant age cohort should follow stepwise evaluation beginning with chest radiograph and clinical observation over a 48-hour period before escalation to computed tomography. The submitted request does not demonstrate that the required stepwise evaluation was completed.\n\nBased on the information available for review, the service does not meet the threshold for emergency retroactive authorization.\n\nYou have the right to appeal this decision. To file an appeal, submit a written request within 180 days of the date of this notice to:\n\nUnitedHealthcare Appeals Department\nP.O. Box 30432\nSalt Lake City, UT 84130-0432\n\nYou may also request an external review through the Texas Department of Insurance.\n\nSincerely,\nUtilization Management Department\nUnitedHealthcare",
+  "clinical_context": "The patient is a 32-year-old female who presented to the emergency department (Memorial Hermann Southeast Hospital) on 3/12/2026 with acute-onset left-sided pleuritic chest pain radiating to the left shoulder, and progressive dyspnea over the preceding 4 hours. Vitals on arrival: HR 112 bpm, BP 104/68, RR 24, SpO2 90% on room air (required 4L NC to maintain SpO2 >94%). Pertinent history includes combined oral contraceptive pills for the past 3 years and a 14-hour car trip 5 days prior. Exam notable for decreased breath sounds at the left base, a prominent S2, and mild left calf tenderness without overt swelling. Wells score was calculated at 5.0 (HR >100 [1.5], immobilization/travel [1.5], clinical signs of DVT [1.0], PE most likely diagnosis [1.0]), indicating moderate-to-high probability. D-dimer markedly elevated at 2,840 ng/mL (ref <500 ng/mL). CXR showed a small right-sided pleural effusion but no acute consolidation or pneumothorax. Dr. Anita Chakrabarti, the attending emergency physician, determined that CT pulmonary angiography (CTPA) was emergently indicated per ACEP clinical policy for suspected PE and ordered the study stat. The scan was performed 47 minutes post-arrival. CTPA revealed a segmental pulmonary embolus in the left lower lobe pulmonary artery with associated subsegmental extension. The patient was started on a heparin drip and admitted to the intermediate care unit.",
+  "submission_timestamp": "2026-03-12T15:30:00Z",
+  "denial_timestamp": "2026-03-14T09:15:00Z",
+  "synthetic_provenance": {
+    "generator_model": "cursor-manual-agent-2026-06-01",
+    "run_id": "manual-harness-20260604-185014-26e01",
+    "generated_at": "2026-06-04T18:50:14Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "26-40",
+      "patient_gender": "F",
+      "specialty": "imaging",
+      "sub_tactic": "emergency_retroactive_auth"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "The brief claims insurer=UHC, denial_type=Prior Authorization, sub_tactic=emergency_retroactive_auth \u2014 all matching the assigned cell exactly. Patient age 32 falls in band 26-40, sex F matches. Diagnosis 'Suspected pulmonary embolism' is imaging specialty (CTPA, CPT 71275). Denial rationale explicitly describes retroactive auth denial for emergency imaging, matching the sub_tactic definition. No age 71+ constraint applies. All fields align field-for-field.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "\"insurer\": \"UHC\"",
+          "\"denial_type\": \"Prior Authorization\"",
+          "\"sub_tactic\": \"emergency_retroactive_auth\"",
+          "\"age\": 32",
+          "\"sex\": \"F\"",
+          "\"treatment\": \"CT pulmonary angiography (CTPA)\""
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "This scenario is highly realistic. A 32-year-old woman presenting to the ED with pleuritic chest pain, tachycardia at 112 bpm, SpO2 90%, Wells score 5.0, and D-dimer 2,840 ng/mL is a textbook intermediate-to-high-risk PE workup requiring stat CTPA. UHC denying retroactive authorization for emergency imaging by claiming the service 'could have been scheduled on an outpatient basis' despite acute hemodynamic compromise is a well-documented frustrating insurer tactic. The exploitable gap is obvious: no reasonable clinician would delay CTPA in a patient with hypoxia and elevated Wells score.",
+        "score": 5,
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "hypoxia (SpO2 90% on room air)",
+          "Wells score is 5.0 (moderate-high probability)",
+          "D-dimer is markedly elevated at 2,840 ng/mL",
+          "Retroactive authorization is not granted for non-emergent services"
+        ],
+        "improvement": null
+      },
+      "predraft_composability": {
+        "dimension": "predraft_composability",
+        "reasoning": "The two intended flaws are highly composable. Flaw 1 (incorrect_demographic_guideline) requires the denial letter to cite a clinical guideline meant for a different age group \u2014 for a 32-year-old woman, the letter could reference a pediatric PE risk stratification protocol (e.g., PECARN criteria for children) to justify denying CTPA, which is clearly inapplicable to an adult patient. Flaw 2 (algo_boilerplate_fingerprint) requires the denial to contain zero case-specific detail. These two flaws reinforce each other naturally: a boilerplate algorithmic denial is exactly the kind that would blindly apply the wrong demographic guideline without checking the patient's actual age. The drafter can render both flaws simultaneously by having the letter cite a pediatric guideline in a generic template paragraph that names no physician, no specific diagnosis details, and no submitted clinical records. No logical contradiction exists.",
+        "framing_guidance": "Render the demographic flaw by having the denial letter cite a pediatric-specific PE risk guideline (e.g., referencing PECARN criteria or a pediatric chest pain triage protocol) as the basis for denying CTPA, without acknowledging the patient is a 32-year-old adult. For the boilerplate flaw, ensure the denial letter uses entirely generic language \u2014 no mention of the patient's name, the ordering physician, the Wells score, the D-dimer result, or the SpO2 reading. The letter should read as if it could apply to any imaging denial regardless of clinical urgency. These two flaws coexist naturally: the misapplied pediatric guideline citation appears within a generic template paragraph, making both flaws independently identifiable by an appeal drafter.",
+        "score": 5,
+        "confidence": 1.0
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "The denial logic is authentically shoddy. The letter cites 'UnitedHealthcare Clinical Policy RAD-0417 (Pediatric Imaging Utilization Thresholds)' \u2014 a plausible-sounding policy number that would be verifiable in a real appeal. The logic is appropriately hand-wavy: it demands 'stepwise evaluation beginning with chest radiograph and clinical observation over a 48-hour period before escalation to computed tomography' for what was an acute emergency presentation with SpO2 90%. This is realistically circular \u2014 the denial treats an ED visit as if it were a scheduled outpatient workup. The phrase 'services that are determined to be non-emergent in nature' uses the passive voice and avoids defining what qualifies as emergent, leaving it vague and exploitable. The pediatric guideline citation is the intentional incorrect_demographic_guideline flaw, not a hallucination \u2014 it is a deliberately misapplied but plausible-sounding policy.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "Per UnitedHealthcare Clinical Policy RAD-0417 (Pediatric Imaging Utilization Thresholds)",
+          "stepwise evaluation beginning with chest radiograph and clinical observation over a 48-hour period",
+          "services that are determined to be non-emergent in nature",
+          "The submitted request does not demonstrate that the required stepwise evaluation was completed"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "The letter reads convincingly as a UHC denial. The header uses 'UNITED HEALTHCARE UTILIZATION MANAGEMENT DETERMINATION' \u2014 correctly branded. The policy reference uses the 'UnitedHealthcare Clinical Policy' naming convention (RAD-0417), which matches UHC's known style of alphanumeric policy identifiers. The letter uses 'documentation does not support' framing and the passive bureaucratic phrasing typical of UHC letters ('services that are determined to be non-emergent in nature'). The appeals address at P.O. Box 30432, Salt Lake City, UT 84130-0432 is consistent with UHC's known claims processing centers. 'Dear Member' is the standard UHC salutation. The closing from 'Utilization Management Department' is correct for UHC (vs. Aetna's 'Clinical Policy' or Cigna's 'Medical Management'). One minor gap: no mention of 'Optum' reviewer, which would strengthen the UHC fingerprint, but overall this is distinctly UHC.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "UNITED HEALTHCARE UTILIZATION MANAGEMENT DETERMINATION",
+          "UnitedHealthcare Clinical Policy RAD-0417",
+          "UnitedHealthcare Appeals Department",
+          "P.O. Box 30432, Salt Lake City, UT 84130-0432",
+          "Utilization Management Department"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "The clinical context is exceptionally specific and clinically credible. It includes precise vital signs (HR 112 bpm, BP 104/68 mmHg, RR 24, SpO2 90%), a specific elevated D-dimer (2,840 ng/mL with reference range <500), a correctly broken-down Wells score (5.0 with individual component values: HR >100 = 1.5, immobilization/travel = 1.5, DVT signs = 1.0, PE most likely = 1.0), relevant risk factors (combined OCP for 3 years, 14-hour car trip 5 days prior), specific physical exam findings (decreased breath sounds at left base, prominent S2, left calf tenderness), and confirmatory CTPA findings (segmental embolus in left lower lobe with subsegmental extension). The treatment response is appropriate (heparin drip, intermediate care unit). A physician would find this entirely believable \u2014 the Wells scoring is correctly calculated, the D-dimer is appropriately elevated for a positive PE case, and the clinical trajectory from presentation to confirmed diagnosis is realistic.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "heart rate of 112 beats per minute, blood pressure 104/68 mmHg, respiratory rate 24 breaths per minute, and oxygen saturation of 90% on room air",
+          "D-dimer was markedly elevated at 2,840 ng/mL (reference range <500 ng/mL)",
+          "Wells score was calculated at 5.0 (heart rate >100 = 1.5, immobilization/travel = 1.5, clinical signs of DVT = 1.0, PE most likely diagnosis = 1.0)",
+          "combined oral contraceptive pills for the past three years and had completed a 14-hour car trip"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "CT pulmonary angiography (CTPA) is the definitive diagnostic imaging study for suspected pulmonary embolism. Per the American College of Emergency Physicians (ACEP) clinical policy, the American Heart Association, and the European Society of Cardiology guidelines, CTPA is the standard of care for confirming or excluding PE in patients with moderate-to-high clinical probability (Wells >=5 or elevated D-dimer). This is not just a legitimate intervention \u2014 it is the first-line diagnostic modality for this exact clinical scenario. The ICD-10 code I26.99 and CPT code 71275 are correctly matched.",
+        "score": "PASS",
+        "confidence": 0.98,
+        "evidence_quotes": [
+          "Suspected pulmonary embolism, intermediate risk (I26.99)",
+          "CT pulmonary angiography (CTPA)"
+        ],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.028 (nearest=case_49_cigna_mednec), neighbours=0.028. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "reasoning": "This case is clearly distinct from its neighbours. While there are other pulmonary embolism/CTPA cases in the neighbour list (e.g., Aetna visit_limit_exceeded, Cigna step_therapy_missing), this case involves a completely different denial mechanism (UHC, emergency_retroactive_auth). The clinical trajectory here is a highly acute emergency department presentation leading to intermediate care admission, whereas the neighbours represent outpatient imaging denials. The specific clinical details (Wells 5.0, D-dimer 2,840, SpO2 90%) and the denial phrasing (pediatric guideline misapplication, retroactive emergency denial) are unique to this case.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "emergency_retroactive_auth",
+          "Memorial Hermann Southeast Hospital",
+          "SpO2 90% on room air",
+          "D-dimer markedly elevated at 2,840 ng/mL"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_verifier_mid": {
+        "dimension": "flaw_injection_verifier",
+        "reasoning": "The pattern algo_boilerplate_fingerprint requires the denial letter to contain zero case-specific detail. Review of the denial letter confirms that it contains no mention of the patient's name, the ordering physician (Dr. Chakrabarti), the diagnosis (suspected PE), or any submitted clinical records (Wells score, D-dimer, vitals). The entire letter consists of generic boilerplate text that could apply to any imaging denial. This flaw is entirely discoverable by a student agent.",
+        "verification_results": [
+          {
+            "pattern_id": "algo_boilerplate_fingerprint",
+            "status": "PRESENT",
+            "evidence": "The denial letter mentions only 'the request for imaging services' and cites a generic policy. It omits the diagnosis, the physician, and any clinical facts."
+          }
+        ],
+        "absent": [],
+        "confidence": 1.0
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The case presents a highly exploitable denial, making it easy to appeal. The clinical context establishes an unambiguous emergency (hypoxia SpO2 90%, tachycardia, Wells 5.0, elevated D-dimer) demanding stat CTPA, completely shredding the insurer's claim that the service was 'non-emergent in nature'. Additionally, the denial commits a blatant factual error by citing a 'Pediatric Imaging' guideline for a 32-year-old adult. The boilerplate nature of the letter (naming no patient specifics or physician) further strengthens an ERISA 'full and fair review' procedural challenge. The insurer's only defense is the strict retroactive authorization policy, but this falls apart against the documented emergency.",
+        "score": 5,
+        "confidence": 1.0,
+        "exploitable_weaknesses": [
+          "Citation of a pediatric guideline for a 32-year-old adult.",
+          "Blatant contradiction between the documented acute emergency (hypoxia, tachycardia) and the denial's claim of a 'non-emergent' presentation.",
+          "Total lack of case-specific detail in the letter, violating ERISA 'full and fair review' standards."
+        ],
+        "strong_defenses": [
+          "The plan explicitly prohibits retroactive authorization for non-emergent services, requiring the appellant to conclusively prove emergency status."
+        ],
+        "evidence_quotes": [
+          "Pediatric Imaging Utilization Thresholds",
+          "services that are determined to be non-emergent in nature",
+          "32-year-old female",
+          "SpO2 90% on room air"
+        ],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "reasoning": "The cited policy 'UnitedHealthcare Clinical Policy RAD-0417' matches UHC's typical alphanumeric policy naming convention and is cleanly stated.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "UnitedHealthcare Clinical Policy RAD-0417"
+        ],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "There are no internal contradictions. The dates align, the diagnosis and treatment match the specialty, and the patient demographics are consistent between the brief and context.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "reasoning": "The dates are logically ordered: presentation on 3/12/2026, submission timestamp 2026-03-12T15:30:00Z, and denial notice on 03/14/2026 (denial_timestamp 2026-03-14T09:15:00Z). The timeline is tight but appropriate for an emergent retroactive request.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "3/12/2026",
+          "03/14/2026"
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "reasoning": "The patient is a 32-year-old female, which perfectly matches the 26-40 age band and F gender assigned in the cell.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "32-year-old female"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "reasoning": "No improper financial claims or billing codes are misused. The CPT 71275 correctly maps to CTPA.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "71275"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_verifier_final": {
+        "dimension": "flaw_injection_verifier_final",
+        "reasoning": "Both injected flaws are present and discoverable. The algo_boilerplate_fingerprint is present as the letter lacks any patient or clinical specifics. The incorrect_demographic_guideline is present via the citation of a 'Pediatric Imaging' policy for a 32-year-old adult.",
+        "verification_results": [
+          {
+            "pattern_id": "algo_boilerplate_fingerprint",
+            "status": "PRESENT",
+            "evidence": "The letter contains no patient name, diagnosis, or clinical facts."
+          },
+          {
+            "pattern_id": "incorrect_demographic_guideline",
+            "status": "PRESENT",
+            "evidence": "The letter cites 'Pediatric Imaging Utilization Thresholds' while the context states '32-year-old female'."
+          }
+        ],
+        "absent": [],
+        "confidence": 1.0
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "reasoning": "The denial letter references ERISA 'full and fair review' indirectly via standard appeal rights and mentions the Texas Department of Insurance for external review, which is accurate for a fully insured TX plan.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Texas Department of Insurance"
+        ],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "reasoning": "The text avoids standard LLM tropes. It reads like a sterile UHC denial letter and a standard physician's ER note. No 'delve', 'tapestry', or over-apologetic tone.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "reasoning": "The denial letter is appropriately cold, bureaucratic, and detached, matching UHC's real-world tone. The clinical context is appropriately objective and clinical.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "This communication is to inform you that the request for imaging services has been reviewed and is not approved."
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "reasoning": "The case correctly addresses an employer-sponsored PPO plan. No mention of Medicare, Medicaid, or out-of-scope topics.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Group Policy: EMP-PPO-7741"
+        ],
+        "improvement": null
+      },
+      "final_flaw_integrity": {
+        "method": "deterministic+llm(all)",
+        "expected_flaws": [
+          "incorrect_demographic_guideline",
+          "algo_boilerplate_fingerprint"
+        ],
+        "deterministic_present": [
+          "incorrect_demographic_guideline"
+        ],
+        "llm_absent": [],
+        "absent": [],
+        "aligned": true
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      }
+    },
+    "human_summary": "Manual swarm case for UHC Prior Authorization / imaging / sub_tactic=emergency_retroactive_auth. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The case presents a highly exploitable denial, making it easy to appeal. The clinical context establishes an unambiguous emergency (hypoxia SpO2 90%, tachycardia, Wells 5.0, elevated D-dimer) demanding stat CTPA, completely shredding the insurer's claim that the service was 'non-emergent in nature'. Additionally, the denial commits a blatant factual error by citing a 'Pediatric Imaging' guideline for a 32-year-old adult. The boilerplate nature of the letter (naming no patient specifics or physician) further strengthens an ERISA 'full and fair review' procedural challenge. The insurer's only defense is the strict retroactive authorization policy, but this falls apart against the documented emergency.",
+      "exploitable_weaknesses": [
+        "Citation of a pediatric guideline for a 32-year-old adult.",
+        "Blatant contradiction between the documented acute emergency (hypoxia, tachycardia) and the denial's claim of a 'non-emergent' presentation.",
+        "Total lack of case-specific detail in the letter, violating ERISA 'full and fair review' standards."
+      ],
+      "strong_defenses": [
+        "The plan explicitly prohibits retroactive authorization for non-emergent services, requiring the appellant to conclusively prove emergency status."
+      ]
+    }
+  }
+}

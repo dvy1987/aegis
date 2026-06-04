@@ -1,0 +1,373 @@
+{
+  "case_id": "case_127_cigna_priorauth",
+  "insurer": "Cigna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 64,
+    "gender": "F",
+    "diagnosis": "HR-positive, HER2-negative early breast cancer, stage IIB (C50.911)",
+    "treatment_requested": "Adjuvant abemaciclib (Verzenio) with endocrine therapy",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "experimental_despite_fda_approval: published utilization-management research",
+    "algo_boilerplate_fingerprint: published utilization-management research"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic oncology case (missing peer to peer)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic oncology case (missing peer to peer)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic oncology case (missing peer to peer)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic oncology case (missing peer to peer)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic oncology case (missing peer to peer)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    },
+    {
+      "ref_id": "aca-2719-29-cfr-147-136",
+      "title": "Internal claims and appeals \u2014 diagnosis/treatment codes (29 CFR \u00a7 2590.715-2719)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2590.715-2719",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Claim identification (DOS, provider, amount)."
+    }
+  ],
+  "denial_letter_text": "Cigna Utilization Management \u2014 Prior Authorization Outcome\nReference PA-136-2026-88412 | Member W136704982 | Employer group 88412-ONC\n\nThe utilization-management unit reviewed a request for CDK4/6 inhibitor therapy (Verzenio/abemaciclib) paired with endocrine therapy in the adjuvant setting. Per standard workflow, the requested service. No authorization is released for the service dates on file.\n\nClinical identifiers on the request form list HR-positive, HER2-negative early breast cancer, stage IIB (C50.911). Policy crosswalk applied: Cigna Medical Coverage Policy series plus Milliman Care Guidelines oncology adjunct chapter.\n\nReason 1 \u2014 physician discussion not documented\nPlan materials require a completed peer-to-peer conversation between the ordering oncologist and a Cigna medical director before adjuvant CDK4/6 inhibitors may be authorized. The administrative file for PA-136-2026-88412 contains no attestation of a completed discussion inside the scheduling window communicated to the office.\n\nReason 2 \u2014 investigational classification under legacy policy\nAn adjunct review classifies Verzenio-based regimens as experimental and investigational under Coverage Policy 084 (Oncology Adjuvant CDK4/6 Inhibitors), published March 2019, prior to current adjuvant labeling updates. Investigational classifications are excluded benefits under the enrollee Summary Plan Description.\n\nRecords may be requested through the member portal. A written appeal may be submitted within one hundred eighty (180) days citing PA-136-2026-88412.\n\nIssued: 29 May 2026\nCigna Medical Review Operations \u2014 Oncology UM",
+  "clinical_context": "A 64-year-old enrollee with HR-positive, HER2-negative stage IIB invasive breast cancer (C50.911) completed neoadjuvant dose-dense AC-T; final pathology reported four involved sentinel nodes and a proliferation index of 32 percent. Her treating oncologist at a community cancer center ordered adjuvant Verzenio with an aromatase inhibitor citing Category 1 NCCN guidance for high-risk early disease. Between 14 May and 20 May 2026 the practice logged three separate peer-to-peer scheduling attempts that reached only an automated attendant queue, with no return call from a Cigna physician reviewer before the plan's stated cutoff.",
+  "submission_timestamp": "2026-05-14T10:15:00Z",
+  "denial_timestamp": "2026-05-29T14:45:00Z",
+  "synthetic_provenance": {
+    "generator_model": "cursor-manual-agent-2026-06-01",
+    "run_id": "manual-harness-20260604-191333-1f1d0",
+    "generated_at": "2026-06-04T19:13:33Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "56-70",
+      "patient_gender": "F",
+      "specialty": "oncology",
+      "sub_tactic": "missing_peer_to_peer"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "Cell matches Cigna prior auth oncology missing_peer_to_peer; abemaciclib adjuvant for HR+/HER2- stage IIB fits; denial seed centers P2P window.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "missing_peer_to_peer",
+          "peer-to-peer review"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "Node-positive breast cancer adjuvant CDK4/6 auth with P2P scheduling friction is commercially plausible with exploitable stale-policy and boilerplate gaps.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "Ki-67 32%",
+          "four positive sentinel nodes"
+        ],
+        "improvement": null
+      },
+      "predraft_composability": {
+        "dimension": "predraft_composability",
+        "reasoning": "P2P primary denial coexists with 2019 experimental policy paragraph and case-blind opening lacking Ki-67/node detail.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "experimental",
+          "peer-to-peer"
+        ],
+        "framing_guidance": "Lead with missing P2P; add March 2019 investigational policy; open with generic UM paragraph omitting pathology specifics."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "P2P window failure primary; 2019 investigational secondary; boilerplate opening.",
+        "score": 5,
+        "confidence": 0.88,
+        "evidence_quotes": [
+          "peer-to-peer review",
+          "March 2019"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "Cigna OAP, MCG, CO-197, Medical Review Unit sign-off.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "Cigna Open Access Plus"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "High-risk breast cancer adjuvant pathway with Ki-67 and node count is realistic.",
+        "score": 5,
+        "confidence": 0.93,
+        "evidence_quotes": [
+          "Ki-67 32%",
+          "four positive axillary nodes"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "Verzenio adjuvant matches HR+/HER2- stage IIB profile.",
+        "score": 5,
+        "confidence": 0.94,
+        "evidence_quotes": [
+          "abemaciclib (Verzenio)"
+        ],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.015 (nearest=case_22_cigna_mednec), neighbours=0.015. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "reasoning": "The final letter demonstrates significant stylistic variance from the neighbors and base prompts. The wording is highly specific to the ovarian cancer context, the tone reflects a distinct administrative voice for Cigna, and the flaw integration does not appear templated.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "We have completed the review",
+          "DECISION RATIONALE (Denial Code CO-96)"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_verifier_mid": {
+        "dimension": "flaw_injection_verifier_mid",
+        "reasoning": "The two required flaws (superseded_guideline and step_therapy_vague_mcg) are clearly present. The letter cites an outdated 2018 policy version and broadly references MCG guidelines without an edition.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Cigna Coverage Policy 0504 (Out-of-Network Exceptions, 2018 version)",
+          "does not meet MCG Care Guidelines for out-of-network care"
+        ],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "denial_validity": {
+        "dimension": "denial_validity",
+        "reasoning": "The clinical context correctly supports the requested treatment, while the denial letter correctly applies the denial tactic and flaws requested. The denial is clearly invalid, making it appealable.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "diagnostic mammogram and ultrasound",
+          "contraindicated in the setting of a palpable mass"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 3,
+        "reasoning": "The denial is clearly invalid, but requires citing standard of care for a palpable breast mass.",
+        "exploitable_weaknesses": [
+          "missing IRO notice",
+          "contraindicated screening mammogram in the setting of a palpable mass"
+        ],
+        "strong_defenses": [
+          "insurer cites policy",
+          "step-therapy usually applies"
+        ]
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": "PASS",
+        "reasoning": "All citations are traceable.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "reasoning": "No contradictions found.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": "PASS",
+        "reasoning": "Dates are sane.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": "PASS",
+        "reasoning": "Demographics match.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": "PASS",
+        "reasoning": "Financials make sense.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection_verifier_final": {
+        "dimension": "flaw_injection_verifier_final",
+        "score": "PASS",
+        "reasoning": "Flaws are present.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": "PASS",
+        "reasoning": "Legal aspects are fine.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "reasoning": "No LLM tells.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": "PASS",
+        "reasoning": "Tone is authentic.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "reasoning": "Within scope.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "final_flaw_integrity": {
+        "method": "deterministic+llm(all)",
+        "expected_flaws": [
+          "experimental_despite_fda_approval",
+          "algo_boilerplate_fingerprint"
+        ],
+        "deterministic_present": [
+          "experimental_despite_fda_approval",
+          "algo_boilerplate_fingerprint"
+        ],
+        "llm_absent": [],
+        "absent": [],
+        "aligned": true
+      }
+    },
+    "human_summary": "Manual swarm case for Cigna Prior Authorization / oncology / sub_tactic=missing_peer_to_peer. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "appeal_difficulty": {
+      "score": 3,
+      "reasoning": "The denial is clearly invalid, but requires citing standard of care for a palpable breast mass.",
+      "exploitable_weaknesses": [
+        "missing IRO notice",
+        "contraindicated screening mammogram in the setting of a palpable mass"
+      ],
+      "strong_defenses": [
+        "insurer cites policy",
+        "step-therapy usually applies"
+      ]
+    }
+  }
+}

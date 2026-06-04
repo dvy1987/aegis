@@ -1,0 +1,395 @@
+{
+  "case_id": "case_126_cigna_priorauth",
+  "insurer": "Cigna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 45,
+    "gender": "F",
+    "diagnosis": "Ovarian cancer, platinum-sensitive recurrence (C56.9)",
+    "treatment_requested": "Secondary cytoreductive surgery evaluation",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "superseded_guideline: published utilization-management research",
+    "step_therapy_vague_mcg: published utilization-management research"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic oncology case (out of network no authorization)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic oncology case (out of network no authorization)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic oncology case (out of network no authorization)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic oncology case (out of network no authorization)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic oncology case (out of network no authorization)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    },
+    {
+      "ref_id": "aca-2719-29-cfr-147-136",
+      "title": "Internal claims and appeals \u2014 diagnosis/treatment codes (29 CFR \u00a7 2590.715-2719)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2590.715-2719",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Claim identification (DOS, provider, amount)."
+    }
+  ],
+  "denial_letter_text": "Cigna Group Health Plan\nMember: W100007919\nAuthorization Reference: UM-2026-104159\nDate: 01/24/2026\n\nDear Member,\n\nWe have completed the review of your provider's prior authorization request for an out-of-network Secondary cytoreductive surgery evaluation (diagnosis: Ovarian cancer, platinum-sensitive recurrence, C56.9). Based on the clinical details provided by Summit Specialty Associates, we must deny this request for coverage.\n\nDECISION RATIONALE (Denial Code CO-96)\nYour employer-sponsored plan requires you to use in-network providers. Care provided by out-of-network specialists is only covered when an in-network gap exception is justified. At this time, in-network alternatives are available. The submitted medical records do not establish that an in-network provider is incapable of performing this evaluation. As such, this request does not satisfy the requirements of Cigna Coverage Policy 0504 (Out-of-Network Exceptions, 2018 version). Furthermore, this request does not meet MCG Care Guidelines for out-of-network care.\n\nWhile your provider may submit additional clinical documentation, the current file does not support an approval for out-of-network services.\n\nYOUR RIGHT TO APPEAL\nIf you disagree with this adverse benefit determination, you may file an internal appeal within 180 days of this letter's date.\n\nSincerely,\nCigna Medical Review Department\n\nAdditional plan language regarding experimental/investigational definitions, network status, and member cost-sharing may apply and is available upon request.",
+  "clinical_context": "The patient is a 45-year-old female with platinum-sensitive ovarian cancer who recently experienced a CA-125 elevation (from 22 to 210 U/mL) and a CT-confirmed localized pelvic recurrence. Due to severe access constraints within the network, her primary oncologist urgently referred her to an out-of-network specialist, Dr. Smith, for a secondary cytoreductive surgery evaluation. The plan's denial incorrectly assumes an in-network gynecologic oncologist is available within a clinically safe timeframe.",
+  "submission_timestamp": "2026-01-04T10:00:00Z",
+  "denial_timestamp": "2026-01-24T14:30:00Z",
+  "synthetic_provenance": {
+    "generator_model": "cursor-manual-agent-2026-06-01",
+    "run_id": "manual-harness-20260604-190303-a6bf7",
+    "generated_at": "2026-06-04T19:03:03Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "F",
+      "specialty": "oncology",
+      "sub_tactic": "out_of_network_no_authorization"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "The ScenarioBrief exactly matches the assigned cell fields (Cigna, Prior Authorization, F). The diagnosis 'Ovarian cancer, platinum-sensitive recurrence (C56.9)' belongs to the assigned specialty (oncology) and the requested treatment 'Secondary cytoreductive surgery evaluation' is highly realistic for this condition. The age matches the 41-55 age band.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Cigna",
+          "Prior Authorization",
+          "Ovarian cancer, platinum-sensitive recurrence (C56.9)",
+          "Secondary cytoreductive surgery evaluation"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "This is a frustratingly realistic commercial UM scenario. A 45-year-old female with recurrent platinum-sensitive ovarian cancer seeking evaluation for secondary cytoreduction often faces out-of-network prior authorization hurdles, reflecting real-world insurer behavior.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "Ovarian cancer, platinum-sensitive recurrence (C56.9)",
+          "Secondary cytoreductive surgery evaluation"
+        ],
+        "improvement": null
+      },
+      "predraft_composability": {
+        "dimension": "predraft_composability",
+        "reasoning": "The two intended flaws (superseded_guideline and step_therapy_vague_mcg) are highly composable and do not contradict each other. An insurer can cite an outdated internal clinical policy while broadly referencing MCG guidelines without specifying the exact module or edition.",
+        "framing_guidance": "In the denial letter, explicitly name an outdated version of a Cigna coverage policy for out-of-network exceptions, and separately state that the request does not meet MCG care guidelines, intentionally omitting the MCG edition/module.",
+        "score": 5,
+        "confidence": 1.0
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "The denial logic correctly applies the out-of-network without authorization rationale and successfully embeds both the superseded_guideline (Policy 0504, 2018 edition) and step_therapy_vague_mcg flaws seamlessly.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Cigna Coverage Policy 0504 (Out-of-Network Exceptions, 2018 edition)",
+          "does not meet MCG Care Guidelines for out-of-network exceptions"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "The letter uses authentic procedural tone typical of Cigna, avoiding empathetic or LLM-like phrasing. The structure, reference numbers, and appeal instructions align with real-world administrative standards.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "NOTICE OF ADVERSE BENEFIT DETERMINATION",
+          "CO-96 \u2014 Non-covered charge",
+          "Send a written request and supporting medical records within 180 days"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "The clinical context is highly realistic. The rising CA-125 from 22 to 210 U/mL and a localized pelvic recurrence on CT precisely match standard real-world presentations of platinum-sensitive recurrent ovarian cancer. Referral to a specific out-of-network specialist due to in-network availability issues is a very common administrative reality.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "CA-125 rise from 22 to 210 U/mL",
+          "localized pelvic recurrence"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "Secondary cytoreductive surgery evaluation is the standard and appropriate next step for localized, platinum-sensitive recurrent ovarian cancer as per current oncology guidelines.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "platinum-sensitive ovarian cancer",
+          "Secondary cytoreductive surgery evaluation"
+        ],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.092 (nearest=case_104_uhc_mednec), neighbours=0.092. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "reasoning": "The final letter demonstrates significant stylistic variance from the neighbors and base prompts. The wording is highly specific to the ovarian cancer context, the tone reflects a distinct administrative voice for Cigna, and the flaw integration does not appear templated.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "We have completed the review",
+          "DECISION RATIONALE (Denial Code CO-96)"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_verifier_mid": {
+        "dimension": "flaw_injection_verifier_mid",
+        "reasoning": "The two required flaws (superseded_guideline and step_therapy_vague_mcg) are clearly present. The letter cites an outdated 2018 policy version and broadly references MCG guidelines without an edition.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Cigna Coverage Policy 0504 (Out-of-Network Exceptions, 2018 version)",
+          "does not meet MCG Care Guidelines for out-of-network care"
+        ],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 3,
+        "confidence": 0.9,
+        "reasoning": "The appeal has moderate difficulty. While the out-of-network policy is strict, the patient's urgent timeline and lack of network availability provide a strong medical necessity pathway to appeal the administrative denial. The reliance on a superseded guideline makes the denial vulnerable.",
+        "evidence_quotes": [
+          "due to severe access constraints",
+          "superseded_guideline: Cigna Coverage Policy 0504 (Out-of-Network Exceptions, 2018 version)"
+        ],
+        "exploitable_weaknesses": [
+          "The insurer cited an outdated coverage policy version (2018)",
+          "Vague reference to MCG Care Guidelines without specific modules"
+        ],
+        "strong_defenses": [
+          "Strict out-of-network requirements for employer-sponsored plans",
+          "Explicit statement that in-network providers have not been definitively proven unavailable"
+        ],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 3,
+        "confidence": 0.9,
+        "reasoning": "Policy citations are present but intentionally vague or outdated as part of the flaw injection.",
+        "evidence_quotes": [
+          "MCG Care Guidelines",
+          "Coverage Policy 0504 (Out-of-Network Exceptions, 2018 version)"
+        ],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 1.0,
+        "reasoning": "The clinical context aligns perfectly with the denial letter without contradictions.",
+        "evidence_quotes": [
+          "Ovarian cancer",
+          "Secondary cytoreductive surgery evaluation"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": "PASS",
+        "confidence": 1.0,
+        "reasoning": "Dates flow logically from service date (01/04) to notice date (01/24) without temporal anomalies.",
+        "evidence_quotes": [
+          "Date of Service: 01/04/2026",
+          "Date of Notice: 01/24/2026"
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": "PASS",
+        "confidence": 1.0,
+        "reasoning": "The 45-year-old female demographic fits the ovarian cancer presentation perfectly.",
+        "evidence_quotes": [
+          "45-year-old female patient",
+          "ovarian cancer"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 3,
+        "confidence": 0.85,
+        "reasoning": "No dollar amounts present; the denial focuses strictly on network requirements and coverage policies.",
+        "evidence_quotes": [
+          "out-of-network provider is not covered without a gap exception"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_verifier_final": {
+        "dimension": "flaw_injection_verifier_final",
+        "score": "PASS",
+        "confidence": 1.0,
+        "reasoning": "Both intended flaws are fully realized in the text and metadata.",
+        "evidence_quotes": [
+          "2018 version",
+          "MCG Care Guidelines"
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 3,
+        "confidence": 0.9,
+        "reasoning": "Appeal rights are outlined, though deliberately brief and missing IRO/ERISA details.",
+        "evidence_quotes": [
+          "file an internal appeal within 180 days"
+        ],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "No overt LLM stylistic tells. Uses typical, dry insurance bureaucratic language.",
+        "evidence_quotes": [
+          "We have completed the review",
+          "adverse benefit determination"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Tone is appropriately administrative and unyielding, typical of commercial prior authorization denials.",
+        "evidence_quotes": [
+          "we must deny this request for coverage"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 1.0,
+        "reasoning": "Fully in scope for a commercial health insurance appeal. No Medicare/Medicaid language.",
+        "evidence_quotes": [
+          "employer-sponsored group health plan"
+        ],
+        "improvement": null
+      },
+      "final_flaw_integrity": {
+        "method": "deterministic+llm(all)",
+        "expected_flaws": [
+          "superseded_guideline",
+          "step_therapy_vague_mcg"
+        ],
+        "deterministic_present": [
+          "superseded_guideline",
+          "step_therapy_vague_mcg"
+        ],
+        "llm_absent": [],
+        "absent": [],
+        "aligned": true
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      }
+    },
+    "human_summary": "Manual swarm case for Cigna Prior Authorization / oncology / sub_tactic=out_of_network_no_authorization. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "appeal_difficulty": {
+      "score": 3,
+      "reasoning": "The appeal has moderate difficulty. While the out-of-network policy is strict, the patient's urgent timeline and lack of network availability provide a strong medical necessity pathway to appeal the administrative denial. The reliance on a superseded guideline makes the denial vulnerable.",
+      "exploitable_weaknesses": [
+        "The insurer cited an outdated coverage policy version (2018)",
+        "Vague reference to MCG Care Guidelines without specific modules"
+      ],
+      "strong_defenses": [
+        "Strict out-of-network requirements for employer-sponsored plans",
+        "Explicit statement that in-network providers have not been definitively proven unavailable"
+      ]
+    }
+  }
+}

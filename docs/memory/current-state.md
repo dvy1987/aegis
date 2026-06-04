@@ -14,6 +14,7 @@
 - **`eval/gumloop_runs/true-swarm-500/`** and **`run_true_gumloop_all_500.py`** are **not** valid proof of Gumloop pass.
 - **Corpus readiness** = PM re-runs Gumloop (or trusted external chat) on samples + full set; see `docs/memory/learnings.md` (2026-06-03 eval trust breach).
 - Partial Cursor fixes may exist in `eval/cases/drafts/` (cases 02, 03, 05, algo batch, etc.) — **verify independently** before `approved/`.
+- ✅ Generated **case 104** (UHC Prior Auth imaging emergency_retroactive_auth) manually using harness_io state-machine.
 - PM intent: **terminate Cursor subscription**; future agents must not ask PM to trust prior Cursor eval statements.
 
 ### Session (2026-06-03 — Cloud library + Vertex AI Search)

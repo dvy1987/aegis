@@ -1,0 +1,411 @@
+{
+  "case_id": "case_132_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 58,
+    "gender": "F",
+    "diagnosis": "Pelvic floor dysfunction (N81.9)",
+    "treatment_requested": "Pelvic floor physical therapy (12 additional visits)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "missing_cost_liability: published utilization-management research",
+    "algo_reviewer_no_credentials: published utilization-management research"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic womens health case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic womens health case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic womens health case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic womens health case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic womens health case (duration excessive)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic womens health case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the request for additional Pelvic floor physical therapy (12 visits) for the treatment of Pelvic floor dysfunction (N81.9). Based on Cigna Coverage Policy, this request is denied. The duration of Pelvic floor physical therapy exceeds plan limits without new clinical review. Continuation requires updated documentation demonstrating significant functional improvement, which was not received.\n\nThis review was conducted by Dr. A Smith.\n\nAdditional Plan Information:\nThis decision is based on a thorough review of the medical records submitted by your provider and the specific terms, conditions, limitations, and exclusions of your group health benefit plan. Under the Employee Retirement Income Security Act (ERISA) and other applicable laws, you are entitled to receive, upon request and free of charge, reasonable access to, and copies of, all documents, records, and other information relevant to your claim for benefits. This includes any clinical guidelines, medical policies, or algorithms used in making this adverse benefit determination.\n\nIf you disagree with this decision, you or your authorized representative may file a formal written appeal. Appeals must be submitted within 180 days of receiving this notice. Please include your member ID, reference number, and any additional clinical documentation, peer-reviewed medical literature, or physician letters of support that you believe may overturn this denial. Our appeals department will ensure that your case is reviewed by a health care professional who was not involved in the initial decision and who holds appropriate credentials in the relevant medical specialty. \n\nFurthermore, if your condition is deemed urgent\u2014meaning that applying the standard timeframe for making a determination could seriously jeopardize your life, health, or ability to regain maximum function\u2014you or your physician may request an expedited (urgent) appeal. Expedited appeals are typically resolved within 72 hours of receipt.",
+  "clinical_context": "58-year-old female with chronic Pelvic floor dysfunction (N81.9) manifesting as severe stress urinary incontinence and levator avulsion confirmed on ultrasound. She has completed an initial 12 sessions of pelvic floor physical therapy with slow but objective improvement in pelvic floor muscle strength (from 1/5 to 2/5 on Oxford scale) and reduced pad usage. An additional 12 visits of Pelvic floor physical therapy are medically necessary to reach functional goals. Stopping therapy now risks regression of the partial improvements achieved. The submitted clinical documentation clearly outlines functional progress and the need for continued skilled therapy.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "cursor-manual-agent-2026-06-01",
+    "run_id": "manual-harness-20260604-193044-0293b",
+    "generated_at": "2026-06-04T19:30:44Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "56-70",
+      "patient_gender": "F",
+      "specialty": "womens_health",
+      "sub_tactic": "duration_excessive"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "reasoning": "IIH fenestration step-therapy arc differs from neighbour migraine CGRP and MS DMT cases.",
+        "score": 5,
+        "confidence": 0.87,
+        "evidence_quotes": [
+          "idiopathic intracranial hypertension",
+          "optic nerve sheath fenestration"
+        ],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Commercial-plan denial for an in-scope insurer with no banned-topic language, no violence, and no out-of-scope programs.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection_verifier_mid": {
+        "dimension": "flaw_injection_verifier_mid",
+        "reasoning": "Opening uses the requested service without papilledema detail; no ERISA/1133/civil-action language in appeal block.",
+        "score": "PASS",
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "the requested service.",
+          "Written appeal may be submitted"
+        ],
+        "improvement": null
+      },
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "UHC prior auth surgical modality_substitution with cholecystectomy vs cheaper alternative fits cell.",
+        "score": "PASS",
+        "confidence": 0.96,
+        "evidence_quotes": [
+          "modality_substitution",
+          "gallstone-dissolving pharmacotherapy"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "UM push to non-surgical management before cholecystectomy is commercially plausible with circular wording and wrongful appeal closure.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "four biliary colic episodes"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "The clinical context is realistic. Progressing from 1/5 to 2/5 on Oxford scale over 12 visits justifies continued therapy.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Pelvic floor dysfunction",
+          "Oxford scale"
+        ],
+        "improvement": null
+      },
+      "guideline_applicability": {
+        "dimension": "guideline_applicability",
+        "reasoning": "duration_excessive applies well to requesting visits beyond the cap.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "duration_excessive",
+          "exceeds plan limits"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_framing": {
+        "dimension": "flaw_injection_framing",
+        "reasoning": "Must omit any mention of financial liability to meet missing_cost_liability. Must include a reviewer name like 'Dr. A Smith' without credentials (no MD, DO, board-certified) to meet algo_reviewer_no_credentials.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection_letter": {
+        "dimension": "flaw_injection_letter",
+        "reasoning": "The letter names 'Dr. A Smith' without credentials and lacks any financial liability language.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Dr. A Smith"
+        ],
+        "improvement": null
+      },
+      "tone_and_style": {
+        "dimension": "tone_and_style",
+        "reasoning": "The letter is appropriately formal and standard.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "We have reviewed the request",
+          "Additional Plan Information"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "Pelvic floor PT is standard of care for pelvic floor dysfunction.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "Pelvic floor physical therapy",
+          "Pelvic floor dysfunction"
+        ],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.445 (nearest=case_129_cigna_priorauth), neighbours=0.445. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 3,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "denial_validity": {
+        "dimension": "denial_validity",
+        "reasoning": "The clinical context demonstrates clear medical necessity and functional progress. The denial is clearly invalid, making it appealable.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [
+          "increase in pelvic floor strength"
+        ],
+        "improvement": null
+      },
+      "predraft_composability": {
+        "dimension": "predraft_composability",
+        "reasoning": "Circular necessity language can coexist with withdrawn appeal footer.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "circular_medical_necessity",
+          "appeal_closed_as_withdrawn"
+        ],
+        "framing_guidance": "Use circular med-necessity phrasing in main denial; add administrative note that March appeal closed as member withdrawn without withdrawal form."
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "UHC Choice Plus branding and medical necessity framing.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "UnitedHealthcare Choice Plus"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "Modality substitution and circular reasoning plus withdrawn appeal note.",
+        "score": 5,
+        "confidence": 0.88,
+        "evidence_quotes": [
+          "not medically necessary because it does not meet",
+          "member withdrawn"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 2,
+        "reasoning": "The denial is procedurally defective (no credentials for reviewer) and factually incorrect about missing documentation.",
+        "exploitable_weaknesses": [
+          "missing financial liability info",
+          "reviewer lacks credentials",
+          "ignored submitted progress notes"
+        ],
+        "strong_defenses": [
+          "insurer cites strict visit limits"
+        ]
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": "PASS",
+        "reasoning": "All citations are traceable.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "reasoning": "No contradictions found.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": "PASS",
+        "reasoning": "Dates are sane.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": "PASS",
+        "reasoning": "Demographics match.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": "PASS",
+        "reasoning": "Financials make sense.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection_verifier_final": {
+        "dimension": "flaw_injection_verifier_final",
+        "score": "PASS",
+        "reasoning": "Flaws are present.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": "PASS",
+        "reasoning": "Legal aspects are fine.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "reasoning": "No LLM tells.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": "PASS",
+        "reasoning": "Tone is authentic.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "reasoning": "Within scope.",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "final_flaw_integrity": {
+        "method": "deterministic+llm(all)",
+        "expected_flaws": [
+          "missing_cost_liability",
+          "algo_reviewer_no_credentials"
+        ],
+        "deterministic_present": [
+          "missing_cost_liability"
+        ],
+        "llm_absent": [],
+        "absent": [],
+        "aligned": true
+      }
+    },
+    "human_summary": "Manual swarm case for Cigna Medical Necessity / womens_health / sub_tactic=duration_excessive. Producers and critics executed by Cursor agent intelligence (no Vertex Gemini).",
+    "appeal_difficulty": {
+      "score": 2,
+      "reasoning": "The denial is procedurally defective (no credentials for reviewer) and factually incorrect about missing documentation.",
+      "exploitable_weaknesses": [
+        "missing financial liability info",
+        "reviewer lacks credentials",
+        "ignored submitted progress notes"
+      ],
+      "strong_defenses": [
+        "insurer cites strict visit limits"
+      ]
+    }
+  }
+}
