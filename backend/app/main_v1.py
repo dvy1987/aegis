@@ -21,7 +21,11 @@ socket.getaddrinfo = _ipv4_first_getaddrinfo
 # us-central1 is the regional endpoint that actually responds.
 os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
 
-os.environ.setdefault("PHOENIX_PROJECT_NAME", "aegis-hackathon")
+# Phoenix project name is pinned by the v1 backend so the host env cannot
+# override it and bleed traces into another project. v1 = "default"; the
+# swarm service uses its own project. See AGENTS.md (root) and ADR-006.
+os.environ["PHOENIX_PROJECT_NAME"] = "default"
+print(f"[main_v1] PHOENIX_PROJECT_NAME={os.environ['PHOENIX_PROJECT_NAME']}")
 
 from fastapi import FastAPI
 from google.adk.cli.fast_api import get_fast_api_app

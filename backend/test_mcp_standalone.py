@@ -8,22 +8,31 @@ load_dotenv("../.env")
 
 async def test_phoenix_mcp():
     env = os.environ.copy()
-    env["PHOENIX_PROJECT"] = env.get("PHOENIX_PROJECT_NAME", "default")
+    project = env.get("PHOENIX_PROJECT_NAME", "default")
+    env["PHOENIX_PROJECT"] = project
+    if "PHOENIX_API_KEY" in env and "PHOENIX_CLIENT_HEADERS" not in env:
+        env["PHOENIX_CLIENT_HEADERS"] = f"api_key={env['PHOENIX_API_KEY']}"
     params = StdioServerParameters(command="npx", args=["-y", "@arizeai/phoenix-mcp"], env=env)
     async with stdio_client(params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            print("Connected! Listing tools:")
+            print(f"Connected (project={project}). Listing tools:")
             tools = await session.list_tools()
             for t in tools.tools:
                 print(f" - {t.name}: {t.description[:100]}...")
-            
-            print("\nQuerying a trace...")
-            try:
-                res = await session.call_tool("list-traces", arguments={"projectIdentifier": "aegis-hackathon", "limit": 1})
-                print(f"Result: {res.content}")
-            except Exception as e:
-                print(f"Query error: {e}")
+
+            for tool_name, args in [
+                ("list-projects", {}),
+                ("get-spans", {"projectIdentifier": project, "limit": 1}),
+                ("list-traces", {"projectIdentifier": project, "limit": 1}),
+            ]:
+                print(f"\nCalling {tool_name} {args}...")
+                try:
+                    res = await session.call_tool(tool_name, arguments=args)
+                    text = str(res.content)
+                    print(f"  -> {text[:400]}")
+                except Exception as e:
+                    print(f"  ERROR: {e}")
 
 if __name__ == "__main__":
     asyncio.run(test_phoenix_mcp())

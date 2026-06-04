@@ -95,12 +95,15 @@ class OtelPhoenixRecorder:
             return format(ctx.span_id, "016x")
 
     def annotate(self, trace_ref, annotations) -> None:
+        import json as _json
         import pandas as pd
         from phoenix.client import Client
 
-        # Phoenix Client API changes frequently; the stable surface is
-        # span annotations. We log the laundered eval signal as a CODE annotation
-        # so it is visible in the UI for demo + debugging.
+        # The Phoenix annotation API expects scalar columns. Nested dicts (the
+        # laundered per-dimension payload) hang the dataframe serializer on
+        # macOS, so we stringify the full payload into `explanation` as JSON
+        # while keeping `label`/`score` as the headline scalars. Tier 1 reads
+        # parse `explanation` back into the structured signal.
         verdict = str(annotations.get("verdict", ""))
         weighted = annotations.get("weighted_quality")
         try:
@@ -108,25 +111,27 @@ class OtelPhoenixRecorder:
         except Exception:
             score = 0.0
 
-        explanation = (
-            f"verdict={verdict} weighted_quality={weighted} "
-            f"hard_gate_failures={annotations.get('hard_gate_failures', [])}"
-        )
-
+        explanation = _json.dumps(annotations, default=str)
         df = pd.DataFrame(
             [
                 {
                     "label": verdict,
                     "score": score,
                     "explanation": explanation,
-                    **annotations,
                 }
             ]
         )
         df.index = [trace_ref]
         df.index.name = "span_id"
+        # The Phoenix Python client reads PHOENIX_COLLECTOR_ENDPOINT (the
+        # `/v1/traces` OTEL endpoint) as its default base URL, which produces a
+        # bogus `/v1/traces/v1/span_annotations` URL and a 405. PHOENIX_HOST is
+        # the correct API base; pass it explicitly with a trailing slash so
+        # httpx joins paths correctly.
+        host = os.environ.get("PHOENIX_HOST")
+        base_url = (host.rstrip("/") + "/") if host else None
         try:
-            Client().spans.log_span_annotations_dataframe(
+            Client(base_url=base_url).spans.log_span_annotations_dataframe(
                 dataframe=df,
                 annotator_kind="CODE",
                 annotation_name="aegis_part_a_panel",
