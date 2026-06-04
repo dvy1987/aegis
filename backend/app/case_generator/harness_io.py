@@ -339,6 +339,52 @@ def cmd_stage5_eval(brief_path: str, final_path: str) -> None:
     }
     write_prompts("stage5", prompts)
 
+def cmd_stage5_verify(brief_path: str, final_path: str, critics_path: str) -> None:
+    inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
+    brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
+    final = json.loads(Path(final_path).read_text(encoding="utf-8"))
+    critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
+    st = load_state()
+    
+    # 1. Semantic Safety Check
+    if critics.get("safety_redactor", {}).get("score") == 1:
+        print("HARD FAIL: Semantic Safety check failed. Discarding scenario and re-rolling Phase 0...")
+        st["scenario_retries"] += 1
+        save_state(st)
+        cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
+        sys.exit(2)
+        
+    # 2. Phase 7 Flaw Injection Check (Union of deterministic absent + LLM absent)
+    fv = flaw_verifier.verify_flaws(
+        denial_letter_text=final["denial_letter_text"],
+        clinical_context=final["clinical_context"],
+        pattern_ids=[p["id"] for p in inputs["patterns"]],
+        submission_timestamp=final.get("submission_timestamp"),
+        denial_timestamp=final.get("denial_timestamp"),
+        specialty=inputs["cell"]["specialty"],
+        plan_funding_type=brief.get("plan_funding_type")
+    )
+    
+    fv_mid = critics.get("flaw_injection_verifier_mid", {})
+    llm_absent = [r["pattern_id"] for r in fv_mid.get("verification_results", []) if r.get("status") == "ABSENT"]
+    final_absent = sorted(set(fv["absent"]) | set(llm_absent))
+    
+    if final_absent:
+        st["stage5_retries"] = st.get("stage5_retries", 0) + 1
+        if st["stage5_retries"] >= 2:
+            print(f"HARD FAIL: Stage 5 Flaw Injection failed 2 retries (Absent: {final_absent}). Discarding scenario...")
+            st["scenario_retries"] += 1
+            st["stage5_retries"] = 0
+            save_state(st)
+            cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
+            sys.exit(2)
+        else:
+            save_state(st)
+            print(f"STAGE 5 FLAW VERIFIER FAILED. Absent: {final_absent}. Retry {st['stage5_retries']}/2. Agent must re-inject flaws and re-run P5.")
+            sys.exit(3)
+            
+    print("STAGE 5 PASS (Flaw Integrity + Safety Verified). Proceed to Final Panel.")
+
 def cmd_final_panel(brief_path: str, final_path: str) -> None:
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
@@ -481,6 +527,11 @@ def main(argv: list[str] | None = None) -> int:
     s5.add_argument("--brief", required=True)
     s5.add_argument("--final", required=True)
     
+    s5v = sub.add_parser("stage5_verify")
+    s5v.add_argument("--brief", required=True)
+    s5v.add_argument("--final", required=True)
+    s5v.add_argument("--critics", required=True)
+    
     fp = sub.add_parser("final_panel")
     fp.add_argument("--brief", required=True)
     fp.add_argument("--final", required=True)
@@ -501,6 +552,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "stage3_verify": cmd_stage3_verify(args.critics)
     elif args.cmd == "stage4_det_check": cmd_stage4_det_check(args.brief, args.p4)
     elif args.cmd == "stage5_eval": cmd_stage5_eval(args.brief, args.final)
+    elif args.cmd == "stage5_verify": cmd_stage5_verify(args.brief, args.final, args.critics)
     elif args.cmd == "final_panel": cmd_final_panel(args.brief, args.final)
     elif args.cmd == "assemble": cmd_assemble(args.index, args.brief, args.final, args.critics)
     
