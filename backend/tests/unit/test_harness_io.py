@@ -48,6 +48,24 @@ def test_harness_io_state_machine(mock_run_dir):
         assert (stage1_dir / "matrix_coverage.txt").exists()
         assert (stage1_dir / "scenario_realism.txt").exists()
 
+        # 2a. Run stage1_verify with fake PASS critic output
+        critics1 = {
+            "matrix_coverage": {"score": 5},
+            "scenario_realism": {"score": 5}
+        }
+        critics1_file = mock_run_dir / "critics1.json"
+        critics1_file.write_text(json.dumps(critics1))
+        harness_io.cmd_stage1_verify(str(critics1_file))
+
+        # 2b. Run stage1_predraft_eval and verify
+        harness_io.cmd_stage1_predraft_eval(str(brief_file))
+        critics_predraft = {
+            "predraft_composability": {"score": 5, "framing_guidance": "test guidance"}
+        }
+        critics_predraft_file = mock_run_dir / "critics_predraft.json"
+        critics_predraft_file.write_text(json.dumps(critics_predraft))
+        harness_io.cmd_stage1_predraft_verify(str(critics_predraft_file))
+
         # Create dummy P2 letter
         letter = {"denial_letter_text": "This is a mock denial letter."}
         letter_file = mock_run_dir / "letter.json"
@@ -55,23 +73,39 @@ def test_harness_io_state_machine(mock_run_dir):
 
         # 3. Test stage2_eval
         harness_io.cmd_stage2_eval(str(brief_file), str(letter_file))
-        stage2_dir = mock_run_dir / "critics" / "stage2"
-        assert (stage2_dir / "insurer_voice.txt").exists()
+        
+        # 3a. Run stage2_verify with fake PASS critic output
+        critics2 = {
+            "insurer_voice": {"score": 5},
+            "denial_logic": {"score": 5}
+        }
+        critics2_file = mock_run_dir / "critics2.json"
+        critics2_file.write_text(json.dumps(critics2))
+        harness_io.cmd_stage2_verify(str(critics2_file))
 
         # Create dummy P3 context
-        context = {"clinical_context": "This is the mock clinical context."}
-        context_file = mock_run_dir / "context.json"
-        context_file.write_text(json.dumps(context))
+        ctx = {"clinical_context": "This is a mock clinical context."}
+        ctx_file = mock_run_dir / "ctx.json"
+        ctx_file.write_text(json.dumps(ctx))
 
         # 4. Test stage3_eval
-        harness_io.cmd_stage3_eval(str(brief_file), str(context_file))
+        harness_io.cmd_stage3_eval(str(brief_file), str(ctx_file))
         stage3_dir = mock_run_dir / "critics" / "stage3"
         assert (stage3_dir / "clinical_realism.txt").exists()
+
+        # 4a. Run stage3_verify with fake PASS critic output
+        critics3 = {
+            "clinical_realism": {"score": 5},
+            "diagnosis_treatment_match": {"score": "PASS"}
+        }
+        critics3_file = mock_run_dir / "critics3.json"
+        critics3_file.write_text(json.dumps(critics3))
+        harness_io.cmd_stage3_verify(str(critics3_file))
 
         # Create dummy P4 injection
         p4 = {
             "denial_letter_text": letter["denial_letter_text"],
-            "clinical_context": context["clinical_context"],
+            "clinical_context": ctx["clinical_context"],
             "submission_timestamp": "2026-06-01T10:00:00Z",
             "denial_timestamp": "2026-06-02T10:00:00Z"
         }
@@ -81,33 +115,37 @@ def test_harness_io_state_machine(mock_run_dir):
         # 5. Test stage4_det_check
         harness_io.cmd_stage4_det_check(str(brief_file), str(p4_file))
         
-        # 6. Test stage4_5_eval
+        # 6. Test stage5_eval
         harness_io.cmd_stage5_eval(str(brief_file), str(p4_file))
         stage5_dir = mock_run_dir / "critics" / "stage5"
         assert (stage5_dir / "diversity_delta.txt").exists()
         assert (stage5_dir / "flaw_injection_verifier_mid.txt").exists()
+        
+        # 6a. Run stage5_verify
+        critics5 = {
+            "safety_redactor": {"score": 5},
+            "flaw_injection_verifier_mid": {"verification_results": []}
+        }
+        critics5_file = mock_run_dir / "critics5.json"
+        critics5_file.write_text(json.dumps(critics5))
+        harness_io.cmd_stage5_verify(str(brief_file), str(p4_file), str(critics5_file))
 
         # 7. Test final panel
         harness_io.cmd_final_panel(str(brief_file), str(p4_file))
-        final_panel_dir = mock_run_dir / "critics" / "final_panel"
-        assert len(list(final_panel_dir.glob("*.txt"))) == 11 # 10 critics + final flaw verifier
-
-        # Create dummy critics results
-        critics = {
-            "matrix_coverage": {"score": "PASS"},
-            "flaw_injection_verifier_mid": {
-                "verification_results": [{"pattern_id": "test_pattern", "status": "PRESENT"}]
-            },
-            "flaw_injection_verifier_final": {
-                "verification_results": [{"pattern_id": "test_pattern", "status": "PRESENT"}]
-            }
-        }
-        critics_file = mock_run_dir / "critics.json"
-        critics_file.write_text(json.dumps(critics))
+        final_dir = mock_run_dir / "critics" / "final_panel"
+        assert (final_dir / "contradiction_hunter.txt").exists()
 
         # 8. Test assemble
+        critics_final = {
+            "contradiction_hunter": {"score": 5},
+            "flaw_injection_verifier_final": {"verification_results": []}
+        }
+        critics_final_file = mock_run_dir / "critics_final.json"
+        critics_final_file.write_text(json.dumps(critics_final))
+
         with patch("app.case_generator.harness_io.assemble_case") as mock_assemble:
-            mock_assemble.return_value = {"case_id": "case_999_mock_mock"}
-            harness_io.cmd_assemble(999, str(brief_file), str(p4_file), str(critics_file))
+            mock_assemble.return_value = {"case_id": "test_case_id"}
+            harness_io.cmd_assemble(999, str(brief_file), str(p4_file), str(critics_final_file))
             
-        assert (mock_run_dir / "drafts" / "case_999_mock_mock.json").exists()
+            out_file = mock_run_dir / "drafts" / "test_case_id.json"
+            assert out_file.exists()

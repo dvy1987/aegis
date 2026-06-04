@@ -28,13 +28,41 @@ DRAFTS = config.REPO_ROOT / "eval" / "cases" / "drafts"
 STATE_FILE = RUN_DIR / "state.json"
 ENVELOPE = load_prompt("_critic_envelope")
 
+def _fresh_state(seed: int = 0) -> dict[str, Any]:
+    return {"scenario_retries": 0, "stage1_retries": 0, "stage2_retries": 0, "stage3_retries": 0, "p4_retries": 0, "stage5_retries": 0, "seed": seed}
+
 def load_state() -> dict[str, Any]:
+    REQUIRED_KEYS = {"scenario_retries", "stage1_retries", "stage2_retries", "stage3_retries", "p4_retries", "seed"}
     if STATE_FILE.exists():
-        return json.loads(STATE_FILE.read_text(encoding="utf-8"))
-    return {"scenario_retries": 0, "stage1_retries": 0, "stage2_retries": 0, "stage3_retries": 0, "p4_retries": 0, "seed": 0}
+        try:
+            st = json.loads(STATE_FILE.read_text(encoding="utf-8"))
+            if not REQUIRED_KEYS.issubset(st.keys()):
+                print("WARNING: state.json is corrupt or incomplete. Resetting.")
+                return _fresh_state()
+            return st
+        except json.JSONDecodeError:
+            print("WARNING: state.json could not be parsed. Resetting.")
+            return _fresh_state()
+    return _fresh_state()
 
 def save_state(st: dict[str, Any]) -> None:
     STATE_FILE.write_text(json.dumps(st, indent=2), encoding="utf-8")
+
+def _require_stage(st: dict[str, Any], required_stage: str) -> None:
+    if required_stage not in st.get("completed_stages", []):
+        print(f"HARD FAIL: {required_stage} has not been run or did not pass. Sequence violated.")
+        sys.exit(1)
+
+def _mark_stage(st: dict[str, Any], completed_stage: str) -> None:
+    if "completed_stages" not in st:
+        st["completed_stages"] = []
+    if completed_stage not in st["completed_stages"]:
+        st["completed_stages"].append(completed_stage)
+    save_state(st)
+
+def _write_verdict(status: str, next_action: str) -> None:
+    path = RUN_DIR / "last_verdict.json"
+    path.write_text(json.dumps({"status": status, "next_action": next_action}, indent=2), encoding="utf-8")
 
 def _fmt(template: str, **kw: Any) -> str:
     for k, v in kw.items():
@@ -83,7 +111,7 @@ def write_prompts(stage_name: str, prompts: dict[str, str]) -> None:
 
 def cmd_stage1_prep(index: int, seed: int, is_retry: bool = False) -> None:
     RUN_DIR.mkdir(parents=True, exist_ok=True)
-    st = load_state() if is_retry else {"scenario_retries": 0, "stage1_retries": 0, "stage2_retries": 0, "stage3_retries": 0, "p4_retries": 0, "seed": seed}
+    st = load_state() if is_retry else _fresh_state(seed)
     
     if st["scenario_retries"] >= 4:
         print("HARD FAIL: Max scenario retries (4) exceeded. Giving up on this case entirely.")
@@ -105,7 +133,9 @@ def cmd_stage1_prep(index: int, seed: int, is_retry: bool = False) -> None:
         "joint_constraints": config.joint_constraints_text()
     }
     (RUN_DIR / "inputs.json").write_text(json.dumps(inputs, indent=2), encoding="utf-8")
+    st["completed_stages"] = ["stage1_prep"]
     save_state(st)
+    _write_verdict("PASS", "Run Drafter (P1) and then stage1_eval")
     print(f"=== PREP case_{index} (seed={actual_seed}, attempt={st['scenario_retries']+1}/4) ===\nInputs written to {RUN_DIR}/inputs.json\nAgent should now run P1.")
 
 def cmd_stage1_verify(critics_path: str) -> None:
@@ -123,16 +153,66 @@ def cmd_stage1_verify(critics_path: str) -> None:
             st["scenario_retries"] += 1
             st["stage1_retries"] = 0
             save_state(st)
+            _write_verdict("FAIL", "STAGE 1 FAILED 2 RETRIES. Discarding scenario. Re-run stage1_prep.")
             cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
             sys.exit(2)
         else:
             save_state(st)
-            print(f"STAGE 1 CRITIC FAILED (Score 1). Retry {st['stage1_retries']}/2. Agent must re-draft P1.")
+            msg = f"STAGE 1 CRITIC FAILED (Score 1). Retry {st['stage1_retries']}/2. Agent must re-draft P1."
+            _write_verdict("RETRY", msg)
+            print(msg)
             sys.exit(3)
     
+    _mark_stage(st, "stage1_verify")
+    _write_verdict("PASS", "STAGE 1 PASS. Run stage1_predraft_eval.")
     print("STAGE 1 PASS. Proceed to P2.")
 
+def cmd_stage1_predraft_eval(brief_path: str) -> None:
+    st = load_state()
+    _require_stage(st, "stage1_verify")
+    inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
+    brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
+    prompts = {
+        "predraft_composability": _fmt(load_prompt("c_predraft_composability"), envelope=ENVELOPE, 
+                                 scenario_brief_json=json.dumps(brief, indent=2),
+                                 patterns_json=json.dumps(inputs["patterns"], indent=2))
+    }
+    write_prompts("stage1_predraft", prompts)
+
+def cmd_stage1_predraft_verify(critics_path: str) -> None:
+    critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
+    st = load_state()
+    inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
+    
+    score = critics.get("predraft_composability", {}).get("score")
+    guidance = critics.get("predraft_composability", {}).get("framing_guidance")
+    
+    if score == 1:
+        st["stage1_retries"] += 1
+        if st["stage1_retries"] >= 2:
+            print("PRE-DRAFT FAILED 2 RETRIES. Discarding scenario and re-rolling Phase 0...")
+            st["scenario_retries"] += 1
+            st["stage1_retries"] = 0
+            save_state(st)
+            _write_verdict("FAIL", "PRE-DRAFT FAILED 2 RETRIES. Discarding scenario. Re-run stage1_prep.")
+            cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
+            sys.exit(2)
+        else:
+            save_state(st)
+            msg = f"PRE-DRAFT VALIDATOR FAILED (Score 1). Retry {st['stage1_retries']}/2. Agent must re-draft P1."
+            _write_verdict("RETRY", msg)
+            print(msg)
+            sys.exit(3)
+            
+    inputs["framing_guidance"] = guidance
+    (RUN_DIR / "inputs.json").write_text(json.dumps(inputs, indent=2), encoding="utf-8")
+    _mark_stage(st, "stage1_predraft_verify")
+    _write_verdict("PASS", "PRE-DRAFT PASS. Proceed to Drafter (P2) and then stage2_eval.")
+    print(f"PRE-DRAFT PASS. Framing guidance saved to inputs.json. Proceed to P2.")
+
 def cmd_stage1_eval(brief_path: str) -> None:
+    st = load_state()
+    _require_stage(st, "stage1_prep")
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
     
@@ -151,8 +231,11 @@ def cmd_stage1_eval(brief_path: str) -> None:
                                  scenario_brief_json=json.dumps(brief, indent=2))
     }
     write_prompts("stage1", prompts)
+    _mark_stage(st, "stage1_eval")
 
 def cmd_stage2_eval(brief_path: str, letter_path: str) -> None:
+    st = load_state()
+    _require_stage(st, "stage1_predraft_verify")
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
     letter = json.loads(Path(letter_path).read_text(encoding="utf-8"))["denial_letter_text"]
@@ -165,6 +248,7 @@ def cmd_stage2_eval(brief_path: str, letter_path: str) -> None:
                              denial_letter_text=letter)
     }
     write_prompts("stage2", prompts)
+    _mark_stage(st, "stage2_eval")
 
 def cmd_stage2_verify(critics_path: str) -> None:
     critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
@@ -177,15 +261,23 @@ def cmd_stage2_verify(critics_path: str) -> None:
         st["stage2_retries"] += 1
         save_state(st)
         if st["stage2_retries"] >= 2:
-            print("STAGE 2 FAILED 2 RETRIES. Reached max revisions, proceeding anyway (per pipeline rules). Proceed to P3.")
+            msg = "STAGE 2 FAILED 2 RETRIES. Reached max revisions, proceeding anyway. Proceed to P3."
+            _write_verdict("PASS", msg)
+            print(msg)
             sys.exit(0)
         else:
-            print(f"STAGE 2 CRITIC FAILED (Score 1). Retry {st['stage2_retries']}/2. Agent must re-draft P2.")
+            msg = f"STAGE 2 CRITIC FAILED (Score 1). Retry {st['stage2_retries']}/2. Agent must re-draft P2."
+            _write_verdict("RETRY", msg)
+            print(msg)
             sys.exit(3)
             
+    _mark_stage(st, "stage2_verify")
+    _write_verdict("PASS", "STAGE 2 PASS. Proceed to Clinical Writer (P3) and then stage3_eval.")
     print("STAGE 2 PASS. Proceed to P3.")
 
 def cmd_stage3_eval(brief_path: str, context_path: str) -> None:
+    st = load_state()
+    _require_stage(st, "stage2_verify")
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
     ctx = json.loads(Path(context_path).read_text(encoding="utf-8"))["clinical_context"]
     prompts = {
@@ -196,6 +288,7 @@ def cmd_stage3_eval(brief_path: str, context_path: str) -> None:
                                           diagnosis=brief["diagnosis"], treatment_requested=brief["treatment_requested"])
     }
     write_prompts("stage3", prompts)
+    _mark_stage(st, "stage3_eval")
 
 def cmd_stage3_verify(critics_path: str) -> None:
     critics = json.loads(Path(critics_path).read_text(encoding="utf-8"))
@@ -208,15 +301,23 @@ def cmd_stage3_verify(critics_path: str) -> None:
         st["stage3_retries"] += 1
         save_state(st)
         if st["stage3_retries"] >= 2:
-            print("STAGE 3 FAILED 2 RETRIES. Reached max revisions, proceeding anyway (per pipeline rules). Proceed to P4.")
+            msg = "STAGE 3 FAILED 2 RETRIES. Reached max revisions, proceeding anyway. Proceed to P4."
+            _write_verdict("PASS", msg)
+            print(msg)
             sys.exit(0)
         else:
-            print(f"STAGE 3 CRITIC FAILED (Score 1 / FAIL). Retry {st['stage3_retries']}/2. Agent must re-draft P3.")
+            msg = f"STAGE 3 CRITIC FAILED (Score 1 / FAIL). Retry {st['stage3_retries']}/2. Agent must re-draft P3."
+            _write_verdict("RETRY", msg)
+            print(msg)
             sys.exit(3)
             
+    _mark_stage(st, "stage3_verify")
+    _write_verdict("PASS", "STAGE 3 PASS. Proceed to Flaw Injector (P4) and then stage4_det_check.")
     print("STAGE 3 PASS. Proceed to P4.")
 
 def cmd_stage4_det_check(brief_path: str, p4_path: str) -> None:
+    st = load_state()
+    _require_stage(st, "stage3_verify")
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
     p4 = json.loads(Path(p4_path).read_text(encoding="utf-8"))
@@ -244,16 +345,23 @@ def cmd_stage4_det_check(brief_path: str, p4_path: str) -> None:
             st["scenario_retries"] += 1
             st["p4_retries"] = 0
             save_state(st)
+            _write_verdict("FAIL", "HARD FAIL: P4 failed 2 targeted re-injections. Discarding scenario. Re-run stage1_prep.")
             cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
             sys.exit(2)
         else:
             save_state(st)
-            print(f"\nHARD FAIL: Flaws are absent deterministically. Retry {st['p4_retries']}/2. Agent MUST re-run P4 injection.")
+            msg = f"\nHARD FAIL: Flaws are absent deterministically. Retry {st['p4_retries']}/2. Agent MUST re-run P4 injection."
+            _write_verdict("RETRY", msg)
+            print(msg)
             sys.exit(3)
     else:
+        _mark_stage(st, "stage4_det_check")
+        _write_verdict("PASS", "No deterministic flaws absent. Proceed to P5.")
         print("\nPASS: No deterministic flaws absent. Proceed to P5.")
 
 def cmd_stage5_eval(brief_path: str, final_path: str) -> None:
+    st = load_state()
+    _require_stage(st, "stage4_det_check")
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
     final = json.loads(Path(final_path).read_text(encoding="utf-8"))
@@ -275,6 +383,7 @@ def cmd_stage5_eval(brief_path: str, final_path: str) -> None:
         st = load_state()
         st["scenario_retries"] += 1
         save_state(st)
+        _write_verdict("FAIL", "HARD FAIL: Deterministic Safety/PHI check failed. Discarding scenario. Re-run stage1_prep.")
         cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
         sys.exit(2)
         
@@ -304,6 +413,7 @@ def cmd_stage5_eval(brief_path: str, final_path: str) -> None:
         st = load_state()
         st["scenario_retries"] += 1
         save_state(st)
+        _write_verdict("FAIL", "HARD FAIL: Statistical Diversity check failed (duplicate case). Discarding scenario. Re-run stage1_prep.")
         cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
         sys.exit(2)
     
@@ -338,6 +448,7 @@ def cmd_stage5_eval(brief_path: str, final_path: str) -> None:
                                         denial_timestamp=final.get("denial_timestamp", "null"))
     }
     write_prompts("stage5", prompts)
+    _mark_stage(st, "stage5_eval")
 
 def cmd_stage5_verify(brief_path: str, final_path: str, critics_path: str) -> None:
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
@@ -351,6 +462,7 @@ def cmd_stage5_verify(brief_path: str, final_path: str, critics_path: str) -> No
         print("HARD FAIL: Semantic Safety check failed. Discarding scenario and re-rolling Phase 0...")
         st["scenario_retries"] += 1
         save_state(st)
+        _write_verdict("FAIL", "HARD FAIL: Semantic Safety check failed. Discarding scenario. Re-run stage1_prep.")
         cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
         sys.exit(2)
         
@@ -376,16 +488,23 @@ def cmd_stage5_verify(brief_path: str, final_path: str, critics_path: str) -> No
             st["scenario_retries"] += 1
             st["stage5_retries"] = 0
             save_state(st)
+            _write_verdict("FAIL", "HARD FAIL: Stage 5 Flaw Injection failed 2 retries. Discarding scenario. Re-run stage1_prep.")
             cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
             sys.exit(2)
         else:
             save_state(st)
-            print(f"STAGE 5 FLAW VERIFIER FAILED. Absent: {final_absent}. Retry {st['stage5_retries']}/2. Agent must re-inject flaws and re-run P5.")
+            msg = f"STAGE 5 FLAW VERIFIER FAILED. Absent: {final_absent}. Retry {st['stage5_retries']}/2. Agent must re-inject flaws and re-run P5."
+            _write_verdict("RETRY", msg)
+            print(msg)
             sys.exit(3)
             
+    _mark_stage(st, "stage5_verify")
+    _write_verdict("PASS", "STAGE 5 PASS. Run final_panel.")
     print("STAGE 5 PASS (Flaw Integrity + Safety Verified). Proceed to Final Panel.")
 
 def cmd_final_panel(brief_path: str, final_path: str) -> None:
+    st = load_state()
+    _require_stage(st, "stage5_verify")
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
     final = json.loads(Path(final_path).read_text(encoding="utf-8"))
@@ -418,8 +537,11 @@ def cmd_final_panel(brief_path: str, final_path: str) -> None:
                                               denial_timestamp=final.get("denial_timestamp", "null"))
     }
     write_prompts("final_panel", prompts)
+    _mark_stage(st, "final_panel")
 
 def cmd_assemble(index: int, brief_path: str, final_path: str, all_critics_path: str) -> None:
+    st = load_state()
+    _require_stage(st, "final_panel")
     inputs = json.loads((RUN_DIR / "inputs.json").read_text(encoding="utf-8"))
     brief = json.loads(Path(brief_path).read_text(encoding="utf-8"))
     final = json.loads(Path(final_path).read_text(encoding="utf-8"))
@@ -484,11 +606,14 @@ def cmd_assemble(index: int, brief_path: str, final_path: str, all_critics_path:
         st = load_state()
         st["scenario_retries"] += 1
         save_state(st)
+        _write_verdict("FAIL", f"HARD FAIL: Final flaw integrity failed! Missing flaws: {final_absent}. Discarding scenario. Re-run stage1_prep.")
         cmd_stage1_prep(inputs["index"], st["seed"], is_retry=True)
         sys.exit(2)
         
     out_path = DRAFTS / f"{final_case['case_id']}.json"
     out_path.write_text(json.dumps(final_case, indent=2), encoding="utf-8")
+    _mark_stage(st, "assemble")
+    _write_verdict("PASS", f"SUCCESS: Case {final_case['case_id']} assembled and validated!")
     print(f"SUCCESS: Case {final_case['case_id']} assembled and validated!")
 
 def main(argv: list[str] | None = None) -> int:
@@ -504,6 +629,12 @@ def main(argv: list[str] | None = None) -> int:
     
     s1v = sub.add_parser("stage1_verify")
     s1v.add_argument("--critics", required=True)
+    
+    s1pre = sub.add_parser("stage1_predraft_eval")
+    s1pre.add_argument("--brief", required=True)
+    
+    s1prev = sub.add_parser("stage1_predraft_verify")
+    s1prev.add_argument("--critics", required=True)
     
     s2 = sub.add_parser("stage2_eval")
     s2.add_argument("--brief", required=True)
@@ -546,6 +677,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "stage1_prep": cmd_stage1_prep(args.index, args.seed)
     elif args.cmd == "stage1_eval": cmd_stage1_eval(args.brief)
     elif args.cmd == "stage1_verify": cmd_stage1_verify(args.critics)
+    elif args.cmd == "stage1_predraft_eval": cmd_stage1_predraft_eval(args.brief)
+    elif args.cmd == "stage1_predraft_verify": cmd_stage1_predraft_verify(args.critics)
     elif args.cmd == "stage2_eval": cmd_stage2_eval(args.brief, args.letter)
     elif args.cmd == "stage2_verify": cmd_stage2_verify(args.critics)
     elif args.cmd == "stage3_eval": cmd_stage3_eval(args.brief, args.context)
