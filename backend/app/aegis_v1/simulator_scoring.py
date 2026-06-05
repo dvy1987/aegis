@@ -13,7 +13,7 @@ from app.aegis_v1.schemas import (
 )
 
 # backend/app/aegis_v1/simulator_scoring.py -> parents[3] is the repo root; eval/ lives there.
-RULES_PATH = Path(__file__).resolve().parents[3] / "eval" / "simulator_rules.json"
+RULES_PATH = Path(__file__).resolve().parents[2] / "simulator_rules.json"
 
 
 class FeatureRule(BaseModel):

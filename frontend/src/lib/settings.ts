@@ -48,8 +48,8 @@ export async function checkBackendHealth(apiBase: string): Promise<BackendStatus
       cache: "no-store",
     });
     if (!res.ok) return "offline";
-    const data = (await res.json()) as { ok?: boolean };
-    return data.ok ? "connected" : "offline";
+    const data = (await res.json()) as { ok?: boolean; status?: string };
+    return (data.ok || data.status === "ok") ? "connected" : "offline";
   } catch {
     return "offline";
   }

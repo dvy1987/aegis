@@ -17,10 +17,10 @@
 - Secret Manager enabled; `phoenix-api-key` secret (v2) mounted as `PHOENIX_API_KEY`.
 - `PHOENIX_PROJECT_NAME=default` set authoritatively in `main_v1.py`.
 
-### 🔴 Frontend deploy pending
-- Cloud Build fails: `pnpm@latest` (v11.5.1) requires Node v22.13+, Dockerfile uses `node:20`.
-- Fix committed locally: `pnpm@10` pin in `frontend/Dockerfile` — deploy not yet run.
-- **Next step:** `cd frontend && YES=1 bash deploy.sh --mode live --api https://aegis-v1-api-v6a3eydpoq-uc.a.run.app`
+### ✅ Frontend deployed to Cloud Run
+- Cloud Build succeeded with the `pnpm@10` pin.
+- URL: `https://aegis-frontend-v6a3eydpoq-uc.a.run.app`
+- Smoke test verified HTTP 200 on `/`, `/appeal`, and `/showcase`.
 
 ### ⚠️ OtelPhoenixRecorder.annotate fix
 - `PHOENIX_COLLECTOR_ENDPOINT` in `.env` → `phoenix.client` was using it as base URL, producing 405.

@@ -337,8 +337,16 @@ class LivePhoenixLearningStore:
         )
         if spans_df is None or spans_df.empty:
             return [], []
+        if spans_df.index.name and spans_df.index.name in spans_df.columns:
+            spans_df = spans_df.reset_index(drop=True)
+        else:
+            try:
+                spans_df = spans_df.reset_index()
+            except ValueError:
+                spans_df = spans_df.reset_index(drop=True)
+                
         spans_records = json.loads(
-            spans_df.reset_index().to_json(orient="records", default_handler=str)
+            spans_df.to_json(orient="records", default_handler=str)
         )
 
         def _matches(s: dict[str, Any]) -> bool:
@@ -368,9 +376,19 @@ class LivePhoenixLearningStore:
             )
         except Exception:
             return spans, []
-        annotations = json.loads(
-            ann_df.reset_index().to_json(orient="records", default_handler=str)
-        )
+        if ann_df is not None and not ann_df.empty:
+            if ann_df.index.name and ann_df.index.name in ann_df.columns:
+                ann_df = ann_df.reset_index(drop=True)
+            else:
+                try:
+                    ann_df = ann_df.reset_index()
+                except ValueError:
+                    ann_df = ann_df.reset_index(drop=True)
+            annotations = json.loads(
+                ann_df.to_json(orient="records", default_handler=str)
+            )
+        else:
+            annotations = []
         return spans, annotations
 
     def _fetch_prompt_record(
