@@ -2125,3 +2125,49 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - Dirty: Generated `/tmp/harness/inputs.json` and various `.json` outputs for the cases. Assembled output cases reside wherever `harness_io.py assemble` placed them.
+
+## 2026-06-05 — Session Handoff (Droid — Tier 1 Phoenix Live Wiring)
+
+### Done
+- ✅ **Phase A:** Pinned v1 Phoenix project name to `default` in `main_v1.py` (authoritative `os.environ[...]`, not `setdefault`); fixed `deploy-v1.sh` default from `aegis-baseline` → `default`; verified MCP auth works against `default` project.
+- ✅ **Phase B (T0):** Fixed `OtelPhoenixRecorder.annotate` — `PHOENIX_COLLECTOR_ENDPOINT` was being used as base URL, producing a bogus `/v1/traces/v1/span_annotations` → 405. Fix: pass `PHOENIX_HOST` with trailing slash as `base_url`. Also stripped nested dicts from annotation DataFrame (they hung the serializer on macOS); now stashing the full laundered payload as JSON in `explanation`. Seeded 3 real spans via `scripts/seed_phoenix_default.py` (StubDrafterClient, IPv4 patch); recorded fixtures to `backend/tests/fixtures/phoenix/` via MCP `get-spans` + `get-span-annotations`.
+- ✅ **Phase C (T2):** Replaced the always-`cold_start` `phoenix_mcp_lookup` with a live read path: `fetch_slice_traces` (MCP first, `phoenix.client` fallback) → pure `_summarize_traces` (INV-2 firewall preserved). `PHOENIX_MCP_ENABLED=false` → `disabled`; empty fetch → `cold_start`; real traces → `available` with failure_patterns + success_traits. **Live smoke verified:** `phoenix_mcp_lookup(insurer='Cigna', denial_type='medical_necessity')` returns `status='available'` with real traits. 7 new offline transform tests.
+- ✅ **Phase D (T3):** `LivePhoenixLearningStore` implementing the `PhoenixLearningStore` Protocol. Reads spans/annotations via `phoenix.client`, transforms via `rows_to_scored_runs` (firewall-safe), writes promoted prompts to disk + Phoenix Prompts registry. 5 new offline tests including construction-without-creds and recorded-fixture parse.
+- ✅ **Phase E (T4):** `run_live.py` CLI wiring `GeminiDrafterClient` + `PanelJudgeAdapter(GeminiJudgeClient)` + `GeminiReflectionClient` into `LearningCoordinator`. `--record-only`, `--slice`, `--promote --approver` flags. 3 offline construction tests.
+- ✅ **Phase F (partial):** v1 backend deployed to Cloud Run (`https://aegis-v1-api-v6a3eydpoq-uc.a.run.app`). Frontend build **fails** in Cloud Build — `pnpm@latest` (v11.5.1) requires Node v22.13+, but Dockerfile uses `node:20`. Fix committed (`pnpm@10` pin) but deploy was cancelled by user before it ran.
+
+### Debated
+- PM clarified: v1 backend project = `default`, swarm = `aegis-swarm` (deliberately different so traces don't mix). Previous `main_v1.py` had `aegis-hackathon` which was wrong.
+- PM chose "MCP first; Phoenix client only as fallback" for the read path (judge-credibility max).
+- PM chose to pin project name authoritatively (not `setdefault`) + log it at startup.
+- PM chose to push + deploy both backend and frontend to Cloud Run.
+
+### Decisions
+- `PHOENIX_PROJECT_NAME` for v1 = `default` (authoritative, not overridable by host env) — `main_v1.py:27`
+- `OtelPhoenixRecorder.annotate` passes `PHOENIX_HOST.rstrip('/')+'/'` as `base_url` to `Client()` — fixes the 405 from `/v1/traces/v1/span_annotations`
+- Annotation payload simplified to scalars only (`label`, `score`, `explanation` as JSON string) — nested dicts hung the DataFrame serializer on macOS
+- `phoenix_mcp_lookup` now reads live from Phoenix MCP (MCP first, client fallback) — the always-cold_start stub is gone
+- `LivePhoenixLearningStore` delegates disk writes to `FileSystemPhoenixLearningStore` (the running v1 backend reads prompts from disk) and best-effort upserts to Phoenix Prompts registry
+- Frontend Dockerfile pinned `pnpm@10` (not `@latest`) to fix Node 20 compat
+
+### Deferred
+- **Frontend Cloud Run deploy** — build fix committed but deploy not yet run. Next agent: `cd frontend && YES=1 bash deploy.sh --mode live --api https://aegis-v1-api-v6a3eydpoq-uc.a.run.app`
+- **Smoke test of single frontend URL** — curl after deploy succeeds
+- **Live LearningCoordinator run** — `python -m app.learning.run_live --slice Cigna:medical_necessity` (needs Vertex + Gemini)
+- **MCP-off counterfactual with live `phoenix_mcp_lookup`** — now that it returns `available`, the delta should be real
+- Memory update (current-state.md, decision-log) — only handoff done this session
+
+### Next Agent Should Know
+1. **The `phoenix_mcp_lookup` cold_start stub is dead.** It now returns real Phoenix data. This is the single most important change this session.
+2. **Frontend deploy needs one command** — the pnpm@10 fix is committed; just run `YES=1 bash deploy.sh --mode live --api https://aegis-v1-api-v6a3eydpoq-uc.a.run.app` from `frontend/`.
+3. **Do NOT touch swarm code.** PM was explicit: v1 only this session.
+4. **Secret Manager API is now enabled** on the GCP project and the `phoenix-api-key` secret exists (version 2).
+5. **`.env` has `PHOENIX_COLLECTOR_ENDPOINT`** pointing to `.../v1/traces` — this is correct for OTEL export but wrong as a `phoenix.client` base URL. The recorder fix handles this; don't remove it from `.env`.
+
+### Revisit Triggers
+- If `phoenix.client` changes its default base URL resolution in a future version, the `base_url=PHOENIX_HOST` override may become redundant or need updating
+- If Arize Cloud changes MCP auth requirements, the auto-derived `PHOENIX_CLIENT_HEADERS` in `phoenix_mcp.py` and `test_mcp_standalone.py` may need updating
+
+### Working Tree
+- Dirty: `frontend/Dockerfile` (pnpm@10 fix, uncommitted), `backend/app/case_generator/harness_io.py` (unrelated)
+- 4 commits pushed to `origin/main`: Phases A+B, C, D, E

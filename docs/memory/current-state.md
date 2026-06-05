@@ -1,7 +1,30 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-03 (CRITICAL: library → judges → Phoenix improvement)
-**Phase:** **Execution — Part B swarm + eval corpus at scale; cloud library v1 indexed (uncommitted).**
+**Updated:** 2026-06-05 (Tier 1 Phoenix live wiring done; frontend deploy pending)
+**Phase:** **Execution — Phoenix learning loop now live; v1 backend deployed; frontend deploy blocked on pnpm fix.**
+
+### ✅ phoenix_mcp_lookup NO LONGER COLD_START
+- Returns `status='available'` with real `failure_patterns` and `success_traits` when traces exist for the slice.
+- MCP-off counterfactual (`PHOENIX_MCP_ENABLED=false`) still returns `disabled` — demo toggle intact.
+- See `phoenix_mcp.py` (MCP-first, client-fallback) + `tools.py` (`_summarize_traces` pure transform).
+
+### ✅ LivePhoenixLearningStore built
+- `PhoenixLearningStore` Protocol over real `phoenix.client` reads + Phoenix Prompts registry writes.
+- `rows_to_scored_runs` pure transform (offline-tested against `tests/fixtures/phoenix/`).
+
+### ✅ v1 backend deployed to Cloud Run
+- URL: `https://aegis-v1-api-v6a3eydpoq-uc.a.run.app`
+- Secret Manager enabled; `phoenix-api-key` secret (v2) mounted as `PHOENIX_API_KEY`.
+- `PHOENIX_PROJECT_NAME=default` set authoritatively in `main_v1.py`.
+
+### 🔴 Frontend deploy pending
+- Cloud Build fails: `pnpm@latest` (v11.5.1) requires Node v22.13+, Dockerfile uses `node:20`.
+- Fix committed locally: `pnpm@10` pin in `frontend/Dockerfile` — deploy not yet run.
+- **Next step:** `cd frontend && YES=1 bash deploy.sh --mode live --api https://aegis-v1-api-v6a3eydpoq-uc.a.run.app`
+
+### ⚠️ OtelPhoenixRecorder.annotate fix
+- `PHOENIX_COLLECTOR_ENDPOINT` in `.env` → `phoenix.client` was using it as base URL, producing 405.
+- Fix: pass `PHOENIX_HOST.rstrip('/')+'/'` as `base_url`. Payload simplified to scalars only.
 
 ### 🔴 CRITICAL TODO — library before judges / showcase / Phoenix improvement
 - **PM is building the library first.** Do not bypass judge panel with simulator scores.
