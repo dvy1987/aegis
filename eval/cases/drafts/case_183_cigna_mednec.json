@@ -1,0 +1,318 @@
+{
+  "case_id": "case_183_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 32,
+    "gender": "M",
+    "diagnosis": "Hereditary angioedema (D84.1)",
+    "treatment_requested": "Lanadelumab (Takhzyro) prophylaxis",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "unreasonable_documentation_deadline: DOL ERISA Claims Procedure Regulations 29 CFR \u00a7 2560.503-1(g); AMA 2023 Prior Authorization Survey",
+    "experimental_despite_fda_approval: ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nWe have completed our review of the request your provider submitted on April 28, 2026 for Lanadelumab (Takhzyro) prophylaxis to treat hereditary angioedema (D84.1). Applying the Cigna Medical Necessity Guidelines and our Medical Coverage Policy for specialty biologic agents, we have denied this request as not medically necessary at this time.\n\nThe reviewing clinician determined that routine long-term prophylaxis with Lanadelumab (Takhzyro) prophylaxis exceeds the level of care your condition requires. A lower level of care - on-demand treatment of individual attacks as they occur - has not been shown to be inadequate, and the records submitted do not establish that this lower-intensity management has been exhausted. Under our current coverage policy, routine prophylactic use of this agent is moreover considered experimental and investigational for this indication.\n\nBefore any reconsideration, we require additional clinical documentation, including a contemporaneous log of attack frequency and severity. This documentation must be received within 48 hours of the date of this letter; no extension of this deadline is available, and if it is not received within that window the denial will stand.\n\nYou or your provider may request, at no charge, a copy of the claim file and the specific clinical criteria relied upon. Your treating provider may also request a peer-to-peer discussion with a Cigna medical director.\n\nYou have the right to appeal. A written appeal may be submitted within 180 days of the date of this letter, and you may attach additional clinical documentation in support of the request. Please consult your plan materials for instructions on where to send your appeal.\n\nSincerely,\nCigna Medical Necessity Review",
+  "clinical_context": "The member is a 32-year-old man with hereditary angioedema confirmed by C1-inhibitor deficiency, a C1-inhibitor functional level below 30% of normal, and a chronically low C4. Over the past year he has averaged two to three angioedema attacks per month and has made three emergency department visits, including two laryngeal attacks with airway involvement. He previously used attenuated androgen prophylaxis (danazol) but discontinued it because of transaminitis and intolerable side effects, and on-demand treatment of individual attacks with a C1-esterase inhibitor concentrate has not prevented the recurrent, disabling, and at times airway-threatening episodes. His treating immunologist documents that long-term prophylaxis is now indicated and that on-demand-only management is inadequate given the attack frequency and laryngeal involvement. Lanadelumab received FDA approval in 2018 for routine prevention of HAE attacks and is recommended as a first-line prophylactic agent in current international (WAO/EAACI) HAE guidelines, directly contradicting the denial's experimental and investigational characterization. The contemporaneous attack log the insurer demands within 48 hours already exists within the records that were submitted.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-145650-0c02a",
+    "generated_at": "2026-06-05T14:56:51Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "26-40",
+      "patient_gender": "M",
+      "specialty": "infusion_specialty_rx",
+      "sub_tactic": "level_of_care_too_high"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (Cigna, Medical Necessity, infusion_specialty_rx, 26-40, M, level_of_care_too_high); dx HAE fits specialty; denial_rationale_seed describes level_of_care_too_high; age 32 in band; not 71+ so null employer_archetype fine; experimental label is secondary flaw, not a drift.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Correct HAE pathophysiology; lanadelumab FDA-approved 2018 for prophylaxis; Cigna LOC framing (on-demand as lower-intensity not exhausted) is a real squeeze; exploitable gaps (stale experimental label, 48h no-extension window) are authentic and rebuttable; demographics agnostic.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Branded Cigna; cites Cigna Medical Necessity Guidelines + Medical Coverage Policy; step-therapy/conservative cadence; Cigna medical director peer-to-peer; no Aetna/UHC cross-tells. MCG omission acceptable.",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Applies level_of_care_too_high correctly (on-demand suffices, prophylaxis exceeds required care); threshold-free, circular, burden-shifting; cites plausible Cigna policies, no hallucinated guideline; layered experimental label is realistic stacking, exploitable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Correct HAE confirmatory triad (C1-INH deficiency, functional <30%, low C4); realistic attack burden and laryngeal involvement; danazol transaminitis is a real adverse effect; on-demand C1-esterase concentrate rescue; lanadelumab 2018 approval accurate; no invented drugs or impossible timelines.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Lanadelumab is a plasma kallikrein inhibitor FDA-approved specifically for routine HAE prophylaxis and guideline-endorsed; sole approved indication is the stated diagnosis; exact mechanistic match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.88,
+        "reasoning": "HAE/lanadelumab (plasma-kallikrein inhibitor) is therapeutically unique in the corpus; no neighbour shares the diagnosis or drug; nearest payer/category match (Cigna SLE/Benlysta level_of_care) is a different disease, drug class, and mechanism. Distinct clinical content, not a near-duplicate.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['unreasonable_documentation_deadline', 'experimental_despite_fda_approval']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['unreasonable_documentation_deadline', 'experimental_despite_fda_approval']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.16 (nearest=case_181_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Adult 32M HAE specialty-Rx dispute; laryngeal/airway references are disease pathophysiology, not self-harm; no SI/abuse/IPV/EOL/minor-gender care; Cigna commercial plan, no Medicare/Medicaid framing. No banned topics.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Age (32M), dx (D84.1), requested lanadelumab agree across letter and context; the denial's 'on-demand not exhausted' and 'experimental' claims are the allowed appealable denial-vs-fact tension; letter paragraphs mutually consistent; clinical timeline coherent; no drug/date/laterality instability.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Formal bureaucratic insurer prose and dense comma-spliced clinical recitation; no 'As an AI' tics, GPT vocabulary, listicles, or marketing filler; nothing at the >=0.7 conspicuous-tell bar.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural Cigna register, passive institutional phrasing, effective vagueness, harsh 48h no-extension edge, no apology/marketing; clinical context plain factual with only mild closing rebuttal framing.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "No member out-of-pocket figure or dollar estimate; 'at no charge' refers to records access, not drug cost; silence on cost liability is standard practice; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites only internal policy (no invented statutes); discloses 180-day appeal, claim file, peer-to-peer; omits external/IRO review and explicit ERISA naming (realistic attack vectors, not defects); the 48h demand is procedural aggression, not a statutory hallucination; no Medicare misapplication.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "HAE is autosomal dominant affecting both sexes; a 32M with established recurrent attacks is epidemiologically sound; biologic confirmation consistent; consistent male pronouns; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cigna in-scope, Medical Necessity, self_funded employer-sponsored commercial (no Medicare/Medicaid/TRICARE/VA/marketplace), adult 32, member-facing written appeal only, no live-filing/attorney/court language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Request April 28, 2026; denial contemporaneous; 180-day window realistic; FDA 2018 and 'past year' attack history precede the request without contradiction; 48h deadline is aggressive but not chronologically impossible; no date inversion or impossible duration.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "References 'Cigna Medical Necessity Guidelines' and 'Medical Coverage Policy for specialty biologic agents' \u2014 correct owner, no edition/code/page, no fabricated alphanumeric; 'our current coverage policy' appropriately generic; offers specific criteria on request. Realistic obscurity.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Coercive 48h no-extension deadline contradicts the 180-day appeal right and demands records already submitted; false 'experimental/investigational' label contradicted by 2018 FDA approval and first-line WAO/EAACI status; circular step-therapy logic; patient plainly meets standard of care (confirmed C1-INH deficiency, 2-3 attacks/month, laryngeal involvement, danazol intolerance). Easy appeal.",
+        "exploitable_weaknesses": [
+          "Coercive 48-hour documentation deadline contradicts the stated 180-day appeal window and demands records already submitted",
+          "False 'experimental and investigational' label contradicted by 2018 FDA approval and first-line WAO/EAACI guideline status",
+          "Circular step-therapy logic: on-demand C1-INH has not prevented airway-threatening attacks, yet denial claims lower-intensity care not exhausted",
+          "Patient plainly meets standard of care (confirmed C1-INH deficiency, 2-3 attacks/month, laryngeal involvement, danazol intolerance) which the denial ignores"
+        ],
+        "strong_defenses": [
+          "The denial nominally cites real Cigna Medical Necessity Guidelines and preserves a 180-day appeal right and peer-to-peer option"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / infusion_specialty_rx / sub_tactic=level_of_care_too_high. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Coercive 48h no-extension deadline contradicts the 180-day appeal right and demands records already submitted; false 'experimental/investigational' label contradicted by 2018 FDA approval and first-line WAO/EAACI status; circular step-therapy logic; patient plainly meets standard of care (confirmed C1-INH deficiency, 2-3 attacks/month, laryngeal involvement, danazol intolerance). Easy appeal.",
+      "exploitable_weaknesses": [
+        "Coercive 48-hour documentation deadline contradicts the stated 180-day appeal window and demands records already submitted",
+        "False 'experimental and investigational' label contradicted by 2018 FDA approval and first-line WAO/EAACI guideline status",
+        "Circular step-therapy logic: on-demand C1-INH has not prevented airway-threatening attacks, yet denial claims lower-intensity care not exhausted",
+        "Patient plainly meets standard of care (confirmed C1-INH deficiency, 2-3 attacks/month, laryngeal involvement, danazol intolerance) which the denial ignores",
+        "Pattern anchor: unreasonable_documentation_deadline",
+        "Pattern anchor: experimental_despite_fda_approval"
+      ],
+      "strong_defenses": [
+        "The denial nominally cites real Cigna Medical Necessity Guidelines and preserves a 180-day appeal right and peer-to-peer option"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "unreasonable_documentation_deadline",
+        "experimental_despite_fda_approval"
+      ],
+      "deterministic_present": [
+        "unreasonable_documentation_deadline",
+        "experimental_despite_fda_approval"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

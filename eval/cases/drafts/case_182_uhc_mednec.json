@@ -1,0 +1,314 @@
+{
+  "case_id": "case_182_uhc_mednec",
+  "insurer": "UHC",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 24,
+    "gender": "F",
+    "diagnosis": "Alcohol use disorder, severe (F10.20)",
+    "treatment_requested": "Inpatient medical detoxification (3-5 day medically supervised withdrawal)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "wrong_benefit_category: CMS Essential Health Benefits Bulletin 2022; documented in Aetna member complaints",
+    "contraindication_to_step_therapy: AMA 2023 Prior Authorization Physician Survey; State step-therapy exception laws (NY, TX, IL)"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nUnited has finished reviewing the request your provider submitted on May 6, 2026 for inpatient medical detoxification (3-5 day medically supervised withdrawal) to treat alcohol use disorder, severe (F10.20). Applying the UnitedHealthcare Coverage Determination Guideline for substance-related disorders and Optum behavioral health level-of-care criteria, we have determined the request is not medically necessary at this time, and it is denied.\n\nThe reviewing clinician concluded that a lower level of care is appropriate and that inpatient medically supervised withdrawal exceeds what your condition requires. Ambulatory (outpatient) withdrawal management is ordinarily expected to be attempted before an inpatient admission is authorized, and the documentation submitted does not support that outpatient management was tried or that it would be inadequate. The reviewer further assigned the requested inpatient stay to the residential/custodial care benefit category, which is subject to an exclusion under the terms of your benefit plan. For these reasons the requested inpatient level of care is not approved.\n\nThis determination reflects the clinical information available to us and the guidelines in effect on the date of review. You or your provider may request, at no cost, a copy of the claim file and the specific clinical criteria used. Your treating provider may also request a peer-to-peer discussion with an Optum medical director.\n\nYou have the right to appeal. A written appeal may be submitted within 180 days of the date of this notice, and you may include additional clinical documentation, such as records describing the severity of your withdrawal and any prior treatment. Please refer to your plan documents for instructions on how to submit your appeal.\n\nSincerely,\nUnitedHealthcare Clinical Services",
+  "clinical_context": "The member is a 24-year-old woman with severe alcohol use disorder, drinking roughly a pint to a fifth of spirits daily, who presented to the emergency department in early 2026 with tremor, diaphoresis, and a heart rate of 118; her arrival blood alcohol level was 0.21% yet she was already in early withdrawal. Her CIWA-Ar score peaked at 17, in the moderate-to-severe withdrawal range, and the evaluating emergency physician documented that ambulatory (outpatient) detoxification would be unsafe. She has a documented complicated alcohol withdrawal in 2024 that included a withdrawal seizure, which further contraindicates outpatient management. The requested admission is for acute, medically supervised withdrawal with a symptom-triggered benzodiazepine protocol and cardiac monitoring - an acute medical detoxification service, not long-term residential or custodial care. Her treating physician planned a 3-to-5 day monitored inpatient detox precisely because her objective withdrawal severity and prior seizure make a lower, ambulatory level of care dangerous. The denial's premise that outpatient management should be tried first is directly contradicted by the contemporaneous CIWA-Ar findings and the prior complicated withdrawal.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-145212-13645",
+    "generated_at": "2026-06-05T14:52:12Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "18-25",
+      "patient_gender": "F",
+      "specialty": "behavioral_health",
+      "sub_tactic": "level_of_care_too_high"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (UHC, Medical Necessity, behavioral_health, 18-25, F, level_of_care_too_high); dx F10.20 is behavioral_health; inpatient detox realistic for severe AUD; denial_rationale_seed describes level_of_care_too_high; age 24 in band; not 71+ so null employer_archetype fine.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "UHC/Optum LOC denial pushing ambulatory withdrawal management and invoking a custodial-exclusion is a textbook real-world tactic; exploitable gap is the ignored CIWA-Ar 17 with tremor/tachycardia and prior complicated withdrawal that contraindicate outpatient detox; dx/tx/age congruent.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Brands as 'United', cites UnitedHealthcare Coverage Determination Guideline + Optum behavioral criteria, Optum medical director peer-to-peer, signature 'documentation does not support' framing; no Aetna/Cigna cross-tells.",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites real UHC/Optum guidelines; matches level_of_care_too_high with threshold-free 'lower level of care appropriate' reasoning; hand-wavy step-therapy expectation and the custodial mischaracterization are realistically sloppy and exploitable; no hallucinated guideline.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Coherent withdrawal picture (a pint-to-fifth daily, HR 118, BAL 0.21% with early withdrawal, CIWA-Ar peaked 17, prior withdrawal seizure, symptom-triggered benzo protocol, 3-5 day monitored detox); accurate per ASAM; no invented drugs or impossible timelines.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Inpatient medically supervised detox is guideline-endorsed standard of care for severe AUD with withdrawal risk; 3-5 day duration aligns with acute withdrawal course; correct addiction-medicine category.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "AUD/acute detox is entirely new clinical territory in this run; no neighbour involves substance withdrawal or inpatient detox; nearest LOC neighbours (IOP depression, CBT-I insomnia) differ sharply in dx, tx, and trajectory. Not a near-duplicate.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['wrong_benefit_category', 'contraindication_to_step_therapy']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['wrong_benefit_category', 'contraindication_to_step_therapy']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.083 (nearest=case_181_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Substance use without suicidal ideation is allowed; no SI/self-harm/child abuse/IPV/EOL/minor-gender care; commercial UnitedHealthcare/Optum framing, no Medicare/Medicaid. No banned topics.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Age (24F), dx (F10.20), and requested inpatient detox agree across letter and context; the denial's 'outpatient not tried/custodial' claims vs the context's contraindication and acute-detox characterization are the allowed appealable denial-vs-fact tension; timeline (2024 seizure, early-2026 ED) coherent; no laterality/drug mismatch.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Formal bureaucratic insurer prose and dense comma-spliced clinical recitation; no 'As an AI' tics, GPT vocabulary, listicles, or marketing filler; nothing at the >=0.7 conspicuous-tell bar.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural United register with flat determination, guideline/exclusion citation, rote appeal boilerplate, no apology/marketing; effective custodial-recharacterization vagueness; clinical context plain factual with only mild closing advocacy framing.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No member out-of-pocket figure or dollar estimate; 'at no cost' refers to records access, not treatment liability; silence on cost liability is standard practice; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Discloses 180-day internal appeal, claim file, and peer-to-peer; omits external/independent review and explicit ERISA language (realistic attack vectors, not defects); references plan exclusion and named guidelines without inventing statutes; no Medicare misapplication to this commercial plan.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "24F with severe AUD requiring inpatient detox is epidemiologically plausible (early-onset severe AUD with prior complicated withdrawal); consistent female pronouns; objective findings, no moralizing or gendered stereotype.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "UHC in-scope, Medical Necessity, fully_insured employer-sponsored commercial (no Medicare/Medicaid/TRICARE/VA/marketplace), adult 24, member-facing written appeal only, no live-filing/attorney/court language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "All dates in 2024-2026 and stack consistently; request May 6, 2026; denial post-dates it; 180-day window realistic; early-2026 ED presentation and 2024 prior seizure precede the denial; 3-5 day detox length realistic; no impossible durations.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "References 'UnitedHealthcare Coverage Determination Guideline for substance-related disorders' and 'Optum behavioral health level-of-care criteria' \u2014 correct owner, plausible category, no edition/code/page and no fabricated alphanumeric; reinforced vagueness via offer to request the specific criteria.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Denial rests on two record-refuted premises: demands outpatient detox contradicted by ED documentation it would be unsafe and a 2024 withdrawal seizure (standard contraindications), and mischaracterizes acute benzo-protocol detox with cardiac monitoring as excluded custodial/residential care. Objective severity (CIWA-Ar 17, HR 118, BAL 0.21%) supports inpatient LOC. Procedurally clean but the clinical/factual appeal is overwhelming.",
+        "exploitable_weaknesses": [
+          "Denial requires outpatient detox first, directly contradicted by ED documentation that ambulatory detox would be unsafe and a prior 2024 complicated withdrawal with seizure (standard contraindications)",
+          "Reviewer mischaracterizes acute symptom-triggered benzodiazepine detox with cardiac monitoring as residential/custodial care to invoke a benefit exclusion, which is factually inapplicable to acute medical detoxification"
+        ],
+        "strong_defenses": [
+          "Procedurally sound notice: 180-day appeal window, free access to claim file and specific clinical criteria, and offered peer-to-peer with an Optum medical director"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Medical Necessity / behavioral_health / sub_tactic=level_of_care_too_high. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Denial rests on two record-refuted premises: demands outpatient detox contradicted by ED documentation it would be unsafe and a 2024 withdrawal seizure (standard contraindications), and mischaracterizes acute benzo-protocol detox with cardiac monitoring as excluded custodial/residential care. Objective severity (CIWA-Ar 17, HR 118, BAL 0.21%) supports inpatient LOC. Procedurally clean but the clinical/factual appeal is overwhelming.",
+      "exploitable_weaknesses": [
+        "Denial requires outpatient detox first, directly contradicted by ED documentation that ambulatory detox would be unsafe and a prior 2024 complicated withdrawal with seizure (standard contraindications)",
+        "Reviewer mischaracterizes acute symptom-triggered benzodiazepine detox with cardiac monitoring as residential/custodial care to invoke a benefit exclusion, which is factually inapplicable to acute medical detoxification",
+        "Pattern anchor: wrong_benefit_category",
+        "Pattern anchor: contraindication_to_step_therapy"
+      ],
+      "strong_defenses": [
+        "Procedurally sound notice: 180-day appeal window, free access to claim file and specific clinical criteria, and offered peer-to-peer with an Optum medical director"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "wrong_benefit_category",
+        "contraindication_to_step_therapy"
+      ],
+      "deterministic_present": [
+        "wrong_benefit_category",
+        "contraindication_to_step_therapy"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

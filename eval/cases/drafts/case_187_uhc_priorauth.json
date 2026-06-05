@@ -1,0 +1,318 @@
+{
+  "case_id": "case_187_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 62,
+    "gender": "M",
+    "diagnosis": "Type 2 diabetes mellitus, inadequately controlled, with established atherosclerotic cardiovascular disease (E11.9)",
+    "treatment_requested": "Dulaglutide (Trulicity)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719",
+    "wrong_benefit_category: CMS Essential Health Benefits Bulletin 2022; documented in Aetna member complaints"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic endocrine case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic endocrine case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic endocrine case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic endocrine case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic endocrine case (formulary tier dispute)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nUnited has finished reviewing the prior authorization request your provider submitted on May 20, 2026 for dulaglutide (Trulicity) to treat type 2 diabetes mellitus, inadequately controlled, with established atherosclerotic cardiovascular disease (E11.9). After review under the UnitedHealthcare prescription benefit, this request is not approved at this time.\n\nDulaglutide (Trulicity) is a non-preferred agent on your plan's formulary. A preferred, lower-tier formulary alternative is available, and our records do not document a trial and failure of that preferred agent before this non-preferred medication. The requested drug is therefore not authorized at the non-preferred tier without a documented trial of the preferred alternative.\n\nThe medication has also been assigned to the weight-management benefit category under your plan, which is an excluded benefit category, and on that basis the requested drug is not a covered benefit.\n\nYou or your provider may request, at no charge, a copy of the claim file and the specific criteria used in this determination. Your provider may request a peer-to-peer discussion with a plan medical director. You have the right to appeal this decision in writing within 180 days of the date of this notice. Please refer to your plan documents for instructions on how to submit your appeal.\n\nSincerely,\nUnitedHealthcare Pharmacy Services",
+  "clinical_context": "The member is a 62-year-old man with type 2 diabetes mellitus and established atherosclerotic cardiovascular disease, including an anterior myocardial infarction in 2023 with subsequent coronary stenting. His most recent HbA1c is 9.1% with an eGFR of 64 mL/min despite metformin at the maximum tolerated dose. He previously trialed the preferred formulary sulfonylurea (glipizide), stopped because of recurrent symptomatic hypoglycemia, and a DPP-4 inhibitor (sitagliptin) that produced inadequate glycemic improvement. His endocrinologist prescribed dulaglutide specifically for glycemic control and cardiovascular risk reduction, since GLP-1 receptor agonists with proven cardiovascular benefit are recommended in the ADA Standards of Care for patients with type 2 diabetes and established ASCVD. The drug is being used to treat his diabetes and cardiovascular risk, not for weight loss, so its placement in an excluded weight-management benefit category is a miscategorization. The plan's claim that no preferred agent was tried is contradicted by the documented failure of glipizide and sitagliptin. The denial notice also omits any statement of the member's right to independent external review of this decision.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-160530-02952",
+    "generated_at": "2026-06-05T16:05:31Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "56-70",
+      "patient_gender": "M",
+      "specialty": "endocrine",
+      "sub_tactic": "formulary_tier_dispute"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (UHC, Prior Authorization, endocrine, 56-70, M, formulary_tier_dispute); dx T2DM+ASCVD is endocrine; dulaglutide realistic; denial_rationale_seed describes formulary_tier_dispute (non-preferred, try preferred lower-tier); age 62 in band; not 71+ so null employer_archetype fine.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "UHC routinely places GLP-1 RAs non-preferred and self-funded plans invoke weight-management exclusions; the no-trial-of-preferred premise is rebutted by documented glipizide/sitagliptin failures; the weight-management miscategorization and omitted ACA external-review notice are authentic exploitable gaps; clinically coherent (62M, prior MI, HbA1c 9.1%, GLP-1 with CV benefit guideline-recommended).",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correctly branded 'United'/'UnitedHealthcare Pharmacy Services' with no wrong-insurer tells (no MCG/InterQual), but uses generic pharmacy-benefit boilerplate rather than UHC's signature 'UnitedHealthcare Medical Management Guidelines'/'Optum' and 'documentation does not support' cadence. Plausible but not a textbook UHC fingerprint.",
+        "improvement": "Could cite UnitedHealthcare Medical Management Guidelines/Optum and the 'documentation does not support' framing to lock in the house voice; accepted as-is (passes, no wrong-insurer tells)."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Formulary rationale is authentically shoddy (non-preferred, demands a documented trial of an unnamed preferred agent without tiers/duration); the weight-management benefit-category exclusion is a real, hand-wavy maneuver; neither guideline hallucinated; circular/vague with clear appeal openings.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Correct drug-class pairings (glipizide=sulfonylurea, sitagliptin=DPP-4, dulaglutide=GLP-1); sulfonylurea hypoglycemia and modest DPP-4 effect are accurate; HbA1c 9.1% and eGFR 64 cohere (metformin appropriate); anterior MI 2023 with stenting and GLP-1 CV benefit (REWIND/ADA) are current; no invented drugs or impossible courses.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Dulaglutide is a GLP-1 RA indicated for glycemic control in T2DM and FDA-labeled to reduce MACE in T2DM with established CVD; both elements of the diagnosis map to guideline-endorsed uses; exact match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Shares ICD code E11.9 with the Cigna tirzepatide neighbour and the GLP-1/incretin class with that case and the semaglutide obesity case; but differentiated by unique denial reason (formulary_tier_dispute), payer (UHC), request type (PA), specific drug (dulaglutide), and ASCVD clinical driver. Related-but-distinct middle band, not a near-duplicate (statistical near-dup gate is the hard check).",
+        "improvement": "Could shift dx off E11.9 or to a non-incretin agent to further separate from the two GLP-1/incretin neighbours; accepted as distinct on payer/denial-reason/drug/trajectory."
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['missing_iro_notice', 'wrong_benefit_category']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['missing_iro_notice', 'wrong_benefit_category']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.079 (nearest=case_182_uhc_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Adult 62M T2DM/ASCVD formulary appeal; only history is a 2023 MI; no SI/self-harm/child abuse/IPV/EOL/minor-gender care; commercial UnitedHealthcare prescription benefit, no Medicare/Medicaid. No banned topics.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Gender (62M), dx (T2DM+ASCVD E11.9), and requested dulaglutide agree across profile, letter, and context; the two denial bases (non-preferred tier, weight-management exclusion) are distinct and non-contradicting; the false 'no preferred agent tried' vs documented glipizide/sitagliptin failures is the allowed appealable falsehood; timeline coherent; no fact instability.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Formal bureaucratic PA-denial boilerplate and dense clinical recitation; no 'As an AI' tics, GPT vocabulary, listicles, or marketing filler; nothing at the >=0.7 conspicuous-tell bar.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural United register, denied without apology/marketing, standard appeal boilerplate; clinical context neutral narrative with only mild analytic advocacy ('is a miscategorization'), not emotional pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "No member out-of-pocket figure or dollar liability; tier/benefit-category language is coverage framing, not cost liability; only 'at no charge' for records access; silence on cost is standard; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Commercial framing only, no invented statutes; 180-day internal appeal present with instructions deferred to plan documents; omits independent external review (the intended realistic procedural-omission flaw, an attack vector not a defect); no Medicare misapplication.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "62M with T2DM and established ASCVD (prior anterior MI with stenting) is epidemiologically apt; consistent male pronouns; purely clinical prescribing rationale; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "UHC in-scope, Prior Authorization, self_funded employer-sponsored commercial (no Medicare/Medicaid/TRICARE/VA/marketplace), adult 62, member-facing written appeal/peer-to-peer only, no live-filing/attorney/court language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Request May 20, 2026; 180-day appeal window sensible; 2023 MI with stenting precedes the request; coherent chronological stack; no impossible durations or vague hedges.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Relies on generic un-named references (plan formulary, prescription benefit, weight-management benefit category, plan documents) with no bulletin/edition/page and no fabricated alphanumeric; offers the specific criteria on request. Realistic frustrating vagueness.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Denial's no-trial-of-preferred claim is contradicted by documented glipizide (hypoglycemia) and sitagliptin (inadequate) failures; weight-management exclusion is a miscategorization (drug for glycemic/CV indication, not weight loss); ADA Standards recommend GLP-1 with CV benefit for T2DM+ASCVD which the patient has; notice omits the external-review right. Substantive grounds collapse; easy appeal.",
+        "exploitable_weaknesses": [
+          "Factual error: denial claims no preferred agent was trialed, but glipizide (failed for hypoglycemia) and sitagliptin (inadequate control) are documented",
+          "Miscategorization: drug placed in excluded weight-management benefit though prescribed for glycemic control and CV risk reduction, not weight loss",
+          "Clinical guideline ignored: ADA Standards of Care recommend GLP-1 RAs with proven CV benefit for T2DM with established ASCVD, which patient clearly has",
+          "Procedural omission: notice fails to state the member's right to independent external review"
+        ],
+        "strong_defenses": [
+          "Denial preserves a 180-day appeal window and offers a peer-to-peer discussion and copy of the claim file/criteria"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / endocrine / sub_tactic=formulary_tier_dispute. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Denial's no-trial-of-preferred claim is contradicted by documented glipizide (hypoglycemia) and sitagliptin (inadequate) failures; weight-management exclusion is a miscategorization (drug for glycemic/CV indication, not weight loss); ADA Standards recommend GLP-1 with CV benefit for T2DM+ASCVD which the patient has; notice omits the external-review right. Substantive grounds collapse; easy appeal.",
+      "exploitable_weaknesses": [
+        "Factual error: denial claims no preferred agent was trialed, but glipizide (failed for hypoglycemia) and sitagliptin (inadequate control) are documented",
+        "Miscategorization: drug placed in excluded weight-management benefit though prescribed for glycemic control and CV risk reduction, not weight loss",
+        "Clinical guideline ignored: ADA Standards of Care recommend GLP-1 RAs with proven CV benefit for T2DM with established ASCVD, which patient clearly has",
+        "Procedural omission: notice fails to state the member's right to independent external review",
+        "Pattern anchor: missing_iro_notice",
+        "Pattern anchor: wrong_benefit_category"
+      ],
+      "strong_defenses": [
+        "Denial preserves a 180-day appeal window and offers a peer-to-peer discussion and copy of the claim file/criteria"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "missing_iro_notice",
+        "wrong_benefit_category"
+      ],
+      "deterministic_present": [
+        "missing_iro_notice",
+        "wrong_benefit_category"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

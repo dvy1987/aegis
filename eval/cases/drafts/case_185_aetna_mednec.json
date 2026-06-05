@@ -1,0 +1,317 @@
+{
+  "case_id": "case_185_aetna_mednec",
+  "insurer": "Aetna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 48,
+    "gender": "M",
+    "diagnosis": "Heterozygous familial hypercholesterolemia (E78.01)",
+    "treatment_requested": "Continuation of inclisiran (Leqvio)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "experimental_despite_fda_approval: ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis",
+    "algo_reviewer_no_credentials: ERISA 29 U.S.C. \u00a7 1133; MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Hansens v. Cigna (D. Conn. 2023)"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic cardiology case (duration excessive)."
+    },
+    {
+      "ref_id": "aetna-denial-codes-muni",
+      "title": "How to Appeal Aetna Denials \u2014 denial codes B7/CO-96 (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-aetna-denials-2025",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna denial code medical necessity appeal letter. Calibrated to this synthetic cardiology case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic cardiology case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic cardiology case (duration excessive)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic cardiology case (duration excessive)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic cardiology case (duration excessive)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "wa-oic-mednec-templates",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Calibrated P2 letter surface: Insurer cites internal medical policies with criteria member must meet."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nAetna has completed its review of the request your provider submitted on May 12, 2026 for continuation of inclisiran (Leqvio) to treat heterozygous familial hypercholesterolemia (E78.01). Following review against the applicable Aetna Clinical Policy Bulletin (CPB) and InterQual criteria, we have denied this request as not medically necessary at this time.\n\nThe previously authorized course of inclisiran (Leqvio) has reached the treatment duration permitted under the plan. Continuation beyond that duration requires a fresh clinical review supported by updated documentation, including a current lipid panel and a statement of continued medical need. Because the documentation required to support continuation was not received, the requested extension of therapy exceeds the plan's approved duration. Under the coverage policy applied to this review, the agent is moreover considered experimental or investigational for the submitted indication.\n\nThis determination was made by our reviewing physician, Dr. R. Mason. You or your provider may request, at no charge, a copy of the claim file and the specific clinical criteria relied upon. Your provider may also request a peer-to-peer discussion to review this decision.\n\nYou have the right to appeal this decision. A written appeal may be submitted within 180 days of the date of this notice, and you may include the updated clinical documentation in support of continued therapy. Please refer to your plan documents for instructions on where to submit your appeal.\n\nSincerely,\nAetna Clinical Review Unit",
+  "clinical_context": "The member is a 48-year-old man with heterozygous familial hypercholesterolemia whose LDL cholesterol was 196 mg/dL despite maximally tolerated high-intensity rosuvastatin 40 mg and ezetimibe. Inclisiran was added as adjunctive LDL-lowering therapy, after which his LDL fell to 84 mg/dL, and his treating cardiologist continued it to maintain goal given his elevated ASCVD risk and a family history of premature coronary disease (father with myocardial infarction at 46). With the continuation request, the practice submitted an updated lipid panel dated April 2026 and a letter of continued medical necessity, directly contradicting the denial's statement that updated documentation was not received. Inclisiran received FDA approval in 2021 as an adjunct to diet and maximally tolerated statin therapy for LDL lowering in heterozygous familial hypercholesterolemia and is endorsed in current ACC/AHA lipid-management guidance, contradicting the experimental or investigational characterization. The denial identifies a reviewing physician by name but provides no specialty, credentials, or license number, so the reviewer's qualifications to assess this lipid-specialty decision cannot be verified.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-150641-0376c",
+    "generated_at": "2026-06-05T15:06:41Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "cardiology",
+      "sub_tactic": "duration_excessive"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "matrix_cell matches field-for-field (Aetna, Medical Necessity, cardiology, 41-55, M, duration_excessive); dx HeFH and inclisiran continuation fit cardiology/lipid management; denial_rationale_seed leads with the duration premise; age 48 in band; not 71+ so null employer_archetype fine; experimental prong secondary, does not displace the duration tactic.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Inclisiran is a high-cost siRNA insurers gate aggressively; 48M HeFH with LDL 196 on max statin+ezetimibe is textbook; continuation-denial boilerplate (duration reached, docs not received) is real; stale experimental label and uncredentialed reviewer are authentic exploitable gaps. Stacking two grounds is slightly busy but realistic.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Hits both canonical Aetna tells \u2014 Aetna Clinical Policy Bulletin (CPB) and InterQual criteria \u2014 with cool procedural cadence and 'Aetna Clinical Review Unit' sign-off; no Cigna/UHC cross-tells. Credible Aetna letter.",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.75,
+        "reasoning": "Targets duration_excessive with authentic shoddiness: never specifies the actual duration cap, conflates a duration limit with a documentation gap (circular/exploitable); cites plausible CPB/InterQual, no hallucinated guideline; the tacked-on experimental line adds vagueness rather than airtightness.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "HeFH correctly coded; rosuvastatin 40 mg is true max high-intensity dose; ezetimibe standard add-on; inclisiran is a real PCSK9-pathway siRNA with accurate 2021 FDA timing; LDL 196 to 84 trajectory realistic; father MI at 46 consistent with premature CAD/FH; no invented drugs or impossible courses.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Inclisiran is FDA-approved as an adjunct to statin for LDL lowering in HeFH and is guideline-listed; HeFH is an explicit labeled indication; unambiguous match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.7,
+        "reasoning": "Most neighbours are procedural/device cardiology cases; the only lipid-adjacent neighbour (UHC FH/evolocumab, not_evidence_based) differs in drug mechanism (siRNA inclisiran vs mAb evolocumab), payer, denial reason, and posture (continuation vs initiation). Shared dx code only; multi-axis deltas, not a near-duplicate.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['experimental_despite_fda_approval']; needs_llm=['algo_reviewer_no_credentials']; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['experimental_despite_fda_approval']; needs_llm=['algo_reviewer_no_credentials']; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.11 (nearest=case_183_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Adult 48M lipid-management coverage dispute; only family detail (father MI at 46) is benign; no SI/self-harm/child abuse/IPV/EOL/minor-gender care; Aetna commercial plan, no Medicare/Medicaid framing. No banned topics.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Age (48M), dx (HeFH E78.01), and requested inclisiran continuation agree across letter and context; request May 12, 2026 and April 2026 lipid panel align; the denial's 'documentation not received' and 'experimental' claims are the allowed appealable denial falsehoods the context rebuts; letter internally consistent; no drug/date/laterality mismatch.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Formal bureaucratic insurer boilerplate and dense clinical recitation; no 'As an AI' tics, GPT vocabulary, listicles, or marketing filler; the slightly awkward 'moreover considered experimental' is bureaucratic phrasing, not a conspicuous tell; nothing at the >=0.7 bar.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural Aetna register, denied as not medically necessary, realistic bureaucratic obfuscation, impersonal 'Aetna Clinical Review Unit' close, no apology/marketing; clinical context plain factual, flags contradictions without emotional pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No member out-of-pocket figure or dollar estimate; 'at no charge' refers to records access, not drug cost; silence on cost liability is standard practice; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cites real commercial references (CPB, InterQual), no invented statutes; 180-day appeal present; grants claim-file/criteria access; omits external/IRO review and explicit ERISA naming (realistic attack vectors, not defects); no Medicare misapplication.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "48M with HeFH (autosomal dominant, both sexes; presents young adulthood) and premature-CAD family history is textbook; consistent male pronouns; clinical, neutral framing with no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Aetna in-scope, Medical Necessity, self_funded employer-sponsored commercial (no Medicare/Medicaid/TRICARE/VA/marketplace), adult 48, member-facing written appeal/peer-to-peer only, no live-filing/attorney/court language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Dates in 2021/2025-2026 and mutually consistent; request May 12, 2026 with an April 2026 lipid panel preceding it; 180-day appeal window standard; FDA 2021 a correctly-ordered anchor; no inversion or impossible duration.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "References 'Aetna Clinical Policy Bulletin (CPB)' and 'InterQual criteria' generically (correct owners), no edition/module/page, no fabricated alphanumeric; 'the specific clinical criteria relied upon' keeps criteria opaque. Realistic frustrating vagueness.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Denial asserts documentation 'not received' but the practice submitted an April 2026 lipid panel + letter of continued necessity (direct contradiction gutting the procedural basis); labels inclisiran experimental despite 2021 FDA approval and ACC/AHA endorsement; patient meets standard of care (LDL 196 to 84, high ASCVD risk, premature-CAD family history); reviewer lacks specialty/credentials. Procedurally clean but overwhelmingly easy appeal.",
+        "exploitable_weaknesses": [
+          "Denial asserts updated documentation 'was not received' but the practice submitted an April 2026 lipid panel and letter of continued medical necessity, a direct factual contradiction",
+          "Drug labeled 'experimental or investigational' despite 2021 FDA approval for HeFH and ACC/AHA endorsement",
+          "Patient demonstrably meets standard of care (LDL 196 to 84 on therapy, high ASCVD risk, premature-CAD family history) which the denial ignored",
+          "Reviewing physician given no specialty, credentials, or license number, so qualifications to make a lipid-specialty determination are unverifiable"
+        ],
+        "strong_defenses": [
+          "Procedural rights are intact: 180-day appeal window, offer of claim file and clinical criteria, and peer-to-peer option are all disclosed"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Medical Necessity / cardiology / sub_tactic=duration_excessive. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Denial asserts documentation 'not received' but the practice submitted an April 2026 lipid panel + letter of continued necessity (direct contradiction gutting the procedural basis); labels inclisiran experimental despite 2021 FDA approval and ACC/AHA endorsement; patient meets standard of care (LDL 196 to 84, high ASCVD risk, premature-CAD family history); reviewer lacks specialty/credentials. Procedurally clean but overwhelmingly easy appeal.",
+      "exploitable_weaknesses": [
+        "Denial asserts updated documentation 'was not received' but the practice submitted an April 2026 lipid panel and letter of continued medical necessity, a direct factual contradiction",
+        "Drug labeled 'experimental or investigational' despite 2021 FDA approval for HeFH and ACC/AHA endorsement",
+        "Patient demonstrably meets standard of care (LDL 196 to 84 on therapy, high ASCVD risk, premature-CAD family history) which the denial ignored",
+        "Reviewing physician given no specialty, credentials, or license number, so qualifications to make a lipid-specialty determination are unverifiable",
+        "Pattern anchor: experimental_despite_fda_approval",
+        "Pattern anchor: algo_reviewer_no_credentials"
+      ],
+      "strong_defenses": [
+        "Procedural rights are intact: 180-day appeal window, offer of claim file and clinical criteria, and peer-to-peer option are all disclosed"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "experimental_despite_fda_approval",
+        "algo_reviewer_no_credentials"
+      ],
+      "deterministic_present": [
+        "experimental_despite_fda_approval"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

@@ -1,0 +1,316 @@
+{
+  "case_id": "case_181_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 31,
+    "gender": "F",
+    "diagnosis": "Type 1 diabetes mellitus with hypoglycemia unawareness (E10.649)",
+    "treatment_requested": "Automated insulin delivery system (hybrid closed-loop insulin pump with predictive low-glucose suspend)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "contraindication_to_step_therapy: AMA 2023 Prior Authorization Physician Survey; State step-therapy exception laws (NY, TX, IL)",
+    "missing_cost_liability: No Surprises Act Compliance Audit 2024"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic endocrine case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic endocrine case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic endocrine case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic endocrine case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic endocrine case (level of care too high)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic endocrine case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nWe have completed our review of the request your provider submitted on April 14, 2026 for an automated insulin delivery system (hybrid closed-loop insulin pump with predictive low-glucose suspend) to treat Type 1 diabetes mellitus with hypoglycemia unawareness (E10.649). Applying the Cigna Medical Necessity Guidelines and our Medical Coverage Policy for external insulin infusion devices, we have denied this request as not medically necessary at this time.\n\nThat policy treats an automated, closed-loop pump as a higher level of care appropriate only after lower-intensity outpatient management has been optimized and exhausted. The reviewing clinician found that the documentation does not establish that an optimized multiple daily injection (MDI) regimen with structured insulin titration has been fully attempted. Members are ordinarily expected to first reach glycemic stability through intensified outpatient MDI therapy before a closed-loop device is authorized. Because the records do not show that this lower level of care has been exhausted, the requested device is considered to exceed what is presently required to manage your condition.\n\nThis determination reflects the medical necessity criteria in effect on the date of review and the records we received. You or your provider may request, at no charge, a copy of the claim file and the specific clinical criteria relied upon. Your treating provider may also request a peer-to-peer discussion with a Cigna medical director.\n\nYou have the right to appeal. A written appeal may be submitted within 180 days of the date of this letter, and you may attach additional clinical documentation, including records of prior therapies attempted and their outcomes. Please consult your plan materials for instructions on where to send your appeal.\n\nSincerely,\nCigna Medical Necessity Review",
+  "clinical_context": "The member is a 31-year-old woman who has lived with Type 1 diabetes since adolescence and has spent the past 16 months on an optimized basal-bolus multiple daily injection regimen (insulin degludec at night plus mealtime insulin aspart with carbohydrate counting) paired with continuous glucose monitoring. Despite structured titration across several endocrinology visits through 2025 and into early 2026, her HbA1c remains 8.9%, her CGM time-in-range sits at only 48% with 6% of time below range, and she has a marked dawn phenomenon. Her chart documents hypoglycemia unawareness (Gold score 5) and a severe nocturnal event with a fingerstick of 38 mg/dL that required a family member's assistance to treat. Her endocrinologist explicitly records that further intensification of injected insulin is contraindicated given the hypoglycemia unawareness, because it raises the risk of recurrent severe hypoglycemia, and that an automated insulin delivery system with predictive low-glucose suspend is the indicated next step for exactly that reason. The insurer's 'lower level of care not yet exhausted' premise is thus contradicted by more than a year of optimized MDI management and by a documented contraindication to escalating the very therapy it demands she try first.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-144638-e2228",
+    "generated_at": "2026-06-05T14:46:38Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "26-40",
+      "patient_gender": "F",
+      "specialty": "endocrine",
+      "sub_tactic": "level_of_care_too_high"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (Cigna, Medical Necessity, endocrine, 26-40, F, level_of_care_too_high); dx E10.649 is endocrine; AID device realistic for T1DM; denial_rationale_seed describes level_of_care_too_high precisely; age 31 in band; not 71+ so null employer_archetype fine.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cigna level-of-care denial requiring exhaustion of optimized MDI before AID mirrors real payer step logic; exploitable gap is the ignored hypoglycemia unawareness with a 38 mg/dL nocturnal event where MDI intensification is contraindicated; internally coherent and current.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Names Cigna Medical Necessity Guidelines + Medical Coverage Policy; signature conservative-treatment-first cadence; Cigna medical director peer-to-peer; 180-day window; no Aetna/UHC cross-tells. MCG omission acceptable (behavioral-health-specific).",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites vaguely-named Cigna guidelines; matches level_of_care_too_high (lower-intensity MDI must be exhausted before higher-intensity pump); appropriately circular and threshold-free ('exceed what is presently required'); no hallucinated guideline; authentically exploitable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Real agents/modalities (degludec + aspart, carb counting, CGM); consistent quantitative markers (HbA1c 8.9%, TIR 48%, TBR 6%, 38 mg/dL nocturnal); Gold score 5 correctly named; AID with predictive low-glucose suspend is guideline-concordant for hypoglycemia unawareness; no invented drugs or impossible timelines.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "AID hybrid closed-loop with predictive low-glucose suspend is FDA-approved and guideline-endorsed for T1DM, mechanistically aligned to the hypoglycemia-unawareness comorbidity; precise match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "level_of_care_too_high appears in no neighbour; AID closed-loop pump is a device class no neighbour shares; nearest neighbour (Aetna T2DM Dexcom CGM, modality_substitution) differs in diabetes type, device kind, denial reason, and payer; dx unique. Not a near-duplicate.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['contraindication_to_step_therapy', 'missing_cost_liability']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['contraindication_to_step_therapy', 'missing_cost_liability']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.048 (nearest=case_101_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "T1DM coverage dispute; severe nocturnal hypoglycemia is an accidental medical event, not self-harm; adult 31; no IPV/EOL/minor-gender care; Cigna commercial plan, no Medicare/Medicaid framing. No banned topics.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Age (31F), dx (E10.649), and requested AID agree across letter and context; denial's 'MDI not exhausted' vs context's 16 months optimized MDI is the allowed appealable denial-vs-fact tension, not a contradiction; timeline coherent; no laterality/drug mismatch.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Dense formal bureaucratic insurer prose and comma-spliced clinical recitation; no 'As an AI' tics, GPT vocabulary, listicles, or marketing filler; nothing at the >=0.7 conspicuous-tell bar.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural Cigna register with file-review framing, policy machinery, flat determination, no apology/marketing; effective bureaucratic vagueness; clinical context plain factual with only mild closing advocacy drift.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No member cost liability, out-of-pocket figure, or dollar estimate anywhere; only 'at no charge' refers to records access, not device cost; silence on cost liability is standard practice and is itself the intended discoverable omission; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites only Cigna policy/benefit terms (no invented statutes, no Medicare misapplication); discloses 180-day appeal, claim file, and peer-to-peer consistent with ERISA full-and-fair-review norms; omits external/independent review (a realistic attack vector, not a defect).",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "31F with long-standing T1D since adolescence and hypoglycemia unawareness is epidemiologically apt; condition not gender-skewed and sex plays no role in the rationale; consistent female pronouns; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cigna in-scope, Medical Necessity, fully_insured employer-sponsored commercial (no Medicare/Medicaid/TRICARE/VA/marketplace), adult 31, member-facing internal/written appeal only, no live-filing/attorney/court language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "All dates in 2025-2026 and stack consistently; request submitted April 14, 2026; 180-day appeal window realistic; concrete durations (16 months MDI, titration through 2025 into early 2026) precede the denial; no impossible or vague placeholders.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "References 'Cigna Medical Necessity Guidelines' and 'Medical Coverage Policy for external insulin infusion devices' \u2014 correct brand, generically-named, no edition/code/page and no fabricated alphanumeric; reinforced vagueness via 'may request... the specific clinical criteria relied upon'. Realistically frustrating vagueness.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Denial's core premise (lower level of care not exhausted) is contradicted by 16 months of documented optimized MDI; it demands intensified MDI that the endocrinologist documents as contraindicated for hypoglycemia unawareness (circular/unmeetable); objective failure documented (HbA1c 8.9%, TIR 48%, Gold 5, 38 mg/dL event). Procedural rights properly disclosed, but the clinical/factual appeal is overwhelming.",
+        "exploitable_weaknesses": [
+          "Denial's premise that optimized MDI/lower level of care was not exhausted is contradicted by 16 months of documented optimized basal-bolus MDI with CGM and structured titration",
+          "Denial demands intensified MDI as prerequisite, but the endocrinologist documents that further intensification is contraindicated due to hypoglycemia unawareness, making the required step unsafe and unmeetable",
+          "Objective evidence shows the demanded therapy already failed: HbA1c 8.9%, TIR 48%, 6% below range, Gold score 5, and a severe 38 mg/dL nocturnal event requiring assistance; AID threshold met and ignored"
+        ],
+        "strong_defenses": [
+          "A genuine lower-level-of-care-first guideline exists in Cigna's Medical Coverage Policy, and procedural rights (180-day window, claim file, peer-to-peer) are properly disclosed, leaving no easy procedural lever"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / endocrine / sub_tactic=level_of_care_too_high. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Denial's core premise (lower level of care not exhausted) is contradicted by 16 months of documented optimized MDI; it demands intensified MDI that the endocrinologist documents as contraindicated for hypoglycemia unawareness (circular/unmeetable); objective failure documented (HbA1c 8.9%, TIR 48%, Gold 5, 38 mg/dL event). Procedural rights properly disclosed, but the clinical/factual appeal is overwhelming.",
+      "exploitable_weaknesses": [
+        "Denial's premise that optimized MDI/lower level of care was not exhausted is contradicted by 16 months of documented optimized basal-bolus MDI with CGM and structured titration",
+        "Denial demands intensified MDI as prerequisite, but the endocrinologist documents that further intensification is contraindicated due to hypoglycemia unawareness, making the required step unsafe and unmeetable",
+        "Objective evidence shows the demanded therapy already failed: HbA1c 8.9%, TIR 48%, 6% below range, Gold score 5, and a severe 38 mg/dL nocturnal event requiring assistance; AID threshold met and ignored",
+        "Pattern anchor: contraindication_to_step_therapy",
+        "Pattern anchor: missing_cost_liability"
+      ],
+      "strong_defenses": [
+        "A genuine lower-level-of-care-first guideline exists in Cigna's Medical Coverage Policy, and procedural rights (180-day window, claim file, peer-to-peer) are properly disclosed, leaving no easy procedural lever"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "contraindication_to_step_therapy",
+        "missing_cost_liability"
+      ],
+      "deterministic_present": [
+        "contraindication_to_step_therapy",
+        "missing_cost_liability"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

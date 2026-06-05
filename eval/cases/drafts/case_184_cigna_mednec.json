@@ -1,0 +1,318 @@
+{
+  "case_id": "case_184_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 49,
+    "gender": "F",
+    "diagnosis": "Major depressive disorder, recurrent, severe without psychotic features (F33.2), treatment-resistant",
+    "treatment_requested": "Repetitive transcranial magnetic stimulation (rTMS)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "mhpaea_step_therapy_asymmetry: MHPAEA Final Rule 2024; DOL MHPAEA Self-Compliance Tool 2023",
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic behavioral health case (not evidence based)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic behavioral health case (not evidence based)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic behavioral health case (not evidence based)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic behavioral health case (not evidence based)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic behavioral health case (not evidence based)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic behavioral health case (not evidence based)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nWe have reviewed the recent request for behavioral health services submitted on your behalf. Following review under the applicable Cigna Medical Necessity Guidelines and our Medical Coverage Policy, we have determined that the request does not meet our criteria for coverage, and it is denied as not medically necessary.\n\nOur medical policy provides that the requested service is not considered evidence-based for the submitted indication, and the published clinical criteria do not support authorization of the requested service. In addition, our policy requires that a member first complete and document failure of the applicable course of step therapy before a service in this category is approved. The information available to us does not establish that these policy requirements have been satisfied.\n\nThis determination is based on our standard medical policy in effect on the date of review. You or your provider may request, at no charge, a copy of the claim file and the specific clinical criteria used to make this decision. Your treating provider may request a peer-to-peer discussion with a Cigna medical director.\n\nYou have the right to appeal this decision. A written appeal may be submitted within 180 days of the date of this notice, and you may submit additional information in support of the request. Please refer to your plan documents for instructions on where to submit your appeal.\n\nSincerely,\nCigna Medical Necessity Review",
+  "clinical_context": "The member is a 49-year-old woman with recurrent, treatment-resistant major depressive disorder dating to early 2024. She has documented inadequate response to five adequate antidepressant trials - sertraline 200 mg, venlafaxine XR 225 mg, bupropion XL 300 mg, escitalopram 20 mg, and aripiprazole augmentation - each at therapeutic dose for eight weeks or longer, alongside a course of cognitive behavioral therapy. Her two most recent PHQ-9 scores were 21 and 19. Her treating psychiatrist referred her for repetitive transcranial magnetic stimulation (rTMS), which is FDA-cleared and recommended in the American Psychiatric Association major-depression practice guideline specifically for treatment-resistant depression after multiple failed pharmacologic trials, directly contradicting the denial's not-evidence-based characterization. The submitted records document each medication, dose, duration, and outcome, none of which the denial letter acknowledges. The fail-first step-therapy requirement the insurer imposes on this behavioral health service has no analogous requirement for comparable medical or surgical procedures under the same plan, which the treating provider has flagged as a parity concern under mental health parity rules.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-150142-f74e8",
+    "generated_at": "2026-06-05T15:01:42Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "41-55",
+      "patient_gender": "F",
+      "specialty": "behavioral_health",
+      "sub_tactic": "not_evidence_based"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (Cigna, Medical Necessity, behavioral_health, 41-55, F, not_evidence_based); dx F33.2 is behavioral_health; rTMS realistic and FDA-cleared for treatment-resistant MDD; denial_rationale_seed describes not_evidence_based; age 49 in band; not 71+ so null employer_archetype fine.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "rTMS for treatment-resistant MDD is FDA-cleared and the canonical indication; Cigna 'not evidence-based'/criteria-not-met denials and BH fail-first step therapy are real; the boilerplate non-individualization (fails ERISA full-and-fair-review) and BH-only step therapy with no med/surg analog (MHPAEA NQTL on a self_funded ERISA plan) are textbook exploitable features.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.7,
+        "reasoning": "Cites Cigna Medical Necessity Guidelines + Medical Coverage Policy and invokes step therapy (a strong Cigna tell); Cigna medical director peer-to-peer; no Aetna/UHC cross-tells. MCG omission keeps it just short of a textbook fingerprint but the markers dominate.",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Targets not_evidence_based with authentic shoddiness: circular evidence-flavored language ('not evidence-based... criteria do not support') naming no RCT/threshold, plausible Cigna policy pointers (no hallucinated guideline), hand-waves that requirements weren't satisfied. Exploitable, far from airtight.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Real agents at genuine therapeutic doses (sertraline 200, venlafaxine XR 225, bupropion XL 300, escitalopram 20, aripiprazole augmentation), 8-week adequate-trial benchmark, PHQ-9 21/19 concordant with severe MDD; rTMS FDA-cleared/APA-endorsed for TRD; coherent trajectory; no invented drugs or impossible timelines.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "rTMS is FDA-cleared and guideline-endorsed neuromodulation for treatment-resistant MDD after failed antidepressant trials; correct clinical category, unambiguous match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.78,
+        "reasoning": "rTMS for treatment-resistant MDD diverges from the nearest neighbour (UHC TMS for OCD) on diagnosis, payer, review type, and denial reason; depression-adjacent neighbours use unrelated modalities (esketamine, lisdexamfetamine, PHP). Partial TMS-modality overlap only; not a near-duplicate.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['mhpaea_step_therapy_asymmetry', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['mhpaea_step_therapy_asymmetry', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.103 (nearest=case_183_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Treatment-resistant MDD with PHQ-9 severity but NO suicidal ideation/self-harm framing (depression severity alone is not banned); no child abuse/IPV/EOL/minor-gender care; Cigna commercial plan, no Medicare/Medicaid. No banned topics.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Age (49F), dx (treatment-resistant MDD), and requested rTMS agree across profile and context; the denial's 'not evidence-based' and unmet-step-therapy claims are the allowed appealable denial-vs-fact tension (record shows five trials + FDA-clearance); generic letter introduces no contradicting specifics; timeline coherent; no drug/date/laterality mismatch.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.88,
+        "reasoning": "Standard insurer boilerplate and dense clinical recitation; medication enumeration within prose is clinically normal, not a listicle; no 'As an AI' tics, GPT vocabulary, or marketing filler; nothing at the >=0.7 conspicuous-tell bar.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural Cigna register, denied as not medically necessary, realistically opaque/vague, no apology/marketing; clinical context plain factual with only mild advocacy drift framed as record/provider attributions.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No member out-of-pocket figure or dollar estimate; 'at no charge' refers to records access, not treatment cost; silence on cost liability is standard practice; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites only internal policy (no invented statutes); 180-day appeal present but mechanics deferred to plan documents; omits external/IRO review (realistic attack vector, not a defect); no Medicare misapplication to this commercial self-funded plan.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "49F with treatment-resistant recurrent MDD is epidemiologically apt (MDD more prevalent in women; rTMS standard for this population); consistent female pronouns; grounded in trials/PHQ-9, no gendered stereotype.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Cigna in-scope, Medical Necessity, self_funded employer-sponsored commercial (no Medicare/Medicaid/TRICARE/VA/marketplace), adult 49, member-facing written appeal only, no live-filing/attorney/court language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No internal date contradiction; 180-day window numerically correct; the letter is deliberately date-sparse (part of the case-blind boilerplate flaw) and clinical history anchors to early 2024 with 8-week+ trials that stack plausibly before a 2026 review. Middle anchor due to vagueness, not error.",
+        "improvement": "Letter is intentionally date-sparse to render the algo_boilerplate_fingerprint flaw; explicit dates withheld by design."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "References 'Cigna Medical Necessity Guidelines' and 'Medical Coverage Policy' \u2014 correct owner, no module/edition/page, no fabricated alphanumeric; generic 'standard medical policy' is realistically vague and frustrating, exactly what the dimension rewards.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Denial labels rTMS not-evidence-based while it is FDA-cleared and APA-guideline-recommended for TRD; fail-first step therapy contradicted by five documented adequate trials + CBT the letter never acknowledges; circular/vague unnamed-criteria reasoning; BH-only step therapy with no med/surg analog is an MHPAEA NQTL parity violation. Procedurally clean but overwhelmingly easy appeal.",
+        "exploitable_weaknesses": [
+          "Denial calls rTMS 'not considered evidence-based' while it is FDA-cleared and APA-guideline-recommended for treatment-resistant depression",
+          "Step-therapy fail-first denial contradicted by documented failure of five adequate antidepressant trials plus CBT the letter never acknowledges",
+          "Circular/vague reasoning citing unnamed 'published clinical criteria' never applied to the record (case-blind boilerplate failing ERISA full-and-fair review)",
+          "MHPAEA parity violation: fail-first requirement has no analogue for comparable medical/surgical procedures under the same plan"
+        ],
+        "strong_defenses": [
+          "Procedural disclosures intact: 180-day appeal window, peer-to-peer offer, and free access to the claim file and specific clinical criteria"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / behavioral_health / sub_tactic=not_evidence_based. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Denial labels rTMS not-evidence-based while it is FDA-cleared and APA-guideline-recommended for TRD; fail-first step therapy contradicted by five documented adequate trials + CBT the letter never acknowledges; circular/vague unnamed-criteria reasoning; BH-only step therapy with no med/surg analog is an MHPAEA NQTL parity violation. Procedurally clean but overwhelmingly easy appeal.",
+      "exploitable_weaknesses": [
+        "Denial calls rTMS 'not considered evidence-based' while it is FDA-cleared and APA-guideline-recommended for treatment-resistant depression",
+        "Step-therapy fail-first denial contradicted by documented failure of five adequate antidepressant trials plus CBT the letter never acknowledges",
+        "Circular/vague reasoning citing unnamed 'published clinical criteria' never applied to the record (case-blind boilerplate failing ERISA full-and-fair review)",
+        "MHPAEA parity violation: fail-first requirement has no analogue for comparable medical/surgical procedures under the same plan",
+        "Pattern anchor: mhpaea_step_therapy_asymmetry",
+        "Pattern anchor: algo_boilerplate_fingerprint"
+      ],
+      "strong_defenses": [
+        "Procedural disclosures intact: 180-day appeal window, peer-to-peer offer, and free access to the claim file and specific clinical criteria"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "mhpaea_step_therapy_asymmetry",
+        "algo_boilerplate_fingerprint"
+      ],
+      "deterministic_present": [
+        "mhpaea_step_therapy_asymmetry",
+        "algo_boilerplate_fingerprint"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}
