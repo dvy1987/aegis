@@ -28,6 +28,7 @@ Quick navigation for agents picking up this project.
 | Date | Session | Handoff file |
 |---|---|---|
 | 2026-06-03 | Session (Cloud library + Vertex index live) | [agent-handoffs.md](agent-handoffs.md#2026-06-03--session-end-handoff-cursor--cloud-library-built--vertex-index-live) |
+| 2026-06-05 | Session (Codex — live showcase planning drafts) | [agent-handoffs.md](agent-handoffs.md#2026-06-05-2054---handoff-codex--live-showcase-planning-drafts) |
 | 2026-06-02 | Session (Gumloop prompt-pass cases 01–500) | [agent-handoffs.md](agent-handoffs.md#2026-06-02-1759--session-end-handoff-cursor--gumloop-prompt-pass-on-drafts-cases-01500) |
 | 2026-06-02 | Session (Nav connected dot + v1 model/location consistency) | [agent-handoffs.md](agent-handoffs.md#2026-06-02-1641--session-end-handoff-cursor--nav-connected-green-dot--v1-modellocation-consistency) |
 | 2026-06-02 | Session (cloud-only library + explicit discovery error) | [agent-handoffs.md](agent-handoffs.md#2026-06-02-1310--session-end-handoff-cursor--cloud-only-library--explicit-discovery-error-no-silent-toggles) |

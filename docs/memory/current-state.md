@@ -1,7 +1,15 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-05 (Tier 1 Phoenix live wiring done; frontend deploy pending)
-**Phase:** **Execution — Phoenix learning loop now live; v1 backend deployed; frontend deploy blocked on pnpm fix.**
+**Updated:** 2026-06-05 (Tier 1 Phoenix live wiring done; live showcase learning UX planning in progress)
+**Phase:** **Execution — Phoenix learning loop now live; v1/backend/frontend deployed; live showcase HITL learning workflow under design.**
+
+### 2026-06-05 - Live showcase learning UX working drafts
+- Added two working draft plans, not approved implementation specs:
+  - `docs/specs/2026-06-05-live-showcase-learning-ux-plan.md`
+  - `docs/specs/2026-06-05-v1-demo-benchmark-split-plan.md`
+- Current shared direction: `/showcase` should support a live HITL learning workflow with pre-test and post-test stages that use no Phoenix, no judges, and no learning annotations; training is the only stage that can use Phoenix/judges.
+- Benchmark split planning is deliberately separate from UX/backend planning: first 100 draft cases only, 20 held-out test cases in 4 sets, 80 training cases in 8 sets, no overlap.
+- Open questions remain in both draft docs and should be resolved before implementation.
 
 ### ✅ phoenix_mcp_lookup NO LONGER COLD_START
 - Returns `status='available'` with real `failure_patterns` and `success_traits` when traces exist for the slice.

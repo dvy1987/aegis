@@ -2171,3 +2171,41 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 ### Working Tree
 - Dirty: `frontend/Dockerfile` (pnpm@10 fix, uncommitted), `backend/app/case_generator/harness_io.py` (unrelated)
 - 4 commits pushed to `origin/main`: Phases A+B, C, D, E
+
+## 2026-06-05 20:54 - Handoff (Codex — live showcase planning drafts)
+
+### Done
+- Wrote two working draft planning docs:
+  - `docs/specs/2026-06-05-live-showcase-learning-ux-plan.md`
+  - `docs/specs/2026-06-05-v1-demo-benchmark-split-plan.md`
+- Logged the brainstorming output in `docs/skill-outputs/SKILL-OUTPUTS.md`.
+- Updated `docs/memory/current-state.md` with the new planning state.
+
+### Debated
+- PM wants `/showcase` to become a demo-friendly live HITL learning workflow, not just recorded artifacts.
+- Pre-test and post-test should have no Phoenix at all: no reads, no writes, no judges, no learning annotations.
+- Training is a separate stage and can use the v1 LearningCoordinator, Phoenix, and judges.
+- The benchmark split is separate work: 20 held-out test cases and 80 training cases from the first 100 draft cases.
+
+### Decisions
+- Review-and-approve is required before promotion; post-test measures the promoted update.
+- Updates may include both drafter writing approach and slice-specific learned playbook rules.
+- UX language should stay non-technical: "held-out letters", "training letters", "writing approach", "learned rules".
+
+### Deferred
+- Final benchmark split selection and manifest.
+- Backend job ledger/interface details for cancellable showcase sessions.
+- Exact UX treatment for raw prompt/playbook visibility and evolution timeline.
+
+### Next Agent Should Know
+- The two new docs are working drafts only and are expected to change as PM discussion continues.
+- Do not implement from these docs until the PM explicitly reviews/approves the final plan.
+- Existing untracked draft cases `case_181` through `case_185` were present before this documentation work and were not touched.
+
+### Revisit Triggers
+- PM resolves open questions in either draft plan.
+- PM switches out of planning again and asks to update the docs after further discussion.
+
+### Working Tree
+- Documentation changes from this session should be committed separately.
+- Pre-existing untracked generated cases remain: `eval/cases/drafts/case_181_cigna_mednec.json` through `case_185_aetna_mednec.json`.
