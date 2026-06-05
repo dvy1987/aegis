@@ -1,0 +1,316 @@
+{
+  "case_id": "case_150_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 34,
+    "gender": "M",
+    "diagnosis": "Status post arthroscopic partial medial meniscectomy, right knee (M23.205 / Z47.89)",
+    "treatment_requested": "Continued post-operative outpatient physical therapy (additional visits beyond the annual cap)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "wrong_benefit_category: CMS Essential Health Benefits Bulletin 2022; documented in Aetna member complaints"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic msk case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic msk case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic msk case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic msk case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic msk case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "ERISA Claims Procedure \u2014 adverse benefit determination content (29 CFR \u00a7 2560.503-1)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Specific reasons for denial."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nAetna has reviewed the prior authorization request for the requested service. After review, the request is denied and the requested service is not approved.\n\nThe annual visit limit for outpatient therapy services under this plan has been reached for the current plan year. Additional visits beyond the annual maximum are not a covered benefit this plan year. In addition, the requested service is classified under the habilitative services benefit category, which is excluded from coverage under the terms of this plan.\n\nCoverage of outpatient therapy services is subject to the annual visit maximum and the benefit categories defined in your plan documents, regardless of the provider or setting in which the services are delivered.\n\nThis determination applies the plan's standard criteria to all requests of this type and does not reflect any review of the member's diagnosis or individual clinical records. No additional case-specific findings were made.\n\nIf you disagree with this determination, you may file an internal appeal by contacting the number on your member identification card within the timeframe stated in your plan documents. You may submit additional information with that request.\n\nThis determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nAetna Utilization Management",
+  "clinical_context": "The patient is a 34-year-old man who underwent arthroscopic partial medial meniscectomy of the right knee eight weeks ago and was referred for a continued course of post-operative physical therapy to restore quadriceps strength, range of motion, and gait mechanics that were lost after the injury and surgery. Because this therapy restores function the patient previously had, it is rehabilitative care, not habilitative care, which develops new functional skills a patient never acquired; the denial's classification of the therapy under the habilitative services benefit category is therefore incorrect. His orthopedic surgeon documented persistent quadriceps weakness, a 15-degree extension lag, and an antalgic gait, and recommended additional supervised physical therapy beyond the plan's annual visit cap to complete the recovery. The denial letter contains no reference to his diagnosis, his surgeon, the operative report, or any of the submitted progress notes, and states that it does not reflect any review of the individual records. The operative report and the physical therapy progress notes were submitted with the prior authorization request.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-013838-9026b",
+    "generated_at": "2026-06-05T01:38:39Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "26-40",
+      "patient_gender": "M",
+      "specialty": "msk",
+      "sub_tactic": "visit_limit_exceeded"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field; post-meniscectomy knee is msk; continued post-op PT realistic; visit_limit_exceeded is the primary rationale; age 34 M in 26-40.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Aetna denying continued post-op PT on an annual visit cap is a common commercial dispute; boilerplate no-individual-review letter and rehabilitative-miscoded-as-habilitative are realistic exploitable defects.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.78,
+        "reasoning": "Correct Aetna branding and cool procedural cadence, no wrong-insurer tells, but no named Aetna CPB/InterQual fingerprint (intentionally generic for the boilerplate flaw).",
+        "improvement": "Cite an Aetna Clinical Policy Bulletin or InterQual criteria."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy visit_limit_exceeded: no numeric cap or visit tally, defers to plan documents, admits no individual review, overlapping habilitative exclusion; exploitable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "34M eight weeks post partial medial meniscectomy with quad weakness, 15-degree extension lag, antalgic gait is coherent; continued rehab PT appropriate; no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Post-operative physical therapy is standard rehabilitation after arthroscopic meniscectomy; exact match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Aetna PA visit_limit_exceeded with post-meniscectomy PT is a unique payer+flaw+dx+tx point; closest neighbour is a different payer/axis/dx PT continuation.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['algo_boilerplate_fingerprint', 'wrong_benefit_category']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['algo_boilerplate_fingerprint', 'wrong_benefit_category']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.096 (nearest=case_143_uhc_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Routine orthopedic rehab; no banned topics; adult 34M; Aetna commercial.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Gender, diagnosis, treatment, habilitative-classification stable across documents; rehab-vs-habilitative and ignored-records are appealability not contradictions.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Cold procedural Aetna register with evasive boilerplate; clinical context plain factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No cost/liability or dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal present; ERISA/external-review omission and buried window are realistic attackable imperfections; no hallucinated statutes; no Medicare framing.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "34M with post-meniscectomy knee is epidemiologically apt; consistent male pronouns/'Mr.'; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Aetna in-scope, fully-insured commercial, adult 34, member-facing internal appeal only, no live-filing language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No contradictions; relative timing (eight weeks ago, plan year) consistent but no absolute calendar anchor.",
+        "improvement": "Add absolute 2026 dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Generic un-named 'plan documents'/'standard criteria' references; no hallucinated alphanumeric code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Boilerplate denial admitting no individual review despite submitted records, plus rehabilitative PT miscoded as excluded habilitative; easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Therapy misclassified as habilitative when it is rehabilitative (restoring previously-held function after meniscectomy), making the exclusion inapplicable",
+          "Denial admits it does not reflect any review of the member's diagnosis or individual clinical records despite operative report and PT progress notes submitted",
+          "Vague appeal-window disclosure rather than a specific deadline"
+        ],
+        "strong_defenses": [
+          "The annual outpatient therapy visit maximum is a facially enforceable contractual benefit limit applied regardless of provider or setting"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Prior Authorization / msk / sub_tactic=visit_limit_exceeded. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Boilerplate denial admitting no individual review despite submitted records, plus rehabilitative PT miscoded as excluded habilitative; easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Therapy misclassified as habilitative when it is rehabilitative (restoring previously-held function after meniscectomy), making the exclusion inapplicable",
+        "Denial admits it does not reflect any review of the member's diagnosis or individual clinical records despite operative report and PT progress notes submitted",
+        "Vague appeal-window disclosure rather than a specific deadline",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: wrong_benefit_category"
+      ],
+      "strong_defenses": [
+        "The annual outpatient therapy visit maximum is a facially enforceable contractual benefit limit applied regardless of provider or setting"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_boilerplate_fingerprint",
+        "wrong_benefit_category"
+      ],
+      "deterministic_present": [
+        "algo_boilerplate_fingerprint",
+        "wrong_benefit_category"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

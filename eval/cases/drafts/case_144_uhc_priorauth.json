@@ -1,0 +1,316 @@
+{
+  "case_id": "case_144_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 54,
+    "gender": "M",
+    "diagnosis": "Abdominal aortic aneurysm, 4.8 cm, under surveillance (I71.4)",
+    "treatment_requested": "Surveillance abdominal aortic ultrasound",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "algo_time_delta: ProPublica + Capitol Forum Cigna Investigation 2023; Senate Finance Committee UHC Investigation 2024",
+    "timeline_violation: DOL ERISA Claims Procedure Regulations 29 CFR \u00a7 2560.503-1; documented in UHC state AG complaints 2022\u20132024"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic imaging case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic imaging case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic imaging case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic imaging case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic imaging case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Mr. Member,\n\nUnitedHealthcare has reviewed the request submitted by your vascular surgeon to continue your abdominal aortic aneurysm surveillance ultrasound program and is unable to approve coverage at this time.\n\nContinuation of the surveillance imaging requires an active prior authorization. The prior authorization for your surveillance program has lapsed, and a new authorization must be submitted and approved before further surveillance imaging is covered.\n\nOur records show that the original re-authorization request was received 47 days ago. This determination was issued at 10:05 AM today, three minutes after the request was re-received at 10:02 AM the same day. The determination is based on the request as adjudicated by the plan.\n\nTo continue coverage, your provider must submit a new prior authorization request consistent with the plan's procedures described in your plan documents, together with the clinical records supporting continued surveillance.\n\nIf you disagree with this determination, you or your provider may file an internal appeal by contacting the number on your member identification card within the timeframe stated in your plan documents. You or your provider may submit additional records and a written statement with that request.\n\nThis determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nUnitedHealthcare Utilization Management",
+  "clinical_context": "The patient is a 54-year-old man with a known infrarenal abdominal aortic aneurysm measured at 4.8 cm on ultrasound six months ago, up from 4.5 cm on the prior study, with an extensive smoking history. Surveillance imaging at defined intervals is the standard of care for an aneurysm of this size to detect growth toward the surgical-repair threshold, and his vascular surgeon submitted the re-authorization request to continue the established surveillance program. Under the plan's standard pre-service timeframe, a decision on that request was due within 30 days; the plan did not act on the original request until 47 days had passed, beyond the applicable deadline. When the file was re-received, the denial was generated three minutes later, a turnaround too short for any individual review of the submitted imaging history. The records documenting the 4.8 cm diameter, the interval growth from 4.5 cm, and the established surveillance schedule were part of the file.",
+  "submission_timestamp": "2026-04-08T10:02:00",
+  "denial_timestamp": "2026-04-08T10:05:00",
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-011426-bcd46",
+    "generated_at": "2026-06-05T01:14:26Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "imaging",
+      "sub_tactic": "continuation_of_care_lapsed"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field; I71.4 AAA surveillance is imaging; surveillance ultrasound realistic; continuation_of_care_lapsed instantiated; age 54 in 41-55.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "AAA surveillance ultrasound for a 4.8 cm aneurysm in 54M is standard of care; lapsed-PA continuation denial with a 47-day deadline miss and 3-minute automated re-adjudication is realistic with exploitable gaps.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.78,
+        "reasoning": "Correct UHC branding and procedural cadence, no wrong-insurer tells, but no Optum reviewer / UHC Medical Management Guideline fingerprint.",
+        "improvement": "Add UHC tells (Optum reviewer, UnitedHealthcare Medical Management Guidelines)."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.78,
+        "reasoning": "Authentically shoddy continuation_of_care_lapsed: vague lapsed-PA basis, a 47-day stall then 3-minute rubber-stamp; no hallucinated guideline; exploitable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Infrarenal AAA 4.8 cm grown from 4.5 cm in 54M smoker, below repair threshold, surveillance standard of care; no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Surveillance ultrasound is standard of care for a 4.0-5.4 cm AAA; exact match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Vascular AAA surveillance ultrasound and continuation_of_care_lapsed trajectory are unique among imaging neighbours (MRI/CT spine/brain/shoulder, PE, renal colic, breast); distinct anatomy and intent.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['algo_time_delta', 'timeline_violation']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['algo_time_delta', 'timeline_violation']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.191 (nearest=case_143_uhc_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Preventive surveillance; no banned topics; adult 54M; UHC commercial.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Gender, diagnosis, diameter, timestamps stable across documents; deadline-blowing denial is appealability not a contradiction.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural UHC register; clinical context plain factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.97,
+        "reasoning": "Silent on cost liability; no dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal present; ERISA/external-review omission and buried window are realistic attackable imperfections; deemed-denial vector; no hallucinated statutes.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "54M smoker with AAA is textbook epidemiology; consistent male pronouns/'Mr.'; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "UHC in-scope, fully-insured commercial, adult 54, member-facing internal appeal only, no live-filing language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.78,
+        "reasoning": "Timeline internally consistent (47 days, 10:02->10:05, 6-month prior) but all relative with no absolute year anchor.",
+        "improvement": "Anchor absolute 2026 dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Generic un-named 'plan documents'/'active prior authorization' references; no hallucinated alphanumeric code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Plan missed its own 30-day deadline (47 days), 3-minute turnaround proves no review, patient clearly meets surveillance standard of care; easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Plan missed its own 30-day decision deadline (acted at 47 days), undermining the denial's procedural validity and supporting a deemed-denial argument",
+          "3-minute turnaround proves no individual clinical review of the submitted imaging history occurred",
+          "Patient clearly meets standard of care (4.8 cm growing AAA, smoking history) and the supporting records were in the file but ignored"
+        ],
+        "strong_defenses": [
+          "Continuation of surveillance does require an active prior authorization, giving the plan a formal procedural basis to demand resubmission"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / imaging / sub_tactic=continuation_of_care_lapsed. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Plan missed its own 30-day deadline (47 days), 3-minute turnaround proves no review, patient clearly meets surveillance standard of care; easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Plan missed its own 30-day decision deadline (acted at 47 days), undermining the denial's procedural validity and supporting a deemed-denial argument",
+        "3-minute turnaround proves no individual clinical review of the submitted imaging history occurred",
+        "Patient clearly meets standard of care (4.8 cm growing AAA, smoking history) and the supporting records were in the file but ignored",
+        "Pattern anchor: algo_time_delta",
+        "Pattern anchor: timeline_violation"
+      ],
+      "strong_defenses": [
+        "Continuation of surveillance does require an active prior authorization, giving the plan a formal procedural basis to demand resubmission"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_time_delta",
+        "timeline_violation"
+      ],
+      "deterministic_present": [
+        "algo_time_delta",
+        "timeline_violation"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

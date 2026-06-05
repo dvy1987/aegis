@@ -1,0 +1,316 @@
+{
+  "case_id": "case_147_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 63,
+    "gender": "F",
+    "diagnosis": "Endometrial cancer, high-grade, stage IB (C54.1)",
+    "treatment_requested": "Adjuvant vaginal brachytherapy",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "timeline_violation: DOL ERISA Claims Procedure Regulations 29 CFR \u00a7 2560.503-1; documented in UHC state AG complaints 2022\u20132024",
+    "non_specialist_reviewer: MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Cal. Health & Safety Code \u00a7 1374.72"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic oncology case (out of network no authorization)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic oncology case (out of network no authorization)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic oncology case (out of network no authorization)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic oncology case (out of network no authorization)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic oncology case (out of network no authorization)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Ms. Member,\n\nUnitedHealthcare has reviewed the prior authorization request submitted on your behalf for adjuvant vaginal brachytherapy and is unable to approve coverage as requested.\n\nThe requested treatment is scheduled with an out-of-network radiation oncology provider. Under your plan, services from an out-of-network provider are not covered without an approved gap exception, and no gap exception is on file for this request. In-network alternatives for this service are available, and on that basis the request as submitted does not qualify for coverage.\n\nOur records show that the original prior authorization request was received 47 days ago; this determination is being issued now. This determination was made by Dr. A. Nguyen, a family medicine physician serving as the plan's reviewer.\n\nTo pursue coverage, your provider may submit a gap-exception request or identify an in-network provider for the requested treatment consistent with the plan's procedures. A gap-exception request should document that no in-network provider with the required brachytherapy expertise is available within the medically necessary timeframe.\n\nIf you disagree with this determination, you or your provider may file an internal appeal by contacting the number on your member identification card within the timeframe stated in your plan documents. You or your provider may submit additional records with that request.\n\nThis determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nUnitedHealthcare Utilization Management",
+  "clinical_context": "The patient is a 63-year-old woman with high-grade (grade 3) stage IB endometrial cancer with lymphovascular space invasion identified on hysterectomy pathology. Adjuvant vaginal brachytherapy is guideline-endorsed for this risk profile to reduce the risk of vaginal cuff recurrence, and her gynecologic oncologist referred her for the treatment. The radiation oncologist with the appropriate brachytherapy expertise and available scheduling within the medically necessary window is at a cancer center that is out of network; her physician documented that an in-network provider with timely availability for this specialized treatment could not be identified, which supports a gap exception. Under the plan's standard pre-service timeframe a decision was due within 30 days, but the determination was not issued until 47 days after the request, beyond the regulatory deadline. The determination was made by a family medicine physician rather than a radiation or gynecologic oncologist, so it was not reviewed by a clinician with expertise in the relevant specialty. The hysterectomy pathology report and the specialist referral were submitted with the request.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-012944-f4a68",
+    "generated_at": "2026-06-05T01:29:44Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "56-70",
+      "patient_gender": "F",
+      "specialty": "oncology",
+      "sub_tactic": "out_of_network_no_authorization"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "matrix_cell matches field-for-field; C54.1 endometrial cancer is oncology; adjuvant vaginal brachytherapy realistic; out_of_network_no_authorization instantiated; age 63 F in 56-70.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "High-grade stage IB endometrial cancer with LVSI is a textbook brachytherapy indication; OON/no-gap-exception PA denial plus a 47-day deadline miss and family-medicine reviewer are realistic exploitable defects.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correct UHC branding and procedural cadence, no wrong-insurer tells, but no Optum reviewer / UHC Medical Management Guideline fingerprint.",
+        "improvement": "Add UHC tells (Optum reviewer, UnitedHealthcare Medical Management Guidelines)."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy out_of_network_no_authorization: asserts in-network alternatives without substantiation, never evaluates brachytherapy availability; exploitable gap.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "High-grade stage IB endometrial cancer with LVSI; vaginal brachytherapy guideline-endorsed (PORTEC-2/GOG-249); referral pathway realistic; no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Adjuvant vaginal brachytherapy is standard of care for high-risk stage I endometrial cancer; exact match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Endometrial cancer + brachytherapy (radiation modality) is unique among oncology neighbours (all systemic therapy or surgery); distinct dx, modality, and OON denial.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['timeline_violation', 'non_specialist_reviewer']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['timeline_violation', 'non_specialist_reviewer']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.149 (nearest=case_144_uhc_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Curative adjuvant oncology; no banned topics; adult 63F; UHC commercial.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Gender, diagnosis, treatment, 47-day timeline, family-medicine reviewer stable across documents; deadline/specialty defects are appealability not contradictions.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural UHC register; clinical context plain factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No cost/liability or dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal present; ERISA/external-review omission and buried window are realistic attackable imperfections; deemed-denial vector; no hallucinated statutes.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "63F with high-grade stage IB endometrial cancer is textbook epidemiology; consistent female pronouns/'Ms.'; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "UHC in-scope, fully-insured commercial, adult 63, member-facing internal appeal only, no live-filing language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Relative timing (47 days vs 30-day deadline) internally consistent, no contradictions, but no absolute calendar anchor.",
+        "improvement": "Add absolute 2026 dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.88,
+        "reasoning": "Generic un-named 'plan'/'plan documents'/'plan's procedures' references; no hallucinated alphanumeric code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "47-day deadline miss (deemed-denial), non-oncology reviewer, pre-satisfied gap-exception basis, and guideline-endorsed treatment; easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Determination issued 47 days after request, beyond the 30-day regulatory deadline for a standard pre-service decision",
+          "Review conducted by a family medicine physician rather than a radiation or gynecologic oncologist, failing same-specialty review",
+          "Gap-exception basis already documented (no timely in-network specialist available), making the out-of-network rationale weak"
+        ],
+        "strong_defenses": [
+          "No formal gap-exception request was on file at the time of the determination, and in-network alternatives were asserted to exist"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / oncology / sub_tactic=out_of_network_no_authorization. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "47-day deadline miss (deemed-denial), non-oncology reviewer, pre-satisfied gap-exception basis, and guideline-endorsed treatment; easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Determination issued 47 days after request, beyond the 30-day regulatory deadline for a standard pre-service decision",
+        "Review conducted by a family medicine physician rather than a radiation or gynecologic oncologist, failing same-specialty review",
+        "Gap-exception basis already documented (no timely in-network specialist available), making the out-of-network rationale weak",
+        "Pattern anchor: timeline_violation",
+        "Pattern anchor: non_specialist_reviewer"
+      ],
+      "strong_defenses": [
+        "No formal gap-exception request was on file at the time of the determination, and in-network alternatives were asserted to exist"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "timeline_violation",
+        "non_specialist_reviewer"
+      ],
+      "deterministic_present": [
+        "timeline_violation",
+        "non_specialist_reviewer"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

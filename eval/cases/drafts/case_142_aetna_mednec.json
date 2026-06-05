@@ -1,0 +1,315 @@
+{
+  "case_id": "case_142_aetna_mednec",
+  "insurer": "Aetna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 22,
+    "gender": "F",
+    "diagnosis": "Hereditary angioedema (D84.1)",
+    "treatment_requested": "Lanadelumab prophylaxis",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "algo_reviewer_no_credentials: ERISA 29 U.S.C. \u00a7 1133; MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Hansens v. Cigna (D. Conn. 2023)",
+    "appeal_closed_as_withdrawn: State Insurance Commissioner complaint logs (CA DOI 2022, NY DFS 2023)"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic infusion specialty rx case (guideline mis cite)."
+    },
+    {
+      "ref_id": "aetna-denial-codes-muni",
+      "title": "How to Appeal Aetna Denials \u2014 denial codes B7/CO-96 (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-aetna-denials-2025",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna denial code medical necessity appeal letter. Calibrated to this synthetic infusion specialty rx case (guideline mis cite)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic infusion specialty rx case (guideline mis cite)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic infusion specialty rx case (guideline mis cite)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic infusion specialty rx case (guideline mis cite)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic infusion specialty rx case (guideline mis cite)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "wa-oic-mednec-templates",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Calibrated P2 letter surface: Insurer cites internal medical policies with criteria member must meet."
+    }
+  ],
+  "denial_letter_text": "Dear Ms. Member,\n\nAetna has completed a medical necessity review of the request submitted by your physician for lanadelumab for routine prophylaxis and has determined that it is not medically necessary under your plan at this time.\n\nThe plan applied its clinical criteria for hereditary angioedema. Under the criteria set cited in this review, coverage of long-term prophylaxis requires documented failure of C1 esterase inhibitor replacement therapy and documented failure of on-demand acute treatment before a plasma kallikrein inhibitor is approved. The submitted records do not establish that these threshold requirements in the referenced criteria have been met, and on that basis the request does not satisfy the plan's criteria for coverage.\n\nThis determination was made by Dr. M. Reyes, a plan reviewer. The review reflects the plan's standard application of the cited criteria.\n\nOur records indicate that a prior appeal associated with this request was closed as withdrawn. Because that appeal was recorded as withdrawn, it is no longer pending and the appeal period for it has ended.\n\nIf you disagree with this determination, you may request an internal appeal by contacting the number on your member identification card within the timeframe stated in your plan documents. Your physician may submit additional documentation supporting medical necessity with that request.\n\nThis determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nAetna Utilization Management",
+  "clinical_context": "The patient is a 22-year-old woman with hereditary angioedema confirmed by a chronically low C4 and reduced C1 esterase inhibitor function. She has frequent attacks, averaging about three per month, including episodes of laryngeal and abdominal involvement, and a previous trial of attenuated androgens was stopped because of intolerable side effects. Her immunologist requested lanadelumab, a plasma kallikrein inhibitor, for long-term prophylaxis; lanadelumab is a guideline-endorsed first-line option for routine prevention of hereditary angioedema attacks and does not require prior failure of C1 esterase inhibitor replacement or of on-demand acute therapy. The criteria the denial cites set thresholds drawn from a different part of the policy that govern acute and on-demand treatment, not first-line long-term prophylaxis, so the cited criterion was misapplied to this request. The submitted records documenting the attack frequency, the low C4 and reduced C1 esterase inhibitor function, and the androgen intolerance were part of the file. The member did not withdraw the earlier appeal.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-010831-fcef1",
+    "generated_at": "2026-06-05T01:08:31Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "18-25",
+      "patient_gender": "F",
+      "specialty": "infusion_specialty_rx",
+      "sub_tactic": "guideline_mis_cite"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field; HAE D84.1 infusion_specialty_rx; lanadelumab realistic; guideline_mis_cite instantiated by misapplied acute/on-demand module; age 22 in 18-25.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Aetna PA-style med-nec denial of lanadelumab with a misapplied criteria module; uncredentialed named reviewer and wrongly-withdrawn appeal are realistic ERISA-actionable defects.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.78,
+        "reasoning": "Correct Aetna branding and cool procedural cadence, but no named Aetna CPB/InterQual fingerprint; generic 'cited criteria' placeholders.",
+        "improvement": "Name an Aetna CPB or InterQual criteria set for HAE."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.8,
+        "reasoning": "Authentically shoddy guideline_mis_cite: vague unnamed criteria, circular threshold-not-met, no hallucinated nameable guideline; exploitable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "HAE with low C4 and reduced C1-INH function, ~3 attacks/month with laryngeal/abdominal involvement, androgen intolerance; lanadelumab correctly a kallikrein inhibitor; no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.99,
+        "reasoning": "Lanadelumab is FDA/guideline-endorsed for HAE long-term prophylaxis; exact match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "HAE/lanadelumab kallikrein-inhibitor trajectory is unique among neighbours (no shared drug or dx); only surface overlap is guideline_mis_cite flaw with a different payer/drug/dx.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['appeal_closed_as_withdrawn']; needs_llm=['algo_reviewer_no_credentials']; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['appeal_closed_as_withdrawn']; needs_llm=['algo_reviewer_no_credentials']; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.089 (nearest=case_115_uhc_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "No banned topics; physical angioedema not self-harm; adult 22F; Aetna commercial.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Gender, diagnosis, drug, insurer stable across documents; misapplied-criteria and not-withdrawn are appealable disputes, not unstable facts.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural Aetna register; clinical context plain factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability; no dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal present; ERISA/external-review omission and buried window are realistic attackable imperfections; withdrawn-appeal wrinkle invents no statute.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "22F with HAE is epidemiologically apt (childhood/adolescent onset, estrogen modulation); objective dx; consistent female pronouns/'Ms.'; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Aetna in-scope, fully-insured commercial, adult 22, member-facing internal appeal only, no live-filing language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No stamped dates; relative windows only, internally consistent, no contradictions, but unquantified.",
+        "improvement": "Stamp request/denial dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Generic un-named 'the plan's clinical criteria' references; no hallucinated alphanumeric code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Misapplied acute/on-demand thresholds to first-line prophylaxis, a false withdrawn-appeal record, and an uncredentialed reviewer; easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Misapplied guideline: acute/on-demand failure thresholds wrongly imposed on first-line long-term prophylaxis, which lanadelumab does not require",
+          "False procedural record that the prior appeal was withdrawn, when the member did not withdraw it",
+          "Named reviewer (Dr. M. Reyes) with no specialty, credential, or license to verify against the relevant immunology specialty"
+        ],
+        "strong_defenses": [
+          "The denial articulates a specific criteria set with explicit threshold requirements, giving a veneer of standard utilization-management process"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Medical Necessity / infusion_specialty_rx / sub_tactic=guideline_mis_cite. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Misapplied acute/on-demand thresholds to first-line prophylaxis, a false withdrawn-appeal record, and an uncredentialed reviewer; easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Misapplied guideline: acute/on-demand failure thresholds wrongly imposed on first-line long-term prophylaxis, which lanadelumab does not require",
+        "False procedural record that the prior appeal was withdrawn, when the member did not withdraw it",
+        "Named reviewer (Dr. M. Reyes) with no specialty, credential, or license to verify against the relevant immunology specialty",
+        "Pattern anchor: algo_reviewer_no_credentials",
+        "Pattern anchor: appeal_closed_as_withdrawn"
+      ],
+      "strong_defenses": [
+        "The denial articulates a specific criteria set with explicit threshold requirements, giving a veneer of standard utilization-management process"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_reviewer_no_credentials",
+        "appeal_closed_as_withdrawn"
+      ],
+      "deterministic_present": [
+        "appeal_closed_as_withdrawn"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

@@ -1,0 +1,314 @@
+{
+  "case_id": "case_141_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 34,
+    "gender": "F",
+    "diagnosis": "HR-positive, HER2-negative early breast cancer (C50.911)",
+    "treatment_requested": "Adjuvant abemaciclib with endocrine therapy",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "peer_to_peer_window_verbal_only: AMA 2023 Prior Authorization Physician Survey; documented in multiple state PA reform laws (TX HB 2002, VA SB 1272)",
+    "ignored_physician_letter: AMA 2023 Prior Authorization Physician Survey"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic oncology case (missing peer to peer)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic oncology case (missing peer to peer)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic oncology case (missing peer to peer)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic oncology case (missing peer to peer)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic oncology case (missing peer to peer)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Ms. Member,\n\nUnitedHealthcare has completed its review of the prior authorization request submitted by your oncologist for adjuvant abemaciclib in combination with endocrine therapy and is unable to approve coverage at this time.\n\nPrior authorization for abemaciclib is denied because a required peer-to-peer review was not completed within the allowed window. The peer-to-peer review window was communicated verbally, by telephone, to your physician's office staff; that window was not confirmed in this letter or in any other written notice. Because the peer-to-peer discussion did not occur within the timeframe, the request does not meet the plan's procedural requirements for approval at this time.\n\nThis determination applies the plan's standard utilization criteria regardless of information previously sent, and is based on the request as adjudicated by the plan. Clinical information may be discussed during appeal submission.\n\nIf you disagree with this determination, you or your provider may file an internal appeal by contacting the number on your member identification card. An internal appeal must be requested within the timeframe stated in your plan documents, and you or your provider may submit additional clinical records and a written statement with that request. Your provider may also request reconsideration consistent with the plan's procedures.\n\nThis determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nUnitedHealthcare Utilization Management",
+  "clinical_context": "The patient is a 34-year-old woman with hormone-receptor-positive, HER2-negative early breast cancer, stage IIB. Sentinel lymph node biopsy showed four positive axillary nodes, and the tumor Ki-67 index was 32 percent, placing her in the high-risk node-positive group for which adjuvant abemaciclib added to endocrine therapy is guideline-endorsed to reduce the risk of recurrence. Her oncologist completed wide local excision and submitted a detailed letter of medical necessity documenting the nodal burden, the Ki-67 result, and the high-risk pathology, along with the request for abemaciclib. That letter of medical necessity was part of the submitted file at the time of the determination, yet the denial does not address the nodal status, the Ki-67 index, or any clinical finding in the physician's letter. The peer-to-peer review window was relayed only by telephone to office staff and was never put in writing, so the office could not verify or dispute the deadline before it passed. Her ECOG performance status is 0 and she tolerates her current endocrine therapy.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-010456-11d32",
+    "generated_at": "2026-06-05T01:04:56Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "26-40",
+      "patient_gender": "F",
+      "specialty": "oncology",
+      "sub_tactic": "missing_peer_to_peer"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field; C50.911 HR+/HER2- breast is oncology; abemaciclib guideline-endorsed; missing_peer_to_peer correctly instantiated; age 34 in 26-40.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Adjuvant abemaciclib (monarchE) for high-risk node-positive HR+/HER2- early breast cancer; verbal-only P2P window and ignored LOMN are realistic UHC tactics.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Branded UHC with procedural cadence and no wrong-insurer tells, but no named UHC Medical Management Guideline / Optum reviewer.",
+        "improvement": "Cite a UnitedHealthcare Medical Management Guideline or Optum reviewer."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy missing_peer_to_peer: procedural denial on an unwritten verbal window, circular 'regardless of information previously sent'; no hallucinated guideline; appealable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Stage IIB, four positive nodes, Ki-67 32%, ECOG 0 correctly places her in the monarchE high-risk node-positive group; no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Adjuvant abemaciclib + endocrine therapy is FDA/NCCN standard for HR+/HER2- node-positive high-risk early breast cancer; clean match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Breast cancer CDK4/6 adjuvant trajectory is unique among neighbours (ovarian, melanoma, ALL, NSCLC, DLBCL, prostate, RCC, CLL); distinct dx, drug, flaw.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['peer_to_peer_window_verbal_only', 'ignored_physician_letter']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['peer_to_peer_window_verbal_only', 'ignored_physician_letter']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.097 (nearest=case_125_aetna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Curative adjuvant oncology; no banned topics; commercial UHC plan; adult 34F.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Gender, diagnosis, drug, insurer, verbal-only window stable across documents; ignored-evidence is appealability not a factual contradiction.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural UHC register with realistic deflection; clinical context plain factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability; no dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal present; external-review/ERISA omission and buried appeal window are realistic attackable imperfections; no hallucinated statutes.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "34F with node-positive HR+/HER2- early breast cancer is epidemiologically plausible; consistent female pronouns and 'Ms.' salutation; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "UHC in-scope, fully-insured commercial, adult 34, member-facing appeal rights only, no live-filing language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No stamped calendar dates; relative windows only, internally consistent, no contradictions, but unquantified.",
+        "improvement": "Stamp request/denial dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Generic un-named 'plan's standard utilization criteria' references; no hallucinated alphanumeric code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Verbal-only unwritten P2P window (notice/due-process defect) plus an ignored LOMN while the patient clearly meets guideline criteria; easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Peer-to-peer deadline given only verbally by phone and never put in writing, denying the provider any chance to verify or meet it \u2014 a notice/due-process defect",
+          "Denial is purely procedural and ignores the submitted LOMN, nodal status, and Ki-67, while the patient clearly meets guideline-endorsed criteria for adjuvant abemaciclib"
+        ],
+        "strong_defenses": [
+          "The plan can assert a facially valid procedural rule that the peer-to-peer was not completed within the stated window"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / oncology / sub_tactic=missing_peer_to_peer. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Verbal-only unwritten P2P window (notice/due-process defect) plus an ignored LOMN while the patient clearly meets guideline criteria; easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Peer-to-peer deadline given only verbally by phone and never put in writing, denying the provider any chance to verify or meet it \u2014 a notice/due-process defect",
+        "Denial is purely procedural and ignores the submitted LOMN, nodal status, and Ki-67, while the patient clearly meets guideline-endorsed criteria for adjuvant abemaciclib",
+        "Pattern anchor: peer_to_peer_window_verbal_only",
+        "Pattern anchor: ignored_physician_letter"
+      ],
+      "strong_defenses": [
+        "The plan can assert a facially valid procedural rule that the peer-to-peer was not completed within the stated window"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "peer_to_peer_window_verbal_only",
+        "ignored_physician_letter"
+      ],
+      "deterministic_present": [
+        "peer_to_peer_window_verbal_only",
+        "ignored_physician_letter"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}
