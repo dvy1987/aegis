@@ -1,0 +1,318 @@
+{
+  "case_id": "case_161_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 47,
+    "gender": "F",
+    "diagnosis": "Generalized vulvodynia (N94.818)",
+    "treatment_requested": "Continuation of a specialized vulvar/pelvic-floor physical therapy protocol (additional supervised outpatient visits)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "non_specialist_reviewer: MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Cal. Health & Safety Code \u00a7 1374.72",
+    "peer_to_peer_window_verbal_only: AMA 2023 Prior Authorization Physician Survey; documented in multiple state PA reform laws (TX HB 2002, VA SB 1272)"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic womens health case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic womens health case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic womens health case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic womens health case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic womens health case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nUnitedHealthcare has completed prior authorization review of the request submitted by your provider for additional outpatient pelvic-floor physical therapy visits for the treatment of your diagnosed condition. After review, the request for the additional visits is denied.\n\nYour plan provides a defined number of outpatient physical and rehabilitative therapy visits per benefit year for the treatment of this condition. Our records indicate that the annual visit limit for these services has been reached for the current plan year. Additional visits beyond the plan's annual maximum are not a covered benefit for the remainder of this plan year. Because the limit has been met, the requested continuation of therapy cannot be authorized under your plan's outpatient therapy benefit.\n\nThis determination was made by Dr. M. Alvarez, Family Medicine, who reviewed the submitted request against the plan's benefit terms; no reviewer credentialed in gynecology or pelvic medicine was identified in this determination.\n\nA peer-to-peer review opportunity was offered to your provider's office. The window for requesting that peer-to-peer discussion was communicated verbally by telephone to your provider's office staff; that timeframe is not confirmed in this letter. If your provider wishes to seek that discussion, the office should contact us using the telephone number on file.\n\nIf you disagree with this determination, you may file an internal appeal as described in your plan materials and submit additional clinical information for review. This determination concerns coverage under the terms of your plan only and is not medical advice or a statement about the care your treating providers may recommend.\n\nSincerely,\nUnitedHealthcare Prior Authorization Department",
+  "clinical_context": "The patient is a 47-year-old woman with generalized vulvodynia, confirmed on a positive cotton-swab (Q-tip) examination after six months of failed topical therapy including lidocaine ointment and a low-dose tricyclic. She was referred to a pelvic-floor physical therapist who runs a specialized vulvar-pain protocol, and she completed an initial authorized block of visits with documented benefit: validated pain scores fell and sitting tolerance and function improved. Her treating urogynecologist documented the response and requested continuation to consolidate gains, noting that stopping mid-protocol risks regression. The denied benefit cap is a generic outpatient physical-therapy visit limit that does not account for this targeted vulvar-pain protocol. The denial was issued by a family-medicine reviewer with no gynecology or pelvic-medicine credential, did not engage the documented functional improvement, and offered a peer-to-peer window only verbally by phone to office staff without written confirmation.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-061731-5cbe7",
+    "generated_at": "2026-06-05T06:17:31Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "F",
+      "specialty": "womens_health",
+      "sub_tactic": "visit_limit_exceeded"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field (UHC, Prior Authorization, womens_health, 41-55, F, visit_limit_exceeded); dx generalized vulvodynia is womens_health; tx specialized vulvar/pelvic-floor PT continuation fits a visit-limit denial; age 47 in band; null employer_archetype permitted.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "UHC routinely caps annual outpatient therapy visits and denies PA for continued PT; visit_limit_exceeded is a real driver. Generic cap conflating routine rehab with a specialized vulvar-pain protocol, a non-specialist family-medicine reviewer, and a verbal-only unconfirmed P2P window are authentic exploitable gaps.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correct UnitedHealthcare branding and procedural cadence with no wrong-insurer tells, but missing UHC fingerprints (no UnitedHealthcare Medical Management Guidelines, no Optum reviewer, no 'documentation does not support' framing); rests on a generic benefit-limit rationale.",
+        "improvement": "Cite UnitedHealthcare Medical Management Guidelines, name an Optum clinical reviewer, or use the 'documentation does not support' framing."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy visit_limit_exceeded: undefined numeric cap ('a defined number of... visits'), circular 'because the limit has been met' reasoning, unverifiable count, and possible mis-categorization of a specialized protocol under a generic therapy cap; no hallucinated guideline.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "47F generalized vulvodynia with positive cotton-swab exam after six months failed topical therapy (lidocaine, low-dose TCA), escalated to pelvic-floor PT with documented benefit and urogynecologist oversight; guideline-concordant, no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Pelvic-floor physical therapy is guideline-endorsed core conservative care for vulvodynia (ACOG/ISSVD/AUGS); continuation of an existing legitimate protocol is a clear category match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Generalized vulvodynia dx is unique in the corpus, but the pelvic-floor PT modality + visit_limit_exceeded axis is reminiscent of the Cigna postpartum pelvic-floor PT neighbour and the Cigna endometriosis visit-limit case; visibly distinct dx/payer/framing but a near neighbour in modality.",
+        "improvement": "Foreground a distinctive vulvodynia-specific treatment element (biofeedback-guided dilator therapy, surface EMG) to separate from the postpartum pelvic-floor PT neighbour."
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['non_specialist_reviewer', 'peer_to_peer_window_verbal_only']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['non_specialist_reviewer', 'peer_to_peer_window_verbal_only']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.073 (nearest=case_151_aetna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Routine womens-health vulvar-pain rehab; no banned topics (no SI/self-harm/abuse/IPV/EOL/minor-gender framing); adult 47F; commercial UnitedHealthcare plan with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Gender (F/47), diagnosis (generalized vulvodynia), and requested continuation of vulvar/pelvic-floor PT agree across profile, letter, and clinical context; reviewer-credential and verbal-P2P points are consistent across documents; coherent timeline; no contradictions.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Formal insurer boilerplate and dense clinical chart-style recitation; no AI tics, GPT vocabulary, listicles, or marketing cadence.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Consistently cold procedural UHC register with realistic obfuscation (undefined cap, vague verbal P2P timeframe); clinical context plain factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability (standard real-world practice); no dollar figures; no Medicare/Medicaid conflation; denial framed on a benefit visit cap.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal referenced; external-review/ERISA language strategically omitted and the appeal window left unspecified (realistic attackable imperfections); no hallucinated statutes; no Medicare framing.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "47F with generalized vulvodynia is epidemiologically correct; consistent female pronouns; urogynecologist referral appropriate; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "UHC in-scope, fully-insured commercial, adult 47, member-facing internal appeal only, no Medicare/Medicaid/marketplace language, no live-filing/attorney claims.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No date contradictions, but timeline is qualitative (six months failed therapy, initial block completed) with no absolute calendar dates and the P2P timeframe explicitly unconfirmed; matches the vague-but-OK anchor.",
+        "improvement": "Add explicit 2025-2026 dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Generic un-named plan benefit terms ('a defined number of... visits per benefit year', 'plan materials'); no fabricated alphanumeric policy code and no named clinical guideline; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.8,
+        "reasoning": "A contractual visit cap is structurally hard to overturn, but the verbal-only unconfirmed P2P window, the wrong-specialty (family-medicine) reviewer, the ignored documented functional improvement, and the generic-cap/specialized-protocol mismatch make a strong multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Peer-to-peer window communicated only verbally and 'not confirmed in this letter'",
+          "Reviewer was Family Medicine with no gynecology/pelvic-medicine credential",
+          "Denial did not engage the documented functional improvement (falling pain scores, improved sitting tolerance)",
+          "Generic PT visit cap does not account for the targeted vulvar-pain protocol"
+        ],
+        "strong_defenses": [
+          "The denial rests on a defined contractual benefit visit cap, a benefit-design limit harder to overturn on clinical grounds alone"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / womens_health / sub_tactic=visit_limit_exceeded. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "A contractual visit cap is structurally hard to overturn, but the verbal-only unconfirmed P2P window, the wrong-specialty (family-medicine) reviewer, the ignored documented functional improvement, and the generic-cap/specialized-protocol mismatch make a strong multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Peer-to-peer window communicated only verbally and 'not confirmed in this letter'",
+        "Reviewer was Family Medicine with no gynecology/pelvic-medicine credential",
+        "Denial did not engage the documented functional improvement (falling pain scores, improved sitting tolerance)",
+        "Generic PT visit cap does not account for the targeted vulvar-pain protocol",
+        "Pattern anchor: non_specialist_reviewer",
+        "Pattern anchor: peer_to_peer_window_verbal_only"
+      ],
+      "strong_defenses": [
+        "The denial rests on a defined contractual benefit visit cap, a benefit-design limit harder to overturn on clinical grounds alone"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "non_specialist_reviewer",
+        "peer_to_peer_window_verbal_only"
+      ],
+      "deterministic_present": [
+        "non_specialist_reviewer",
+        "peer_to_peer_window_verbal_only"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

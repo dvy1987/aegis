@@ -1,0 +1,313 @@
+{
+  "case_id": "case_153_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 64,
+    "gender": "F",
+    "diagnosis": "Symptomatic stage III uterine prolapse (N81.2)",
+    "treatment_requested": "Vaginal hysterectomy with apical suspension for pelvic organ prolapse",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "non_specialist_reviewer: MHPAEA Final Rule 2024 (29 CFR § 2590.712); Cal. Health & Safety Code § 1374.72",
+    "algo_reviewer_no_credentials: ERISA 29 U.S.C. § 1133; MHPAEA Final Rule 2024 (29 CFR § 2590.712); Hansens v. Cigna (D. Conn. 2023)"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template — CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic womens health case (modality substitution)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage — ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic womens health case (modality substitution)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper — ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic womens health case (modality substitution)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic womens health case (modality substitution)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL — An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic womens health case (modality substitution)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "ERISA Claims Procedure — adverse benefit determination content (29 CFR § 2560.503-1)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Specific reasons for denial."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Ms. Member,\n\nAetna has reviewed the prior authorization request for vaginal hysterectomy with apical suspension for pelvic organ prolapse, submitted on your behalf. After review, the request is denied at this time.\n\nPlan policy requires that a less costly treatment modality be attempted before surgical repair of pelvic organ prolapse. A vaginal pessary is an appropriate and lower-cost modality for the management of prolapse and is required as a first-line approach before surgical correction will be authorized. The requested surgical procedure represents a more costly modality than the plan considers appropriate at this stage.\n\nThis determination was made by Dr. R. Patel, a family medicine physician, applying the plan's medical policy. The notice does not provide the reviewer's specialty qualifications for this procedure, a license number, or any record of the time spent on this review.\n\nYou may pursue a pessary trial and resubmit the request if it is unsuccessful, or you may appeal this determination.\n\nIf you disagree with this determination, you may file an internal appeal by contacting Member Services at the number on your identification card within the timeframe stated in your plan documents. You may submit additional clinical information with your appeal request, and a different reviewer will evaluate the appeal.\n\nThis determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nAetna Utilization Management",
+  "clinical_context": "The patient is a 64-year-old woman with symptomatic stage III uterine prolapse, with the cervix protruding several centimeters beyond the hymenal ring, vaginal mucosal erosion, and obstructed voiding that requires manual reduction. Her gynecologist requested vaginal hysterectomy with apical suspension. A vaginal pessary was already fitted and trialed over three months but was repeatedly expelled and caused worsening mucosal erosion, so it is not a viable modality for her. The denial nonetheless requires a pessary trial as a lower-cost modality before surgery, despite this documented pessary failure. The determination was issued by a family medicine physician rather than a gynecologic surgeon, and the notice provides no license number and no record of time spent, so the reviewer's qualifications and identity cannot be verified against the state medical board.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-045801-73a61",
+    "generated_at": "2026-06-05T04:58:01Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "56-70",
+      "patient_gender": "F",
+      "specialty": "womens_health",
+      "sub_tactic": "modality_substitution"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "matrix_cell matches field-for-field; stage III uterine prolapse is womens_health; vaginal hysterectomy realistic; modality_substitution (pessary before surgery) is the primary rationale; 64F in 56-70.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Aetna demanding a pessary trial before prolapse surgery is a realistic step/modality denial; family-medicine reviewer and missing license/time-spent are realistic exploitable defects.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correct Aetna branding and procedural cadence, no wrong-insurer tells, but no named Aetna CPB/InterQual fingerprint.",
+        "improvement": "Cite an Aetna Clinical Policy Bulletin or InterQual criteria."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Faithful modality_substitution: demands lower-cost pessary before surgery, cost-framed, vague plan policy with no thresholds; exploitable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "64F stage III prolapse with cervix beyond hymen, erosion, obstructed voiding; failed pessary; vaginal hysterectomy with apical suspension is guideline-concordant; no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Vaginal hysterectomy with apical suspension is standard surgical care for symptomatic stage III uterine prolapse; exact match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Uterine prolapse / vaginal hysterectomy with modality_substitution is a unique payer+flaw+dx+tx point; no womens_health neighbour shares dx, procedure, or denial reason.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['non_specialist_reviewer']; needs_llm=['algo_reviewer_no_credentials']; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['non_specialist_reviewer']; needs_llm=['algo_reviewer_no_credentials']; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.137 (nearest=case_151_aetna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Routine urogynecologic surgery; no banned topics; adult 64F; Aetna commercial with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Gender, diagnosis, treatment, reviewer details stable across documents; pessary-requirement vs documented pessary failure is appealability not contradiction.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural Aetna register with vague modality phrasing; clinical context plain factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Cost referenced only as coverage-policy rationale (lower-cost/more-costly modality); no patient liability dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal present; omitted external-review/ERISA language and buried window are realistic attackable imperfections; no hallucinated statutes; no Medicare framing.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "64F with stage III uterine prolapse is epidemiologically textbook; consistent female pronouns/'Ms.'; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.96,
+        "reasoning": "Aetna in-scope, fully-insured commercial, adult 64, member-facing internal appeal only, no live-filing language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No contradictions; relative timing (over three months) consistent but no absolute calendar anchor.",
+        "improvement": "Add absolute 2026 dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Generic un-named 'plan policy'/'medical policy' references; no hallucinated alphanumeric code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Pessary modality demanded despite documented prior pessary failure (circular), plus a family-medicine reviewer with no verifiable license/time-spent; easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Denial requires a pessary trial as lower-cost first-line modality despite documented prior pessary failure (repeated expulsion and worsening erosion), making the rationale circular and inapplicable",
+          "Reviewer is a family medicine physician, not a gynecologic surgeon, with no license number and no time-spent record, so specialty qualifications cannot be verified"
+        ],
+        "strong_defenses": [
+          "A genuine plan step-therapy policy requiring a lower-cost modality before surgical prolapse repair does exist"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Prior Authorization / womens_health / sub_tactic=modality_substitution. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Pessary modality demanded despite documented prior pessary failure (circular), plus a family-medicine reviewer with no verifiable license/time-spent; easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Denial requires a pessary trial as lower-cost first-line modality despite documented prior pessary failure (repeated expulsion and worsening erosion), making the rationale circular and inapplicable",
+        "Reviewer is a family medicine physician, not a gynecologic surgeon, with no license number and no time-spent record, so specialty qualifications cannot be verified",
+        "Pattern anchor: non_specialist_reviewer",
+        "Pattern anchor: algo_reviewer_no_credentials"
+      ],
+      "strong_defenses": [
+        "A genuine plan step-therapy policy requiring a lower-cost modality before surgical prolapse repair does exist"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "non_specialist_reviewer",
+        "algo_reviewer_no_credentials"
+      ],
+      "deterministic_present": [
+        "non_specialist_reviewer"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

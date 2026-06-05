@@ -1,0 +1,318 @@
+{
+  "case_id": "case_162_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 47,
+    "gender": "M",
+    "diagnosis": "Chronic recurrent tonsillitis (J35.01)",
+    "treatment_requested": "Tonsillectomy",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials",
+    "wrong_benefit_category: CMS Essential Health Benefits Bulletin 2022; documented in Aetna member complaints"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic surgical case (out of network no authorization)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic surgical case (out of network no authorization)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic surgical case (out of network no authorization)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic surgical case (out of network no authorization)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic surgical case (out of network no authorization)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "ERISA Claims Procedure \u2014 adverse benefit determination content (29 CFR \u00a7 2560.503-1)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Specific reasons for denial."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nAetna has completed prior authorization review of the request submitted on your behalf for a tonsillectomy. After review, the request is denied for the reasons stated below.\n\nOur records indicate that the operating surgeon identified in this request participates outside your plan's network. Surgical services furnished by an out-of-network provider are not covered unless a network gap exception has been approved in advance, and no gap exception is on file for this request. In-network otolaryngology providers are available to furnish this service.\n\nIn addition, the request does not meet the plan's clinical criteria for this procedure. Under the plan's pediatric tonsillectomy criteria, coverage requires a documented pattern of throat infections meeting the specified annual thresholds; the submitted records were assessed against these criteria and were found not to establish that the procedure is warranted.\n\nThis service has also been processed under the plan's outpatient dental and oral procedures benefit category. Coverage and any applicable limits are governed by the terms of that benefit category as described in your plan documents.\n\nIf you disagree with this determination, you may file an internal appeal as described in your plan materials and submit additional clinical information, including any documentation supporting a network gap exception, for review. This determination addresses coverage under the terms of your plan only and is not medical advice or a statement about the care your treating providers may recommend.\n\nSincerely,\nAetna Prior Authorization Department",
+  "clinical_context": "The patient is a 47-year-old man with chronic recurrent tonsillitis: seven culture-confirmed episodes of acute tonsillitis in the past twelve months are documented in his otolaryngology records, each treated with antibiotics, with repeated missed work. His ENT recommended tonsillectomy as definitive treatment, consistent with adult guidelines for recurrent tonsillitis. The only in-network otolaryngology surgeon carried a multi-month scheduling backlog, so the referral was made to an out-of-network ENT and a network gap exception was requested at the time of submission. Tonsillectomy is a covered surgical procedure, not a dental or oral-cavity service, and the plan's pediatric tonsillectomy frequency criteria are designed for children and are not the applicable standard for a 47-year-old adult. The denial neither acknowledged the documented adult infection history nor the pending gap-exception request, and assigned the procedure to a benefit category that does not correspond to the service actually requested.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-062144-fb49b",
+    "generated_at": "2026-06-05T06:21:44Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "surgical",
+      "sub_tactic": "out_of_network_no_authorization"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field (Aetna, Prior Authorization, surgical, 41-55, M, out_of_network_no_authorization); dx chronic recurrent tonsillitis and tx tonsillectomy are genuinely surgical/ENT; age 47 in band; sub_tactic is the lead rationale; null employer_archetype permitted.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Aetna OON/no-gap-exception denial driven by a multi-month in-network backlog is a textbook real-world PA scenario; misapplying pediatric tonsillectomy criteria to a 47-year-old and miscategorizing the surgery under a dental/oral benefit are believable, exploitable misclassifications.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.78,
+        "reasoning": "Correct Aetna branding and cool procedural cadence with no wrong-insurer tells, but missing signature anchors (no Clinical Policy Bulletin / InterQual citation); rests on generic 'plan's clinical criteria' phrasing.",
+        "improvement": "Cite an Aetna Clinical Policy Bulletin (CPB) for tonsillectomy or note review against InterQual criteria."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy: a plausible network-gap-exception rule, undefined infection thresholds never quantified, circular 'found not to establish that the procedure is warranted', and a vague dental/oral reclassification; no hallucinated guideline; invites appeal with gap-exception documentation.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.7,
+        "reasoning": "47M chronic recurrent tonsillitis with seven culture-confirmed episodes in twelve months meets adult tonsillectomy indications; guideline framing sound; no biology violations (antibiotic specifics omitted but the load-bearing episode count is specific and correct).",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Tonsillectomy is the long-established guideline-recognized standard surgical treatment for chronic recurrent tonsillitis (AAO-HNS / Paradise criteria); clear ENT/surgical category match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "No neighbour shares the tonsillitis dx or tonsillectomy procedure; the only same-sub_tactic neighbour (Cigna gastric bypass for morbid obesity) is a completely different payer/procedure/trajectory; clearly distinct in feature-space.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['incorrect_demographic_guideline', 'wrong_benefit_category']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['incorrect_demographic_guideline', 'wrong_benefit_category']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.099 (nearest=case_161_uhc_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Routine adult ENT surgery; no banned topics (no SI/self-harm/abuse/IPV/EOL/minor-gender framing); adult 47M; Aetna commercial plan with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Age/gender (47M), diagnosis (chronic recurrent tonsillitis), and requested tonsillectomy agree across profile, letter, and clinical context; the three denial grounds are independent, not mutually contradictory; the misapplied criteria/benefit category are appealable falsehoods, not contradictions; coherent timeline.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Formal bureaucratic insurer boilerplate and a dense clinical recitation; no AI tics, GPT vocabulary, listicles, or marketing cadence.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural Aetna register with effective obfuscation (undefined thresholds, deferral to plan documents); clinical context plain factual narrative, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability (standard practice); no dollar figures; no Medicare/Medicaid conflation; denial framed on network status, criteria, and benefit categorization.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal referenced; external-review/ERISA language strategically omitted and the appeal window left unspecified (realistic attackable imperfections); no hallucinated statutes; no Medicare framing.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "47M with chronic recurrent tonsillitis is epidemiologically plausible (adults do undergo tonsillectomy for this burden); consistent male pronouns; the 'pediatric criteria' line is a clinical-criteria flaw not a demographic-validity error.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Aetna in-scope, fully-insured commercial, adult 47, member-facing internal appeal only, no Medicare/Medicaid/marketplace language (dental/oral is an internal benefit category), no live-filing/attorney claims.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No date contradictions; relative timing (twelve-month infection history, multi-month backlog, gap exception at submission) is internally consistent, but no absolute 2025-2026 dates and some vagueness ('multi-month'); matches the vague-but-OK anchor.",
+        "improvement": "Add explicit 2025-2026 submission/denial dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Generic un-named internal references ('plan's pediatric tonsillectomy criteria', 'specified annual thresholds', 'plan documents/materials'); no fabricated alphanumeric policy code and no named guideline edition/page; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Multiple independent, well-documented errors: pediatric criteria misapplied to an adult, ignored adult infection history meeting standard of care, surgical service miscategorized as dental/oral, and an ignored contemporaneous gap-exception request; an easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Pediatric frequency criteria misapplied to a 47-year-old adult, the wrong standard for the patient's age",
+          "Documented adult infection history (seven culture-confirmed episodes/12 months) ignored despite meeting the adult standard of care",
+          "Procedure misclassified under the dental and oral procedures benefit category when it is a covered surgical service",
+          "Network denial ignores the gap-exception request submitted contemporaneously due to a multi-month in-network backlog"
+        ],
+        "strong_defenses": [
+          "Out-of-network gap exception was requested but not yet approved, leaving a technical coverage gap on the network issue until granted"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Prior Authorization / surgical / sub_tactic=out_of_network_no_authorization. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Multiple independent, well-documented errors: pediatric criteria misapplied to an adult, ignored adult infection history meeting standard of care, surgical service miscategorized as dental/oral, and an ignored contemporaneous gap-exception request; an easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Pediatric frequency criteria misapplied to a 47-year-old adult, the wrong standard for the patient's age",
+        "Documented adult infection history (seven culture-confirmed episodes/12 months) ignored despite meeting the adult standard of care",
+        "Procedure misclassified under the dental and oral procedures benefit category when it is a covered surgical service",
+        "Network denial ignores the gap-exception request submitted contemporaneously due to a multi-month in-network backlog",
+        "Pattern anchor: incorrect_demographic_guideline",
+        "Pattern anchor: wrong_benefit_category"
+      ],
+      "strong_defenses": [
+        "Out-of-network gap exception was requested but not yet approved, leaving a technical coverage gap on the network issue until granted"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "incorrect_demographic_guideline",
+        "wrong_benefit_category"
+      ],
+      "deterministic_present": [
+        "incorrect_demographic_guideline",
+        "wrong_benefit_category"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

@@ -1,0 +1,316 @@
+{
+  "case_id": "case_157_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 22,
+    "gender": "F",
+    "diagnosis": "Systemic lupus erythematosus, active (M32.10)",
+    "treatment_requested": "Belimumab (Benlysta) intravenous infusion as add-on therapy",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719",
+    "superseded_guideline: AHIP 2022 Coverage Policy Review; documented in multiple Cigna litigation cases 2021\u20132023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic infusion specialty rx case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Ms. Member,\n\nCigna has completed a medical necessity review of the request for belimumab (Benlysta) intravenous infusion. After review, the request is denied.\n\nBased on our coverage policy, a lower level of care is appropriate for the management of systemic lupus erythematosus at this time, and the requested intravenous biologic infusion exceeds what is required. Under the criteria in our 2019 lupus management coverage policy, standard outpatient pharmacologic management is expected to be optimized and exhausted before an intravenous biologic agent is authorized, and the documentation reviewed does not establish that this lower level of care has been exhausted.\n\nContinued management with standard outpatient therapy is therefore the appropriate level of care at this time. If your condition does not respond to optimized outpatient management, a future request may be submitted with additional documentation for review.\n\nIf you disagree with this determination, you may file an internal appeal by contacting Member Services at the number on your identification card within the timeframe stated in your plan documents. You may submit additional clinical information with your appeal, and a clinician who was not involved in this determination will review your appeal.\n\nThis determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nCigna Utilization Management",
+  "clinical_context": "The patient is a 22-year-old woman with active systemic lupus erythematosus, with a SLEDAI score of 10, inflammatory arthritis, and a malar rash, whose disease remains active despite hydroxychloroquine 400 mg daily and mycophenolate mofetil titrated to 2 grams daily over the past eight months. Her rheumatologist requested belimumab (Benlysta) as add-on therapy for persistently active disease. Standard outpatient management has in fact been optimized and exhausted: she remains clinically active on maximized hydroxychloroquine and mycophenolate, which is precisely the basis for escalation. The denial relies on the plan's 2019 lupus coverage policy; the current 2023 EULAR recommendations for the management of systemic lupus erythematosus endorse belimumab as add-on therapy for patients with active disease inadequately controlled by standard immunosuppressants, superseding the older policy. The denial letter also omits any notice of the member's right to independent external review.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-051708-caad3",
+    "generated_at": "2026-06-05T05:17:08Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "18-25",
+      "patient_gender": "F",
+      "specialty": "infusion_specialty_rx",
+      "sub_tactic": "level_of_care_too_high"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field; active SLE is infusion_specialty_rx; belimumab IV add-on realistic; level_of_care_too_high is the rationale; 22F in 18-25.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cigna denying belimumab infusion as too-high a level of care is realistic; exhausted standard therapy, superseded 2019 policy vs 2023 EULAR, and omitted IRO notice are genuine exploitable gaps.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correct Cigna branding and conservative-treatment cadence, no wrong-insurer tells, but no named MCG/Cigna MNG fingerprint.",
+        "improvement": "Cite Cigna Medical Necessity Guidelines or MCG by name."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.75,
+        "reasoning": "Authentically shoddy level_of_care_too_high: vague step-therapy framing, undefined exhaustion threshold, circular 'not established' claim; exploitable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "22F active SLE, SLEDAI 10, arthritis, malar rash, on HCQ 400 mg + MMF 2 g; belimumab add-on is guideline-concordant escalation; no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Belimumab is FDA-approved add-on for active SLE on standard therapy; exact on-label match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "SLE/belimumab with level_of_care_too_high is a unique drug+dx+denial point; no infusion neighbour shares SLE, belimumab, or this denial reason.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['missing_iro_notice', 'superseded_guideline']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['missing_iro_notice', 'superseded_guideline']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.146 (nearest=case_156_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Routine rheumatologic biologic dispute; no banned topics; adult 22F; Cigna commercial with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Gender, diagnosis, treatment stable across documents; not-exhausted claim vs documented exhausted therapy is an appealable falsehood not a contradiction.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural Cigna register with bureaucratic vagueness; clinical context plain factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No cost/liability or dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal present; omitted external-review/ERISA language and buried window are realistic attackable imperfections; no hallucinated statutes; no Medicare framing.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "22F with active SLE is epidemiologically textbook (9:1 female, reproductive-age peak); consistent female pronouns/'Ms.'; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cigna in-scope, fully-insured commercial, adult 22, member-facing internal appeal only, no live-filing language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No contradictions; relative timing (eight months) and policy years consistent but no absolute calendar anchor or numeric appeal window.",
+        "improvement": "Add absolute 2026 dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Generic un-named '2019 coverage policy' reference with a year but no module/code; no hallucinated alphanumeric code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Factual misstatement (therapy was exhausted), superseded 2019 policy vs 2023 EULAR, and omitted external-review notice; easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Factual error: denial claims lower level of care not exhausted, but record shows standard outpatient therapy was optimized and exhausted (active disease on maximized HCQ 400 mg and MMF 2 g over eight months, SLEDAI 10)",
+          "Outdated guideline: relies on the plan's 2019 lupus coverage policy, superseded by 2023 EULAR recommendations endorsing belimumab add-on",
+          "Procedural omission: letter omits notice of the member's right to independent external review"
+        ],
+        "strong_defenses": [
+          "Letter names an internal appeal pathway and states a non-involved clinician will review the appeal"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / infusion_specialty_rx / sub_tactic=level_of_care_too_high. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Factual misstatement (therapy was exhausted), superseded 2019 policy vs 2023 EULAR, and omitted external-review notice; easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Factual error: denial claims lower level of care not exhausted, but record shows standard outpatient therapy was optimized and exhausted (active disease on maximized HCQ 400 mg and MMF 2 g over eight months, SLEDAI 10)",
+        "Outdated guideline: relies on the plan's 2019 lupus coverage policy, superseded by 2023 EULAR recommendations endorsing belimumab add-on",
+        "Procedural omission: letter omits notice of the member's right to independent external review",
+        "Pattern anchor: missing_iro_notice",
+        "Pattern anchor: superseded_guideline"
+      ],
+      "strong_defenses": [
+        "Letter names an internal appeal pathway and states a non-involved clinician will review the appeal"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "missing_iro_notice",
+        "superseded_guideline"
+      ],
+      "deterministic_present": [
+        "missing_iro_notice",
+        "superseded_guideline"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

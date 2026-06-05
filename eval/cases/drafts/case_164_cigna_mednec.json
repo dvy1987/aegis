@@ -1,0 +1,316 @@
+{
+  "case_id": "case_164_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 62,
+    "gender": "M",
+    "diagnosis": "Class III obesity with prediabetes (E66.01)",
+    "treatment_requested": "GLP-1 receptor agonist pharmacotherapy (semaglutide 2.4 mg)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "superseded_guideline: AHIP 2022 Coverage Policy Review; documented in multiple Cigna litigation cases 2021\u20132023",
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic endocrine case (step therapy missing)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nCigna has completed a medical necessity review of the requested service. After review, the requested service is denied.\n\nUnder the plan's 2021 medical coverage policy, the requested service is covered only after documented failure of the required prerequisite therapies. The plan's criteria require that lower-cost treatment options be tried for an adequate duration and shown to be ineffective before the requested service is authorized. Based on the information available to the plan, those criteria are not met, and the requested service does not satisfy the plan's medical necessity requirements at this time.\n\nThis determination applies the plan's standard criteria to requests of this type. It does not reflect any independent finding about the individual circumstances beyond the application of those criteria, and no case-specific exception has been identified.\n\nIf you disagree with this determination, you may request an internal appeal through Member Services using the number on your identification card, and you may submit additional information for consideration. A different reviewer who was not involved in this determination will review a timely appeal.\n\nThis determination addresses coverage under the terms of your plan only. It is not medical advice and does not direct the care your providers may recommend.\n\nSincerely,\nCigna Medical Management",
+  "clinical_context": "The patient is a 62-year-old man with class III obesity (BMI 42) and prediabetes (HbA1c 6.2%). He completed a structured six-month lifestyle-modification program and a documented trial of metformin and phentermine without achieving meaningful or durable weight loss, and he has obesity-related comorbidities including hypertension and obstructive sleep apnea. His endocrinologist prescribed semaglutide 2.4 mg as guideline-concordant pharmacotherapy. The prerequisite lower-cost options the policy requires were in fact tried and failed, contradicting the denial's step-therapy basis. The coverage policy the denial relies on dates from 2021 and has since been superseded by updated obesity-management guidance that supports GLP-1 receptor agonist therapy at this BMI with comorbidity. The denial letter contains no reference to the patient's diagnosis, his endocrinologist, the prior lifestyle and medication trials, or any submitted records, reading as generic boilerplate that shows no engagement with the individual claim.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-063052-9c48b",
+    "generated_at": "2026-06-05T06:30:53Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "56-70",
+      "patient_gender": "M",
+      "specialty": "endocrine",
+      "sub_tactic": "step_therapy_missing"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field (Cigna, Medical Necessity, endocrine, 56-70, M, step_therapy_missing); dx class III obesity with prediabetes is endocrine/metabolic; tx semaglutide 2.4 mg realistic; age 62 in band; step_therapy_missing is the lead rationale; null employer_archetype permitted.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cigna step-therapy denials of GLP-1 agonists for obesity are among the most common real-world disputes; the stale 2021 policy and pure boilerplate (failing ERISA full-and-fair review) are authentic, exploitable gaps; the factually-wrong step-therapy basis is rebutted by the documented lifestyle/metformin/phentermine trials.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correct Cigna branding and conservative-treatment-first cadence, but no named Cigna artifacts (no Cigna Medical Necessity Guidelines / MCG); relies on generic 'plan's 2021 medical coverage policy' and 'standard criteria'.",
+        "improvement": "Name Cigna Medical Necessity Guidelines or MCG rather than a generic plan policy."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy step-therapy reasoning: unnamed 'lower-cost options', undefined 'adequate duration', circular 'criteria are not met'; evasive 'standard criteria to requests of this type' boilerplate; no hallucinated named guideline.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "62M class III obesity (BMI 42) with prediabetes (HbA1c 6.2%) and comorbidities, failed lifestyle + metformin/phentermine, prescribed semaglutide 2.4 mg (exact FDA weight-management dose); guideline-concordant, no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Semaglutide 2.4 mg (Wegovy) is FDA-approved and guideline-endorsed for chronic weight management in obesity with a weight-related comorbidity (prediabetes); clean standard-of-care category match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "No neighbour involves obesity, prediabetes, GLP-1 agonists, or semaglutide; the only same-sub_tactic neighbour (teriparatide for osteoporosis) is a completely different clinical entity; clearly distinct in feature-space.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['superseded_guideline', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['superseded_guideline', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.106 (nearest=case_163_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Routine metabolic/obesity pharmacotherapy; no banned topics (no SI/self-harm/abuse/IPV/EOL/minor-gender framing); adult 62M; Cigna commercial plan with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Age/gender (62M), diagnosis (class III obesity with prediabetes), and requested semaglutide agree across profile, letter, and clinical context; the letter is internally consistent; the unmet-prerequisite claim is an appealable falsehood the context rebuts, not a contradiction; coherent timeline.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Formal bureaucratic denial boilerplate and a dense clinical recitation; no AI tics, GPT vocabulary, listicles, or marketing cadence.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural Cigna register with effective vagueness and explicit distancing from the individual; clinical context plain factual narrative, only lightly analytic, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability (standard practice); 'lower-cost options' is step-therapy framing not patient liability; no dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal offered while external-review/ERISA disclosures are strategically omitted and the appeal window is left ambiguous ('a timely appeal') \u2014 realistic attackable imperfections; no hallucinated statutes; no Medicare framing.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "62M with class III obesity and prediabetes is epidemiologically sound; consistent male pronouns; comorbidities clinically typical, not stereotyped.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cigna in-scope, fully-insured commercial, adult 62, member-facing internal appeal only, no Medicare/Medicaid/marketplace framing, no live-filing/attorney/court-representation language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No date contradictions; a 2021 policy vintage is plausible and not impossible against a 2026 review; clinical timeline coherent, but no absolute service-request/denial dates and no numeric appeal window; matches the vague-but-OK anchor.",
+        "improvement": "Add explicit 2025-2026 service-request/denial dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Generic un-named references ('plan's 2021 medical coverage policy', 'standard criteria', 'medical necessity requirements'); only a year, no module/edition/page; no fabricated alphanumeric code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.93,
+        "reasoning": "A factually false step-therapy basis (lifestyle/metformin/phentermine actually tried and failed), reliance on a superseded 2021 policy, and generic boilerplate showing no individualized review make an easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Step-therapy basis is factually false: prerequisite lower-cost therapies (lifestyle program, metformin, phentermine) were tried and failed",
+          "Reliance on a superseded 2021 policy now overtaken by updated obesity guidance supporting GLP-1 therapy at BMI 42 with comorbidities",
+          "Generic boilerplate showing no engagement with the individual claim; self-admits no case-specific review"
+        ],
+        "strong_defenses": [
+          "Offers an independent, non-involved reviewer for a timely internal appeal"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / endocrine / sub_tactic=step_therapy_missing. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "A factually false step-therapy basis (lifestyle/metformin/phentermine actually tried and failed), reliance on a superseded 2021 policy, and generic boilerplate showing no individualized review make an easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Step-therapy basis is factually false: prerequisite lower-cost therapies (lifestyle program, metformin, phentermine) were tried and failed",
+        "Reliance on a superseded 2021 policy now overtaken by updated obesity guidance supporting GLP-1 therapy at BMI 42 with comorbidities",
+        "Generic boilerplate showing no engagement with the individual claim; self-admits no case-specific review",
+        "Pattern anchor: superseded_guideline",
+        "Pattern anchor: algo_boilerplate_fingerprint"
+      ],
+      "strong_defenses": [
+        "Offers an independent, non-involved reviewer for a timely internal appeal"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "superseded_guideline",
+        "algo_boilerplate_fingerprint"
+      ],
+      "deterministic_present": [
+        "superseded_guideline",
+        "algo_boilerplate_fingerprint"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

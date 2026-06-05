@@ -1,0 +1,316 @@
+{
+  "case_id": "case_178_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 50,
+    "gender": "M",
+    "diagnosis": "Type 2 diabetes mellitus, inadequately controlled (E11.9)",
+    "treatment_requested": "Continuation of tirzepatide (Mounjaro) glucose-lowering therapy",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "experimental_despite_fda_approval: ProPublica 'Uncovered' Series 2023; ASCO 2023 Coverage Policy Analysis"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic endocrine case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic endocrine case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic endocrine case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic endocrine case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic endocrine case (duration excessive)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic endocrine case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nCigna has completed its medical necessity review of the requested service. After review, Cigna has denied coverage of the requested service.\n\nThe duration of the requested service exceeds the plan's stated coverage limits, and continuation beyond those limits requires a new clinical review supported by updated documentation, which has not been received within the plan's required review cycle. In addition, under the applicable Cigna coverage policy, the requested service is considered experimental or investigational, and services that are experimental or investigational are not covered benefits under the plan.\n\nCoverage under your benefit plan is subject to the terms, conditions, limitations, and exclusions set out in your plan documents, and the plan applies its coverage policies uniformly in determining whether a requested service meets the applicable criteria. Based on the plan's coverage policy and the information available at the time of review, the requested service does not meet the plan's coverage criteria at this time.\n\nIf you disagree with this determination, you may request an internal appeal as described in your plan materials and submit additional clinical information for review. Your provider may also contact Cigna to discuss this determination.\n\nThis determination addresses coverage under the terms of your plan only and is not medical advice or a statement about the care your treating providers may recommend.\n\nSincerely,\nCigna Medical Coverage Review",
+  "clinical_context": "The patient is a 50-year-old man with type 2 diabetes mellitus that was inadequately controlled on metformin and a sulfonylurea, with a baseline HbA1c of 9.1 percent. After tirzepatide was started, his HbA1c fell to 6.8 percent with clinically meaningful weight loss and no severe hypoglycemia, and his endocrinologist submitted updated documentation of this sustained response when requesting continuation; the duration-based cutoff therefore ignores documented ongoing medical necessity. Tirzepatide received FDA approval in May 2022 and is a guideline-endorsed glucose-lowering agent in the current American Diabetes Association Standards of Care, so labeling the therapy experimental or investigational rests on a coverage policy that predates the FDA approval and whose stated review cycle has lapsed. The denial letter itself contains no case-specific clinical reasoning of any kind: it does not mention the diagnosis, the treating physician, the HbA1c response, or any of the submitted records, and reads as identical boilerplate that could apply to any claim, so it shows no evidence the reviewer engaged with this patient's individual facts as required for a full and fair review.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-113211-3c175",
+    "generated_at": "2026-06-05T11:32:12Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "endocrine",
+      "sub_tactic": "duration_excessive"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field (Cigna, Medical Necessity, endocrine, 41-55, M, duration_excessive); dx type 2 diabetes (E11.9) is endocrine; tirzepatide continuation is realistic; denial_rationale_seed describes duration_excessive as the core tactic (duration exceeds coverage limits; continuation requires updated review); the two flaws are layered extras; null employer_archetype acceptable for age 50.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "GLP-1/GIP continuation denials are a real flashpoint; insurers impose duration-based 'updated clinical review' hurdles; generic algorithmic boilerplate that names nothing is exactly how such denials read; the experimental/investigational label from a stale pre-FDA-approval policy is a real artifact; the documented HbA1c drop 9.1->6.8 rebuts the duration cutoff and the May 2022 FDA approval rebuts the experimental label - exploitable, not airtight; drug-dx-age fit is correct.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.8,
+        "reasoning": "Branded Cigna with a 'Cigna coverage policy' reference and 'Cigna Medical Coverage Review' sign-off (no wrong-insurer tells), but lacks Cigna's distinctive fingerprints (no Cigna Medical Necessity Guidelines / MCG); the generic experimental/coverage-policy boilerplate reads pan-insurer, landing at 3. Note the genericness is intended (the algo_boilerplate flaw).",
+        "improvement": "Cite Cigna's signature sources (Cigna Medical Necessity Guidelines / MCG) - tension with the intended boilerplate flaw."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.78,
+        "reasoning": "Primary rationale matches duration_excessive (duration exceeds the plan's stated coverage limits; continuation requires updated documentation) and is appropriately vague (no numeric cap or named guideline), leaving appeal room; the bolted-on experimental/investigational exclusion is mismatched but real denials do stack boilerplate exclusions; plausible vague references, no hallucinated guideline; authentically hand-wavy.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Standard second-line regimen (metformin + sulfonylurea) with escalation to tirzepatide; HbA1c 9.1->6.8 with weight loss and no severe hypoglycemia matches tirzepatide's profile; the FDA approval date (May 2022) and ADA Standards endorsement are accurate; correct indication; no invented drugs, impossible dosing, or biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Tirzepatide (Mounjaro), a dual GIP/GLP-1 receptor agonist, is FDA-approved and indicated for glycemic control in adults with type 2 diabetes, directly matching the 'inadequately controlled' qualifier; correct brand mapping and clinical category; unambiguous match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "No neighbour shares the drug tirzepatide; the closest (Cigna step_therapy obesity/semaglutide) is a different dx (E66.01), drug, and tactic, and the diabetes neighbour (Aetna CGM/Dexcom) is a device; the Cigna/MedNec/duration_excessive neighbour is liothyronine for hypothyroidism (unrelated drug/disease); distinct dx, drug, and trajectory - not a near-duplicate.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['algo_boilerplate_fingerprint', 'experimental_despite_fda_approval']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['algo_boilerplate_fingerprint', 'experimental_despite_fda_approval']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.126 (nearest=case_173_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Adult 50M type 2 diabetes tirzepatide-continuation dispute; weight loss is therapeutic, not self-injury; no banned topics (no SI/self-harm/abuse/IPV/EOL, not minor-gender care); Cigna fully-insured commercial plan with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Gender (50M), dx (type 2 diabetes E11.9), and treatment (tirzepatide continuation) are stable across profile and context; the denial's duration/experimental claims vs the context's rebuttals are the intended appealable falsehoods (allowed edge case), not contradictions; the boilerplate letter names no facts to contradict; the clinical timeline (baseline 9.1 -> 6.8 after tirzepatide -> continuation request) is coherent; no core fact flips.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Formal bureaucratic insurer boilerplate and a dense clinical recitation; no 'As an AI' tics, GPT vocabulary, listicles, or marketing cadence; the letter is intentionally generic (the algo_boilerplate flaw) but the rubric explicitly says not to fail for 'suspiciously generic'; nothing at the >=0.7 conspicuous-tell bar.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Cold procedural Cigna register ('Cigna has denied coverage of the requested service', 'does not meet the plan's coverage criteria at this time') with effective bureaucratic vagueness and no apology or marketing; clinical context is plain analytic prose, not emotional pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability - no dollar figures or out-of-pocket statements; the only liability-adjacent language ('experimental or investigational ... not covered benefits') describes coverage status, not a price; no Medicare/Medicaid conflation. Silence on cost liability is standard practice.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "References appeal rights generically ('request an internal appeal as described in your plan materials', provider may contact Cigna) but omits external review rights and specific ERISA disclosures (no 180-day deadline, no 502(a) civil-action notice) - a realistic attack vector per the edge-case rule, not a defect; the appeal window is present-but-buried; no hallucinated statutes; no Medicare framing on this commercial plan.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "50M with type 2 diabetes is epidemiologically clean (highly prevalent in middle-aged adults); tirzepatide after metformin/sulfonylurea is age/sex-appropriate; consistent male pronouns ('his HbA1c', 'his endocrinologist'); no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Cigna in-scope, Medical Necessity, fully_insured employer-sponsored commercial (no government/marketplace framing), adult 50, member-facing internal appeal only, no live-filing/attorney/court-representation language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "The letter has no explicit calendar dates (only 'the plan's required review cycle'); the one concrete date in context ('FDA approval in May 2022') is accurate and stacks plausibly before a 2026 review; no chronological contradiction (so not a 1), but no denial-letter 2025-2026 dated stack either - the middle anchor.",
+        "improvement": "Add explicit 2025-2026 service-request/denial dates and a concrete appeal window to the letter."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "References coverage only through generic umbrella terms ('the applicable Cigna coverage policy', 'the plan's coverage policy', 'your plan documents') with no bulletin/edition/module/page and no fabricated alphanumeric code or over-specified third-party guideline; the realistically-unspecific ideal.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.93,
+        "reasoning": "Pure boilerplate with zero case-specific reasoning (fails full-and-fair-review); the experimental label is demonstrably false for an FDA-approved (May 2022), ADA-endorsed therapy resting on a stale pre-approval policy with a lapsed review cycle; the duration cutoff is contradicted by submitted documentation of a sustained HbA1c drop 9.1->6.8. Major factual and procedural defects; easy appeal.",
+        "exploitable_weaknesses": [
+          "Pure boilerplate with zero case-specific reasoning (no diagnosis, physician, HbA1c, or records mentioned), failing the full-and-fair-review requirement",
+          "False 'experimental or investigational' label for an FDA-approved (May 2022), ADA-guideline-endorsed therapy, based on a policy predating approval with a lapsed review cycle",
+          "Duration cutoff contradicted by submitted updated documentation showing sustained response (HbA1c 9.1% to 6.8%); the denial's claim that records were not received is factually wrong"
+        ],
+        "strong_defenses": [
+          "The denial invokes procedural scaffolding the plan does have: a stated coverage-limit/review-cycle structure, uniform application of coverage policies, and a disclosed internal appeal right with an invitation to submit additional clinical information and have the provider contact Cigna"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / endocrine / sub_tactic=duration_excessive. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Pure boilerplate with zero case-specific reasoning (fails full-and-fair-review); the experimental label is demonstrably false for an FDA-approved (May 2022), ADA-endorsed therapy resting on a stale pre-approval policy with a lapsed review cycle; the duration cutoff is contradicted by submitted documentation of a sustained HbA1c drop 9.1->6.8. Major factual and procedural defects; easy appeal.",
+      "exploitable_weaknesses": [
+        "Pure boilerplate with zero case-specific reasoning (no diagnosis, physician, HbA1c, or records mentioned), failing the full-and-fair-review requirement",
+        "False 'experimental or investigational' label for an FDA-approved (May 2022), ADA-guideline-endorsed therapy, based on a policy predating approval with a lapsed review cycle",
+        "Duration cutoff contradicted by submitted updated documentation showing sustained response (HbA1c 9.1% to 6.8%); the denial's claim that records were not received is factually wrong",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: experimental_despite_fda_approval"
+      ],
+      "strong_defenses": [
+        "The denial invokes procedural scaffolding the plan does have: a stated coverage-limit/review-cycle structure, uniform application of coverage policies, and a disclosed internal appeal right with an invitation to submit additional clinical information and have the provider contact Cigna"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_boilerplate_fingerprint",
+        "experimental_despite_fda_approval"
+      ],
+      "deterministic_present": [
+        "algo_boilerplate_fingerprint",
+        "experimental_despite_fda_approval"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

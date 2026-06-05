@@ -1,0 +1,316 @@
+{
+  "case_id": "case_166_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 22,
+    "gender": "F",
+    "diagnosis": "Chronic lateral ankle instability (M25.371)",
+    "treatment_requested": "Brostr\u00f6m anatomic lateral ankle ligament repair",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "ignored_physician_letter: AMA 2023 Prior Authorization Physician Survey",
+    "peer_to_peer_window_verbal_only: AMA 2023 Prior Authorization Physician Survey; documented in multiple state PA reform laws (TX HB 2002, VA SB 1272)"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic msk case (modality substitution)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic msk case (modality substitution)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic msk case (modality substitution)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic msk case (modality substitution)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic msk case (modality substitution)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nUnitedHealthcare has completed prior authorization review of the request submitted by your provider for surgical ankle ligament reconstruction. After review, the request is denied.\n\nUnder the plan's policy, a less costly therapeutic modality is appropriate before surgical ligament reconstruction is authorized. The plan requires a step-down approach in which functional bracing and a supervised rehabilitation program are completed and documented before this surgical service is considered. Based on the plan's criteria, that less costly modality has not been established as exhausted, and the requested surgery is therefore not authorized at this time.\n\nThis determination applies the plan's standard criteria. Standard criteria apply regardless of information previously sent to the plan, and no case-specific exception has been identified for the requested service.\n\nA peer-to-peer review opportunity was offered. The window for requesting that peer-to-peer discussion was communicated verbally by telephone to your provider's office; that window is not confirmed in this letter. If your provider wishes to seek that discussion, the office should contact the plan using the number on file.\n\nIf you disagree with this determination, you may file an internal appeal as described in your plan materials and submit additional clinical information for review.\n\nThis determination addresses coverage under the terms of your plan only and is not medical advice or a statement about the care your treating providers may recommend.\n\nSincerely,\nUnitedHealthcare Prior Authorization Department",
+  "clinical_context": "The patient is a 22-year-old woman and collegiate athlete with chronic lateral ankle instability after repeated inversion injuries. MRI shows attenuation of the anterior talofibular ligament, and she has recurrent giving-way despite a documented and completed course of functional bracing and a supervised proprioceptive rehabilitation program, both of which failed to control her instability. Her orthopedic surgeon submitted a detailed letter of medical necessity describing the failed bracing and rehabilitation and recommending a Brostr\u00f6m anatomic ligament repair; the denial does not acknowledge or address that letter at all. The requested surgery is the standard treatment for recurrent instability that has failed conservative bracing and rehabilitation, so the plan's demand to repeat a less costly bracing modality ignores the documented failure the surgeon already established. The peer-to-peer window was conveyed only verbally by phone to the office staff without any written confirmation, so the surgeon could not verify the deadline or use the opportunity.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-063946-0c230",
+    "generated_at": "2026-06-05T06:39:49Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "18-25",
+      "patient_gender": "F",
+      "specialty": "msk",
+      "sub_tactic": "modality_substitution"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field (UHC, Prior Authorization, msk, 18-25, F, modality_substitution); dx chronic lateral ankle instability is msk; tx Brostr\u00f6m repair realistic; age 22 in band; modality_substitution (less costly modality / step-down before surgery) is the lead rationale; null employer_archetype permitted.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Conservative-modality-first denials for elective MSK surgery are routine; demanding the member repeat already-failed bracing/rehab, ignoring the surgeon's medical-necessity letter, and a verbal-only unconfirmed P2P window are authentic, exploitable gaps; Brostr\u00f6m is age-appropriate for a 22F athlete.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correct UnitedHealthcare branding with no wrong-insurer tells, but missing UHC fingerprints (no Medical Management Guidelines / Optum / 'documentation does not support' framing); the step-down phrasing reads cross-insurer.",
+        "improvement": "Cite UnitedHealthcare Medical Management Guidelines / an Optum reviewer and use the 'documentation does not support' framing."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy modality_substitution: vague 'less costly modality... not established as exhausted', circular reasoning, no specified thresholds, and the hand-wavy 'standard criteria apply regardless of information previously sent'; no hallucinated named guideline; exploitable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "22F collegiate athlete with chronic lateral ankle instability, ATFL attenuation on MRI, recurrent giving-way despite completed/failed bracing and proprioceptive rehab, escalated to a Brostr\u00f6m repair; correct anatomy, indication, and trajectory; no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "The Brostr\u00f6m (modified Brostr\u00f6m-Gould) repair is the gold-standard surgical treatment for chronic lateral ankle instability after failed conservative care; exact anatomic/clinical category match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "No neighbour shares the ankle-instability dx or the Brostr\u00f6m procedure; the modality_substitution flaw is unique among neighbours; the nearest foot/ankle neighbours (plantar fasciitis ESWT, Achilles PRP) are non-surgical tendinopathies with distinct trajectories; clearly distinct in feature-space.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['ignored_physician_letter', 'peer_to_peer_window_verbal_only']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['ignored_physician_letter', 'peer_to_peer_window_verbal_only']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.177 (nearest=case_161_uhc_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Routine elective orthopedic surgery; no banned topics (athletic injuries are accidental; no SI/self-harm/abuse/IPV/EOL framing; not gender-affirming-minor care); adult 22F; commercial UnitedHealthcare plan with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Age/gender (22F), diagnosis (chronic lateral ankle instability), and requested Brostr\u00f6m repair agree across profile, letter, and clinical context; the three denial grounds are consistent; the 'not exhausted' vs 'completed and failed' tension is an appealable falsehood the context rebuts, not a contradiction; verbal-P2P consistent; coherent timeline.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Formal bureaucratic insurer boilerplate and dense clinical recitation; no AI tics, GPT vocabulary, listicles, or marketing cadence.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural UHC register with evasive obfuscation (undefined 'exhausted', vague verbal P2P window); clinical context plain factual narrative, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on member cost liability; 'less costly modality' is a policy-criteria framing not a dollar figure; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal referenced; external-review/ERISA language strategically omitted and the appeal window left ambiguous (realistic attackable imperfections); the buried verbal P2P window adds an attack vector; no hallucinated statutes; no Medicare framing.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "22F collegiate athlete with chronic lateral ankle instability from repeated inversion injuries is epidemiologically strong; consistent female pronouns; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "UHC in-scope, fully-insured commercial, adult 22, member-facing internal appeal only, no Medicare/Medicaid/marketplace framing, no live-filing/attorney/court-representation language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No date contradictions (no dates are asserted, so nothing can conflict), but no absolute 2025-2026 dates and the verbal P2P window is explicitly unconfirmed; matches the vague-but-OK anchor.",
+        "improvement": "Add explicit 2025-2026 service-request/denial dates, a numeric appeal window, and a confirmed P2P deadline."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Generic un-named references ('plan's policy', 'plan's criteria', 'standard criteria'); no fabricated alphanumeric code and no named guideline edition/page; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "The plan demands repeating an already-completed/failed bracing-rehab modality, ignores the surgeon's submitted letter of medical necessity, and gave a verbal-only unconfirmed P2P window \u2014 a strong, easily winnable multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Peer-to-peer deadline conveyed only verbally and not confirmed in writing, depriving the provider of a verifiable window",
+          "Denial demands completion of bracing/rehabilitation already documented as completed and failed, ignoring the surgeon's letter of medical necessity",
+          "Circular/factually wrong step-down logic: the requested surgery is standard of care after failed conservative care, yet the plan demands repeating exhausted modalities"
+        ],
+        "strong_defenses": [
+          "The plan does articulate a recognized step-down criterion (conservative care before surgical reconstruction), a legitimate framework when conservative care is genuinely incomplete"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / msk / sub_tactic=modality_substitution. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The plan demands repeating an already-completed/failed bracing-rehab modality, ignores the surgeon's submitted letter of medical necessity, and gave a verbal-only unconfirmed P2P window \u2014 a strong, easily winnable multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Peer-to-peer deadline conveyed only verbally and not confirmed in writing, depriving the provider of a verifiable window",
+        "Denial demands completion of bracing/rehabilitation already documented as completed and failed, ignoring the surgeon's letter of medical necessity",
+        "Circular/factually wrong step-down logic: the requested surgery is standard of care after failed conservative care, yet the plan demands repeating exhausted modalities",
+        "Pattern anchor: ignored_physician_letter",
+        "Pattern anchor: peer_to_peer_window_verbal_only"
+      ],
+      "strong_defenses": [
+        "The plan does articulate a recognized step-down criterion (conservative care before surgical reconstruction), a legitimate framework when conservative care is genuinely incomplete"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "ignored_physician_letter",
+        "peer_to_peer_window_verbal_only"
+      ],
+      "deterministic_present": [
+        "ignored_physician_letter",
+        "peer_to_peer_window_verbal_only"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

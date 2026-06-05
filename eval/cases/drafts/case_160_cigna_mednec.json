@@ -1,0 +1,316 @@
+{
+  "case_id": "case_160_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 63,
+    "gender": "M",
+    "diagnosis": "Severe medial-compartment knee osteoarthritis (M17.11)",
+    "treatment_requested": "Continuation of an ongoing structured nonoperative knee program (supervised therapy, unloader brace, and intra-articular corticosteroid injection series)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "missing_cost_liability: No Surprises Act Compliance Audit 2024"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic msk case (duration excessive)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nCigna has completed a medical necessity review of the request for the requested service. After review, continued coverage of the requested service is denied.\n\nThe duration of the requested service exceeds the plan's coverage limits for this type of service. Continuation beyond the supported duration requires a new clinical review based on updated documentation. The updated documentation needed to support an extended duration has not been received, and the records on file do not establish that continuation beyond the standard duration is supported under the plan's criteria.\n\nThis determination applies the plan's standard criteria to requests of this type and does not reflect any review of the member's diagnosis or individual clinical records. No additional case-specific findings were made.\n\nCoverage of services of this type is limited to a defined duration under the plan's criteria. When the supported duration is reached, continuation is not covered unless updated documentation establishing continued necessity is submitted and approved under the criteria in effect at that time.\n\nIf you disagree with this determination, you may file an internal appeal by contacting the number on your member identification card within the timeframe stated in your plan documents. You may submit additional clinical information with your appeal, and a clinician who was not involved in this determination will review your appeal.\n\nThis determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nCigna Utilization Management",
+  "clinical_context": "The patient is a 63-year-old man with severe medial-compartment knee osteoarthritis, Kellgren-Lawrence grade 3, with varus malalignment, who has been in an ongoing structured nonoperative program for several months, including supervised physical therapy, an unloader brace, and a series of intra-articular corticosteroid injections, the most recent of which has already been administered. His orthopedic surgeon documented continued functional benefit, with improved walking distance and reduced pain scores, and requested continuation of the program while knee replacement is deferred. The denial contains no reference to his diagnosis, his surgeon, the documented response, or any of the submitted progress notes, and it does not state whether the member will be financially responsible for the services already rendered or for any continued services if he proceeds. The submitted progress notes and injection records were provided with the request.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-060249-6c08c",
+    "generated_at": "2026-06-05T06:02:49Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "56-70",
+      "patient_gender": "M",
+      "specialty": "msk",
+      "sub_tactic": "duration_excessive"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field; severe knee OA is msk; continued nonoperative program realistic; duration_excessive is the rationale; 63M in 56-70.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cigna denying continuation of a nonoperative knee-OA program on duration grounds is realistic; boilerplate with no case detail and the cost-liability omission (services already rendered) are realistic exploitable gaps.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.8,
+        "reasoning": "Correct Cigna branding and procedural cadence, no wrong-insurer tells, but no named MCG/Cigna MNG fingerprint.",
+        "improvement": "Cite Cigna Medical Necessity Guidelines or MCG by name."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy duration_excessive: undefined 'standard duration', circular not-supported reasoning, admits no individual review; exploitable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "63M medial-compartment knee OA KL grade 3 with varus malalignment; supervised therapy, unloader brace, and IA corticosteroid injections are guideline-concordant; no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Supervised therapy, unloader bracing, and IA corticosteroid injections are standard nonoperative care for medial-compartment knee OA; correct match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Shares payer/category/flaw (Cigna/msk/duration_excessive) and a continuation-of-conservative-care trajectory with the lumbar-radiculopathy PT-continuation neighbour, though anatomy (knee vs lumbar), pathology (OA vs radiculopathy), and treatment mix (brace+injection vs PT-only) differ.",
+        "improvement": "Differentiate the trajectory from the lumbar duration_excessive neighbour, e.g. frame around the injection-series cumulative load rather than program duration."
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['algo_boilerplate_fingerprint', 'missing_cost_liability']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['algo_boilerplate_fingerprint', 'missing_cost_liability']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.169 (nearest=case_154_uhc_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Routine nonoperative orthopedics; no banned topics; adult 63M; Cigna commercial with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Gender, diagnosis, treatment stable across documents; the not-received-documentation claim vs submitted records is an appealable falsehood not a contradiction.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Cold procedural Cigna register with obfuscatory undefined-duration phrasing; clinical context plain factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability (the intended omission); no dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internal appeal present; omitted external-review/ERISA language and buried window are realistic attackable imperfections; no hallucinated statutes; no Medicare framing.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "63M with medial-compartment knee OA and varus malalignment is epidemiologically textbook; consistent male pronouns; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Cigna in-scope, fully-insured commercial, adult 63, member-facing internal appeal only, no live-filing language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.78,
+        "reasoning": "No contradictions; relative timing (several months) consistent but no absolute calendar dates or numeric appeal window.",
+        "improvement": "Add absolute 2026 dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Generic un-named 'plan's criteria'/'coverage limits' references; no hallucinated alphanumeric code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Boilerplate denial that disclaims individual review and wrongly claims documentation not received (records were submitted), plus omitted cost liability on already-rendered services; easy multi-vector appeal, though a genuine duration limit is a defense.",
+        "exploitable_weaknesses": [
+          "Denial claims required updated documentation was not received, but progress notes and injection records were submitted with the request",
+          "Letter admits it does not reflect any review of the diagnosis or individual records, ignoring surgeon-documented functional benefit",
+          "Vague/templated criteria with no named guideline plus omitted financial-responsibility disclosure on already-rendered services"
+        ],
+        "strong_defenses": [
+          "The plan legitimately limits this service to a defined duration and can require a fresh clinical review with updated documentation when that limit is reached"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / msk / sub_tactic=duration_excessive. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Boilerplate denial that disclaims individual review and wrongly claims documentation not received (records were submitted), plus omitted cost liability on already-rendered services; easy multi-vector appeal, though a genuine duration limit is a defense.",
+      "exploitable_weaknesses": [
+        "Denial claims required updated documentation was not received, but progress notes and injection records were submitted with the request",
+        "Letter admits it does not reflect any review of the diagnosis or individual records, ignoring surgeon-documented functional benefit",
+        "Vague/templated criteria with no named guideline plus omitted financial-responsibility disclosure on already-rendered services",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: missing_cost_liability"
+      ],
+      "strong_defenses": [
+        "The plan legitimately limits this service to a defined duration and can require a fresh clinical review with updated documentation when that limit is reached"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_boilerplate_fingerprint",
+        "missing_cost_liability"
+      ],
+      "deterministic_present": [
+        "algo_boilerplate_fingerprint",
+        "missing_cost_liability"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

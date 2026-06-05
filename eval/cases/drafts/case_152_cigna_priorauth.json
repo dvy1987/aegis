@@ -1,0 +1,316 @@
+{
+  "case_id": "case_152_cigna_priorauth",
+  "insurer": "Cigna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 52,
+    "gender": "M",
+    "diagnosis": "Young-onset Parkinson disease with motor fluctuations (G20)",
+    "treatment_requested": "Continued multidisciplinary outpatient physical and occupational therapy for gait freezing and postural instability (additional visits beyond the annual cap)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "wrong_appeals_contact: State Insurance Commissioner complaint logs (CA, NY, TX) 2023",
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic neurology case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic neurology case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic neurology case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic neurology case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic neurology case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    },
+    {
+      "ref_id": "aca-2719-29-cfr-147-136",
+      "title": "Internal claims and appeals \u2014 diagnosis/treatment codes (29 CFR \u00a7 2590.715-2719)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2590.715-2719",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Claim identification (DOS, provider, amount)."
+    }
+  ],
+  "denial_letter_text": "Dear Mr. Member,\n\nCigna has reviewed the prior authorization request for continued outpatient neurological rehabilitation visits, including physical and occupational therapy for gait and balance, submitted on your behalf. After review, the request is denied.\n\nThe annual visit limit for outpatient rehabilitation therapy services under this plan has been reached for the current plan year. Additional visits beyond the annual maximum are not a covered benefit for the remainder of the plan year.\n\nThe visit-frequency criteria applied in this determination are characterized in the geriatric (ages 65 and older) population, and under those criteria the rehabilitation visits already furnished this plan year are considered sufficient. The request for additional supervised therapy therefore exceeds the frequency supported by the applicable criteria.\n\nCoverage of outpatient rehabilitation services is subject to the annual visit maximum and the medical-management frequency criteria described in your plan documents, regardless of the provider or setting in which the services are delivered.\n\nIf you disagree with this determination, you may request an appeal. Written appeals must be submitted to the Cigna Pharmacy Appeals Unit, P.O. Box 42005, Phoenix, AZ 85080, or by fax to 1-800-555-0143, within the timeframe stated in your plan documents. You may submit additional clinical information with your appeal.\n\nThis determination addresses coverage under your plan only and is not medical advice.\n\nSincerely,\nCigna Utilization Management",
+  "clinical_context": "The patient is a 52-year-old man with young-onset Parkinson disease and motor fluctuations, including roughly six hours of daily off-time and freezing of gait despite optimized oral levodopa. His neurologist requested continued multidisciplinary physical and occupational therapy beyond the plan's annual visit cap to address gait freezing, postural instability, and two recent falls, which a prior supervised course measurably improved. The visit-frequency criteria the denial applies are drawn from a geriatric population characterized as ages 65 and older; the American Academy of Neurology and Parkinson Foundation rehabilitation recommendations support intensive, individualized therapy for working-age patients with motor fluctuations and do not endorse a geriatric-frailty visit cap for a 52-year-old who remains employed and ambulatory. The appeals contact printed on the denial is the Cigna Pharmacy Appeals Unit; under the member's plan documents, medical-necessity appeals must be directed to the Medical Appeals unit, and the pharmacy unit returns misdirected medical appeals.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-045334-53acc",
+    "generated_at": "2026-06-05T04:53:35Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "neurology",
+      "sub_tactic": "visit_limit_exceeded"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field; young-onset Parkinson is neurology; continued PT/OT beyond annual cap realistic; visit_limit_exceeded is the rationale; 52M in 41-55.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cigna visit-cap PA denial on neuro rehab is a common commercial dispute; misapplied geriatric guideline and misrouted appeals contact are realistic exploitable defects.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correct Cigna branding and procedural cadence, no wrong-insurer tells, but no named MCG/MNG fingerprint.",
+        "improvement": "Cite Cigna Medical Necessity Guidelines or MCG."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy visit_limit_exceeded: no numeric cap, vague sufficiency, defers to plan documents, geriatric-criteria hook; exploitable.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "52M young-onset PD with six hours off-time, freezing of gait, falls; continued multidisciplinary PT/OT appropriate; no biology violations.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "PT/OT for gait freezing and postural instability is guideline-endorsed standard care for Parkinson disease; exact match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Parkinson/PT-OT with visit_limit_exceeded is a unique payer+flaw+dx+tx point; no neighbour shares dx, flaw, or visit-cap trajectory.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['wrong_appeals_contact', 'incorrect_demographic_guideline']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['wrong_appeals_contact', 'incorrect_demographic_guideline']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.261 (nearest=case_151_aetna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Routine neuro rehab; no banned topics; adult 52M; Cigna commercial with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Gender, diagnosis, treatment, geriatric-criteria and appeals-routing stable across documents; sufficiency disagreement and misrouting are appealability not contradictions.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Formal insurer boilerplate and dense clinical recitation; no GPT vocabulary, listicles, or meta-commentary.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural Cigna register with vague benefit-limit phrasing; clinical context plain factual, no pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No cost/liability or dollar figures; no Medicare/Medicaid conflation.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Appeal right present; misrouted appeals contact and buried window are realistic attackable imperfections; no hallucinated statutes; no Medicare framing.",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "52M with young-onset PD is epidemiologically apt; consistent male pronouns/'Mr.'; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cigna in-scope, fully-insured commercial, adult 52, member-facing internal appeal only, no live-filing language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.75,
+        "reasoning": "No contradictions; relative timing (plan year, recent falls) consistent but no absolute calendar anchor.",
+        "improvement": "Add absolute 2026 dates and a numeric appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Generic un-named 'plan documents'/'frequency criteria' references; no hallucinated alphanumeric code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Misapplied geriatric visit-frequency criteria on a 52-year-old contradicting AAN/Parkinson Foundation, plus appeals misrouted to the Pharmacy Appeals Unit; easy multi-vector appeal.",
+        "exploitable_weaknesses": [
+          "Wrong appeals contact: medical-necessity appeal directed to the Cigna Pharmacy Appeals Unit while plan documents require the Medical Appeals unit",
+          "Visit-frequency criteria drawn from the geriatric ages 65+ population misapplied to a 52-year-old working-age patient, contrary to AAN/Parkinson Foundation recommendations",
+          "Ignored clinical need: freezing of gait, postural instability, two recent falls, prior course measurably improved"
+        ],
+        "strong_defenses": [
+          "The plan's annual outpatient rehabilitation visit maximum is a contractual benefit limit applied regardless of provider or setting"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Prior Authorization / neurology / sub_tactic=visit_limit_exceeded. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Misapplied geriatric visit-frequency criteria on a 52-year-old contradicting AAN/Parkinson Foundation, plus appeals misrouted to the Pharmacy Appeals Unit; easy multi-vector appeal.",
+      "exploitable_weaknesses": [
+        "Wrong appeals contact: medical-necessity appeal directed to the Cigna Pharmacy Appeals Unit while plan documents require the Medical Appeals unit",
+        "Visit-frequency criteria drawn from the geriatric ages 65+ population misapplied to a 52-year-old working-age patient, contrary to AAN/Parkinson Foundation recommendations",
+        "Ignored clinical need: freezing of gait, postural instability, two recent falls, prior course measurably improved",
+        "Pattern anchor: wrong_appeals_contact",
+        "Pattern anchor: incorrect_demographic_guideline"
+      ],
+      "strong_defenses": [
+        "The plan's annual outpatient rehabilitation visit maximum is a contractual benefit limit applied regardless of provider or setting"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "wrong_appeals_contact",
+        "incorrect_demographic_guideline"
+      ],
+      "deterministic_present": [
+        "wrong_appeals_contact",
+        "incorrect_demographic_guideline"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

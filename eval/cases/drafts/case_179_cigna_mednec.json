@@ -1,0 +1,315 @@
+{
+  "case_id": "case_179_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 62,
+    "gender": "F",
+    "diagnosis": "Incidental adrenal nodule, 2.8 cm, indeterminate (E27.8)",
+    "treatment_requested": "Dedicated adrenal-protocol CT (non-contrast plus contrast washout)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "algo_reviewer_no_credentials: ERISA 29 U.S.C. \u00a7 1133; MHPAEA Final Rule 2024 (29 CFR \u00a7 2590.712); Hansens v. Cigna (D. Conn. 2023)",
+    "superseded_guideline: AHIP 2022 Coverage Policy Review; documented in multiple Cigna litigation cases 2021\u20132023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic imaging case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic imaging case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic imaging case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic imaging case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic imaging case (level of care too high)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic imaging case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nCigna has completed its medical necessity review of the request submitted by your provider for a dedicated adrenal-protocol CT. After review, the request is denied.\n\nCigna's medical necessity criteria provide that a lower level of care is appropriate before advanced dedicated imaging for an incidental adrenal nodule. The requested adrenal-protocol CT exceeds what is required at this time, and a lower level of care, namely clinical follow-up with standard interval imaging, has not been shown to be exhausted. This determination applies the standards set out in the plan's 2020 adrenal imaging coverage policy. Under that policy, dedicated adrenal characterization imaging is reserved for nodules that meet specific size and attenuation thresholds, and the documentation does not establish that those thresholds are met, so a lower level of care is sufficient under the plan's criteria at this time.\n\nThis determination was made by Dr. L. Pereira following review of the submitted records.\n\nIf you disagree with this determination, you may request an internal appeal as described in your plan materials and submit additional clinical information for review. Your treating provider may also contact Cigna to discuss this determination.\n\nThis determination addresses coverage under the terms of your plan only and is not medical advice or a statement about the care your treating providers may recommend.\n\nSincerely,\nCigna Medical Coverage Review",
+  "clinical_context": "The patient is a 62-year-old woman with difficult-to-control hypertension on three antihypertensive agents in whom a prior non-contrast CT incidentally identified a 2.8 cm right adrenal nodule with indeterminate attenuation above 10 Hounsfield units. Current American College of Radiology and American Association of Clinical Endocrinology guidance recommends a dedicated adrenal-protocol CT with contrast washout to characterize an indeterminate adrenal nodule larger than 1 cm, so the requested study is the guideline-indicated level of care for this finding rather than an excessive one, and standard interval imaging would not adequately characterize the nodule. The plan's 2020 adrenal imaging coverage policy predates this updated adrenal-incidentaloma guidance that supports dedicated characterization imaging, so the standard the denial applies is out of date. The letter names Dr. L. Pereira as the reviewer but gives no specialty, credentials, or license number, so the ordering physician cannot verify whether the reviewer is a radiologist or endocrinologist qualified to assess an adrenal imaging request.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-113557-773e5",
+    "generated_at": "2026-06-05T11:35:57Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "56-70",
+      "patient_gender": "F",
+      "specialty": "imaging",
+      "sub_tactic": "level_of_care_too_high"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field (Cigna, Medical Necessity, imaging, 56-70, F, level_of_care_too_high); dx incidental 2.8 cm indeterminate adrenal nodule (E27.8) is an imaging finding; dedicated adrenal-protocol CT is realistic; denial_rationale_seed describes level_of_care_too_high (a lower level of care suffices; dedicated characterization exceeds what is required); patient 62F matches; null employer_archetype acceptable.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.88,
+        "reasoning": "An incidental 2.8 cm indeterminate adrenal nodule genuinely triggers dedicated adrenal-protocol CT (washout) per current ACR/AACE incidentaloma guidance for nodules >1 cm; Cigna asserting a lower level of care suffices is the hand-wavy level-of-care rationing insurers deploy; the uncredentialed named reviewer and the stale 2020 policy are real exploitable defects; 62F with difficult HTN is clinically coherent.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Names Cigna repeatedly with a bureaucratic step-therapy/level-of-care cadence ('lower level of care', 'has not been shown to be exhausted') and a 'Cigna Medical Coverage Review' sign-off (no wrong-insurer tells), but cites generic 'medical necessity criteria' and a vague 'plan's 2020 adrenal imaging coverage policy' rather than named Cigna fingerprints (Cigna Medical Necessity Guidelines / MCG), leaving it on the unspecific side.",
+        "improvement": "Cite Cigna's named criteria (Cigna Medical Necessity Guidelines / MCG)."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites the plan's '2020 adrenal imaging coverage policy' (plausible internal guideline) and applies it with authentic vagueness - invokes 'specific size and attenuation thresholds' without stating them and shifts the burden ('documentation does not establish that those thresholds are met'); maps cleanly onto level_of_care_too_high (a lower tier of watchful follow-up suffices); hand-wavy and exploitable, not airtight.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "62F with difficult-to-control HTN on three agents realistically frames why an adrenal nodule matters; the >10 HU indeterminate-attenuation threshold and dedicated adrenal-protocol washout CT for an indeterminate >1 cm nodule reflect genuine ACR/AACE guidance; the incidental-finding-to-washout-protocol trajectory is workflow-realistic; no invented or biology-violating content.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Dedicated adrenal-protocol CT (non-contrast plus contrast washout) is the textbook, guideline-endorsed characterization study for an incidentally discovered indeterminate adrenal nodule in the 1-4 cm indeterminate range; correct modality and organ system; clean match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "No neighbour involves an adrenal nodule, adrenal-protocol/washout CT, or E27.8; the two Cigna/MedNec/imaging/level_of_care neighbours are a cervical-spine MRI and an AAA ultrasound - different organ systems, modalities, and trajectories; the washout-CT-for-adrenal-characterization scenario is a recognizable distinct point in feature-space; not a near-duplicate.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['superseded_guideline']; needs_llm=['algo_reviewer_no_credentials']; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['superseded_guideline']; needs_llm=['algo_reviewer_no_credentials']; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.208 (nearest=case_173_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Adult 62F adrenal-nodule imaging-characterization dispute; no banned topics (no SI/self-harm/abuse/IPV/EOL framing - this is diagnostic characterization, not life-sustaining treatment; not minor-gender care); Cigna fully-insured commercial plan with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Gender (62F), dx (2.8 cm indeterminate adrenal nodule E27.8), requested dedicated adrenal-protocol CT, and reviewer name (Dr. L. Pereira) agree across letter and context; the letter's 'thresholds not established' vs the context's 2.8 cm/>10 HU is the appealable denial-vs-fact tension (allowed edge case), not an unstable fact; consistent 2020-policy reference; no laterality/drug/date conflicts.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Formal bureaucratic insurer boilerplate and a dense comma-spliced clinical recitation; no 'As an AI' tics, GPT vocabulary, listicles, or marketing cadence; nothing at the >=0.7 conspicuous-tell bar.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural Cigna register ('the request is denied', circular 'a lower level of care is sufficient ... at this time') with effective bureaucratic obfuscation and no apology or marketing; clinical context is plain analytic prose with only mild advocacy drift, not emotional pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No mention of cost, dollar amounts, or member out-of-pocket liability; addresses only medical necessity, coverage criteria, and appeal rights; no Medicare/Medicaid conflation. Silence on cost liability is standard practice.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Offers an internal appeal path but strategically omits external/independent review rights and ERISA disclosure language (a realistic attack vector, not a penalty); cites no statutes and hallucinates none; no Medicare framing on this commercial plan; the appeal window is present-but-buried ('as described in your plan materials').",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "62F with an indeterminate adrenal nodule and resistant hypertension is strongly coherent (incidentalomas rise with age; resistant HTN is a classic trigger for adrenal evaluation); gender-neutral letter, female context with no pronoun mismatch; clinically motivated rather than default; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cigna in-scope, Medical Necessity, fully_insured commercial, adult 62, member-facing internal appeal only, no live-filing/attorney/court-representation language, no Medicare/Medicaid/marketplace framing.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.75,
+        "reasoning": "No explicit calendar dates, service-request/denial dates, or numeric appeal window; the single concrete year (2020 policy) is plausible and internally consistent (it predates current guidance); no contradiction (so not a 1), but the timeline is unanchored to 2025-2026 - the middle anchor.",
+        "improvement": "Add explicit 2026 service-request/denial dates and a concrete appeal window."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "References generic umbrella terms ('Cigna's medical necessity criteria', 'the plan's criteria') plus a descriptive un-named 'plan's 2020 adrenal imaging coverage policy' with only a year and no alphanumeric code/module/edition/page, alluding to thresholds without stating values; no fabricated identifier; realistically unspecific.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "The denial applies an out-of-date 2020 policy that predates current ACR/AACE incidentaloma guidance, which recommends dedicated adrenal-protocol washout CT for an indeterminate >1 cm nodule - squarely met by the 2.8 cm, >10 HU nodule with resistant HTN - making the 'lower level of care' reasoning circular and contradicted; the named reviewer (Dr. L. Pereira) lacks specialty/credentials/license. Easy appeal.",
+        "exploitable_weaknesses": [
+          "Denial applies the out-of-date 2020 adrenal imaging policy that predates updated adrenal-incidentaloma guidance, so the cited standard is factually inapplicable",
+          "Circular 'lower level of care' reasoning contradicted by current ACR/AACE guidance recommending dedicated adrenal-protocol CT for an indeterminate nodule >1 cm, which the 2.8 cm >10 HU nodule meets",
+          "Reviewer Dr. L. Pereira is named with no specialty, credentials, or license number, so qualification to assess an adrenal imaging request cannot be verified"
+        ],
+        "strong_defenses": [
+          "The denial cites a named, dated written coverage standard (the plan's 2020 adrenal imaging coverage policy with size/attenuation thresholds), identifies a named physician reviewer, and provides internal appeal rights plus an invitation to submit additional clinical information"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / imaging / sub_tactic=level_of_care_too_high. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial applies an out-of-date 2020 policy that predates current ACR/AACE incidentaloma guidance, which recommends dedicated adrenal-protocol washout CT for an indeterminate >1 cm nodule - squarely met by the 2.8 cm, >10 HU nodule with resistant HTN - making the 'lower level of care' reasoning circular and contradicted; the named reviewer (Dr. L. Pereira) lacks specialty/credentials/license. Easy appeal.",
+      "exploitable_weaknesses": [
+        "Denial applies the out-of-date 2020 adrenal imaging policy that predates updated adrenal-incidentaloma guidance, so the cited standard is factually inapplicable",
+        "Circular 'lower level of care' reasoning contradicted by current ACR/AACE guidance recommending dedicated adrenal-protocol CT for an indeterminate nodule >1 cm, which the 2.8 cm >10 HU nodule meets",
+        "Reviewer Dr. L. Pereira is named with no specialty, credentials, or license number, so qualification to assess an adrenal imaging request cannot be verified",
+        "Pattern anchor: algo_reviewer_no_credentials",
+        "Pattern anchor: superseded_guideline"
+      ],
+      "strong_defenses": [
+        "The denial cites a named, dated written coverage standard (the plan's 2020 adrenal imaging coverage policy with size/attenuation thresholds), identifies a named physician reviewer, and provides internal appeal rights plus an invitation to submit additional clinical information"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_reviewer_no_credentials",
+        "superseded_guideline"
+      ],
+      "deterministic_present": [
+        "superseded_guideline"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

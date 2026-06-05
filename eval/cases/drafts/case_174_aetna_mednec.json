@@ -1,0 +1,316 @@
+{
+  "case_id": "case_174_aetna_mednec",
+  "insurer": "Aetna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 32,
+    "gender": "F",
+    "diagnosis": "Dermatomyositis with proximal muscle weakness (M33.10)",
+    "treatment_requested": "Intravenous immunoglobulin (IVIG) maintenance infusions every four weeks",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719",
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic infusion specialty rx case (frequency excessive)."
+    },
+    {
+      "ref_id": "aetna-denial-codes-muni",
+      "title": "How to Appeal Aetna Denials \u2014 denial codes B7/CO-96 (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-aetna-denials-2025",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna denial code medical necessity appeal letter. Calibrated to this synthetic infusion specialty rx case (frequency excessive)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic infusion specialty rx case (frequency excessive)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic infusion specialty rx case (frequency excessive)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic infusion specialty rx case (frequency excessive)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic infusion specialty rx case (frequency excessive)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "wa-oic-mednec-templates",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Calibrated P2 letter surface: Insurer cites internal medical policies with criteria member must meet."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nAetna has completed its medical necessity review of the request submitted by your provider for intravenous immunoglobulin (IVIG) for dermatomyositis at the requested infusion frequency of every four weeks. After review, the requested frequency is denied as not medically necessary.\n\nUnder Aetna's Clinical Policy Bulletin for immunoglobulin therapy, the requested infusion cadence exceeds plan guidelines for this condition. The documentation does not support that infusions at the requested every-four-week frequency are medically necessary. A less frequent maintenance cadence is consistent with the plan's criteria, and additional infusions at the requested interval are not approved at this time.\n\nThe dosing thresholds applied in this determination are drawn from the plan's pediatric dermatomyositis dosing guideline. Under that pediatric guideline, immunoglobulin maintenance is supported only at the lower frequency described, and the requested cadence does not meet those thresholds.\n\nIf you disagree with this determination, you may file an internal appeal as described in your plan materials and submit additional clinical information for review. Your treating provider may also contact Aetna to request a peer-to-peer discussion.\n\nThis determination addresses coverage under the terms of your plan only and is not medical advice or a statement about the care your treating providers may recommend.\n\nSincerely,\nAetna Clinical Review",
+  "clinical_context": "The patient is a 32-year-old woman with dermatomyositis confirmed by proximal muscle weakness, a peak creatine kinase of 3200 U/L, and characteristic findings, who failed methotrexate and was started on intravenous immunoglobulin. She has had a measurable response on IVIG dosed every four weeks, and her proximal weakness and creatine kinase rose when the interval was previously lengthened, so the every-four-week maintenance cadence is medically necessary to maintain remission rather than an excessive frequency. The dosing thresholds the denial applies come from a pediatric (juvenile dermatomyositis) dosing guideline, which does not govern maintenance dosing for adult dermatomyositis; adult IVIG maintenance evidence supports the requested interval. The determination also lists only an internal appeal and a peer-to-peer option and omits any notice of the right to independent external review by an external review organization, which is required for this non-grandfathered plan, so the notice is procedurally defective.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-111240-a686e",
+    "generated_at": "2026-06-05T11:12:40Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "26-40",
+      "patient_gender": "F",
+      "specialty": "infusion_specialty_rx",
+      "sub_tactic": "frequency_excessive"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches the assigned cell field-for-field (Aetna, Medical Necessity, infusion_specialty_rx, 26-40, F, frequency_excessive); dx dermatomyositis (M33.10) with IVIG maintenance belongs to infusion_specialty_rx; denial_rationale_seed correctly leads with frequency_excessive (every-four-week cadence exceeds plan guidelines); null employer_archetype acceptable for age 32.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Aetna requires PA for IVIG and applies frequency criteria; dermatomyositis is a recognized IVIG indication, so an 'every-four-week cadence exceeds plan guidelines' denial mirrors real frequency pushback; drug-dx fit is correct (IVIG after failed methotrexate, CK 3200, proximal weakness); the pediatric-guideline misapplication and the omitted IRO notice on a fully-insured non-grandfathered plan are genuine exploitable defects.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Sourced from Aetna with Aetna tells: cites 'Aetna's Clinical Policy Bulletin for immunoglobulin therapy' (the signature CPB reference), cool terse procedural cadence, and an 'Aetna Clinical Review' sign-off; no wrong-insurer tells; would convince a claims handler this is an Aetna letter.",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites a plausible Aetna CPB and applies it with authentic vagueness ('exceeds plan guidelines', 'documentation does not support') without a numeric threshold, matching frequency_excessive; the mismatched-authority point (pediatric guideline applied to an adult) is a realistic exploitable appeal lever; no hallucinated rule; hand-wavy and non-airtight.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correct indication and real agents (failed methotrexate, IVIG for refractory DM), realistic CK 3200, coherent relapse-on-interval-extension narrative, and every-four-week maintenance is a recognized adult DM regimen; the only gap is missing exact dosing (IVIG g/kg per cycle, MTX dose/duration), which keeps it from a flawless 5 but a clinician would not wince.",
+        "improvement": "Specify IVIG 2 g/kg per cycle and the methotrexate dose/duration to anchor the trajectory."
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "IVIG is a guideline-supported, FDA-approved therapy for adult dermatomyositis (an idiopathic inflammatory myopathy with proximal weakness), including maintenance dosing; every-four-week maintenance is consistent with real-world IVIG dosing; clean immunomodulatory category match.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "No neighbour uses IVIG or a polyclonal immunoglobulin (neighbours are monoclonal biologics or an oral JAK), and dermatomyositis appears nowhere in the neighbour set; the only shared axis is the frequency_excessive tag (UHC Crohn's/ustekinumab neighbour), which differs in payer, drug, dx, and trajectory; not a near-duplicate.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['missing_iro_notice', 'incorrect_demographic_guideline']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['missing_iro_notice', 'incorrect_demographic_guideline']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.119 (nearest=case_173_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Adult 32F dermatomyositis IVIG-frequency dispute; no banned topics (the pediatric guideline is cited as the wrong standard, not abuse framing; no SI/self-harm/IPV/EOL, not minor-gender care); Aetna fully-insured commercial plan with no Medicare/Medicaid framing.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Gender (32F), dx (dermatomyositis M33.10), and requested every-four-week IVIG agree across letter and context; the necessity dispute is appealable disagreement, not a contradiction; the pediatric-guideline rationale is stable across both documents; the clinical timeline (failed MTX -> IVIG -> response -> worsening on interval lengthening) is internally consistent; no unstable facts.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Formal bureaucratic insurer boilerplate and a dense comma-spliced clinical recitation; no 'As an AI' tics, GPT vocabulary, listicles, or marketing cadence; no conspicuous tell at confidence >=0.7.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural Aetna register ('denied as not medically necessary', 'exceeds plan guidelines') with effective bureaucratic vagueness and no apology or marketing; clinical context is flat third-person clinical prose, no emotional pleading.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.97,
+        "reasoning": "No mention of cost, out-of-pocket liability, or dollar amounts; framed entirely around medical necessity and infusion frequency; no Medicare/Medicaid conflation. Total silence on cost liability mirrors real practice.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.88,
+        "reasoning": "Mentions internal appeal and peer-to-peer but strategically omits external-review/IRO rights (a realistic attack vector per the edge-case rule, not a penalty); invokes authority only vaguely (Aetna CPB, plan terms) with no invented statutes; no Medicare framing on this commercial plan; appeal window left ambiguous ('as described in your plan materials').",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "32F with dermatomyositis is epidemiologically apt (female predominance ~2:1; well-documented in younger adults); objective confirmatory findings (CK 3200, proximal weakness, IVIG response); consistent female pronouns; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Aetna in-scope, Medical Necessity, fully_insured commercial (non-grandfathered), adult 32, member-facing internal appeal + external-review reference are standard appeal-rights notices (not live-filing/attorney/court language); the cited pediatric guideline is the flawed basis, but the patient is an adult, so scope holds.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "No explicit calendar dates, denial/request dates, or appeal-window day count; 'every four weeks' is a treatment interval, not a date, and is internally coherent; no contradiction exists but no affirmative 2025-2026 dated content either - the middle anchor.",
+        "improvement": "Add explicit 2026 service-request/denial dates, an appeal window, and date-anchored clinical history."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cites the correct owner and real document type ('Aetna's Clinical Policy Bulletin for immunoglobulin therapy') and an un-named 'pediatric dermatomyositis dosing guideline' without any fabricated alphanumeric code, edition, or page; realistic frustrating-to-providers vagueness, no hallucinated identifiers.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Two independent vectors: the determination admits its thresholds come from a pediatric/juvenile-DM dosing guideline applied to a 32-year-old adult (wrong-guideline error), and the record affirmatively supports necessity (response at every-four-week dosing, CK/weakness worsening when the interval was lengthened), rebutting the 'documentation does not support' claim; procedurally the notice omits the required independent external review notice for a non-grandfathered plan. Easy appeal.",
+        "exploitable_weaknesses": [
+          "Wrong guideline applied: pediatric/juvenile dermatomyositis dosing thresholds used to deny an adult, where that guideline does not govern adult maintenance dosing",
+          "Contradicted clinical reasoning: documented response at every-four-week dosing with CK and weakness worsening when the interval was lengthened refutes 'documentation does not support'",
+          "Procedurally defective notice: omits the required notice of the right to independent external review for a non-grandfathered plan"
+        ],
+        "strong_defenses": [
+          "The denial provides procedural scaffolding: it names a specific Aetna Clinical Policy Bulletin, cites an identifiable dosing guideline, offers an internal appeal and a peer-to-peer option, and includes the standard coverage-terms disclaimer"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Medical Necessity / infusion_specialty_rx / sub_tactic=frequency_excessive. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Two independent vectors: the determination admits its thresholds come from a pediatric/juvenile-DM dosing guideline applied to a 32-year-old adult (wrong-guideline error), and the record affirmatively supports necessity (response at every-four-week dosing, CK/weakness worsening when the interval was lengthened), rebutting the 'documentation does not support' claim; procedurally the notice omits the required independent external review notice for a non-grandfathered plan. Easy appeal.",
+      "exploitable_weaknesses": [
+        "Wrong guideline applied: pediatric/juvenile dermatomyositis dosing thresholds used to deny an adult, where that guideline does not govern adult maintenance dosing",
+        "Contradicted clinical reasoning: documented response at every-four-week dosing with CK and weakness worsening when the interval was lengthened refutes 'documentation does not support'",
+        "Procedurally defective notice: omits the required notice of the right to independent external review for a non-grandfathered plan",
+        "Pattern anchor: missing_iro_notice",
+        "Pattern anchor: incorrect_demographic_guideline"
+      ],
+      "strong_defenses": [
+        "The denial provides procedural scaffolding: it names a specific Aetna Clinical Policy Bulletin, cites an identifiable dosing guideline, offers an internal appeal and a peer-to-peer option, and includes the standard coverage-terms disclaimer"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "missing_iro_notice",
+        "incorrect_demographic_guideline"
+      ],
+      "deterministic_present": [
+        "missing_iro_notice",
+        "incorrect_demographic_guideline"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}
