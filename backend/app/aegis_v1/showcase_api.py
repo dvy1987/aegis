@@ -1,18 +1,124 @@
 from __future__ import annotations
 
 import os
+import threading
 from contextlib import contextmanager
 from typing import Literal
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
+from app.aegis_v1.showcase_manifest import ShowcaseManifest, load_showcase_manifest
+from app.aegis_v1.showcase_session import (
+    SessionLockedError,
+    ShowcaseSession,
+    ShowcaseSessionManager,
+)
 from app.evals.part_a.evaluated_run import run_evaluated_case
 from app.evals.part_a.llm_judges import GeminiJudgeClient, OfflineHeuristicJudgeClient
 from app.evals.part_a.recorder import OtelPhoenixRecorder
 
 
 router = APIRouter(prefix="/v1/showcase", tags=["showcase"])
+
+
+class ShowcaseManifestResponse(BaseModel):
+    benchmark_id: str
+    version: str
+    quick_slice: str
+    quick_train: list[dict]
+    serious_train_count: int
+    serious_holdout: list[dict]
+
+
+class ApprovalRequest(BaseModel):
+    approver: str = "pm"
+
+
+def _manager() -> ShowcaseSessionManager:
+    return ShowcaseSessionManager()
+
+
+def _autorun_enabled() -> bool:
+    return os.environ.get("AEGIS_SHOWCASE_AUTORUN", "true").lower() not in {
+        "0",
+        "false",
+        "no",
+    }
+
+
+def _launch_quick(session_id: str) -> None:
+    if not _autorun_enabled():
+        return
+    from app.aegis_v1.showcase_runner import run_quick_session
+
+    thread = threading.Thread(target=run_quick_session, args=(session_id,), daemon=True)
+    thread.start()
+
+
+@router.get("/manifest", response_model=ShowcaseManifestResponse)
+def get_manifest() -> ShowcaseManifestResponse:
+    manifest: ShowcaseManifest = load_showcase_manifest()
+    return ShowcaseManifestResponse(
+        benchmark_id=manifest.benchmark_id,
+        version=manifest.version,
+        quick_slice=manifest.quick_slice,
+        quick_train=[case.model_dump() for case in manifest.quick_train],
+        serious_train_count=len(manifest.serious_train),
+        serious_holdout=[case.model_dump() for case in manifest.serious_holdout],
+    )
+
+
+@router.post("/runs/quick", response_model=ShowcaseSession)
+def start_quick_run() -> ShowcaseSession:
+    manifest = load_showcase_manifest()
+    session = _manager().start_quick(case_ids=[case.case_id for case in manifest.quick_train])
+    _launch_quick(session.session_id)
+    return session
+
+
+@router.post("/runs/serious", response_model=ShowcaseSession)
+def start_serious_run() -> ShowcaseSession:
+    manifest = load_showcase_manifest()
+    try:
+        return _manager().start_serious(
+            case_ids=[case.case_id for case in manifest.serious_train + manifest.serious_holdout]
+        )
+    except SessionLockedError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/runs/{session_id}", response_model=ShowcaseSession)
+def get_run(session_id: str) -> ShowcaseSession:
+    try:
+        return _manager().get(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="showcase session not found") from exc
+
+
+@router.post("/runs/{session_id}/cancel", response_model=ShowcaseSession)
+def cancel_run(session_id: str) -> ShowcaseSession:
+    try:
+        return _manager().cancel(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="showcase session not found") from exc
+
+
+@router.post("/runs/{session_id}/approve", response_model=ShowcaseSession)
+def approve_run(session_id: str, req: ApprovalRequest) -> ShowcaseSession:
+    manager = _manager()
+    try:
+        session = manager.get(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="showcase session not found") from exc
+    if session.cancelled:
+        raise HTTPException(status_code=409, detail="cancelled runs cannot be promoted")
+    if not session.proposal:
+        raise HTTPException(status_code=409, detail="no GEPA proposal is ready for approval")
+    from app.aegis_v1.showcase_runner import approve_session
+
+    approve_session(session_id, approver=req.approver)
+    return manager.get(session_id)
 
 
 class ShowcaseEvaluateRequest(BaseModel):
@@ -205,4 +311,3 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
         counterfactual=ShowcaseCounterfactual(on_composite=counter_on, off_composite=counter_off),
         phoenix_url=phoenix_url,
     )
-

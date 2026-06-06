@@ -213,7 +213,7 @@ def component_version_from_prompt_record(
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _PROMPT_DIR = _REPO_ROOT / "backend" / "app" / "aegis_v1" / "prompts"
-_PLAYBOOK_DIR = _REPO_ROOT / "backend" / "app" / "aegis_v1" / "playbooks"
+_PLAYBOOK_DIR = _REPO_ROOT / "playbooks"
 
 
 class LivePhoenixLearningStore:

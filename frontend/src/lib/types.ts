@@ -87,3 +87,62 @@ export interface ShowcaseBundle {
   counterfactual: { on_composite: number; off_composite: number };
   phoenix_url?: string;
 }
+
+export interface ShowcaseManifest {
+  benchmark_id: string;
+  version: string;
+  quick_slice: string;
+  quick_train: CaseSummary[];
+  serious_train_count: number;
+  serious_holdout: CaseSummary[];
+}
+
+export interface ShowcaseRunError {
+  code: string;
+  message: string;
+}
+
+export interface ShowcaseRunDiagnostics {
+  stage:
+    | "queued"
+    | "measure_before"
+    | "train_gepa"
+    | "waiting_for_approval"
+    | "promote"
+    | "measure_after"
+    | "failed"
+    | "cancelled"
+    | "rolled_back";
+  stage_started_at?: string | null;
+  stage_finished_at?: string | null;
+  current_case_id?: string | null;
+  completed_cases: number;
+  total_cases: number;
+  retryable: boolean;
+  last_error?: ShowcaseRunError | null;
+  phoenix_trace_ids: string[];
+  cloud_log_filter: string;
+}
+
+export interface ShowcaseRunSession {
+  session_id: string;
+  run_type: "quick" | "serious";
+  status:
+    | "queued"
+    | "running"
+    | "needs_approval"
+    | "promoted"
+    | "successful"
+    | "failed"
+    | "cancelled"
+    | "rolled_back";
+  created_at: string;
+  updated_at: string;
+  case_ids: string[];
+  diagnostics: ShowcaseRunDiagnostics;
+  cancelled: boolean;
+  approved_by?: string | null;
+  proposal?: Record<string, unknown> | null;
+  pre_measure_results: Record<string, unknown>[];
+  post_measure_results: Record<string, unknown>[];
+}

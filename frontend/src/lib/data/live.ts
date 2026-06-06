@@ -1,5 +1,5 @@
 import type { DataSource } from "./source";
-import type { AppealRequest, AppealFixture, ShowcaseBundle } from "@/lib/types";
+import type { AppealRequest, AppealFixture, ShowcaseBundle, ShowcaseManifest, ShowcaseRunSession } from "@/lib/types";
 import { parseAppealResponse } from "@/lib/schema";
 import { getApiBase, getDiscoveryEnabled } from "@/lib/settings";
 import { demoSource } from "./demo";
@@ -50,3 +50,57 @@ export const liveSource: DataSource = {
     };
   },
 };
+
+async function jsonOrThrow<T>(res: Response, label: string): Promise<T> {
+  if (!res.ok) throw new Error(`${label} failed: ${res.status}`);
+  return (await res.json()) as T;
+}
+
+export async function getShowcaseManifest(): Promise<ShowcaseManifest> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseManifest>(await fetch(`${base}/v1/showcase/manifest`), "showcase manifest");
+}
+
+export async function startQuickRun(): Promise<ShowcaseRunSession> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseRunSession>(
+    await fetch(`${base}/v1/showcase/runs/quick`, { method: "POST" }),
+    "quick run",
+  );
+}
+
+export async function startSeriousRun(): Promise<ShowcaseRunSession> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseRunSession>(
+    await fetch(`${base}/v1/showcase/runs/serious`, { method: "POST" }),
+    "serious run",
+  );
+}
+
+export async function getRunSession(sessionId: string): Promise<ShowcaseRunSession> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseRunSession>(
+    await fetch(`${base}/v1/showcase/runs/${sessionId}`),
+    "run status",
+  );
+}
+
+export async function cancelRun(sessionId: string): Promise<ShowcaseRunSession> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseRunSession>(
+    await fetch(`${base}/v1/showcase/runs/${sessionId}/cancel`, { method: "POST" }),
+    "cancel run",
+  );
+}
+
+export async function approveRun(sessionId: string): Promise<ShowcaseRunSession> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseRunSession>(
+    await fetch(`${base}/v1/showcase/runs/${sessionId}/approve`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ approver: "pm" }),
+    }),
+    "approve run",
+  );
+}

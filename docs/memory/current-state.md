@@ -528,6 +528,15 @@ ahead of GCP/Phoenix setup, TDD, commits `8a35860`,`5720eaf`. Full unit **103 pa
 - **System fix:** `build_teacher_grading_packet()` now parses Gumloop-style `pattern_id: source` entries before matching `eval/denial_patterns.json`; this makes source-of-truth expected vectors come from the declared Gumloop flaw IDs instead of relying on fallback hidden metadata.
 - **Verification:** JSON parsed cleanly; `build_teacher_grading_packet()` now emits coherent `expected_appeal_vectors` with no `risk_flags`; backend eval-path tests passed under Python 3.11 from `backend/`.
 
+## 2026-06-06 — V1 showcase quick/serious execution foundation built
+
+- **Built:** `/showcase` now has a quick/serious live-learning control surface. Quick run starts through `POST /v1/showcase/runs/quick`, returns a `session_id` immediately, polls `GET /v1/showcase/runs/{session_id}`, can cancel, and can approve when a GEPA proposal is ready. Serious run endpoint exists and is locked until quick success.
+- **Manifest:** fixed read-only v1 manifest at `eval/benchmarks/v1_showcase_100/manifest.json`. Quick cohort is targeted Cigna + medical necessity: cases 01, 07, 13, 19, 22, 30, 35, 45, 46, 48. Serious holdout is cases 91-100. Draft case files were not modified.
+- **Backend correctness:** promotion wiring now writes drafter prompts to runtime-loadable filenames and updates `active_drafter_prompt.txt`; `LivePhoenixLearningStore` now writes playbooks to root `playbooks/`, matching `playbook_loader`. Measurement runner disables Phoenix memory reads by parameter and uses drafter + simulator only.
+- **Diagnostics:** JSON session ledger defaults to `/tmp/aegis_showcase_sessions` or `AEGIS_SHOWCASE_LEDGER_DIR`, with stage, session id, case counts, last error, retryability, Phoenix trace ids, and Cloud Run log filter.
+- **Runner caveat:** quick background runner is implemented and gated by `AEGIS_SHOWCASE_AUTORUN` (default true). It requires `PHOENIX_API_KEY` and Google ADC; missing creds persist a clear failed session. Approval promotes and runs post-measurement. Serious-run execution body is not yet implemented beyond locked start/poll shell.
+- **Verification:** targeted backend showcase tests 16 passed; corrected pipeline prompt-version test passed; frontend `tsc`, `npm run test -- --run`, `npm run lint`, and `npm run build` passed. Full backend unit suite had unrelated pre-existing failures: case generator natural anchor, missing `case_500_*` fixture tests, and `/tmp/harness` setup.
+
 ## Next recommended action
 
 **Updated 2026-05-28 (Session 18):** Before any feature work, the next agent must resolve the inconsistencies identified in the audit. PM wants to review each issue individually — see Session 18 handoff in `agent-handoffs.md` for the full 16-item table with recommendations.

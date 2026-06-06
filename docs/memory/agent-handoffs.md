@@ -2251,3 +2251,40 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - Documentation-only changes from this planning pass should be committed separately.
+
+## 2026-06-06 — Handoff (Codex — v1 showcase quick-run foundation implemented)
+
+### Done
+- Implemented the current v1 showcase quick/serious plan foundation:
+  - fixed manifest and selection report under `eval/benchmarks/v1_showcase_100/`
+  - manifest loader with student-safe metadata
+  - Phoenix-off measurement runner (`run_measurement_case`)
+  - promotion wiring repair for prompt files + active prompt pointer
+  - `LivePhoenixLearningStore` playbook path aligned to root `playbooks/`
+  - JSON session ledger and diagnostics keyed by `session_id`
+  - backend endpoints for manifest, start quick, start serious, poll, cancel, approve
+  - quick background runner with credential gate, pre-measure, Phoenix/Judge training seed, GEPA optimize, approval handoff
+  - `/showcase` UI for quick/serious workflow, polling, cancel, approval, and diagnostics
+- Updated the June 6 plan/task addendum with the PM-approved diagnostics layer.
+
+### Important Notes
+- Draft case files were not modified. The only `eval/` additions are benchmark manifest/report files.
+- Quick cohort is targeted Cigna medical necessity, not literal `case_01` through `case_10`.
+- Measurement mode does not call Phoenix memory reads, recorder, judges, or learning.
+- Start endpoints return immediately; frontend polls session state.
+- `AEGIS_SHOWCASE_AUTORUN=false` disables background execution for tests.
+
+### Verification
+- Backend targeted: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/aegis_v1/test_showcase_api_runs.py tests/unit/aegis_v1/test_showcase_session.py tests/unit/aegis_v1/test_showcase_manifest.py tests/unit/evals/test_measurement_run.py tests/unit/learning/test_promotion_wiring.py -q` → 16 passed.
+- Pipeline prompt-version regression: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/agent/test_aegis_v1_tools.py::test_local_pipeline_returns_structured_appeal_package -q` → 1 passed.
+- Frontend: `./node_modules/.bin/tsc --noEmit`, `npm run test -- --run`, `npm run lint`, `npm run build` all passed.
+- Full backend unit suite: 272 passed, 6 failed. Failures appear unrelated/pre-existing: case generator anchor expectation, missing `case_500_cigna_priorauth` fixture, and `/tmp/harness/state.json` setup.
+
+### Next Agent Should Know
+- Live quick run requires `.env`/runtime env with `PHOENIX_API_KEY` and Google ADC. Missing creds should now show a failed session with `missing_live_credentials`.
+- Serious execution is still a shell: it is locked/unlocked by session status, but the serious background runner is not implemented.
+- Rollback endpoint is still not implemented.
+- Approval can modify runtime prompt/playbook files by design; this is how the next v1 run uses the approved update.
+
+### Working Tree
+- Should be committed as one implementation commit after final status check.

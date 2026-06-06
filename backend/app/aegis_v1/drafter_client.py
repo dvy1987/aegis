@@ -9,10 +9,22 @@ from typing import Any, Protocol
 # Part A prompts are colocated with the aegis_v1 backend (matching the
 # case_generator pattern). Swarm/Part B prompts live under aegis_swarm/prompts/.
 PROMPT_DIR = Path(__file__).resolve().parent / "prompts"
+ACTIVE_PROMPT_FILE = PROMPT_DIR / "active_drafter_prompt.txt"
 
 
 def load_drafter_prompt(version: str = "drafter_v1") -> str:
     return (PROMPT_DIR / f"{version}.md").read_text(encoding="utf-8")
+
+
+def get_active_drafter_prompt_version() -> str:
+    configured = os.environ.get("AEGIS_DRAFTER_PROMPT_VERSION")
+    if configured:
+        return configured
+    if ACTIVE_PROMPT_FILE.exists():
+        value = ACTIVE_PROMPT_FILE.read_text(encoding="utf-8").strip()
+        if value:
+            return value
+    return "drafter_v2"
 
 
 class DrafterLLMClient(Protocol):

@@ -255,9 +255,14 @@ class FileSystemPhoenixLearningStore:
     def _write_prompt(self, comp: Component) -> None:
         if self._prompts_dir is None:
             return
-        safe_id = _slug(comp.component_id)
         safe_version = _slug(comp.version)
-        path = self._prompts_dir / f"{safe_id}__{safe_version}.md"
+        if comp.component_id == "drafter_system_prompt":
+            path = self._prompts_dir / f"{safe_version}.md"
+            active_path = self._prompts_dir / "active_drafter_prompt.txt"
+            active_path.write_text(safe_version, encoding="utf-8")
+        else:
+            safe_id = _slug(comp.component_id)
+            path = self._prompts_dir / f"{safe_id}__{safe_version}.md"
         path.write_text(comp.text or "", encoding="utf-8")
 
     # ------------------------------------------------------------------

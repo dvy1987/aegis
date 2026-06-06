@@ -1,14 +1,22 @@
 "use client";
 import { useEffect, useState } from "react";
 import { showcaseSource } from "@/lib/data";
-import { liveSource } from "@/lib/data/live";
-import type { CaseSummary, ShowcaseBundle } from "@/lib/types";
+import {
+  approveRun,
+  cancelRun,
+  getRunSession,
+  getShowcaseManifest,
+  startQuickRun,
+  startSeriousRun,
+} from "@/lib/data/live";
+import type { CaseSummary, ShowcaseBundle, ShowcaseManifest, ShowcaseRunSession } from "@/lib/types";
 import { Nav } from "@/components/Nav";
 import { CasePicker } from "@/components/showcase/CasePicker";
 import { VersusPanel } from "@/components/showcase/VersusPanel";
 import { DiffCard } from "@/components/showcase/DiffCard";
 import { CounterfactualCard } from "@/components/showcase/CounterfactualCard";
 import { ArrowUpRightIcon } from "@/icons";
+import { Button } from "@/components/Button";
 
 const DEFAULT_CASE = "case_13_cigna_mednec";
 
@@ -17,11 +25,13 @@ export default function ShowcasePage() {
   const [cases, setCases] = useState<CaseSummary[]>([]);
   const [sel, setSel] = useState(DEFAULT_CASE);
   const [bundle, setBundle] = useState<ShowcaseBundle | null>(null);
-  const [running, setRunning] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
+  const [manifest, setManifest] = useState<ShowcaseManifest | null>(null);
+  const [runSession, setRunSession] = useState<ShowcaseRunSession | null>(null);
+  const [runErr, setRunErr] = useState<string | null>(null);
 
   useEffect(() => {
     ds.listCases().then(setCases);
+    getShowcaseManifest().then(setManifest).catch(() => undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -29,16 +39,54 @@ export default function ShowcasePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sel]);
 
-  async function runLive() {
-    setRunning(true);
-    setErr(null);
+  useEffect(() => {
+    if (!runSession) return;
+    if (["successful", "failed", "cancelled", "needs_approval", "rolled_back"].includes(runSession.status)) return;
+    const timer = window.setInterval(async () => {
+      try {
+        setRunSession(await getRunSession(runSession.session_id));
+      } catch (e) {
+        setRunErr(e instanceof Error ? e.message : String(e));
+      }
+    }, 3000);
+    return () => window.clearInterval(timer);
+  }, [runSession]);
+
+  async function startQuick() {
+    setRunErr(null);
     try {
-      const b = await liveSource.getShowcase(sel);
-      setBundle(b);
+      setRunSession(await startQuickRun());
     } catch (e) {
-      setErr(e instanceof Error ? e.message : String(e));
-    } finally {
-      setRunning(false);
+      setRunErr(e instanceof Error ? e.message : String(e));
+    }
+  }
+
+  async function startSerious() {
+    setRunErr(null);
+    try {
+      setRunSession(await startSeriousRun());
+    } catch (e) {
+      setRunErr(e instanceof Error ? e.message : String(e));
+    }
+  }
+
+  async function cancelCurrentRun() {
+    if (!runSession) return;
+    setRunErr(null);
+    try {
+      setRunSession(await cancelRun(runSession.session_id));
+    } catch (e) {
+      setRunErr(e instanceof Error ? e.message : String(e));
+    }
+  }
+
+  async function approveCurrentRun() {
+    if (!runSession) return;
+    setRunErr(null);
+    try {
+      setRunSession(await approveRun(runSession.session_id));
+    } catch (e) {
+      setRunErr(e instanceof Error ? e.message : String(e));
     }
   }
 
@@ -63,19 +111,44 @@ export default function ShowcasePage() {
 
         <CasePicker cases={cases} selected={sel} onSelect={setSel} />
 
-        <div className="flex flex-col gap-3">
-          <button
-            type="button"
-            onClick={runLive}
-            disabled={running}
-            className="inline-flex w-fit items-center justify-center rounded-md border border-border-subtle bg-surface-secondary px-4 py-2 font-body text-sm text-text-primary hover:bg-surface-tertiary disabled:opacity-60"
-          >
-            {running ? "Running evaluation…" : "Run evaluation now (live)"}
-          </button>
-          {err && <p className="font-body text-sm text-text-secondary">Could not run live evaluation: {err}</p>}
-          <p className="font-body text-sm text-text-tertiary">
-            This runs the same case twice (baseline vs improved) and links to the Phoenix evidence.
-          </p>
+        <div className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+          <section className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
+              <div>
+                <p className="font-body text-sm text-text-tertiary">Current mode</p>
+                <h2 className="font-display text-2xl font-semibold">Human-approved learning</h2>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="rounded-md border border-border-subtle bg-surface-primary p-4">
+                  <p className="font-body text-sm text-text-tertiary">Quick learning check</p>
+                  <p className="mt-2 font-body text-sm text-text-secondary">
+                    {manifest ? `${manifest.quick_train.length} ${manifest.quick_slice.replace("_", " ")} cases` : "Targeted 10-case set"}
+                  </p>
+                  <Button className="mt-4 h-10 px-4 text-sm" onClick={startQuick}>
+                    Run quick check
+                  </Button>
+                </div>
+                <div className="rounded-md border border-border-subtle bg-surface-primary p-4">
+                  <p className="font-body text-sm text-text-tertiary">Serious learning pass</p>
+                  <p className="mt-2 font-body text-sm text-text-secondary">
+                    Locked until the quick check succeeds.
+                  </p>
+                  <Button className="mt-4 h-10 px-4 text-sm" variant="secondary" onClick={startSerious}>
+                    Run serious pass
+                  </Button>
+                </div>
+              </div>
+              {runErr && <p className="font-body text-sm text-text-secondary">{runErr}</p>}
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-border-subtle bg-surface-secondary p-5">
+            <RunStatusPanel
+              session={runSession}
+              onCancel={cancelCurrentRun}
+              onApprove={approveCurrentRun}
+            />
+          </section>
         </div>
 
         {bundle && (
@@ -97,6 +170,74 @@ export default function ShowcasePage() {
           </>
         )}
       </main>
+    </div>
+  );
+}
+
+function RunStatusPanel({
+  session,
+  onCancel,
+  onApprove,
+}: {
+  session: ShowcaseRunSession | null;
+  onCancel: () => void;
+  onApprove: () => void;
+}) {
+  if (!session) {
+    return (
+      <div className="flex min-h-48 flex-col justify-between">
+        <div>
+          <p className="font-body text-sm text-text-tertiary">Run status</p>
+          <h2 className="mt-2 font-display text-2xl font-semibold">No live run started</h2>
+        </div>
+        <p className="font-body text-sm text-text-secondary">
+          Start a run to see the session id, current stage, and troubleshooting details.
+        </p>
+      </div>
+    );
+  }
+  const pct = session.diagnostics.total_cases
+    ? Math.round((session.diagnostics.completed_cases / session.diagnostics.total_cases) * 100)
+    : 0;
+  return (
+    <div className="flex flex-col gap-4">
+      <div>
+        <p className="font-body text-sm text-text-tertiary">Session id</p>
+        <p className="mt-1 break-all font-body text-sm text-text-primary">{session.session_id}</p>
+      </div>
+      <div>
+        <p className="font-body text-sm text-text-tertiary">Current stage</p>
+        <h2 className="mt-1 font-display text-2xl font-semibold">
+          {session.diagnostics.stage.replaceAll("_", " ")}
+        </h2>
+        <p className="mt-2 font-body text-sm text-text-secondary">
+          {session.diagnostics.completed_cases} of {session.diagnostics.total_cases} cases complete
+          {pct ? ` (${pct}%)` : ""}
+        </p>
+      </div>
+      {session.diagnostics.last_error && (
+        <div className="rounded-md border border-border-subtle bg-surface-primary p-3">
+          <p className="font-body text-sm font-medium text-text-primary">{session.diagnostics.last_error.message}</p>
+          <p className="mt-1 font-body text-xs text-text-tertiary">{session.diagnostics.last_error.code}</p>
+        </div>
+      )}
+      {session.diagnostics.cloud_log_filter && (
+        <p className="break-all font-body text-xs text-text-tertiary">
+          Log filter: {session.diagnostics.cloud_log_filter}
+        </p>
+      )}
+      <div className="flex flex-wrap gap-3">
+        {session.status === "needs_approval" && (
+          <Button className="h-10 px-4 text-sm" onClick={onApprove}>
+            Approve update
+          </Button>
+        )}
+        {!["successful", "failed", "cancelled", "rolled_back"].includes(session.status) && (
+          <Button className="h-10 px-4 text-sm" variant="secondary" onClick={onCancel}>
+            Cancel run
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

@@ -33,6 +33,7 @@ def run_aegis_v1_pipeline(
     drafter_client: "DrafterLLMClient | None" = None,
     drafter_prompt_version: str | None = None,
     library_stack: dict[str, Any] | None = None,
+    use_phoenix_memory: bool = True,
 ) -> dict[str, Any]:
     """Run the six-tool v1 Student flow. The Outcome Simulator is no longer part
     of the Student — it runs in the eval layer (`run_evaluated_case`)."""
@@ -62,22 +63,35 @@ def run_aegis_v1_pipeline(
     finally:
         reset_controlled_retrieval(token)
 
-    phoenix = phoenix_mcp_lookup(
-        insurer=parsed["insurer"],
-        denial_type=parsed["denial_type"],
-        case_id=parsed["case_id"],
-    )
+    if use_phoenix_memory:
+        phoenix = phoenix_mcp_lookup(
+            insurer=parsed["insurer"],
+            denial_type=parsed["denial_type"],
+            case_id=parsed["case_id"],
+        )
+    else:
+        phoenix = {
+            "status": "disabled",
+            "query": "measurement mode disables Phoenix memory",
+            "similar_trace_count": 0,
+            "failure_patterns": [],
+            "success_traits": [],
+            "risk_flags": ["phoenix_mcp_measurement_disabled"],
+        }
     playbook = playbook_loader(
         insurer=parsed["insurer"],
         denial_type=parsed["denial_type"],
     )
+    from app.aegis_v1.drafter_client import get_active_drafter_prompt_version
+
+    active_prompt_version = drafter_prompt_version or get_active_drafter_prompt_version()
     draft = draft_appeal(
         parsed_case=parsed,
         retrieval_results=retrieval,
         playbook=playbook,
         phoenix_summary=phoenix,
         client=drafter_client,
-        prompt_version=drafter_prompt_version,
+        prompt_version=active_prompt_version,
     )
     check = self_check(
         parsed_case=parsed,
@@ -108,6 +122,7 @@ def run_aegis_v1_pipeline(
             denial_type=parsed["denial_type"],
             plan_type=parsed["plan_type"],
             state=parsed["state"],
+            prompt_version=active_prompt_version,
             playbook_version=loaded_playbook.version,
             dataset_split=dataset_split,
             run_mode=run_mode,

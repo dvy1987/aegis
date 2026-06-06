@@ -427,6 +427,7 @@ def draft_appeal(
     from app.aegis_v1.drafter_client import (
         GeminiDrafterClient,
         DrafterLLMClient,
+        get_active_drafter_prompt_version,
         load_drafter_prompt,
     )
     from app.aegis_v1.guardrails import apply_guardrails
@@ -438,11 +439,7 @@ def draft_appeal(
     citations = retrieval.hits[:3]
 
     active: DrafterLLMClient = client or GeminiDrafterClient()
-    active_prompt_version = (
-        prompt_version
-        or os.environ.get("AEGIS_DRAFTER_PROMPT_VERSION")
-        or "drafter_v2"
-    )
+    active_prompt_version = prompt_version or get_active_drafter_prompt_version()
     raw_body = active.draft(
         # Default is the current promoted prompt. Eval/showcase can override it to
         # produce a real before/after on the same case.

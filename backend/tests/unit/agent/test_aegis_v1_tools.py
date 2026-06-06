@@ -123,7 +123,7 @@ def test_local_pipeline_returns_structured_appeal_package() -> None:
 
     assert package.run_id.startswith("aegis-v1-")
     assert package.parsed_case.insurer == "Cigna"
-    assert package.trace_metadata.prompt_version == "aegis_v1_weak"
+    assert package.trace_metadata.prompt_version == "drafter_v2"
     assert package.trace_metadata.dataset_split == "train"
     # Cloud-only posture: when the cloud library isn't configured for unit tests,
     # the pipeline should still return a structured package but will have no

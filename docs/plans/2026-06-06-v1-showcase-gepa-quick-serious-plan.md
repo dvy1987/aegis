@@ -1,7 +1,7 @@
 # Plan — V1 Showcase GEPA Quick + Serious Workflow
 
 **Date:** 2026-06-06  
-**Status:** Draft for PM review  
+**Status:** Approved for implementation by PM chat instruction on 2026-06-06  
 **Supersedes:**  
 - `docs/specs/2026-06-05-live-showcase-learning-ux-plan.md`
 - `docs/specs/2026-06-05-v1-demo-benchmark-split-plan.md`
@@ -32,9 +32,10 @@ The core demo claim becomes:
   - explicit split manifest
   - explicit run modes
   - promotion gates
-  - session ledger
-  - visible human-approved autonomy language
-  - simple credit summary
+- session ledger
+- run diagnostics for frontend and GCP troubleshooting
+- visible human-approved autonomy language
+- simple credit summary
 - Do not implement the old 8-training-batch evolution timeline.
 - Do not require the Part B swarm for this workflow.
 - Serious run is locked until the quick run has completed successfully.
@@ -231,6 +232,40 @@ Each session record should include:
 - cancellation state
 - timestamps
 
+### 4A. Run Diagnostics
+
+Every frontend-triggered run must be diagnosable without guessing what the backend was doing.
+
+The start endpoint should return a `session_id` immediately. The frontend should poll the session record rather than waiting on one long HTTP request. If a run fails or times out, the PM should be able to give an agent the session id, and the agent should be able to inspect Cloud Run logs, the backend ledger, and Phoenix traces where applicable.
+
+Each backend stage should record:
+
+- `session_id`
+- run type: quick or serious
+- stage name: `queued`, `measure_before`, `train_gepa`, `waiting_for_approval`, `promote`, `measure_after`, `failed`, `cancelled`, `rolled_back`
+- started/finished timestamps
+- current case id when applicable
+- completed case count and total case count
+- latest error code and message
+- whether the stage is retryable
+- Cloud Run log correlation fields
+- Phoenix trace/span ids where Phoenix is used
+
+Troubleshooting rules:
+
+- Measurement stages are Phoenix-off by design, so debug them through the session ledger and Cloud Run logs.
+- Training stages may use Phoenix and judges, so debug them through the ledger, Cloud Run logs, and Phoenix trace/span ids.
+- The frontend must never rely on a single long-running request for the whole learning flow.
+- Cancellation must persist to the ledger and must block later promotion.
+
+Operator query shape:
+
+```text
+resource.type="cloud_run_revision"
+AND resource.labels.service_name="aegis-v1-api"
+AND jsonPayload.session_id="<session_id>"
+```
+
 ### 5. Visible Autonomy Language
 
 Use only:
@@ -401,6 +436,7 @@ Responsibilities:
 - no promotion after cancellation
 - session ledger persistence
 - rollback checkpoint metadata
+- stage diagnostics for frontend and Cloud Run troubleshooting
 
 #### GEPA Session Adapter
 
@@ -593,6 +629,7 @@ Tasks:
 - Add serious run endpoint with quick-success lock.
 - Add approve/reject/cancel/rollback endpoints.
 - Persist session ledger.
+- Emit structured diagnostic events keyed by `session_id`.
 
 Definition of done:
 
@@ -601,6 +638,7 @@ Definition of done:
 - Approval promotes.
 - Cancel stops queued work.
 - Ledger records the full run.
+- Failed runs expose the failed stage, latest error, and retryability.
 
 ### Phase 6 — Frontend Showcase UX
 

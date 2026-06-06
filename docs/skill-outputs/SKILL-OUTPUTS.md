@@ -89,5 +89,8 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-06 | memory-capture | docs/memory/current-state.md, docs/memory/project-index.md | Captured current state for v1 showcase GEPA quick/serious plan |
 | 2026-06-06 | memory-handoff | docs/memory/agent-handoffs.md | Handoff for v1 showcase GEPA quick/serious planning state |
 | 2026-06-06 | implementation-plan | docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md | Clarified serious run starts from quick-approved checkpoint when quick promotion occurs |
+| 2026-06-06 | test-driven-development | backend/tests/unit/aegis_v1/test_showcase_api_runs.py, backend/tests/unit/aegis_v1/test_showcase_session.py, backend/tests/unit/aegis_v1/test_showcase_manifest.py, backend/tests/unit/evals/test_measurement_run.py, backend/tests/unit/learning/test_promotion_wiring.py | TDD: v1 showcase manifest, measurement isolation, promotion wiring, session diagnostics, and backend API |
+| 2026-06-06 | memory-capture | docs/memory/current-state.md | Captured v1 showcase quick-run implementation foundation |
+| 2026-06-06 | memory-handoff | docs/memory/agent-handoffs.md | Handoff for v1 showcase quick-run foundation implementation |
 
 - memory-handoff: docs/memory/agent-handoffs.md
