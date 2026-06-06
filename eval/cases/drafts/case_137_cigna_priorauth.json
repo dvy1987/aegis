@@ -1,0 +1,387 @@
+{
+  "case_id": "case_137_cigna_priorauth",
+  "insurer": "Cigna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 52,
+    "gender": "M",
+    "diagnosis": "Resected stage IIIB cutaneous melanoma (C43.9), on adjuvant therapy",
+    "treatment_requested": "Continuation of adjuvant pembrolizumab to complete the planned one-year course",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "superseded_guideline: AHIP 2022 Coverage Policy Review; documented in multiple Cigna litigation cases 2021\u20132023",
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic oncology case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic oncology case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic oncology case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic oncology case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic oncology case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    },
+    {
+      "ref_id": "aca-2719-29-cfr-147-136",
+      "title": "Internal claims and appeals \u2014 diagnosis/treatment codes (29 CFR \u00a7 2590.715-2719)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2590.715-2719",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Claim identification (DOS, provider, amount)."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis letter concerns the prior authorization request your provider submitted to continue adjuvant pembrolizumab and complete a planned course of therapy following melanoma surgery. After review under the applicable Cigna Medical Coverage Policy, the request is not authorized. Determination date: May 25, 2026.\n\nContinuation of this therapy requires an active prior authorization on file. The prior authorization previously approved for this treatment has lapsed, so a new authorization is required before coverage can continue. In evaluating this continuation request, we applied the Cigna Medical Coverage Policy for immunotherapy in melanoma (2020), and on the records reviewed the criteria for continued authorization are not met.\n\nYou or your provider may request, at no charge, a copy of the specific coverage policy and the documents relied upon in reaching this decision. If your provider wishes to discuss this determination, a peer-to-peer review with a Cigna medical director may be arranged by calling the number on your member ID card.\n\nYou have the right to file an internal appeal of this decision. To file an internal appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter, along with any additional clinical information you would like considered. Appeals may be sent to the address shown on your Explanation of Benefits.\n\nSincerely,\nCigna Coverage Review Department",
+  "clinical_context": "The patient is a 52-year-old man with resected stage IIIB cutaneous melanoma (BRAF wild-type, a 2.1 mm primary with one positive sentinel node, wide local excision completed) who began adjuvant pembrolizumab to reduce the risk of recurrence. He is approximately seven months into the planned twelve-month adjuvant course, has tolerated therapy well aside from grade 1 hypothyroidism managed with levothyroxine, and has no evidence of recurrence on surveillance imaging. The prior authorization covering this treatment lapsed during active therapy after his oncology practice submitted a renewal that was not processed before the existing authorization expired, an administrative gap rather than a change in clinical status. His oncologist documents that interrupting adjuvant immunotherapy before completion of the planned one-year course is expected to reduce its recurrence-prevention benefit, and that current NCCN guidance supports completing the full adjuvant pembrolizumab course - superseding the 2020 coverage policy the insurer applied. The determination letter provided notice of internal appeal only and gave no notice of the member's right to external independent review, a procedural protection required for an adverse benefit determination.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260606-072828-7aff7",
+    "generated_at": "2026-06-06T07:28:28Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "oncology",
+      "sub_tactic": "continuation_of_care_lapsed"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "matrix_cell matches field-for-field (Cigna, Prior Authorization, oncology, 41-55, M, continuation_of_care_lapsed). Melanoma is oncology; adjuvant pembrolizumab continuation realistic. Rationale precisely enacts continuation_of_care_lapsed (lapsed re-auth). Age 52 in band; not 71+, null employer_archetype fine.",
+        "evidence_quotes": [
+          "\"sub_tactic\": \"continuation_of_care_lapsed\"",
+          "the prior authorization for the ongoing therapy has lapsed and a new authorization is required before treatment can continue"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Frustratingly realistic. Adjuvant pembrolizumab over a one-year course for resected stage IIIB melanoma is standard of care; a lapsed re-auth interrupting active oncology treatment is textbook. Stale 2020 policy superseded by NCCN and an omitted external-review notice are realistic exploitable gaps. No anachronism or mismatch.",
+        "evidence_quotes": [
+          "the prior authorization for the ongoing therapy has lapsed and a new authorization is required before treatment can continue",
+          "The 2020 policy the insurer applied is superseded by current NCCN guidance supporting completion of adjuvant pembrolizumab"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.72,
+        "reasoning": "Brands as Cigna and anchors to 'the applicable Cigna Medical Coverage Policy' with no wrong-insurer tells (no InterQual/Optum), so above a 1. But it never invokes Cigna's signature criteria (MCG / 'Medical Necessity Guidelines') or step-therapy framing; reads as generic payer denial cadence. Anchor 3.",
+        "evidence_quotes": [
+          "After review under the applicable Cigna Medical Coverage Policy, the request is not authorized.",
+          "a peer-to-peer review with a Cigna medical director may be arranged by calling the number on your member ID card"
+        ],
+        "improvement": "Cite Cigna's named criteria (Medical Necessity Guidelines / MCG) to read unmistakably as Cigna."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Fits continuation_of_care_lapsed: denies continuation because the prior auth lapsed. Cites a plausible vaguely-named 2020 policy applied circularly ('criteria for continued authorization are not met' without naming a threshold). Procedural rather than clinical; wide appeal room. No hallucinated guideline.",
+        "evidence_quotes": [
+          "The prior authorization previously approved for this treatment has lapsed, so a new authorization is required before coverage can continue.",
+          "we applied the Cigna Medical Coverage Policy for immunotherapy in melanoma (2020), and on the records reviewed the criteria for continued authorization are not met"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Adjuvant pembrolizumab for resected stage IIIB melanoma is guideline-concordant (KEYNOTE-054/-716 era); staging coherent (2.1 mm primary, one positive sentinel node, BRAF wild-type steers to immunotherapy); 7-of-12 months is realistic; grade 1 hypothyroidism on levothyroxine is the most common dose-appropriate irAE. No invented drugs or impossible courses.",
+        "evidence_quotes": [
+          "resected stage IIIB cutaneous melanoma (BRAF wild-type, a 2.1 mm primary with one positive sentinel node, wide local excision completed) who began adjuvant pembrolizumab",
+          "has tolerated therapy well aside from grade 1 hypothyroidism managed with levothyroxine"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.99,
+        "reasoning": "Pembrolizumab is FDA-approved and NCCN-endorsed adjuvant therapy for resected stage IIB-IV melanoma (KEYNOTE-054), with a one-year standard course. Exact category match for the resected/adjuvant setting.",
+        "evidence_quotes": [
+          "Resected stage IIIB cutaneous melanoma (C43.9), on adjuvant therapy",
+          "Continuation of adjuvant pembrolizumab to complete the planned one-year course"
+        ],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "No neighbour involves melanoma, pembrolizumab, or continuation_of_care_lapsed. Other immunotherapy (nivo+cabo for RCC) differs in drug/disease/stage; closest trajectory parallel (R-CHOP continuation) differs in drug, cancer type, and setting. Unique dx, ICD (C43.9), drug, and adjuvant-completion trajectory.",
+        "evidence_quotes": [
+          "dx=Resected stage IIIB cutaneous melanoma (C43.9), on adjuvant therapy; tx=Continuation of adjuvant pembrolizumab to complete the planned one-year course",
+          "tx=R-CHOP cycle continuation"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['superseded_guideline', 'missing_iro_notice']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['superseded_guideline', 'missing_iro_notice']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.187 (nearest=case_136_uhc_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.96,
+        "reasoning": "Curative-intent adjuvant immunotherapy continuation appeal for a 52M. Explicitly recurrence-prevention with no recurrence \u2014 opposite of end-of-life; no suicide/self-harm, child abuse, IPV, or gender-affirming-minor content. Administrative-gap frustration is not incitement. Cigna commercial, in scope. No banned topic.",
+        "evidence_quotes": [
+          "adjuvant pembrolizumab to reduce the risk of recurrence",
+          "no evidence of recurrence on surveillance imaging"
+        ],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Facts stable across documents: 52M, resected stage IIIB melanoma (C43.9), continuation of adjuvant pembrolizumab; lapsed-auth premise consistent. The 2020-policy vs NCCN point is a substantive appeal issue; the missing external-review notice is a procedural defect \u2014 neither a factual instability. No paragraph self-contradicts.",
+        "evidence_quotes": [
+          "The prior authorization previously approved for this treatment has lapsed, so a new authorization is required",
+          "The patient is a 52-year-old man with resected stage IIIB cutaneous melanoma"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Standard adverse-benefit boilerplate + dense comma-spliced clinical recitation, both PASS-worthy. No 'as an AI' tics, no GPT vocabulary, no listicle structure, no marketing filler.",
+        "evidence_quotes": [
+          "After review under the applicable Cigna Medical Coverage Policy, the request is not authorized.",
+          "The patient is a 52-year-old man with resected stage IIIB cutaneous melanoma (BRAF wild-type, a 2.1 mm primary with one positive sentinel node, wide local excision completed)"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural register: 'Dear Member,', 'the request is not authorized', vague 'criteria not met', institutional sign-off, no apology/warmth/buzzwords. Clinical context is neutral clinical prose reporting the oncologist's documentation. Correct registers.",
+        "evidence_quotes": [
+          "the request is not authorized",
+          "Sincerely,\nCigna Coverage Review Department"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Entirely silent on cost: no dollar figures, no out-of-pocket liability. 'at no charge' refers to a policy copy. No Medicare/Medicaid conflation. Silent on cost liability is standard practice \u2014 anchor 5.",
+        "evidence_quotes": [
+          "the request is not authorized",
+          "You or your provider may request, at no charge, a copy of the specific coverage policy and the documents relied upon in reaching this decision."
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "References real instruments (internal appeal with a 180-day window, document-disclosure, peer-to-peer); no hallucinated statutes, no Medicare framing on a commercial plan. The omitted external-review notice is a realistic imperfection (the intended flaw), not penalized. Anchor 5.",
+        "evidence_quotes": [
+          "you or your authorized representative must submit a written request within 180 days of the date of this letter",
+          "The determination letter provided notice of internal appeal only and gave no notice of the member's right to external independent review, a procedural protection required for an adverse benefit determination."
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "52M with resected stage IIIB melanoma is epidemiologically sound (incidence rises with age, slight male predominance in older adults); adjuvant pembrolizumab is standard of care. Pronouns (he/his) consistent with M. No stereotyping.",
+        "evidence_quotes": [
+          "The patient is a 52-year-old man with resected stage IIIB cutaneous melanoma",
+          "He is approximately seven months into the planned twelve-month adjuvant course"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Insurer Cigna (allowed); Prior Authorization (allowed); coverage self_funded employer-sponsored commercial with no government/marketplace framing; patient 52 (adult 18-89); only internal appeal and a missing-external-review note, no live-filing/attorney-work/court-representation. All PASS conditions met.",
+        "evidence_quotes": [
+          "Cigna \u2014 Prior Authorization",
+          "\"plan_funding_type\": \"self_funded\"",
+          "\"age\": 52"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Determination May 25, 2026 in window; 180-day appeal window valid; 7-of-12-months stacks plausibly before the determination; the 2020 policy is a concrete year (not vague). No contradictions or impossible durations.",
+        "evidence_quotes": [
+          "Determination date: May 25, 2026.",
+          "He is approximately seven months into the planned twelve-month adjuvant course"
+        ],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 3,
+        "confidence": 0.6,
+        "reasoning": "Names a real owner and a generic umbrella policy with no module/section/page and no fabricated alphanumeric code; offers the policy on request. The lone blemish is the '(2020)' year qualifier (a mild over-specification) \u2014 but a bare year is not an edition/page. Lands at anchor 3.",
+        "evidence_quotes": [
+          "the applicable Cigna Medical Coverage Policy",
+          "Cigna Medical Coverage Policy for immunotherapy in melanoma (2020)"
+        ],
+        "improvement": "Drop the '(2020)' qualifier to stay in the fully generic, frustratingly-vague band (note: the year is intentional to render the superseded-guideline flaw)."
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Two strong vectors: no external-review notice (required procedural protection), and reliance on the outdated 2020 policy where current NCCN supersedes it to support completing the course. Patient clearly meets standard of care (7 months into a 12-month course, well tolerated, no recurrence); the lapse was an administrative gap. Only defense is the technical lapsed authorization.",
+        "exploitable_weaknesses": [
+          "No notice of external independent review right, a required procedural protection for an adverse benefit determination",
+          "Denial applies the outdated 2020 Cigna coverage policy while current NCCN guidance superseding it supports completing the full adjuvant course"
+        ],
+        "strong_defenses": [
+          "An active prior authorization had genuinely lapsed, so a new authorization is technically required before coverage can continue"
+        ],
+        "evidence_quotes": [
+          "The determination letter provided notice of internal appeal only and gave no notice of the member's right to external independent review, a procedural protection required for an adverse benefit determination.",
+          "current NCCN guidance supports completing the full adjuvant pembrolizumab course - superseding the 2020 coverage policy the insurer applied"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Prior Authorization / oncology / sub_tactic=continuation_of_care_lapsed. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Two strong vectors: no external-review notice (required procedural protection), and reliance on the outdated 2020 policy where current NCCN supersedes it to support completing the course. Patient clearly meets standard of care (7 months into a 12-month course, well tolerated, no recurrence); the lapse was an administrative gap. Only defense is the technical lapsed authorization.",
+      "exploitable_weaknesses": [
+        "No notice of external independent review right, a required procedural protection for an adverse benefit determination",
+        "Denial applies the outdated 2020 Cigna coverage policy while current NCCN guidance superseding it supports completing the full adjuvant course",
+        "Pattern anchor: superseded_guideline",
+        "Pattern anchor: missing_iro_notice"
+      ],
+      "strong_defenses": [
+        "An active prior authorization had genuinely lapsed, so a new authorization is technically required before coverage can continue"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "superseded_guideline",
+        "missing_iro_notice"
+      ],
+      "deterministic_present": [
+        "superseded_guideline",
+        "missing_iro_notice"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

@@ -1,0 +1,390 @@
+{
+  "case_id": "case_136_uhc_mednec",
+  "insurer": "UHC",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 49,
+    "gender": "M",
+    "diagnosis": "Incidental indeterminate adrenal nodule, 2.8 cm (E27.8)",
+    "treatment_requested": "Short-interval (6-month) follow-up adrenal-protocol CT",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719",
+    "appeal_closed_as_withdrawn: State Insurance Commissioner complaint logs (CA DOI 2022, NY DFS 2023)"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic imaging case (frequency excessive)."
+    },
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic imaging case (frequency excessive)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic imaging case (frequency excessive)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic imaging case (frequency excessive)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic imaging case (frequency excessive)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic imaging case (frequency excessive)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis letter concerns the request your provider submitted for a short-interval, 6-month follow-up adrenal-protocol CT to monitor an incidental adrenal nodule. After review under the UnitedHealthcare Medical Management Guidelines, the request is denied as not medically necessary at the requested frequency. Determination date: May 18, 2026.\n\nUnited's guidelines provide that follow-up imaging for an incidental adrenal nodule is appropriate at an annual interval. The requested 6-month cadence exceeds that interval, and the documentation does not support that imaging at this higher frequency is medically necessary. Following review by an Optum clinical reviewer, the determination is to deny the requested frequency.\n\nOur records indicate that your prior appeal on this matter was closed as withdrawn, and the original determination therefore stands.\n\nYou or your provider may request, at no charge, a copy of the specific guideline and the documents relied upon in reaching this decision. If your provider wishes to discuss this determination, a peer-to-peer review with a United medical director may be arranged by calling the number on your member ID card.\n\nYou have the right to file an internal appeal of this decision. To file an internal appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter, along with any additional clinical information you would like considered. Appeals may be sent to the address shown on your Explanation of Benefits.\n\nSincerely,\nUnitedHealthcare Medical Management",
+  "clinical_context": "The patient is a 49-year-old man with an incidentally discovered right adrenal nodule measuring 2.8 cm on a CT performed for abdominal pain. The nodule has indeterminate features, with an unenhanced attenuation of 24 Hounsfield units (above the 10-HU benign-adenoma threshold) and an absolute contrast washout of only 40%. He also has difficult-to-control hypertension on three agents, raising concern for a functional lesion, and an initial workup for hyperaldosteronism is pending. Current radiology and endocrine guidance support short-interval follow-up imaging at 6 months for an indeterminate adrenal nodule of this size to assess for interval growth and to help exclude malignancy or a functional tumor; annual-only imaging would delay detection of a clinically significant change. His prior appeal of the earlier denial was closed by the insurer as 'member withdrawn,' but the member never requested withdrawal and the file contains no signed or documented withdrawal; this improperly ended the appeal. The determination letter also provided no notice of the member's right to external independent review, which is required for an adverse benefit determination, leaving the member without that procedural protection.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260606-072437-6ac0e",
+    "generated_at": "2026-06-06T07:24:41Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "imaging",
+      "sub_tactic": "frequency_excessive"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (UHC, Medical Necessity, imaging, 41-55, M, frequency_excessive). Adrenal nodule belongs to imaging; adrenal-protocol CT realistic. Rationale enacts frequency_excessive (6-month exceeds annual guideline). Age 49 in band; not 71+, null employer_archetype fine.",
+        "evidence_quotes": [
+          "\"sub_tactic\": \"frequency_excessive\"",
+          "exceeds plan guidelines for an incidental adrenal nodule, asserting that annual follow-up imaging is appropriate and that imaging at this cadence is not medically necessary"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Frustratingly realistic. Short-interval follow-up CT for an indeterminate adrenal incidentaloma with resistant hypertension is guideline-supported; UHC asserting annual cadence under frequency_excessive is exactly the kind of misapplied guideline the context rebuts. Omitted external-review notice and a prior appeal 'closed as withdrawn' without documentation are common procedural abuses. No mismatch.",
+        "evidence_quotes": [
+          "asserting that annual follow-up imaging is appropriate and that imaging at this cadence is not medically necessary",
+          "The letter states the member's prior appeal on this issue was closed as withdrawn"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Hits all UHC fingerprints: cites 'UnitedHealthcare Medical Management Guidelines', an 'Optum clinical reviewer', uses 'documentation does not support', brands as 'United', signs 'UnitedHealthcare Medical Management'. No wrong-insurer tells. Clear 5.",
+        "evidence_quotes": [
+          "After review under the UnitedHealthcare Medical Management Guidelines",
+          "Following review by an Optum clinical reviewer",
+          "the documentation does not support that imaging at this higher frequency is medically necessary"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Frequency-based denial matching frequency_excessive: annual interval appropriate, 6-month cadence exceeds it. Authentically shoddy \u2014 asserts 'documentation does not support' without specifying clinical thresholds (size/HU/growth); cites a plausible vaguely-named source and an Optum reviewer. Not airtight; clear appeal room.",
+        "evidence_quotes": [
+          "United's guidelines provide that follow-up imaging for an incidental adrenal nodule is appropriate at an annual interval.",
+          "The requested 6-month cadence exceeds that interval, and the documentation does not support that imaging at this higher frequency is medically necessary."
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Credible: 2.8 cm right adrenal nodule, 24 HU (above the 10-HU adenoma cutoff), 40% absolute washout (below the ~60% adenoma threshold) correctly flag indeterminate; resistant hypertension on three agents with a pending hyperaldosteronism workup is a realistic functional concern; 6-month short-interval follow-up aligns with guidance. No invented drugs or impossible courses.",
+        "evidence_quotes": [
+          "an unenhanced attenuation of 24 Hounsfield units (above the 10-HU benign-adenoma threshold) and an absolute contrast washout of only 40%",
+          "difficult-to-control hypertension on three agents, raising concern for a functional lesion"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Interval adrenal-protocol CT for an indeterminate 2.8 cm adrenal nodule is guideline-concordant standard of care (ACR Incidental Findings, AACE/AAES). Exact category match.",
+        "evidence_quotes": [
+          "Incidental indeterminate adrenal nodule, 2.8 cm (E27.8)",
+          "Short-interval (6-month) follow-up adrenal-protocol CT"
+        ],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Adrenal/endocrine incidentaloma with an adrenal-protocol CT appears nowhere else; neighbours are MSK MRI, neuro/headache, PE CTA, renal-colic CT, breast mammogram. The shared frequency_excessive token appears on different anatomy/modality. Distinct point in feature-space; not a near-duplicate.",
+        "evidence_quotes": [
+          "dx=Incidental indeterminate adrenal nodule, 2.8 cm (E27.8); tx=Short-interval (6-month) follow-up adrenal-protocol CT",
+          "dx=Sinus headache with vision changes (G44.1); tx=MRI orbits and brain"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['missing_iro_notice', 'appeal_closed_as_withdrawn']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['missing_iro_notice', 'appeal_closed_as_withdrawn']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.176 (nearest=case_131_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Adrenal-nodule surveillance frequency appeal for a 49M. Nodule incidentally found on imaging (not deliberate injury); no suicide/self-harm, child abuse, IPV, end-of-life, or gender-affirming-minor content. The withdrawn-appeal grievance is administrative, not violence. UHC commercial, in scope. No banned topic.",
+        "evidence_quotes": [
+          "incidentally discovered right adrenal nodule measuring 2.8 cm on a CT performed for abdominal pain",
+          "short-interval follow-up imaging at 6 months for an indeterminate adrenal nodule of this size to assess for interval growth and to help exclude malignancy or a functional tumor"
+        ],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Facts stable across documents: 49M, indeterminate 2.8 cm adrenal nodule (E27.8), 6-month follow-up CT. The annual-vs-6-month dispute is an appealable disagreement, not a contradiction; the withdrawn-appeal fact appears consistently; laterality 'right' added in context, denial silent (no conflict). Letter paragraphs consistent; timeline coherent.",
+        "evidence_quotes": [
+          "a 49-year-old man with an incidentally discovered right adrenal nodule measuring 2.8 cm",
+          "your prior appeal on this matter was closed as withdrawn"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Standard bureaucratic insurance prose + dense comma-spliced clinical recitation, both PASS-worthy. No 'as an AI' tics, no GPT vocabulary, no listicle structure, no marketing filler.",
+        "evidence_quotes": [
+          "This letter concerns the request your provider submitted for a short-interval, 6-month follow-up adrenal-protocol CT",
+          "with an unenhanced attenuation of 24 Hounsfield units (above the 10-HU benign-adenoma threshold) and an absolute contrast washout of only 40%"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural register: 'denied as not medically necessary at the requested frequency', bloodless withdrawn-appeal statement, standard sign-off, no apology/warmth/marketing. Clinical context is neutral clinical narrative with only faint advocacy drift. Correct registers.",
+        "evidence_quotes": [
+          "the request is denied as not medically necessary at the requested frequency",
+          "Our records indicate that your prior appeal on this matter was closed as withdrawn, and the original determination therefore stands."
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No out-of-pocket liability, no dollar figures; 'at no charge' refers to guideline copies. No Medicare/Medicaid conflation. Silent on cost \u2014 anchor 5.",
+        "evidence_quotes": [
+          "request, at no charge, a copy of the specific guideline and the documents relied upon in reaching this decision",
+          "the request is denied as not medically necessary at the requested frequency"
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites internal guidelines/Optum rather than inventing a statute; offers internal appeal with a 180-day window; no Medicare framing on a commercial plan. Omits external-review notice \u2014 a realistic imperfection (the intended flaw), not penalized. Anchor 5.",
+        "evidence_quotes": [
+          "You have the right to file an internal appeal of this decision. To file an internal appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter",
+          "The determination letter also provided no notice of the member's right to external independent review, which is required for an adverse benefit determination"
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Adrenal incidentalomas are common in middle-aged adults; a 49yo man is typical. Diagnosis is not sex-specific. Pronouns (he/his) consistent with M; letter gender-neutral. Resistant hypertension prompting functional concern is coherent. No stereotyping.",
+        "evidence_quotes": [
+          "The patient is a 49-year-old man with an incidentally discovered right adrenal nodule",
+          "His prior appeal of the earlier denial was closed by the insurer as 'member withdrawn'"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Insurer UHC (allowed); Medical Necessity (allowed); coverage self_funded employer-sponsored commercial with no government/marketplace framing; patient 49 (adult 18-89); only standard internal-appeal guidance, no live-filing/attorney-work/court-representation. All PASS conditions met.",
+        "evidence_quotes": [
+          "UHC \u2014 Medical Necessity",
+          "\"plan_funding_type\": \"self_funded\"",
+          "\"age\": 49"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.72,
+        "reasoning": "Single explicit date (Determination May 18, 2026) in window; 180-day appeal window correct; the prior appeal and earlier denial clearly precede the determination. No denial pre-dating a request, no impossible duration. Ancillary clinical events lack concrete dates (mild omission, not a contradiction).",
+        "evidence_quotes": [
+          "Determination date: May 18, 2026.",
+          "your prior appeal on this matter was closed as withdrawn, and the original determination therefore stands"
+        ],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Cites 'UnitedHealthcare Medical Management Guidelines' (correct umbrella, real owner) and an Optum reviewer without module/edition/page or a fabricated alphanumeric code; offers the guideline on request. Realistically vague \u2014 anchor 5.",
+        "evidence_quotes": [
+          "After review under the UnitedHealthcare Medical Management Guidelines, the request is denied as not medically necessary at the requested frequency.",
+          "request, at no charge, a copy of the specific guideline and the documents relied upon in reaching this decision."
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Two strong procedural vectors: a prior appeal closed as 'member withdrawn' with no documented withdrawal (improperly ended the appeal), and no external-review notice. Clinically strong too: indeterminate nodule (24 HU, 40% washout, 2.8 cm) with resistant hypertension and pending hyperaldosteronism workup, where radiology/endocrine guidance supports 6-month follow-up, undermining the annual-only rule.",
+        "exploitable_weaknesses": [
+          "Prior appeal improperly closed as 'member withdrawn' with no signed or documented withdrawal request",
+          "No notice of the right to external independent review, a required procedural protection",
+          "Annual-only guideline misapplied to an indeterminate (24 HU, 40% washout) nodule with functional concern where 6-month follow-up is supported"
+        ],
+        "strong_defenses": [
+          "The letter facially cites and applies the UnitedHealthcare Medical Management Guidelines (annual interval) and references an Optum clinical reviewer"
+        ],
+        "evidence_quotes": [
+          "the member never requested withdrawal and the file contains no signed or documented withdrawal; this improperly ended the appeal",
+          "The determination letter also provided no notice of the member's right to external independent review, which is required for an adverse benefit determination"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Medical Necessity / imaging / sub_tactic=frequency_excessive. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Two strong procedural vectors: a prior appeal closed as 'member withdrawn' with no documented withdrawal (improperly ended the appeal), and no external-review notice. Clinically strong too: indeterminate nodule (24 HU, 40% washout, 2.8 cm) with resistant hypertension and pending hyperaldosteronism workup, where radiology/endocrine guidance supports 6-month follow-up, undermining the annual-only rule.",
+      "exploitable_weaknesses": [
+        "Prior appeal improperly closed as 'member withdrawn' with no signed or documented withdrawal request",
+        "No notice of the right to external independent review, a required procedural protection",
+        "Annual-only guideline misapplied to an indeterminate (24 HU, 40% washout) nodule with functional concern where 6-month follow-up is supported",
+        "Pattern anchor: missing_iro_notice",
+        "Pattern anchor: appeal_closed_as_withdrawn"
+      ],
+      "strong_defenses": [
+        "The letter facially cites and applies the UnitedHealthcare Medical Management Guidelines (annual interval) and references an Optum clinical reviewer"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "missing_iro_notice",
+        "appeal_closed_as_withdrawn"
+      ],
+      "deterministic_present": [
+        "missing_iro_notice",
+        "appeal_closed_as_withdrawn"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

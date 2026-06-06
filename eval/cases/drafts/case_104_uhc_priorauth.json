@@ -1,0 +1,420 @@
+{
+  "case_id": "case_104_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 73,
+    "gender": "F",
+    "diagnosis": "Primary hyperparathyroidism with hypercalcemic crisis (E21.0)",
+    "treatment_requested": "Urgent focused single-gland parathyroidectomy during emergency admission",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "circular_medical_necessity: ProPublica 'Uncovered' Series 2023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic endocrine case (emergency retroactive auth)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic endocrine case (emergency retroactive auth)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic endocrine case (emergency retroactive auth)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic endocrine case (emergency retroactive auth)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic endocrine case (emergency retroactive auth)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nDate of this notice: April 14, 2026\n\nWe are writing regarding the request for coverage that UnitedHealthcare received for review on March 28, 2026. After completing our review, United is unable to approve the requested service. This letter explains our determination and your appeal rights.\n\nOur records indicate that prior authorization was not requested or approved before the requested service was rendered. Under your plan, services that require prior authorization must be approved in advance. Retroactive authorization is not granted for services that were furnished without prior approval, and the requested service is therefore not eligible for coverage on that basis.\n\nIn addition, applying the UnitedHealthcare Medical Management Guidelines, we have determined that the requested service is not medically necessary because it does not meet our criteria for medical necessity. The documentation submitted does not support that the applicable criteria were satisfied. This determination was made under the United Coverage Determination Guideline (CDG) for the requested service.\n\nYou or your provider may request a copy of the specific clinical criteria used and a copy of the claim file by contacting Member Services at the number on your identification card. If your treating provider would like to discuss this decision, a peer-to-peer review with a United medical director may be arranged on request.\n\nYou have the right to appeal this decision. A request for appeal must be submitted within 180 days of the date of this letter. Please include any additional information you would like us to consider.\n\nSincerely,\nClinical Review Services\nUnitedHealthcare",
+  "clinical_context": "The member is a 73-year-old woman with primary hyperparathyroidism who presented to the emergency department in hypercalcemic crisis over a 36-hour admission: serum calcium 14.2 mg/dL (ionized 1.92 mmol/L), intact PTH 412 pg/mL, and acute kidney injury with creatinine 2.1 mg/dL from a baseline of 0.9. She was lethargic and confused on arrival, with a shortened QT interval on her admission ECG. Neck ultrasound and a sestamibi scan localized a single enlarged inferior parathyroid adenoma. She was stabilized with aggressive intravenous saline, calcitonin, and intravenous zoledronic acid, but calcium remained above 12 mg/dL and her mentation only partially improved. Because recurrent crisis was likely and definitive treatment could not safely be deferred, endocrine surgery performed a focused single-gland parathyroidectomy during the same admission; intraoperative PTH fell by more than 70 percent, confirming cure. The treating endocrinologist and surgeon documented in records submitted with the claim that prior authorization was not feasible given the patient's altered mental status and the emergent threat to renal and neurologic function, and that the admission met the plan's emergency-services definition. Parathyroidectomy is the only definitive therapy for symptomatic primary hyperparathyroidism and is guideline-indicated for hypercalcemic crisis.",
+  "submission_timestamp": "2026-03-28T10:15:00Z",
+  "denial_timestamp": "2026-04-14T16:40:00Z",
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260606-075802-c7fa1",
+    "generated_at": "2026-06-06T07:58:03Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "71+",
+      "patient_gender": "F",
+      "specialty": "endocrine",
+      "sub_tactic": "emergency_retroactive_auth"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "The brief's matrix_cell matches the assigned cell field-for-field: insurer UHC, denial_type Prior Authorization, patient_age_band 71+, patient_gender F, specialty endocrine, sub_tactic emergency_retroactive_auth (order differs, values identical). Diagnosis Primary hyperparathyroidism with hypercalcemic crisis (E21.0) is squarely endocrine, and focused single-gland parathyroidectomy is realistic for it. The denial_rationale_seed describes the assigned sub_tactic: prior authorization had not been obtained before the service was rendered, and that retroactive authorization is not available for services furnished without prior approval - this is emergency_retroactive_auth, not some other denial reason. Age_band is 71+ and employer_archetype is non-empty (still actively employed as a senior partner at a regional accounting firm). Every PASS criterion is satisfied.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "sub_tactic: emergency_retroactive_auth",
+          "Primary hyperparathyroidism with hypercalcemic crisis (E21.0)",
+          "Urgent focused single-gland parathyroidectomy during emergency admission",
+          "prior authorization had not been obtained before the service was rendered, and that retroactive authorization is not available for services furnished without prior approval",
+          "still actively employed as a senior partner at a regional accounting firm, covered under the firm's self-funded ERISA group health plan"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "This conflict is highly plausible on a US commercial/ERISA self-funded plan. Primary hyperparathyroidism with hypercalcemic crisis (Ca 14.2, PTH 412, AKI, altered mentation) is a textbook emergency, and urgent focused parathyroidectomy is the correct, current treatment - no anachronistic therapy. UHC routinely denies post-service claims citing prior authorization not obtained plus boilerplate does not meet medical necessity criteria, which is exactly the hand-wavy logic real insurers use. The exploitable gaps are realistic and central: retroactively denying PA on a bona fide emergency clashes with plan/ERISA emergency-services provisions, and the circular not medically necessary because it does not meet medical-necessity criteria rationale without identifying any specific threshold is a genuine ERISA full-and-fair-review vulnerability. Age 73 female fits the epidemiology of primary hyperparathyroidism. The flaws are features, not implausibilities.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "serum calcium 14.2 mg/dL, intact PTH 412 pg/mL) with acute kidney injury and altered mentation, a bona fide emergency",
+          "retroactive authorization is not available for services furnished without prior approval",
+          "not medically necessary because it did not meet United's coverage criteria, without identifying any specific threshold the case failed",
+          "The notice recites standard language that would apply to almost any denial and contains no analysis tied to the individual claim"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "The letter is branded as United throughout, matching the UHC tell: United is unable to approve the requested service and the signature block UnitedHealthcare. It cites UnitedHealthcare Medical Management Guidelines, the exact named guideline source in the fingerprint, plus the United Coverage Determination Guideline (CDG), a genuine UHC artifact. The phrase documentation submitted does not support that the applicable criteria were satisfied reproduces UHC's hallmark documentation does not support framing. No wrong-insurer tells appear: no InterQual (Aetna), no MCG/Milliman or step-therapy (Cigna). The one minor gap is the absence of an Optum reviewer reference, but the peer-to-peer with a United medical director is consistent cadence. A claims-handler would believe this came from UnitedHealthcare.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "United is unable to approve the requested service",
+          "applying the UnitedHealthcare Medical Management Guidelines",
+          "This determination was made under the United Coverage Determination Guideline (CDG) for the requested service",
+          "The documentation submitted does not support that the applicable criteria were satisfied",
+          "a peer-to-peer review with a United medical director may be arranged on request"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "Sub_tactic is emergency_retroactive_auth: ER care denied for missing prior auth despite an emergency exemption. The letter denies precisely on a no-prior-auth / no-retroactive-auth basis, fitting the tactic, while conspicuously never addressing the emergency exemption - the exact exploitable gap real denials leave open. The medical-necessity paragraph is textbook circular reasoning (not medically necessary because it does not meet our criteria for medical necessity), which the prompt explicitly flags as HIGHLY realistic. Cited rules (UnitedHealthcare Medical Management Guidelines, Coverage Determination Guideline/CDG) are plausible real UHC artifacts, not hallucinations. No specific clinical thresholds are quoted, the documentation rationale is hand-wavy, and the determination is far from airtight, leaving ample appeal room. This is authentically shoddy logic, mapping to a 5.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "Retroactive authorization is not granted for services that were furnished without prior approval, and the requested service is therefore not eligible for coverage on that basis.",
+          "the requested service is not medically necessary because it does not meet our criteria for medical necessity",
+          "applying the UnitedHealthcare Medical Management Guidelines",
+          "This determination was made under the United Coverage Determination Guideline (CDG) for the requested service."
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "Internally consistent and clinically authentic. PTH-dependent hypercalcemia is correctly portrayed: serum calcium 14.2 mg/dL (ionized 1.92 mmol/L) with non-suppressed intact PTH 412 pg/mL is diagnostic of primary hyperparathyroidism. AKI creatinine 2.1 mg/dL from a baseline of 0.9 fits hypercalcemic nephropathy/volume depletion. shortened QT interval is the correct hypercalcemia ECG finding. Localization via Neck ultrasound and a sestamibi scan for a single enlarged inferior parathyroid adenoma is standard. The acute regimen - intravenous saline, calcitonin, and intravenous zoledronic acid - is the correct stepwise therapy. intraoperative PTH fell by more than 70 percent reflects real intraoperative-PTH cure criteria. No invented drugs, impossible dosing, or biology violations; trajectory and durations are plausible. A clinician would believe this patient exists.",
+        "score": 5,
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "serum calcium 14.2 mg/dL (ionized 1.92 mmol/L), intact PTH 412 pg/mL",
+          "acute kidney injury with creatinine 2.1 mg/dL from a baseline of 0.9",
+          "a shortened QT interval on her admission ECG",
+          "stabilized with aggressive intravenous saline, calcitonin, and intravenous zoledronic acid",
+          "intraoperative PTH fell by more than 70 percent, confirming cure"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "The diagnosis is Primary hyperparathyroidism with hypercalcemic crisis (E21.0) and the treatment requested is Urgent focused single-gland parathyroidectomy during emergency admission. Parathyroidectomy is the definitive and standard-of-care treatment for primary hyperparathyroidism; surgical removal of the offending adenomatous gland is curative. Focused (minimally invasive) single-gland parathyroidectomy is a recognized, guideline-endorsed surgical approach when a single adenoma is localized. In the setting of hypercalcemic crisis (a life-threatening emergency), urgent/emergent parathyroidectomy is an accepted intervention after medical stabilization. The treatment is unambiguously in the correct clinical category and matches the diagnosis. No mismatch, invented drug, or wrong category is present. This is a clear PASS.",
+        "score": "PASS",
+        "confidence": 0.97,
+        "evidence_quotes": [
+          "Primary hyperparathyroidism with hypercalcemic crisis (E21.0)",
+          "Urgent focused single-gland parathyroidectomy during emergency admission"
+        ],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "reasoning": "The case sits at a clearly distinct point in feature-space. Its diagnosis, Primary hyperparathyroidism with hypercalcemic crisis (E21.0), appears nowhere among neighbours, which cluster around diabetes, thyroid eye disease, and other chronic endocrine conditions. Its treatment, Urgent focused single-gland parathyroidectomy during emergency admission, is the only surgical/procedural intervention in the set; neighbours are pharmacotherapy (GLP-1s, tirzepatide, spironolactone, teprotumumab) or device/monitoring. The acute surgical-crisis trajectory contrasts with neighbours' continuation/chronic-management arcs. Two neighbours share the emergency_retroactive_auth flaw (testosterone, pituitary MRI), but both differ entirely in drug, diagnosis, and trajectory, so no near-duplicate exists. A human scanning the dataset would not call this a near-duplicate of any neighbour.",
+        "score": 5,
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "dx=Primary hyperparathyroidism with hypercalcemic crisis (E21.0); tx=Urgent focused single-gland parathyroidectomy during emergency admission",
+          "dx=Male hypogonadism (E29.1); tx=Testosterone cypionate with monitoring",
+          "dx=Cushing disease, suspected (E24.0); tx=Pituitary MRI with endocrinology referral"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['algo_boilerplate_fingerprint', 'circular_medical_necessity']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['algo_boilerplate_fingerprint', 'circular_medical_necessity']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.059 (nearest=case_184_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Checking each banned topic against the denial letter and clinical context. No suicide/SI, self-harm, child abuse, or intimate partner violence content appears; the patient is a 73-year-old woman with primary hyperparathyroidism in hypercalcemic crisis, a curative surgical case, not EOL framing (intraoperative PTH fell by more than 70 percent, confirming cure). No gender-affirming/dysphoria framing. No violence or polarizing insurance events; the letter is a routine UnitedHealthcare denial. On out-of-scope program: the insurer is UnitedHealthcare (UHC, a commercial plan) with no mention of Medicare/Medicaid/TRICARE/VA/marketplace, and the appeal references 180 days and Member Services - standard commercial-plan language. Patient age 73 does not by itself invoke Medicare; no coverage type is named that would place it out of scope. No banned topic is present, even paraphrased or implied.",
+        "score": "PASS",
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "After completing our review, United is unable to approve the requested service.",
+          "The member is a 73-year-old woman with primary hyperparathyroidism",
+          "intraoperative PTH fell by more than 70 percent, confirming cure",
+          "the admission met the plan's emergency-services definition"
+        ],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "Cross-document facts agree: a 73-year-old woman (gender F) with primary hyperparathyroidism/hypercalcemic crisis (E21.0), requesting urgent focused single-gland parathyroidectomy during emergency admission - identical in profile, denial framing, and context. Dates are consistent (received March 28, 2026; notice April 14, 2026; 180-day appeal). Within the denial, paragraph 2 (no prior authorization) and paragraph 3 (not medically necessary) are independent denial bases, not self-contradictory. Per the edge-case rule, the denial's claims being rebutted by the context (PA infeasible due to altered mental status; guideline-indicated parathyroidectomy; intraoperative PTH fell >70%) is the appealable core, NOT a contradiction. The context timeline is internally coherent: presentation, stabilization, persistent calcium >12, same-admission surgery, confirmed cure. No anatomical, gender, drug, or diagnosis instability found.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "Primary hyperparathyroidism with hypercalcemic crisis (E21.0)",
+          "Urgent focused single-gland parathyroidectomy during emergency admission",
+          "endocrine surgery performed a focused single-gland parathyroidectomy during the same admission; intraoperative PTH fell by more than 70 percent, confirming cure",
+          "prior authorization was not feasible given the patient's altered mental status and the emergent threat to renal and neurologic function"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "reasoning": "The denial letter reads as standard formal insurance boilerplate: After completing our review, United is unable to approve the requested service, Retroactive authorization is not granted for services that were furnished without prior approval, and standard appeal-rights language (within 180 days of the date of this letter). This is dense bureaucratic prose with no bullet-point listicles, no numbered enumerations in place of prose, no meta-commentary, no as-an-AI tics, and none of the signature GPT vocabulary (delve, tapestry, navigate the complexities, it's important to note, a testament to). The clinical context is a dense clinical recitation with specific lab values (calcium 14.2 mg/dL, PTH 412 pg/mL, creatinine 2.1) - exactly how a real chart note reads, which the rubric explicitly says must PASS. No conspicuous tell reaches the 0.7 confidence threshold required to FAIL.",
+        "score": "PASS",
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "After completing our review, United is unable to approve the requested service.",
+          "Retroactive authorization is not granted for services that were furnished without prior approval",
+          "serum calcium 14.2 mg/dL (ionized 1.92 mmol/L), intact PTH 412 pg/mL, and acute kidney injury with creatinine 2.1 mg/dL from a baseline of 0.9"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "reasoning": "The denial letter nails the cold, procedural register. It opens We are writing regarding the request for coverage and closes Sincerely, Clinical Review Services / UnitedHealthcare with no apology, no warmth, no marketing buzzwords. It deploys effective bureaucratic obfuscation: not medically necessary because it does not meet our criteria for medical necessity is circular and vague, and applying the UnitedHealthcare Medical Management Guidelines invokes unnamed criteria the member must request - a positive realism signal. It stacks impersonal denial bases without empathy. The clinical context is plain prose, purely descriptive with lab values and no emotional pleading; phrases like definitive treatment could not safely be deferred report the record rather than advocate. Both voices match their authorship. No detectable wavering toward friendliness, apology, or advocacy.",
+        "score": 5,
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "After completing our review, United is unable to approve the requested service.",
+          "the requested service is not medically necessary because it does not meet our criteria for medical necessity",
+          "Sincerely,\nClinical Review Services\nUnitedHealthcare",
+          "The member is a 73-year-old woman with primary hyperparathyroidism who presented to the emergency department in hypercalcemic crisis"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "reasoning": "The denial letter makes no mention whatsoever of the patient's cost liability, out-of-pocket amounts, dollar figures, or coverage cost-sharing. It addresses only the prior-authorization basis, medical-necessity determination, and appeal rights. Per the explicit edge case in the prompt (If the denial makes no mention of cost liability at all, that is standard practice. Score 5), this is textbook realistic behavior for a real-world denial. There is no precise out-of-pocket figure, no round-number estimate, no conflation of commercial terms with Medicare/Medicaid, and no incorrect order-of-magnitude cost claim. The strongest evidence is the total absence of cost language. Financial framing is therefore maximally realistic.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "United is unable to approve the requested service",
+          "the requested service is therefore not eligible for coverage on that basis",
+          "You or your provider may request a copy of the specific clinical criteria used and a copy of the claim file by contacting Member Services"
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "reasoning": "The letter references appeal rights with a concrete window: A request for appeal must be submitted within 180 days of the date of this letter - a plausible ERISA-aligned commercial-plan timeframe, not hallucinated. It offers a copy of the claim file and specific clinical criteria, mirroring real disclosure practice. Crucially, it strategically OMITS external review / independent review rights and any explicit ERISA statutory citation - per the edge-case rule this is a realistic imperfection that creates an attack vector, not a defect. It invokes internal Medical Management Guidelines and United Coverage Determination Guideline (CDG) vaguely but plausibly, with no invented statutes. No Medicare framing is applied to this commercial plan. The framing is realistically imperfect rather than unrealistically perfect or hallucinated.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "A request for appeal must be submitted within 180 days of the date of this letter.",
+          "This determination was made under the United Coverage Determination Guideline (CDG) for the requested service.",
+          "You or your provider may request a copy of the specific clinical criteria used and a copy of the claim file by contacting Member Services"
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "reasoning": "Primary hyperparathyroidism is strongly associated with postmenopausal women, roughly 3-4x more common in women with peak incidence in the sixth-seventh decades. A 73-year-old woman is the modal demographic for this diagnosis, so the age/gender/diagnosis triad is epidemiologically accurate rather than a stereotype. Pronoun usage is internally consistent with gender F: '73-year-old woman', 'She was lethargic and confused', 'her admission ECG', and 'the patient's altered mental status' are all female and match the profile. The requested treatment, a focused single-gland parathyroidectomy, is age-appropriate and not framed through any demographic assumption. No exoticising, heteronormative-by-implication, or stereotyping language appears. This is a clean epidemiologic match with consistent pronouns and no baked-in stereotype.",
+        "score": 5,
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "age: 73",
+          "gender: F",
+          "diagnosis: Primary hyperparathyroidism with hypercalcemic crisis (E21.0)",
+          "The member is a 73-year-old woman with primary hyperparathyroidism",
+          "She was lethargic and confused on arrival, with a shortened QT interval on her admission ECG."
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "reasoning": "Checking each gate. Insurer: UnitedHealthcare / UHC - passes (UHC allowed). Denial type: UHC Prior Authorization - passes. Coverage: plan_funding_type is self_funded, and the letter addresses a Member under your plan with no Medicare/Medicaid/TRICARE/VA/marketplace framing. Self-funded ERISA employer-sponsored commercial plans are IN scope, so this passes. Age: 73 - within 18-89, passes. No prohibited language: the case describes a past admission/claim review and standard appeal rights; no live-filing, attorney-work, or court-representation claims. All five PASS conditions are satisfied.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "UHC - Prior Authorization",
+          "plan_funding_type: self_funded",
+          "age: 73",
+          "Under your plan, services that require prior authorization must be approved in advance.",
+          "You have the right to appeal this decision."
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "reasoning": "All explicit dates sit in 2026 and are mutually consistent. The request was received for review on March 28, 2026 and the Date of this notice: April 14, 2026 - the denial correctly post-dates the service/review request by ~17 days, a plausible turnaround. The appeal window, submitted within 180 days of the date of this letter, is numerically valid and matches a realistic commercial timeframe. The clinical context is an emergent, same-admission event (36-hour admission, during the same admission) with no stated calendar dates that could conflict with the denial timeline, and contains no vague references like 'a few years ago' or impossible durations. No chronological contradictions exist.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Date of this notice: April 14, 2026",
+          "received for review on March 28, 2026",
+          "A request for appeal must be submitted within 180 days of the date of this letter",
+          "over a 36-hour admission"
+        ],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "reasoning": "The letter cites guidelines at the realistically vague level insurers use. It names UnitedHealthcare Medical Management Guidelines and United Coverage Determination Guideline (CDG) - both real, correctly-owned UnitedHealthcare policy families. Critically, it does NOT supply an edition number, module number, page reference, or any specific bulletin identifier for either. It also explicitly defers specificity to the member: You or your provider may request a copy of the specific clinical criteria used, which mirrors the genuine insurer tactic of withholding the exact criteria. No fabricated alphanumeric code appears, so no hallucination penalty applies. The reference to our criteria for medical necessity without naming the specific bulletin is highly realistic and not penalized. This is umbrella-term-level vagueness with correct brand ownership and zero over-specification.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "applying the UnitedHealthcare Medical Management Guidelines, we have determined that the requested service is not medically necessary because it does not meet our criteria for medical necessity",
+          "This determination was made under the United Coverage Determination Guideline (CDG) for the requested service.",
+          "You or your provider may request a copy of the specific clinical criteria used and a copy of the claim file by contacting Member Services"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial is highly vulnerable. It rests on two pillars, both broken. Procedurally, it cites lack of prior authorization, yet the clinical context shows a 73-year-old in hypercalcemic crisis with altered mental status, AKI, and a shortened QT interval admitted emergently - records document the admission met the plan's emergency-services definition and that PA was not feasible. Emergency services are typically exempt from PA, gutting the first basis. Clinically, the letter is purely circular: not medically necessary because it does not meet our criteria for medical necessity, naming no specific threshold, while the patient indisputably meets standard of care - parathyroidectomy is the only definitive therapy and guideline-indicated for hypercalcemic crisis, confirmed by >70% intraoperative PTH drop. No genuine defense survives. This is a textbook easy appeal.",
+        "score": 5,
+        "confidence": 0.92,
+        "exploitable_weaknesses": [
+          "Prior-auth denial collapses against documented emergency admission with altered mental status where PA was not feasible and the admission met the plan's emergency-services definition",
+          "Purely circular medical-necessity reasoning that cites no specific clinical criterion while the patient clearly meets guideline-indicated standard of care for hypercalcemic crisis"
+        ],
+        "strong_defenses": [
+          "The letter does provide an appeal window (180 days), a peer-to-peer offer, and access to the specific clinical criteria/claim file, which are procedurally adequate disclosures"
+        ],
+        "evidence_quotes": [
+          "Retroactive authorization is not granted for services that were furnished without prior approval",
+          "not medically necessary because it does not meet our criteria for medical necessity",
+          "prior authorization was not feasible given the patient's altered mental status and the emergent threat to renal and neurologic function, and that the admission met the plan's emergency-services definition",
+          "Parathyroidectomy is the only definitive therapy for symptomatic primary hyperparathyroidism and is guideline-indicated for hypercalcemic crisis"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / endocrine / sub_tactic=emergency_retroactive_auth. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial is highly vulnerable. It rests on two pillars, both broken. Procedurally, it cites lack of prior authorization, yet the clinical context shows a 73-year-old in hypercalcemic crisis with altered mental status, AKI, and a shortened QT interval admitted emergently - records document the admission met the plan's emergency-services definition and that PA was not feasible. Emergency services are typically exempt from PA, gutting the first basis. Clinically, the letter is purely circular: not medically necessary because it does not meet our criteria for medical necessity, naming no specific threshold, while the patient indisputably meets standard of care - parathyroidectomy is the only definitive therapy and guideline-indicated for hypercalcemic crisis, confirmed by >70% intraoperative PTH drop. No genuine defense survives. This is a textbook easy appeal.",
+      "exploitable_weaknesses": [
+        "Prior-auth denial collapses against documented emergency admission with altered mental status where PA was not feasible and the admission met the plan's emergency-services definition",
+        "Purely circular medical-necessity reasoning that cites no specific clinical criterion while the patient clearly meets guideline-indicated standard of care for hypercalcemic crisis",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: circular_medical_necessity"
+      ],
+      "strong_defenses": [
+        "The letter does provide an appeal window (180 days), a peer-to-peer offer, and access to the specific clinical criteria/claim file, which are procedurally adequate disclosures"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_boilerplate_fingerprint",
+        "circular_medical_necessity"
+      ],
+      "deterministic_present": [
+        "algo_boilerplate_fingerprint",
+        "circular_medical_necessity"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

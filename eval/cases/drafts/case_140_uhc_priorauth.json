@@ -1,0 +1,390 @@
+{
+  "case_id": "case_140_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 53,
+    "gender": "M",
+    "diagnosis": "Oropharyngeal squamous cell carcinoma (C10.9), post chemoradiation, with radiation-associated dysphagia and cervical lymphedema",
+    "treatment_requested": "Continued outpatient swallowing therapy and complete decongestive (lymphedema) therapy beyond the plan's annual therapy visit cap",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "algo_time_delta: ProPublica + Capitol Forum Cigna Investigation 2023; Senate Finance Committee UHC Investigation 2024",
+    "step_therapy_vague_mcg: KFF 2023 Survey of Consumer Experiences with Health Insurance"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic oncology case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic oncology case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic oncology case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic oncology case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic oncology case (visit limit exceeded)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis letter concerns the prior authorization request your provider submitted for continued outpatient swallowing therapy and complete decongestive (lymphedema) therapy following treatment for oropharyngeal cancer. After review under the UnitedHealthcare Medical Management Guidelines, the request is not authorized. Determination date: May 27, 2026.\n\nThe annual visit limit for outpatient rehabilitation therapy under your plan has been exceeded, and additional visits are not a covered benefit for the remainder of this plan year. Separately, under the applicable Milliman Care Guidelines (MCG), the documentation does not support that continued therapy at this level is medically necessary.\n\nYour request was received at 11:02 AM and this determination was issued at 11:05 AM the same day, following review by an Optum clinical reviewer.\n\nYou or your provider may request, at no charge, a copy of the specific criteria and the documents relied upon in reaching this decision. If your provider wishes to discuss this determination, a peer-to-peer review with a United medical director may be arranged by calling the number on your member ID card.\n\nYou have the right to appeal this decision. To file an internal appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter, along with any additional clinical information you would like considered. You may also have the right to an external review by an independent review organization after the internal appeal. Appeals may be sent to the address shown on your Explanation of Benefits.\n\nSincerely,\nUnitedHealthcare Medical Management",
+  "clinical_context": "The patient is a 53-year-old man who completed concurrent chemoradiation for stage III oropharyngeal squamous cell carcinoma (HPV-positive) and is now in active survivorship rehabilitation. He has radiation-associated dysphagia with documented penetration-aspiration on a modified barium swallow study (Penetration-Aspiration Scale 6) and is dependent on a modified, pureed diet, along with cervical and submental lymphedema causing restricted neck range of motion. His care team requests continued outpatient swallowing therapy with a speech-language pathologist and complete decongestive therapy for the lymphedema. These are active, medically necessary treatment-related complications, not elective visits, and applying a flat annual rehabilitation-visit cap disregards the ongoing functional impairment and aspiration risk. The Milliman Care Guidelines cited in the denial are referenced without any edition or module, so the specific criteria applied cannot be verified or rebutted. The submission and the denial were timestamped only three minutes apart, which is inconsistent with any individualized review of the swallow-study findings and lymphedema measurements. His treating oncologist documents that interrupting therapy now risks worsening aspiration and irreversible fibrosis.",
+  "submission_timestamp": "2026-05-27T11:02:00",
+  "denial_timestamp": "2026-05-27T11:05:00",
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260606-074231-518aa",
+    "generated_at": "2026-06-06T07:42:31Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "oncology",
+      "sub_tactic": "visit_limit_exceeded"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (UHC, Prior Authorization, oncology, 41-55, M, visit_limit_exceeded). Oropharyngeal SCC is oncology; survivorship rehab therapy realistic. Rationale enacts visit_limit_exceeded (annual cap exceeded). Age 53 in band; not 71+, null employer_archetype fine.",
+        "evidence_quotes": [
+          "\"sub_tactic\": \"visit_limit_exceeded\"",
+          "the annual visit limit for outpatient rehabilitation therapy has been exceeded and additional visits are not a covered benefit this plan year"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Frustratingly realistic. UHC routinely applies annual outpatient-therapy visit caps and pairs benefit exhaustion with a boilerplate MCG necessity statement. The clinical picture (post-chemoradiation dysphagia + cervical lymphedema needing SLP + complete decongestive therapy) is coherent and current. A 3-minute turnaround and MCG cited without edition are real exploitable gaps. No mismatch.",
+        "evidence_quotes": [
+          "the annual visit limit for outpatient rehabilitation therapy has been exceeded and additional visits are not a covered benefit this plan year",
+          "The request was received at 11:02 AM and denied at 11:05 AM the same day"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.8,
+        "reasoning": "Carries UHC's strongest fingerprints: cites 'UnitedHealthcare Medical Management Guidelines', invokes 'Optum' reviewers, uses the 'United' short brand and 'documentation does not support', signs 'UnitedHealthcare Medical Management'. The MCG citation is a minor cross-tell (UHC does use MCG) that doesn't override the dominant UHC markers. Reads unmistakably as United.",
+        "evidence_quotes": [
+          "After review under the UnitedHealthcare Medical Management Guidelines, the request is not authorized.",
+          "following review by an Optum clinical reviewer"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Targets visit_limit_exceeded directly, applied with authentic shoddiness: asserts the annual limit is 'exceeded' without stating the cap or current count; stacks a near-circular MCG necessity rationale without thresholds. Cited guidelines are real, not hallucinated. Unquantified cap leaves clear appeal room.",
+        "evidence_quotes": [
+          "The annual visit limit for outpatient rehabilitation therapy under your plan has been exceeded, and additional visits are not a covered benefit for the remainder of this plan year.",
+          "Separately, under the applicable Milliman Care Guidelines (MCG), the documentation does not support that continued therapy at this level is medically necessary."
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Textbook HPV-positive stage III oropharyngeal SCC post-chemoradiation with radiation-associated dysphagia and cervical/submental lymphedema; PAS 6 correctly denotes airway penetration; SLP swallowing therapy and complete decongestive therapy are the correct standard-of-care interventions; radiation-fibrosis trajectory is faithful. No invented drugs or impossible courses.",
+        "evidence_quotes": [
+          "completed concurrent chemoradiation for stage III oropharyngeal squamous cell carcinoma (HPV-positive)",
+          "documented penetration-aspiration on a modified barium swallow study (Penetration-Aspiration Scale 6)"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "SLP swallowing therapy is standard of care for radiation-associated dysphagia and complete decongestive therapy is the recognized standard for lymphedema; both map directly onto the diagnosed sequelae. The visit cap is a benefit-design issue, not a clinical mismatch. Clear match.",
+        "evidence_quotes": [
+          "radiation-associated dysphagia and cervical lymphedema",
+          "Continued outpatient swallowing therapy and complete decongestive (lymphedema) therapy beyond the plan's annual therapy visit cap"
+        ],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Distinct on three axes: a supportive/rehabilitative service (swallowing + complete decongestive therapy) rather than an antineoplastic regimen/surgery; a survivorship/late-toxicity trajectory; and the visit_limit_exceeded flaw, which appears in no neighbour (all systemic regimens or oncologic surgery/radiation). No head/neck cancer neighbour. Not a near-duplicate.",
+        "evidence_quotes": [
+          "dx=Oropharyngeal squamous cell carcinoma (C10.9), post chemoradiation, with radiation-associated dysphagia and cervical lymphedema; tx=Continued outpatient swallowing therapy and complete decongestive (lymphedema) therapy beyond the plan's annual therapy visit cap",
+          "tx=R-CHOP cycle continuation"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['algo_time_delta', 'step_therapy_vague_mcg']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['algo_time_delta', 'step_therapy_vague_mcg']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.235 (nearest=case_138_uhc_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Curative survivorship oncology appeal for a 53M (swallowing + lymphedema therapy). NOT end-of-life \u2014 rehabilitative/curative framing; the fibrosis/aspiration risk is a treatment complication, not hospice/DNR. No suicide/self-harm, child abuse, IPV, or gender-affirming-minor content. No incitement. UHC commercial, in scope. No banned topic.",
+        "evidence_quotes": [
+          "is now in active survivorship rehabilitation",
+          "interrupting therapy now risks worsening aspiration and irreversible fibrosis"
+        ],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Facts stable across documents: 53M, oropharyngeal SCC with dysphagia and lymphedema, continued swallowing + decongestive therapy; timestamps match (11:02/11:05 = 3 min). Visit-cap and MCG necessity are independent co-existing grounds; the necessity dispute is appealable, not a contradiction. Timeline coherent.",
+        "evidence_quotes": [
+          "This letter concerns the prior authorization request your provider submitted for continued outpatient swallowing therapy and complete decongestive (lymphedema) therapy following treatment for oropharyngeal cancer.",
+          "The submission and the denial were timestamped only three minutes apart"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Formal bureaucratic insurance prose + dense compound clinical recitation, both PASS-worthy. No 'as an AI' tics, no GPT vocabulary, no listicle structure, no marketing filler.",
+        "evidence_quotes": [
+          "radiation-associated dysphagia with documented penetration-aspiration on a modified barium swallow study (Penetration-Aspiration Scale 6)",
+          "you or your authorized representative must submit a written request within 180 days of the date of this letter"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural register: 'Dear Member', 'the request is not authorized', bureaucratic vagueness, institutional sign-off, no apology/warmth/marketing. Clinical context is neutral data-led prose with only mild clinical-rebuttal framing. Correct registers.",
+        "evidence_quotes": [
+          "the request is not authorized. Determination date: May 27, 2026.",
+          "Sincerely,\nUnitedHealthcare Medical Management"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on out-of-pocket liability: states 'not a covered benefit' but quantifies nothing; no dollar figures. 'at no charge' refers to criteria copies. No Medicare/Medicaid conflation. Silent on cost liability \u2014 anchor 5.",
+        "evidence_quotes": [
+          "additional visits are not a covered benefit for the remainder of this plan year",
+          "You or your provider may request, at no charge, a copy of the specific criteria and the documents relied upon in reaching this decision"
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "States appeal rights with a concrete 180-day internal-appeal window and a hedged external-review reference; relies on proprietary criteria, cites no statute (no hallucination), never names ERISA explicitly, no Medicare framing on a commercial plan. Realistically imperfect \u2014 anchor 5.",
+        "evidence_quotes": [
+          "To file an internal appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter",
+          "You may also have the right to an external review by an independent review organization after the internal appeal."
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "HPV-positive oropharyngeal SCC predominantly affects middle-aged men (median diagnosis in the 50s), so a 53yo man is a textbook match. Pronouns (he/his) consistent with M; letter gender-neutral. No stereotyping.",
+        "evidence_quotes": [
+          "The patient is a 53-year-old man who completed concurrent chemoradiation for stage III oropharyngeal squamous cell carcinoma (HPV-positive)",
+          "He has radiation-associated dysphagia with documented penetration-aspiration on a modified barium swallow study"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Insurer UHC (allowed); Prior Authorization (allowed); coverage self_funded employer-sponsored commercial (ERISA self-insured, in scope) with no Medicare/Medicaid/TRICARE/VA/marketplace framing (Optum/MCG are commercial UM tools); patient 53 (adult 18-89); appeal-rights text is generic, no live-filing/attorney-work/court-representation. All PASS conditions met.",
+        "evidence_quotes": [
+          "UHC \u2014 Prior Authorization",
+          "\"plan_funding_type\": \"self_funded\"",
+          "\"age\": 53"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Determination May 27, 2026 in window; same-day timestamps ordered (11:02 received, 11:05 issued); 180-day appeal window valid; chemoradiation precedes survivorship rehab plausibly. The 3-minute gap is a review-adequacy concern, not a date inconsistency.",
+        "evidence_quotes": [
+          "Determination date: May 27, 2026.",
+          "Your request was received at 11:02 AM and this determination was issued at 11:05 AM the same day"
+        ],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Names real, correctly-attributed umbrella programs (UnitedHealthcare Medical Management Guidelines, Milliman Care Guidelines (MCG)) with no edition/module/page and no fabricated alphanumeric code; defers to un-named criteria offered on request. Realistically vague \u2014 anchor 5.",
+        "evidence_quotes": [
+          "After review under the UnitedHealthcare Medical Management Guidelines, the request is not authorized.",
+          "under the applicable Milliman Care Guidelines (MCG), the documentation does not support that continued therapy at this level is medically necessary"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Multiple exploitable weaknesses: MCG cited without edition/module (unverifiable criteria); a 3-minute turnaround inconsistent with individualized review; and a flat annual visit cap applied to active cancer-treatment complications with objective deficits (PAS 6, lymphedema, oncologist-documented risk of irreversible fibrosis). Procedural disclosures correct but the clinical/procedural vectors dominate.",
+        "exploitable_weaknesses": [
+          "MCG cited without any edition or module, so the specific criteria cannot be verified or rebutted",
+          "Three-minute submission-to-determination gap is inconsistent with any individualized review",
+          "Flat annual visit cap applied to active, medically necessary cancer-treatment complications with objective deficits (PAS 6, lymphedema, risk of irreversible fibrosis)"
+        ],
+        "strong_defenses": [
+          "Procedural disclosures correct: 180-day internal appeal, external IRO review, free criteria access, offered peer-to-peer"
+        ],
+        "evidence_quotes": [
+          "The Milliman Care Guidelines cited in the denial are referenced without any edition or module, so the specific criteria applied cannot be verified or rebutted.",
+          "The submission and the denial were timestamped only three minutes apart, which is inconsistent with any individualized review of the swallow-study findings and lymphedema measurements.",
+          "His treating oncologist documents that interrupting therapy now risks worsening aspiration and irreversible fibrosis."
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / oncology / sub_tactic=visit_limit_exceeded. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Multiple exploitable weaknesses: MCG cited without edition/module (unverifiable criteria); a 3-minute turnaround inconsistent with individualized review; and a flat annual visit cap applied to active cancer-treatment complications with objective deficits (PAS 6, lymphedema, oncologist-documented risk of irreversible fibrosis). Procedural disclosures correct but the clinical/procedural vectors dominate.",
+      "exploitable_weaknesses": [
+        "MCG cited without any edition or module, so the specific criteria cannot be verified or rebutted",
+        "Three-minute submission-to-determination gap is inconsistent with any individualized review",
+        "Flat annual visit cap applied to active, medically necessary cancer-treatment complications with objective deficits (PAS 6, lymphedema, risk of irreversible fibrosis)",
+        "Pattern anchor: algo_time_delta",
+        "Pattern anchor: step_therapy_vague_mcg"
+      ],
+      "strong_defenses": [
+        "Procedural disclosures correct: 180-day internal appeal, external IRO review, free criteria access, offered peer-to-peer"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_time_delta",
+        "step_therapy_vague_mcg"
+      ],
+      "deterministic_present": [
+        "algo_time_delta",
+        "step_therapy_vague_mcg"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

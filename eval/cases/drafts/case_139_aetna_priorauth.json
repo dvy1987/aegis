@@ -1,0 +1,388 @@
+{
+  "case_id": "case_139_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 47,
+    "gender": "M",
+    "diagnosis": "Post-traumatic stress disorder, chronic (F43.12)",
+    "treatment_requested": "Course of individual eye movement desensitization and reprocessing (EMDR) therapy",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic behavioral health case (modality substitution)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic behavioral health case (modality substitution)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic behavioral health case (modality substitution)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic behavioral health case (modality substitution)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic behavioral health case (modality substitution)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "ERISA Claims Procedure \u2014 adverse benefit determination content (29 CFR \u00a7 2560.503-1)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Specific reasons for denial."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis notice concerns a prior authorization request that was submitted to Aetna on your behalf. Following review, Aetna is unable to approve the requested service.\n\nPlan policy requires that a less costly, clinically appropriate modality be used before the requested service is authorized. On the information available, the criteria for the requested service are not met, and a lower-cost alternative has not been shown to be inadequate. For these reasons, coverage cannot be approved for the requested service.\n\nTo pursue coverage, your provider may submit documentation establishing that the lower-cost alternative is inappropriate. Until a determination is made on such documentation, the service remains not covered.\n\nYou or your provider may request a copy of the criteria used in reaching this determination. If your provider wishes to discuss this decision, a peer-to-peer review with an Aetna medical director may be arranged by calling the number on your member ID card.\n\nYou have the right to appeal this decision. To file an appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter. Determination date: May 13, 2026.\n\nSincerely,\nAetna Utilization Management\n\nAdditional plan language regarding experimental/investigational definitions, network status, and member cost-sharing may apply and is available upon request.",
+  "clinical_context": "The patient is a 47-year-old man with chronic post-traumatic stress disorder following a serious motor-vehicle collision two years ago, with a CAPS-5 score of 41 and a PCL-5 of 52, plus persistent intrusive symptoms, hyperarousal, and avoidance that impair work and family functioning; an SSRI (sertraline) trial produced only partial response. The requested service is a course of individual eye movement desensitization and reprocessing (EMDR), a trauma-focused individual psychotherapy. Contrary to the insurer's demand for a lower-cost modality, he has already completed a lower-intensity group-based program and a self-guided digital module over the past year without meaningful symptom improvement; his treating psychologist documents that individual trauma-focused therapy is the appropriate next modality given his symptom severity and prior failure of group and self-guided options. The denial letter engaged with none of these facts: it named no diagnosis, no clinician, and no submitted records, reading as generic boilerplate applicable to any case. The letter also omitted the ERISA disclosures required in an adverse benefit determination, including the member's right to bring a civil action and the plan-document and claim-file rights, leaving the member without notice of those procedural protections.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260606-073741-2266f",
+    "generated_at": "2026-06-06T07:37:41Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "behavioral_health",
+      "sub_tactic": "modality_substitution"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (Aetna, Prior Authorization, behavioral_health, 41-55, M, modality_substitution). PTSD F43.12 is behavioral_health; individual EMDR realistic. Rationale enacts modality_substitution (cheaper modality first). Age 47 in band; not 71+, null employer_archetype fine.",
+        "evidence_quotes": [
+          "\"sub_tactic\": \"modality_substitution\"",
+          "a less costly, clinically appropriate modality must be used before the requested individual trauma-focused therapy is authorized"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Frustratingly realistic. EMDR is first-line for chronic PTSD; a 47M with CAPS-5 41 is coherent. Aetna requiring a least-costly modality before individual EMDR is real step-therapy/modality-substitution behavior. Exploitable gaps (ignores failed group/self-guided modalities; case-blind boilerplate; omitted ERISA disclosures on a self-funded plan) mirror real adverse-determination defects.",
+        "evidence_quotes": [
+          "a less costly, clinically appropriate modality must be used before the requested individual trauma-focused therapy is authorized",
+          "generic boilerplate that names no diagnosis, no treating clinician, and no submitted clinical records, and it omits the ERISA disclosure rights legally required in an adverse benefit determination"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.78,
+        "reasoning": "Procedural cadence and names Aetna (and an Aetna medical director), but omits Aetna's signature tells (no CPB, no InterQual) and the least-costly-modality framing leans toward the Cigna step-therapy tell. Generic payer boilerplate with the name swapped in. Anchor 3 (expected for the case-blind algo_boilerplate flaw).",
+        "evidence_quotes": [
+          "This notice concerns a prior authorization request that was submitted to Aetna on your behalf.",
+          "a peer-to-peer review with an Aetna medical director may be arranged"
+        ],
+        "improvement": "Cite an Aetna CPB / InterQual and drop the step-therapy framing to read distinctively Aetna (note: case-blind boilerplate is the intended flaw)."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites a plausible least-costly-modality rule matching modality_substitution. Authentically shoddy: circular and burden-shifting ('criteria not met', 'lower-cost alternative has not been shown to be inadequate', provider must prove the alternative inappropriate) without naming criteria, threshold, or the specific cheaper modality. No hallucinated named guideline; clear appeal room.",
+        "evidence_quotes": [
+          "Plan policy requires that a less costly, clinically appropriate modality be used before the requested service is authorized.",
+          "your provider may submit documentation establishing that the lower-cost alternative is inappropriate"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Credible and trauma-specific: F43.12 chronic PTSD from an MVC; CAPS-5 41 (moderate-severe) and PCL-5 52 (well above threshold) are consistent; intrusive/hyperarousal/avoidance clusters correct; sertraline partial response is first-line; EMDR is a guideline-supported next step after group/self-guided failure. No invented drugs or impossible courses.",
+        "evidence_quotes": [
+          "a CAPS-5 score of 41 and a PCL-5 of 52",
+          "an SSRI (sertraline) trial produced only partial response"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.99,
+        "reasoning": "EMDR is a well-established, guideline-recommended (APA, VA/DoD, WHO) trauma-focused psychotherapy for PTSD. Correct clinical category; unambiguous match.",
+        "evidence_quotes": [
+          "Post-traumatic stress disorder, chronic (F43.12)",
+          "Course of individual eye movement desensitization and reprocessing (EMDR) therapy"
+        ],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "EMDR appears in no neighbour. The PTSD F43.12 neighbour uses prolonged exposure under a different payer/flaw/trajectory; the Aetna modality_substitution neighbour uses esketamine for PDD. No neighbour combines this drug/trajectory/denial phrasing. Distinct feature-space point.",
+        "evidence_quotes": [
+          "[Aetna / Prior Authorization / behavioral_health / modality_substitution] dx=Post-traumatic stress disorder, chronic (F43.12); tx=Course of individual eye movement desensitization and reprocessing (EMDR) therapy",
+          "[UHC / Prior Authorization / behavioral_health / visit_limit_exceeded] dx=Post-traumatic stress disorder, chronic (F43.12); tx=Prolonged exposure therapy beyond visit cap"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['missing_erisa_disclosures', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['missing_erisa_disclosures', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.306 (nearest=case_135_aetna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Chronic PTSD from an MVC (single-event, accident-based \u2014 explicitly allowed; not IPV). No suicidal ideation/self-harm, child abuse, end-of-life, or gender-affirming-minor content. No incitement against insurers. Aetna employer commercial (ERISA), in scope. No banned topic.",
+        "evidence_quotes": [
+          "chronic post-traumatic stress disorder following a serious motor-vehicle collision two years ago",
+          "individual eye movement desensitization and reprocessing (EMDR), a trauma-focused individual psychotherapy"
+        ],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Facts stable: 47M, chronic PTSD (F43.12), individual EMDR. The case-blind letter conflicts with nothing in the context; its 'lower-cost alternative not shown inadequate' is an appealable falsehood the context rebuts, not a contradiction. Timeline coherent (collision two years ago, SSRI partial response, prior group/self-guided failure over the past year).",
+        "evidence_quotes": [
+          "47-year-old man with chronic post-traumatic stress disorder",
+          "The requested service is a course of individual eye movement desensitization and reprocessing (EMDR)"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Standard formal insurance boilerplate + dense comma-spliced clinical paragraph, both PASS-worthy. No 'as an AI' tics, no GPT vocabulary, no listicle structure, no marketing filler.",
+        "evidence_quotes": [
+          "a peer-to-peer review with an Aetna medical director may be arranged by calling the number on your member ID card",
+          "a CAPS-5 score of 41 and a PCL-5 of 52, plus persistent intrusive symptoms, hyperarousal, and avoidance that impair work and family functioning"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold bureaucratic register: detached opening, no apology/warmth/buzzwords, realistic obfuscation ('criteria not met', 'lower-cost alternative has not been shown to be inadequate'), stiff appeal language, impersonal sign-off. Clinical context is neutral factual prose. Correct registers.",
+        "evidence_quotes": [
+          "Following review, Aetna is unable to approve the requested service.",
+          "Sincerely,\nAetna Utilization Management"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "No out-of-pocket liability or dollar figures. Cost appears only at policy level ('less costly modality', 'lower-cost alternative'), realistically vague. No Medicare/Medicaid conflation. Silent on exact liability \u2014 anchor 5.",
+        "evidence_quotes": [
+          "Plan policy requires that a less costly, clinically appropriate modality be used before the requested service is authorized.",
+          "the service remains not covered"
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Invokes appeal rights with the correct ERISA 180-day window and a determination date; no hallucinated statutes, no Medicare framing on a commercial plan. Omitted external-review/full ERISA disclosures (civil action, plan-document/claim-file) are realistic imperfections (the intended flaw), not penalized. Anchor 5.",
+        "evidence_quotes": [
+          "You have the right to appeal this decision. To file an appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter.",
+          "The letter also omitted the ERISA disclosures required in an adverse benefit determination, including the member's right to bring a civil action and the plan-document and claim-file rights"
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "47M with chronic PTSD from an MVC matches epidemiology (MVC a common precipitant; substantial adult-male PTSD prevalence; age 47 plausible for chronic functional impairment). Pronouns (he/his) consistent with M. EMDR carries no stereotype; framing neutral.",
+        "evidence_quotes": [
+          "The patient is a 47-year-old man with chronic post-traumatic stress disorder following a serious motor-vehicle collision two years ago",
+          "his treating psychologist documents that individual trauma-focused therapy is the appropriate next modality given his symptom severity"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Insurer Aetna (allowed); Prior Authorization (allowed); coverage self_funded employer-sponsored commercial (ERISA self-insured, in scope) with no Medicare/Medicaid/TRICARE/VA/marketplace framing; patient 47 (adult 18-89); only denial-and-appeal language \u2014 the 'right to bring a civil action' appears only as an omitted ERISA disclosure, not a court-representation claim. All PASS conditions met.",
+        "evidence_quotes": [
+          "submitted to Aetna on your behalf",
+          "\"plan_funding_type\": \"self_funded\"",
+          "\"age\": 47"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.72,
+        "reasoning": "Determination May 13, 2026 in window and 180-day appeal correct; no hard date errors. But the clinical timeline relies on vague relative anchors ('two years ago', 'over the past year') rather than specific quarters/dates, with no explicit service-request date.",
+        "evidence_quotes": [
+          "You or your authorized representative must submit a written request within 180 days of the date of this letter. Determination date: May 13, 2026.",
+          "following a serious motor-vehicle collision two years ago"
+        ],
+        "improvement": "Anchor the clinical timeline to concrete quarters/dates tied to the May 13, 2026 determination."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Never names a bulletin/code/edition; references 'Plan policy' and 'the criteria used' as un-named internal policy with no fabricated alphanumeric code; invites a copy on request. Realistic insurer vagueness \u2014 anchor 5.",
+        "evidence_quotes": [
+          "Plan policy requires that a less costly, clinically appropriate modality be used before the requested service is authorized.",
+          "You or your provider may request a copy of the criteria used in reaching this determination."
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Highly exploitable on multiple vectors: omitted ERISA adverse-determination disclosures (civil action, plan-document/claim-file) \u2014 a \u00a7503 violation; generic case-blind boilerplate; and a circular premise ('lower-cost alternative has not been shown to be inadequate') contradicted by documented failure of group and self-guided modalities plus partial SSRI response. EMDR documented as the appropriate next modality.",
+        "exploitable_weaknesses": [
+          "Omitted ERISA adverse-benefit-determination disclosures (right to civil action, plan-document and claim-file rights), a procedural Section 503 violation",
+          "Generic boilerplate denial naming no diagnosis, clinician, or records, with circular reasoning despite documented failure of group and self-guided modalities"
+        ],
+        "strong_defenses": [
+          "The plan can point to a facially valid step-therapy/least-costly-modality policy, but it is rebutted by the documented record"
+        ],
+        "evidence_quotes": [
+          "a lower-cost alternative has not been shown to be inadequate",
+          "he has already completed a lower-intensity group-based program and a self-guided digital module over the past year without meaningful symptom improvement",
+          "The letter also omitted the ERISA disclosures required in an adverse benefit determination, including the member's right to bring a civil action and the plan-document and claim-file rights"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Prior Authorization / behavioral_health / sub_tactic=modality_substitution. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Highly exploitable on multiple vectors: omitted ERISA adverse-determination disclosures (civil action, plan-document/claim-file) \u2014 a \u00a7503 violation; generic case-blind boilerplate; and a circular premise ('lower-cost alternative has not been shown to be inadequate') contradicted by documented failure of group and self-guided modalities plus partial SSRI response. EMDR documented as the appropriate next modality.",
+      "exploitable_weaknesses": [
+        "Omitted ERISA adverse-benefit-determination disclosures (right to civil action, plan-document and claim-file rights), a procedural Section 503 violation",
+        "Generic boilerplate denial naming no diagnosis, clinician, or records, with circular reasoning despite documented failure of group and self-guided modalities",
+        "Pattern anchor: missing_erisa_disclosures",
+        "Pattern anchor: algo_boilerplate_fingerprint"
+      ],
+      "strong_defenses": [
+        "The plan can point to a facially valid step-therapy/least-costly-modality policy, but it is rebutted by the documented record"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "missing_erisa_disclosures",
+        "algo_boilerplate_fingerprint"
+      ],
+      "deterministic_present": [
+        "missing_erisa_disclosures",
+        "algo_boilerplate_fingerprint"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}
