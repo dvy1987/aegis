@@ -1,7 +1,7 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-06 (showcase redesign backend workflow partially implemented)
-**Phase:** **Execution — Phoenix learning loop live; v1/backend/frontend deployed; showcase quick/serious redesign backend in progress; baseline reset to day-zero (drafter_v1 + minimal playbooks).**
+**Updated:** 2026-06-06 (showcase quick/serious redesign locally implemented)
+**Phase:** **Execution — Phoenix learning loop live; v1/backend/frontend deployed; showcase quick/serious redesign locally implemented; live credentialed rehearsal still pending.**
 
 ### 2026-06-06 - Showcase redesign implementation pass
 - Manifest moved to the redesigned split: quick = 8 train + 2 holdout; serious = 80 train + 20 holdout; quick train/holdout are subsets of serious train/holdout respectively.
@@ -10,15 +10,17 @@
 - Quick runner now follows the redesigned pre-approval flow: holdout pre-measure → training pre-row → Phoenix/judge GEPA training → candidate training post-row → PM approval state.
 - Serious runner exists and uses the same flow over serious train/holdout.
 - Added reject endpoint/status and JSON-backed LIFO promotion rollback stack; approval now snapshots rollback state before promotion and post-measures on holdout.
-- Frontend wire-up now includes quick_holdout types, reject, rollback, disabled serious button until quick success. Full 6-box visual rebuild remains pending.
-- Verification: focused backend showcase/measurement/coordinator tests 29 passed; frontend `tsc`, lint, tests, and build passed. Full backend unit suite: 284 passed, 5 known/pre-existing failures unrelated to showcase (case-generator anchor, missing `case_500_*`, `/tmp/harness` setup).
+- Added mid-loop cancellation polling in measurement/training-signal loops and a conservative regression warning (`APPROVE→DENY` flip or mean score drop >5%).
+- Frontend now has the primary 6-box learning matrix: Demo and Serious columns, Pre/Training/Post boxes, before/after training rows, green/red case blocks, Reject, Roll back, disabled Serious button until quick success, and a regression banner.
+- Verification: focused backend showcase/measurement/coordinator tests 31 passed; frontend `tsc`, lint, tests, and build passed. Full backend unit suite: 286 passed, 5 known/pre-existing failures unrelated to showcase (case-generator anchor, missing `case_500_*`, `/tmp/harness` setup).
+- Remaining: live credentialed rehearsal in the real environment; PM visual review on a machine that can run the frontend; Cloud Run background-session reliability decision if live runs are flaky.
 
 ### 2026-06-06 - Showcase baseline reset to day-zero
 - Active drafter prompt flipped from `drafter_v2` → `drafter_v1` everywhere (`/v1/appeal`, showcase pre-measure, GEPA seed all default to v1 now).
 - 6 day-zero playbook files created (Aetna/Cigna/UnitedHealthcare × medical_necessity/prior_authorization) with single useless tactic each, version `"day_zero"`.
 - `drafter_v2.md` archived to `backend/app/aegis_v1/prompts/archive/`; copy kept in active dir for legacy `/showcase/evaluate` endpoint compatibility.
-- Redesign plan: `docs/plans/2026-06-06-v1-showcase-redesign-plan.md` — locks Reject button, multi-slice GEPA, sequential LIFO rollback, 6-box UX, 7-stage workflow, 12-step implementation order.
-- Status: foundation reset done. Reject button + serious runner + frontend rebuild still pending.
+- Redesign plan: `docs/plans/2026-06-06-v1-showcase-redesign-plan.md` — current source for the implemented quick/serious showcase workflow and remaining operational rehearsal work.
+- Status: foundation reset done; reject, serious runner, rollback, regression warning, cancellation polling, and primary 6-box UI are locally implemented.
 
 ### 2026-06-06 - V1 showcase GEPA quick/serious plan is current
 - New current planning source of truth: `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md`.

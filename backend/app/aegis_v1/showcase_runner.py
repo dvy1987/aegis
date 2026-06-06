@@ -33,6 +33,13 @@ def _log(session_id: str, stage: str, message: str, **extra) -> None:
     )
 
 
+def _is_cancelled(manager: ShowcaseSessionManager, session_id: str) -> bool:
+    try:
+        return manager.get(session_id).cancelled
+    except Exception:
+        return False
+
+
 def _case_obj(case: ShowcaseCase, *, dataset_split: str) -> dict:
     return {
         "case_id": case.case_id,
@@ -88,12 +95,18 @@ def _measure(
     playbook_overrides: dict[str, dict] | None = None,
 ) -> list[dict]:
     stage = "measure_before" if phase in {"pre", "training_pre"} else "measure_after"
+    if _is_cancelled(manager, session_id):
+        _log(session_id, stage, "showcase measurement skipped because session is cancelled")
+        return []
     manager.set_stage(session_id, stage=stage, total_cases=len(cases))
     _log(session_id, stage, "showcase measurement started", total_cases=len(cases))
     results: list[dict] = []
     drafter = GeminiDrafterClient()
     simulator = GeminiSimulatorClient()
     for index, case in enumerate(cases, start=1):
+        if _is_cancelled(manager, session_id):
+            _log(session_id, stage, "showcase measurement cancelled mid-loop")
+            return results
         manager.set_stage(
             session_id,
             stage=stage,
@@ -129,12 +142,18 @@ def _seed_training_signal(
     cases: list[ShowcaseCase],
     dataset_split: str,
 ) -> list[str]:
+    if _is_cancelled(manager, session_id):
+        _log(session_id, "train_gepa", "showcase training skipped because session is cancelled")
+        return []
     manager.set_stage(session_id, stage="train_gepa", total_cases=len(cases))
     recorder = OtelPhoenixRecorder()
     drafter = GeminiDrafterClient()
     judge = GeminiJudgeClient()
     trace_ids: list[str] = []
     for index, case in enumerate(cases, start=1):
+        if _is_cancelled(manager, session_id):
+            _log(session_id, "train_gepa", "showcase training cancelled mid-loop")
+            return trace_ids
         manager.set_stage(
             session_id,
             stage="train_gepa",
@@ -201,6 +220,40 @@ def _candidate_playbooks(proposal: PromotionProposal) -> dict[str, dict]:
             continue
         out[comp_id.removeprefix("playbook:")] = comp.playbook
     return out
+
+
+def _regression_summary(before: list[dict], after: list[dict]) -> str | None:
+    before_by_case = {str(item.get("case_id")): item for item in before}
+    after_by_case = {str(item.get("case_id")): item for item in after}
+    common_ids = sorted(set(before_by_case) & set(after_by_case))
+    if not common_ids:
+        return None
+
+    flipped = [
+        case_id
+        for case_id in common_ids
+        if before_by_case[case_id].get("verdict") == "APPROVE"
+        and after_by_case[case_id].get("verdict") == "DENY"
+    ]
+
+    def _mean(items: list[dict]) -> float:
+        values: list[float] = []
+        for item in items:
+            try:
+                values.append(float(item.get("score")))
+            except (TypeError, ValueError):
+                continue
+        return sum(values) / len(values) if values else 0.0
+
+    before_mean = _mean([before_by_case[case_id] for case_id in common_ids])
+    after_mean = _mean([after_by_case[case_id] for case_id in common_ids])
+    if flipped or after_mean < before_mean - 0.05:
+        return (
+            "Post-measure score dropped — consider rolling back. "
+            f"Before={before_mean:.2f}, after={after_mean:.2f}, "
+            f"approve-to-deny flips={len(flipped)}."
+        )
+    return None
 
 
 def run_quick_session(session_id: str) -> None:
@@ -379,7 +432,12 @@ def approve_session(session_id: str, *, approver: str) -> None:
         session.approved_by = approver
         manager._save(session)
         post_cases = manifest.quick_holdout if session.run_type == "quick" else manifest.serious_holdout
-        _measure(manager, session_id, phase="post", cases=post_cases)
+        post_results = _measure(manager, session_id, phase="post", cases=post_cases)
+        session = manager.get(session_id)
+        manager.set_regression_warning(
+            session_id,
+            summary=_regression_summary(session.pre_measure_results, post_results),
+        )
         manager.mark_success(session_id)
         _log(session_id, "measure_after", "showcase approved run completed")
     except Exception as exc:

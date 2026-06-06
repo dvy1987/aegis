@@ -84,6 +84,8 @@ class ShowcaseSession(BaseModel):
     training_pre_measure_results: list[dict] = Field(default_factory=list)
     training_post_measure_results: list[dict] = Field(default_factory=list)
     post_measure_results: list[dict] = Field(default_factory=list)
+    regression_detected: bool = False
+    regression_summary: str | None = None
 
 
 class ShowcaseSessionManager:
@@ -192,6 +194,13 @@ class ShowcaseSessionManager:
             session.training_post_measure_results = results
         else:
             session.post_measure_results = results
+        session.updated_at = _now()
+        return self._save(session)
+
+    def set_regression_warning(self, session_id: str, *, summary: str | None) -> ShowcaseSession:
+        session = self.get(session_id)
+        session.regression_detected = bool(summary)
+        session.regression_summary = summary
         session.updated_at = _now()
         return self._save(session)
 

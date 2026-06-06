@@ -150,6 +150,8 @@ export interface ShowcaseRunSession {
   training_pre_measure_results: Record<string, unknown>[];
   training_post_measure_results: Record<string, unknown>[];
   post_measure_results: Record<string, unknown>[];
+  regression_detected: boolean;
+  regression_summary?: string | null;
 }
 
 export interface ShowcaseRollbackTarget {

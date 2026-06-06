@@ -96,5 +96,7 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-06 | implementation-plan | docs/plans/2026-06-06-v1-showcase-redesign-plan.md | Updated plan: multi-slice default-on for showcase runs; current active-state semantics and serious re-measurement resolved |
 | 2026-06-06 | test-driven-development | backend/tests/unit/aegis_v1/test_showcase_runner.py, backend/tests/unit/aegis_v1/test_showcase_rollback.py, backend/tests/unit/evals/test_measurement_run.py, backend/tests/unit/learning/test_coordinator.py | TDD: redesigned quick/serious manifest, multi-slice coordinator, reject/rollback controls, candidate measurement overrides, and runner flow |
 | 2026-06-06 | memory-capture | docs/memory/current-state.md | Captured showcase redesign implementation pass |
+| 2026-06-06 | test-driven-development | backend/tests/unit/aegis_v1/test_showcase_runner.py, frontend/src/app/showcase/page.tsx | TDD: mid-loop cancellation, holdout regression warning, and primary 6-box showcase learning matrix |
+| 2026-06-06 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Handoff: showcase workflow controls + 6-box matrix; live rehearsal pending |
 
 - memory-handoff: docs/memory/agent-handoffs.md

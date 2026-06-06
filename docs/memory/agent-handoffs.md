@@ -2395,3 +2395,46 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - Should be committed as one logical implementation commit.
+
+---
+
+## 2026-06-06 - Handoff (Codex - showcase workflow controls + 6-box matrix)
+
+### Done
+- Finished the second implementation pass after commit `3a0b3c8`.
+- Added cooperative cancellation polling inside showcase measurement and training-signal seeding loops, so a cancelled run stops between cases instead of continuing through the full batch.
+- Added regression warning persistence on sessions:
+  - `regression_detected`
+  - `regression_summary`
+  - warning fires on any holdout `APPROVE→DENY` flip or mean simulator score drop >5%.
+- Built the primary `/showcase` 6-box learning matrix:
+  - Demo and Serious columns.
+  - Pre-training / Training / Post-training boxes.
+  - Training box shows before and after rows.
+  - Case blocks are green/red by simulator verdict.
+  - Regression banner appears when post-measurement worsens.
+- Kept the legacy v1-vs-v3 compare section below the new matrix, per PM decision.
+- Updated the redesign plan and current-state memory so they no longer say the 6-box UI, regression warning, and cancellation polling are pending.
+
+### Verification
+- Focused backend showcase suite: `31 passed`.
+- Frontend: `./node_modules/.bin/tsc --noEmit`, `npm run lint`, `npm run test -- --run`, and `npm run build` passed.
+- Full backend unit suite: `286 passed, 5 failed`. Failures are the known unrelated ones:
+  - case generator natural anchor expectation
+  - 3× Gumloop offline-runner tests missing `case_500_cigna_priorauth.json`
+  - `/tmp/harness/state.json` setup
+- Dev servers were not started per PM instruction. Earlier attempts on this machine were not useful: backend needed local Google ADC, and frontend localhost binding is not supported in this environment.
+
+### Still Pending
+- Live credentialed rehearsal with `PHOENIX_API_KEY`, Google ADC, Gemini, and Phoenix available.
+- PM visual review of `/showcase` on a machine that can run the frontend.
+- If live Cloud Run background sessions are unreliable, decide between CPU-always-on, Cloud Tasks, or a poll-driven `/advance` endpoint.
+
+### Next Agent Should Know
+- Draft case files were not modified.
+- Quick run intentionally exercises the multi-slice GEPA path even though its selected cohort is one slice (`Cigna:medical_necessity`), because this is the low-cost smoke test before serious.
+- Quick train/holdout merge into serious train/holdout respectively; serious holdout is slice-balanced and medium-difficulty where available.
+- Reset-to-day-zero should be an explicit recovery/demo reset, not a hidden permanent pin. Normal behavior is to continue from the current accepted prompt/playbook state.
+
+### Working Tree
+- Commit the second pass as one logical commit after final status check.

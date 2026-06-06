@@ -196,6 +196,8 @@ export default function ShowcasePage() {
           </section>
         </div>
 
+        <LearningMatrix manifest={manifest} session={runSession} />
+
         {bundle && (
           <>
             <VersusPanel bundle={bundle} />
@@ -268,6 +270,11 @@ function RunStatusPanel({
           <p className="mt-1 font-body text-xs text-text-tertiary">{session.diagnostics.last_error.code}</p>
         </div>
       )}
+      {session.regression_detected && session.regression_summary && (
+        <div className="rounded-md border border-amber-300 bg-amber-50 p-3">
+          <p className="font-body text-sm font-medium text-amber-950">{session.regression_summary}</p>
+        </div>
+      )}
       {session.diagnostics.cloud_log_filter && (
         <p className="break-all font-body text-xs text-text-tertiary">
           Log filter: {session.diagnostics.cloud_log_filter}
@@ -289,6 +296,161 @@ function RunStatusPanel({
             Cancel run
           </Button>
         )}
+      </div>
+    </div>
+  );
+}
+
+function LearningMatrix({
+  manifest,
+  session,
+}: {
+  manifest: ShowcaseManifest | null;
+  session: ShowcaseRunSession | null;
+}) {
+  return (
+    <section className="grid gap-4 lg:grid-cols-2">
+      <RunColumn
+        title="Demo"
+        subtitle={manifest ? `${manifest.quick_train.length} train · ${manifest.quick_holdout.length} holdout` : "Quick check"}
+        session={session?.run_type === "quick" ? session : null}
+        lockedMessage="Run quick check to populate this view."
+      />
+      <RunColumn
+        title="Serious"
+        subtitle={manifest ? `${manifest.serious_train_count} train · ${manifest.serious_holdout.length} holdout` : "Serious pass"}
+        session={session?.run_type === "serious" ? session : null}
+        lockedMessage="Locked until the quick check succeeds."
+      />
+    </section>
+  );
+}
+
+function RunColumn({
+  title,
+  subtitle,
+  session,
+  lockedMessage,
+}: {
+  title: string;
+  subtitle: string;
+  session: ShowcaseRunSession | null;
+  lockedMessage: string;
+}) {
+  return (
+    <div className="rounded-lg border border-border-subtle bg-surface-secondary p-4">
+      <div className="mb-4 flex items-start justify-between gap-4">
+        <div>
+          <h2 className="font-display text-2xl font-semibold">{title}</h2>
+          <p className="mt-1 font-body text-sm text-text-secondary">{subtitle}</p>
+        </div>
+        {session && (
+          <span className="rounded-sm border border-border-subtle bg-surface-primary px-2 py-1 font-body text-xs text-text-secondary">
+            {session.status.replaceAll("_", " ")}
+          </span>
+        )}
+      </div>
+      <div className="grid gap-3">
+        <StageBox
+          title="Pre-training"
+          results={session?.pre_measure_results ?? []}
+          emptyMessage={session ? "Waiting for held-out measurement." : lockedMessage}
+        />
+        <TrainingBox
+          before={session?.training_pre_measure_results ?? []}
+          after={session?.training_post_measure_results ?? []}
+          emptyMessage={session ? "Waiting for training measurements." : lockedMessage}
+        />
+        <StageBox
+          title="Post-training"
+          results={session?.post_measure_results ?? []}
+          emptyMessage={session ? "Waiting for approval." : lockedMessage}
+        />
+      </div>
+    </div>
+  );
+}
+
+function TrainingBox({
+  before,
+  after,
+  emptyMessage,
+}: {
+  before: Record<string, unknown>[];
+  after: Record<string, unknown>[];
+  emptyMessage: string;
+}) {
+  const hasData = before.length > 0 || after.length > 0;
+  return (
+    <div className="rounded-md border border-border-subtle bg-surface-primary p-4">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h3 className="font-body text-sm font-medium text-text-primary">Training</h3>
+        {hasData && <p className="font-body text-xs text-text-tertiary">before / after</p>}
+      </div>
+      {hasData ? (
+        <div className="grid gap-2">
+          <OutcomeGrid results={before} rowLabel="Before" />
+          <OutcomeGrid results={after} rowLabel="After" />
+        </div>
+      ) : (
+        <p className="font-body text-sm text-text-tertiary">{emptyMessage}</p>
+      )}
+    </div>
+  );
+}
+
+function StageBox({
+  title,
+  results,
+  emptyMessage,
+}: {
+  title: string;
+  results: Record<string, unknown>[];
+  emptyMessage: string;
+}) {
+  return (
+    <div className="rounded-md border border-border-subtle bg-surface-primary p-4">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <h3 className="font-body text-sm font-medium text-text-primary">{title}</h3>
+        {results.length > 0 && <p className="font-body text-xs text-text-tertiary">{results.length} cases</p>}
+      </div>
+      {results.length > 0 ? (
+        <OutcomeGrid results={results} />
+      ) : (
+        <p className="font-body text-sm text-text-tertiary">{emptyMessage}</p>
+      )}
+    </div>
+  );
+}
+
+function OutcomeGrid({
+  results,
+  rowLabel,
+}: {
+  results: Record<string, unknown>[];
+  rowLabel?: string;
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      {rowLabel && <span className="w-12 shrink-0 font-body text-xs text-text-tertiary">{rowLabel}</span>}
+      <div className="grid max-h-36 flex-1 grid-cols-[repeat(auto-fill,minmax(1.25rem,1fr))] gap-1 overflow-auto">
+        {results.map((result, index) => {
+          const verdict = String(result.verdict ?? "").toUpperCase();
+          const approved = verdict === "APPROVE";
+          const caseId = String(result.case_id ?? `case_${index + 1}`);
+          return (
+            <span
+              key={`${caseId}-${index}`}
+              title={`${caseId}: ${verdict || "pending"}`}
+              className={[
+                "block aspect-square min-w-5 rounded-sm border",
+                approved
+                  ? "border-emerald-700 bg-emerald-500"
+                  : "border-rose-800 bg-rose-500",
+              ].join(" ")}
+            />
+          );
+        })}
       </div>
     </div>
   );

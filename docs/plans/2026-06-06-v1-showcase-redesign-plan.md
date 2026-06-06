@@ -1,7 +1,7 @@
 # Plan — V1 Showcase Redesign (Multi-Slice GEPA + 6-Box Layout)
 
 **Date:** 2026-06-06
-**Status:** Partially implemented. Backend manifest, reject/rollback primitives, quick/serious runner scaffolding, multi-slice coordinator support, and minimal frontend controls are in progress.
+**Status:** Implemented through local unit/build verification. Backend manifest, reject/rollback primitives, quick/serious runners, multi-slice coordinator support, mid-loop cancellation, regression warning, and the primary 6-box frontend layout are built. Live credentialed rehearsal and PM visual review on a runnable machine remain.
 **Source plan superseded for the v1 showcase push:** `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md`
 **Source task list partially superseded:** `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-tasks.md`
 
@@ -171,30 +171,30 @@ Frontend type updates:
 7. **Candidate-prompt-text capability in measurement runner** must be tightly scoped. It must not bleed into `/v1/appeal`, which already correctly reads only from disk-promoted prompts.
 8. **Multi-component GEPA** could produce a proposal where the drafter improved but a playbook regressed. Promotion gates need per-slice composite checks.
 
-## Open questions still on the table
+## Resolved checks
 
 - **Resolved:** when the PM clicks Run Serious, the system re-measures all 20 serious holdout cases from scratch. It does not reuse Quick's 2 post-training holdout results. This keeps the serious measurement window consistent.
-- **Regression tolerance for the warning banner:** is "≥ 1 case flipped APPROVE→DENY OR composite drop ≥ 5%" the right threshold, or stricter/looser?
-- **What happens to `synthetic_provenance` and other answer-key-bearing fields** in the case JSONs when they're loaded by the manifest? Confirm `ShowcaseCase` strips them so the firewall stays intact. Verification needed.
+- **Resolved:** regression warning threshold is "at least 1 case flips APPROVE→DENY OR mean simulator score drops by more than 5%." This is intentionally conservative for the demo: it warns the PM, but does not auto-rollback.
+- **Resolved:** `ShowcaseCase` strips `synthetic_provenance`, expected vectors, exploitable weaknesses, and other answer-key-bearing fields. The manifest response only carries student-safe case metadata plus the denial text/context needed to run the drafter.
 
-## Suggested order of work (when implementation begins)
+## Implementation status
 
-1. **Manifest restructure + loader validation flip + `headline` field + tests update.** Smallest, lowest-risk; unblocks everything else.
-2. **Promotion stack module + content hashes + rollback endpoints.** Self-contained backend addition; no UI yet.
-3. **Reject endpoint + status + manager method.** Small, isolated, low risk.
-4. **Measurement runner gains "prompt text" capability.** Small, scoped.
-5. **Approve-session branches on `run_type` + regression warning logic.** Touches existing code; medium risk.
-6. **Workflow restructure: rewrite `run_quick_session` to follow the new 7-stage pattern.** Large; depends on 4.
-7. **Multi-slice Learning Coordinator** default-on for showcase runs, with single-slice retained behind an env flag as a fallback. Highest risk; runs end-to-end on quick first.
-8. **Build `run_serious_session`.** Medium; depends on 5, 6, 7.
-9. **Mid-loop cancellation polling.** Small.
-10. **Frontend rebuild: 6-box layout, case-block grids, reject + rollback buttons, serious-button disabled state, regression banner.** Large; can begin in parallel with 6-9 once the API contract is firm.
-11. **Tests: backend unit, frontend unit, end-to-end smoke run.**
-12. **Memory + handoff updates.**
+1. **Done:** Manifest restructure + loader validation flip + `headline` field + tests update.
+2. **Done:** Promotion stack module + rollback endpoints.
+3. **Done:** Reject endpoint + status + manager method.
+4. **Done:** Measurement runner gains candidate prompt/playbook override capability, scoped to measurement.
+5. **Done:** Approve-session branches on `run_type` and emits regression warnings after holdout post-measure.
+6. **Done:** `run_quick_session` follows the redesigned 7-stage pattern.
+7. **Done:** Multi-slice Learning Coordinator is default-on for showcase quick and serious runs; single-slice remains a fallback concept.
+8. **Done:** `run_serious_session` exists and follows the same workflow over 80 train / 20 holdout.
+9. **Done:** Mid-loop cancellation polling in measurement and training-signal seeding.
+10. **Done:** Frontend primary 6-box layout, case-block grids, reject + rollback buttons, serious-button disabled state, and regression banner.
+11. **Partially done:** Tests and builds pass locally for focused backend and frontend. Full live credentialed smoke run remains because this machine cannot run the dev server and lacks local ADC.
+12. **Done:** Memory + handoff updates are part of session close-out.
 
-## Remaining decisions / checks
+## Remaining operational work
 
-- Confirm regression-warning tolerance.
-- Verify `ShowcaseCase` continues stripping `synthetic_provenance` and other answer-key-bearing fields.
-- Multi-slice default is resolved: **ON for showcase quick and serious runs**, with single-slice fallback only for recovery.
-- Confirm the regression-warning tolerance threshold.
+- Deploy/restart the backend and frontend in the real demo environment.
+- Run a live credentialed quick run with `PHOENIX_API_KEY` and Google ADC available.
+- PM visual review of `/showcase` on a machine that can run the frontend.
+- Decide Cloud Run execution posture if live background sessions prove unreliable: CPU-always-on, Cloud Tasks, or a poll-driven `/advance` endpoint.

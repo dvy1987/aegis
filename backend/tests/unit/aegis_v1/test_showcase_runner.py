@@ -4,6 +4,7 @@ from pathlib import Path
 
 from app.aegis_v1 import showcase_runner
 from app.aegis_v1.showcase_runner import approve_session, run_quick_session, run_serious_session
+from app.aegis_v1.showcase_manifest import load_showcase_manifest
 from app.aegis_v1.showcase_session import ShowcaseSessionManager
 from app.learning.models import Candidate, Component, ExperimentResult, PromotionProposal
 
@@ -192,3 +193,75 @@ def test_serious_session_uses_serious_train_and_holdout_with_multi_slice(
         "UnitedHealthcare:prior_authorization",
     }
     assert manager.get(session.session_id).status == "needs_approval"
+
+
+def test_measure_stops_before_case_work_when_session_cancelled(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    manager.cancel(session.session_id)
+    called = False
+
+    def fail_measurement(*args, **kwargs):
+        nonlocal called
+        called = True
+        raise AssertionError("cancelled measurement should not run case work")
+
+    monkeypatch.setattr(showcase_runner, "run_measurement_case", fail_measurement)
+
+    results = showcase_runner._measure(
+        manager,
+        session.session_id,
+        phase="pre",
+        cases=load_showcase_manifest().quick_holdout,
+    )
+
+    assert results == []
+    assert called is False
+
+
+def test_approval_marks_regression_when_holdout_score_drops(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    manager.set_measure_results(
+        session.session_id,
+        phase="pre",
+        results=[
+            {"case_id": "case_13_cigna_mednec", "verdict": "APPROVE", "score": 0.9},
+            {"case_id": "case_46_cigna_mednec", "verdict": "APPROVE", "score": 0.8},
+        ],
+    )
+    manager.mark_needs_approval(session.session_id, proposal=_proposal().model_dump())
+
+    class FakeStack:
+        def push_checkpoint(self, *, run_type, session_id, candidate):
+            return None
+
+    class FakeStore:
+        def register_promotion(self, candidate, audit):
+            return None
+
+    def fake_measure(manager, session_id, *, phase, cases, **kwargs):
+        results = [
+            {"case_id": "case_13_cigna_mednec", "verdict": "DENY", "score": 0.3},
+            {"case_id": "case_46_cigna_mednec", "verdict": "APPROVE", "score": 0.75},
+        ]
+        manager.set_measure_results(session_id, phase=phase, results=results)
+        return results
+
+    monkeypatch.setattr(showcase_runner, "PromotionStack", lambda: FakeStack(), raising=False)
+    monkeypatch.setattr(showcase_runner, "LivePhoenixLearningStore", lambda: FakeStore())
+    monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
+
+    approve_session(session.session_id, approver="pm")
+
+    reloaded = manager.get(session.session_id)
+    assert reloaded.regression_detected is True
+    assert "consider rolling back" in (reloaded.regression_summary or "")
