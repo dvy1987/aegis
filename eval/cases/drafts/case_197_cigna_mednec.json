@@ -1,0 +1,314 @@
+{
+  "case_id": "case_197_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 33,
+    "gender": "F",
+    "diagnosis": "Alcohol use disorder, severe (F10.20)",
+    "treatment_requested": "Inpatient medical detoxification (3-5 days)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "step_therapy_vague_mcg: KFF 2023 Survey of Consumer Experiences with Health Insurance",
+    "contraindication_to_step_therapy: AMA 2023 Prior Authorization Physician Survey; State step-therapy exception laws (NY, TX, IL)"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic behavioral health case (level of care too high)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis notice concerns the request for inpatient medical detoxification (3 to 5 days) submitted on your behalf. Cigna has completed a medical necessity review and has determined that the requested inpatient level of care is not approved.\n\nUnder the MCG behavioral health care guidelines applied to your plan, the documentation does not establish that the inpatient setting is required for medically supervised withdrawal. In our reviewer's determination, a lower level of care, ambulatory (outpatient) detoxification, is appropriate to manage withdrawal at this time, and the records do not show that outpatient detoxification has been attempted. We would expect a trial of ambulatory detoxification before inpatient admission is considered.\n\nBecause a less intensive level of care is available and has not been used, the requested inpatient detoxification exceeds what is medically necessary and is denied.\n\nIf you wish to pursue inpatient admission, additional clinical documentation may be submitted for review under the applicable guidelines.\n\nYou may request a copy of your claim file and the clinical criteria used in this determination at no charge. You have the right to appeal this determination within 180 days of the date of this notice by submitting a written request together with any additional records. A peer-to-peer discussion with a Cigna medical director may be arranged on request. If your appeal is unsuccessful, you may request an external review by an independent review organization.\n\nSincerely,\nCigna Behavioral Health Review",
+  "clinical_context": "The patient is a 33-year-old woman with severe alcohol use disorder (F10.20) who presented to the emergency department during the first quarter of 2026 in active withdrawal after abruptly stopping daily heavy drinking of roughly a liter of wine per day. Her CIWA-Ar score peaked at 17 with tremor, diaphoresis, and a heart rate of 116, indicating autonomic instability and a moderate-to-severe withdrawal trajectory. She has a documented history of a prior withdrawal seizure during an unsupervised attempt to quit in 2024, and the evaluating emergency physician explicitly documented that ambulatory (outpatient) detoxification is contraindicated and unsafe for her given the CIWA-Ar severity, the autonomic findings, and the prior seizure, recommending medically supervised inpatient detoxification. Her social circumstances offer no reliable home monitoring, compounding the risk of unsupervised withdrawal. The treating team documented that inpatient medical detoxification with symptom-triggered benzodiazepine dosing and continuous monitoring is the appropriate level of care, and that requiring a trial of outpatient detoxification first would expose her to a foreseeable risk of seizure or delirium tremens.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-170104-3723c",
+    "generated_at": "2026-06-05T17:01:04Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "26-40",
+      "patient_gender": "F",
+      "specialty": "behavioral_health",
+      "sub_tactic": "level_of_care_too_high"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cell matches field-for-field; denial reason squarely level_of_care_too_high.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Frustratingly realistic detox level-of-care denial with genuine exploitable gaps.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cigna MCG + step-therapy/level-of-care framing; Cigna Behavioral Health Review; no wrong-insurer tells.",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Authentically shoddy level-of-care logic; real MCG; no named thresholds, mildly circular.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "CIWA-Ar 17 with autonomic findings, prior withdrawal seizure, symptom-triggered benzo protocol all credible.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Inpatient medical detox is ASAM/SAMHSA standard for severe AUD.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Unique substance-use/inpatient-detox domain vs all behavioral_health neighbours.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['step_therapy_vague_mcg', 'contraindication_to_step_therapy']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['step_therapy_vague_mcg', 'contraindication_to_step_therapy']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.173 (nearest=case_195_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Substance use without SI is allowed; withdrawal seizure is a medical complication; no banned topics; Cigna commercial.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Core facts stable across documents; necessity dispute is appealable, not a contradiction.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Formal boilerplate and dense clinical recitation; no conspicuous LLM tells.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural denial voice; neutral clinical narrative.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability; standard practice.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 3,
+        "confidence": 0.65,
+        "reasoning": "No hallucinated statutes, correct 180-day window and disclosures, but cleanly enumerates every appeal right rather than realistically omitting one (judge preferred a strategic omission; non-failing).",
+        "improvement": "Bury or omit one disclosure for a more realistic attack vector."
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "33F severe AUD epidemiologically sound; consistent female pronouns; no stereotyping.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cigna medical necessity, self-funded employer commercial, adult 33, standard appeal language.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.6,
+        "reasoning": "No internal date contradiction; 2024 seizure precedes Q1-2026 presentation; 180-day window correct, but letter is dateless (soft vagueness).",
+        "improvement": "Add explicit notice/request dates."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "MCG by brand only, no module/edition; generic umbrella; no fabricated codes.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Denial demands a contraindicated lower level of care contradicted by ED documentation; overwhelming clinical appeal.",
+        "exploitable_weaknesses": [
+          "Denial asserts outpatient detox is appropriate and untried, directly contradicting the ED physician's documentation that ambulatory detox is 'contraindicated and unsafe'",
+          "Reviewer ignored objective criteria (CIWA-Ar 17, HR 116, prior 2024 withdrawal seizure, no home monitoring) that satisfy MCG/ASAM inpatient thresholds, making the step-therapy demand a misapplication that exposes the patient to foreseeable seizure or delirium tremens"
+        ],
+        "strong_defenses": [
+          "Procedural disclosures are complete and correct (180-day appeal window, free claim file and criteria access, peer-to-peer option, external IRO review)"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / behavioral_health / sub_tactic=level_of_care_too_high. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Denial demands a contraindicated lower level of care contradicted by ED documentation; overwhelming clinical appeal.",
+      "exploitable_weaknesses": [
+        "Denial asserts outpatient detox is appropriate and untried, directly contradicting the ED physician's documentation that ambulatory detox is 'contraindicated and unsafe'",
+        "Reviewer ignored objective criteria (CIWA-Ar 17, HR 116, prior 2024 withdrawal seizure, no home monitoring) that satisfy MCG/ASAM inpatient thresholds, making the step-therapy demand a misapplication that exposes the patient to foreseeable seizure or delirium tremens",
+        "Pattern anchor: step_therapy_vague_mcg",
+        "Pattern anchor: contraindication_to_step_therapy"
+      ],
+      "strong_defenses": [
+        "Procedural disclosures are complete and correct (180-day appeal window, free claim file and criteria access, peer-to-peer option, external IRO review)"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "step_therapy_vague_mcg",
+        "contraindication_to_step_therapy"
+      ],
+      "deterministic_present": [
+        "step_therapy_vague_mcg",
+        "contraindication_to_step_therapy"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

@@ -1,0 +1,314 @@
+{
+  "case_id": "case_193_cigna_priorauth",
+  "insurer": "Cigna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 74,
+    "gender": "M",
+    "diagnosis": "Pemphigus vulgaris (L10.0)",
+    "treatment_requested": "Rituximab maintenance infusion",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023",
+    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic infusion specialty rx case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic infusion specialty rx case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic infusion specialty rx case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic infusion specialty rx case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "29 CFR \u00a7 2560.503-1 \u2014 Claims procedure (adverse benefit determination content)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA 29 CFR 2560.503-1 adverse benefit determination notice. Calibrated to this synthetic infusion specialty rx case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    },
+    {
+      "ref_id": "aca-2719-29-cfr-147-136",
+      "title": "Internal claims and appeals \u2014 diagnosis/treatment codes (29 CFR \u00a7 2590.715-2719)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2590.715-2719",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Claim identification (DOS, provider, amount)."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis notice concerns the request for continued coverage of the requested service submitted on your behalf. Cigna has completed its review and has determined that the request cannot be approved at this time.\n\nOur records indicate that the prior authorization associated with the requested service is no longer active. Plan terms require a current, approved authorization to be on file before coverage of the requested service may continue. Because an active authorization is not on file, continued coverage of the requested service is not approved.\n\nTo be considered for continued coverage, a new prior authorization request must be submitted for the requested service. Once a complete request is received, it will be reviewed under the applicable plan provisions and a determination will be issued.\n\nThis determination relates only to the authorization status described above. It does not represent a judgment about any other aspect of the request.\n\nIf you disagree with this determination, you may submit a written request for reconsideration within 180 days of the date of this notice. Please include any information you would like to have considered.\n\nSincerely,\nCigna Coverage Review Department\n\nAdditional plan language regarding experimental/investigational definitions, network status, and member cost-sharing may apply and is available upon request.",
+  "clinical_context": "The patient is a 74-year-old man with biopsy-confirmed pemphigus vulgaris (L10.0), diagnosed in 2023 after presenting with painful oral and cutaneous erosions and positive direct immunofluorescence. He failed repeated high-dose prednisone taper attempts, each producing recurrent mucosal erosions below 20 mg daily, and was transitioned to rituximab, which achieved disease control. He is maintained on periodic rituximab maintenance infusions, with anti-desmoglein-1 and anti-desmoglein-3 titers trending down and only minimal residual buccal involvement at his most recent visit in the first quarter of 2026. The current denial followed an administrative lapse in the re-authorization timeline rather than any change in his clinical status; his dermatologist resubmitted records documenting ongoing, though controlled, disease activity and the high relapse risk of pemphigus vulgaris when B-cell-depleting therapy is interrupted. The treating physician noted that a gap in maintenance dosing risks a severe mucocutaneous flare requiring hospitalization, citing a prior flare in 2024 when a dosing interval was extended, and that continuation is consistent with established maintenance protocols for this condition.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-164617-e557c",
+    "generated_at": "2026-06-05T16:46:18Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "71+",
+      "patient_gender": "M",
+      "specialty": "infusion_specialty_rx",
+      "sub_tactic": "continuation_of_care_lapsed"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cell matches field-for-field; 71+ employer_archetype non-empty; denial reason squarely continuation lapse.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Frustratingly realistic continuation-lapse with genuine procedural/individualized-review defects.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Correctly Cigna-branded with no wrong-insurer tells, but generic boilerplate lacking Cigna MCG/step-therapy fingerprints (intended for the case-blind algo_boilerplate flaw).",
+        "improvement": "Add a Cigna-specific guideline citation and step-therapy framing to match house style."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically circular administrative logic matching continuation_of_care_lapsed; no hallucinated guideline.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "PV with DIF, steroid failure, rituximab response, anti-desmoglein titer monitoring all correct.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Rituximab FDA-approved first-line for PV; maintenance accepted.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.7,
+        "reasoning": "Shares metadata tuple with the Cigna ocrelizumab case but drug and disease differ entirely; not a near-duplicate.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['algo_boilerplate_fingerprint', 'missing_erisa_disclosures']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['algo_boilerplate_fingerprint', 'missing_erisa_disclosures']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.074 (nearest=case_190_cigna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "No banned topics; Cigna commercial; adult dermatology.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Core facts agree across documents; administrative-only basis consistent; appealable mismatch not a contradiction.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Formal boilerplate and dense clinical recitation; no conspicuous LLM tells.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural denial voice; neutral clinical narrative.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability; standard practice.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "180-day reconsideration present; no hallucinated statutes; ERISA disclosures and external review omitted (intended imperfection).",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "74M pemphigus vulgaris within epidemiology; consistent male pronouns.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "Cigna PA, self-funded employer commercial (in-scope, no public-program framing), adult 74, member reconsideration only.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.75,
+        "reasoning": "No internal date contradictions; 2023/2024/Q1-2026 timeline coherent; 180-day window plausible.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Only generic un-named plan provisions; no fabricated codes; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Purely administrative denial with no clinical determination; curable and strongly rebutted.",
+        "exploitable_weaknesses": [
+          "Denial is purely administrative (lapsed prior authorization) with no clinical determination, so it offers no clinical defense and is curable by resubmission",
+          "The letter explicitly disclaims any clinical judgment while strong clinical documentation supports medical necessity and high relapse risk"
+        ],
+        "strong_defenses": [
+          "The plan-terms requirement that a current approved authorization be on file is a legitimate procedural basis, and the stated 180-day reconsideration window gives the insurer a defensible process posture"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Prior Authorization / infusion_specialty_rx / sub_tactic=continuation_of_care_lapsed. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Purely administrative denial with no clinical determination; curable and strongly rebutted.",
+      "exploitable_weaknesses": [
+        "Denial is purely administrative (lapsed prior authorization) with no clinical determination, so it offers no clinical defense and is curable by resubmission",
+        "The letter explicitly disclaims any clinical judgment while strong clinical documentation supports medical necessity and high relapse risk",
+        "Pattern anchor: algo_boilerplate_fingerprint",
+        "Pattern anchor: missing_erisa_disclosures"
+      ],
+      "strong_defenses": [
+        "The plan-terms requirement that a current approved authorization be on file is a legitimate procedural basis, and the stated 180-day reconsideration window gives the insurer a defensible process posture"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "algo_boilerplate_fingerprint",
+        "missing_erisa_disclosures"
+      ],
+      "deterministic_present": [
+        "algo_boilerplate_fingerprint",
+        "missing_erisa_disclosures"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

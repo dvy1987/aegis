@@ -1,0 +1,316 @@
+{
+  "case_id": "case_192_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 64,
+    "gender": "F",
+    "diagnosis": "Multiple myeloma, relapsed (C90.00)",
+    "treatment_requested": "Carfilzomib-based triplet (carfilzomib, daratumumab, dexamethasone) with twice-weekly carfilzomib infusions",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "step_therapy_vague_mcg: KFF 2023 Survey of Consumer Experiences with Health Insurance",
+    "algo_time_delta: ProPublica + Capitol Forum Cigna Investigation 2023; Senate Finance Committee UHC Investigation 2024"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic oncology case (frequency excessive)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic oncology case (frequency excessive)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic oncology case (frequency excessive)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic oncology case (frequency excessive)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic oncology case (frequency excessive)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic oncology case (frequency excessive)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis notice concerns the request for coverage of a carfilzomib-based triplet (carfilzomib, daratumumab, and dexamethasone) administered with twice-weekly carfilzomib infusions for relapsed multiple myeloma. Cigna has completed a medical necessity review and has determined that the requested administration frequency does not meet coverage criteria.\n\nUnder the Cigna Medical Coverage Policy and the applicable MCG Care Guidelines, the requested twice-weekly carfilzomib infusion cadence exceeds the frequency we consider medically necessary for this therapy. Our reviewer concluded that a less frequent administration schedule would be expected to achieve the intended clinical benefit, and that the documentation does not establish why the more frequent cadence is required in this case. On that basis, coverage at the requested frequency is denied.\n\nThis determination reflects the visit-frequency standards described in the MCG Care Guidelines applied to your plan. The decision pertains to the cadence of administration; it is not a determination that the underlying agents are themselves excluded from coverage.\n\nThe request was received at 9:32 AM on May 19, 2026, and the determination was issued at 9:36 AM the same day, based on the information available at that time.\n\nYou may request a copy of your claim file and the clinical criteria applied to this review at no charge. You have the right to appeal this determination within 180 days of the date of this notice by submitting a written request together with any supporting clinical documentation. A peer-to-peer discussion with a Cigna medical director may be arranged on request.\n\nSincerely,\nCigna Coverage Review Department",
+  "clinical_context": "The patient is a 64-year-old woman with relapsed multiple myeloma (C90.00). She was initially treated with a lenalidomide-bortezomib-dexamethasone induction followed by lenalidomide maintenance, on which she progressed during the first quarter of 2026 with a serum M-spike rising from 0.4 to 1.9 g/dL over four months and a reciprocal fall in uninvolved immunoglobulins, confirming biochemical relapse. Her treating hematologist selected a carfilzomib-daratumumab-dexamethasone triplet, for which twice-weekly carfilzomib (administered on days 1, 2, 8, 9, 15, and 16 of each cycle) is the FDA-labeled and NCCN-recognized administration schedule; the dosing density is intrinsic to the regimen rather than an elective increase in visits. Renal function is preserved with a stable creatinine of 0.9 mg/dL, and an echocardiogram showed a normal ejection fraction of 60 percent, supporting tolerability of the proteasome inhibitor schedule. The oncologist documented that a reduced infusion frequency is not an established equivalent for this combination and would deliver subtherapeutic exposure for an aggressive relapse.",
+  "submission_timestamp": "2026-05-19T09:32:00",
+  "denial_timestamp": "2026-05-19T09:36:00",
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-164152-9ff5a",
+    "generated_at": "2026-06-05T16:41:52Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "56-70",
+      "patient_gender": "F",
+      "specialty": "oncology",
+      "sub_tactic": "frequency_excessive"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cell matches field-for-field; denial reason squarely frequency_excessive.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Frustratingly realistic with genuine exploitable seams.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cigna MCG fingerprint, conservative-cadence framing, no wrong-insurer tells.",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy frequency logic; real sources; vague application.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "RVd induction, biochemical relapse, KdD schedule, renal/echo workup all correct.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "KdD triplet recognized NCCN regimen for relapsed MM.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Unique MM dx and proteasome-inhibitor regimen; distinct from all neighbours.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['step_therapy_vague_mcg', 'algo_time_delta']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['step_therapy_vague_mcg', 'algo_time_delta']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.069 (nearest=case_191_uhc_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "No banned topics; Cigna commercial plan; adult oncology.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "All core facts stable across documents; appealable falsehood not a contradiction.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "No conspicuous LLM tells; formal boilerplate and dense clinical recitation.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Cold procedural denial voice; neutral clinical narrative.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability; standard practice.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "180-day window, claim-file rights, no hallucinated statutes; external review omitted (intended).",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "64F myeloma squarely within epidemiology; consistent pronouns.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cigna medical necessity, self-funded commercial, adult, member self-appeal.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Dates internally consistent, all 2026, plausible relapse timeline.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Cigna Medical Coverage Policy + MCG at umbrella level only; no edition/module/code; realistically vague.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Denial misapplies generic MCG visit-frequency standard to FDA-labeled twice-weekly carfilzomib; easy appeal.",
+        "exploitable_weaknesses": [
+          "Misapplies a generic MCG visit-frequency standard to the FDA-labeled, NCCN-recognized twice-weekly carfilzomib schedule, where dosing density is intrinsic to the regimen, not an elective visit increase",
+          "Circular/conclusory clinical reasoning asserting a less frequent schedule would achieve the intended benefit without citing any validated equivalent, contradicted by the oncologist's documentation",
+          "Four-minute determination (received 9:32 AM, issued 9:36 AM) suggests inadequate individualized clinical review"
+        ],
+        "strong_defenses": [
+          "Letter is procedurally sound: discloses 180-day appeal window, peer-to-peer option, and free access to claim file and clinical criteria"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / oncology / sub_tactic=frequency_excessive. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Denial misapplies generic MCG visit-frequency standard to FDA-labeled twice-weekly carfilzomib; easy appeal.",
+      "exploitable_weaknesses": [
+        "Misapplies a generic MCG visit-frequency standard to the FDA-labeled, NCCN-recognized twice-weekly carfilzomib schedule, where dosing density is intrinsic to the regimen, not an elective visit increase",
+        "Circular/conclusory clinical reasoning asserting a less frequent schedule would achieve the intended benefit without citing any validated equivalent, contradicted by the oncologist's documentation",
+        "Four-minute determination (received 9:32 AM, issued 9:36 AM) suggests inadequate individualized clinical review",
+        "Pattern anchor: step_therapy_vague_mcg",
+        "Pattern anchor: algo_time_delta"
+      ],
+      "strong_defenses": [
+        "Letter is procedurally sound: discloses 180-day appeal window, peer-to-peer option, and free access to claim file and clinical criteria"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "step_therapy_vague_mcg",
+        "algo_time_delta"
+      ],
+      "deterministic_present": [
+        "step_therapy_vague_mcg",
+        "algo_time_delta"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

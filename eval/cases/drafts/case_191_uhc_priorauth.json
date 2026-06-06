@@ -1,0 +1,318 @@
+{
+  "case_id": "case_191_uhc_priorauth",
+  "insurer": "UHC",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 46,
+    "gender": "F",
+    "diagnosis": "Primary dysmenorrhea, severe (N94.4)",
+    "treatment_requested": "Hormonal intrauterine device placement (levonorgestrel 52 mg)",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials",
+    "algo_time_delta: ProPublica + Capitol Forum Cigna Investigation 2023; Senate Finance Committee UHC Investigation 2024"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "uhc-appeal-cdg-muni",
+      "title": "How to Appeal UHC Denials \u2014 CDG citation (Muni Health, 2026)",
+      "url": "https://muni.health/blog/how-to-appeal-uhc-denials-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare CO-96 coverage determination guideline appeal. Calibrated to this synthetic womens health case (out of network no authorization)."
+    },
+    {
+      "ref_id": "uhc-peer-to-peer-form",
+      "title": "UnitedHealthcare Peer-to-Peer Scheduling Request Form",
+      "url": "https://providerforms.uhc.com/PeertoPeerRequestForm.html",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): UnitedHealthcare peer to peer prior authorization denial. Calibrated to this synthetic womens health case (out of network no authorization)."
+    },
+    {
+      "ref_id": "uhc-co96-appealtemplates",
+      "title": "CO-96 Denial Code \u2014 non-covered / medical necessity appeals",
+      "url": "https://www.appealtemplates.com/blogs/co-96-non-covered-charges",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): CO-96 denial code medical necessity appeal UnitedHealthcare. Calibrated to this synthetic womens health case (out of network no authorization)."
+    },
+    {
+      "ref_id": "propublica-external-review",
+      "title": "How to Fight Your Health Insurance Denial With an External Appeal \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/health-insurance-denial-external-review",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): health insurance denial external review buried appeal rights letter. Calibrated to this synthetic womens health case (out of network no authorization)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic womens health case (out of network no authorization)."
+    },
+    {
+      "ref_id": "uhc-cdg-provider",
+      "title": "UnitedHealthcare Coverage Determination Guidelines (provider clinical resources)",
+      "url": "https://www.uhcprovider.com/en/resource-library/clinical-resources.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CDG number as authoritative criterion (distinct from generic InterQual-only wording)."
+    },
+    {
+      "ref_id": "propublica-uncovered-2023",
+      "title": "ProPublica \u2014 Uncovered (insurance denials reporting)",
+      "url": "https://www.propublica.org/series/uncovered",
+      "source_type": "journalism",
+      "relevance": "Calibrated P2 letter surface: Circular medical-necessity boilerplate."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis letter concerns the prior authorization request for a levonorgestrel 52 mg intrauterine device placement submitted on your behalf. After review under the UnitedHealthcare Medical Management Guidelines, United has determined that this service is not authorized for coverage.\n\nThe requesting gynecologist is not a participating provider in your plan's network. Plan benefits for this procedure require that care be furnished by an in-network provider, or that a gap exception be approved in advance when no participating provider is reasonably available. Our records show that participating gynecologists in your service area were available and that no gap exception was requested before the procedure. On that basis the service is considered out-of-network care obtained without authorization.\n\nSeparately, the Optum clinical reviewer found that the submitted documentation does not support medical necessity under United's coverage criteria. Those criteria reflect the efficacy data established in the adolescent population, ages 12 to 17, and call for a documented trial of nonsteroidal anti-inflammatory drugs and combined oral contraceptives before an intrauterine device is considered for dysmenorrhea. The documentation does not demonstrate that this requirement was met.\n\nYour provider's request was received at 2:14 PM on May 21, 2026, and our determination was completed at 2:17 PM the same day. The decision reflects review of the information available to United at that time.\n\nYou have the right to request a copy of your claim file and the specific clinical criteria applied to this determination at no charge. You may appeal this decision within 180 days of the date of this notice by submitting a written request and any additional records. A peer-to-peer discussion with a United medical director may be arranged on request.\n\nSincerely,\nUnitedHealthcare Coverage Determination Unit",
+  "clinical_context": "The patient is a 46-year-old woman with severe primary dysmenorrhea (N94.4), with pain rated 8-9/10 disabling her for two to three days each cycle. Pelvic ultrasound performed in the first quarter of 2026 was unremarkable, excluding fibroids, adenomyosis, and endometriosis as secondary causes. Over the preceding eight months she completed a trial of high-dose naproxen 500 mg twice daily, which gave inadequate relief, followed sequentially by two combined oral contraceptive formulations (a norethindrone-ethinyl estradiol pill, then a drospirenone-ethinyl estradiol pill), each carried for roughly three cycles without adequate control and the second discontinued for refractory headaches. Adult gynecology guidance identifies the levonorgestrel 52 mg intrauterine device as a first-line, guideline-concordant option for severe primary dysmenorrhea in adult women after NSAID and hormonal-pill failure. Her treating gynecologist documented that the only participating provider offering same-cycle placement had no appointment within the clinically appropriate window, and proceeded with placement to avoid another month of disabling pain, providing the basis for a retrospective gap-exception request.",
+  "submission_timestamp": "2026-05-21T14:14:00",
+  "denial_timestamp": "2026-05-21T14:17:00",
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260605-163801-aee70",
+    "generated_at": "2026-06-05T16:38:01Z",
+    "matrix_cell": {
+      "insurer": "UHC",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "F",
+      "specialty": "womens_health",
+      "sub_tactic": "out_of_network_no_authorization"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Cell matches field-for-field; denial reason squarely OON.",
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Frustratingly realistic with genuine exploitable gaps.",
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "All three UHC fingerprints present; no competing tells.",
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Authentically shoddy OON logic; real insurer entities.",
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Realistic dosing, drug classes, stepwise escalation.",
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "LNG-52 IUD recognized tx for primary dysmenorrhea.",
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Unique dx N94.4 and device tx; distinct from all neighbours.",
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['incorrect_demographic_guideline', 'algo_time_delta']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['incorrect_demographic_guideline', 'algo_time_delta']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.058 (nearest=case_108_aetna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "No banned topics; commercial plan; adult gynecology.",
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Core facts stable; appealable falsehoods not contradictions.",
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.9,
+        "reasoning": "No conspicuous LLM tells; formal boilerplate and dense clinical recitation.",
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural denial voice; neutral clinical narrative.",
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Silent on cost liability, standard practice.",
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "180-day window, claim-file rights, no hallucinated statutes; external review omitted (intended).",
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "46F dysmenorrhea epidemiologically coherent; IUD matches.",
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "UHC PA, self-funded commercial, adult, member self-appeal.",
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "All dates 2025-2026, consistent timeline, determination after request.",
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Real United/Optum entities, realistically vague criteria, no fabricated codes.",
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Multiple exploitable weaknesses; easy appeal.",
+        "exploitable_weaknesses": [
+          "Coverage criteria rely on adolescent (ages 12-17) efficacy data misapplied to a 46-year-old adult, contradicting adult guideline-concordant first-line status of the LNG-52 IUD",
+          "Denial claims step-therapy unmet, but patient documented completed trials of high-dose naproxen and two combined oral contraceptives without relief",
+          "Network/gap-exception basis undermined by documentation that no participating provider had a same-cycle appointment in the clinically appropriate window",
+          "Three-minute determination (2:14 PM to 2:17 PM) suggests no individualized medical-necessity review"
+        ],
+        "strong_defenses": [
+          "Plan correctly requires in-network care or a pre-approved gap exception, and no gap exception was requested before the procedure"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for UHC Prior Authorization / womens_health / sub_tactic=out_of_network_no_authorization. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Multiple exploitable weaknesses; easy appeal.",
+      "exploitable_weaknesses": [
+        "Coverage criteria rely on adolescent (ages 12-17) efficacy data misapplied to a 46-year-old adult, contradicting adult guideline-concordant first-line status of the LNG-52 IUD",
+        "Denial claims step-therapy unmet, but patient documented completed trials of high-dose naproxen and two combined oral contraceptives without relief",
+        "Network/gap-exception basis undermined by documentation that no participating provider had a same-cycle appointment in the clinically appropriate window",
+        "Three-minute determination (2:14 PM to 2:17 PM) suggests no individualized medical-necessity review",
+        "Pattern anchor: incorrect_demographic_guideline",
+        "Pattern anchor: algo_time_delta"
+      ],
+      "strong_defenses": [
+        "Plan correctly requires in-network care or a pre-approved gap exception, and no gap exception was requested before the procedure"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "incorrect_demographic_guideline",
+        "algo_time_delta"
+      ],
+      "deterministic_present": [
+        "incorrect_demographic_guideline",
+        "algo_time_delta"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}
