@@ -2226,7 +2226,7 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 - Build v1 showcase learning, not swarm.
 - Borrow swarm discipline only: explicit manifest, explicit run modes, promotion gates, session ledger, human-approved autonomy language, and simple credit summary.
 - Quick run: targeted 10-case cohort, ideally single insurer + single denial type. It may promote with explicit PM approval and rollback checkpoint.
-- Serious run: locked until quick success. Recommended serious split is `serious_train` cases 11-90 and `serious_holdout` cases 91-100 if quality/coverage allow.
+- Serious run: locked until quick success. If quick promoted, serious starts from the quick-approved prompt/playbook checkpoint. Recommended serious split is `serious_train` cases 11-90 and `serious_holdout` cases 91-100 if quality/coverage allow.
 - The older 4 held-out sets / 8 training batches / 8-block evolution timeline is retired for the immediate v1 showcase workflow.
 
 ### Important Carry-Forwards From Older Plans

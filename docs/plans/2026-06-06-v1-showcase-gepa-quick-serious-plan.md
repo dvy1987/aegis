@@ -39,6 +39,7 @@ The core demo claim becomes:
 - Do not require the Part B swarm for this workflow.
 - Serious run is locked until the quick run has completed successfully.
 - Quick run may promote, but only with rollback checkpoint and PM approval.
+- If quick run is approved/promoted, the serious run starts from that quick-approved prompt/playbook checkpoint, not from untouched original v1.
 - Measurement stages must not create learning signal.
 
 ### Updated Split Model
@@ -61,6 +62,7 @@ Quick run:
   purpose: prove the loop works and create an approved checkpoint
 
 Serious run:
+  starting point: quick-approved checkpoint, if quick promotion happened
   serious_train: cases 11-90, or curated equivalent from first-100 manifest
   serious_holdout: cases 91-100, or curated equivalent from first-100 manifest
   purpose: train v1 on the serious pool and measure on clean held-out cases
@@ -115,6 +117,8 @@ serious_holdout:
 If raw filename ranges do not support clean measurement, the manifest may curate equivalent slots from the first 100 cases, but this must be made explicit in the selection report.
 
 Serious training should preferably align with the quick run's learned slice enough that the second pass can build on the checkpoint, while still being broad enough to reduce overfitting.
+
+If the quick run produces an approved promotion, that approved writing approach and learned-rule state becomes the seed for the serious run. The original v1 state remains available as a rollback checkpoint, but it is not the default serious-run starting point after quick success.
 
 ## Borrowed From Swarm
 
@@ -293,6 +297,8 @@ Purpose: stronger v1 training pass with clean measurement.
 Precondition:
 
 - Quick run status is successful.
+- If the quick run was approved/promoted, the promoted quick checkpoint is the serious run's starting prompt/playbook state.
+- If quick succeeded operationally but no promotion occurred, the serious run starts from the current promoted v1 state and the ledger must say no quick checkpoint was applied.
 
 Flow:
 
@@ -309,6 +315,7 @@ Notes:
 
 - Serious training should not use serious holdout cases.
 - Serious holdout is the credible before/after proof.
+- The serious "before" measurement represents the current promoted state at serious-run start, which normally means the quick-approved checkpoint.
 
 ## Backend Architecture
 

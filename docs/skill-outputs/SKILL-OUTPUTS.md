@@ -88,5 +88,6 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-06 | implementation-plan | docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md | Current v1 showcase GEPA quick/serious workflow plan; supersedes older 8-batch showcase drafts |
 | 2026-06-06 | memory-capture | docs/memory/current-state.md, docs/memory/project-index.md | Captured current state for v1 showcase GEPA quick/serious plan |
 | 2026-06-06 | memory-handoff | docs/memory/agent-handoffs.md | Handoff for v1 showcase GEPA quick/serious planning state |
+| 2026-06-06 | implementation-plan | docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md | Clarified serious run starts from quick-approved checkpoint when quick promotion occurs |
 
 - memory-handoff: docs/memory/agent-handoffs.md

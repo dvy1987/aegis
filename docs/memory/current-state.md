@@ -8,7 +8,7 @@
 - The older 4-held-out-set / 8-training-set evolution plan is superseded for the immediate v1 showcase push.
 - Current direction: v1 only; borrow swarm split discipline, not swarm runtime.
 - Quick run: targeted 10-case cohort, preferably single insurer + single denial type; may promote with PM approval and rollback checkpoint.
-- Serious run: locked until quick success; train on the serious pool and preserve clean held-out measurement, recommended `serious_train` 11-90 and `serious_holdout` 91-100 if quality/coverage allow.
+- Serious run: locked until quick success; if quick promoted, serious starts from the quick-approved prompt/playbook checkpoint; train on the serious pool and preserve clean held-out measurement, recommended `serious_train` 11-90 and `serious_holdout` 91-100 if quality/coverage allow.
 - Carry forward from older plans: measurement stages are Phoenix-off, judge-off, learning-off; training can use Phoenix/judges; use explicit run modes, session ledger, promotion gates, cancellation, and accessible UX language.
 
 ### 2026-06-05 - Live showcase learning UX working drafts
