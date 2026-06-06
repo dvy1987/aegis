@@ -439,7 +439,7 @@ class LivePhoenixLearningStore:
         # playbooks, fall back to the file-based store (which the FS store
         # already maintains).
         if component_id == "drafter_system_prompt":
-            v = version or os.environ.get("AEGIS_DRAFTER_PROMPT_VERSION", "drafter_v2")
+            v = version or os.environ.get("AEGIS_DRAFTER_PROMPT_VERSION", "drafter_v1")
             path = _PROMPT_DIR / f"{v}.md"
             if path.exists():
                 return ComponentVersion(

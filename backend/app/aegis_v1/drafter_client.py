@@ -24,7 +24,7 @@ def get_active_drafter_prompt_version() -> str:
         value = ACTIVE_PROMPT_FILE.read_text(encoding="utf-8").strip()
         if value:
             return value
-    return "drafter_v2"
+    return "drafter_v1"
 
 
 class DrafterLLMClient(Protocol):

@@ -27,6 +27,7 @@ Quick navigation for agents picking up this project.
 
 | Date | Session | Handoff file |
 |---|---|---|
+| 2026-06-06 | Session (Droid — showcase baseline reset + redesign plan) | [agent-handoffs.md](agent-handoffs.md#2026-06-06-1750---handoff-droid---showcase-reset-to-day-zero-baseline) |
 | 2026-06-06 | Session (Codex — v1 showcase GEPA quick/serious plan) | [agent-handoffs.md](agent-handoffs.md#2026-06-06--handoff-codex--v1-showcase-gepa-quickserious-plan) |
 | 2026-06-03 | Session (Cloud library + Vertex index live) | [agent-handoffs.md](agent-handoffs.md#2026-06-03--session-end-handoff-cursor--cloud-library-built--vertex-index-live) |
 | 2026-06-05 | Session (Codex — live showcase planning drafts) | [agent-handoffs.md](agent-handoffs.md#2026-06-05-2054---handoff-codex--live-showcase-planning-drafts) |

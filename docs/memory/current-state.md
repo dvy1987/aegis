@@ -1,7 +1,14 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-06 (v1 showcase GEPA quick/serious plan supersedes older 8-batch drafts)
-**Phase:** **Execution — Phoenix learning loop now live; v1/backend/frontend deployed; live showcase HITL learning workflow under design.**
+**Updated:** 2026-06-06 (showcase baseline reset to day-zero; v1 showcase redesign plan drafted)
+**Phase:** **Execution — Phoenix learning loop live; v1/backend/frontend deployed; showcase redesign in planning; baseline reset to day-zero (drafter_v1 + minimal playbooks).**
+
+### 2026-06-06 - Showcase baseline reset to day-zero
+- Active drafter prompt flipped from `drafter_v2` → `drafter_v1` everywhere (`/v1/appeal`, showcase pre-measure, GEPA seed all default to v1 now).
+- 6 day-zero playbook files created (Aetna/Cigna/UnitedHealthcare × medical_necessity/prior_authorization) with single useless tactic each, version `"day_zero"`.
+- `drafter_v2.md` archived to `backend/app/aegis_v1/prompts/archive/`; copy kept in active dir for legacy `/showcase/evaluate` endpoint compatibility.
+- Redesign plan: `docs/plans/2026-06-06-v1-showcase-redesign-plan.md` — locks Reject button, multi-slice GEPA, sequential LIFO rollback, 6-box UX, 7-stage workflow, 12-step implementation order.
+- Status: foundation reset done. Reject button + serious runner + frontend rebuild still pending.
 
 ### 2026-06-06 - V1 showcase GEPA quick/serious plan is current
 - New current planning source of truth: `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md`.

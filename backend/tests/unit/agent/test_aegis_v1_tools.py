@@ -58,12 +58,20 @@ def test_corpus_retrieval_returns_traceable_hits() -> None:
 
 
 def test_playbook_loader_returns_cold_start_playbook_when_missing() -> None:
-    playbook = playbook_loader(insurer="Aetna", denial_type="prior_authorization")
+    playbook = playbook_loader(insurer="FakeInsurer", denial_type="prior_authorization")
 
     assert playbook["version"] == "cold-start"
     assert playbook["status"] == "missing"
     assert "playbook_cold_start" in playbook["risk_flags"]
     assert playbook["tactics"]
+
+
+def test_playbook_loader_returns_day_zero_playbook_for_known_slice() -> None:
+    playbook = playbook_loader(insurer="Aetna", denial_type="prior_authorization")
+
+    assert playbook["version"] == "day_zero"
+    assert playbook["status"] == "loaded"
+    assert playbook["tactics"] == ["Write a polite appeal letter."]
 
 
 def test_tool_pipeline_produces_self_checked_appeal_package() -> None:
@@ -123,7 +131,7 @@ def test_local_pipeline_returns_structured_appeal_package() -> None:
 
     assert package.run_id.startswith("aegis-v1-")
     assert package.parsed_case.insurer == "Cigna"
-    assert package.trace_metadata.prompt_version == "drafter_v2"
+    assert package.trace_metadata.prompt_version == "drafter_v1"
     assert package.trace_metadata.dataset_split == "train"
     # Cloud-only posture: when the cloud library isn't configured for unit tests,
     # the pipeline should still return a structured package but will have no

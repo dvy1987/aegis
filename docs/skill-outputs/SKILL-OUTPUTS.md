@@ -92,5 +92,6 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-06 | test-driven-development | backend/tests/unit/aegis_v1/test_showcase_api_runs.py, backend/tests/unit/aegis_v1/test_showcase_session.py, backend/tests/unit/aegis_v1/test_showcase_manifest.py, backend/tests/unit/evals/test_measurement_run.py, backend/tests/unit/learning/test_promotion_wiring.py | TDD: v1 showcase manifest, measurement isolation, promotion wiring, session diagnostics, and backend API |
 | 2026-06-06 | memory-capture | docs/memory/current-state.md | Captured v1 showcase quick-run implementation foundation |
 | 2026-06-06 | memory-handoff | docs/memory/agent-handoffs.md | Handoff for v1 showcase quick-run foundation implementation |
+| 2026-06-06 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Handoff: showcase baseline reset to day-zero (drafter_v1 + minimal playbooks); redesign plan drafted |
 
 - memory-handoff: docs/memory/agent-handoffs.md

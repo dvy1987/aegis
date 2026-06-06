@@ -2288,3 +2288,51 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - Should be committed as one implementation commit after final status check.
+
+---
+
+## 2026-06-06 17:50 - Handoff (Droid - showcase reset to day-zero baseline)
+
+### Done
+- Audited the v1 showcase GEPA quick/serious plan vs current code; produced `docs/plans/2026-06-06-v1-showcase-redesign-plan.md` (12 locked decisions, 10 per-area changes A-J, 12-step impl order).
+- Confirmed `/v1/appeal` and `/v1/showcase` share the same drafting pipeline (`run_aegis_v1_pipeline`); only difference was prompt-version resolution.
+- **Reset baseline state to day-zero per PM directive:**
+  - Archived `drafter_v2.md` to `backend/app/aegis_v1/prompts/archive/drafter_v2.md` (kept original in active dir for legacy `/showcase/evaluate` endpoint + tests).
+  - Flipped default drafter prompt version from `drafter_v2` → `drafter_v1` in `drafter_client.get_active_drafter_prompt_version()` and `phoenix_live._read_prompt_from_disk`.
+  - Created 6 day-zero playbook JSONs at `playbooks/<slug>__<denial_type>.json` (Aetna/Cigna/UnitedHealthcare × medical_necessity/prior_authorization), each with one deliberately useless tactic (`"Write a polite appeal letter."`).
+  - Updated `test_aegis_v1_tools.py`: cold-start test now uses fake insurer; added new test asserting day_zero playbook loads correctly.
+- Verified: 11/11 targeted tests pass; full unit suite 275/279 (4 pre-existing failures in case_generator + gumloop, all `FileNotFoundError` for missing fixtures, unrelated to these changes).
+
+### Debated
+- Whether to delete `drafter_v2.md` outright vs keep a copy in active prompts. Kept it: legacy endpoint default + 2 tests still reference the file by name. PM intent ("save it somewhere safe, archive it") satisfied via dual-copy (active + archive).
+- Whether the day-zero playbook should be empty, "hello", or a near-empty single-tactic dict. Locked the third — gives reflection LLM a nucleus to mutate from rather than inventing from blank, which makes the demo before/after look like a transformation.
+- "Local minima" risk for GEPA when starting from a near-empty playbook: **none**. GEPA's mutation step is an LLM reading judge feedback, not gradient descent. Empty / nonsense / minimal all converge from failures — minimal is just better demo optics.
+
+### Decisions
+- Active drafter prompt = `drafter_v1` (basic starter) across all surfaces.
+- Day-zero playbook for all 6 slices = single tactic `"Write a polite appeal letter."`, version `"day_zero"`.
+- `drafter_v2.md` archived but retained in active dir for legacy compatibility.
+
+### Deferred (still on redesign-plan to-do list)
+- Reject button (`POST /v1/showcase/{session}/reject`).
+- Pin showcase quick run to seed=`drafter_v1` + day-zero playbook explicitly (today it works because v1 is the active default; once promotion happens via showcase, the showcase will start picking up the promoted version unless explicitly pinned).
+- Build `/v1/showcase/serious` runner.
+- 6-box frontend rebuild (Demo + Serious × Pre/Training/Post-training).
+- Multi-slice GEPA on quick run (smoke test) and serious run (full).
+- Sequential LIFO promotion stack with rollback JSON file.
+- 7-stage workflow restructure with mid-loop cancellation.
+- Phoenix `default` project trace cleanup (PM owns this manually).
+
+### Next Agent Should Know
+- The 4 failing unit tests (`test_inject_flaws_includes_natural_detectable_anchors`, 3× `test_offline_runner.py`) are pre-existing FileNotFound / fixture-data issues, NOT caused by this session's changes.
+- PM standing directive remains: NO speculative code edits. Discuss → confirm → act. This session's edits were confined to the explicit reset-to-day-zero approval.
+- The redesign plan at `docs/plans/2026-06-06-v1-showcase-redesign-plan.md` still has 3 open PM questions (holdout re-measurement, regression-tolerance threshold, synthetic_provenance stripping) and 1 architectural fork (quick-run accept = production update? PM confirmed Path A — both prompt + playbook update production on accept; but the implication that each replay overwrites prior cumulative wins should be revisited if showcase is ever run >1 time).
+
+### Revisit Triggers
+- If a future showcase run promotes a new prompt and PM is surprised production changed → re-examine quick-vs-serious commit semantics.
+- If the legacy `/v1/showcase/evaluate` endpoint or its frontend "versus" panel gets ripped out → can also delete `drafter_v2.md` from active prompts dir (archive copy remains).
+
+### Working Tree
+- Modified: `backend/app/aegis_v1/drafter_client.py`, `backend/app/learning/phoenix_live.py`, `backend/tests/unit/agent/test_aegis_v1_tools.py`.
+- New: `backend/app/aegis_v1/prompts/archive/drafter_v2.md`, `docs/plans/2026-06-06-v1-showcase-redesign-plan.md`, 6 × `playbooks/*.json`.
+- Uncommitted. Suggest committing as one logical unit: "feat: reset showcase baseline to day-zero (v1 prompt + minimal playbooks); archive v2".
