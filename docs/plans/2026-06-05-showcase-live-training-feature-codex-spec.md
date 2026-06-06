@@ -1,6 +1,6 @@
 ---
 artifact: feature-spec
-status: Draft
+status: Superseded Draft
 constitution: docs/constitution.md@1
 slug: showcase-live-training
 sources:
@@ -9,6 +9,9 @@ sources:
 ---
 
 # Showcase Live Training Workflow
+
+> Superseded on 2026-06-06 by `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md`.
+> This remains useful as a high-level requirement sketch, but it does not contain the current quick/serious run model, targeted quick cohort selection, serious lock, promotion rollback, or retired 8-batch decision.
 
 ## Summary
 

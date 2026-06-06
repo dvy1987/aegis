@@ -1,7 +1,11 @@
 # Live Showcase Learning UX Plan
 
 Date: 2026-06-05
-Status: Working Draft
+Status: Superseded working draft
+
+> Superseded on 2026-06-06 by `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md`.
+> The old 4-held-out-set / 8-training-set evolution model is retired for the immediate v1 showcase push.
+> Carry forward only the non-contradictory principles: clean measurement isolation, HITL approval, cancellable jobs, accessible language, and session ledger.
 
 ## Summary
 

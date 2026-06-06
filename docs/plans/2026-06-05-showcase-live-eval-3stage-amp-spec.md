@@ -1,9 +1,13 @@
 # Plan — Showcase 3-Stage Live Evaluation (Pre-test → Train → Post-test)
 
 **Date:** 2026-06-05
-**Status:** Draft for PM approval
+**Status:** Superseded draft
 **Owner:** next build session
 **Oracle-reviewed:** yes (architecture pressure-tested 2026-06-05)
+
+> Superseded on 2026-06-06 by `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md`.
+> Carry forward the isolation, cancellation, no env mutation, session-scoped split, force-flush/retry, and job-manager concerns.
+> Retire the old small caps, arbitrary draft selection, and in-session-only candidate promotion recommendation.
 
 ---
 

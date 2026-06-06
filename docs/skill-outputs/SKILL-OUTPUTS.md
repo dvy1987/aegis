@@ -85,5 +85,8 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-05 | brainstorming | docs/specs/2026-06-05-live-showcase-learning-ux-plan.md, docs/specs/2026-06-05-v1-demo-benchmark-split-plan.md | Working draft plans for live showcase HITL learning UX and v1 demo benchmark split curation |
 | 2026-06-05 20:54 | memory-capture | docs/memory/current-state.md | Captured current state for live showcase learning UX working drafts |
 | 2026-06-05 20:54 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/project-index.md | Handoff for live showcase planning drafts and deferred decisions |
+| 2026-06-06 | implementation-plan | docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md | Current v1 showcase GEPA quick/serious workflow plan; supersedes older 8-batch showcase drafts |
+| 2026-06-06 | memory-capture | docs/memory/current-state.md, docs/memory/project-index.md | Captured current state for v1 showcase GEPA quick/serious plan |
+| 2026-06-06 | memory-handoff | docs/memory/agent-handoffs.md | Handoff for v1 showcase GEPA quick/serious planning state |
 
 - memory-handoff: docs/memory/agent-handoffs.md

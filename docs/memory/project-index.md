@@ -27,6 +27,7 @@ Quick navigation for agents picking up this project.
 
 | Date | Session | Handoff file |
 |---|---|---|
+| 2026-06-06 | Session (Codex — v1 showcase GEPA quick/serious plan) | [agent-handoffs.md](agent-handoffs.md#2026-06-06--handoff-codex--v1-showcase-gepa-quickserious-plan) |
 | 2026-06-03 | Session (Cloud library + Vertex index live) | [agent-handoffs.md](agent-handoffs.md#2026-06-03--session-end-handoff-cursor--cloud-library-built--vertex-index-live) |
 | 2026-06-05 | Session (Codex — live showcase planning drafts) | [agent-handoffs.md](agent-handoffs.md#2026-06-05-2054---handoff-codex--live-showcase-planning-drafts) |
 | 2026-06-02 | Session (Gumloop prompt-pass cases 01–500) | [agent-handoffs.md](agent-handoffs.md#2026-06-02-1759--session-end-handoff-cursor--gumloop-prompt-pass-on-drafts-cases-01500) |

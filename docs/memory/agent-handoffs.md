@@ -2209,3 +2209,45 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 ### Working Tree
 - Documentation changes from this session should be committed separately.
 - Pre-existing untracked generated cases remain: `eval/cases/drafts/case_181_cigna_mednec.json` through `case_185_aetna_mednec.json`.
+
+## 2026-06-06 — Handoff (Codex — v1 showcase GEPA quick/serious plan)
+
+### Done
+- Wrote the current source-of-truth planning draft:
+  - `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md`
+- Marked four older, potentially contradictory showcase docs as superseded:
+  - `docs/specs/2026-06-05-live-showcase-learning-ux-plan.md`
+  - `docs/specs/2026-06-05-v1-demo-benchmark-split-plan.md`
+  - `docs/plans/2026-06-05-showcase-live-eval-3stage-amp-spec.md`
+  - `docs/plans/2026-06-05-showcase-live-training-feature-codex-spec.md`
+- Updated `docs/memory/current-state.md`, `docs/memory/project-index.md`, and `docs/skill-outputs/SKILL-OUTPUTS.md` so future agents see the quick/serious plan as current.
+
+### Current Plan
+- Build v1 showcase learning, not swarm.
+- Borrow swarm discipline only: explicit manifest, explicit run modes, promotion gates, session ledger, human-approved autonomy language, and simple credit summary.
+- Quick run: targeted 10-case cohort, ideally single insurer + single denial type. It may promote with explicit PM approval and rollback checkpoint.
+- Serious run: locked until quick success. Recommended serious split is `serious_train` cases 11-90 and `serious_holdout` cases 91-100 if quality/coverage allow.
+- The older 4 held-out sets / 8 training batches / 8-block evolution timeline is retired for the immediate v1 showcase workflow.
+
+### Important Carry-Forwards From Older Plans
+- Measurement mode must be Phoenix-off, judge-off, learning-off.
+- Training mode can use Phoenix and judges because it is the learning intervention.
+- Do not use process-global env mutation for request isolation.
+- Use session-scoped training splits so GEPA reads only the intended training signal.
+- Use cooperative cancellation and no promotion after cancellation.
+- Persist a session ledger.
+
+### Open Questions
+- If raw `case_01` through `case_10` are not a coherent quick cohort, should the manifest prioritize literal numbering or targeted learning signal?
+- Should quick and serious runs stay on the same insurer/denial slice when feasible?
+- Should session ledgers be local JSON first or GCS JSON from the start?
+- What max runtime is acceptable for the quick run in a live demo?
+- Should rollback be visible in the first UX or kept backend/admin-only?
+
+### Next Agent Should Know
+- Do not implement from the superseded June 5 plans except for carry-forward constraints explicitly listed in the June 6 plan.
+- Do not touch `/tmp` or draft case files unless PM explicitly changes that instruction.
+- Before coding, fix promotion wiring first: approved GEPA proposal must change the next v1 runtime behavior.
+
+### Working Tree
+- Documentation-only changes from this planning pass should be committed separately.

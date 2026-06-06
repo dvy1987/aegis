@@ -1,7 +1,11 @@
 # V1 Demo Benchmark Split Plan
 
 Date: 2026-06-05
-Status: Working Draft
+Status: Superseded working draft
+
+> Superseded on 2026-06-06 by `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md`.
+> The 20-held-out / 80-training / 8-batch split is retired for the immediate v1 showcase workflow.
+> Carry forward only the manifest discipline, first-100 source constraint, no-overlap requirement, and case-quality curation principles.
 
 ## Summary
 

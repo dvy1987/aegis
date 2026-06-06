@@ -1,14 +1,23 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-05 (Tier 1 Phoenix live wiring done; live showcase learning UX planning in progress)
+**Updated:** 2026-06-06 (v1 showcase GEPA quick/serious plan supersedes older 8-batch drafts)
 **Phase:** **Execution — Phoenix learning loop now live; v1/backend/frontend deployed; live showcase HITL learning workflow under design.**
 
+### 2026-06-06 - V1 showcase GEPA quick/serious plan is current
+- New current planning source of truth: `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md`.
+- The older 4-held-out-set / 8-training-set evolution plan is superseded for the immediate v1 showcase push.
+- Current direction: v1 only; borrow swarm split discipline, not swarm runtime.
+- Quick run: targeted 10-case cohort, preferably single insurer + single denial type; may promote with PM approval and rollback checkpoint.
+- Serious run: locked until quick success; train on the serious pool and preserve clean held-out measurement, recommended `serious_train` 11-90 and `serious_holdout` 91-100 if quality/coverage allow.
+- Carry forward from older plans: measurement stages are Phoenix-off, judge-off, learning-off; training can use Phoenix/judges; use explicit run modes, session ledger, promotion gates, cancellation, and accessible UX language.
+
 ### 2026-06-05 - Live showcase learning UX working drafts
+- Superseded by the 2026-06-06 quick/serious plan above. Keep this entry as historical context only.
 - Added two working draft plans, not approved implementation specs:
   - `docs/specs/2026-06-05-live-showcase-learning-ux-plan.md`
   - `docs/specs/2026-06-05-v1-demo-benchmark-split-plan.md`
 - Current shared direction: `/showcase` should support a live HITL learning workflow with pre-test and post-test stages that use no Phoenix, no judges, and no learning annotations; training is the only stage that can use Phoenix/judges.
-- Benchmark split planning is deliberately separate from UX/backend planning: first 100 draft cases only, 20 held-out test cases in 4 sets, 80 training cases in 8 sets, no overlap.
+- Retired split model: first 100 draft cases as 20 held-out in 4 sets + 80 training in 8 sets. Do not implement that model unless the PM explicitly reopens it.
 - Open questions remain in both draft docs and should be resolved before implementation.
 
 ### ✅ phoenix_mcp_lookup NO LONGER COLD_START
