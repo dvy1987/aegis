@@ -1,7 +1,17 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-06 (showcase baseline reset to day-zero; v1 showcase redesign plan drafted)
-**Phase:** **Execution — Phoenix learning loop live; v1/backend/frontend deployed; showcase redesign in planning; baseline reset to day-zero (drafter_v1 + minimal playbooks).**
+**Updated:** 2026-06-06 (showcase redesign backend workflow partially implemented)
+**Phase:** **Execution — Phoenix learning loop live; v1/backend/frontend deployed; showcase quick/serious redesign backend in progress; baseline reset to day-zero (drafter_v1 + minimal playbooks).**
+
+### 2026-06-06 - Showcase redesign implementation pass
+- Manifest moved to the redesigned split: quick = 8 train + 2 holdout; serious = 80 train + 20 holdout; quick train/holdout are subsets of serious train/holdout respectively.
+- Serious holdout is slice-balanced across Aetna/Cigna/UnitedHealthcare × medical_necessity/prior_authorization with medium appeal-difficulty score where available.
+- `LearningCoordinator` now supports multi-slice candidates (drafter + one playbook per slice); showcase quick/serious runners use multi-slice by default, with single-slice retained only as a fallback concept.
+- Quick runner now follows the redesigned pre-approval flow: holdout pre-measure → training pre-row → Phoenix/judge GEPA training → candidate training post-row → PM approval state.
+- Serious runner exists and uses the same flow over serious train/holdout.
+- Added reject endpoint/status and JSON-backed LIFO promotion rollback stack; approval now snapshots rollback state before promotion and post-measures on holdout.
+- Frontend wire-up now includes quick_holdout types, reject, rollback, disabled serious button until quick success. Full 6-box visual rebuild remains pending.
+- Verification: focused backend showcase/measurement/coordinator tests 29 passed; frontend `tsc`, lint, tests, and build passed. Full backend unit suite: 284 passed, 5 known/pre-existing failures unrelated to showcase (case-generator anchor, missing `case_500_*`, `/tmp/harness` setup).
 
 ### 2026-06-06 - Showcase baseline reset to day-zero
 - Active drafter prompt flipped from `drafter_v2` → `drafter_v1` everywhere (`/v1/appeal`, showcase pre-measure, GEPA seed all default to v1 now).

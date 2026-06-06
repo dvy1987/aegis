@@ -93,6 +93,7 @@ export interface ShowcaseManifest {
   version: string;
   quick_slice: string;
   quick_train: CaseSummary[];
+  quick_holdout: CaseSummary[];
   serious_train_count: number;
   serious_holdout: CaseSummary[];
 }
@@ -112,6 +113,7 @@ export interface ShowcaseRunDiagnostics {
     | "measure_after"
     | "failed"
     | "cancelled"
+    | "rejected"
     | "rolled_back";
   stage_started_at?: string | null;
   stage_finished_at?: string | null;
@@ -135,6 +137,7 @@ export interface ShowcaseRunSession {
     | "successful"
     | "failed"
     | "cancelled"
+    | "rejected"
     | "rolled_back";
   created_at: string;
   updated_at: string;
@@ -144,5 +147,15 @@ export interface ShowcaseRunSession {
   approved_by?: string | null;
   proposal?: Record<string, unknown> | null;
   pre_measure_results: Record<string, unknown>[];
+  training_pre_measure_results: Record<string, unknown>[];
+  training_post_measure_results: Record<string, unknown>[];
   post_measure_results: Record<string, unknown>[];
+}
+
+export interface ShowcaseRollbackTarget {
+  run_type: string;
+  session_id: string;
+  promoted_at: string;
+  candidate_id: string;
+  files: Record<string, unknown>[];
 }

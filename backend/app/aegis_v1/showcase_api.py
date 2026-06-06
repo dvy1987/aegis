@@ -27,12 +27,17 @@ class ShowcaseManifestResponse(BaseModel):
     version: str
     quick_slice: str
     quick_train: list[dict]
+    quick_holdout: list[dict]
     serious_train_count: int
     serious_holdout: list[dict]
 
 
 class ApprovalRequest(BaseModel):
     approver: str = "pm"
+
+
+class RejectionRequest(BaseModel):
+    reviewer: str = "pm"
 
 
 def _manager() -> ShowcaseSessionManager:
@@ -56,6 +61,15 @@ def _launch_quick(session_id: str) -> None:
     thread.start()
 
 
+def _launch_serious(session_id: str) -> None:
+    if not _autorun_enabled():
+        return
+    from app.aegis_v1.showcase_runner import run_serious_session
+
+    thread = threading.Thread(target=run_serious_session, args=(session_id,), daemon=True)
+    thread.start()
+
+
 @router.get("/manifest", response_model=ShowcaseManifestResponse)
 def get_manifest() -> ShowcaseManifestResponse:
     manifest: ShowcaseManifest = load_showcase_manifest()
@@ -64,6 +78,7 @@ def get_manifest() -> ShowcaseManifestResponse:
         version=manifest.version,
         quick_slice=manifest.quick_slice,
         quick_train=[case.model_dump() for case in manifest.quick_train],
+        quick_holdout=[case.model_dump() for case in manifest.quick_holdout],
         serious_train_count=len(manifest.serious_train),
         serious_holdout=[case.model_dump() for case in manifest.serious_holdout],
     )
@@ -72,7 +87,9 @@ def get_manifest() -> ShowcaseManifestResponse:
 @router.post("/runs/quick", response_model=ShowcaseSession)
 def start_quick_run() -> ShowcaseSession:
     manifest = load_showcase_manifest()
-    session = _manager().start_quick(case_ids=[case.case_id for case in manifest.quick_train])
+    session = _manager().start_quick(
+        case_ids=[case.case_id for case in manifest.quick_train + manifest.quick_holdout]
+    )
     _launch_quick(session.session_id)
     return session
 
@@ -81,9 +98,11 @@ def start_quick_run() -> ShowcaseSession:
 def start_serious_run() -> ShowcaseSession:
     manifest = load_showcase_manifest()
     try:
-        return _manager().start_serious(
+        session = _manager().start_serious(
             case_ids=[case.case_id for case in manifest.serious_train + manifest.serious_holdout]
         )
+        _launch_serious(session.session_id)
+        return session
     except SessionLockedError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
@@ -119,6 +138,38 @@ def approve_run(session_id: str, req: ApprovalRequest) -> ShowcaseSession:
 
     approve_session(session_id, approver=req.approver)
     return manager.get(session_id)
+
+
+@router.post("/runs/{session_id}/reject", response_model=ShowcaseSession)
+def reject_run(session_id: str, req: RejectionRequest) -> ShowcaseSession:
+    manager = _manager()
+    try:
+        session = manager.get(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="showcase session not found") from exc
+    if session.cancelled:
+        raise HTTPException(status_code=409, detail="cancelled runs cannot be rejected")
+    if not session.proposal:
+        raise HTTPException(status_code=409, detail="no GEPA proposal is ready for rejection")
+    return manager.mark_rejected(session_id, reviewer=req.reviewer)
+
+
+@router.get("/rollback-target")
+def get_rollback_target() -> dict | None:
+    from app.aegis_v1.showcase_rollback import PromotionStack
+
+    target = PromotionStack().rollback_target()
+    return target.model_dump() if target is not None else None
+
+
+@router.post("/rollback")
+def rollback_latest() -> dict:
+    from app.aegis_v1.showcase_rollback import PromotionStack
+
+    try:
+        return PromotionStack().rollback_latest().model_dump()
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
 class ShowcaseEvaluateRequest(BaseModel):

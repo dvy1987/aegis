@@ -14,6 +14,7 @@ CASES_DIR = REPO_ROOT / "eval" / "cases" / "drafts"
 
 class ShowcaseCase(BaseModel):
     case_id: str
+    headline: str
     path: str
     insurer: str
     denial_type: str
@@ -26,6 +27,7 @@ class ShowcaseManifest(BaseModel):
     version: str
     selection_policy: dict[str, str] = Field(default_factory=dict)
     quick_train: list[ShowcaseCase]
+    quick_holdout: list[ShowcaseCase]
     serious_train: list[ShowcaseCase]
     serious_holdout: list[ShowcaseCase]
 
@@ -51,6 +53,7 @@ def _load_case(case_id: str) -> ShowcaseCase:
         raise ValueError(f"Manifest case id mismatch: {case_id} != {actual_id}")
     return ShowcaseCase(
         case_id=case_id,
+        headline=case_id,
         path=str(path.relative_to(REPO_ROOT)),
         insurer=str(data.get("insurer") or "unknown"),
         denial_type=str(data.get("denial_type") or "unknown").replace(" ", "_").lower(),
@@ -74,25 +77,37 @@ def load_showcase_manifest(path: Path | None = None) -> ShowcaseManifest:
     manifest_path = path or DEFAULT_MANIFEST_PATH
     raw = json.loads(manifest_path.read_text(encoding="utf-8"))
     quick = _load_cases(list(raw.get("quick_train") or []))
+    quick_holdout = _load_cases(list(raw.get("quick_holdout") or []))
     serious_train = _load_cases(list(raw.get("serious_train") or []))
     serious_holdout = _load_cases(list(raw.get("serious_holdout") or []))
 
-    if len(quick) != 10:
-        raise ValueError("quick_train must contain exactly 10 cases")
-    if len(serious_holdout) != 10:
-        raise ValueError("serious_holdout must contain exactly 10 cases")
+    if len(quick) != 8:
+        raise ValueError("quick_train must contain exactly 8 cases")
+    if len(quick_holdout) != 2:
+        raise ValueError("quick_holdout must contain exactly 2 cases")
+    if len(serious_train) != 80:
+        raise ValueError("serious_train must contain exactly 80 cases")
+    if len(serious_holdout) != 20:
+        raise ValueError("serious_holdout must contain exactly 20 cases")
+    quick_train_ids = {case.case_id for case in quick}
+    quick_holdout_ids = {case.case_id for case in quick_holdout}
     train_ids = {case.case_id for case in serious_train}
     holdout_ids = {case.case_id for case in serious_holdout}
+    if quick_train_ids & quick_holdout_ids:
+        raise ValueError("quick_train and quick_holdout must not overlap")
     if train_ids & holdout_ids:
         raise ValueError("serious_train and serious_holdout must not overlap")
-    if train_ids & {case.case_id for case in quick}:
-        raise ValueError("quick_train and serious_train must not overlap")
+    if not quick_train_ids <= train_ids:
+        raise ValueError("quick_train must be a subset of serious_train")
+    if not quick_holdout_ids <= holdout_ids:
+        raise ValueError("quick_holdout must be a subset of serious_holdout")
 
     return ShowcaseManifest(
         benchmark_id=str(raw["benchmark_id"]),
         version=str(raw["version"]),
         selection_policy=dict(raw.get("selection_policy") or {}),
         quick_train=quick,
+        quick_holdout=quick_holdout,
         serious_train=serious_train,
         serious_holdout=serious_holdout,
     )

@@ -14,6 +14,19 @@ CASE = {
 }
 
 
+class CapturingDrafterClient:
+    name = "capturing"
+
+    def __init__(self) -> None:
+        self.prompts: list[str] = []
+        self.playbooks: list[dict] = []
+
+    def draft(self, prompt, parsed_case, citations, playbook, phoenix_summary) -> str:
+        self.prompts.append(prompt)
+        self.playbooks.append(playbook)
+        return StubDrafterClient().draft(prompt, parsed_case, citations, playbook, phoenix_summary)
+
+
 def test_measurement_runner_returns_simulator_outcome() -> None:
     result = run_measurement_case(
         CASE,
@@ -39,4 +52,41 @@ def test_measurement_runner_does_not_read_phoenix_memory(monkeypatch: pytest.Mon
         simulator_client=StubSimulatorClient(uniform_assessment(3)),
     )
 
+    assert result.case_id == "measurement_case"
+
+
+def test_measurement_runner_can_use_candidate_prompt_text_without_promotion() -> None:
+    drafter = CapturingDrafterClient()
+
+    result = run_measurement_case(
+        CASE,
+        drafter_client=drafter,
+        simulator_client=StubSimulatorClient(uniform_assessment(3)),
+        drafter_prompt_version="candidate_v3",
+        drafter_prompt_text="candidate prompt text",
+    )
+
+    assert drafter.prompts == ["candidate prompt text"]
+    assert result.prompt_version == "candidate_v3"
+
+
+def test_measurement_runner_can_use_candidate_playbook_without_promotion() -> None:
+    drafter = CapturingDrafterClient()
+
+    result = run_measurement_case(
+        CASE,
+        drafter_client=drafter,
+        simulator_client=StubSimulatorClient(uniform_assessment(3)),
+        playbook_override={
+            "insurer": "Cigna",
+            "denial_type": "medical_necessity",
+            "version": "candidate_playbook_v3",
+            "tactics": ["Use the candidate tactic."],
+            "required_evidence": [],
+            "risk_flags": [],
+        },
+    )
+
+    assert drafter.playbooks[0]["version"] == "candidate_playbook_v3"
+    assert drafter.playbooks[0]["tactics"] == ["Use the candidate tactic."]
     assert result.case_id == "measurement_case"

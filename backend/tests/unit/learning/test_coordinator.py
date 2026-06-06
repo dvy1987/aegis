@@ -5,9 +5,14 @@ from app.learning.reflection_client import StubReflectionClient
 from app.learning.store import InMemoryPhoenixLearningStore
 
 SLICE = "Cigna:medical_necessity"
+SLICE_2 = "Aetna:prior_authorization"
 DATASET = [
     {"case_id": "h1", "slice": SLICE, "base": {"appeal_vector_capture": 1, "grounding": 3}},
     {"case_id": "h2", "slice": SLICE, "base": {"appeal_vector_capture": 1, "grounding": 3}},
+]
+MULTI_SLICE_DATASET = DATASET + [
+    {"case_id": "h3", "slice": SLICE_2, "base": {"appeal_vector_capture": 1, "grounding": 3}},
+    {"case_id": "h4", "slice": SLICE_2, "base": {"appeal_vector_capture": 1, "grounding": 3}},
 ]
 
 
@@ -57,3 +62,38 @@ def test_promote_writes_new_version_and_audit():
     assert len(store.list_prompt_versions("drafter_system_prompt")) == 2
     assert store.read_prompt_version("drafter_system_prompt").version != "v1"
     assert store.audits[-1].after_composite == proposal.after.composite
+
+
+def test_coordinator_can_seed_and_optimize_multiple_playbook_slices():
+    store = InMemoryPhoenixLearningStore()
+    store.seed_component(Component(component_id="drafter_system_prompt", kind="prompt", version="v1", text="draft"))
+    for slice_key in (SLICE, SLICE_2):
+        store.seed_component(Component(component_id=f"playbook:{slice_key}", kind="playbook", version="v1",
+                                       playbook={"tactics": [], "dimension_targets": []}))
+        store.add_run("benchmark_train", ScoredRun(
+            case_id=f"train_{slice_key}", slice=slice_key,
+            dimension_scores={"appeal_vector_capture": 1, "grounding": 3},
+            hard_gate_pass=True,
+            weighted_quality=composite_score({"appeal_vector_capture": 1, "grounding": 3}, True),
+            improvement_notes={"appeal_vector_capture": "missed the denial-specific rebuttal"}))
+
+    coord = LearningCoordinator(
+        store=store,
+        runner=StubExperimentRunner(MULTI_SLICE_DATASET),
+        reflection_client=StubReflectionClient(),
+        slice_filter=SLICE,
+        slice_filters=[SLICE, SLICE_2],
+        holdout_split="benchmark_holdout",
+        train_split="benchmark_train",
+        max_rounds=4,
+    )
+
+    proposal = coord.optimize()
+
+    assert proposal is not None
+    assert set(proposal.candidate.components) == {
+        "drafter_system_prompt",
+        f"playbook:{SLICE}",
+        f"playbook:{SLICE_2}",
+    }
+    assert proposal.after.composite > proposal.before.composite

@@ -23,7 +23,10 @@ def test_manifest_endpoint_returns_quick_slice(tmp_path, monkeypatch) -> None:
     body = res.json()
     assert body["benchmark_id"] == "v1_showcase_100"
     assert body["quick_slice"] == "Cigna:medical_necessity"
-    assert len(body["quick_train"]) == 10
+    assert len(body["quick_train"]) == 8
+    assert len(body["quick_holdout"]) == 2
+    assert body["serious_train_count"] == 80
+    assert len(body["serious_holdout"]) == 20
 
 
 def test_quick_run_start_returns_pollable_session(tmp_path, monkeypatch) -> None:
@@ -34,6 +37,7 @@ def test_quick_run_start_returns_pollable_session(tmp_path, monkeypatch) -> None
     assert start.status_code == 200
     session_id = start.json()["session_id"]
     assert session_id.startswith("quick_")
+    assert len(start.json()["case_ids"]) == 10
 
     poll = client.get(f"/v1/showcase/runs/{session_id}")
     assert poll.status_code == 200
@@ -46,6 +50,20 @@ def test_serious_run_locked_until_quick_success(tmp_path, monkeypatch) -> None:
     res = client.post("/v1/showcase/runs/serious")
 
     assert res.status_code == 409
+
+
+def test_serious_run_starts_after_successful_quick(tmp_path, monkeypatch) -> None:
+    client = _client(tmp_path, monkeypatch)
+    quick_id = client.post("/v1/showcase/runs/quick").json()["session_id"]
+    from app.aegis_v1.showcase_session import ShowcaseSessionManager
+
+    ShowcaseSessionManager(ledger_dir=tmp_path).mark_success(quick_id)
+
+    res = client.post("/v1/showcase/runs/serious")
+
+    assert res.status_code == 200
+    assert res.json()["session_id"].startswith("serious_")
+    assert len(res.json()["case_ids"]) == 100
 
 
 def test_cancel_run_persists_cancel_state(tmp_path, monkeypatch) -> None:
@@ -63,5 +81,14 @@ def test_approve_without_proposal_is_rejected(tmp_path, monkeypatch) -> None:
     session_id = client.post("/v1/showcase/runs/quick").json()["session_id"]
 
     res = client.post(f"/v1/showcase/runs/{session_id}/approve", json={"approver": "pm"})
+
+    assert res.status_code == 409
+
+
+def test_reject_without_proposal_is_rejected(tmp_path, monkeypatch) -> None:
+    client = _client(tmp_path, monkeypatch)
+    session_id = client.post("/v1/showcase/runs/quick").json()["session_id"]
+
+    res = client.post(f"/v1/showcase/runs/{session_id}/reject", json={"reviewer": "pm"})
 
     assert res.status_code == 409

@@ -19,6 +19,7 @@ StageName = Literal[
     "measure_after",
     "failed",
     "cancelled",
+    "rejected",
     "rolled_back",
 ]
 RunStatus = Literal[
@@ -29,6 +30,7 @@ RunStatus = Literal[
     "successful",
     "failed",
     "cancelled",
+    "rejected",
     "rolled_back",
 ]
 
@@ -79,6 +81,8 @@ class ShowcaseSession(BaseModel):
     approved_by: str | None = None
     proposal: dict | None = None
     pre_measure_results: list[dict] = Field(default_factory=list)
+    training_pre_measure_results: list[dict] = Field(default_factory=list)
+    training_post_measure_results: list[dict] = Field(default_factory=list)
     post_measure_results: list[dict] = Field(default_factory=list)
 
 
@@ -162,16 +166,30 @@ class ShowcaseSessionManager:
         session.diagnostics.retryable = False
         return self._save(session)
 
+    def mark_rejected(self, session_id: str, *, reviewer: str) -> ShowcaseSession:
+        session = self.get(session_id)
+        session.status = "rejected"
+        session.approved_by = None
+        session.updated_at = _now()
+        session.diagnostics.stage = "waiting_for_approval"
+        session.diagnostics.stage_finished_at = _now()
+        session.diagnostics.retryable = False
+        return self._save(session)
+
     def set_measure_results(
         self,
         session_id: str,
         *,
-        phase: Literal["pre", "post"],
+        phase: Literal["pre", "training_pre", "training_post", "post"],
         results: list[dict],
     ) -> ShowcaseSession:
         session = self.get(session_id)
         if phase == "pre":
             session.pre_measure_results = results
+        elif phase == "training_pre":
+            session.training_pre_measure_results = results
+        elif phase == "training_post":
+            session.training_post_measure_results = results
         else:
             session.post_measure_results = results
         session.updated_at = _now()

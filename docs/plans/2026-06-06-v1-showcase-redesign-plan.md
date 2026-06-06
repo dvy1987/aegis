@@ -1,7 +1,7 @@
 # Plan — V1 Showcase Redesign (Multi-Slice GEPA + 6-Box Layout)
 
 **Date:** 2026-06-06
-**Status:** Draft for PM review. No code changes have been made.
+**Status:** Partially implemented. Backend manifest, reject/rollback primitives, quick/serious runner scaffolding, multi-slice coordinator support, and minimal frontend controls are in progress.
 **Source plan superseded for the v1 showcase push:** `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-plan.md`
 **Source task list partially superseded:** `docs/plans/2026-06-06-v1-showcase-gepa-quick-serious-tasks.md`
 
@@ -27,7 +27,7 @@ This document captures the redesign agreed in the 2026-06-06 PM session. It buil
 ## Verifications confirmed in this session
 
 - **`/v1/appeal` already evolves with promotions.** It reads the active drafter prompt from `backend/app/aegis_v1/prompts/active_drafter_prompt.txt` (or `AEGIS_DRAFTER_PROMPT_VERSION` env). When GEPA promotes a new drafter prompt, the next `/v1/appeal` call picks it up automatically. **No change needed for the `/v1/appeal` path itself.**
-- **Today `/v1/appeal` is using `drafter_v2`** (promoted in Session 24's manual GEPA run), not the day-0 `drafter_v1`. The day-0 prompt is on disk but inactive.
+- **Today `/v1/appeal` defaults to `drafter_v1`** after the day-zero reset. `drafter_v2` is archived and retained on disk for legacy compare-view compatibility, but it is not the default active prompt.
 - **v1 writes to Phoenix project `default`**, not `aegis-hackathon`. Swarm writes to `aegis-swarm`. They use different recorder classes; they cannot collide.
 
 ## Scope of change vs current code
@@ -101,6 +101,8 @@ For the **quick run**, this still goes through the multi-slice code path even th
 
 The single-slice code path stays available as a fallback (e.g., behind an env flag like `AEGIS_LEARNING_MODE=single_slice`) so we can revert if multi-slice misbehaves.
 
+For showcase runs, the default is **multi-slice ON**. This is intentional even for the quick run: quick is the low-cost smoke test for the same multi-slice machinery that serious will use. The fallback exists only as a recovery lever if multi-slice blocks the demo.
+
 ### E. Promotion stack with sequential rollback
 
 - New file: `promotion_stack.json` next to the showcase session ledger (default `/tmp/aegis_showcase_sessions/promotion_stack.json`; configurable via `AEGIS_SHOWCASE_LEDGER_DIR`).
@@ -171,7 +173,7 @@ Frontend type updates:
 
 ## Open questions still on the table
 
-- **Quick run after promotion → starting state for Serious "Pre-training":** when the PM clicks Run Serious, should it re-measure all 20 holdouts from scratch, or reuse Quick's post-training results for the 2 cases that were in quick_holdout? Cleanest is "re-measure all 20" (consistent measurement window). Open for confirmation.
+- **Resolved:** when the PM clicks Run Serious, the system re-measures all 20 serious holdout cases from scratch. It does not reuse Quick's 2 post-training holdout results. This keeps the serious measurement window consistent.
 - **Regression tolerance for the warning banner:** is "≥ 1 case flipped APPROVE→DENY OR composite drop ≥ 5%" the right threshold, or stricter/looser?
 - **What happens to `synthetic_provenance` and other answer-key-bearing fields** in the case JSONs when they're loaded by the manifest? Confirm `ShowcaseCase` strips them so the firewall stays intact. Verification needed.
 
@@ -183,15 +185,16 @@ Frontend type updates:
 4. **Measurement runner gains "prompt text" capability.** Small, scoped.
 5. **Approve-session branches on `run_type` + regression warning logic.** Touches existing code; medium risk.
 6. **Workflow restructure: rewrite `run_quick_session` to follow the new 7-stage pattern.** Large; depends on 4.
-7. **Multi-slice Learning Coordinator** behind an env flag, default off until validated. Highest risk; runs end-to-end on quick first.
+7. **Multi-slice Learning Coordinator** default-on for showcase runs, with single-slice retained behind an env flag as a fallback. Highest risk; runs end-to-end on quick first.
 8. **Build `run_serious_session`.** Medium; depends on 5, 6, 7.
 9. **Mid-loop cancellation polling.** Small.
 10. **Frontend rebuild: 6-box layout, case-block grids, reject + rollback buttons, serious-button disabled state, regression banner.** Large; can begin in parallel with 6-9 once the API contract is firm.
 11. **Tests: backend unit, frontend unit, end-to-end smoke run.**
 12. **Memory + handoff updates.**
 
-## Decisions needed before implementation begins
+## Remaining decisions / checks
 
-- Confirm or override the three "Open questions still on the table" above.
-- Confirm whether multi-slice should default ON (single-slice fallback under env flag) or default OFF (multi-slice opt-in via env flag) for the first wired run.
+- Confirm regression-warning tolerance.
+- Verify `ShowcaseCase` continues stripping `synthetic_provenance` and other answer-key-bearing fields.
+- Multi-slice default is resolved: **ON for showcase quick and serious runs**, with single-slice fallback only for recovery.
 - Confirm the regression-warning tolerance threshold.

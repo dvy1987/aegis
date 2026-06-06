@@ -418,6 +418,7 @@ def draft_appeal(
     phoenix_summary: dict[str, Any],
     client: "DrafterLLMClient | None" = None,
     prompt_version: str | None = None,
+    prompt_text: str | None = None,
 ) -> dict[str, Any]:
     """Injectable drafter core. The letter PROSE is produced by an evolvable LLM
     (or offline stub); structure, citations, and safety are deterministic. Tests
@@ -440,10 +441,11 @@ def draft_appeal(
 
     active: DrafterLLMClient = client or GeminiDrafterClient()
     active_prompt_version = prompt_version or get_active_drafter_prompt_version()
+    resolved_prompt = prompt_text if prompt_text is not None else load_drafter_prompt(active_prompt_version)
     raw_body = active.draft(
         # Default is the current promoted prompt. Eval/showcase can override it to
         # produce a real before/after on the same case.
-        prompt=load_drafter_prompt(active_prompt_version),
+        prompt=resolved_prompt,
         parsed_case=case.model_dump(),
         citations=[c.model_dump() for c in citations],
         playbook=loaded_playbook.model_dump(),

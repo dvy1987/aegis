@@ -1,5 +1,12 @@
 import type { DataSource } from "./source";
-import type { AppealRequest, AppealFixture, ShowcaseBundle, ShowcaseManifest, ShowcaseRunSession } from "@/lib/types";
+import type {
+  AppealRequest,
+  AppealFixture,
+  ShowcaseBundle,
+  ShowcaseManifest,
+  ShowcaseRollbackTarget,
+  ShowcaseRunSession,
+} from "@/lib/types";
 import { parseAppealResponse } from "@/lib/schema";
 import { getApiBase, getDiscoveryEnabled } from "@/lib/settings";
 import { demoSource } from "./demo";
@@ -102,5 +109,33 @@ export async function approveRun(sessionId: string): Promise<ShowcaseRunSession>
       body: JSON.stringify({ approver: "pm" }),
     }),
     "approve run",
+  );
+}
+
+export async function rejectRun(sessionId: string): Promise<ShowcaseRunSession> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseRunSession>(
+    await fetch(`${base}/v1/showcase/runs/${sessionId}/reject`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ reviewer: "pm" }),
+    }),
+    "reject run",
+  );
+}
+
+export async function getRollbackTarget(): Promise<ShowcaseRollbackTarget | null> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseRollbackTarget | null>(
+    await fetch(`${base}/v1/showcase/rollback-target`),
+    "rollback target",
+  );
+}
+
+export async function rollbackRun(): Promise<ShowcaseRollbackTarget> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseRollbackTarget>(
+    await fetch(`${base}/v1/showcase/rollback`, { method: "POST" }),
+    "rollback run",
   );
 }

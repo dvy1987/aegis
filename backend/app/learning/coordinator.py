@@ -23,6 +23,7 @@ class LearningCoordinator:
 
     def __init__(self, *, store: PhoenixLearningStore, runner: ExperimentRunner,
                  reflection_client: ReflectionClient, slice_filter: str,
+                 slice_filters: list[str] | None = None,
                  holdout_split: str = "benchmark_holdout", train_split: str = "benchmark_train",
                  max_rounds: int = 8, max_merges: int = 5,
                  minibatch_size: int = 3) -> None:
@@ -30,6 +31,7 @@ class LearningCoordinator:
         self.runner = runner
         self.reflection_client = reflection_client
         self.slice_filter = slice_filter
+        self.slice_filters = list(dict.fromkeys(slice_filters or [slice_filter]))
         self.holdout_split = holdout_split
         self.train_split = train_split
         self.max_rounds = max_rounds
@@ -38,13 +40,26 @@ class LearningCoordinator:
 
     def _seed(self) -> Candidate:
         prompt = self.store.read_prompt_version("drafter_system_prompt")
-        pb = self.store.read_prompt_version(f"playbook:{self.slice_filter}")
-        return Candidate(candidate_id="seed", components={
+        components = {
             "drafter_system_prompt": Component(component_id="drafter_system_prompt", kind="prompt",
                                                version=prompt.version, text=prompt.text),
-            f"playbook:{self.slice_filter}": Component(component_id=f"playbook:{self.slice_filter}",
-                                                       kind="playbook", version=pb.version, playbook=pb.playbook)},
-            origin="seed")
+        }
+        for slice_key in self.slice_filters:
+            pb = self.store.read_prompt_version(f"playbook:{slice_key}")
+            components[f"playbook:{slice_key}"] = Component(
+                component_id=f"playbook:{slice_key}",
+                kind="playbook",
+                version=pb.version,
+                playbook=pb.playbook,
+            )
+        return Candidate(candidate_id="seed", components=components, origin="seed")
+
+    def _component_slice_filter(self, component_id: str) -> str | None:
+        if component_id == "drafter_system_prompt":
+            return None
+        if component_id.startswith("playbook:"):
+            return component_id.removeprefix("playbook:")
+        return self.slice_filter
 
     def _case_scores(self, result: ExperimentResult) -> dict[str, float]:
         return {c.case_id: c.composite for c in result.per_case}
@@ -52,7 +67,8 @@ class LearningCoordinator:
     def optimize(self) -> PromotionProposal | None:
         # INV-1: no Phoenix signal -> no gradient -> halt before any candidate work.
         probe = acquire_signal(self.store, component_id="drafter_system_prompt",
-                               dataset_split=self.train_split, slice_filter=self.slice_filter)
+                               dataset_split=self.train_split,
+                               slice_filter=self._component_slice_filter("drafter_system_prompt"))
         if probe is None:
             return None
 
@@ -68,7 +84,8 @@ class LearningCoordinator:
             parent = pareto_select(pool, scores)
             comp_id = select_component(parent, round_index)   # round-robin coverage (v2 §4.2)
             signal = acquire_signal(self.store, component_id=comp_id,
-                                    dataset_split=self.train_split, slice_filter=self.slice_filter)
+                                    dataset_split=self.train_split,
+                                    slice_filter=self._component_slice_filter(comp_id))
             if signal is None:
                 break
             minibatch = signal.failing_cases[: self.minibatch_size]

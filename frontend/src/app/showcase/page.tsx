@@ -4,12 +4,21 @@ import { showcaseSource } from "@/lib/data";
 import {
   approveRun,
   cancelRun,
+  getRollbackTarget,
   getRunSession,
   getShowcaseManifest,
+  rejectRun,
+  rollbackRun,
   startQuickRun,
   startSeriousRun,
 } from "@/lib/data/live";
-import type { CaseSummary, ShowcaseBundle, ShowcaseManifest, ShowcaseRunSession } from "@/lib/types";
+import type {
+  CaseSummary,
+  ShowcaseBundle,
+  ShowcaseManifest,
+  ShowcaseRollbackTarget,
+  ShowcaseRunSession,
+} from "@/lib/types";
 import { Nav } from "@/components/Nav";
 import { CasePicker } from "@/components/showcase/CasePicker";
 import { VersusPanel } from "@/components/showcase/VersusPanel";
@@ -27,11 +36,13 @@ export default function ShowcasePage() {
   const [bundle, setBundle] = useState<ShowcaseBundle | null>(null);
   const [manifest, setManifest] = useState<ShowcaseManifest | null>(null);
   const [runSession, setRunSession] = useState<ShowcaseRunSession | null>(null);
+  const [rollbackTarget, setRollbackTarget] = useState<ShowcaseRollbackTarget | null>(null);
   const [runErr, setRunErr] = useState<string | null>(null);
 
   useEffect(() => {
     ds.listCases().then(setCases);
     getShowcaseManifest().then(setManifest).catch(() => undefined);
+    getRollbackTarget().then(setRollbackTarget).catch(() => undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -41,7 +52,7 @@ export default function ShowcasePage() {
 
   useEffect(() => {
     if (!runSession) return;
-    if (["successful", "failed", "cancelled", "needs_approval", "rolled_back"].includes(runSession.status)) return;
+    if (["successful", "failed", "cancelled", "rejected", "needs_approval", "rolled_back"].includes(runSession.status)) return;
     const timer = window.setInterval(async () => {
       try {
         setRunSession(await getRunSession(runSession.session_id));
@@ -85,10 +96,33 @@ export default function ShowcasePage() {
     setRunErr(null);
     try {
       setRunSession(await approveRun(runSession.session_id));
+      setRollbackTarget(await getRollbackTarget());
     } catch (e) {
       setRunErr(e instanceof Error ? e.message : String(e));
     }
   }
+
+  async function rejectCurrentRun() {
+    if (!runSession) return;
+    setRunErr(null);
+    try {
+      setRunSession(await rejectRun(runSession.session_id));
+    } catch (e) {
+      setRunErr(e instanceof Error ? e.message : String(e));
+    }
+  }
+
+  async function rollbackLatestRun() {
+    setRunErr(null);
+    try {
+      await rollbackRun();
+      setRollbackTarget(await getRollbackTarget());
+    } catch (e) {
+      setRunErr(e instanceof Error ? e.message : String(e));
+    }
+  }
+
+  const seriousUnlocked = runSession?.run_type === "quick" && runSession.status === "successful";
 
   return (
     <div className="flex min-h-dvh flex-col bg-surface-primary text-text-primary">
@@ -122,7 +156,7 @@ export default function ShowcasePage() {
                 <div className="rounded-md border border-border-subtle bg-surface-primary p-4">
                   <p className="font-body text-sm text-text-tertiary">Quick learning check</p>
                   <p className="mt-2 font-body text-sm text-text-secondary">
-                    {manifest ? `${manifest.quick_train.length} ${manifest.quick_slice.replace("_", " ")} cases` : "Targeted 10-case set"}
+                    {manifest ? `${manifest.quick_train.length} train + ${manifest.quick_holdout.length} holdout ${manifest.quick_slice.replace("_", " ")} cases` : "Targeted quick set"}
                   </p>
                   <Button className="mt-4 h-10 px-4 text-sm" onClick={startQuick}>
                     Run quick check
@@ -133,9 +167,19 @@ export default function ShowcasePage() {
                   <p className="mt-2 font-body text-sm text-text-secondary">
                     Locked until the quick check succeeds.
                   </p>
-                  <Button className="mt-4 h-10 px-4 text-sm" variant="secondary" onClick={startSerious}>
+                  <Button
+                    className="mt-4 h-10 px-4 text-sm"
+                    variant="secondary"
+                    onClick={startSerious}
+                    disabled={!seriousUnlocked}
+                  >
                     Run serious pass
                   </Button>
+                  {rollbackTarget && (
+                    <Button className="mt-3 h-10 px-4 text-sm" variant="ghost" onClick={rollbackLatestRun}>
+                      Roll back latest update
+                    </Button>
+                  )}
                 </div>
               </div>
               {runErr && <p className="font-body text-sm text-text-secondary">{runErr}</p>}
@@ -147,6 +191,7 @@ export default function ShowcasePage() {
               session={runSession}
               onCancel={cancelCurrentRun}
               onApprove={approveCurrentRun}
+              onReject={rejectCurrentRun}
             />
           </section>
         </div>
@@ -178,10 +223,12 @@ function RunStatusPanel({
   session,
   onCancel,
   onApprove,
+  onReject,
 }: {
   session: ShowcaseRunSession | null;
   onCancel: () => void;
   onApprove: () => void;
+  onReject: () => void;
 }) {
   if (!session) {
     return (
@@ -232,7 +279,12 @@ function RunStatusPanel({
             Approve update
           </Button>
         )}
-        {!["successful", "failed", "cancelled", "rolled_back"].includes(session.status) && (
+        {session.status === "needs_approval" && (
+          <Button className="h-10 px-4 text-sm" variant="secondary" onClick={onReject}>
+            Reject update
+          </Button>
+        )}
+        {!["successful", "failed", "cancelled", "rejected", "rolled_back"].includes(session.status) && (
           <Button className="h-10 px-4 text-sm" variant="secondary" onClick={onCancel}>
             Cancel run
           </Button>

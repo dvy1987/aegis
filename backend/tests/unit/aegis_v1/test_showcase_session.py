@@ -50,3 +50,17 @@ def test_stage_failure_is_persisted_with_retryability(tmp_path: Path) -> None:
     assert reloaded.diagnostics.last_error is not None
     assert reloaded.diagnostics.last_error.code == "timeout"
     assert reloaded.diagnostics.retryable is True
+
+
+def test_reject_marks_session_without_discarding_proposal(tmp_path: Path) -> None:
+    manager = ShowcaseSessionManager(ledger_dir=tmp_path)
+    session = manager.start_quick()
+    manager.mark_needs_approval(session.session_id, proposal={"candidate_id": "c1"})
+
+    rejected = manager.mark_rejected(session.session_id, reviewer="pm")
+    reloaded = manager.get(session.session_id)
+
+    assert rejected.status == "rejected"
+    assert rejected.approved_by is None
+    assert reloaded.proposal == {"candidate_id": "c1"}
+    assert reloaded.diagnostics.stage == "waiting_for_approval"

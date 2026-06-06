@@ -5,6 +5,7 @@ from typing import Literal
 
 from app.aegis_v1.drafter_client import GeminiDrafterClient
 from app.aegis_v1.showcase_manifest import ShowcaseCase, load_showcase_manifest
+from app.aegis_v1.showcase_rollback import PromotionStack
 from app.aegis_v1.showcase_session import ShowcaseSessionManager
 from app.aegis_v1.simulator_client import GeminiSimulatorClient
 from app.aegis_v1.tools import case_parser, phoenix_mcp_lookup
@@ -22,6 +23,7 @@ from app.learning.run_live import _creds_available
 
 
 logger = logging.getLogger(__name__)
+MeasurePhase = Literal["pre", "training_pre", "training_post", "post"]
 
 
 def _log(session_id: str, stage: str, message: str, **extra) -> None:
@@ -40,7 +42,16 @@ def _case_obj(case: ShowcaseCase, *, dataset_split: str) -> dict:
     }
 
 
-def _dataset(cases: list[ShowcaseCase], *, slice_filter: str) -> list[dict]:
+def _case_slice(case: ShowcaseCase) -> str:
+    insurer = "UnitedHealthcare" if case.insurer == "UHC" else case.insurer
+    return f"{insurer}:{case.denial_type}"
+
+
+def _slice_filters(cases: list[ShowcaseCase]) -> list[str]:
+    return list(dict.fromkeys(_case_slice(case) for case in cases))
+
+
+def _dataset(cases: list[ShowcaseCase]) -> list[dict]:
     out: list[dict] = []
     for case in cases:
         parsed = case_parser(
@@ -51,7 +62,7 @@ def _dataset(cases: list[ShowcaseCase], *, slice_filter: str) -> list[dict]:
         out.append(
             {
                 "case_id": case.case_id,
-                "slice": slice_filter,
+                "slice": f"{parsed['insurer']}:{parsed['denial_type']}",
                 "parsed_case": parsed,
                 "citations": [],
                 "phoenix_summary": phoenix_mcp_lookup(
@@ -70,10 +81,13 @@ def _measure(
     manager: ShowcaseSessionManager,
     session_id: str,
     *,
-    phase: Literal["pre", "post"],
+    phase: MeasurePhase,
     cases: list[ShowcaseCase],
+    drafter_prompt_version: str | None = None,
+    drafter_prompt_text: str | None = None,
+    playbook_overrides: dict[str, dict] | None = None,
 ) -> list[dict]:
-    stage = "measure_before" if phase == "pre" else "measure_after"
+    stage = "measure_before" if phase in {"pre", "training_pre"} else "measure_after"
     manager.set_stage(session_id, stage=stage, total_cases=len(cases))
     _log(session_id, stage, "showcase measurement started", total_cases=len(cases))
     results: list[dict] = []
@@ -91,6 +105,9 @@ def _measure(
             _case_obj(case, dataset_split=f"showcase_{phase}_measure_{session_id}"),
             drafter_client=drafter,
             simulator_client=simulator,
+            drafter_prompt_version=drafter_prompt_version,
+            drafter_prompt_text=drafter_prompt_text,
+            playbook_override=(playbook_overrides or {}).get(_case_slice(case)),
         )
         results.append(result.model_dump())
         manager.set_stage(
@@ -146,14 +163,14 @@ def _seed_training_signal(
 def _optimize(
     *,
     cases: list[ShowcaseCase],
-    slice_filter: str,
+    slice_filters: list[str],
     train_split: str,
     holdout_split: str,
     max_rounds: int,
 ):
     store = LivePhoenixLearningStore()
     runner = LiveExperimentRunner(
-        dataset=_dataset(cases, slice_filter=slice_filter),
+        dataset=_dataset(cases),
         drafter_client=GeminiDrafterClient(),
         judge_client=PanelJudgeAdapter(judge_client=GeminiJudgeClient()),
     )
@@ -161,12 +178,29 @@ def _optimize(
         store=store,
         runner=runner,
         reflection_client=GeminiReflectionClient(),
-        slice_filter=slice_filter,
+        slice_filter=slice_filters[0],
+        slice_filters=slice_filters,
         train_split=train_split,
         holdout_split=holdout_split,
         max_rounds=max_rounds,
     )
     return coordinator.optimize()
+
+
+def _candidate_prompt(proposal: PromotionProposal) -> tuple[str | None, str | None]:
+    comp = proposal.candidate.components.get("drafter_system_prompt")
+    if comp is None:
+        return None, None
+    return comp.version, comp.text
+
+
+def _candidate_playbooks(proposal: PromotionProposal) -> dict[str, dict]:
+    out: dict[str, dict] = {}
+    for comp_id, comp in proposal.candidate.components.items():
+        if not comp_id.startswith("playbook:") or comp.playbook is None:
+            continue
+        out[comp_id.removeprefix("playbook:")] = comp.playbook
+    return out
 
 
 def run_quick_session(session_id: str) -> None:
@@ -183,19 +217,23 @@ def run_quick_session(session_id: str) -> None:
                 retryable=True,
             )
             return
-        _measure(manager, session_id, phase="pre", cases=manifest.quick_train)
+        quick_train = manifest.quick_train
+        quick_holdout = manifest.quick_holdout
+        slice_filters = _slice_filters(quick_train)
+        _measure(manager, session_id, phase="pre", cases=quick_holdout)
+        _measure(manager, session_id, phase="training_pre", cases=quick_train)
         trace_ids = _seed_training_signal(
             manager,
             session_id,
-            cases=manifest.quick_train,
+            cases=quick_train,
             dataset_split=train_split,
         )
         session = manager.get(session_id)
         session.diagnostics.phoenix_trace_ids = trace_ids
         manager._save(session)
         proposal = _optimize(
-            cases=manifest.quick_train,
-            slice_filter=manifest.quick_slice,
+            cases=quick_train,
+            slice_filters=slice_filters,
             train_split=train_split,
             holdout_split=train_split,
             max_rounds=1,
@@ -209,6 +247,16 @@ def run_quick_session(session_id: str) -> None:
                 retryable=True,
             )
             return
+        candidate_prompt_version, candidate_prompt_text = _candidate_prompt(proposal)
+        _measure(
+            manager,
+            session_id,
+            phase="training_post",
+            cases=quick_train,
+            drafter_prompt_version=candidate_prompt_version,
+            drafter_prompt_text=candidate_prompt_text,
+            playbook_overrides=_candidate_playbooks(proposal),
+        )
         manager.mark_needs_approval(session_id, proposal=proposal.model_dump())
     except Exception as exc:
         manager.fail_stage(
@@ -216,6 +264,71 @@ def run_quick_session(session_id: str) -> None:
             stage="train_gepa",
             code=exc.__class__.__name__,
             message=str(exc) or "Showcase quick run failed.",
+            retryable=True,
+        )
+
+
+def run_serious_session(session_id: str) -> None:
+    manager = ShowcaseSessionManager()
+    manifest = load_showcase_manifest()
+    train_split = f"showcase_serious_train_{session_id}"
+    try:
+        if not _creds_available():
+            manager.fail_stage(
+                session_id,
+                stage="queued",
+                code="missing_live_credentials",
+                message="Live serious run requires PHOENIX_API_KEY and Google ADC.",
+                retryable=True,
+            )
+            return
+        serious_train = manifest.serious_train
+        serious_holdout = manifest.serious_holdout
+        slice_filters = _slice_filters(serious_train)
+        _measure(manager, session_id, phase="pre", cases=serious_holdout)
+        _measure(manager, session_id, phase="training_pre", cases=serious_train)
+        trace_ids = _seed_training_signal(
+            manager,
+            session_id,
+            cases=serious_train,
+            dataset_split=train_split,
+        )
+        session = manager.get(session_id)
+        session.diagnostics.phoenix_trace_ids = trace_ids
+        manager._save(session)
+        proposal = _optimize(
+            cases=serious_train,
+            slice_filters=slice_filters,
+            train_split=train_split,
+            holdout_split=train_split,
+            max_rounds=3,
+        )
+        if proposal is None:
+            manager.fail_stage(
+                session_id,
+                stage="train_gepa",
+                code="no_learning_signal",
+                message="Phoenix did not return learning signal for this serious run.",
+                retryable=True,
+            )
+            return
+        candidate_prompt_version, candidate_prompt_text = _candidate_prompt(proposal)
+        _measure(
+            manager,
+            session_id,
+            phase="training_post",
+            cases=serious_train,
+            drafter_prompt_version=candidate_prompt_version,
+            drafter_prompt_text=candidate_prompt_text,
+            playbook_overrides=_candidate_playbooks(proposal),
+        )
+        manager.mark_needs_approval(session_id, proposal=proposal.model_dump())
+    except Exception as exc:
+        manager.fail_stage(
+            session_id,
+            stage="train_gepa",
+            code=exc.__class__.__name__,
+            message=str(exc) or "Showcase serious run failed.",
             retryable=True,
         )
 
@@ -256,11 +369,17 @@ def approve_session(session_id: str, *, approver: str) -> None:
             approver=approver,
             vetoes=proposal.vetoes,
         )
+        PromotionStack().push_checkpoint(
+            run_type=session.run_type,
+            session_id=session_id,
+            candidate=proposal.candidate,
+        )
         LivePhoenixLearningStore().register_promotion(proposal.candidate, audit)
         session = manager.get(session_id)
         session.approved_by = approver
         manager._save(session)
-        _measure(manager, session_id, phase="post", cases=manifest.quick_train)
+        post_cases = manifest.quick_holdout if session.run_type == "quick" else manifest.serious_holdout
+        _measure(manager, session_id, phase="post", cases=post_cases)
         manager.mark_success(session_id)
         _log(session_id, "measure_after", "showcase approved run completed")
     except Exception as exc:

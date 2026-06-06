@@ -32,6 +32,8 @@ def run_aegis_v1_pipeline(
     ),
     drafter_client: "DrafterLLMClient | None" = None,
     drafter_prompt_version: str | None = None,
+    drafter_prompt_text: str | None = None,
+    playbook_override: dict[str, Any] | None = None,
     library_stack: dict[str, Any] | None = None,
     use_phoenix_memory: bool = True,
 ) -> dict[str, Any]:
@@ -78,10 +80,14 @@ def run_aegis_v1_pipeline(
             "success_traits": [],
             "risk_flags": ["phoenix_mcp_measurement_disabled"],
         }
-    playbook = playbook_loader(
-        insurer=parsed["insurer"],
-        denial_type=parsed["denial_type"],
-    )
+    if playbook_override is not None:
+        playbook = dict(playbook_override)
+        playbook.setdefault("status", "loaded")
+    else:
+        playbook = playbook_loader(
+            insurer=parsed["insurer"],
+            denial_type=parsed["denial_type"],
+        )
     from app.aegis_v1.drafter_client import get_active_drafter_prompt_version
 
     active_prompt_version = drafter_prompt_version or get_active_drafter_prompt_version()
@@ -92,6 +98,7 @@ def run_aegis_v1_pipeline(
         phoenix_summary=phoenix,
         client=drafter_client,
         prompt_version=active_prompt_version,
+        prompt_text=drafter_prompt_text,
     )
     check = self_check(
         parsed_case=parsed,

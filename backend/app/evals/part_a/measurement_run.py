@@ -32,6 +32,8 @@ def run_measurement_case(
     drafter_client: DrafterLLMClient | None = None,
     simulator_client: "SimulatorClient | None" = None,
     drafter_prompt_version: str | None = None,
+    drafter_prompt_text: str | None = None,
+    playbook_override: dict[str, Any] | None = None,
 ) -> MeasurementResult:
     """Run clean measurement: v1 drafter plus simulator only.
 
@@ -48,6 +50,8 @@ def run_measurement_case(
         run_mode="benchmark",
         drafter_client=drafter_client,
         drafter_prompt_version=drafter_prompt_version,
+        drafter_prompt_text=drafter_prompt_text,
+        playbook_override=playbook_override,
         use_phoenix_memory=False,
     )
 

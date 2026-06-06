@@ -2336,3 +2336,62 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 - Modified: `backend/app/aegis_v1/drafter_client.py`, `backend/app/learning/phoenix_live.py`, `backend/tests/unit/agent/test_aegis_v1_tools.py`.
 - New: `backend/app/aegis_v1/prompts/archive/drafter_v2.md`, `docs/plans/2026-06-06-v1-showcase-redesign-plan.md`, 6 × `playbooks/*.json`.
 - Uncommitted. Suggest committing as one logical unit: "feat: reset showcase baseline to day-zero (v1 prompt + minimal playbooks); archive v2".
+
+---
+
+## 2026-06-06 - Handoff (Codex - showcase redesign backend implementation pass)
+
+### Done
+- Updated `docs/plans/2026-06-06-v1-showcase-redesign-plan.md` to resolve the multi-slice contradiction: multi-slice is **default-on** for showcase quick and serious runs; single-slice is fallback only.
+- Restructured `eval/benchmarks/v1_showcase_100/manifest.json`:
+  - `quick_train`: 8 Cigna medical-necessity training cases.
+  - `quick_holdout`: 2 Cigna medical-necessity holdout cases.
+  - `serious_train`: 80 cases and includes all quick_train cases.
+  - `serious_holdout`: 20 medium-difficulty, slice-balanced cases and includes all quick_holdout cases.
+- Updated manifest loader/API:
+  - `quick_holdout` is now exposed.
+  - `headline` is included in student-safe manifest case metadata.
+  - validation enforces quick subset semantics and serious train/holdout disjointness.
+- Added PM control primitives:
+  - `rejected` status + `POST /v1/showcase/runs/{session_id}/reject`.
+  - JSON-backed LIFO rollback stack in `backend/app/aegis_v1/showcase_rollback.py`.
+  - `GET /v1/showcase/rollback-target` and `POST /v1/showcase/rollback`.
+  - `approve_session` snapshots rollback state before promotion.
+- Extended clean measurement:
+  - supports candidate prompt text without writing it to disk.
+  - supports candidate playbook override without writing it to disk.
+- Extended `LearningCoordinator` for multi-slice:
+  - seed includes drafter + one playbook per slice.
+  - drafter signal is pooled across slices.
+  - playbook signal is filtered to that playbook's slice.
+- Reworked runners:
+  - quick runner now does holdout pre-measure → training pre-row → Phoenix/judge GEPA → candidate training post-row → needs approval.
+  - serious runner now exists and uses the same flow with 80 train / 20 holdout.
+  - approval post-measures on holdout, not training cases.
+- Minimal frontend wiring:
+  - types include `quick_holdout`, `rejected`, and training pre/post result buckets.
+  - added reject/rollback API helpers.
+  - `/showcase` shows Reject, Roll back, and disables Serious until quick success.
+
+### Verification
+- Focused backend: `29 passed` for showcase manifest/API/session/rollback/runner, measurement, promotion wiring, and coordinator tests.
+- Frontend: `tsc --noEmit`, `npm run lint`, `npm run test -- --run`, and `npm run build` passed.
+- Full backend unit suite: `284 passed, 5 failed`. Failures appear pre-existing/unrelated:
+  - `test_inject_flaws_includes_natural_detectable_anchors`
+  - 3× `tests/unit/evals/gumloop/test_offline_runner.py` missing `case_500_cigna_priorauth.json`
+  - `tests/unit/test_harness_io.py` missing `/tmp/harness/state.json`
+
+### Still Pending
+- Full 6-box visual rebuild for `/showcase`.
+- Regression-warning banner and threshold implementation.
+- Mid-loop cancellation polling inside `_measure` and `_seed_training_signal`.
+- Live credentialed rehearsal against Phoenix/Gemini/GCP.
+- Cloud Run background-thread reliability decision remains open: current background threads may need CPU-always-on, Cloud Tasks, or a poll-driven `/advance` endpoint for dependable demos.
+
+### Next Agent Should Know
+- Draft case files were not modified.
+- The quick run is intentionally the low-cost smoke test for multi-slice GEPA, even though quick currently has only one slice.
+- Normal behavior should be current active state continuing forward; reset-to-day-zero should be an explicit recovery/demo control, not hidden permanent pinning.
+
+### Working Tree
+- Should be committed as one logical implementation commit.
