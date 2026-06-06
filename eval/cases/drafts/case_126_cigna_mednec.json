@@ -1,0 +1,396 @@
+{
+  "case_id": "case_126_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 32,
+    "gender": "M",
+    "diagnosis": "Diabetic gastroparesis, refractory (K31.84)",
+    "treatment_requested": "Gastric electrical stimulation (Enterra Therapy) implantation evaluation",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "incorrect_demographic_guideline: Commonwealth Fund 2023 Review of Prior Auth Denials",
+    "missing_iro_notice: CMS External Appeal Regulations 45 CFR \u00a7 147.136; ACA \u00a7 2719"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic endocrine case (not evidence based)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic endocrine case (not evidence based)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic endocrine case (not evidence based)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic endocrine case (not evidence based)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic endocrine case (not evidence based)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic endocrine case (not evidence based)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis letter concerns the prior authorization request your treating provider submitted for gastric electrical stimulation (Enterra Therapy) implantation evaluation to treat your diabetic gastroparesis. After review under Cigna Medical Coverage Policy CPG 0178, the request is denied as not medically necessary. Determination date: May 28, 2026.\n\nCigna considers gastric electrical stimulation to be investigational and not evidence-based for gastroparesis. Our Medical Coverage Policy finds that the published peer-reviewed literature does not include randomized controlled trial evidence sufficient to show that the device improves net health outcomes for this indication. The coverage criteria applied here reflect efficacy data drawn predominantly from a geriatric study population (patients ages 65 and older), and the submitted records do not meet the threshold requirements in that criteria set. The requested procedure therefore does not satisfy our standard for medical necessity.\n\nThis decision was made by a Cigna medical reviewer using the information in the claim file. You or your provider may request, at no charge, a copy of the specific medical necessity criteria and the documents relied upon in reaching this decision.\n\nIf your provider would like to discuss this determination, a peer-to-peer review with a Cigna medical director may be arranged by calling the number on your member ID card.\n\nYou have the right to appeal. To file an internal appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter, together with any additional clinical information you would like considered. Appeals may be sent to the address shown on your Explanation of Benefits.\n\nSincerely,\nCigna Coverage Review Department",
+  "clinical_context": "The member is a 32-year-old man with type 2 diabetes (HbA1c 8.4%) and a two-year history of diabetic gastroparesis. A 4-hour solid-phase gastric emptying scintigraphy in February 2026 showed 38% retention at four hours, consistent with moderately severe delayed emptying. He has failed first-line prokinetic therapy: metoclopramide 10 mg four times daily was trialed for more than twelve weeks with persistent nausea, postprandial vomiting, and inability to maintain oral intake, and was ultimately limited by tremor and akathisia. Dietary modification to small, low-fat, low-fiber meals and a separate trial of erythromycin also failed to control symptoms. Over the preceding six months he lost approximately 7% of his body weight and required two emergency department visits for dehydration. His treating gastroenterologist documents that gastric electrical stimulation (Enterra Therapy) is indicated for refractory diabetic gastroparesis under the device's FDA Humanitarian Device Exemption, and that current peer-reviewed evidence supports its use in working-age adults whose disease is refractory to prokinetic agents. This is a young adult with treatment-refractory disease, not a patient from the geriatric cohort underlying the insurer's cited criteria.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260606-012637-2f961",
+    "generated_at": "2026-06-06T01:26:37Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "26-40",
+      "patient_gender": "M",
+      "specialty": "endocrine",
+      "sub_tactic": "not_evidence_based"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "reasoning": "Brief's matrix_cell reproduces the assigned cell field-for-field (Cigna, Medical Necessity, 26-40, M, endocrine, not_evidence_based). Diabetic gastroparesis (K31.84) is a close-adjacent endocrine comorbidity that endocrinologists co-manage, satisfying the 'close adjacent area' allowance. Enterra is the realistic device. Rationale credibly describes not_evidence_based. Age band not 71+, so null employer_archetype is fine.",
+        "score": "PASS",
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "\"sub_tactic\": \"not_evidence_based\"",
+          "Diabetic gastroparesis, refractory (K31.84)",
+          "Gastric electrical stimulation (Enterra Therapy) implantation evaluation"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "reasoning": "Frustratingly realistic. Cigna does treat GES as investigational, and 'not evidence-based/lacks RCT data' is authentic insurer logic. The exploitable gap is sharp: criteria built on a geriatric (65+) population applied to a 32-year-old, rebutted by the clinical context. Clinical picture coherent (scintigraphy 38% retention, failed metoclopramide/diet, refractory diabetic etiology). Enterra FDA HDE is a real verifiable hook. Self-funded plan adds realistic ERISA/IRO texture.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "Cigna's Medical Coverage Policy holds that gastric electrical stimulation is not considered evidence-based for gastroparesis",
+          "Cigna draws from a coverage analysis built on a geriatric study population (patients aged 65 and older)",
+          "Enterra Therapy carries an FDA Humanitarian Device Exemption for exactly this refractory diabetic indication"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "reasoning": "Correctly self-identifies as Cigna and uses Cigna apparatus (Medical Coverage Policy CPG 0178, Cigna medical reviewer, peer-to-peer with a Cigna medical director, Cigna Coverage Review Department) with bureaucratic cadence. But the load-bearing Cigna tell is missing: no 'Milliman Care Guidelines (MCG)' and no step-therapy/conservative-treatment framing. No wrong-insurer tells appear, so the illusion holds. Plausible for Cigna but not unmistakably so.",
+        "score": 3,
+        "confidence": 0.7,
+        "evidence_quotes": [
+          "After review under Cigna Medical Coverage Policy CPG 0178, the request is denied as not medically necessary.",
+          "a peer-to-peer review with a Cigna medical director may be arranged",
+          "Cigna considers gastric electrical stimulation to be investigational and not evidence-based for gastroparesis."
+        ],
+        "improvement": "Add Cigna's signature tells: cite Milliman Care Guidelines (MCG) as the criteria set and invoke a step-therapy/conservative-treatment-first requirement."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "reasoning": "Cites Cigna Medical Coverage Policy CPG 0178 and labels the device investigational/not evidence-based, invoking lack of RCT evidence \u2014 a plausible real-world basis matching not_evidence_based. Logic is realistically hand-wavy and near-circular without naming specific studies or thresholds. The mismatched geriatric evidence basis is a clear exploitable flaw. Guideline plausible, not hallucinated.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "Cigna considers gastric electrical stimulation to be investigational and not evidence-based for gastroparesis.",
+          "efficacy data drawn predominantly from a geriatric study population (patients ages 65 and older), and the submitted records do not meet the threshold requirements in that criteria set",
+          "The requested procedure therefore does not satisfy our standard for medical necessity."
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "reasoning": "Clinically credible throughout. HbA1c 8.4% plausible; 4-hour scintigraphy 38% retention is the gold standard with correct delayed-emptying threshold; metoclopramide 10mg QID >12 weeks with tremor and akathisia is accurate; erythromycin and low-fat low-fiber diet reflect real sequencing; 7% weight loss and two ED visits for dehydration plausible; Enterra under FDA HDE for refractory diabetic gastroparesis is factually correct. No invented drugs or impossible courses.",
+        "score": 5,
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "type 2 diabetes (HbA1c 8.4%)",
+          "4-hour solid-phase gastric emptying scintigraphy in February 2026 showed 38% retention at four hours, consistent with moderately severe delayed emptying",
+          "gastric electrical stimulation (Enterra Therapy) is indicated for refractory diabetic gastroparesis under the device's FDA Humanitarian Device Exemption"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "reasoning": "Gastric electrical stimulation (Enterra) is a real, recognized intervention specifically for drug-refractory diabetic/idiopathic gastroparesis, holding an FDA HDE for that indication and appearing in ACG/AGA guidance. The 'refractory' qualifier aligns precisely. Correct clinical category, not a mismatch.",
+        "score": "PASS",
+        "confidence": 0.97,
+        "evidence_quotes": [
+          "Diabetic gastroparesis, refractory (K31.84)",
+          "Gastric electrical stimulation (Enterra Therapy) implantation evaluation"
+        ],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "reasoning": "None of the 12 neighbours address gastroparesis or an implantable gastric stimulation device. Diabetes-adjacent neighbours all concern glucose-lowering pharmacotherapy or monitoring (GLP-1, tirzepatide, AID, CGM, dulaglutide) \u2014 a wholly different modality. The only payer+category+flaw match (Cigna/MedNec/not_evidence_based PCOS+spironolactone) shares nothing in dx or trajectory. Not a near-duplicate.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "dx=Diabetic gastroparesis, refractory (K31.84); tx=Gastric electrical stimulation (Enterra Therapy) implantation evaluation",
+          "dx=Polycystic ovary syndrome with hyperandrogenism (E28.2); tx=Spironolactone for androgenic symptoms"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['incorrect_demographic_guideline', 'missing_iro_notice']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['incorrect_demographic_guideline', 'missing_iro_notice']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.05 (nearest=case_183_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "reasoning": "Coverage appeal for Enterra GES for diabetic gastroparesis. Patient is a 32-year-old man (above minor threshold, no gender-dysphoria framing). Weight loss and ED visits stem from dehydration/delayed emptying, not self-harm. No child-abuse, IPV, or end-of-life framing. No violence/incitement against insurers. Commercial Cigna plan, in scope; the geriatric reference describes the insurer's criteria, not the member. No banned topic present.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "The member is a 32-year-old man with type 2 diabetes (HbA1c 8.4%) and a two-year history of diabetic gastroparesis.",
+          "required two emergency department visits for dehydration"
+        ],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "reasoning": "Core scenario facts stable and agree across documents: 32-year-old male, refractory diabetic gastroparesis (K31.84), Enterra GES implantation evaluation all match. The denial's investigational assertion and the geriatric-criteria point are appealable falsehoods/rebuttals, not contradictions. Within the denial paragraphs are consistent; the clinical timeline (2-year history, Feb 2026 scintigraphy, >12-week trial, 6-month weight loss) is coherent. No drug, dx, date, gender, or laterality mismatch.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "prior authorization request your treating provider submitted for gastric electrical stimulation (Enterra Therapy) implantation evaluation to treat your diabetic gastroparesis",
+          "The member is a 32-year-old man with type 2 diabetes (HbA1c 8.4%) and a two-year history of diabetic gastroparesis"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "reasoning": "Both documents read as formal bureaucratic/clinical prose. No 'as an AI' tics, no signature GPT vocabulary (delve, tapestry), no listicle structure in prose, no marketing cadence. Dense comma-spliced chart prose in the clinical context is characteristic of real notes. PASS.",
+        "score": "PASS",
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "the request is denied as not medically necessary",
+          "metoclopramide 10 mg four times daily was trialed for more than twelve weeks with persistent nausea, postprandial vomiting, and inability to maintain oral intake, and was ultimately limited by tremor and akathisia"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "reasoning": "Denial holds a consistently cold, procedural register: impersonal 'Dear Member,', bureaucratic phrasing, policy machinery, flat sign-off. No apologies, warmth, or marketing buzzwords. Procedural vagueness is a positive realism signal. Clinical context is neutral plain-prose narrative. Top tone score.",
+        "score": 5,
+        "confidence": 0.9,
+        "evidence_quotes": [
+          "Dear Member,",
+          "the request is denied as not medically necessary",
+          "Sincerely,\nCigna Coverage Review Department"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "reasoning": "The denial makes no statement of member out-of-pocket liability, no dollar figures, no 'you will owe' language, and no Medicare/Medicaid conflation. The only cost-adjacent language ('at no charge' for criteria copies) concerns administrative costs. Per the edge case, silence on cost liability is standard practice. Anchor 5.",
+        "score": 5,
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "the request is denied as not medically necessary",
+          "You or your provider may request, at no charge, a copy of the specific medical necessity criteria and the documents relied upon in reaching this decision"
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "reasoning": "Regulatory framing realistic and imperfect. States a correct commercial internal-appeal window (180 days) but strategically omits external/independent review rights and uses no ERISA disclosure language \u2014 a realistic imperfection and appeal attack vector, not a penalty. No hallucinated statutes, no Medicare framing on a commercial plan. Matches anchor 5.",
+        "score": 5,
+        "confidence": 0.85,
+        "evidence_quotes": [
+          "You have the right to appeal. To file an internal appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter",
+          "Appeals may be sent to the address shown on your Explanation of Benefits."
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "reasoning": "A 32-year-old man with refractory diabetic gastroparesis is fully plausible; gastroparesis is a recognized T2DM complication across adult ages with no gender implausibility. Pronouns (he/his) consistent with M. No exoticising or stereotyping. The geriatric-cohort language concerns the cited evidence base, not the member's demographics.",
+        "score": 5,
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "The member is a 32-year-old man with type 2 diabetes (HbA1c 8.4%) and a two-year history of diabetic gastroparesis.",
+          "he lost approximately 7% of his body weight and required two emergency department visits for dehydration"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "reasoning": "Insurer Cigna (allowed); denial type Medical Necessity (allowed); patient 32 (adult 18-89); coverage employer-sponsored commercial self_funded with no government/marketplace framing; no live-filing, attorney-work-product, or court-representation language (the 180-day internal appeal text is standard appeal-rights language). The geriatric-study reference is appeal merit, not a scope violation. All five PASS criteria satisfied.",
+        "score": "PASS",
+        "confidence": 0.95,
+        "evidence_quotes": [
+          "the request is denied as not medically necessary",
+          "\"plan_funding_type\": \"self_funded\"",
+          "a 32-year-old man with type 2 diabetes",
+          "you or your authorized representative must submit a written request within 180 days of the date of this letter"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "reasoning": "All dates fall in 2025-2026 and are chronologically consistent. Determination May 28, 2026 post-dates the February 2026 scintigraphy. Durational anchors (two-year history, >12-week metoclopramide, six-month weight loss) stack plausibly. 180-day appeal window is standard. No contradictions.",
+        "score": 5,
+        "confidence": 0.92,
+        "evidence_quotes": [
+          "Determination date: May 28, 2026.",
+          "A 4-hour solid-phase gastric emptying scintigraphy in February 2026 showed 38% retention",
+          "must submit a written request within 180 days of the date of this letter"
+        ],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "reasoning": "The letter cites 'Cigna Medical Coverage Policy CPG 0178'. Cigna genuinely uses 'Medical Coverage Policy' documents with a 'CPG ####' convention, so brand and naming format are authentic, not hallucinated. Supplying a specific four-digit number is slightly too precise for the ideal of being realistically vague, but not a fabricated penalized code. Body otherwise stays generic. Maps to anchor 3.",
+        "score": 3,
+        "confidence": 0.75,
+        "evidence_quotes": [
+          "After review under Cigna Medical Coverage Policy CPG 0178, the request is denied as not medically necessary.",
+          "You or your provider may request, at no charge, a copy of the specific medical necessity criteria and the documents relied upon in reaching this decision."
+        ],
+        "improvement": "Drop the specific policy number and refer to it generically to make the citation realistically vague rather than precisely identifiable."
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "reasoning": "The denial applies criteria explicitly drawn from a geriatric (65+) population to a 32-year-old, directly rebutted by the clinical context; patient meets a strong refractory-disease picture (38% 4h retention, failed metoclopramide >12 weeks, failed erythromycin and diet, 7% weight loss, two ED visits). The insurer's only genuine defense is the device's investigational/HDE status and absence of RCTs. Strong clinical exploit plus weak procedural surface yields an easy-to-appeal case.",
+        "score": 5,
+        "confidence": 0.85,
+        "exploitable_weaknesses": [
+          "Criteria are drawn predominantly from a geriatric study population (patients ages 65 and older) but applied to a 32-year-old, making the cited threshold facially inapplicable",
+          "Patient clearly meets refractory-disease standard of care (failed metoclopramide >12 weeks, failed erythromycin and diet, 38% 4-hour retention, 7% weight loss, two ED visits) yet this was disregarded against an age-mismatched criteria set"
+        ],
+        "strong_defenses": [
+          "Gastric electrical stimulation is genuinely investigational/HDE-only with no sufficient RCT evidence of improved net health outcomes, a legitimate medical-necessity basis"
+        ],
+        "evidence_quotes": [
+          "The coverage criteria applied here reflect efficacy data drawn predominantly from a geriatric study population (patients ages 65 and older), and the submitted records do not meet the threshold requirements in that criteria set.",
+          "This is a young adult with treatment-refractory disease, not a patient from the geriatric cohort underlying the insurer's cited criteria.",
+          "metoclopramide 10 mg four times daily was trialed for more than twelve weeks"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / endocrine / sub_tactic=not_evidence_based. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "The denial applies criteria explicitly drawn from a geriatric (65+) population to a 32-year-old, directly rebutted by the clinical context; patient meets a strong refractory-disease picture (38% 4h retention, failed metoclopramide >12 weeks, failed erythromycin and diet, 7% weight loss, two ED visits). The insurer's only genuine defense is the device's investigational/HDE status and absence of RCTs. Strong clinical exploit plus weak procedural surface yields an easy-to-appeal case.",
+      "exploitable_weaknesses": [
+        "Criteria are drawn predominantly from a geriatric study population (patients ages 65 and older) but applied to a 32-year-old, making the cited threshold facially inapplicable",
+        "Patient clearly meets refractory-disease standard of care (failed metoclopramide >12 weeks, failed erythromycin and diet, 38% 4-hour retention, 7% weight loss, two ED visits) yet this was disregarded against an age-mismatched criteria set",
+        "Pattern anchor: incorrect_demographic_guideline",
+        "Pattern anchor: missing_iro_notice"
+      ],
+      "strong_defenses": [
+        "Gastric electrical stimulation is genuinely investigational/HDE-only with no sufficient RCT evidence of improved net health outcomes, a legitimate medical-necessity basis"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "incorrect_demographic_guideline",
+        "missing_iro_notice"
+      ],
+      "deterministic_present": [
+        "incorrect_demographic_guideline",
+        "missing_iro_notice"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

@@ -1,0 +1,391 @@
+{
+  "case_id": "case_127_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 49,
+    "gender": "M",
+    "diagnosis": "Alcohol use disorder, severe, with complicated withdrawal (F10.20)",
+    "treatment_requested": "Inpatient medical detoxification (3-5 day medically managed withdrawal)",
+    "plan_funding_type": "fully_insured"
+  },
+  "denial_pattern_sources": [
+    "superseded_guideline: AHIP 2022 Coverage Policy Review; documented in multiple Cigna litigation cases 2021\u20132023",
+    "plan_exclusion_overrides_state_mandate: NCSL State Health Insurance Mandates Database 2024; documented in CA, NJ, IL enforcement actions"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic behavioral health case (modality substitution)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic behavioral health case (modality substitution)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic behavioral health case (modality substitution)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic behavioral health case (modality substitution)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic behavioral health case (modality substitution)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "ERISA Claims Procedure \u2014 adverse benefit determination content (29 CFR \u00a7 2560.503-1)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Specific reasons for denial."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nWe have completed our review of the prior authorization request your provider submitted for inpatient medical detoxification (a 3 to 5 day medically managed withdrawal admission) to treat alcohol use disorder. After review under the applicable Aetna Clinical Policy Bulletin and the InterQual behavioral health subset, this request is not authorized. Determination date: May 19, 2026.\n\nAetna's behavioral health coverage directs that a less costly, clinically appropriate modality be used before an inpatient admission is approved. Our reviewer concluded that ambulatory (outpatient) detoxification is the appropriate setting for managed withdrawal and that the submitted records do not establish that outpatient detoxification would be inadequate. The level-of-care criteria applied here are those adopted in Aetna's 2020 Behavioral Health Medical Policy. Separately, your plan contains a plan exclusion for inpatient and residential substance-use detoxification services, which independently applies to this request. Inpatient medical detoxification is therefore denied; outpatient detoxification remains available as a covered modality.\n\nYou or your provider may request, at no charge, a copy of the specific clinical criteria and the documents relied upon in reaching this decision. If your provider wishes to discuss this determination, a peer-to-peer review with an Aetna medical director may be arranged by calling the number on your member ID card.\n\nYou have the right to appeal. To file an internal appeal, you or your authorized representative may submit a written request within 180 days of the date of this letter, together with any additional clinical information. You may also request an external review by an independent review organization after the internal appeal is completed.\n\nSincerely,\nAetna Behavioral Health Utilization Management",
+  "clinical_context": "The member is a 49-year-old man with severe alcohol use disorder and a history of complicated alcohol withdrawal. On the most recent presentation his CIWA-Ar peaked at 18 with tremor, diaphoresis, and a heart rate of 112; his blood alcohol concentration on arrival was 0.31, and a prior withdrawal two years earlier was complicated by a generalized seizure. GGT was elevated at 210 U/L. The evaluating emergency physician judged ambulatory detoxification unsafe given his withdrawal severity and seizure history and recommended a 3 to 5 day medically managed inpatient withdrawal. The treating addiction specialist documents that current ASAM 4th edition criteria support medically managed inpatient withdrawal for patients with high CIWA-Ar scores and prior complicated withdrawal, superseding the older policy the insurer applied. The member is covered under a fully-insured plan issued in his state, where the substance-use-disorder parity mandate requires withdrawal-management benefits at parity with medical care; that state mandate preempts the plan exclusion cited in the denial. Outpatient detoxification has previously failed to maintain a safe withdrawal and is not appropriate for the current risk.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260606-013243-e92b7",
+    "generated_at": "2026-06-06T01:32:43Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "41-55",
+      "patient_gender": "M",
+      "specialty": "behavioral_health",
+      "sub_tactic": "modality_substitution"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (Aetna, Prior Authorization, behavioral_health, 41-55, M, modality_substitution). F10.20 belongs to behavioral_health; inpatient detox realistic. Rationale enacts modality_substitution (directs to ambulatory detox). Age band not 71+, so null employer_archetype fine.",
+        "evidence_quotes": [
+          "\"sub_tactic\": \"modality_substitution\"",
+          "directs the member to ambulatory (outpatient) detoxification"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Highly plausible on a commercial Aetna plan. ASAM-derived step-down logic and hand-wavy 'outpatient not shown inadequate' mirror real denials. Exploitable gaps clinically credible (CIWA-Ar 17, prior complicated withdrawal contraindicate outpatient). superseded_guideline and parity/plan-exclusion conflict for a fully-insured plan are real levers. Coherent dx/tx/demographics.",
+        "evidence_quotes": [
+          "it directs the member to ambulatory (outpatient) detoxification and states that inpatient medical detoxification is not authorized because the lower-cost modality has not been shown to be inadequate",
+          "Because the plan is fully-insured, the state's substance-use-disorder parity mandate preempts the plan exclusion"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.82,
+        "reasoning": "Hits Aetna's two strongest fingerprints (Aetna Clinical Policy Bulletin + InterQual) and avoids competitor tells (no MCG/Milliman, no Optum). Cool procedural cadence matching Aetna house style. Minor step-therapy framing leans faintly Cigna but the dominant correct tells would convince a claims handler.",
+        "evidence_quotes": [
+          "After review under the applicable Aetna Clinical Policy Bulletin and the InterQual behavioral health subset, this request is not authorized.",
+          "Sincerely,\nAetna Behavioral Health Utilization Management"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.7,
+        "reasoning": "Cites real plausible guidelines (Aetna CPB, InterQual BH subset, 2020 policy) \u2014 not hallucinated. Logic authentically shoddy and exploitable: asserts a less costly modality without a named threshold, near-circular burden-shift ('records do not establish outpatient would be inadequate'), bolted-on plan exclusion. Leaves ample appeal room.",
+        "evidence_quotes": [
+          "a less costly, clinically appropriate modality be used before an inpatient admission is approved",
+          "the submitted records do not establish that outpatient detoxification would be inadequate"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Internally coherent and credible: CIWA-Ar 18 with tremor/diaphoresis/HR 112, BAC 0.31 with active withdrawal (high tolerance), prior withdrawal seizure elevating risk, GGT 210 U/L realistic, 3-5 day medically managed withdrawal standard. No fabricated drugs or impossible courses.",
+        "evidence_quotes": [
+          "his CIWA-Ar peaked at 18 with tremor, diaphoresis, and a heart rate of 112",
+          "a prior withdrawal two years earlier was complicated by a generalized seizure",
+          "GGT was elevated at 210 U/L"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Medically managed inpatient detoxification is core standard of care for severe AUD with complicated withdrawal (ASAM Level 3.7/4-WM), specifically for patients at risk of complicated/severe withdrawal (seizure history). Clear, unambiguous match.",
+        "evidence_quotes": [
+          "Alcohol use disorder, severe, with complicated withdrawal (F10.20)",
+          "Inpatient medical detoxification (3-5 day medically managed withdrawal)"
+        ],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "No neighbour is a substance use disorder or involves alcohol/withdrawal; treatment (inpatient medical detox) is unique vs rTMS/PHP/esketamine/CBT/etc. The shared modality_substitution flaw appears in the esketamine/PDD neighbour but differs in drug, trajectory, and dx. Not a near-duplicate.",
+        "evidence_quotes": [
+          "dx=Alcohol use disorder, severe, with complicated withdrawal (F10.20); tx=Inpatient medical detoxification (3-5 day medically managed withdrawal)"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['superseded_guideline', 'plan_exclusion_overrides_state_mandate']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['superseded_guideline', 'plan_exclusion_overrides_state_mandate']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.111 (nearest=case_126_cigna_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "49M with severe AUD seeking inpatient detox. No suicidal ideation/self-harm (substance use without SI is allowed; the generalized seizure is a withdrawal complication). No child abuse, IPV, end-of-life, or gender-affirming-minor content. No violence against insurers. Fully-insured commercial plan, in scope. No banned topic.",
+        "evidence_quotes": [
+          "49-year-old man with severe alcohol use disorder and a history of complicated alcohol withdrawal",
+          "The member is covered under a fully-insured plan issued in his state"
+        ],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Core facts stable across documents: M/49-year-old man, F10.20, inpatient medical detox match verbatim. Dates consistent. The denial's assertions (outpatient adequate, 2020 policy governs, exclusion applies) are appealable falsehoods rebutted by context, not contradictions. No drug/dx/date/gender/laterality instability.",
+        "evidence_quotes": [
+          "inpatient medical detoxification (a 3 to 5 day medically managed withdrawal admission) to treat alcohol use disorder",
+          "The member is a 49-year-old man with severe alcohol use disorder"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Formal bureaucratic/clinical prose. No 'as an AI' meta, no signature GPT vocabulary, no listicle structure, no marketing filler. Dense comma-spliced clinical recitation is characteristic of real notes.",
+        "evidence_quotes": [
+          "this request is not authorized",
+          "his CIWA-Ar peaked at 18 with tremor, diaphoresis, and a heart rate of 112; his blood alcohol concentration on arrival was 0.31"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cold procedural register, no apology/warmth/marketing, realistic bureaucratic obfuscation (stacked rationales, policy citations, boilerplate appeal language). Clinical context is neutral data-led narrative. Top tone.",
+        "evidence_quotes": [
+          "this request is not authorized",
+          "Sincerely,\nAetna Behavioral Health Utilization Management"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Never states member out-of-pocket liability; no dollar figures. Cost appears only comparatively ('less costly modality') and 'at no charge' refers to criteria copies. No Medicare/Medicaid conflation. Silence on cost liability is standard practice \u2014 anchor 5.",
+        "evidence_quotes": [
+          "a less costly, clinically appropriate modality be used before an inpatient admission is approved",
+          "request, at no charge, a copy of the specific clinical criteria"
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.8,
+        "reasoning": "Appeal rights present and concrete (180-day internal appeal, external review by an IRO after internal appeal). No hallucinated statute, no Medicare framing on a commercial plan. ERISA-specific disclosure language strategically absent \u2014 a realistic imperfection. Matches anchor 5.",
+        "evidence_quotes": [
+          "To file an internal appeal, you or your authorized representative may submit a written request within 180 days of the date of this letter",
+          "You may also request an external review by an independent review organization after the internal appeal is completed."
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "49M with severe AUD and complicated withdrawal is strongly concordant epidemiologically (skews male, middle-aged). Pronouns (his) consistent with M. Adult treatment. No stereotyping or moralising; framing purely clinical.",
+        "evidence_quotes": [
+          "The member is a 49-year-old man with severe alcohol use disorder",
+          "his withdrawal severity and seizure history"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Insurer Aetna (allowed); Prior Authorization (allowed); coverage fully-insured commercial behavioral health with no government/marketplace framing; patient 49 (adult 18-89); only recites member's own appeal rights, no live-filing/attorney-work/court-representation. State parity/plan-exclusion discussion is coverage-argument substance, not a scope violation. All PASS conditions met.",
+        "evidence_quotes": [
+          "the prior authorization request your provider submitted",
+          "The member is covered under a fully-insured plan issued in his state",
+          "\"age\": 49"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "One explicit date (Determination May 19, 2026) in window; 180-day appeal window sound; policy-version anchors (2020 policy, ASAM 4th edition) are version refs not timeline events and predate the determination correctly; clinical timing (prior withdrawal two years earlier) stacks plausibly. No contradictions.",
+        "evidence_quotes": [
+          "Determination date: May 19, 2026.",
+          "within 180 days of the date of this letter",
+          "a prior withdrawal two years earlier was complicated by a generalized seizure"
+        ],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.8,
+        "reasoning": "Names real brand-correct sources (Aetna Clinical Policy Bulletin, InterQual behavioral health subset, 2020 Behavioral Health Medical Policy) without hallucinated alphanumeric codes, appropriately vague (no bulletin number or module), and offers criteria on request. The lone year is far weaker than a section/edition/page. Fits anchor 5.",
+        "evidence_quotes": [
+          "under the applicable Aetna Clinical Policy Bulletin and the InterQual behavioral health subset",
+          "those adopted in Aetna's 2020 Behavioral Health Medical Policy"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Two independently fatal weaknesses: outdated 2020 policy vs current ASAM 4th edition supporting inpatient withdrawal for high CIWA-Ar + prior complicated withdrawal; and a plan exclusion preempted by the state SUD parity mandate on a fully-insured plan. The denial's premise that records do not establish outpatient inadequacy is contradicted by CIWA-Ar 18, HR 112, BAC 0.31, prior withdrawal seizure, and an ED physician judging ambulatory detox unsafe.",
+        "exploitable_weaknesses": [
+          "Insurer applied the outdated 2020 Behavioral Health Medical Policy when current ASAM 4th edition criteria support inpatient managed withdrawal",
+          "Plan exclusion for inpatient detox is preempted by the state substance-use-disorder parity mandate on this fully-insured plan",
+          "Denial's premise that records do not establish outpatient inadequacy is contradicted by documented withdrawal severity and ED physician judgment"
+        ],
+        "strong_defenses": [
+          "Procedural rights are properly disclosed: 180-day appeal window, external review availability, peer-to-peer offer, free copy of clinical criteria"
+        ],
+        "evidence_quotes": [
+          "The level-of-care criteria applied here are those adopted in Aetna's 2020 Behavioral Health Medical Policy.",
+          "current ASAM 4th edition criteria support medically managed inpatient withdrawal ... superseding the older policy the insurer applied",
+          "that state mandate preempts the plan exclusion cited in the denial"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Prior Authorization / behavioral_health / sub_tactic=modality_substitution. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Two independently fatal weaknesses: outdated 2020 policy vs current ASAM 4th edition supporting inpatient withdrawal for high CIWA-Ar + prior complicated withdrawal; and a plan exclusion preempted by the state SUD parity mandate on a fully-insured plan. The denial's premise that records do not establish outpatient inadequacy is contradicted by CIWA-Ar 18, HR 112, BAC 0.31, prior withdrawal seizure, and an ED physician judging ambulatory detox unsafe.",
+      "exploitable_weaknesses": [
+        "Insurer applied the outdated 2020 Behavioral Health Medical Policy when current ASAM 4th edition criteria support inpatient managed withdrawal",
+        "Plan exclusion for inpatient detox is preempted by the state substance-use-disorder parity mandate on this fully-insured plan",
+        "Denial's premise that records do not establish outpatient inadequacy is contradicted by documented withdrawal severity and ED physician judgment",
+        "Pattern anchor: superseded_guideline",
+        "Pattern anchor: plan_exclusion_overrides_state_mandate"
+      ],
+      "strong_defenses": [
+        "Procedural rights are properly disclosed: 180-day appeal window, external review availability, peer-to-peer offer, free copy of clinical criteria"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "superseded_guideline",
+        "plan_exclusion_overrides_state_mandate"
+      ],
+      "deterministic_present": [
+        "superseded_guideline",
+        "plan_exclusion_overrides_state_mandate"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

@@ -1,0 +1,388 @@
+{
+  "case_id": "case_135_aetna_priorauth",
+  "insurer": "Aetna",
+  "denial_type": "Prior Authorization",
+  "patient_profile": {
+    "age": 63,
+    "gender": "F",
+    "diagnosis": "Generalized anxiety disorder (F41.1)",
+    "treatment_requested": "Continuation of ongoing weekly individual psychotherapy",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "missing_erisa_disclosures: DOL EBSA Technical Release 2011-01; common in Aetna pre-2024 templates",
+    "algo_boilerplate_fingerprint: JAMA Health Forum Feb 2024 (AI in coverage decisions); ProPublica 'Uncovered' Series 2023"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "aetna-appeal-cpb-muni",
+      "title": "Aetna Appeal Letter Template \u2014 CPB citation guide (Muni Health, 2026)",
+      "url": "https://muni.health/blog/aetna-appeal-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Aetna clinical policy bulletin medical necessity denial appeal commercial. Calibrated to this synthetic behavioral health case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic behavioral health case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic behavioral health case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "cms-abd-model",
+      "title": "Model Notice of Adverse Benefit Determination (CMS/reginfo)",
+      "url": "https://www.reginfo.gov/public/do/DownloadDocument?objectID=65703301",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): CMS model adverse benefit determination notice commercial. Calibrated to this synthetic behavioral health case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "erisa-dol-employer-guide",
+      "title": "DOL \u2014 An Employer's Guide to Health and Disability Benefit Claims",
+      "url": "https://www.dol.gov/sites/dolgov/files/EBSA/about-ebsa/our-activities/resource-center/publications/an-employers-guide-to-health-and-disability-benefit-claims.pdf",
+      "source_type": "federal",
+      "relevance": "Web research (2026-06-02): ERISA adverse benefit determination denial notice commercial plan. Calibrated to this synthetic behavioral health case (continuation of care lapsed)."
+    },
+    {
+      "ref_id": "aetna-cpb-public",
+      "title": "Aetna Clinical Policy Bulletins (public search)",
+      "url": "https://www.aetna.com/health-care-professionals/clinical-policy-bulletins.html",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: CPB number citation in medical-necessity denials."
+    },
+    {
+      "ref_id": "erisa-29-cfr-2560-503-1",
+      "title": "ERISA Claims Procedure \u2014 adverse benefit determination content (29 CFR \u00a7 2560.503-1)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/2560.503-1",
+      "source_type": "federal",
+      "relevance": "Calibrated P2 letter surface: Specific reasons for denial."
+    },
+    {
+      "ref_id": "ama-2023-prior-auth-survey",
+      "title": "AMA 2023 Prior Authorization Physician Survey",
+      "url": "https://www.ama-assn.org/practice-management/prior-authorization",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Ignored submitted clinical records."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis notice concerns a request for continued coverage that was submitted to Aetna on your behalf. Following review, Aetna is unable to approve the requested service.\n\nContinued coverage of ongoing services requires an active prior authorization on file. Our records show that the prior authorization previously on file for this case has lapsed. Because there is no active authorization on file, continued coverage cannot be approved for the requested service.\n\nTo seek continued coverage, your provider must submit a new prior authorization with current supporting documentation. Until a new authorization is approved, the service remains not covered.\n\nYou or your provider may request a copy of the criteria used in reaching this determination. If your provider wishes to discuss this decision, a peer-to-peer review with an Aetna medical director may be arranged by calling the number on your member ID card.\n\nYou have the right to appeal this decision. To file an appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter. Determination date: May 12, 2026.\n\nSincerely,\nAetna Utilization Management\n\nAdditional plan language regarding experimental/investigational definitions, network status, and member cost-sharing may apply and is available upon request.",
+  "clinical_context": "The patient is a 63-year-old woman with generalized anxiety disorder (GAD-7 score 16, down from 19 at intake) who has been in continuous weekly individual psychotherapy for 18 months, with documented reduction in anxiety symptoms and improved daily functioning that her psychiatrist attributes directly to the ongoing therapeutic relationship; a prior trial of escitalopram produced only partial response. The prior authorization covering this treatment expired during an active episode of care after her provider's office submitted a renewal that was not processed before the existing authorization lapsed, an administrative gap rather than a change in clinical need. Her treating psychiatrist documents that interrupting weekly psychotherapy at this stage carries a substantial risk of symptom relapse and that continuity of care is clinically necessary. The denial letter engaged with none of these facts: it did not mention her diagnosis, her treating clinician, or the submitted clinical records, and reads as generic boilerplate applicable to any case. The letter also omits the ERISA disclosures required in an adverse benefit determination, including the member's right to bring a civil action and the plan-document and claim-file rights, leaving the member without notice of those procedural protections.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260606-021904-43556",
+    "generated_at": "2026-06-06T02:19:04Z",
+    "matrix_cell": {
+      "insurer": "Aetna",
+      "denial_type": "Prior Authorization",
+      "patient_age_band": "56-70",
+      "patient_gender": "F",
+      "specialty": "behavioral_health",
+      "sub_tactic": "continuation_of_care_lapsed"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (Aetna, Prior Authorization, behavioral_health, 56-70, F, continuation_of_care_lapsed). GAD F41.1 is behavioral_health; continuation psychotherapy realistic. Rationale precisely enacts continuation_of_care_lapsed (lapsed prior auth). Age 63 in band; not 71+, null employer_archetype fine.",
+        "evidence_quotes": [
+          "\"sub_tactic\": \"continuation_of_care_lapsed\"",
+          "the prior authorization on file for the ongoing service has lapsed and an active authorization is required for continuation"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "Frustratingly realistic. Continuation-of-care denials from lapsed prior auth are extremely common; Aetna requires re-auth for ongoing psychotherapy and an unprocessed-renewal gap during an active GAD episode is textbook. Coherent dx/tx for a 63F. Omitted ERISA disclosures on a self-funded plan and case-blind boilerplate are genuine, frequently-litigated procedural defects.",
+        "evidence_quotes": [
+          "Aetna denies continued coverage on the basis that the prior authorization on file for the ongoing service has lapsed and an active authorization is required for continuation",
+          "the authorization lapsed during an active episode of care because a timely renewal was not processed, an administrative gap rather than a change in clinical need"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 3,
+        "confidence": 0.8,
+        "reasoning": "Tone/cadence fit Aetna (cool, procedural, names Aetna and a peer-to-peer with an Aetna medical director) but it lacks Aetna's signature tells (no CPB, no InterQual) \u2014 only a generic 'criteria used'. No wrong-insurer slip, so above a 1, but reads as generic insurance-denial style. Expected, since the algo_boilerplate flaw requires a case-blind generic letter.",
+        "evidence_quotes": [
+          "Following review, Aetna is unable to approve the requested service.",
+          "a peer-to-peer review with an Aetna medical director may be arranged by calling the number on your member ID card."
+        ],
+        "improvement": "Cite an Aetna-specific source by name (CPB / InterQual) instead of the generic 'criteria used'."
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites a real rule (continuation requires an active prior authorization) matching the sub_tactic, applied with authentic circularity ('no active authorization on file, continued coverage cannot be approved') without engaging clinical necessity. No hallucinated guideline; exploitable on appeal.",
+        "evidence_quotes": [
+          "Continued coverage of ongoing services requires an active prior authorization on file.",
+          "Because there is no active authorization on file, continued coverage cannot be approved for the requested service."
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Credible: GAD-7 16 (down from 19) is valid and denotes severe anxiety; escitalopram partial response is realistic first-line; 18 months of weekly psychotherapy with documented benefit and relapse risk on interruption reflects genuine continuity-of-care reasoning. No invented drugs or impossible courses.",
+        "evidence_quotes": [
+          "generalized anxiety disorder (GAD-7 score 16, down from 19 at intake)",
+          "a prior trial of escitalopram produced only partial response"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Weekly individual psychotherapy (e.g., CBT) is a cornerstone, first-line, guideline-endorsed standard of care for GAD (NICE/APA). Unambiguous match.",
+        "evidence_quotes": [
+          "Generalized anxiety disorder (F41.1)",
+          "Continuation of ongoing weekly individual psychotherapy"
+        ],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "continuation_of_care_lapsed flaw, GAD (F41.1) dx, and continuation individual psychotherapy tx are all unique vs the twelve neighbours (MDD/rTMS, bipolar/PHP, BED, panic, social anxiety, PTSD, OCD, insomnia, PDD). Distinct point in feature-space; not a near-duplicate.",
+        "evidence_quotes": [
+          "continuation_of_care_lapsed] dx=Generalized anxiety disorder (F41.1); tx=Continuation of ongoing weekly individual psychotherapy"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['missing_erisa_disclosures', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['missing_erisa_disclosures', 'algo_boilerplate_fingerprint']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.08 (nearest=case_130_uhc_mednec), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "63F GAD continuation-of-care appeal. Anxiety improving (GAD-7 19->16); no suicidal ideation/self-harm, child abuse, IPV, end-of-life, or gender-affirming-minor content. No violence against insurers. Aetna employer commercial, in scope. No banned topic.",
+        "evidence_quotes": [
+          "The patient is a 63-year-old woman with generalized anxiety disorder (GAD-7 score 16, down from 19 at intake) who has been in continuous weekly individual psychotherapy for 18 months",
+          "an administrative gap rather than a change in clinical need"
+        ],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.92,
+        "reasoning": "Facts stable across documents: F member, GAD F41.1, continuation of weekly psychotherapy; lapsed-auth rationale matches the administrative-gap context. Letter paragraphs consistent (no missing-then-shown flip); clinical timeline coherent. The letter's silence on clinical facts and ERISA is an appealability/quality concern, not a contradiction.",
+        "evidence_quotes": [
+          "the prior authorization previously on file for this case has lapsed",
+          "Continuation of ongoing weekly individual psychotherapy"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Standard adverse-benefit boilerplate + a dense comma-spliced clinical paragraph, both PASS-worthy. No 'as an AI' tics, no GPT vocabulary, no listicle structure, no marketing filler.",
+        "evidence_quotes": [
+          "This notice concerns a request for continued coverage that was submitted to Aetna on your behalf.",
+          "The patient is a 63-year-old woman with generalized anxiety disorder (GAD-7 score 16, down from 19 at intake) who has been in continuous weekly individual psychotherapy for 18 months"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold, procedural, bureaucratic voice: detached framing, circular substantive rationale, formal sign-off, no apology/warmth/buzzwords. Clinical context is neutral descriptive narrative that flags omissions analytically, not emotionally. Correct registers.",
+        "evidence_quotes": [
+          "Following review, Aetna is unable to approve the requested service.",
+          "Sincerely,\nAetna Utilization Management"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "Entirely silent on cost: no dollar figures, no out-of-pocket liability, no copay/deductible. No Medicare/Medicaid conflation. Silent on cost liability is standard practice \u2014 anchor 5.",
+        "evidence_quotes": [
+          "Because there is no active authorization on file, continued coverage cannot be approved for the requested service.",
+          "Until a new authorization is approved, the service remains not covered."
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "States appeal rights with the correct ERISA 180-day window and a determination date; no invented statutes, no Medicare framing on a commercial plan. The omitted external review and ERISA disclosures (civil action, plan-document/claim-file) are realistic imperfections (the intended flaw), not penalized. Matches anchor 5.",
+        "evidence_quotes": [
+          "You have the right to appeal this decision. To file an appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter.",
+          "The letter also omits the ERISA disclosures required in an adverse benefit determination, including the member's right to bring a civil action and the plan-document and claim-file rights"
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.92,
+        "reasoning": "63F with GAD aligns cleanly with epidemiology (GAD prevalent in older adults, higher in women). Pronouns (her) consistent with F. Continued psychotherapy after partial SSRI response is age/diagnosis-appropriate. No stereotyping.",
+        "evidence_quotes": [
+          "The patient is a 63-year-old woman with generalized anxiety disorder",
+          "her psychiatrist attributes directly to the ongoing therapeutic relationship"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Insurer Aetna (allowed); Prior Authorization (allowed); coverage self_funded employer-sponsored commercial (ERISA) with no government/marketplace framing; patient 63 (adult 18-89); only describes member's own rights, no live-filing/attorney-work/court-representation. All PASS conditions met.",
+        "evidence_quotes": [
+          "Aetna \u2014 Prior Authorization",
+          "\"plan_funding_type\": \"self_funded\"",
+          "\"age\": 63"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 3,
+        "confidence": 0.7,
+        "reasoning": "Determination May 12, 2026 in window and 180-day appeal correct; no hard date errors. But the clinical timeline is entirely relative ('18 months', 'a prior trial' with no date), leaving mild vagueness about the trial and prior-treatment timing.",
+        "evidence_quotes": [
+          "Determination date: May 12, 2026.",
+          "who has been in continuous weekly individual psychotherapy for 18 months"
+        ],
+        "improvement": "Anchor the clinical timeline to explicit dates relative to the determination (therapy start, auth lapse, escitalopram trial quarter)."
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.88,
+        "reasoning": "Only references 'a copy of the criteria used in reaching this determination' \u2014 a generic un-named reference with no bulletin/edition/page and no fabricated alphanumeric code. Realistically vague (thin toward vagueness, appropriate for a procedural boilerplate denial). Anchor 5.",
+        "evidence_quotes": [
+          "You or your provider may request a copy of the criteria used in reaching this determination.",
+          "Continued coverage of ongoing services requires an active prior authorization on file."
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Weak on multiple vectors: omits required ERISA disclosures (civil action, plan-document/claim-file); case-blind boilerplate ignoring diagnosis/clinician/records; and the lapse was an unprocessed-renewal administrative gap, not a change in clinical need. Record favors the patient (GAD-7 19->16, 18 months continuity, documented relapse risk). Only defense is the bare procedural lapse, itself contested.",
+        "exploitable_weaknesses": [
+          "Omits required ERISA disclosures (right to civil action, plan-document and claim-file rights) in an adverse benefit determination",
+          "Generic boilerplate that ignores diagnosis, treating clinician, and submitted clinical records",
+          "The authorization lapse was an unprocessed-renewal administrative gap, not a change in clinical need"
+        ],
+        "strong_defenses": [
+          "The bare procedural fact that no active prior authorization is on file technically supports requiring a new authorization"
+        ],
+        "evidence_quotes": [
+          "The letter also omits the ERISA disclosures required in an adverse benefit determination, including the member's right to bring a civil action and the plan-document and claim-file rights",
+          "an administrative gap rather than a change in clinical need"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Aetna Prior Authorization / behavioral_health / sub_tactic=continuation_of_care_lapsed. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Weak on multiple vectors: omits required ERISA disclosures (civil action, plan-document/claim-file); case-blind boilerplate ignoring diagnosis/clinician/records; and the lapse was an unprocessed-renewal administrative gap, not a change in clinical need. Record favors the patient (GAD-7 19->16, 18 months continuity, documented relapse risk). Only defense is the bare procedural lapse, itself contested.",
+      "exploitable_weaknesses": [
+        "Omits required ERISA disclosures (right to civil action, plan-document and claim-file rights) in an adverse benefit determination",
+        "Generic boilerplate that ignores diagnosis, treating clinician, and submitted clinical records",
+        "The authorization lapse was an unprocessed-renewal administrative gap, not a change in clinical need",
+        "Pattern anchor: missing_erisa_disclosures",
+        "Pattern anchor: algo_boilerplate_fingerprint"
+      ],
+      "strong_defenses": [
+        "The bare procedural fact that no active prior authorization is on file technically supports requiring a new authorization"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "missing_erisa_disclosures",
+        "algo_boilerplate_fingerprint"
+      ],
+      "deterministic_present": [
+        "missing_erisa_disclosures",
+        "algo_boilerplate_fingerprint"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}

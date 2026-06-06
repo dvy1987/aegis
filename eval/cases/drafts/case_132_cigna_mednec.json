@@ -1,0 +1,388 @@
+{
+  "case_id": "case_132_cigna_mednec",
+  "insurer": "Cigna",
+  "denial_type": "Medical Necessity",
+  "patient_profile": {
+    "age": 31,
+    "gender": "M",
+    "diagnosis": "Suspected medial meniscus tear with mechanical knee symptoms (M23.205)",
+    "treatment_requested": "MRI of the left knee without contrast",
+    "plan_funding_type": "self_funded"
+  },
+  "denial_pattern_sources": [
+    "peer_to_peer_window_verbal_only: AMA 2023 Prior Authorization Physician Survey; documented in multiple state PA reform laws (TX HB 2002, VA SB 1272)",
+    "step_therapy_vague_mcg: KFF 2023 Survey of Consumer Experiences with Health Insurance"
+  ],
+  "denial_letter_references": [
+    {
+      "ref_id": "cigna-mednec-muni",
+      "title": "Cigna Medical Necessity Letter \u2014 CPG/MCG criteria (Muni Health, 2026)",
+      "url": "https://muni.health/blog/cigna-medical-necessity-letter-template-2026",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna medical necessity denial letter MCG CPG. Calibrated to this synthetic imaging case (step therapy missing)."
+    },
+    {
+      "ref_id": "cigna-appeal-pdf",
+      "title": "Cigna Customer Appeal Request (official PDF)",
+      "url": "https://www.cigna.com/static/www-cigna-com/docs/medical-appeal-request.pdf",
+      "source_type": "insurer",
+      "relevance": "Web research (2026-06-02): Cigna medical appeal request form denial. Calibrated to this synthetic imaging case (step therapy missing)."
+    },
+    {
+      "ref_id": "cigna-coverage-policy-rxcheckup",
+      "title": "How to Appeal a Cigna Prior Authorization Denial \u2014 Coverage Policy MM_/CPG (RxCheckUp, 2026)",
+      "url": "https://rxcheckup.ai/blog/how-to-appeal-cigna-denial",
+      "source_type": "research",
+      "relevance": "Web research (2026-06-02): Cigna prior authorization denial Coverage Policy appeal. Calibrated to this synthetic imaging case (step therapy missing)."
+    },
+    {
+      "ref_id": "propublica-evicore-2024",
+      "title": "EviCore, the Company Helping U.S. Health Insurers Deny Coverage \u2014 ProPublica",
+      "url": "https://www.propublica.org/article/evicore-health-insurance-denials-cigna-unitedhealthcare-aetna-prior-authorizations",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica EviCore prior authorization denials Aetna Cigna UHC. Calibrated to this synthetic imaging case (step therapy missing)."
+    },
+    {
+      "ref_id": "propublica-claim-file-helper",
+      "title": "Claim File Helper \u2014 ProPublica",
+      "url": "https://projects.propublica.org/claimfile/",
+      "source_type": "journalism",
+      "relevance": "Web research (2026-06-02): ProPublica claim file request before insurance appeal. Calibrated to this synthetic imaging case (step therapy missing)."
+    },
+    {
+      "ref_id": "wa-oic-mednec",
+      "title": "Washington OIC \u2014 medically necessary denial appeal templates",
+      "url": "https://www.insurance.wa.gov/insurance-resources/health-insurance/appealing-health-insurance-denial/common-reasons-denial-and-examples-appeal-letters",
+      "source_type": "state",
+      "relevance": "Web research (2026-06-02): state insurance commissioner medical necessity denial letter example. Calibrated to this synthetic imaging case (step therapy missing)."
+    },
+    {
+      "ref_id": "cigna-coverage-policies",
+      "title": "Cigna Medical Coverage Policies (public)",
+      "url": "https://www.cigna.com/health-care-providers/coverage-and-claims/coverage-policies",
+      "source_type": "insurer",
+      "relevance": "Calibrated P2 letter surface: Milliman Care Guidelines (MCG) reference."
+    },
+    {
+      "ref_id": "kff-2023-consumer-survey",
+      "title": "KFF 2023 Survey of Consumer Experiences with Health Insurance",
+      "url": "https://www.kff.org/private-insurance/issue-brief/consumer-experiences-with-health-insurance/",
+      "source_type": "research",
+      "relevance": "Calibrated P2 letter surface: Vague guideline citations without edition."
+    }
+  ],
+  "denial_letter_text": "Dear Member,\n\nThis letter concerns the prior authorization request your provider submitted for an MRI of the left knee without contrast to evaluate a suspected medial meniscus tear. After review under the applicable Cigna Medical Coverage Policy and the Milliman Care Guidelines (MCG), the request is denied as not medically necessary. Determination date: May 28, 2026.\n\nCigna's criteria require documented completion of conservative management - a course of physical therapy and anti-inflammatory medication - together with plain knee radiographs before advanced imaging such as MRI is authorized. The submitted documentation does not establish that this step therapy has been completed, and the applicable MCG criteria set was used to make this determination.\n\nA peer-to-peer review window was offered to your provider's office verbally by telephone; that window is not confirmed in this letter. Because the peer-to-peer was not completed, the determination stands at this stage.\n\nYou or your provider may request, at no charge, a copy of the specific criteria and the documents relied upon in reaching this decision. You have the right to appeal. To file an internal appeal, you or your authorized representative must submit a written request within 180 days of the date of this letter, along with any additional clinical information you would like considered. You may also request an external review by an independent review organization after the internal appeal.\n\nSincerely,\nCigna Coverage Review Department",
+  "clinical_context": "The patient is a 31-year-old man who sustained a twisting injury to the left knee during recreational soccer about three months ago. He reports mechanical symptoms including intermittent locking and a sensation of the knee giving way, with a moderate effusion and a positive McMurray test for the medial compartment on examination. Weight-bearing radiographs obtained at presentation were normal, showing no fracture or significant osteoarthritis. He has since completed eight supervised physical therapy sessions over six weeks and a trial of naproxen without resolution of his mechanical symptoms. His orthopedic surgeon documents that the combination of a positive McMurray sign, mechanical locking, effusion, and failure of conservative management meets criteria for MRI to characterize a suspected medial meniscus tear and guide possible arthroscopy. The conservative management and plain radiographs that the insurer's step-therapy criteria require were therefore completed before the MRI was requested. The peer-to-peer review window was conveyed to the office only by a verbal telephone call and never confirmed in writing, so the timeframe could not be verified or met.",
+  "submission_timestamp": null,
+  "denial_timestamp": null,
+  "synthetic_provenance": {
+    "generator_model": "gemini-3.1-pro",
+    "run_id": "gen-20260606-020650-19e99",
+    "generated_at": "2026-06-06T02:06:50Z",
+    "matrix_cell": {
+      "insurer": "Cigna",
+      "denial_type": "Medical Necessity",
+      "patient_age_band": "26-40",
+      "patient_gender": "M",
+      "specialty": "imaging",
+      "sub_tactic": "step_therapy_missing"
+    },
+    "prompt_versions": {
+      "p1_scenario_planner": "1.0.0",
+      "p2_denial_drafter": "1.1.0",
+      "p3_clinical_writer": "1.0.0",
+      "p4_realistic_flaw_injector": "1.0.0",
+      "c_pre_draft_consistency": "1.0.0",
+      "c_matrix_coverage": "1.0.0",
+      "c_scenario_realism": "1.0.0",
+      "c_insurer_voice": "1.0.0",
+      "c_denial_logic": "1.0.0",
+      "c_clinical_realism": "1.0.0",
+      "c_diagnosis_treatment_match": "1.0.0",
+      "c_diversity_delta": "1.0.0",
+      "c_safety_redactor": "1.0.0",
+      "c_contradiction_hunter": "1.0.0",
+      "c_llm_tell_detector": "1.1.0",
+      "c_overall_tone": "1.0.0",
+      "c_financial_auditor": "1.0.0",
+      "c_legal_auditor": "1.0.0",
+      "c_demographic_validator": "1.0.0",
+      "c_scope_guard": "1.0.0",
+      "c_date_sanity": "1.0.0",
+      "c_citation_traceability": "1.0.0",
+      "c_flaw_injection_verifier": "1.0.0"
+    },
+    "banned_topic_filter_version": "1.0.0",
+    "schema_version": "1.1.0",
+    "diversity_matrix_version": "1.0.0",
+    "critic_verdicts": {
+      "matrix_coverage": {
+        "dimension": "matrix_coverage",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "matrix_cell matches field-for-field (Cigna, Medical Necessity, imaging, 26-40, M, step_therapy_missing). MRI knee is an imaging scenario; realistic tx. Rationale enacts step_therapy_missing. Age 31 in band; not 71+, null employer_archetype fine.",
+        "evidence_quotes": [
+          "\"sub_tactic\": \"step_therapy_missing\"",
+          "Cigna requires documented failure of conservative therapy - physical therapy and NSAIDs - and plain radiographs before authorizing advanced knee MRI"
+        ],
+        "improvement": null
+      },
+      "scenario_realism": {
+        "dimension": "scenario_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Frustratingly realistic. Cigna does require conservative therapy + plain films before knee MRI and cites MCG. Diagnosis cleanly matches the requested non-contrast MRI for a young man with a twisting injury, locking, McMurray, effusion. Denial is hand-wavy (step therapy not 'established' though completed; MCG cited without edition). Verbal-only P2P and vague guideline are common real defects.",
+        "evidence_quotes": [
+          "Cigna requires documented failure of conservative therapy - physical therapy and NSAIDs - and plain radiographs before authorizing advanced knee MRI",
+          "It cites Milliman Care Guidelines (MCG) as the criteria set without naming the specific edition or module"
+        ],
+        "improvement": null
+      },
+      "insurer_voice": {
+        "dimension": "insurer_voice",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Hits Cigna's tells: cites 'Milliman Care Guidelines (MCG)' twice (signature Cigna framework), references Cigna Medical Coverage Policy, and invokes the conservative-treatment/step-therapy requirement. No wrong-insurer tells (no InterQual/Optum). Convincingly Cigna.",
+        "evidence_quotes": [
+          "the Milliman Care Guidelines (MCG)",
+          "Cigna's criteria require documented completion of conservative management - a course of physical therapy and anti-inflammatory medication - together with plain knee radiographs before advanced imaging such as MRI is authorized"
+        ],
+        "improvement": null
+      },
+      "denial_logic": {
+        "dimension": "denial_logic",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Fits step_therapy_missing: cites Cigna policy + MCG and frames denial as failure to complete conservative management before MRI. Realistically shoddy \u2014 asserts step therapy not 'established' without specifying thresholds, leans on circular 'applicable MCG criteria set was used'. No hallucinated guideline; exploitable.",
+        "evidence_quotes": [
+          "Cigna's criteria require documented completion of conservative management - a course of physical therapy and anti-inflammatory medication - together with plain knee radiographs before advanced imaging such as MRI is authorized.",
+          "The submitted documentation does not establish that this step therapy has been completed"
+        ],
+        "improvement": null
+      },
+      "clinical_realism": {
+        "dimension": "clinical_realism",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Textbook medial meniscus tear: twisting soccer injury, locking, giving-way, effusion, positive McMurray; normal weight-bearing radiographs precede MRI (correct ordering); eight PT sessions over six weeks + naproxen is a realistic conservative trajectory. No invented drugs or impossible courses.",
+        "evidence_quotes": [
+          "intermittent locking and a sensation of the knee giving way, with a moderate effusion and a positive McMurray test for the medial compartment",
+          "eight supervised physical therapy sessions over six weeks and a trial of naproxen"
+        ],
+        "improvement": null
+      },
+      "diagnosis_treatment_match": {
+        "dimension": "diagnosis_treatment_match",
+        "score": "PASS",
+        "confidence": 0.98,
+        "reasoning": "Non-contrast MRI is the standard, guideline-endorsed modality for a suspected meniscal tear / internal knee derangement (ACR Appropriateness Criteria). Correct category, consistent laterality. Unambiguous match.",
+        "evidence_quotes": [
+          "Suspected medial meniscus tear with mechanical knee symptoms (M23.205)",
+          "MRI of the left knee without contrast"
+        ],
+        "improvement": null
+      },
+      "diversity_delta": {
+        "dimension": "diversity_delta",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "No knee MRI anywhere in the run; M23.205 and knee anatomy are unique. Closest neighbour (Aetna imaging step_therapy_missing lumbar MRI) differs in payer, anatomy, and trajectory. Not a near-duplicate; only coarse genre overlap (extremity MRI).",
+        "evidence_quotes": [
+          "dx=Suspected medial meniscus tear with mechanical knee symptoms (M23.205); tx=MRI of the left knee without contrast",
+          "[Aetna / Medical Necessity / imaging / step_therapy_missing] dx=Lumbar disc herniation, suspected (M51.26); tx=MRI lumbar spine without contrast"
+        ],
+        "improvement": null
+      },
+      "flaw_injection_p4": {
+        "dimension": "flaw_injection_p4",
+        "reasoning": "post-P4 deterministic: present=['peer_to_peer_window_verbal_only', 'step_therapy_vague_mcg']; needs_llm=[]; absent=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "flaw_injection": {
+        "dimension": "flaw_injection",
+        "reasoning": "discoverable=['peer_to_peer_window_verbal_only', 'step_therapy_vague_mcg']; needs_llm=[]; absent_after_retry=[]",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "diversity_statistical": {
+        "dimension": "diversity_statistical",
+        "reasoning": "Max trigram-Jaccard: corpus=0.174 (nearest=case_128_cigna_priorauth), neighbours=0.0. Thresholds: warn>=0.35, fail>=0.5.",
+        "score": 5,
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "safety_redactor": {
+        "dimension": "safety_redactor",
+        "score": "PASS",
+        "confidence": 0.97,
+        "reasoning": "Routine orthopedic knee MRI PA appeal; injury is accidental sports trauma. No suicide/self-harm, child abuse, IPV, end-of-life, or gender-affirming-minor content. No violence against insurers. Cigna commercial, in scope. No banned topic.",
+        "evidence_quotes": [
+          "The patient is a 31-year-old man who sustained a twisting injury to the left knee during recreational soccer about three months ago.",
+          "After review under the applicable Cigna Medical Coverage Policy and the Milliman Care Guidelines (MCG)"
+        ],
+        "improvement": null
+      },
+      "phi_pii": {
+        "dimension": "phi_pii",
+        "reasoning": "No deterministic PHI patterns detected.",
+        "score": "PASS",
+        "confidence": 1.0,
+        "evidence_quotes": [],
+        "improvement": null
+      },
+      "contradiction_hunter": {
+        "dimension": "contradiction_hunter",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Facts stable: 31M, M23.205, MRI left knee without contrast; laterality consistently left; P2P verbal-only detail matches across letter and context. The denial's 'step therapy not completed' vs context's completion is the permitted appealable falsehood, not a contradiction. Timeline coherent.",
+        "evidence_quotes": [
+          "MRI of the left knee without contrast to evaluate a suspected medial meniscus tear",
+          "The peer-to-peer review window was conveyed to the office only by a verbal telephone call and never confirmed in writing"
+        ],
+        "improvement": ""
+      },
+      "llm_tell_detector": {
+        "dimension": "llm_tell_detector",
+        "score": "PASS",
+        "confidence": 0.93,
+        "reasoning": "Formal bureaucratic boilerplate + dense clinical recitation, both PASS-worthy. No 'as an AI' tics, no GPT vocabulary, no listicle structure, no marketing filler.",
+        "evidence_quotes": [
+          "After review under the applicable Cigna Medical Coverage Policy and the Milliman Care Guidelines (MCG), the request is denied as not medically necessary.",
+          "a positive McMurray test for the medial compartment on examination"
+        ],
+        "improvement": null
+      },
+      "overall_tone": {
+        "dimension": "overall_tone",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cold procedural register: 'Dear Member,', policy citation, 'denied as not medically necessary', deliberately murky verbal-P2P passage, bureaucratic sign-off. Clinical context is neutral fact-led narrative. Correct registers.",
+        "evidence_quotes": [
+          "the request is denied as not medically necessary",
+          "Sincerely,\nCigna Coverage Review Department"
+        ],
+        "improvement": null
+      },
+      "financial_auditor": {
+        "dimension": "financial_auditor",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "No out-of-pocket liability, no dollar figures, no 'you may be responsible' language. 'at no charge' refers to criteria copies. No Medicare/Medicaid conflation. Silent on cost \u2014 anchor 5.",
+        "evidence_quotes": [
+          "You or your provider may request, at no charge, a copy of the specific criteria and the documents relied upon in reaching this decision.",
+          "the request is denied as not medically necessary"
+        ],
+        "improvement": null
+      },
+      "legal_auditor": {
+        "dimension": "legal_auditor",
+        "score": 5,
+        "confidence": 0.85,
+        "reasoning": "Cites real commercial criteria sources, no hallucinated statutes, no Medicare framing. 180-day internal appeal present, external IRO review mentioned vaguely, ERISA-specific citations strategically omitted; the verbal-only unconfirmed P2P is a realistic procedural imperfection. Anchor 5.",
+        "evidence_quotes": [
+          "you or your authorized representative must submit a written request within 180 days of the date of this letter",
+          "A peer-to-peer review window was offered to your provider's office verbally by telephone; that window is not confirmed in this letter"
+        ],
+        "improvement": null
+      },
+      "demographic_validator": {
+        "dimension": "demographic_validator",
+        "score": 5,
+        "confidence": 0.95,
+        "reasoning": "31M with a twisting-soccer meniscal injury matches epidemiology (young active adult men). Pronouns (he/his) consistent with M. Sport reference is mechanistically relevant, not a stereotype. No age-diagnosis mismatch.",
+        "evidence_quotes": [
+          "The patient is a 31-year-old man who sustained a twisting injury to the left knee during recreational soccer about three months ago.",
+          "His orthopedic surgeon documents that the combination of a positive McMurray sign, mechanical locking, effusion, and failure of conservative management meets criteria for MRI"
+        ],
+        "improvement": null
+      },
+      "scope_guard": {
+        "dimension": "scope_guard",
+        "score": "PASS",
+        "confidence": 0.95,
+        "reasoning": "Insurer Cigna (allowed); Medical Necessity (allowed); coverage self_funded employer-sponsored commercial with no government/marketplace framing; patient 31 (adult 18-89); only describes member appeal rights, no live-filing/attorney-work/court-representation. All PASS conditions met.",
+        "evidence_quotes": [
+          "Cigna \u2014 Medical Necessity",
+          "\"plan_funding_type\": \"self_funded\"",
+          "\"age\": 31"
+        ],
+        "improvement": null
+      },
+      "date_sanity": {
+        "dimension": "date_sanity",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Determination May 28, 2026 in window; injury ~3 months prior, six weeks PT + naproxen stack plausibly before the request; 180-day appeal window standard. Verbal-only P2P is a documentation gap, not a date contradiction.",
+        "evidence_quotes": [
+          "Determination date: May 28, 2026.",
+          "completed eight supervised physical therapy sessions over six weeks and a trial of naproxen"
+        ],
+        "improvement": null
+      },
+      "citation_traceability": {
+        "dimension": "citation_traceability",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Cites umbrella-level sources (Cigna Medical Coverage Policy, Milliman Care Guidelines (MCG)) with no module/edition/page and no fabricated alphanumeric code; criteria described narratively; offers a copy on request. Realistically vague \u2014 anchor 5.",
+        "evidence_quotes": [
+          "the applicable Cigna Medical Coverage Policy and the Milliman Care Guidelines (MCG)",
+          "the applicable MCG criteria set was used to make this determination"
+        ],
+        "improvement": null
+      },
+      "appeal_difficulty": {
+        "dimension": "appeal_difficulty",
+        "score": 5,
+        "confidence": 0.9,
+        "reasoning": "Denial claims step therapy not completed, but the patient completed PT, an NSAID trial, and normal radiographs \u2014 directly contradicting the factual basis; the patient clearly meets standard of care (positive McMurray, mechanical locking, effusion). Additionally the P2P window was verbal-only and never confirmed in writing. Strong clinical/factual and procedural vectors; easy appeal.",
+        "exploitable_weaknesses": [
+          "Denial claims step therapy not completed, but the patient completed PT, NSAID trial, and normal radiographs",
+          "Peer-to-peer window conveyed only verbally and never confirmed in writing, an unverifiable procedural defect"
+        ],
+        "strong_defenses": [
+          "A legitimate step-therapy/conservative-management criterion exists and is correctly named (Cigna policy + MCG)"
+        ],
+        "evidence_quotes": [
+          "The submitted documentation does not establish that this step therapy has been completed",
+          "He has since completed eight supervised physical therapy sessions over six weeks and a trial of naproxen",
+          "A peer-to-peer review window was offered to your provider's office verbally by telephone; that window is not confirmed in this letter"
+        ],
+        "improvement": null
+      }
+    },
+    "human_summary": "Synthetic case for Cigna Medical Necessity / imaging / sub_tactic=step_therapy_missing. Generated by Aegis case_generator swarm with per-stage AlphaEval critics.",
+    "appeal_difficulty": {
+      "score": 5,
+      "reasoning": "Denial claims step therapy not completed, but the patient completed PT, an NSAID trial, and normal radiographs \u2014 directly contradicting the factual basis; the patient clearly meets standard of care (positive McMurray, mechanical locking, effusion). Additionally the P2P window was verbal-only and never confirmed in writing. Strong clinical/factual and procedural vectors; easy appeal.",
+      "exploitable_weaknesses": [
+        "Denial claims step therapy not completed, but the patient completed PT, NSAID trial, and normal radiographs",
+        "Peer-to-peer window conveyed only verbally and never confirmed in writing, an unverifiable procedural defect",
+        "Pattern anchor: peer_to_peer_window_verbal_only",
+        "Pattern anchor: step_therapy_vague_mcg"
+      ],
+      "strong_defenses": [
+        "A legitimate step-therapy/conservative-management criterion exists and is correctly named (Cigna policy + MCG)"
+      ]
+    },
+    "final_flaw_integrity": {
+      "method": "deterministic+llm(all)",
+      "expected_flaws": [
+        "peer_to_peer_window_verbal_only",
+        "step_therapy_vague_mcg"
+      ],
+      "deterministic_present": [
+        "peer_to_peer_window_verbal_only",
+        "step_therapy_vague_mcg"
+      ],
+      "llm_absent": [],
+      "absent": [],
+      "aligned": true
+    }
+  }
+}
