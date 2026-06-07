@@ -1,6 +1,7 @@
 # Plan v2: Make aegis-v1 genuinely built on ADK
 
-- **Status:** Approved for execution — **do not start implementation until PM says "go"**
+- **Status:** Phase 0 **complete** (2026-06-07). Phase 1+ **blocked until PM says "go"**.
+- **Orchestration (PM 2026-06-07):** All multi-step ADK graphs use **`google.adk.Workflow`** — not `SequentialAgent`, not `ParallelAgent`. See §3.4 and §12.4.
 - **Supersedes:** [2026-06-07-aegis-v1-adk-migration-plan.md](2026-06-07-aegis-v1-adk-migration-plan.md) for all product/architecture decisions. v1 remains useful only for historical API notes.
 - **Scope:** `aegis-v1` only (Part A). Swarm / Part B is out of scope.
 - **Audience:** Any agent in any harness with **no chat context**. This document is the single source of truth for the ADK migration.
@@ -8,7 +9,7 @@
 
 ### Executive summary (read this first)
 
-1. **ADK 2.2 Workflow** replaces hand-rolled `google.genai` + deleted `root_agent`. Student = `v1-drafter-agent` inside a fixed graph; simulator/judges/reflector stay outside (firewall).
+1. **ADK 2.2 `Workflow`** (`from google.adk import Workflow`) replaces hand-rolled `google.genai` + deleted `root_agent`. Student pipeline = `Workflow` graph with `v1-drafter-agent` and `library_finder_agent` as graph nodes; simulator/reflector = single-shot `LlmAgent`s outside the student graph; judge panel = separate `Workflow` with parallel fan-out (firewall).
 2. **What GEPA improves:** drafter prompt/playbook — **not** judge prompts. Phoenix holds **judge feedback memory**.
 3. **Phoenix writes — three tiers:**
    - **Tier A (seed):** baseline judge annotations before optimize — `memory_eligible=true` — optimize **reads** this.
@@ -27,7 +28,8 @@ These were decided in a multi-session PM ↔ agent review (2026-06-07). Implemen
 |---|---|
 | D1 | **Delete `root_agent`** in [backend/app/aegis_v1/agent.py](../../backend/app/aegis_v1/agent.py). Replace with ADK 2.2 Workflow + `v1-drafter-agent` inside a student workflow graph. |
 | D2 | **All LLM surfaces become ADK `LlmAgent`s:** drafter, library finder, simulator, six judges, reflector. |
-| D3 | **ADK 2.2 Workflow graph** — not `SequentialAgent` (1.x). Re-verify APIs on installed `google-adk` before coding. |
+| D3 | **ADK 2.2 `Workflow` graph** — import `from google.adk import Workflow` (package `google.adk.workflow`). **Not** `SequentialAgent` or `ParallelAgent` (both deprecated in `google.adk.agents`). Verified on `google-adk==2.2.0` — see §12.4. |
+| D24 | **Workflow is the v1 orchestration primitive** for every multi-step ADK graph: student pipeline (Phase 1) and judge panel (Phase 3). Single-turn agents (simulator, reflector, redaction scrubber) run via `run_llm_agent_sync` — never as sub-agents of the student `Workflow`. Appeal best-of-5 stays a Python loop calling student `Workflow` + simulator. |
 | D4 | **No `AEGIS_USE_ADK` feature flag.** Stash legacy `Gemini*Client` + old `root_agent` code under a `legacy/` or `_stash/` path with a **CLEANUP: delete after ADK path verified** note. Single production path once shipped. |
 | D5 | **`gemini_retry` via custom `BaseLlm` wrapper** passed to every `LlmAgent`. Preserves pacing, exponential retry, and `gemini-3.1` → `gemini-3.5-flash` fallback verbatim. |
 | D6 | **Firewall (only true non-negotiable):** simulator, judges, and reflector are **never** tools/sub-agents of the student. Drafter **never** receives the teacher packet. |
@@ -98,17 +100,18 @@ All route through [gemini_retry.py](../../backend/app/gemini_retry.py).
 
 | Agent | Type | Invoked by | In student workflow? |
 |---|---|---|---|
-| `v1-student-workflow` | ADK 2.2 Workflow graph | `run_aegis_v1_adk_pipeline` | — |
-| `case_parser` step | Deterministic (Python / `BaseAgent`) | workflow | Yes |
-| `playbook_loader` step | Deterministic | workflow | Yes |
-| `phoenix_mcp_lookup` step | Deterministic (MCP read + `_summarize_traces`) | workflow | Yes |
-| `library_finder_agent` | `LlmAgent` | workflow | Yes |
-| `v1-drafter-agent` | `LlmAgent` | workflow | Yes |
-| `self_check` step | Deterministic | workflow | Yes |
-| `simulator_agent` | `LlmAgent` | orchestrator only | **No** |
-| `judge_*` (×6) | `LlmAgent` | eval layer only | **No** |
-| `reflector_agent` | `LlmAgent` | learning coordinator only | **No** |
-| `redaction_scrubber_agent` | `LlmAgent` | post-draft export only (`/appeal`) | **No** |
+| `v1-student-workflow` | `google.adk.Workflow` root graph | `run_aegis_v1_adk_pipeline` | — |
+| `case_parser` step | `@node` `FunctionNode` (Python) | student `Workflow` graph | Yes |
+| `playbook_loader` step | `@node` `FunctionNode` | student `Workflow` graph | Yes |
+| `phoenix_mcp_lookup` step | `@node` `FunctionNode` (MCP read + `_summarize_traces`) | student `Workflow` graph | Yes |
+| `library_finder_agent` | `LlmAgent` **as workflow graph node** | student `Workflow` graph | Yes |
+| `v1-drafter-agent` | `LlmAgent` **as workflow graph node** | student `Workflow` graph | Yes |
+| `self_check` step | `@node` `FunctionNode` | student `Workflow` graph | Yes |
+| `judge-panel-workflow` | `google.adk.Workflow` (parallel fan-out) | `run_panel` / eval layer only | **No** |
+| `judge_*` (×6) | `LlmAgent` nodes inside judge `Workflow` | eval layer only | **No** |
+| `simulator_agent` | `LlmAgent` (single-shot) | appeal orchestrator only | **No** |
+| `reflector_agent` | `LlmAgent` (single-shot) | learning coordinator only | **No** |
+| `redaction_scrubber_agent` | `LlmAgent` (single-shot) | post-draft export only (`/appeal`) | **No** |
 
 ### 3.2 High-level diagram
 
@@ -148,7 +151,76 @@ flowchart TB
   end
 ```
 
-### 3.3 Student vs teacher packets (who builds them)
+### 3.4 Workflow usage policy (D3, D24)
+
+**Import path (authoritative — `google-adk==2.2.0`):**
+
+```python
+from google.adk import Workflow          # re-export from google.adk.workflow
+from google.adk.workflow import node, START, Edge
+from google.adk.agents import LlmAgent
+from google.adk.apps import App
+```
+
+**Do not use:** `google.adk.agents.workflow` (does not exist), `SequentialAgent`, `ParallelAgent`.
+
+| Surface | Pattern | Module (planned) | Why |
+|---|---|---|---|
+| **Student pipeline** | `Workflow` + `state_schema` + linear `edges` chain | `student_workflow.py` | Plan D7; replaces imperative `pipeline.py` orchestration |
+| **Judge panel** | `Workflow` with fan-out for five quality judges after Python prechecks | `judge_workflow.py` (or `judge_agents.py`) | Parallel grading without deprecated `ParallelAgent` |
+| **Simulator** | Single `LlmAgent` via `run_llm_agent_sync` | `simulator_agent.py` | One-shot scoring; firewall — not in student graph |
+| **Reflector** | Single `LlmAgent` via `run_llm_agent_sync` | `reflection_agent.py` | One-shot mutation proposal; firewall |
+| **Redaction scrubber** | Single `LlmAgent` via `run_llm_agent_sync` | `redaction_scrubber_agent.py` | Post-draft export only; not in student graph |
+| **`/appeal` best-of-5** | Python loop: `run_workflow_sync(student)` → `run_llm_agent_sync(simulator)` | `appeal_orchestrator.py` | Firewall + simple retry cap (D14) |
+| **Dev / FastAPI `App`** | `App(root_agent=v1_student_workflow)` — `Workflow` is a valid `BaseNode` root | `agent.py` | ADK `App` validator accepts `BaseNode` including `Workflow` |
+
+**Student graph sketch (Phase 1):**
+
+```python
+from google.adk import Workflow
+from google.adk.workflow import START
+
+v1_student_workflow = Workflow(
+    name="v1_student_workflow",
+    state_schema=StudentWorkflowState,
+    edges=[
+        (
+            START,
+            case_parser_node,
+            playbook_loader_node,
+            phoenix_read_node,
+            library_finder_agent,
+            v1_drafter_agent,
+            self_check_node,
+        ),
+    ],
+)
+```
+
+- Deterministic steps: `@node`-decorated functions → `FunctionNode` (bind params from `ctx.state` via `state_schema`).
+- LLM steps: `LlmAgent` instances passed directly in `edges` — ADK wraps them as graph nodes (`build_node` sets `mode='single_turn'`).
+- **`mode='task'` LlmAgents cannot be static workflow graph nodes** (ADK 2.2.0 validation) — use `single_turn` / `chat` only.
+
+**Judge panel sketch (Phase 3):**
+
+```python
+judge_panel_workflow = Workflow(
+    name="judge_panel_workflow",
+    state_schema=JudgePanelState,
+    edges=[
+        (START, citation_precheck_node, safety_scope_gate_node),
+        # Fan-out: five quality judges run in parallel, then join
+        (safety_scope_gate_node, (judge_legal_node, judge_medical_node, ...)),
+        (join_panel_results_node, aggregate_panel_node),
+    ],
+)
+```
+
+Exact fan-out/join syntax to match installed ADK `edges` tuple rules during Phase 3 spike.
+
+**Verified API notes:** [backend/app/aegis_v1/ADK_API_NOTES.md](../../backend/app/aegis_v1/ADK_API_NOTES.md) (Phase 0).
+
+### 3.5 Student vs teacher packets (who builds them)
 
 | Packet | Builder | Module | Consumers | Student sees it? |
 |---|---|---|---|---|
@@ -446,11 +518,12 @@ Holdout drafter: **read only, never write** throughout.
 
 ## 10. Judges
 
-### 10.1 Architecture (D18)
+### 10.1 Architecture (D18, D24)
 
 - Six separate `LlmAgent`s — one per rubric dimension in [panel.py](../../backend/app/evals/part_a/panel.py) `JUDGE_IDS`
-- Optional `ParallelAgent` for five quality judges after deterministic prechecks
-- `safety_scope_gate` and `citation_precheck` remain **Python** — not LLM agents
+- Orchestrated by **`judge-panel-workflow`** (`google.adk.Workflow`) — fan-out for five quality judges after deterministic prechecks; **not** deprecated `ParallelAgent`
+- `safety_scope_gate` and `citation_precheck` remain **Python `@node` steps** at the front of the judge `Workflow` — not LLM agents
+- Each judge `LlmAgent` uses `model=make_retry_model()` and runs as a workflow graph node (§3.4)
 
 ### 10.2 Verbosity (D17)
 
@@ -495,19 +568,64 @@ Mirror existing `gemini_retry` tests:
 
 ### 12.1 Module: `backend/app/aegis_v1/adk_runtime.py`
 
-Exports (signatures TBD after ADK 2.2 API verification):
+Exports (Phase 0 landed; Phase 1 adds `run_workflow_sync`):
 
-- `make_retry_model()` → custom `BaseLlm`
-- `run_workflow_sync(workflow, *, app_name, initial_state, phoenix_mode)` → final state dict
-- `run_llm_agent_sync(agent, ...)` → for simulator / judges / reflector outside workflow
+| Export | Status | Purpose |
+|---|---|---|
+| `make_retry_model()` → `RetryFallbackGemini` | ✅ Phase 0 | Custom `BaseLlm` with `gemini_retry` pacing/fallback (D5) |
+| `RetryFallbackLlm` | ✅ Phase 0 | Alias for `RetryFallbackGemini` |
+| `EchoLlm` | ✅ Phase 0 | Fake model for offline tests |
+| `run_llm_agent_sync(agent, ...)` | ✅ Phase 0 | Single-shot `LlmAgent` smoke (simulator, reflector, scrubber) |
+| `run_workflow_sync(workflow, *, app_name, initial_state, phoenix_mode)` | Phase 1 | Run `google.adk.Workflow` to completion; return final state + `AppealPackage` inputs |
 
 ### 12.2 Async/sync bridge
 
-FastAPI + showcase daemon threads are sync. Prefer `Runner.run` sync generator where possible; use `asyncio.run()` helper for session seeding when `create_session` is async.
+FastAPI + showcase daemon threads are sync. `Runner.run` is a **sync generator** of `Event` objects. For `Workflow` roots, `Runner` dispatches via `DynamicNodeScheduler` + `NodeRunner` (see `google.adk.runners`).
 
-### 12.3 API verification (Phase 0 gate)
+`run_workflow_sync` should:
 
-Run introspection against **installed** `google-adk` (repo has 2.2.0 as of 2026-06-07 handoff). Confirm Workflow graph API before implementing student workflow. Document findings in implementation PR.
+1. `InMemorySessionService.create_session_sync(..., state=initial_state)`
+2. `Runner(agent=workflow, ...)` — `Workflow` is valid `App.root_agent` / runner root (`BaseNode`)
+3. `list(runner.run(...))` → collect events
+4. `get_session_sync` → read final `state` for `AppealPackage` assembly
+
+Use `run_llm_agent_sync` only for agents **outside** a `Workflow` graph.
+
+### 12.3 API verification (Phase 0 gate) — **PASS**
+
+Verified against **`google-adk==2.2.0`** (2026-06-07). Full notes: [ADK_API_NOTES.md](../../backend/app/aegis_v1/ADK_API_NOTES.md).
+
+| Check | Result |
+|---|---|
+| `from google.adk import Workflow` | ✅ |
+| `google.adk.agents.workflow` | ❌ does not exist (wrong path) |
+| `SequentialAgent` | ⚠️ exists, **deprecated** — do not use |
+| `ParallelAgent` | ⚠️ exists, **deprecated** — do not use |
+| `Workflow` as `App.root_agent` | ✅ `BaseNode` accepted by `App` validator |
+| `LlmAgent` as workflow graph node | ✅ via `build_node` in `google.adk.workflow` |
+| `@node` / `FunctionNode` for Python steps | ✅ |
+| `Runner.run` + `create_session_sync` | ✅ sync API confirmed |
+
+### 12.4 Workflow API quick reference (D3, D24)
+
+**Package:** `google.adk.workflow` — re-exported as `google.adk.Workflow`.
+
+**Core types:**
+
+| Symbol | Module | Role |
+|---|---|---|
+| `Workflow` | `google.adk.workflow._workflow` | Root graph orchestrator (`BaseNode`) |
+| `node` | `google.adk.workflow._node` | Decorator: Python callable → `FunctionNode` |
+| `START` | `google.adk.workflow._base_node` | Graph entry keyword |
+| `Edge` | `google.adk.workflow._graph` | Explicit edge object (optional; tuple chains preferred) |
+| `FunctionNode` | `google.adk.workflow._function_node` | Wraps sync/async Python; params bind from `state_schema` |
+| `LlmAgent` | `google.adk.agents.llm_agent` | Pass directly in `edges` — auto-wrapped as graph node |
+
+**Graph definition:** `edges` is a list of tuples. First row starts with `START`, then nodes in execution order. Conditional routing uses dict syntax: `(router_node, {"route_a": target_a, "route_b": target_b})`. Parallel fan-out uses tuples: `(source, (node_a, node_b))`.
+
+**State:** declare `state_schema: type[BaseModel]` on `Workflow`. Function nodes read/write shared state via `ctx.state` / `Event(state={...})`.
+
+**Docs:** [ADK graph routes](https://adk.dev/graphs/routes/) · [ADK data handling](https://adk.dev/workflows/data-handling/) (official; verify against installed version during Phase 1 spike).
 
 ---
 
@@ -562,31 +680,32 @@ After ADK migration, LLM spans should appear in Phoenix for ADK agent calls. App
 
 ## 15. Phase-by-phase implementation
 
-**Gate:** PM explicit **"go"** before Phase 0.
+**Gate:** Phase 0 **complete** (2026-06-07). Phase 1+ blocked until PM **"go"**.
 
-### Phase 0 — Foundations
+### Phase 0 — Foundations ✅
 
-- [ ] Verify ADK 2.2 Workflow API (document signatures)
-- [ ] Implement `adk_runtime.py` + `RetryFallbackLlm`
-- [ ] Define `PhoenixMode` enum: `appeal`, `holdout_readonly`, `training_write`, `training_readwrite`
-- [ ] Implement redaction: rule-based module + `redaction_scrubber_agent` skeleton
-- [ ] Stash legacy clients + delete `root_agent` from active path
-- [ ] Unit tests: retry model, redaction preserves clinical content on fixture
+- [x] Verify ADK 2.2 `Workflow` API — `from google.adk import Workflow` (§12.3–12.4; [ADK_API_NOTES.md](../../backend/app/aegis_v1/ADK_API_NOTES.md))
+- [x] Implement `adk_runtime.py` + `RetryFallbackGemini` / `RetryFallbackLlm`
+- [x] Define `PhoenixMode` enum: `appeal`, `holdout_readonly`, `training_write`, `training_readwrite`
+- [x] Implement redaction: rule-based module + `redaction_scrubber_agent` skeleton
+- [x] Stash legacy `root_agent`; active `agent.py` = Phase 0 placeholder (Gemini HTTP clients **not** stashed yet)
+- [x] Unit tests: retry model, redaction, `EchoLlm` end-to-end smoke
 
-**Exit:** Trivial `LlmAgent` runs end-to-end with fake model.
+**Exit:** ✅ Trivial `LlmAgent` runs end-to-end with fake model. Full backend suite **323 passed / 1 skipped**.
 
-### Phase 1 — Student workflow + drafter
+### Phase 1 — Student `Workflow` + drafter
 
-- [ ] `student_workflow.py` — ADK 2.2 graph per D7
-- [ ] `v1-drafter-agent` with dynamic instruction from prompt version / override
-- [ ] `library_finder_agent` — separate `LlmAgent`
-- [ ] `run_aegis_v1_adk_pipeline` — assemble `AppealPackage` identical shape to today
+- [ ] `student_workflow.py` — `google.adk.Workflow` graph per D7 + §3.4 (`state_schema`, linear `edges` chain)
+- [ ] `@node` wrappers for `case_parser`, `playbook_loader`, `phoenix_mcp_lookup`, `self_check`
+- [ ] `v1-drafter-agent` — `LlmAgent` workflow graph node; dynamic instruction from prompt version / override
+- [ ] `library_finder_agent` — `LlmAgent` workflow graph node
+- [ ] `run_workflow_sync` in `adk_runtime.py` + `run_aegis_v1_adk_pipeline` — assemble `AppealPackage` identical shape to today
 - [ ] `/appeal`: Phoenix READ before draft; post-draft redacted WRITE
 - [ ] Holdout: `phoenix_mode=holdout_readonly`
-- [ ] Wire dispatcher in `pipeline.py`
+- [ ] Wire dispatcher in `pipeline.py`; mount `v1_student_workflow` in `agent.py` / `App`
 - [ ] Tests: firewall (no teacher packet in workflow state), holdout no-write, appeal read-before-draft
 
-**Exit:** `/appeal` + holdout measure run on ADK path.
+**Exit:** `/appeal` + holdout measure run on ADK `Workflow` path.
 
 ### Phase 2 — Simulator agent
 
@@ -598,14 +717,16 @@ After ADK migration, LLM spans should appear in Phoenix for ADK agent calls. App
 
 **Exit:** `/appeal` gatekeeper works; simulator scores only in API response.
 
-### Phase 3 — Judge agents
+### Phase 3 — Judge `Workflow` + agents
 
-- [ ] `judge_agents.py` — six `LlmAgent`s + ADK-backed `JudgeClient`
+- [ ] `judge_workflow.py` — `google.adk.Workflow` with Python precheck `@node`s + parallel fan-out for five quality `LlmAgent` judges (§3.4, §10.1)
+- [ ] `judge_agents.py` — six `LlmAgent` definitions + ADK-backed `JudgeClient`
+- [ ] `run_workflow_sync(judge_panel_workflow, ...)` from `run_panel`; deterministic gates as `@node` steps, not LLM agents
 - [ ] Verbosity prompt updates (D17)
-- [ ] `run_panel` unchanged contract; deterministic gates unchanged
-- [ ] Tests: `PanelReport` parity on fixture; annotation payload has no simulator keys
+- [ ] `run_panel` unchanged **contract** (`PanelReport` shape); implementation swaps to Workflow
+- [ ] Tests: `PanelReport` parity on fixture; annotation payload has no simulator keys; judge `Workflow` not reachable from student graph
 
-**Exit:** GEPA seed writes judge annotations via ADK judges.
+**Exit:** GEPA seed writes judge annotations via ADK judge `Workflow`.
 
 ### Phase 4 — Reflector + GEPA integration
 
@@ -636,11 +757,14 @@ After ADK migration, LLM spans should appear in Phoenix for ADK agent calls. App
 
 | File | Purpose |
 |---|---|
-| `backend/app/aegis_v1/adk_runtime.py` | Runner helpers, retry model |
-| `backend/app/aegis_v1/student_workflow.py` | ADK 2.2 workflow graph |
-| `backend/app/aegis_v1/library_finder_agent.py` | Library `LlmAgent` |
-| `backend/app/aegis_v1/drafter_agent.py` | `v1-drafter-agent` |
-| `backend/app/aegis_v1/simulator_agent.py` | Simulator `LlmAgent` |
+| `backend/app/aegis_v1/ADK_API_NOTES.md` | Verified Workflow API reference (Phase 0) |
+| `backend/app/aegis_v1/adk_runtime.py` | Runner helpers, retry model, `run_workflow_sync` (Phase 1) |
+| `backend/app/aegis_v1/phoenix_mode.py` | Phoenix mode enum (Phase 0) |
+| `backend/app/aegis_v1/student_workflow.py` | `google.adk.Workflow` student graph |
+| `backend/app/aegis_v1/library_finder_agent.py` | Library `LlmAgent` (workflow node) |
+| `backend/app/aegis_v1/drafter_agent.py` | `v1-drafter-agent` (workflow node) |
+| `backend/app/aegis_v1/simulator_agent.py` | Simulator `LlmAgent` (single-shot, outside student graph) |
+| `backend/app/evals/part_a/judge_workflow.py` | Judge panel `google.adk.Workflow` |
 | `backend/app/aegis_v1/redaction.py` | Rule-based redactor |
 | `backend/app/aegis_v1/redaction_scrubber_agent.py` | LLM scrubber |
 | `backend/app/evals/part_a/judge_agents.py` | Six judge agents |
@@ -653,7 +777,7 @@ After ADK migration, LLM spans should appear in Phoenix for ADK agent calls. App
 | File | Change |
 |---|---|
 | [pipeline.py](../../backend/app/aegis_v1/pipeline.py) | Dispatcher → `run_aegis_v1_adk_pipeline` |
-| [agent.py](../../backend/app/aegis_v1/agent.py) | Remove active `root_agent`; playground may mount workflow |
+| [agent.py](../../backend/app/aegis_v1/agent.py) | `App(root_agent=v1_student_workflow)` — `Workflow` as dev/FastAPI root |
 | [appeal_orchestrator.py](../../backend/app/aegis_v1/appeal_orchestrator.py) | Best-of-5, redacted Phoenix export |
 | [evaluated_run.py](../../backend/app/evals/part_a/evaluated_run.py) | Remove simulator from annotations |
 | [measurement_run.py](../../backend/app/evals/part_a/measurement_run.py) | Pass `phoenix_mode=holdout_readonly` |
@@ -706,7 +830,8 @@ Run: `cd backend && uv run pytest`
 - [ ] `phoenix_mcp_lookup` ignores `memory_eligible=false` experiment spans (D23)
 - [ ] Simulator scores **never** in Phoenix; **never** in judge context
 - [ ] Simulator gatekeeper on `/appeal` (best-of-5 per D14)
-- [ ] All LLM agents use `RetryFallbackLlm`
+- [ ] Student + judge orchestration use `google.adk.Workflow` (not `SequentialAgent` / `ParallelAgent`)
+- [ ] All `LlmAgent`s use `RetryFallbackLlm` / `make_retry_model()`
 - [ ] Teacher packet firewall intact
 - [ ] `library_finder_agent` runs after playbook + Phoenix read
 - [ ] Six judge agents with balanced verbosity
@@ -733,10 +858,12 @@ Use this checklist to verify implementation matches PM intent.
 | Topic | Captured? | Plan section |
 |---|---|---|
 | Delete `root_agent`, create `v1-drafter-agent` | ✅ | D1, §3 |
-| ADK 2.2 Workflow, not SequentialAgent | ✅ | D3, §3 |
+| ADK 2.2 `Workflow` (`google.adk.Workflow`), not SequentialAgent/ParallelAgent | ✅ | D3, D24, §3.4, §12.4 |
+| Workflow import path verified (`google.adk`, not `agents.workflow`) | ✅ | §12.3–12.4 |
+| Judge panel as `Workflow` fan-out | ✅ | D24, §3.4, §10.1, Phase 3 |
 | No feature flag; stash legacy | ✅ | D4, §13.3 |
 | Custom `BaseLlm` wrapper for `gemini_retry` | ✅ | D5, §11 |
-| Firewall: drafter ↔ teacher packet | ✅ | D6, §3.3 |
+| Firewall: drafter ↔ teacher packet | ✅ | D6, §3.5 |
 | Firewall: simulator/judges/reflector outside student | ✅ | D6, §3 |
 | Student order: parser → playbook → Phoenix READ → library → drafter → self_check | ✅ | D7, §4 |
 | `/appeal` must read Phoenix **before** draft | ✅ | D8, §5, §18 |
@@ -778,7 +905,9 @@ Use this checklist to verify implementation matches PM intent.
 | v1 plan item | v2 resolution |
 |---|---|
 | `AEGIS_USE_ADK` feature flag | Rejected — stash legacy (D4) |
-| `SequentialAgent` | Rejected — ADK 2.2 Workflow (D3) |
+| `SequentialAgent` | Rejected — `google.adk.Workflow` (D3) |
+| `ParallelAgent` (judge panel) | Rejected — `Workflow` fan-out (D24, §10.1) |
+| `google.adk.agents.workflow` import path | Wrong — use `from google.adk import Workflow` (§12.4) |
 | Redact before draft | Rejected — redact after draft (§6) |
 | Turn off content capture globally | Rejected — redacted write path on `/appeal` (§6) |
 | `corpus_retrieval` before playbook | Rejected — library after playbook+Phoenix (D7) |

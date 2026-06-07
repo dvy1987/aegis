@@ -1,11 +1,18 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-07 (session end — ADK plan v2 committed)
-**Phase:** **Planning complete — ADK migration plan v2 is authoritative. Implementation blocked until PM says "go". No code changes this session.**
+**Updated:** 2026-06-07 (session end — ADK Phase 0 + plan D24; uncommitted)
+**Phase:** **ADK migration Phase 0 DONE. Phase 1 blocked until PM says "go".**
+
+### 2026-06-07 - ADK migration Phase 0 complete (uncommitted)
+- Foundations landed: `adk_runtime.py` (`RetryFallbackGemini`/`EchoLlm`), `phoenix_mode.py`, `redaction.py`, `redaction_scrubber_agent.py` skeleton, `ADK_API_NOTES.md`.
+- Legacy monolithic `root_agent` stashed → `backend/app/aegis_v1/_stash/legacy_root_agent.py`; active `agent.py` is Phase 0 placeholder.
+- Gemini HTTP clients **not** stashed yet — still power `/appeal` and `/showcase` until Phase 1.
+- Verification: backend **323 passed / 1 skipped**.
+- **PM decision (2026-06-07):** All multi-step ADK graphs use `from google.adk import Workflow` — student pipeline + judge panel; not `SequentialAgent`/`ParallelAgent`. Plan v2 updated (§3.4, D24, §12.4).
+- Next: PM says **"go"** for **Phase 1** (student `Workflow` + drafter).
 
 ### 2026-06-07 - Session end (ADK plan v2 finalized + committed)
 - Authoritative plan: [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md) — ADK 2.2 Workflow, three-tier Phoenix writes, firewalls, GEPA semantics, phases 0–5.
-- Next: PM says **"go"** for Phase 0 ADK implementation.
 
 ### 2026-06-07 - Stack upgrade refactor (uncommitted)
 - Fixed ADK 2.2 breakage: `VertexGemini`, `App(name="aegis_v1")`, `main_swarm.py` imports, GCP OTel logging dep, Phoenix client dep, Pydantic 2.13 schema coercion.

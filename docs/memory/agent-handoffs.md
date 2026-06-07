@@ -2744,3 +2744,104 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
  M docs/memory/current-state.md
 ?? docs/plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md
 ```
+
+## 2026-06-07 — Session (Cursor — ADK migration Phase 0 DONE)
+
+### Done
+- **Phase 0 foundations** per [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md) §15:
+  - `adk_runtime.py` — `RetryFallbackGemini` (gemini_retry via ADK), `EchoLlm`, `run_llm_agent_sync` smoke helper
+  - `phoenix_mode.py` — `appeal`, `holdout_readonly`, `training_write`, `training_readwrite`
+  - `redaction.py` + `redaction_scrubber_agent.py` skeleton
+  - `ADK_API_NOTES.md` — verified `google-adk==2.2.0`; **`Workflow` at `from google.adk import Workflow`** (not `agents.workflow`)
+  - Legacy `root_agent` → `_stash/legacy_root_agent.py`; `agent.py` = Phase 0 placeholder
+  - `gemini_retry.py` — public `pace_gemini_call`, `max_retries`, `backoff_seconds`, `is_retryable`
+- Tests: Phase 0 unit tests + full backend **323 passed / 1 skipped**.
+
+### Not done (by design)
+- Phase 1+ — waiting for PM **"go"**.
+- No commit (PM has not requested).
+
+### Next Agent Should Know
+- Production `/appeal` and `/showcase` still use `Gemini*Client` — ADK path not wired until Phase 1.
+- Phase 1 entry: `student_workflow.py`, `v1-drafter-agent`, `library_finder_agent`, `run_aegis_v1_adk_pipeline`, Phoenix read-before-draft on `/appeal`, dispatcher in `pipeline.py`.
+
+### Revisit Triggers
+- PM says **"go"** → Phase 1.
+- PM asks to commit → stage Phase 0 files (no secrets).
+
+## 2026-06-07 — Session (Cursor — Plan v2 Workflow path + D24)
+
+### Done
+- PM chose **`google.adk.Workflow`** for all multi-step ADK orchestration (student + judge panel).
+- Updated [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md):
+  - **D24** — Workflow usage policy (§3.4)
+  - Correct import path: `from google.adk import Workflow` (not `google.adk.agents.workflow`)
+  - Rejected `ParallelAgent` for judges → `Workflow` fan-out
+  - Phase 0 marked complete; Phase 1/3 tasks reference `Workflow`
+  - §12.3–12.4 API verification PASS
+- Updated [ADK_API_NOTES.md](../../backend/app/aegis_v1/ADK_API_NOTES.md) to match.
+
+### Not done
+- Phase 1 implementation — waiting for PM **"go"**.
+
+### Working Tree (uncommitted)
+```
+ M backend/app/aegis_v1/agent.py
+ M docs/plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md
+ M backend/app/gemini_retry.py
+ M backend/tests/unit/agent/test_aegis_v1_agent.py
+ M docs/memory/agent-handoffs.md
+ M docs/memory/current-state.md
+?? backend/app/aegis_v1/ADK_API_NOTES.md
+?? backend/app/aegis_v1/_stash/
+?? backend/app/aegis_v1/adk_runtime.py
+?? backend/app/aegis_v1/phoenix_mode.py
+?? backend/app/aegis_v1/redaction.py
+?? backend/app/aegis_v1/redaction_scrubber_agent.py
+?? backend/tests/unit/aegis_v1/test_adk_runtime.py
+?? backend/tests/unit/aegis_v1/test_legacy_root_agent.py
+?? backend/tests/unit/aegis_v1/test_redaction.py
+```
+
+## 2026-06-07 — Session end (Cursor — ADK Phase 0 + Workflow decision)
+
+### Done
+- **Phase 0 complete** (code + tests): `adk_runtime.py`, `phoenix_mode.py`, `redaction.py`, scrubber skeleton, legacy stash, placeholder `agent.py`. **323 passed / 1 skipped**.
+- **Plan v2 updated:** D24 — all multi-step ADK graphs use `from google.adk import Workflow` (student + judge panel); not `SequentialAgent`/`ParallelAgent`. §3.4, §12.3–12.4.
+- **`ADK_API_NOTES.md` corrected:** Phase 0 initially looked at wrong path (`agents.workflow`); Workflow lives at `google.adk.workflow`, re-exported top-level.
+
+### Debated
+- Workflow vs SequentialAgent vs imperative Python for student graph → **PM chose Workflow** (D24).
+
+### Decisions
+- Orchestration primitive = **`google.adk.Workflow`** for student pipeline (Phase 1) and judge panel (Phase 3). Single-shot agents (simulator, reflector, scrubber) stay `run_llm_agent_sync` outside student graph.
+
+### Deferred
+- **Phase 1** (`student_workflow.py`, `run_workflow_sync`, pipeline dispatcher, `/appeal` on ADK path) — PM has not said **go**.
+- **Commit** — PM has not requested; all Phase 0 + plan edits uncommitted.
+
+### Next Agent Should Know
+- Start: [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md) §3.4 + Phase 1 checklist.
+- `/appeal` and `/showcase` still use `Gemini*Client` until Phase 1 ships.
+- `run_workflow_sync` not implemented yet — Phase 1 deliverable.
+
+### Revisit Triggers
+- PM says **go** → Phase 1.
+- PM asks to commit → stage Phase 0 + plan + memory (no secrets).
+
+### Working Tree
+```
+ M backend/app/aegis_v1/agent.py
+ M backend/app/gemini_retry.py
+ M backend/tests/unit/agent/test_aegis_v1_agent.py
+ M docs/memory/agent-handoffs.md
+ M docs/memory/current-state.md
+ M docs/plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md
+?? backend/app/aegis_v1/ADK_API_NOTES.md
+?? backend/app/aegis_v1/_stash/
+?? backend/app/aegis_v1/adk_runtime.py
+?? backend/app/aegis_v1/phoenix_mode.py
+?? backend/app/aegis_v1/redaction.py
+?? backend/app/aegis_v1/redaction_scrubber_agent.py
+?? backend/tests/unit/aegis_v1/test_*.py (3 files)
+```

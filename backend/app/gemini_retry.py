@@ -56,6 +56,23 @@ def _retryable(exc: Exception) -> bool:
     return any(marker in message for marker in _RETRYABLE_MARKERS)
 
 
+def pace_gemini_call() -> None:
+    """Public pacing hook shared by sync clients and ADK model wrappers."""
+    _pace()
+
+
+def max_retries() -> int:
+    return _int_env("AEGIS_GEMINI_MAX_RETRIES", 4)
+
+
+def backoff_seconds(attempt: int) -> float:
+    return _backoff_seconds(attempt)
+
+
+def is_retryable(exc: Exception) -> bool:
+    return _retryable(exc)
+
+
 def _pace() -> None:
     global _LAST_CALL_AT
     min_interval = _float_env("AEGIS_GEMINI_MIN_INTERVAL_SECONDS", 2.0)

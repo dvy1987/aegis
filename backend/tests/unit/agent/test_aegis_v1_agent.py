@@ -5,28 +5,21 @@ import typing
 
 from app.aegis_v1 import tools as aegis_tools
 from app.aegis_v1.agent import AEGIS_V1_TOOL_NAMES, root_agent
-from app.aegis_v1.schemas import AppealPackage
 
 EXPECTED_TOOLS = {
-    "case_parser", "corpus_retrieval", "phoenix_mcp_lookup",
-    "playbook_loader", "drafter", "self_check",
+    "case_parser",
+    "corpus_retrieval",
+    "phoenix_mcp_lookup",
+    "playbook_loader",
+    "drafter",
+    "self_check",
 }
 
 
-def test_root_agent_is_aegis_v1_with_required_tools() -> None:
+def test_root_agent_is_phase0_placeholder() -> None:
     assert root_agent.name == "aegis_v1"
-    assert root_agent.output_schema is AppealPackage
-
-    # The Outcome Simulator was relocated out of the Student pipeline (6 tools).
+    assert not root_agent.tools
     assert AEGIS_V1_TOOL_NAMES == EXPECTED_TOOLS
-
-    tool_names = {
-        getattr(tool, "__name__", getattr(tool, "name", ""))
-        for tool in root_agent.tools
-    }
-
-    assert tool_names == EXPECTED_TOOLS
-    assert "simulator" not in tool_names
 
 
 def test_registered_tools_have_resolvable_type_hints() -> None:
@@ -38,7 +31,6 @@ def test_registered_tools_have_resolvable_type_hints() -> None:
     whole registered tool set against that class of bug."""
     for name in AEGIS_V1_TOOL_NAMES:
         fn = getattr(aegis_tools, name)
-        # Must not raise NameError on an unresolved forward reference.
         typing.get_type_hints(fn)
 
 
@@ -55,11 +47,7 @@ def test_registered_tools_do_not_expose_di_client_param() -> None:
         )
 
 
-def test_root_agent_instruction_requires_ordered_tool_flow_and_disclaimer() -> None:
+def test_placeholder_instruction_includes_disclaimer() -> None:
     instruction = str(root_agent.instruction)
-
-    for tool_name in AEGIS_V1_TOOL_NAMES:
-        assert tool_name in instruction
-
     assert "Not legal or medical advice. Draft assistance only." in instruction
-    assert "JSON" in instruction
+    assert "Phase 0" in instruction
