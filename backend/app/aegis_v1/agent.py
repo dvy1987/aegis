@@ -4,10 +4,10 @@ import os
 
 from google.adk.agents import Agent
 from google.adk.apps import App
-from google.adk.models import Gemini
 from google.genai import types
 
 from app.aegis_v1.schemas import AppealPackage
+from app.app_utils.vertex_gemini import VertexGemini
 from app.aegis_v1.tools import (
     DISCLAIMER,
     case_parser,
@@ -63,7 +63,9 @@ Hard safety rules:
 
 root_agent = Agent(
     name="aegis_v1",
-    model=Gemini(model=os.environ.get("AEGIS_V1_AGENT_MODEL", "gemini-3.1-pro-preview")),
+    model=VertexGemini(
+        model=os.environ.get("AEGIS_V1_AGENT_MODEL", "gemini-3.1-pro-preview")
+    ),
     instruction=AEGIS_V1_INSTRUCTION,
     tools=[
         case_parser,
@@ -80,4 +82,4 @@ root_agent = Agent(
     ),
 )
 
-app = App(root_agent=root_agent, name="aegis")
+app = App(root_agent=root_agent, name="aegis_v1")

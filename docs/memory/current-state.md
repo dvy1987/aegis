@@ -1,7 +1,13 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-07 (session end — Arize track assessment doc written)
-**Phase:** **Execution — showcase hardened (committed `19a644b`); Cloud Run posture + Phoenix split + async approve documented in working tree; live credentialed rehearsal still pending.**
+**Updated:** 2026-06-07 (session end — stack upgrade refactor complete, uncommitted)
+**Phase:** **Execution — ADK 2.2 + Next 16.2.7 upgrade fixes verified green locally (316 backend tests, frontend build); commit pending PM request.**
+
+### 2026-06-07 - Stack upgrade refactor (uncommitted)
+- Fixed ADK 2.2 breakage: `VertexGemini`, `App(name="aegis_v1")`, `main_swarm.py` imports, GCP OTel logging dep, Phoenix client dep, Pydantic 2.13 schema coercion.
+- Verification: backend **316 passed / 1 skipped**; frontend test/lint/build **green**.
+- Both backends import: v1 (`default` Phoenix) + swarm (`aegis-hackathon` when run via `main_swarm.py` alone).
+- Handoff: [agent-handoffs.md §2026-06-07 19:35](agent-handoffs.md).
 
 ### KNOWN GAP (2026-06-07): v1 product flows bypass ADK
 - All v1 LLM calls (drafter, simulator, 6 judges, reflector) are raw `google.genai` via `gemini_retry`; the ADK `root_agent` is never invoked by `/appeal` or `/showcase`. ADK = web framework + sidelined playground agent only.

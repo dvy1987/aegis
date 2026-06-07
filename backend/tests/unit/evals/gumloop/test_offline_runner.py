@@ -10,8 +10,11 @@ from app.case_generator.validator import validate_case
 
 def _load_case(case_id: str) -> dict:
     repo = Path(__file__).resolve().parents[5]
-    path = repo / "eval" / "cases" / "drafts" / f"{case_id}.json"
-    return json.loads(path.read_text(encoding="utf-8"))
+    for sub in ("drafts", "drafts/spare-cases"):
+        path = repo / "eval" / "cases" / sub / f"{case_id}.json"
+        if path.exists():
+            return json.loads(path.read_text(encoding="utf-8"))
+    raise FileNotFoundError(f"{case_id}.json not under eval/cases/")
 
 
 def test_offline_swarm_runs_on_real_case_and_preserves_schema() -> None:

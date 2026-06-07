@@ -23,6 +23,15 @@ def _case_obj() -> dict:
             "plan_funding_type": "fully_insured",
         },
         "denial_pattern_sources": ["mhpaea_step_therapy_asymmetry"],
+        "denial_letter_references": [
+            {
+                "ref_id": "cigna-mednec-template",
+                "title": "Cigna Medical Necessity Letter Template",
+                "url": "https://example.com/cigna-mednec",
+                "source_type": "research",
+                "relevance": "Synthetic teacher fixture reference.",
+            }
+        ],
         "denial_letter_text": "Dear Member, Cigna denied IOP as not medically necessary.",
         "clinical_context": (
             "The person has severe OCD, failed weekly outpatient therapy for "

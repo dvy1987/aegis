@@ -16,6 +16,14 @@ socket.getaddrinfo = _ipv4_first_getaddrinfo
 
 os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
 os.environ.setdefault("PHOENIX_PROJECT_NAME", "aegis-hackathon")
+print(f"[main_swarm] PHOENIX_PROJECT_NAME={os.environ['PHOENIX_PROJECT_NAME']}")
+
+from fastapi import FastAPI
+from google.adk.cli.fast_api import get_fast_api_app
+
+from app.aegis_swarm.appeal_api import router as swarm_appeal_router
+from app.app_utils.telemetry import setup_telemetry
+
 setup_telemetry()
 
 allow_origins = (

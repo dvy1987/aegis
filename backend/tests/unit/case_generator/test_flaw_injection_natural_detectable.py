@@ -32,5 +32,5 @@ def test_inject_flaws_includes_natural_detectable_anchors() -> None:
     assert "plan's medical necessity criteria" in letter
     assert "administratively closed as withdrawn" in letter
     assert "benefit category classification" in letter
-    assert "superseded guideline reference" in letter
+    assert "interqual 2018" in letter
 

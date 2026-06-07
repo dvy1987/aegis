@@ -2,7 +2,44 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
+
+
+def _coerce_str_list(value: object) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, str):
+        if not value.strip():
+            return []
+        if "," in value:
+            return [part.strip() for part in value.split(",") if part.strip()]
+        return [value.strip()]
+    if isinstance(value, (list, tuple)):
+        return [str(item).strip() for item in value if item is not None and str(item).strip()]
+    return []
+
+
+def _coerce_citation_hits(value: object) -> list[Any]:
+    if value is None:
+        return []
+    if isinstance(value, str):
+        return [
+            {"corpus_doc_id": doc_id, "title": doc_id, "quote": ""}
+            for doc_id in _coerce_str_list(value)
+        ]
+    if isinstance(value, (list, tuple)):
+        out: list[Any] = []
+        for item in value:
+            if hasattr(item, "corpus_doc_id") and hasattr(item, "quote"):
+                out.append(item)
+            elif isinstance(item, str):
+                out.append({"corpus_doc_id": item, "title": item, "quote": ""})
+            elif isinstance(item, dict):
+                out.append(item)
+            elif hasattr(item, "model_dump"):
+                out.append(item.model_dump())
+        return out
+    return []
 
 
 DenialType = Literal[
@@ -28,6 +65,11 @@ class ParsedCase(BaseModel):
     denial_text: str
     clinical_context: str = ""
 
+    @field_validator("deadlines_mentioned", "missing_facts", mode="before")
+    @classmethod
+    def _coerce_list_fields(cls, value: object) -> object:
+        return _coerce_str_list(value)
+
 
 class CitationHit(BaseModel):
     corpus_doc_id: str
@@ -38,7 +80,12 @@ class CitationHit(BaseModel):
 
 class RetrievalResult(BaseModel):
     query: str
-    hits: list[CitationHit]
+    hits: list[CitationHit] = Field(default_factory=list)
+
+    @field_validator("hits", mode="before")
+    @classmethod
+    def _coerce_hits(cls, value: object) -> object:
+        return _coerce_citation_hits(value)
 
 
 class PhoenixSummary(BaseModel):
@@ -49,6 +96,13 @@ class PhoenixSummary(BaseModel):
     success_traits: list[str] = Field(default_factory=list)
     risk_flags: list[str] = Field(default_factory=list)
 
+    @field_validator(
+        "failure_patterns", "success_traits", "risk_flags", mode="before"
+    )
+    @classmethod
+    def _coerce_summary_lists(cls, value: object) -> object:
+        return _coerce_str_list(value)
+
 
 class Playbook(BaseModel):
     insurer: str
@@ -58,6 +112,11 @@ class Playbook(BaseModel):
     tactics: list[str] = Field(default_factory=list)
     required_evidence: list[str] = Field(default_factory=list)
     risk_flags: list[str] = Field(default_factory=list)
+
+    @field_validator("tactics", "required_evidence", "risk_flags", mode="before")
+    @classmethod
+    def _coerce_playbook_lists(cls, value: object) -> object:
+        return _coerce_str_list(value)
 
 
 class AppealDraft(BaseModel):
@@ -70,11 +129,26 @@ class AppealDraft(BaseModel):
     risk_flags: list[str] = Field(default_factory=list)
     safety_disclaimer: str
 
+    @field_validator("citations_used", mode="before")
+    @classmethod
+    def _coerce_citations_used(cls, value: object) -> object:
+        return _coerce_citation_hits(value)
+
+    @field_validator("missing_evidence_checklist", "risk_flags", mode="before")
+    @classmethod
+    def _coerce_draft_lists(cls, value: object) -> object:
+        return _coerce_str_list(value)
+
 
 class CitationCheck(BaseModel):
     all_citations_traceable: bool
     checked_corpus_doc_ids: list[str] = Field(default_factory=list)
     untraceable_citations: list[str] = Field(default_factory=list)
+
+    @field_validator("checked_corpus_doc_ids", "untraceable_citations", mode="before")
+    @classmethod
+    def _coerce_checked_ids(cls, value: object) -> object:
+        return _coerce_str_list(value)
 
 
 class SelfCheckResult(BaseModel):
@@ -83,6 +157,11 @@ class SelfCheckResult(BaseModel):
     fact_check: dict[str, Any] = Field(default_factory=dict)
     safety_check: dict[str, Any] = Field(default_factory=dict)
     risk_flags: list[str] = Field(default_factory=list)
+
+    @field_validator("risk_flags", mode="before")
+    @classmethod
+    def _coerce_self_check_flags(cls, value: object) -> object:
+        return _coerce_str_list(value)
 
 
 class FeatureMark(BaseModel):

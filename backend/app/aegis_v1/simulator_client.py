@@ -96,8 +96,9 @@ class GeminiSimulatorClient:
         from google.genai import types
         from pydantic import BaseModel, Field
 
+        # google-genai + pydantic 2.13 require string enum values in JSON schemas.
         class _Mark(BaseModel):
-            anchor: Literal[1, 3, 5]
+            anchor: Literal["1", "3", "5"]
             evidence: str = ""
 
         class _Assessment(BaseModel):
@@ -129,11 +130,16 @@ class GeminiSimulatorClient:
                 ),
             )
             data = json.loads(response.text)
+
+            def _anchor_int(mark: dict) -> int:
+                raw = mark.get("anchor", 1)
+                return int(raw) if isinstance(raw, str) else raw
+
             return FeatureAssessment(
                 critique=data.get("critique", ""),
                 features={
                     k: FeatureMark(
-                        anchor=data.get(k, {}).get("anchor", 1),
+                        anchor=_anchor_int(data.get(k, {})),
                         evidence=data.get(k, {}).get("evidence", ""),
                     )
                     for k in keys

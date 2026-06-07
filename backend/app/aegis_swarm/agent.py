@@ -11,7 +11,7 @@ from typing import Any
 
 from google.adk.agents import Agent
 from google.adk.apps import App
-from google.adk.models import Gemini
+from app.app_utils.vertex_gemini import VertexGemini
 _DISCLAIMER_NOTE = (
     "Not legal or medical advice. Draft assistance only."
 )
@@ -64,7 +64,7 @@ result from the tool unchanged.
 
 root_agent = Agent(
     name="aegis_swarm_coordinator",
-    model=Gemini(model="gemini-3.1-pro"),
+    model=VertexGemini(model="gemini-3.1-pro"),
     instruction=AEGIS_SWARM_INSTRUCTION,
     tools=[run_swarm_appeal],
 )

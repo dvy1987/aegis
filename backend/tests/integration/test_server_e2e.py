@@ -137,7 +137,7 @@ def test_chat_stream(server_fixture: subprocess.Popen[str]) -> None:
     user_id = "test_user_123"
     session_data = {"state": {"preferred_language": "English", "visit_count": 1}}
 
-    session_url = f"{BASE_URL}/apps/app/users/{user_id}/sessions"
+    session_url = f"{BASE_URL}/apps/aegis_v1/users/{user_id}/sessions"
     session_response = requests.post(
         session_url,
         headers=HEADERS,
@@ -150,7 +150,7 @@ def test_chat_stream(server_fixture: subprocess.Popen[str]) -> None:
 
     # Then send chat message
     data = {
-        "app_name": "app",
+        "app_name": "aegis_v1",
         "user_id": user_id,
         "session_id": session_id,
         "new_message": {
@@ -216,6 +216,9 @@ def test_chat_stream_error_handling(server_fixture: subprocess.Popen[str]) -> No
     logger.info("Error handling test completed successfully")
 
 
+@pytest.mark.skip(
+    reason="ADK 2.2 scaffold no longer exposes POST /feedback (removed from get_fast_api_app).",
+)
 def test_collect_feedback(server_fixture: subprocess.Popen[str]) -> None:
     """
     Test the feedback collection endpoint (/feedback) to ensure it properly

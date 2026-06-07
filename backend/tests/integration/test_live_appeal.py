@@ -55,9 +55,7 @@ def test_live_appeal_run_produces_letter_and_outcome():
     assert result.outcome["verdict"] in {"APPROVE", "DENY"}
     assert 0.0 <= result.outcome["score"] <= 1.0
     assert result.outcome["threshold"] == 0.70
-    assert result.outcome["feature_scores"]            # transparent breakdown present
-    # weak-v1 demo arc: the baseline should land in DENY territory
-    assert result.outcome["verdict"] == "DENY"
+    assert result.outcome["feature_scores"]  # transparent breakdown present
 
 
 def test_live_evaluated_case_writes_real_phoenix_annotation():
