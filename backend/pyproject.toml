@@ -3,32 +3,32 @@ name = "aegis-backend"
 version = "0.1.0"
 description = "Aegis health-insurance appeal letter agent"
 dependencies = [
-    "google-adk>=1.15.0,<2.0.0",
-    "fastapi>=0.115.8,<1.0.0",
-    "uvicorn~=0.34.0",
+    "google-adk>=2.2.0",
+    "fastapi>=0.115.8",
+    "uvicorn>=0.34.0",
     "openinference-instrumentation-google-adk>=0.1.15",
     "arize-phoenix-otel>=0.16.1",
     "rank-bm25>=0.2.2",
-    "jsonschema>=4.23.0,<5.0.0",
+    "jsonschema>=4.23.0",
 ]
 requires-python = ">=3.11,<3.14"
 
 
 [dependency-groups]
 dev = [
-    "pytest>=9.0.2,<10.0.0",
-    "pytest-asyncio>=1.0.0,<2.0.0",
-    "nest-asyncio>=1.6.0,<2.0.0",
+    "pytest>=9.0.2",
+    "pytest-asyncio>=1.0.0",
+    "nest-asyncio>=1.6.0",
 ]
 
 [project.optional-dependencies]
 eval = [
-    "google-adk[eval]>=1.15.0,<2.0.0",
+    "google-adk[eval]>=2.2.0",
 ]
 lint = [
-    "ruff>=0.4.6,<1.0.0",
+    "ruff>=0.4.6",
     "ty>=0.0.1a0",
-    "codespell>=2.2.0,<3.0.0",
+    "codespell>=2.2.0",
 ]
 
 [tool.ruff]
