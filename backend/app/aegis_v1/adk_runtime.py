@@ -170,6 +170,42 @@ def _should_try_fallback(
     )
 
 
+def run_workflow_sync(
+    workflow: Any,
+    *,
+    app_name: str = "aegis_v1",
+    user_id: str = "pipeline",
+    initial_state: dict[str, Any] | None = None,
+    message: str = "run",
+) -> dict[str, Any]:
+    """Run an ADK 2.2 Workflow graph to completion (Phase 1).
+
+    Returns ``{"events": [...], "state": {...}}`` where *state* is the final
+    ``ctx.state`` dict after all nodes have executed.
+    """
+    session_service = InMemorySessionService()
+    session = session_service.create_session_sync(
+        app_name=app_name,
+        user_id=user_id,
+        state=initial_state or {},
+    )
+    runner = Runner(
+        agent=workflow,
+        session_service=session_service,
+        app_name=app_name,
+    )
+    content = types.Content(
+        role="user", parts=[types.Part.from_text(text=message)]
+    )
+    events = list(
+        runner.run(user_id=user_id, session_id=session.id, new_message=content)
+    )
+    updated = session_service.get_session_sync(
+        app_name=app_name, user_id=user_id, session_id=session.id
+    )
+    return {"events": events, "state": dict(updated.state) if updated else {}}
+
+
 def collect_text(events: Iterable[Any]) -> str:
     chunks: list[str] = []
     for event in events:

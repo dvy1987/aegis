@@ -1,27 +1,12 @@
 from __future__ import annotations
 
+import json
 import logging
 from typing import TYPE_CHECKING, Any, Literal
 from uuid import uuid4
 
-from app.aegis_v1.library_context import (
-    degraded_library_context,
-    prepare_library_context,
-)
-from app.aegis_v1.retrieval_context import (
-    reset_controlled_retrieval,
-    set_controlled_retrieval,
-)
+from app.aegis_v1.phoenix_mode import PhoenixMode
 from app.aegis_v1.schemas import AppealPackage, Playbook, TraceMetadata
-from app.aegis_v1.tools import (
-    case_parser,
-    corpus_retrieval,
-    draft_appeal,
-    phoenix_mcp_lookup,
-    playbook_loader,
-    self_check,
-)
-from app.aegis_v1.v1_config import build_v1_library_stack
 
 if TYPE_CHECKING:
     from app.aegis_v1.drafter_client import DrafterLLMClient
@@ -44,106 +29,110 @@ def run_aegis_v1_pipeline(
     library_stack: dict[str, Any] | None = None,
     use_phoenix_memory: bool = True,
 ) -> dict[str, Any]:
-    """Run the six-tool v1 Student flow. The Outcome Simulator is no longer part
-    of the Student — it runs in the eval layer (`run_evaluated_case`)."""
+    """Run the six-tool v1 Student flow via ADK 2.2 Workflow (D21 seam).
 
-    parsed = case_parser(
+    The Outcome Simulator is no longer part of the Student — it runs in the
+    eval layer (``run_evaluated_case``).
+    """
+    return run_aegis_v1_adk_pipeline(
         denial_text=denial_text,
         clinical_context=clinical_context,
         case_id=case_id,
+        dataset_split=dataset_split,
+        run_mode=run_mode,
+        drafter_client=drafter_client,
+        drafter_prompt_version=drafter_prompt_version,
+        drafter_prompt_text=drafter_prompt_text,
+        playbook_override=playbook_override,
+        library_stack=library_stack,
+        use_phoenix_memory=use_phoenix_memory,
     )
 
-    # The library (cloud Vertex Search + optional discovery) is a best-effort
-    # enrichment, never on the critical path. If building the stack or preparing
-    # the context throws for any reason (auth, network, misconfig), degrade to a
-    # no-citation context with a risk flag so drafting and the showcase
-    # optimization loop still run.
-    try:
-        stack = library_stack or build_v1_library_stack()
-        lib_ctx = prepare_library_context(
-            parsed,
-            case_id=parsed["case_id"],
-            corpus_store=stack["corpus_store"],
-            discovery=stack.get("discovery"),
-            refinement_client=stack.get("refinement_client"),
-            cloud_library_used=bool(stack.get("uses_vertex_store")),
-        )
-    except Exception:
-        logger.warning(
-            "library stack/context failed for case_id=%s; continuing without "
-            "citations so drafting/optimization is unaffected",
-            parsed.get("case_id"),
-            exc_info=True,
-        )
-        try:
-            from app.aegis_v1.search_planner import build_baseline_query
 
-            fallback_query = build_baseline_query(parsed)
-        except Exception:
-            fallback_query = ""
-        lib_ctx = degraded_library_context(query=fallback_query)
+def run_aegis_v1_adk_pipeline(
+    denial_text: str,
+    clinical_context: str = "",
+    case_id: str = "interactive_case",
+    dataset_split: str = "interactive",
+    run_mode: str = "interactive",
+    phoenix_mode: PhoenixMode = PhoenixMode.APPEAL,
+    drafter_client: "DrafterLLMClient | None" = None,
+    drafter_prompt_version: str | None = None,
+    drafter_prompt_text: str | None = None,
+    playbook_override: dict[str, Any] | None = None,
+    library_stack: dict[str, Any] | None = None,
+    use_phoenix_memory: bool = True,
+) -> dict[str, Any]:
+    """Run the v1 Student via ADK 2.2 Workflow and return an AppealPackage dict.
 
-    token = set_controlled_retrieval(lib_ctx.retrieval)
+    This is the single production path (D4 — no feature flag).
+    """
+    from app.aegis_v1.adk_runtime import EchoLlm, run_workflow_sync
+    from app.aegis_v1.library_context import LibraryPrepMetadata
+    from app.aegis_v1.student_workflow import build_student_workflow
+    import app.aegis_v1.student_workflow as _sw
+
+    workflow = build_student_workflow()
+
+    initial_state = {
+        "denial_text": denial_text,
+        "clinical_context": clinical_context,
+        "case_id": case_id,
+        "dataset_split": dataset_split,
+        "run_mode": run_mode,
+        "phoenix_mode": phoenix_mode.value,
+        "drafter_prompt_version": drafter_prompt_version or "",
+        "drafter_prompt_text": drafter_prompt_text or "",
+        "playbook_override_json": (
+            json.dumps(playbook_override) if playbook_override is not None else ""
+        ),
+        "use_phoenix_memory": use_phoenix_memory,
+        "library_stack_json": "",
+    }
+
+    # Inject non-serializable DI objects via module globals.  ADK's Runner
+    # spawns a new asyncio context so contextvars don't propagate, but module
+    # globals are visible from the @node functions in the same process.
+    _sw._injected_library_stack = library_stack
+    # When a legacy StubDrafterClient is passed for offline tests, use EchoLlm
+    # so the ADK drafter agent runs without real API credentials.
+    _sw._injected_drafter_model = EchoLlm() if drafter_client is not None else None
     try:
-        retrieval = corpus_retrieval(
-            query=lib_ctx.metadata.library_search_query,
-            top_k=3,
+        result = run_workflow_sync(
+            workflow,
+            app_name="aegis_v1",
+            user_id="pipeline",
+            initial_state=initial_state,
+            message=f"Process appeal case {case_id}",
         )
     finally:
-        reset_controlled_retrieval(token)
+        _sw._injected_library_stack = None
+        _sw._injected_drafter_model = None
+    state = result["state"]
 
-    if use_phoenix_memory:
-        phoenix = phoenix_mcp_lookup(
-            insurer=parsed["insurer"],
-            denial_type=parsed["denial_type"],
-            case_id=parsed["case_id"],
-        )
-    else:
-        phoenix = {
-            "status": "disabled",
-            "query": "request disabled Phoenix memory",
-            "similar_trace_count": 0,
-            "failure_patterns": [],
-            "success_traits": [],
-            "risk_flags": ["phoenix_mcp_request_disabled"],
-        }
-    if playbook_override is not None:
-        playbook = dict(playbook_override)
-        playbook.setdefault("status", "loaded")
-    else:
-        playbook = playbook_loader(
-            insurer=parsed["insurer"],
-            denial_type=parsed["denial_type"],
-        )
-    from app.aegis_v1.drafter_client import get_active_drafter_prompt_version
-
-    active_prompt_version = drafter_prompt_version or get_active_drafter_prompt_version()
-    draft = draft_appeal(
-        parsed_case=parsed,
-        retrieval_results=retrieval,
-        playbook=playbook,
-        phoenix_summary=phoenix,
-        client=drafter_client,
-        prompt_version=active_prompt_version,
-        prompt_text=drafter_prompt_text,
-    )
-    check = self_check(
-        parsed_case=parsed,
-        appeal_draft=draft,
-        retrieval_results=retrieval,
-    )
+    # --- Assemble AppealPackage from final workflow state ---
+    parsed = state.get("parsed_case", {})
+    draft = state.get("appeal_draft", {})
+    check = state.get("self_check_result", {})
+    playbook_data = state.get("playbook", {})
+    phoenix_data = state.get("phoenix_summary", {})
+    active_prompt_version = state.get("active_prompt_version", "drafter_v1")
+    lib_risk_flags = state.get("library_risk_flags", [])
+    lib_meta_raw = state.get("library_metadata", {})
 
     risk_flags = sorted(
         set(
             draft.get("risk_flags", [])
             + check.get("risk_flags", [])
-            + phoenix.get("risk_flags", [])
-            + playbook.get("risk_flags", [])
-            + lib_ctx.risk_flags
+            + phoenix_data.get("risk_flags", [])
+            + playbook_data.get("risk_flags", [])
+            + lib_risk_flags
         )
     )
-    loaded_playbook = Playbook.model_validate(playbook)
-    prep = lib_ctx.metadata
+
+    loaded_playbook = Playbook.model_validate(playbook_data)
+    prep = LibraryPrepMetadata.model_validate(lib_meta_raw) if lib_meta_raw else LibraryPrepMetadata()
+
     package = AppealPackage(
         run_id=f"aegis-v1-{uuid4().hex[:8]}",
         parsed_case=parsed,
@@ -151,11 +140,11 @@ def run_aegis_v1_pipeline(
         self_check=check,
         risk_flags=risk_flags,
         trace_metadata=TraceMetadata(
-            case_id=parsed["case_id"],
-            insurer=parsed["insurer"],
-            denial_type=parsed["denial_type"],
-            plan_type=parsed["plan_type"],
-            state=parsed["state"],
+            case_id=parsed.get("case_id", case_id),
+            insurer=parsed.get("insurer", "unknown"),
+            denial_type=parsed.get("denial_type", "unknown"),
+            plan_type=parsed.get("plan_type", "commercial"),
+            state=parsed.get("state", "unknown"),
             prompt_version=active_prompt_version,
             playbook_version=loaded_playbook.version,
             dataset_split=dataset_split,

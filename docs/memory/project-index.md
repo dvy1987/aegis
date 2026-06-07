@@ -71,6 +71,7 @@ Quick navigation for agents picking up this project.
 | 2026-06-02 | Session 28 end (✅ **Part B swarm Phase 6 Learning Coordinator re-point** — credit map → `SwarmLearningCoordinator`, all pipeline agents evolvable; autonomy ladder + 60/40 benchmark loader; **228 unit green.** Phases 0–6 complete. Unrelated WIP still dirty.) | [agent-handoffs.md](agent-handoffs.md#2026-06-02--session-28-handoff-cursor--part-b-swarm-phase-6-done-learning-coordinator-re-point) |
 | 2026-06-05 | Session (Droid — Tier 1 Phoenix live wiring) | [agent-handoffs.md](agent-handoffs.md#2026-06-05--session-handoff-droid--tier-1-phoenix-live-wiring) |
 | 2026-06-07 | Session (Cursor — showcase robustness committed `19a644b`; Cloud Run ops documented; demo cheatsheet + 10s poll; **8 files uncommitted**) | [agent-handoffs.md](agent-handoffs.md#2026-06-07--handoff-cursor--cloud-run-ops-clarity--demo-cheatsheet--poll-interval) |
+| 2026-06-07 | Session (Warp/Oz — **ADK Phase 1 built**: student `Workflow` + drafter + all 6 @node steps; pipeline fully on ADK; **325 passed**) | [agent-handoffs.md](agent-handoffs.md#2026-06-07--session-warpoz--adk-phase-1-built-student-workflow--drafter) |
 
 ## Skill-output log
 

@@ -2808,6 +2808,59 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 ### Done
 - **Phase 0 complete** (code + tests): `adk_runtime.py`, `phoenix_mode.py`, `redaction.py`, scrubber skeleton, legacy stash, placeholder `agent.py`. **323 passed / 1 skipped**.
 - **Plan v2 updated:** D24 — all multi-step ADK graphs use `from google.adk import Workflow` (student + judge panel); not `SequentialAgent`/`ParallelAgent`. §3.4, §12.3–12.4.
+
+---
+
+## 2026-06-07 — Session (Warp/Oz — ADK Phase 1 built: student Workflow + drafter)
+
+### Done
+- **Phase 1 of ADK migration plan v2** executed. The v1 student pipeline now runs through an ADK 2.2 `Workflow` graph.
+- **`student_workflow.py`** — `StudentWorkflowState` (Pydantic state schema) + 6 `@node` functions: `case_parser_node`, `playbook_loader_node`, `phoenix_read_node`, `library_finder_node`, `drafter_node`, `self_check_node`. Step order matches D7. LLM steps (library finder, drafter) internally run `LlmAgent` via `run_llm_agent_sync`.
+- **`adk_runtime.py`** — added `run_workflow_sync()` for running `Workflow` graphs to completion.
+- **`pipeline.py`** — `run_aegis_v1_pipeline` now delegates to `run_aegis_v1_adk_pipeline` (no feature flag, D4). New function builds workflow, sets initial state, injects DI via module globals, assembles `AppealPackage` from final state.
+- **`agent.py`** — `App(root_agent=v1_student_workflow)` replaces Phase 0 placeholder `LlmAgent`. `Workflow` is a valid `BaseNode` root.
+- **DI mechanism:** module-level globals (not `contextvars`) because ADK Runner spawns a new asyncio context. `EchoLlm` used when `drafter_client` is passed (offline tests).
+- **Tests:** 7 new workflow tests (firewall: no teacher/simulator/judge in state or graph; state schema completeness; AppealPackage shape parity; holdout mode; phoenix read-before-draft). Updated 2 Phase 0 → Phase 1 agent tests. Updated 3 measurement_run tests for ADK patch targets.
+- **Full suite: 325 passed, 0 failures** (up from 323 baseline).
+
+### Debated
+- **contextvars vs module globals:** ADK's Runner creates a new asyncio context, so `contextvars.ContextVar` values set before `run_workflow_sync` are invisible inside `@node` functions. Module globals work because the pipeline is single-threaded.
+- **LlmAgent as direct graph node vs @node wrapper:** Plan specifies LlmAgents directly in `edges`, but post-processing (guardrails, AppealDraft assembly) needs full state control. Used `@node` wrappers that internally create and run `LlmAgent` — ADK traces still show LLM calls.
+
+### Decisions
+- All 6 steps are `@node` `FunctionNode`s. Drafter and library finder create `LlmAgent` inside the node function.
+- `LlmAgent` names use underscores (`v1_drafter_agent`) — ADK requires valid Python identifiers.
+- Library finder uses existing `prepare_library_context` infrastructure (not a new LLM search tool yet — deferred to polish).
+
+### Deferred
+- **Phase 2** (simulator agent as `LlmAgent` + best-of-5 `/appeal` gatekeeper).
+- **Phase 3** (judge panel `Workflow` with fan-out).
+- **Phase 4** (reflector + GEPA integration + tier B/C Phoenix writes).
+- **Phase 5** (live rehearsal + cleanup).
+- Making `library_finder_node` a fully LLM-driven search agent with a `search_library` tool (currently uses deterministic `prepare_library_context`).
+- Commit (PM did not request).
+
+### Next Agent Should Know
+- **The pipeline is now fully on ADK.** `/appeal`, `/showcase`, measurement, eval — all paths go through `run_aegis_v1_adk_pipeline` → `Workflow` → `@node` functions.
+- Run: `cd backend && uv run pytest tests/unit/ -q` → expect 325 passed.
+- `drafter_client=StubDrafterClient()` triggers `EchoLlm` in the ADK drafter agent. Tests capture letter output from `EchoLlm` (echoes the prompt context).
+- `library_stack` injection uses `student_workflow._injected_library_stack` module global, NOT `contextvars`.
+- Phase 2 is next: `simulator_agent.py` + best-of-5 `/appeal` loop + remove simulator from Phoenix annotations.
+
+### Revisit Triggers
+- If concurrency is needed (multi-request pipeline), replace module globals with a proper DI container.
+- If hackathon judges want to see `LlmAgent` nodes directly in the Workflow graph (not wrapped in `@node`), refactor drafter/library_finder to be direct graph nodes with `output_key` and `instruction` callable.
+
+### Working Tree
+```
+ M backend/app/aegis_v1/adk_runtime.py
+ M backend/app/aegis_v1/agent.py
+ M backend/app/aegis_v1/pipeline.py
+ M backend/tests/unit/agent/test_aegis_v1_agent.py
+ M backend/tests/unit/evals/test_measurement_run.py
+?? backend/app/aegis_v1/student_workflow.py
+?? backend/tests/unit/aegis_v1/test_student_workflow.py
+```
 - **`ADK_API_NOTES.md` corrected:** Phase 0 initially looked at wrong path (`agents.workflow`); Workflow lives at `google.adk.workflow`, re-exported top-level.
 
 ### Debated

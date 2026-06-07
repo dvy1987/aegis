@@ -16,9 +16,12 @@ EXPECTED_TOOLS = {
 }
 
 
-def test_root_agent_is_phase0_placeholder() -> None:
-    assert root_agent.name == "aegis_v1"
-    assert not root_agent.tools
+def test_root_agent_is_workflow() -> None:
+    """Phase 1: root_agent is the ADK 2.2 Workflow (not a placeholder LlmAgent)."""
+    from google.adk import Workflow
+
+    assert isinstance(root_agent, Workflow)
+    assert root_agent.name == "v1_student_workflow"
     assert AEGIS_V1_TOOL_NAMES == EXPECTED_TOOLS
 
 
@@ -47,7 +50,8 @@ def test_registered_tools_do_not_expose_di_client_param() -> None:
         )
 
 
-def test_placeholder_instruction_includes_disclaimer() -> None:
-    instruction = str(root_agent.instruction)
-    assert "Not legal or medical advice. Draft assistance only." in instruction
-    assert "Phase 0" in instruction
+def test_workflow_has_state_schema() -> None:
+    """Phase 1: workflow uses StudentWorkflowState for typed state."""
+    from app.aegis_v1.student_workflow import StudentWorkflowState
+
+    assert root_agent.state_schema is StudentWorkflowState

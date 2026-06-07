@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from google.adk.agents import LlmAgent
 from google.adk.apps import App
 
-from app.aegis_v1.adk_runtime import make_retry_model
+from app.aegis_v1.student_workflow import v1_student_workflow
 
 # Tool registry metadata kept here so existing tool-contract tests stay stable.
 AEGIS_V1_TOOL_NAMES = {
@@ -15,17 +14,8 @@ AEGIS_V1_TOOL_NAMES = {
     "self_check",
 }
 
-PHASE0_PLACEHOLDER_INSTRUCTION = """
-Phase 0 ADK placeholder. The student workflow graph and v1-drafter-agent land in
-Phase 1. Production /appeal and /showcase paths still use Gemini*Client until then.
-
-Not legal or medical advice. Draft assistance only.
-""".strip()
-
-root_agent = LlmAgent(
-    name="aegis_v1",
-    model=make_retry_model(),
-    instruction=PHASE0_PLACEHOLDER_INSTRUCTION,
-)
+# Phase 1: v1_student_workflow (google.adk.Workflow) replaces the Phase 0
+# placeholder LlmAgent.  Workflow is a BaseNode — valid App root.
+root_agent = v1_student_workflow
 
 app = App(root_agent=root_agent, name="aegis_v1")
