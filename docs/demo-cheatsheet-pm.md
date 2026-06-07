@@ -26,6 +26,17 @@ No “practice mode” on the customer path — if the backend is down, you get 
 
 ---
 
+## Phoenix projects (don't mix these up)
+
+| What you're demoing | Open this Phoenix project | Why |
+|---------------------|---------------------------|-----|
+| **v1** — `/appeal`, showcase quick/serious runs | **`default`** | All v1 traces and showcase learning land here |
+| **swarm** — 12-agent Part B | **`aegis-hackathon`** | Swarm-only traces |
+
+There is **no** Phoenix project called `aegis-swarm`. v1 and swarm use **different recorder classes** (`OtelPhoenixRecorder` vs `OtelSwarmTraceRecorder`) — they are not shared. Full detail: [decision-log.md §2026-06-07](memory/decision-log.md).
+
+---
+
 ## Cloud Run flags (PM cheat sheet)
 
 These are set in `backend/deploy-v1.sh` for `aegis-v1-api`. Full rationale: [decision-log.md §2026-06-07](memory/decision-log.md).

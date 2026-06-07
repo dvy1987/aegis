@@ -66,7 +66,8 @@ If we submit at the end of Week 1, the demo focuses on a single agent and human-
 **Duration:** ~40 seconds (Demo arc: 0:50–1:30 "Phoenix protagonist")
 
 **What to show:**
-- The Phoenix `Traces` view showing a v1 (failed) appeal trace.
+- The Phoenix `Traces` view filtered to **`project: default`** (v1 backend — not `aegis-hackathon`, which is swarm-only).
+- A v1 (failed) appeal trace.
 - Expand the span showing the `list-traces` MCP call.
 - **Visual anchors to highlight:** 
   - The structured failure summary generated from past traces (e.g., "Previous Cigna denials failed because they lacked MCG criteria references").

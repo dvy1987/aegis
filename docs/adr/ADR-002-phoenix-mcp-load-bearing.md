@@ -20,7 +20,7 @@ The strategic thesis Aegis bets on is making the self-improvement loop **structu
 **Use Arize Phoenix Cloud (free tier) as the system observability + eval surface, with the `@arizeai/phoenix-mcp` server configured as a runtime tool source on every ADK agent. Phoenix MCP is load-bearing — the Insurer Intelligence Agent and the Learning Coordinator both depend on it for their core function.**
 
 Specifically:
-- All ADK agent calls auto-instrumented via `openinference-instrumentation-google-adk` → traces sent to Phoenix Cloud project `aegis-hackathon`.
+- All ADK agent calls auto-instrumented via `openinference-instrumentation-google-adk` → traces sent to Phoenix Cloud. **As of 2026-06-07:** v1 (`aegis-v1-api`) → project **`default`**; swarm (`aegis-swarm-api`) → **`aegis-hackathon`**. Early T1.3 traces may remain in `aegis-hackathon` as archive; new v1 work uses `default`. See ADR-006 (amended) and decision-log §2026-06-07.
 - Phoenix Datasets store benchmark splits (`benchmark_train_v1`, `benchmark_holdout_v1`, ...).
 - Phoenix Prompts version every prompt; the Learning Coordinator bumps versions on promotion.
 - Phoenix Experiments capture every v_n vs v_{n+1} comparison.

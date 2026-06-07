@@ -37,10 +37,26 @@ Part A: one ADK agent. Part B: 12-agent swarm + Learning Coordinator (see PRD §
 
 ## Phoenix configuration
 
-- Project name: `aegis-hackathon`
-- Datasets: `benchmark_train_v1`, `benchmark_holdout_v1`, expanding to v2/v3 as benchmark grows.
+Two Cloud Run backends share one repo but **must not share one Phoenix project**. Each service pins its own project at startup; traces are isolated by design.
+
+| Service | Cloud Run name | Phoenix project | Trace recorder class |
+|---|---|---|---|
+| **v1 (Part A)** | `aegis-v1-api` | `default` | `OtelPhoenixRecorder` (`app/evals/part_a/recorder.py`) — eval runs, showcase learning, `/v1/appeal` ADK spans |
+| **swarm (Part B)** | `aegis-swarm-api` | `aegis-hackathon` | `OtelSwarmTraceRecorder` (`app/aegis_swarm/trace_recorder.py`) — one OTel span per agent role |
+
+**v1 details:**
+- `main_v1.py` sets `PHOENIX_PROJECT_NAME=default` authoritatively (host env cannot override).
+- `deploy-v1.sh` deploys with `PHOENIX_PROJECT=default`.
+- Showcase runs create session-scoped `dataset_split` names (e.g. `showcase_quick_train_<session_id>`). Noisy in Phoenix UI but fine on free tier.
+
+**swarm details:**
+- `main_swarm.py` and `Dockerfile.swarm` default to `PHOENIX_PROJECT_NAME=aegis-hackathon`.
+- There is **no** Phoenix project named `aegis-swarm` — that name was a stale default, now corrected.
+
+**Other Phoenix projects (out of band):** `aegis-case-gen` for the offline case generator only. Early MVP traces (T1.3) may still live in `aegis-hackathon` as a read-only archive.
+
 - API key in `.env` (`PHOENIX_API_KEY`); never hardcoded.
-- MCP server config goes in agent runtime, not user environment — see `docs/architecture.md` §6.2 *(needs Session 2 update)*.
+- MCP server config goes in agent runtime — see `docs/adr/ADR-002-phoenix-mcp-load-bearing.md`.
 
 ## Safety (backend-specific reinforcement of root rules)
 

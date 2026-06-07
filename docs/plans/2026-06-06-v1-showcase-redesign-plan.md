@@ -28,7 +28,7 @@ This document captures the redesign agreed in the 2026-06-06 PM session. It buil
 
 - **`/v1/appeal` already evolves with promotions.** It reads the active drafter prompt from `backend/app/aegis_v1/prompts/active_drafter_prompt.txt` (or `AEGIS_DRAFTER_PROMPT_VERSION` env). When GEPA promotes a new drafter prompt, the next `/v1/appeal` call picks it up automatically. **No change needed for the `/v1/appeal` path itself.**
 - **Today `/v1/appeal` defaults to `drafter_v1`** after the day-zero reset. `drafter_v2` is archived and retained on disk for legacy compare-view compatibility, but it is not the default active prompt.
-- **v1 writes to Phoenix project `default`**, not `aegis-hackathon`. Swarm writes to `aegis-swarm`. They use different recorder classes; they cannot collide.
+- **v1 writes to Phoenix project `default`**, not `aegis-hackathon`. Swarm writes to `aegis-hackathon`. They use different recorder classes (`OtelPhoenixRecorder` vs `OtelSwarmTraceRecorder`); they cannot collide. See [decision-log.md §2026-06-07 Phoenix project split](../memory/decision-log.md).
 
 ## Scope of change vs current code
 

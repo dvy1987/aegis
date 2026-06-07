@@ -213,6 +213,84 @@ def test_approve_session_writes_rollback_checkpoint_before_promotion(
     assert manager.get(session.session_id).status == "successful"
 
 
+def test_approve_session_skips_promotion_when_already_promoted(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    # A resumed approval (promotion already checkpointed) must NOT register the
+    # candidate a second time — it should only finish the post-measure.
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    manager.mark_needs_approval(session.session_id, proposal=_proposal().model_dump())
+    manager.save_checkpoint(session.session_id, promotion_done=True)
+    events: list[str] = []
+    measure_calls: list[str] = []
+
+    class FakeStack:
+        def push_checkpoint(self, *, run_type, session_id, candidate):
+            events.append("checkpoint")
+
+    class FakeStore:
+        def register_promotion(self, candidate, audit):
+            events.append("promote")
+
+    def fake_measure(manager, session_id, *, phase, cases, **kwargs):
+        measure_calls.append(phase)
+        manager.set_measure_results(session_id, phase=phase, results=[])
+        return []
+
+    monkeypatch.setattr(showcase_runner, "PromotionStack", lambda: FakeStack(), raising=False)
+    monkeypatch.setattr(showcase_runner, "LivePhoenixLearningStore", lambda: FakeStore())
+    monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
+
+    approve_session(session.session_id, approver="pm")
+
+    assert events == []  # promotion not repeated
+    assert measure_calls == ["post"]
+    reloaded = manager.get(session.session_id)
+    assert reloaded.status == "successful"
+    assert reloaded.checkpoint.post_measure_done is True
+
+
+def test_resume_after_promotion_continues_approval_not_learning(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    monkeypatch.setenv("AEGIS_SHOWCASE_AUTORUN", "false")
+    from app.aegis_v1 import showcase_api
+
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    sid = session.session_id
+    manager.mark_needs_approval(sid, proposal=_proposal().model_dump())
+    manager.save_checkpoint(sid, promotion_done=True)
+    promoted = manager.get(sid)
+    promoted.approved_by = "pm"
+    manager._save(promoted)
+    manager.fail_stage(
+        sid, stage="promote", code="Timeout", message="boom", retryable=True
+    )
+
+    calls: dict[str, object] = {}
+    monkeypatch.setattr(
+        showcase_api,
+        "_launch_approve",
+        lambda session_id, approver: calls.update(approve=(session_id, approver)),
+    )
+    monkeypatch.setattr(
+        showcase_api, "_launch_quick", lambda session_id: calls.update(quick=session_id)
+    )
+
+    resumed = showcase_api.resume_run(sid)
+
+    assert calls.get("approve") == (sid, "pm")
+    assert "quick" not in calls
+    assert resumed.status == "running"
+    assert resumed.diagnostics.last_error is None
+
+
 def test_serious_session_uses_serious_train_and_holdout_with_multi_slice(
     tmp_path: Path,
     monkeypatch,

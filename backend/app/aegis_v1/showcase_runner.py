@@ -469,32 +469,48 @@ def approve_session(session_id: str, *, approver: str) -> None:
         proposal = PromotionProposal.model_validate(session.proposal)
         manager.set_stage(session_id, stage="promote", status="running")
         _log(session_id, "promote", "showcase promotion started", approver=approver)
-        audit = PromotionAudit(
-            candidate_id=proposal.candidate.candidate_id,
-            experiment_id=proposal.after.experiment_id,
-            before_composite=proposal.before.composite,
-            after_composite=proposal.after.composite,
-            per_dimension_deltas=proposal.per_dimension_deltas,
-            diff_summary=proposal.candidate.diff_summary,
-            approver=approver,
-            vetoes=proposal.vetoes,
-        )
-        PromotionStack().push_checkpoint(
-            run_type=session.run_type,
-            session_id=session_id,
-            candidate=proposal.candidate,
-        )
-        LivePhoenixLearningStore().register_promotion(proposal.candidate, audit)
-        session = manager.get(session_id)
-        session.approved_by = approver
-        manager._save(session)
-        post_cases = manifest.quick_holdout if session.run_type == "quick" else manifest.serious_holdout
-        post_results = _measure(manager, session_id, phase="post", cases=post_cases)
-        session = manager.get(session_id)
-        manager.set_regression_warning(
-            session_id,
-            summary=_regression_summary(session.pre_measure_results, post_results),
-        )
+
+        # Promotion is checkpointed so a retried/resumed approval (e.g. after an
+        # instance restart mid post-measure) never registers the candidate twice.
+        if not _checkpoint(manager, session_id).promotion_done:
+            audit = PromotionAudit(
+                candidate_id=proposal.candidate.candidate_id,
+                experiment_id=proposal.after.experiment_id,
+                before_composite=proposal.before.composite,
+                after_composite=proposal.after.composite,
+                per_dimension_deltas=proposal.per_dimension_deltas,
+                diff_summary=proposal.candidate.diff_summary,
+                approver=approver,
+                vetoes=proposal.vetoes,
+            )
+            PromotionStack().push_checkpoint(
+                run_type=session.run_type,
+                session_id=session_id,
+                candidate=proposal.candidate,
+            )
+            LivePhoenixLearningStore().register_promotion(proposal.candidate, audit)
+            session = manager.get(session_id)
+            session.approved_by = approver
+            manager._save(session)
+            manager.save_checkpoint(session_id, promotion_done=True)
+
+        # Post-measure on the holdout runs after promotion to detect regressions
+        # (rollback stays available). The whole phase is checkpointed; on resume
+        # the holdout is simply re-measured from the persisted pre-measure baseline.
+        if not _checkpoint(manager, session_id).post_measure_done:
+            post_cases = (
+                manifest.quick_holdout
+                if session.run_type == "quick"
+                else manifest.serious_holdout
+            )
+            post_results = _measure(manager, session_id, phase="post", cases=post_cases)
+            session = manager.get(session_id)
+            manager.set_regression_warning(
+                session_id,
+                summary=_regression_summary(session.pre_measure_results, post_results),
+            )
+            manager.save_checkpoint(session_id, post_measure_done=True)
+
         manager.mark_success(session_id)
         _log(session_id, "measure_after", "showcase approved run completed")
     except Exception as exc:

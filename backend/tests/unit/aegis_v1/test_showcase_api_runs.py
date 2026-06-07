@@ -92,3 +92,23 @@ def test_reject_without_proposal_is_rejected(tmp_path, monkeypatch) -> None:
     res = client.post(f"/v1/showcase/runs/{session_id}/reject", json={"reviewer": "pm"})
 
     assert res.status_code == 409
+
+
+def test_approve_run_is_non_blocking_and_flips_to_running(tmp_path, monkeypatch) -> None:
+    # Approval must return immediately (work happens in the background) so a
+    # serious-run holdout re-measure cannot blow the Cloud Run request timeout.
+    client = _client(tmp_path, monkeypatch)
+    from app.aegis_v1.showcase_session import ShowcaseSessionManager
+
+    manager = ShowcaseSessionManager(ledger_dir=tmp_path)
+    session = manager.start_quick()
+    manager.mark_needs_approval(session.session_id, proposal={"candidate": {"candidate_id": "c1"}})
+
+    res = client.post(
+        f"/v1/showcase/runs/{session.session_id}/approve", json={"approver": "pm"}
+    )
+
+    assert res.status_code == 200
+    body = res.json()
+    assert body["status"] == "running"
+    assert body["diagnostics"]["stage"] == "promote"

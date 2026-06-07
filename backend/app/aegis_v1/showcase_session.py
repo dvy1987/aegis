@@ -70,6 +70,8 @@ class ShowcaseCheckpoint(BaseModel):
     training_signal_done: bool = False
     optimize_done: bool = False
     training_post_done: bool = False
+    promotion_done: bool = False
+    post_measure_done: bool = False
     training_trace_ids: list[str] = Field(default_factory=list)
     training_completed_case_ids: list[str] = Field(default_factory=list)
     failed_cases: list[CaseFailure] = Field(default_factory=list)

@@ -354,7 +354,7 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 
 ## 2026-05-28 — Multi-Service Backend Topology & GCP Generation Job
 
-**Decision.** Run the offline case generator as a headless Cloud Run Job (or local script) to leverage Google Cloud ADC, bypassing the need for raw API keys for Vertex Gemini and Vertex Claude. Keep a single Python backend repository but launch it as two isolated logical services: `aegis-v1-api` (Port 8001, Phoenix project `aegis-baseline`) and `aegis-swarm-api` (Port 8002, Phoenix project `aegis-swarm`). 
+**Decision.** Run the offline case generator as a headless Cloud Run Job (or local script) to leverage Google Cloud ADC, bypassing the need for raw API keys for Vertex Gemini and Vertex Claude. Keep a single Python backend repository but launch it as two isolated logical services: `aegis-v1-api` (Port 8001) and `aegis-swarm-api` (Port 8002), each with its own Phoenix project. *(Phoenix names amended 2026-06-07: v1 → `default`, swarm → `aegis-hackathon` — see decision log entry same date.)* 
 
 **Rationale.** Using ADC for offline generation solves the API key constraint natively. Splitting the runtime into two logical services enforces physical separation between the safety-net MVP (v1) and the complex Full Plan (swarm). Crucially, this split allows emitting traces to completely isolated Phoenix projects, creating a clean "Before vs After" narrative for the 3-minute hackathon demo without needing manual trace filtering.
 
@@ -383,6 +383,29 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 **Revisit triggers.**
 - If judges or PM decide Phoenix runtime hints blur the "learned prompt/playbook improvement" story, flip normal/measurement drafting back to Phoenix-off while preserving learner access to Phoenix traces.
 - If any firewall test shows teacher-only metadata reaching drafter or learner inputs, revert immediately and repair before demo.
+
+---
+
+## 2026-06-07 — Phoenix project split: v1 → `default`, swarm → `aegis-hackathon`
+
+**Decision.** Two Phoenix Cloud projects, two trace recorder classes, no sharing:
+
+| Runtime | Cloud Run service | Phoenix project | Recorder |
+|---|---|---|---|
+| v1 (Part A) | `aegis-v1-api` | **`default`** | `OtelPhoenixRecorder` — showcase evals, learning loop, `/v1/appeal` |
+| swarm (Part B) | `aegis-swarm-api` | **`aegis-hackathon`** | `OtelSwarmTraceRecorder` — one span per agent role |
+
+**Rationale.** Traces must not mix between the single-agent MVP and the 12-agent swarm demo arc. v1 is pinned in `main_v1.py` (`PHOENIX_PROJECT_NAME=default`, not overridable by host env). Swarm defaults to `aegis-hackathon` in `main_swarm.py` and `Dockerfile.swarm`. The names `aegis-baseline` and `aegis-swarm` (from an earlier ADR draft) were never deployed as Phoenix projects — `aegis-swarm` does not exist in Phoenix Cloud.
+
+**What is NOT shared.** `OtelPhoenixRecorder` belongs to v1 only (`app/evals/part_a/recorder.py`). Swarm uses a separate `OtelSwarmTraceRecorder` (`app/aegis_swarm/trace_recorder.py`). Same OTel stack underneath, different classes and projects.
+
+**Showcase noise.** v1 showcase runs write session-scoped `dataset_split` values (e.g. `showcase_quick_train_<session_id>`). This creates many small splits in Phoenix — acceptable on free tier, just noisy in the UI.
+
+**Status.** Accepted. `main_swarm.py` default corrected from `aegis-swarm` → `aegis-hackathon` (2026-06-07). Supersedes the Phoenix naming lines in ADR-006 (`aegis-baseline` / `aegis-swarm`).
+
+**Revisit triggers.** PM creates a dedicated swarm Phoenix project with a new name → update `main_swarm.py`, `Dockerfile.swarm`, and this table only (v1 stays on `default`).
+
+**Artifacts produced.** `backend/AGENTS.md` §Phoenix configuration; `docs/adr/ADR-006` amendment; `.env.example` comment; demo docs (v1 shotlists → `default`, swarm → `aegis-hackathon`).
 
 ---
 

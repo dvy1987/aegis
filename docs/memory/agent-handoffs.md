@@ -2544,3 +2544,31 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - **Dirty, uncommitted:** `docs/demo-cheatsheet-pm.md`, `docs/memory/decision-log.md`, `docs/memory/current-state.md`, `docs/plans/*` (3), `docs/prd/PRD.md`, `frontend/src/app/showcase/page.tsx`.
+
+---
+
+## 2026-06-07 — Handoff (Cursor — Phoenix project split docs + async approve)
+
+### Done
+- **Code:** `main_swarm.py` default `PHOENIX_PROJECT_NAME` corrected `aegis-swarm` → `aegis-hackathon` (only code change this session).
+- **Async approve (earlier in session):** serious-run approval runs in background thread; checkpointed promotion/post-measure; resume routes to approval when `promotion_done`; frontend polls after approve.
+- **Phoenix documentation pass:** authoritative split documented so next agent does not confuse projects or recorders:
+  - v1 → Phoenix **`default`**, recorder **`OtelPhoenixRecorder`**
+  - swarm → Phoenix **`aegis-hackathon`**, recorder **`OtelSwarmTraceRecorder`** (separate class — not shared)
+  - No Phoenix project named `aegis-swarm`
+- Updated: `backend/AGENTS.md`, `docs/memory/decision-log.md` (new §2026-06-07), `docs/memory/current-state.md`, `docs/adr/ADR-006`, `docs/adr/ADR-002`, `docs/architecture/*`, `docs/demo-cheatsheet-pm.md`, `docs/demo/phoenix-shotlist.md`, `docs/demo/rolling-capture-checklist.md`, `.env.example`, `backend/WINDOWS_SETUP.md`, showcase redesign plan.
+
+### Decisions (confirmed with PM)
+- v1 Phoenix project = **`default`** (pinned in `main_v1.py`, `deploy-v1.sh`).
+- swarm Phoenix project = **`aegis-hackathon`** (not `aegis-swarm`).
+- `OtelPhoenixRecorder` is v1-only; swarm uses `OtelSwarmTraceRecorder`.
+
+### Next Agent Should Know
+- **Do not say** v1 and swarm share `OtelPhoenixRecorder` — they do not.
+- **Demo Phoenix UI:** v1/showcase → open project `default`; swarm Part B → `aegis-hackathon`.
+- ADR-006 original names (`aegis-baseline`, `aegis-swarm`) were never deployed; superseded by decision log §2026-06-07.
+- `scripts/dev.ps1` already sets v1=`default`, swarm=`aegis-hackathon` for local dev.
+
+### Deferred
+- Commit (PM has not requested).
+- `phoenix_mcp_lookup` still reads env `PHOENIX_PROJECT_NAME` — correct for v1 when running under `main_v1.py`; verify if any path still hardcodes wrong project.

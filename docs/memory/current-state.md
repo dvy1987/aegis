@@ -1,13 +1,22 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-07 (session end — robustness committed; docs + 10s poll uncommitted)
-**Phase:** **Execution — showcase learning-loop robustness committed (`19a644b`); Cloud Run deploy posture documented; live redeploy + credentialed rehearsal still pending.**
+**Updated:** 2026-06-07 (session end — async approve + Phoenix docs; all uncommitted)
+**Phase:** **Execution — showcase hardened (committed `19a644b`); Cloud Run posture + Phoenix split + async approve documented in working tree; live credentialed rehearsal still pending.**
 
-### 2026-06-07 - Session end (Cloud Run docs + demo cheatsheet + poll interval)
-- Verified Cloud Run background-thread / CPU-throttling concern: **real pattern**, **fixed in `deploy-v1.sh`** (`494556f`); production needs redeploy to pick up settings.
-- Documented rationale in decision log §2026-06-07, PRD §22a, plan docs; PM cheatsheet now has Cloud Run flags + showcase status/stage demo script.
-- Showcase frontend poll interval changed **3s → 10s** (uncommitted).
-- **Uncommitted:** 8 files (docs + `frontend/src/app/showcase/page.tsx`). Last commit: `19a644b`.
+### Phoenix projects & recorders (authoritative — do not confuse)
+| Service | Phoenix project | Recorder |
+|---|---|---|
+| v1 `aegis-v1-api` | **`default`** | `OtelPhoenixRecorder` |
+| swarm `aegis-swarm-api` | **`aegis-hackathon`** | `OtelSwarmTraceRecorder` |
+
+No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main_swarm.py` / `Dockerfile.swarm`. Full rationale: [decision-log.md §2026-06-07 Phoenix project split](decision-log.md).
+
+### 2026-06-07 - Session end (async approve + Phoenix project docs)
+- **Async approve:** `POST /approve` returns immediately; promotion + post-measure run in background; checkpointed so promotion never runs twice; resume continues half-finished approval. Frontend polls to completion.
+- **Phoenix split documented:** v1 → `default` + `OtelPhoenixRecorder`; swarm → `aegis-hackathon` + `OtelSwarmTraceRecorder`. `main_swarm.py` stale `aegis-swarm` default fixed. Decision log §2026-06-07 + AGENTS.md + demo cheatsheet + ADRs.
+- **Earlier this day (committed `b62738b`):** Cloud Run docs, 10s poll, demo status script.
+- **Earlier this day (committed `19a644b`):** learning-loop robustness + day-zero reset.
+- **Uncommitted:** 21 files (backend approve/async, Phoenix docs, showcase poll, tests). Last commit: `b62738b`.
 
 ### 2026-06-07 - Showcase learning-loop robustness (committed `19a644b`)
 - Library search/discovery failures now degrade gracefully — drafting and optimization continue without citations.
@@ -361,7 +370,7 @@
 - ✅ Confirmed architectural direction is sound; inconsistencies are execution-layer cleanup, not design corrections.
 - ⚠️ **dev.sh is broken** — duplicate C_RESET + orphaned else/fi block causes bash syntax error. Must fix before any dev work.
 - ⚠️ **9+ files reference deleted `fast_api_app.py` and port 8000** — stale references across tests, Dockerfile, docs, scripts.
-- ⚠️ **Phoenix project name split not propagated** — code/docs still say `aegis-hackathon`; dev.sh uses `aegis-baseline`/`aegis-swarm` per ADR-006.
+- ✅ **Phoenix project split documented (2026-06-07)** — v1 → `default` (`OtelPhoenixRecorder`); swarm → `aegis-hackathon` (`OtelSwarmTraceRecorder`). `main_swarm.py` stale `aegis-swarm` default fixed. See decision log §2026-06-07.
 
 ### Session 19 (Part A Judge Panel)
 - ✅ Approved and documented the Part A judge panel firewall: Aegis v1 gets a `StudentCasePacket`; judges get a teacher-only grading packet with provenance, expected appeal vectors, and exploitable weaknesses.

@@ -7,8 +7,10 @@ For the final 3-minute hackathon demo, we need to clearly show the contrast betw
 **Decision:**
 1. **Generator on GCP (ADC):** We will run the case generation pipeline either from Google Cloud Shell or as a headless Cloud Run Job. This leverages Application Default Credentials (ADC), bypassing the need for raw API keys for both Vertex Gemini and Vertex Claude.
 2. **Logical Backend Split:** We will keep a single Python backend repository but launch it as two isolated logical services (OS processes):
-   - **Aegis v1 API:** Runs on Port 8001, uses `PHOENIX_PROJECT_NAME=aegis-baseline`.
-   - **Aegis Swarm API:** Runs on Port 8002, uses `PHOENIX_PROJECT_NAME=aegis-swarm`.
+   - **Aegis v1 API:** Runs on Port 8001, uses `PHOENIX_PROJECT_NAME=default` (pinned in `main_v1.py`).
+   - **Aegis Swarm API:** Runs on Port 8002, uses `PHOENIX_PROJECT_NAME=aegis-hackathon` (pinned in `main_swarm.py` / `Dockerfile.swarm`).
+
+   > **Amendment (2026-06-07):** Original ADR named Phoenix projects `aegis-baseline` and `aegis-swarm`. PM confirmed deployed names are **`default`** (v1) and **`aegis-hackathon`** (swarm). There is no Phoenix project called `aegis-swarm`. See [decision-log.md §2026-06-07 Phoenix project split](../memory/decision-log.md).
 
 **Alternatives Considered:**
 - **Single Process with Dynamic Tracing:** Attempt to run both v1 and swarm in the same FastAPI app and dynamically set the Phoenix project name per request. *Rejected:* OpenTelemetry initializes global tracers at process startup. Hacking it to swap projects per-request is brittle, violates the framework's design, and risks trace leakage.
@@ -16,7 +18,7 @@ For the final 3-minute hackathon demo, we need to clearly show the contrast betw
 - **Generator as a Persistent Service:** Deploy the generator as a continuous Cloud Run service. *Rejected:* The generator is a batch process. Paying for an idle persistent HTTP service for a run-once batch job is wasteful.
 
 **Consequences:**
-- ✓ Complete isolation of Phoenix traces into `aegis-baseline` and `aegis-swarm` (perfect for the demo arc).
+- ✓ Complete isolation of Phoenix traces into `default` (v1) and `aegis-hackathon` (swarm) — perfect for the demo arc.
 - ✓ No raw API keys needed for Claude or Gemini; full reliance on enterprise-grade GCP ADC.
 - ✓ Shared Python utilities and lock files, reducing maintenance overhead.
 - Tradeoff: The `scripts/dev.sh` launcher becomes slightly more complex, managing 3 processes (Next.js, API v1, API Swarm) instead of 2.

@@ -63,6 +63,15 @@ export default function ShowcasePage() {
     return () => window.clearInterval(timer);
   }, [runSession]);
 
+  // Promotion now happens in the background after approval, so refresh the
+  // rollback target once the run reaches a state where it may have changed.
+  useEffect(() => {
+    if (!runSession) return;
+    if (!["successful", "rolled_back"].includes(runSession.status)) return;
+    getRollbackTarget().then(setRollbackTarget).catch(() => undefined);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runSession?.status]);
+
   async function startQuick() {
     setRunErr(null);
     try {
@@ -95,8 +104,9 @@ export default function ShowcasePage() {
     if (!runSession) return;
     setRunErr(null);
     try {
+      // Approval returns immediately with a running status; the polling effect
+      // tracks promotion + post-measure to completion, then refreshes rollback.
       setRunSession(await approveRun(runSession.session_id));
-      setRollbackTarget(await getRollbackTarget());
     } catch (e) {
       setRunErr(e instanceof Error ? e.message : String(e));
     }

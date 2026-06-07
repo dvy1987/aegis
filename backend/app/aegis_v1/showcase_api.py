@@ -71,6 +71,20 @@ def _launch_serious(session_id: str) -> None:
     thread.start()
 
 
+def _launch_approve(session_id: str, approver: str) -> None:
+    if not _autorun_enabled():
+        return
+    from app.aegis_v1.showcase_runner import approve_session
+
+    thread = threading.Thread(
+        target=approve_session,
+        args=(session_id,),
+        kwargs={"approver": approver},
+        daemon=True,
+    )
+    thread.start()
+
+
 @router.get("/manifest", response_model=ShowcaseManifestResponse)
 def get_manifest() -> ShowcaseManifestResponse:
     manifest: ShowcaseManifest = load_showcase_manifest()
@@ -137,7 +151,11 @@ def resume_run(session_id: str) -> ShowcaseSession:
         manager.mark_resumable(session_id)
     except SessionBusyError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
-    if session.run_type == "quick":
+    # If the candidate was already promoted, the only work left is the post-measure
+    # regression check — continue the approval flow instead of re-running learning.
+    if session.checkpoint.promotion_done:
+        _launch_approve(session_id, approver=session.approved_by or "pm")
+    elif session.run_type == "quick":
         _launch_quick(session_id)
     else:
         _launch_serious(session_id)
@@ -155,9 +173,12 @@ def approve_run(session_id: str, req: ApprovalRequest) -> ShowcaseSession:
         raise HTTPException(status_code=409, detail="cancelled runs cannot be promoted")
     if not session.proposal:
         raise HTTPException(status_code=409, detail="no GEPA proposal is ready for approval")
-    from app.aegis_v1.showcase_runner import approve_session
-
-    approve_session(session_id, approver=req.approver)
+    # Promotion + post-measure run in the background (like start/resume) so a
+    # serious-run holdout re-measure can't blow the Cloud Run request timeout.
+    # We flip the status to running synchronously so the UI keeps polling to
+    # completion instead of treating needs_approval as a terminal state.
+    manager.set_stage(session_id, stage="promote", status="running")
+    _launch_approve(session_id, approver=req.approver)
     return manager.get(session_id)
 
 
