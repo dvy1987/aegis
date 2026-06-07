@@ -1,7 +1,11 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-07 (session end — stack upgrade refactor complete, uncommitted)
-**Phase:** **Execution — ADK 2.2 + Next 16.2.7 upgrade fixes verified green locally (316 backend tests, frontend build); commit pending PM request.**
+**Updated:** 2026-06-07 (session end — ADK plan v2 committed)
+**Phase:** **Planning complete — ADK migration plan v2 is authoritative. Implementation blocked until PM says "go". No code changes this session.**
+
+### 2026-06-07 - Session end (ADK plan v2 finalized + committed)
+- Authoritative plan: [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md) — ADK 2.2 Workflow, three-tier Phoenix writes, firewalls, GEPA semantics, phases 0–5.
+- Next: PM says **"go"** for Phase 0 ADK implementation.
 
 ### 2026-06-07 - Stack upgrade refactor (uncommitted)
 - Fixed ADK 2.2 breakage: `VertexGemini`, `App(name="aegis_v1")`, `main_swarm.py` imports, GCP OTel logging dep, Phoenix client dep, Pydantic 2.13 schema coercion.
@@ -12,7 +16,7 @@
 ### KNOWN GAP (2026-06-07): v1 product flows bypass ADK
 - All v1 LLM calls (drafter, simulator, 6 judges, reflector) are raw `google.genai` via `gemini_retry`; the ADK `root_agent` is never invoked by `/appeal` or `/showcase`. ADK = web framework + sidelined playground agent only.
 - Denial-letter text is NOT in Phoenix today (no `google-genai` instrumentor installed), but it IS in drafter/simulator prompts + content-capture is on — latent risk if that instrumentor is ever added.
-- Migration plan (hybrid, full v1 scope, PM-approved): [plans/2026-06-07-aegis-v1-adk-migration-plan.md](../plans/2026-06-07-aegis-v1-adk-migration-plan.md). Implementation deferred (PM building elsewhere).
+- Migration plan v2 (authoritative, PM-reviewed): [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md). Supersedes v1 plan. **Do not implement until PM says go.**
 
 ### Hackathon readiness (Arize track)
 - Assessment doc: [assessment-arize-track.md](../assessment-arize-track.md) — MCP/evals/self-improvement **strong**; gaps: demo video, stale README, tracing thinness (raw genai not instrumented), verify Vertex Search on Cloud Run for live citations.

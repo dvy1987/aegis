@@ -2665,3 +2665,82 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 - Dirty: backend agents, schemas, main_swarm, pyproject/uv.lock, integration + unit tests, frontend eslint/vitest/package.json.
 - New untracked: `vertex_gemini.py`, `tests/conftest.py`, `test_schema_coercion.py`, `test-setup.ts`.
 - **Nothing committed this session.**
+
+## 2026-06-07 22:00 - Handoff (ADK migration plan v2 — authoritative, not started)
+
+### Done
+- Wrote consolidated PM-reviewed plan: [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md). Supersedes v1 plan for all product/architecture decisions.
+- Captures: ADK 2.2 Workflow, delete `root_agent`, `v1-drafter-agent`, library_finder after playbook+Phoenix READ, Phoenix modes (appeal read-before-draft + post-draft redacted write; holdout read-only; training read/write synthetic), GEPA seed vs optimize, simulator never to Phoenix/judges, best-of-5 appeal gatekeeper, stash legacy (no feature flag), custom BaseLlm gemini_retry wrapper, six judge agents, PM approval via simulator training_pre/post matrix.
+- Appendix A conversation tally + Appendix B pre-migration codebase facts.
+
+### Decisions (locked in v2)
+- Only non-negotiable: firewall (drafter ↔ teacher; simulator/judges/reflector outside student).
+- `/appeal` drafter MUST read Phoenix before drafting; redact only on Phoenix export copy after draft.
+- GEPA optimize may read/write Phoenix; simulator scores UI/session only.
+- Serious MCP A/B UI: back burner.
+
+### Deferred
+- **All implementation** — PM must say "go" before Phase 0.
+- Commit plan doc when PM asks.
+
+### Next Agent Should Know
+- Single source of truth for ADK build: plan v2. Do not silently revert to v1 plan (SequentialAgent, feature flag, pre-draft redaction, etc.).
+- Hackathon eval requirement met by in-code Gemini judges — not Phoenix UI judges.
+
+### Working Tree
+- New: `docs/plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md`, `docs/memory/current-state.md` (pointer update). Uncommitted unless PM commits.
+
+## 2026-06-07 23:30 - Handoff (plan v2 — three-tier Phoenix + what-improves pass)
+
+### Done
+- PM confirmed three-tier Phoenix write model. Updated [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md): executive summary, §8.2 what-improves table, §8.3 tier A/B/C, §8.3b implementation, D11/D16/D23 reordered, `memory_eligible` filter on MCP, tier C before `needs_approval`.
+
+### Decisions (added/clarified)
+- **Tier A (seed):** `memory_eligible=true` — optimize reads.
+- **Tier B (optimize rounds):** write each candidate to Phoenix for demo; `memory_eligible=false` — does not feed `/appeal` drafter.
+- **Tier C (final candidate):** before approval; `memory_eligible=true` — key learnings for production memory.
+- Judges do not improve; drafter prompt/playbook improves from judge feedback in Phoenix.
+
+### Deferred
+- Implementation still blocked until PM says "go".
+
+### Working Tree
+- Updated: plan v2, this handoff. Uncommitted unless PM commits.
+
+## 2026-06-07 — Session end (Cursor — ADK plan v2 finalized)
+
+### Done
+- PM review pass on ADK migration: clarified what GEPA improves (drafter, not judges), three-tier Phoenix writes (A seed / B optimize `memory_eligible=false` / C final candidate), redaction after draft only, `/appeal` Phoenix read-before-draft, simulator ⊥ Phoenix ⊥ judges.
+- Finalized [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md) with executive summary, §8 expand, D1–D23, acceptance criteria, Appendix A tally.
+- Confirmed hackathon eval requirement met by in-code Gemini judges — not Phoenix UI judges.
+- Earlier this session: [assessment-arize-track.md](../assessment-arize-track.md) exists; v1 ADK gap documented.
+
+### Debated
+- Whether GEPA optimize-round data should go to Phoenix: **yes for demo (tier B)** with `memory_eligible=false`; **tier C before approval** is where production learnings land for `/appeal`.
+- Pre-draft vs post-draft redaction: **post-draft only** for `/appeal`.
+
+### Decisions
+- **Do not implement** until PM says **"go"**. Plan v2 is authoritative; supersedes v1 plan decisions.
+- All locked decisions in plan v2 §0 (D1–D23).
+
+### Deferred
+- Phase 0–5 ADK implementation.
+- Commit plan v2 + memory updates (PM has not requested).
+- Hackathon ops: demo video, README refresh, Cloud Run Vertex env check.
+- Serious MCP A/B UI: back burner.
+
+### Next Agent Should Know
+- Start here: `docs/plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md` executive summary + §8.
+- `git status`: modified `docs/memory/*`; untracked plan v2. No code changes this session.
+- Stack upgrade on `main` is committed; v1 still bypasses ADK for LLM calls until migration.
+
+### Revisit Triggers
+- PM says "go" → Phase 0 (ADK 2.2 API verify + `adk_runtime.py` + `RetryFallbackLlm`).
+- PM asks to commit → stage plan v2 + memory files only (no secrets).
+
+### Working Tree
+```
+ M docs/memory/agent-handoffs.md
+ M docs/memory/current-state.md
+?? docs/plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md
+```
