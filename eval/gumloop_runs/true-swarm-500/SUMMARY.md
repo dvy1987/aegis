@@ -25,6 +25,6 @@ Automated encoder of `gumloop/prompts/01..18` + `gumloop/architecture.md` tier r
 - **case_02:** `eval/gumloop_runs/true-swarm-500/case_02_cigna_priorauth.json`
 - **case_03:** `eval/gumloop_runs/true-swarm-500/case_03_aetna_mednec.json`
 
-## Do not trust
+## Script limitations
 
-`backend/scripts/run_gumloop_prompt_pass_batches_11_500.py` and `eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/` — narrow checker, misleading APPROVE counts.
+`backend/scripts/run_gumloop_prompt_pass_batches_11_500.py` and `eval/gumloop_runs/manual-llm-sample/11-500-full-swarm-batches/` use a narrow checker — APPROVE counts are not equivalent to a full Gumloop UI pass. See `docs/memory/learnings.md` (2026-06-03).

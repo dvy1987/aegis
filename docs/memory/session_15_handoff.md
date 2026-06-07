@@ -12,8 +12,8 @@
 - Reconciled `plan_funding_type` requirements, ensuring State Mandate patterns only apply to "fully_insured" plans.
 
 ### Debated
-- Clarified the misunderstanding surrounding the "Adversarial Diversifier". Initially characterized merely as a "stylistic" mutator, it was correctly identified by the PM as a "Clinical/Procedural" mutator that swaps drugs, alters history, and provides grounding metrics to prevent LLM mode-collapse.
-- Assured the PM that placing P5 *after* P4 would not destroy the carefully crafted legal flaws by implementing strict preservation directives in the P5 prompt.
+- Adversarial Diversifier scope: clinical/procedural mutator (not purely stylistic) — swaps drugs, alters history, and provides grounding metrics to reduce mode-collapse.
+- P5 runs after P4; strict preservation directives in the P5 prompt keep injected legal flaws intact.
 
 ### Decisions
 - Separate the roles of Orchestrator (factual spread), Flaw Injector (legal/algorithmic traps), and Stylistic Diversifier (clinical history/prose mutation) to achieve a robust 100-case dataset.

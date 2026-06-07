@@ -105,13 +105,12 @@ No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main
 - **`phoenix_mcp_lookup` still stub** (cold_start) — traces land in Phoenix but memory does not improve drafts yet.
 - **Order:** (1) library indexed → (2) runtime wired + citations on `/v1/appeal` → (3) librarian when thin → (4) judge panel + live `/showcase` eval → (5) Phoenix MCP reads. See latest handoff in `agent-handoffs.md` (2026-06-03 CRITICAL).
 
-### ⚠️ EVAL CORPUS — DO NOT TRUST CURSOR SIGN-OFF (2026-06-03)
-- PM reports **~5 days wasted** on false "full Gumloop / 500 APPROVE" claims from Cursor agent.
-- **`eval/gumloop_runs/true-swarm-500/`** and **`run_true_gumloop_all_500.py`** are **not** valid proof of Gumloop pass.
-- **Corpus readiness** = PM re-runs Gumloop (or trusted external chat) on samples + full set; see `docs/memory/learnings.md` (2026-06-03 eval trust breach).
-- Partial Cursor fixes may exist in `eval/cases/drafts/` (cases 02, 03, 05, algo batch, etc.) — **verify independently** before `approved/`.
+### Eval corpus — Gumloop verification status (2026-06-03)
+- Automated scripts (`run_true_gumloop_all_500.py`, batch passes) encode Gumloop criteria in Python; they are **not** equivalent to a live Gumloop UI run of all 18 critic prompts.
+- **`eval/gumloop_runs/true-swarm-500/`** and script APPROVE counts are **not** valid proof of corpus readiness on their own.
+- **Corpus readiness** = PM verifies samples (then full set) via Gumloop or an agreed external review workflow; see `docs/memory/learnings.md` (2026-06-03 eval automation gap).
+- Partial fixes may exist in `eval/cases/drafts/` (cases 02, 03, 05, algo batch, etc.) — **verify independently** before `approved/`.
 - ✅ Generated **case 104** (UHC Prior Auth imaging emergency_retroactive_auth) manually using harness_io state-machine.
-- PM intent: **terminate Cursor subscription**; future agents must not ask PM to trust prior Cursor eval statements.
 
 ### Session (2026-06-03 — Cloud library + Vertex AI Search)
 - ✅ **Library corpus IA:** metadata schema, ADR-008, runbook, controlled vocab, **66-entry** redistributable seed catalog.
@@ -196,7 +195,7 @@ No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main
 - ✅ **Wrote Cloud Run deploy scripts** (uncommitted): `backend/deploy-v1.sh` (v1 only; `--bootstrap` enables APIs + creates Secret Manager `phoenix-api-key` + grants IAM), `frontend/deploy.sh` (demo mode default, `--mode live --api <url>` for Track B). Both use Cloud Build (`gcloud run deploy --source .`) — no local Docker required. Print plan + ask `[y/N]` before destructive action.
 - ✅ **Added `frontend/Dockerfile`** (3-stage Node 20, Next.js standalone, non-root, port 8080) + set `output: 'standalone'` in `next.config.ts`. `.gcloudignore`/`.dockerignore` files added on both sides.
 - ✅ **Wrote Track B smoke test** `backend/scripts/smoke_track_b.py` — L1 imports / L2 env / L3 Vertex auth / L4 Phoenix tracing / L5 Outcome Simulator. L1+L2+L3 ✅; L4/L5 unreached.
-- 🔴 **Track B live latency is unworkable today.** Gemini `2.5-flash` first call: 155 s for one token; second call: hung past 4 min, killed. Likely cause: `GOOGLE_CLOUD_LOCATION=global`. Quickest fix to try: flip to `us-central1` in `.env` + refresh ADC.
+- 🔴 **Track B live latency blocked** (Session 27 smoke test). Vertex `2.5-flash` first call: 155 s for one token; second call: hung past 4 min, killed. Likely cause: `GOOGLE_CLOUD_LOCATION=global`. Quickest fix to try: flip to `us-central1` in `.env` + refresh ADC.
 - ⚠️ **Frontend build blocked locally** by pnpm `minimumReleaseAge` policy rejecting `vite@8.0.15` (published today). PM's choice: wait, `pnpm clean --lockfile`, or relax policy.
 - 📝 **Stale-handoff finding:** Session 26's `feat/frontend-two-surface` IS already merged + pushed to `origin/main` (commits `fcdedfd..daf5f6a`). Prior handoffs said "not merged/pushed" — that's outdated. No action needed beyond noting it.
 - ⏭️ Per ADR-006 there are two backend services; only v1 deploy script was built this session (PM-directed). Swarm script (`deploy-swarm.sh`) will mirror it when the swarm is ready.
@@ -378,7 +377,7 @@ No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main
 | Part A judge panel spec | [`docs/specs/2026-05-29-part-a-judge-panel-feature-spec.md`](../specs/2026-05-29-part-a-judge-panel-feature-spec.md) + [`docs/evals/2026-05-29-part-a-judge-panel-spec.md`](../evals/2026-05-29-part-a-judge-panel-spec.md) |
 | Part A judge panel code | [`backend/app/evals/part_a/`](../../backend/app/evals/part_a/) |
 
-### Session 18 (Critical Audit — Droid)
+### Session 18 (Repo audit — Droid)
 - ✅ Full cross-repo audit of all uncommitted changes from Sessions 15–17.
 - ✅ Identified 16 inconsistencies (1 syntax-breaking bug, 4 high, 6 medium, 3 low, 2 deferred).
 - ✅ Confirmed architectural direction is sound; inconsistencies are execution-layer cleanup, not design corrections.

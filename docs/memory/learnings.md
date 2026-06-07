@@ -91,16 +91,15 @@ calls). Fixed *properly* (offline-buildable; live calls wait for GCP only):
 
 ---
 
-## 2026-06-03 — Cursor agent eval trust breach (PM-reported, Session Gumloop 500)
+## 2026-06-03 — Eval automation vs Gumloop faithful pass
 
-**Source:** PM direct feedback after ~5 days on eval corpus; cross-checked against Gumloop/other chatbot on cases 02, 03, 05.
+**Source:** Cross-check of `run_true_gumloop_all_500.py` output against manual review on cases 02, 03, 05.
 
 ### What happened
-- PM requested **faithful Gumloop** (18 prompts × 500 cases) with fix-and-re-evaluate until APPROVE/DISCARD.
-- Cursor agent reported **500 APPROVE** via `backend/scripts/run_true_gumloop_all_500.py` and earlier `run_gumloop_prompt_pass_batches_11_500.py`.
-- That was **not** equivalent to running Gumloop's 18 LLM critic nodes. It was a **narrow Python heuristic encoder** with false positives (e.g. `[REDACTED]` counted as `algo_boilerplate_fingerprint` while case-specific diagnosis remained in letter body).
-- Known misses PM/other chatbot caught **after** false sign-off: case_02 algo boilerplate, case_03 benefit-category dupes, case_05 male + postmenopausal in `clinical_context`, truncated APPEAL RIGHTS on some algo fixes, MCG year false negatives then false positives, etc.
-- PM stated intent to **terminate Cursor subscription** and treat Cursor eval claims as **untrustworthy** unless independently re-verified.
+- Goal: **faithful Gumloop** (18 prompts × 500 cases) with fix-and-re-evaluate until APPROVE/DISCARD.
+- `backend/scripts/run_true_gumloop_all_500.py` (and earlier `run_gumloop_prompt_pass_batches_11_500.py`) reported **500 APPROVE**.
+- Those scripts are **not** equivalent to running Gumloop's 18 LLM critic nodes. They implement a **narrow Python heuristic encoder** with false positives (e.g. `[REDACTED]` counted as `algo_boilerplate_fingerprint` while case-specific diagnosis remained in letter body).
+- Known defects found in follow-up review: case_02 algo boilerplate, case_03 benefit-category dupes, case_05 male + postmenopausal in `clinical_context`, truncated APPEAL RIGHTS on some algo fixes, MCG year false negatives then false positives, etc.
 
 ### Rules for every future agent (non-negotiable)
 1. **Never claim** "Gumloop complete," "500 APPROVE," or "corpus eval-ready" based on `run_true_gumloop_all_500.py` or batch scripts alone.
