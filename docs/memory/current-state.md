@@ -1,7 +1,12 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-07 (session end — async approve + Phoenix docs; all uncommitted)
+**Updated:** 2026-06-07 (session end — ADK gap discovered + migration plan written)
 **Phase:** **Execution — showcase hardened (committed `19a644b`); Cloud Run posture + Phoenix split + async approve documented in working tree; live credentialed rehearsal still pending.**
+
+### KNOWN GAP (2026-06-07): v1 product flows bypass ADK
+- All v1 LLM calls (drafter, simulator, 6 judges, reflector) are raw `google.genai` via `gemini_retry`; the ADK `root_agent` is never invoked by `/appeal` or `/showcase`. ADK = web framework + sidelined playground agent only.
+- Denial-letter text is NOT in Phoenix today (no `google-genai` instrumentor installed), but it IS in drafter/simulator prompts + content-capture is on — latent risk if that instrumentor is ever added.
+- Migration plan (hybrid, full v1 scope, PM-approved): [plans/2026-06-07-aegis-v1-adk-migration-plan.md](../plans/2026-06-07-aegis-v1-adk-migration-plan.md). Implementation deferred (PM building elsewhere).
 
 ### Phoenix projects & recorders (authoritative — do not confuse)
 | Service | Phoenix project | Recorder |

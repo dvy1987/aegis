@@ -2572,3 +2572,31 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 ### Deferred
 - Commit (PM has not requested).
 - `phoenix_mcp_lookup` still reads env `PHOENIX_PROJECT_NAME` — correct for v1 when running under `main_v1.py`; verify if any path still hardcodes wrong project.
+
+## 2026-06-07 16:20 - Handoff (ADK gap discovery + migration plan)
+
+### Done
+- Investigated whether denial-letter text reaches Phoenix for `/appeal` and `/showcase`. Verdict: NOT currently, but it is a latent risk. `parsed_case.denial_text` IS embedded in drafter + simulator prompts ([backend/app/aegis_v1/tools.py](../../backend/app/aegis_v1/tools.py) L181-182; [backend/app/aegis_v1/drafter_client.py](../../backend/app/aegis_v1/drafter_client.py) `_build_contents`), and `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT="true"` is set ([backend/app/app_utils/telemetry.py](../../backend/app/app_utils/telemetry.py)). It does NOT reach Phoenix today only because the `openinference-instrumentation-google-genai` instrumentor is NOT installed (only `google-adk` + `openai`), and these flows use raw `google.genai`, not ADK.
+- Major discovery: ALL v1 LLM calls (drafter, simulator, 6 judges, reflector) are raw `google.genai` via `generate_content_with_fallback`; the ADK `root_agent` ([backend/app/aegis_v1/agent.py](../../backend/app/aegis_v1/agent.py)) is never invoked by `/appeal` or `/showcase`. ADK is used only as the web framework + a sidelined playground agent.
+- Wrote a self-contained migration plan: [docs/plans/2026-06-07-aegis-v1-adk-migration-plan.md](../plans/2026-06-07-aegis-v1-adk-migration-plan.md).
+
+### Debated
+- "Built on ADK" interpretations: model-driven vs deterministic workflow vs wrap-each-call. PM chose **Hybrid** (student = ADK SequentialAgent; simulator/judges/reflector = separate LlmAgents), scope = **everything (v1)**.
+
+### Decisions
+- Target = hybrid ADK topology for v1, behind an `AEGIS_USE_ADK` flag with the raw-genai path kept as fallback. Full rationale + phases in the plan doc above.
+
+### Deferred
+- Implementation deferred: PM will build elsewhere (credit limit). Plan doc is the handoff artifact.
+- Two open decisions in the plan: (1) re-home `gemini_retry` via a custom `BaseLlm` wrapper (recommended) vs callbacks; (2) Phoenix content-capture / PHI policy (recommend disabling raw message-content capture by default).
+
+### Next Agent Should Know
+- The `root_agent` sets `output_schema` + `tools` together, which ADK disallows — likely why model-driven tool-calling was unreliable and got sidelined. The hybrid plan avoids this.
+- PM upgraded ADK after the plan was written (verified against 1.33.0). Re-run the API-verification snippet in the plan §4.1 before coding; if ADK 2.0+, evaluate the Workflow API.
+- Migrating to ADK WILL activate denial-text capture in Phoenix unless content capture is disabled — handle before the `/appeal` product path ships.
+
+### Revisit Triggers
+- If `openinference-instrumentation-google-genai` ever gets added (directly or transitively): raw-genai prompts (denial text) start exporting to Phoenix immediately.
+
+### Working Tree
+- Untracked: `docs/plans/2026-06-07-aegis-v1-adk-migration-plan.md` (only change this session). No code changes, nothing committed.
