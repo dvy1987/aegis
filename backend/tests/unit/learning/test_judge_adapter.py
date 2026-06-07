@@ -23,3 +23,27 @@ def test_adapter_returns_score_dict_with_five_dims_and_hard_gate():
 def test_adapter_hard_gate_fails_without_disclaimer():
     out = PanelJudgeAdapter().score(case=CASE, appeal_letter="Overturn this denial.")
     assert out["hard_gate_pass"] is False   # missing canonical disclaimer -> j1 FAIL
+
+
+def test_adapter_uses_private_teacher_case_for_judges(monkeypatch):
+    from app.evals.part_a import teacher_packet
+
+    real_build = teacher_packet.build_teacher_grading_packet
+    seen: dict = {}
+
+    def fake_build(case, appeal_package=None):
+        seen["case"] = case
+        return real_build(CASE, appeal_package)
+
+    monkeypatch.setattr(teacher_packet, "build_teacher_grading_packet", fake_build)
+
+    student_case = {
+        "case_id": "student-only",
+        "denial_letter_text": "student denial",
+        "clinical_context": "student context",
+        "_teacher_case": CASE,
+    }
+    PanelJudgeAdapter().score(case=student_case, appeal_letter=LETTER)
+
+    assert seen["case"] is CASE
+    assert "synthetic_provenance" in seen["case"]

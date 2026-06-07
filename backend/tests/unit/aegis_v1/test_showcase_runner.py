@@ -3,10 +3,19 @@ from __future__ import annotations
 from pathlib import Path
 
 from app.aegis_v1 import showcase_runner
-from app.aegis_v1.showcase_runner import approve_session, run_quick_session, run_serious_session
 from app.aegis_v1.showcase_manifest import load_showcase_manifest
+from app.aegis_v1.showcase_runner import (
+    approve_session,
+    run_quick_session,
+    run_serious_session,
+)
 from app.aegis_v1.showcase_session import ShowcaseSessionManager
-from app.learning.models import Candidate, Component, ExperimentResult, PromotionProposal
+from app.learning.models import (
+    Candidate,
+    Component,
+    ExperimentResult,
+    PromotionProposal,
+)
 
 
 def _proposal() -> PromotionProposal:
@@ -92,6 +101,67 @@ def test_quick_session_uses_holdout_and_training_rows_before_approval(
     assert calls[2]["playbook_overrides"]
     assert optimize_kwargs["slice_filters"] == ["Cigna:medical_necessity"]
     assert manager.get(session.session_id).status == "needs_approval"
+
+
+def test_training_signal_gives_teacher_packet_only_to_judges(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    seen_cases: list[dict] = []
+
+    class FakeRecorder:
+        pass
+
+    class FakeDrafter:
+        pass
+
+    class FakeJudge:
+        pass
+
+    def fake_run_evaluated_case(case_obj, **kwargs):
+        seen_cases.append(case_obj)
+
+        class Run:
+            trace_ref = "trace-1"
+
+        return Run()
+
+    monkeypatch.setattr(showcase_runner, "OtelPhoenixRecorder", FakeRecorder)
+    monkeypatch.setattr(showcase_runner, "GeminiDrafterClient", FakeDrafter)
+    monkeypatch.setattr(showcase_runner, "GeminiJudgeClient", FakeJudge)
+    monkeypatch.setattr(showcase_runner, "run_evaluated_case", fake_run_evaluated_case)
+
+    trace_ids = showcase_runner._seed_training_signal(
+        manager,
+        session.session_id,
+        cases=load_showcase_manifest().quick_train[:1],
+        dataset_split="train_split",
+    )
+
+    assert trace_ids == ["trace-1"]
+    assert seen_cases[0]["dataset_split"] == "train_split"
+    assert "synthetic_provenance" in seen_cases[0]
+    assert "denial_pattern_sources" in seen_cases[0]
+
+
+def test_optimizer_dataset_keeps_drafter_fields_student_safe_with_private_teacher_case() -> None:
+    item = showcase_runner._dataset(load_showcase_manifest().quick_train[:1])[0]
+    drafter_payload = {
+        "parsed_case": item["parsed_case"],
+        "citations": item["citations"],
+        "phoenix_summary": item["phoenix_summary"],
+        "denial_letter_text": item["denial_letter_text"],
+        "clinical_context": item["clinical_context"],
+    }
+    haystack = str(drafter_payload)
+
+    assert "synthetic_provenance" not in haystack
+    assert "denial_pattern_sources" not in haystack
+    assert "patient_profile" not in haystack
+    assert "synthetic_provenance" in item["_teacher_case"]
 
 
 def test_approve_session_writes_rollback_checkpoint_before_promotion(

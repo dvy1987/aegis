@@ -4,10 +4,11 @@ from typing import TYPE_CHECKING, Any, Literal
 from uuid import uuid4
 
 from app.aegis_v1.library_context import prepare_library_context
-from app.aegis_v1.retrieval_context import reset_controlled_retrieval, set_controlled_retrieval
-from app.aegis_v1.schemas import AppealPackage
-from app.aegis_v1.schemas import Playbook
-from app.aegis_v1.schemas import TraceMetadata
+from app.aegis_v1.retrieval_context import (
+    reset_controlled_retrieval,
+    set_controlled_retrieval,
+)
+from app.aegis_v1.schemas import AppealPackage, Playbook, TraceMetadata
 from app.aegis_v1.tools import (
     case_parser,
     corpus_retrieval,
@@ -74,11 +75,11 @@ def run_aegis_v1_pipeline(
     else:
         phoenix = {
             "status": "disabled",
-            "query": "measurement mode disables Phoenix memory",
+            "query": "request disabled Phoenix memory",
             "similar_trace_count": 0,
             "failure_patterns": [],
             "success_traits": [],
-            "risk_flags": ["phoenix_mcp_measurement_disabled"],
+            "risk_flags": ["phoenix_mcp_request_disabled"],
         }
     if playbook_override is not None:
         playbook = dict(playbook_override)

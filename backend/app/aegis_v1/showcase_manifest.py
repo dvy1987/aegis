@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel, Field
 
-
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(os.environ.get("AEGIS_REPO_ROOT", Path(__file__).resolve().parents[3]))
 DEFAULT_MANIFEST_PATH = REPO_ROOT / "eval" / "benchmarks" / "v1_showcase_100" / "manifest.json"
 CASES_DIR = REPO_ROOT / "eval" / "cases" / "drafts"
 
@@ -20,6 +20,20 @@ class ShowcaseCase(BaseModel):
     denial_type: str
     denial_letter_text: str
     clinical_context: str = ""
+    teacher_case: dict[str, Any] = Field(default_factory=dict, exclude=True)
+
+    def student_case(self, *, dataset_split: str) -> dict[str, Any]:
+        return {
+            "case_id": self.case_id,
+            "denial_letter_text": self.denial_letter_text,
+            "clinical_context": self.clinical_context,
+            "dataset_split": dataset_split,
+        }
+
+    def judge_case(self, *, dataset_split: str) -> dict[str, Any]:
+        case = dict(self.teacher_case)
+        case.update(self.student_case(dataset_split=dataset_split))
+        return case
 
 
 class ShowcaseManifest(BaseModel):
@@ -59,6 +73,7 @@ def _load_case(case_id: str) -> ShowcaseCase:
         denial_type=str(data.get("denial_type") or "unknown").replace(" ", "_").lower(),
         denial_letter_text=str(data.get("denial_letter_text") or ""),
         clinical_context=str(data.get("clinical_context") or ""),
+        teacher_case=data,
     )
 
 

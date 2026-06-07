@@ -365,3 +365,22 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 
 **Artifacts produced.** `docs/adr/ADR-006-multi-service-backend-topology.md`.
 
+---
+
+## 2026-06-06 — Reversible decision: v1 drafter sees sanitized Phoenix trace summaries in all drafting phases
+
+**Decision.** Keep sanitized Phoenix memory visible to the v1 drafter in normal/live drafting, clean measurement drafting, and optimizer candidate drafting. Phoenix remains load-bearing both as runtime memory and as the learner's trace/annotation store.
+
+**Rationale.** PM preference after discussion: the drafter may benefit from sanitized prior-trace patterns during the live demo, while the learner still uses Phoenix traces and judge annotations to propose prompt/playbook changes. This makes Phoenix visibly useful in the draft itself and in the learning loop.
+
+**Boundaries.**
+- Drafter may see only sanitized Phoenix summaries (`failure_patterns`, `success_traits`, risk flags).
+- Drafter and learner must still never see raw answer-key fields such as injected flaws, `synthetic_provenance`, or exploitable weaknesses.
+- Judges may see the curated teacher packet, including injected flaws, denial patterns, and relevant denial-letter references.
+
+**Status.** Accepted as a reversible demo decision.
+
+**Revisit triggers.**
+- If judges or PM decide Phoenix runtime hints blur the "learned prompt/playbook improvement" story, flip normal/measurement drafting back to Phoenix-off while preserving learner access to Phoenix traces.
+- If any firewall test shows teacher-only metadata reaching drafter or learner inputs, revert immediately and repair before demo.
+

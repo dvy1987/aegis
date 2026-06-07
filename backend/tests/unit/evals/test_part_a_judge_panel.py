@@ -4,8 +4,10 @@ from app.evals.part_a.deterministic_gates import safety_scope_gate
 from app.evals.part_a.llm_judges import OfflineHeuristicJudgeClient
 from app.evals.part_a.panel import run_panel
 from app.evals.part_a.schemas import CANONICAL_DISCLAIMER
-from app.evals.part_a.teacher_packet import build_student_case_packet
-from app.evals.part_a.teacher_packet import build_teacher_grading_packet
+from app.evals.part_a.teacher_packet import (
+    build_student_case_packet,
+    build_teacher_grading_packet,
+)
 
 
 def _case_obj() -> dict:
@@ -83,6 +85,8 @@ def test_teacher_packet_includes_answer_key() -> None:
     assert teacher.expected_appeal_vectors
     assert teacher.exploitable_weaknesses
     assert teacher.matrix_cell["sub_tactic"] == "level_of_care_too_high"
+    assert teacher.denial_letter_references
+    assert teacher.denial_letter_references[0]["title"]
 
 
 def test_teacher_packet_parses_pattern_id_prefixes() -> None:

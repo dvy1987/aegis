@@ -4,7 +4,6 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
-
 GateVerdict = Literal["PASS", "FAIL"]
 AnchorScore = Literal[1, 3, 5]
 JudgeScore = Literal[1, 3, 5, "PASS", "FAIL"]
@@ -38,6 +37,7 @@ class TeacherGradingPacket(BaseModel):
     clinical_context: str
     matrix_cell: dict[str, Any] = Field(default_factory=dict)
     denial_pattern_sources: list[str] = Field(default_factory=list)
+    denial_letter_references: list[dict[str, Any]] = Field(default_factory=list)
     expected_appeal_vectors: list[str] = Field(default_factory=list)
     exploitable_weaknesses: list[str] = Field(default_factory=list)
     strong_defenses: list[str] = Field(default_factory=list)

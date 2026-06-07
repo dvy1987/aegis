@@ -7,7 +7,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(os.environ.get("AEGIS_REPO_ROOT", Path(__file__).resolve().parents[3]))
 EVAL_DIR = REPO_ROOT / "eval"
 SCHEMA_PATH = EVAL_DIR / "case_schema.json"
 MATRIX_PATH = EVAL_DIR / "diversity_matrix.json"
@@ -110,10 +110,10 @@ def sample_denial_patterns(
         if p.get("category") == "mhpaea_parity" and specialty != "behavioral_health":
             continue
         valid_patterns.append(p)
-    
+
     if not valid_patterns:
         return []
-    
+
     # Try to pick patterns from different categories
     chosen = []
     seen_categories = set()
@@ -125,7 +125,7 @@ def sample_denial_patterns(
             seen_categories.add(cat)
             if len(chosen) >= max_patterns:
                 break
-    
+
     # If we still need more, just pick any valid
     if len(chosen) < max_patterns:
         for p in valid_patterns:
@@ -133,7 +133,7 @@ def sample_denial_patterns(
                 chosen.append(p)
                 if len(chosen) >= max_patterns:
                     break
-    
+
     return chosen
 
 

@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any, Literal
 
 SplitName = Literal["benchmark_train", "benchmark_holdout"]
 
-_REPO_ROOT = Path(__file__).resolve().parents[3]
+_REPO_ROOT = Path(os.environ.get("AEGIS_REPO_ROOT", Path(__file__).resolve().parents[3]))
 _DRAFTS_DIR = _REPO_ROOT / "eval" / "cases" / "drafts"
 _TRAIN_RATIO = 0.6
 

@@ -2438,3 +2438,30 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - Commit the second pass as one logical commit after final status check.
+
+---
+
+## 2026-06-06 — Handoff (Droid - backend reliability review + Phoenix visibility decision)
+
+### Done
+- Reviewed `ampchat.md` skeptically against repo code instead of accepting Amp's conclusions wholesale.
+- Confirmed live `/v1/showcase/manifest` was returning `500`; root cause is deployment packaging/path mismatch for repo-root `eval/` and `playbooks/` assets when deploying from `backend/`.
+- Implemented local fixes so v1 Cloud Run build context includes showcase/eval assets and playbooks, and runtime path roots are explicit (`AEGIS_REPO_ROOT=/code`, `AEGIS_BACKEND_ROOT=/code`).
+- Hardened v1 demo deployment settings in `backend/deploy-v1.sh`: single instance, single concurrency, always-on CPU, explicit Gemini preview model env vars.
+- Added v1 Gemini pacing/backoff helper with configurable env knobs (`AEGIS_GEMINI_MIN_INTERVAL_SECONDS`, `AEGIS_GEMINI_MAX_RETRIES`, backoff base/max/jitter) and wired it into v1 drafter/simulator/judge/reflection/planner-refinement calls.
+- Added denial-letter references to the judge-only teacher packet.
+- Recorded reversible PM decision: v1 drafter sees sanitized Phoenix trace summaries in normal/live drafting, measurement drafting, and optimizer candidate drafting.
+
+### Decisions / Boundaries
+- **Phoenix visibility:** PM chose to keep Phoenix runtime memory visible to the drafter across all v1 drafting phases for demo usefulness. This is reversible.
+- **Firewall remains mandatory:** drafter and learner may see sanitized Phoenix summaries and laundered judge notes only. They must not see injected flaws, raw `synthetic_provenance`, exploitable weaknesses, or other answer-key fields.
+- **Judges should see enough context:** judge-only teacher packet should include denial patterns/injected flaws and relevant denial-letter references.
+- **Cloud library note:** the real library is cloud-backed; do not make the old local corpus load-bearing.
+
+### Still Pending
+- Run validators after the latest Phoenix visibility changes. Prior interrupted validation had not completed.
+- Revisit the judge packet later if PM wants a more curated field list beyond adding `denial_letter_references`.
+- Live redeploy/rehearsal still needed to confirm `/v1/showcase/manifest` returns `200` in Cloud Run.
+
+### Working Tree
+- Dirty. Includes backend deploy/path hardening, Gemini pacing/backoff, teacher-packet reference changes, Phoenix-visibility change, tests, decision log, and this handoff.

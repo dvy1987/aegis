@@ -29,13 +29,43 @@
 
 set -euo pipefail
 
-ENV_FILE="../.env"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+ENV_FILE="${REPO_ROOT}/.env"
 if [[ -f "${ENV_FILE}" ]]; then
   set -a
   # shellcheck disable=SC1090
   source "${ENV_FILE}"
   set +a
 fi
+
+BUILD_CONTEXT=""
+cleanup() {
+  if [[ -n "${BUILD_CONTEXT}" && -d "${BUILD_CONTEXT}" ]]; then
+    rm -rf "${BUILD_CONTEXT}"
+  fi
+}
+trap cleanup EXIT
+
+prepare_build_context() {
+  BUILD_CONTEXT="$(mktemp -d "${TMPDIR:-/tmp}/aegis-v1-build.XXXXXX")"
+  rsync -a \
+    --exclude ".venv" \
+    --exclude ".pytest_cache" \
+    --exclude ".ruff_cache" \
+    --exclude "__pycache__" \
+    --exclude "tests" \
+    "${SCRIPT_DIR}/" "${BUILD_CONTEXT}/"
+
+  mkdir -p "${BUILD_CONTEXT}/eval/benchmarks"
+  cp -R "${REPO_ROOT}/eval/benchmarks/v1_showcase_100" "${BUILD_CONTEXT}/eval/benchmarks/"
+  cp -R "${REPO_ROOT}/eval/cases" "${BUILD_CONTEXT}/eval/"
+  cp -R "${REPO_ROOT}/eval/judges" "${BUILD_CONTEXT}/eval/"
+  if [[ -f "${REPO_ROOT}/eval/denial_patterns.json" ]]; then
+    cp "${REPO_ROOT}/eval/denial_patterns.json" "${BUILD_CONTEXT}/eval/"
+  fi
+  cp -R "${REPO_ROOT}/playbooks" "${BUILD_CONTEXT}/playbooks"
+}
 
 PROJECT_ID="${PROJECT_ID:-${GOOGLE_CLOUD_PROJECT:-$(gcloud config get-value project 2>/dev/null || true)}}"
 REGION="${REGION:-us-central1}"
@@ -134,7 +164,7 @@ About to deploy:
   Region            : ${REGION}
   Phoenix project   : ${PHOENIX_PROJECT}
   Phoenix collector : ${PHOENIX_COLLECTOR}
-  Source dir        : $(pwd)
+  Source dir        : ${SCRIPT_DIR}
   Builder           : Cloud Build (no local Docker required)
   Secret            : ${SECRET_NAME}  (mounted as PHOENIX_API_KEY)
 
@@ -150,8 +180,19 @@ ENV_VARS=(
   "GOOGLE_CLOUD_PROJECT=${PROJECT_ID}"
   "GOOGLE_CLOUD_LOCATION=${GOOGLE_CLOUD_LOCATION:-global}"
   "GOOGLE_GENAI_USE_VERTEXAI=TRUE"
+  "AEGIS_DRAFTER_MODEL=${AEGIS_DRAFTER_MODEL:-gemini-3.1-pro-preview}"
+  "AEGIS_SIMULATOR_MODEL=${AEGIS_SIMULATOR_MODEL:-gemini-3.1-pro-preview}"
+  "AEGIS_JUDGE_MODEL=${AEGIS_JUDGE_MODEL:-gemini-3.1-pro-preview}"
+  "AEGIS_REFLECTION_MODEL=${AEGIS_REFLECTION_MODEL:-gemini-3.1-pro-preview}"
+  "AEGIS_GEMINI_MIN_INTERVAL_SECONDS=${AEGIS_GEMINI_MIN_INTERVAL_SECONDS:-2}"
+  "AEGIS_GEMINI_MAX_RETRIES=${AEGIS_GEMINI_MAX_RETRIES:-4}"
+  "AEGIS_GEMINI_BACKOFF_BASE_SECONDS=${AEGIS_GEMINI_BACKOFF_BASE_SECONDS:-5}"
+  "AEGIS_GEMINI_BACKOFF_MAX_SECONDS=${AEGIS_GEMINI_BACKOFF_MAX_SECONDS:-60}"
+  "AEGIS_GEMINI_BACKOFF_JITTER_SECONDS=${AEGIS_GEMINI_BACKOFF_JITTER_SECONDS:-0.5}"
   "PHOENIX_PROJECT_NAME=${PHOENIX_PROJECT}"
   "PHOENIX_COLLECTOR_ENDPOINT=${PHOENIX_COLLECTOR}"
+  "AEGIS_BACKEND_ROOT=/code"
+  "AEGIS_REPO_ROOT=/code"
   "VERTEX_SEARCH_PROJECT=${VERTEX_SEARCH_PROJECT:-${PROJECT_ID}}"
   "VERTEX_SEARCH_LOCATION=${VERTEX_SEARCH_LOCATION:-global}"
   "VERTEX_SEARCH_DATA_STORE_ID=${VERTEX_SEARCH_DATA_STORE_ID:-}"
@@ -166,23 +207,26 @@ fi
 # Join with comma for --set-env-vars.
 ENV_VARS_JOINED=$(IFS=,; echo "${ENV_VARS[*]}")
 
-if [ ! -f "uv.lock" ]; then
+if [[ ! -f "${SCRIPT_DIR}/uv.lock" ]]; then
   echo "Generating uv.lock..."
-  uv lock
+  (cd "${SCRIPT_DIR}" && uv lock)
 fi
+
+prepare_build_context
 
 gcloud run deploy "${SERVICE_NAME}" \
   --project "${PROJECT_ID}" \
   --region "${REGION}" \
-  --source . \
+  --source "${BUILD_CONTEXT}" \
   --allow-unauthenticated \
   --port 8080 \
   --cpu 2 \
   --memory 1Gi \
   --min-instances 1 \
-  --max-instances 3 \
+  --max-instances 1 \
   --timeout 300s \
-  --concurrency 8 \
+  --concurrency 1 \
+  --no-cpu-throttling \
   --set-env-vars "${ENV_VARS_JOINED}" \
   --update-secrets "PHOENIX_API_KEY=${SECRET_NAME}:latest" \
   --quiet

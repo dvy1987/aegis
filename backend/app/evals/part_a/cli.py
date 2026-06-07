@@ -2,19 +2,18 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 from app.aegis_v1.pipeline import run_aegis_v1_pipeline
-from app.evals.part_a.llm_judges import GeminiJudgeClient
-from app.evals.part_a.llm_judges import OfflineHeuristicJudgeClient
+from app.evals.part_a.llm_judges import GeminiJudgeClient, OfflineHeuristicJudgeClient
 from app.evals.part_a.panel import run_panel
-from app.evals.part_a.teacher_packet import build_teacher_grading_packet
-from app.evals.part_a.teacher_packet import load_case
+from app.evals.part_a.teacher_packet import build_teacher_grading_packet, load_case
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
-PLAYBOOK_DIR = REPO_ROOT / "backend" / "app" / "aegis_v1" / "playbooks"
+REPO_ROOT = Path(os.environ.get("AEGIS_REPO_ROOT", Path(__file__).resolve().parents[4]))
+PLAYBOOK_DIR = REPO_ROOT / "playbooks"
 
 
 def _case_paths(args: argparse.Namespace) -> list[Path]:
@@ -68,7 +67,7 @@ def _run_learning(panel_report_path: Path, slice_filter: str, approver: str) -> 
     # If the playbook file for this slice doesn't exist yet the coordinator will still
     # run — it just won't have a prior playbook to diff against.
     try:
-        from app.aegis_v1.tools import playbook_loader, CURRENT_PROMPT_VERSION
+        from app.aegis_v1.tools import CURRENT_PROMPT_VERSION, playbook_loader
         from app.learning.models import Component
         pb = playbook_loader(*slice_filter.split(":", 1)) if ":" in slice_filter else {}
         insurer, denial_type = (slice_filter.split(":", 1) + ["unknown"])[:2]

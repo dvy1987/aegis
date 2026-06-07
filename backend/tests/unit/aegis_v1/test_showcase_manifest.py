@@ -33,11 +33,32 @@ def test_manifest_quick_sets_are_subsets_of_serious_sets() -> None:
 
 def test_manifest_case_metadata_is_student_safe() -> None:
     manifest = load_showcase_manifest()
-    public = manifest.quick_train[0].model_dump()
+    case = manifest.quick_train[0]
+    public = case.model_dump()
 
     assert public["headline"]
     assert "denial_letter_text" in public
     assert "clinical_context" in public
+    assert "teacher_case" not in public
     assert "expected_appeal_vectors" not in public
     assert "exploitable_weaknesses" not in public
     assert "synthetic_provenance" not in public
+
+    student = case.student_case(dataset_split="test_split")
+    assert student == {
+        "case_id": case.case_id,
+        "denial_letter_text": case.denial_letter_text,
+        "clinical_context": case.clinical_context,
+        "dataset_split": "test_split",
+    }
+
+
+def test_manifest_keeps_teacher_metadata_for_judges_only() -> None:
+    case = load_showcase_manifest().quick_train[0]
+    judge_case = case.judge_case(dataset_split="judge_split")
+
+    assert judge_case["case_id"] == case.case_id
+    assert judge_case["dataset_split"] == "judge_split"
+    assert "synthetic_provenance" in judge_case
+    assert "denial_pattern_sources" in judge_case
+    assert "patient_profile" in judge_case

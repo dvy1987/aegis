@@ -96,16 +96,20 @@ class GeminiReflectionClient:
     name = "gemini_reflection"
 
     def __init__(self, model: str | None = None, location: str = "global") -> None:
-        self.model = model or os.environ.get("AEGIS_REFLECTION_MODEL", "gemini-3.1-pro")
+        self.model = model or os.environ.get("AEGIS_REFLECTION_MODEL", "gemini-3.1-pro-preview")
         self.location = location
 
     def reflect(self, *, component, signal, minibatch) -> Component:
         from google import genai
         from google.genai import types
+
+        from app.gemini_retry import generate_content_with_retry
+
         prompt = build_reflection_prompt(component=component, signal=signal, minibatch=minibatch)
         try:
             client = genai.Client(vertexai=True, location=self.location)
-            resp = client.models.generate_content(
+            resp = generate_content_with_retry(
+                client.models.generate_content,
                 model=self.model, contents=prompt,
                 config=types.GenerateContentConfig(temperature=0.7))
             return _apply_text_edit(component, resp.text)

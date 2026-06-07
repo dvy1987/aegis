@@ -34,7 +34,6 @@ from app.learning.models import (
 )
 from app.learning.signal import FORBIDDEN_FIELDS
 
-
 # ---------------------------------------------------------------------------
 # Pure transforms (offline-tested)
 # ---------------------------------------------------------------------------
@@ -211,8 +210,9 @@ def component_version_from_prompt_record(
 # ---------------------------------------------------------------------------
 
 
-_REPO_ROOT = Path(__file__).resolve().parents[3]
-_PROMPT_DIR = _REPO_ROOT / "backend" / "app" / "aegis_v1" / "prompts"
+_REPO_ROOT = Path(os.environ.get("AEGIS_REPO_ROOT", Path(__file__).resolve().parents[3]))
+_BACKEND_ROOT = Path(os.environ.get("AEGIS_BACKEND_ROOT", _REPO_ROOT / "backend"))
+_PROMPT_DIR = _BACKEND_ROOT / "app" / "aegis_v1" / "prompts"
 _PLAYBOOK_DIR = _REPO_ROOT / "playbooks"
 
 
@@ -344,7 +344,7 @@ class LivePhoenixLearningStore:
                 spans_df = spans_df.reset_index()
             except ValueError:
                 spans_df = spans_df.reset_index(drop=True)
-                
+
         spans_records = json.loads(
             spans_df.to_json(orient="records", default_handler=str)
         )

@@ -38,8 +38,8 @@ def run_measurement_case(
     """Run clean measurement: v1 drafter plus simulator only.
 
     This path deliberately bypasses `run_evaluated_case`: no recorder, no judges,
-    no Phoenix annotations, and no LearningCoordinator signal. Phoenix memory reads
-    are disabled through a request-scoped pipeline parameter, not process env.
+    no Phoenix annotations, and no LearningCoordinator signal. The drafter still
+    receives the same sanitized Phoenix memory summary used by normal v1 drafting.
     """
 
     package = run_aegis_v1_pipeline(
@@ -52,7 +52,6 @@ def run_measurement_case(
         drafter_prompt_version=drafter_prompt_version,
         drafter_prompt_text=drafter_prompt_text,
         playbook_override=playbook_override,
-        use_phoenix_memory=False,
     )
 
     from app.aegis_v1.tools import simulator

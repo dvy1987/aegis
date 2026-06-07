@@ -11,18 +11,17 @@ from rank_bm25 import BM25Okapi
 from app.aegis_v1.schemas import (
     AppealDraft,
     CitationHit,
+    ParsedCase,
     PhoenixSummary,
     Playbook,
     RetrievalResult,
     SelfCheckResult,
 )
-from app.aegis_v1.schemas import ParsedCase
-
 
 DISCLAIMER = "Not legal or medical advice. Draft assistance only."
 
-BACKEND_ROOT = Path(__file__).resolve().parents[2]
-REPO_ROOT = BACKEND_ROOT.parent
+BACKEND_ROOT = Path(os.environ.get("AEGIS_BACKEND_ROOT", Path(__file__).resolve().parents[2]))
+REPO_ROOT = Path(os.environ.get("AEGIS_REPO_ROOT", BACKEND_ROOT.parent))
 CORPUS_DIR = BACKEND_ROOT / "corpus"
 PLAYBOOK_DIR = REPO_ROOT / "playbooks"
 
@@ -416,7 +415,7 @@ def draft_appeal(
     retrieval_results: dict[str, Any],
     playbook: dict[str, Any],
     phoenix_summary: dict[str, Any],
-    client: "DrafterLLMClient | None" = None,
+    client: Any | None = None,
     prompt_version: str | None = None,
     prompt_text: str | None = None,
 ) -> dict[str, Any]:
@@ -426,8 +425,8 @@ def draft_appeal(
     wrapper instead so the DI seam never reaches the model's tool schema."""
 
     from app.aegis_v1.drafter_client import (
-        GeminiDrafterClient,
         DrafterLLMClient,
+        GeminiDrafterClient,
         get_active_drafter_prompt_version,
         load_drafter_prompt,
     )
@@ -545,15 +544,15 @@ def simulator(
     parsed_case: dict[str, Any],
     appeal_draft: dict[str, Any],
     self_check_result: dict[str, Any],
-    client: "SimulatorClient | None" = None,
+    client: Any | None = None,
 ) -> dict[str, Any]:
     """Run the Insurer Persona Outcome Simulator: LLM critique-first feature
     judgment, then deterministic published-rules scoring. Not a Student tool —
     invoked by the orchestration/eval layer (D11). `self_check_result` is accepted
     for interface stability."""
+    from app.aegis_v1.schemas import FeatureAssessment
     from app.aegis_v1.simulator_client import GeminiSimulatorClient, SimulatorClient
     from app.aegis_v1.simulator_scoring import load_simulator_rules, score_outcome
-    from app.aegis_v1.schemas import FeatureAssessment
 
     case = ParsedCase.model_validate(parsed_case)
     draft = AppealDraft.model_validate(appeal_draft)

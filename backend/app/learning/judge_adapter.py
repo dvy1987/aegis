@@ -20,7 +20,7 @@ class PanelJudgeAdapter:
 
         appeal_package = {"appeal_package_draft": {
             "appeal_letter": appeal_letter, "missing_evidence_checklist": [], "citations_used": []}}
-        teacher = build_teacher_grading_packet(case)
+        teacher = build_teacher_grading_packet(case.get("_teacher_case") or case)
         report = run_panel(appeal_package, teacher, judge_client=self.judge_client)
         return {
             "dimension_scores": dict(report.dimension_scores),

@@ -5,7 +5,6 @@ import os
 from pathlib import Path
 from typing import Any, Protocol
 
-
 # Part A prompts are colocated with the aegis_v1 backend (matching the
 # case_generator pattern). Swarm/Part B prompts live under aegis_swarm/prompts/.
 PROMPT_DIR = Path(__file__).resolve().parent / "prompts"
@@ -90,10 +89,13 @@ class GeminiDrafterClient:
         from google import genai
         from google.genai import types
 
+        from app.gemini_retry import generate_content_with_retry
+
         client = genai.Client(vertexai=True, location=self.location)
         contents = _build_contents(prompt, parsed_case, citations, playbook, phoenix_summary)
         try:
-            response = client.models.generate_content(
+            response = generate_content_with_retry(
+                client.models.generate_content,
                 model=self.model,
                 contents=contents,
                 config=types.GenerateContentConfig(temperature=0.3),
@@ -103,7 +105,8 @@ class GeminiDrafterClient:
             # retry once with a known-available fallback.
             msg = str(e)
             if ("404" in msg or "NOT_FOUND" in msg) and "gemini-3.1" in self.model:
-                response = client.models.generate_content(
+                response = generate_content_with_retry(
+                    client.models.generate_content,
                     model="gemini-2.5-pro",
                     contents=contents,
                     config=types.GenerateContentConfig(temperature=0.3),

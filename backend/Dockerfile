@@ -24,6 +24,8 @@ WORKDIR /code
 COPY ./pyproject.toml ./README.md ./uv.lock* ./simulator_rules.json ./
 
 COPY ./app ./app
+COPY ./eval ./eval
+COPY ./playbooks ./playbooks
 
 RUN uv sync --frozen
 
@@ -34,6 +36,8 @@ ARG AGENT_VERSION=0.0.0
 ENV AGENT_VERSION=${AGENT_VERSION}
 
 ENV PHOENIX_PROJECT_NAME=default
+ENV AEGIS_BACKEND_ROOT=/code
+ENV AEGIS_REPO_ROOT=/code
 
 EXPOSE 8080
 

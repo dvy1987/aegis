@@ -1,15 +1,17 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any
 
-from app.evals.part_a.schemas import CorpusExcerpt
-from app.evals.part_a.schemas import StudentCasePacket
-from app.evals.part_a.schemas import TeacherGradingPacket
+from app.evals.part_a.schemas import (
+    CorpusExcerpt,
+    StudentCasePacket,
+    TeacherGradingPacket,
+)
 
-
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(os.environ.get("AEGIS_REPO_ROOT", Path(__file__).resolve().parents[4]))
 DENIAL_PATTERNS_PATH = REPO_ROOT / "eval" / "denial_patterns.json"
 
 
@@ -93,6 +95,10 @@ def build_teacher_grading_packet(
     expected_vectors = _expected_vectors_for_sources(sources)
     exploitable = list(difficulty.get("exploitable_weaknesses", []) or [])
     strong_defenses = list(difficulty.get("strong_defenses", []) or [])
+    denial_letter_references = [
+        ref for ref in list(case_obj.get("denial_letter_references", []) or [])
+        if isinstance(ref, dict)
+    ]
     risk_flags: list[str] = []
 
     matrix_cell = provenance.get("matrix_cell", {}) or {}
@@ -112,6 +118,7 @@ def build_teacher_grading_packet(
         clinical_context=str(case_obj.get("clinical_context", "")),
         matrix_cell=dict(matrix_cell),
         denial_pattern_sources=sources,
+        denial_letter_references=denial_letter_references,
         expected_appeal_vectors=list(dict.fromkeys(expected_vectors)),
         exploitable_weaknesses=exploitable,
         strong_defenses=strong_defenses,

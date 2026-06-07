@@ -8,8 +8,7 @@ from typing import Any, Protocol
 
 from app.evals.part_a.schemas import JudgeResult
 
-
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(os.environ.get("AEGIS_REPO_ROOT", Path(__file__).resolve().parents[4]))
 PROMPT_DIR = REPO_ROOT / "eval" / "judges" / "part_a"
 
 
@@ -248,7 +247,7 @@ class GeminiJudgeClient:
         self.model = (
             model
             or os.environ.get(
-                "AEGIS_JUDGE_MODEL", "gemini-3.1-pro"
+                "AEGIS_JUDGE_MODEL", "gemini-3.1-pro-preview"
             )
         )
         self.location = location
@@ -257,10 +256,13 @@ class GeminiJudgeClient:
         from google import genai
         from google.genai import types
 
+        from app.gemini_retry import generate_content_with_retry
+
         prompt = load_judge_prompt(judge_id)
         payload = json.dumps(context, indent=2, default=str)
         client = genai.Client(vertexai=True, location=self.location)
-        response = client.models.generate_content(
+        response = generate_content_with_retry(
+            client.models.generate_content,
             model=self.model,
             contents=f"{prompt}\n\nCONTEXT JSON:\n{payload}",
             config=types.GenerateContentConfig(

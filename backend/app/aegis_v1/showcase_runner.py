@@ -21,7 +21,6 @@ from app.learning.phoenix_live import LivePhoenixLearningStore
 from app.learning.reflection_client import GeminiReflectionClient
 from app.learning.run_live import _creds_available
 
-
 logger = logging.getLogger(__name__)
 MeasurePhase = Literal["pre", "training_pre", "training_post", "post"]
 
@@ -41,12 +40,7 @@ def _is_cancelled(manager: ShowcaseSessionManager, session_id: str) -> bool:
 
 
 def _case_obj(case: ShowcaseCase, *, dataset_split: str) -> dict:
-    return {
-        "case_id": case.case_id,
-        "denial_letter_text": case.denial_letter_text,
-        "clinical_context": case.clinical_context,
-        "dataset_split": dataset_split,
-    }
+    return case.student_case(dataset_split=dataset_split)
 
 
 def _case_slice(case: ShowcaseCase) -> str:
@@ -79,6 +73,7 @@ def _dataset(cases: list[ShowcaseCase]) -> list[dict]:
                 ),
                 "denial_letter_text": case.denial_letter_text,
                 "clinical_context": case.clinical_context,
+                "_teacher_case": case.judge_case(dataset_split="showcase_optimizer"),
             }
         )
     return out
@@ -162,7 +157,7 @@ def _seed_training_signal(
             total_cases=len(cases),
         )
         run = run_evaluated_case(
-            _case_obj(case, dataset_split=dataset_split),
+            case.judge_case(dataset_split=dataset_split),
             recorder=recorder,
             drafter_client=drafter,
             judge_client=judge,

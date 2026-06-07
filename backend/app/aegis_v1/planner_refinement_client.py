@@ -81,6 +81,8 @@ class GeminiPlannerRefinementClient:
     ) -> str:
         from google import genai
 
+        from app.gemini_retry import generate_content_with_retry
+
         firewall_input = {
             "insurer": parsed_case.get("insurer"),
             "denial_type": parsed_case.get("denial_type"),
@@ -99,7 +101,8 @@ class GeminiPlannerRefinementClient:
             "Reply with the phrase only."
         )
         client = genai.Client(vertexai=True, location=self.location)
-        response = client.models.generate_content(
+        response = generate_content_with_retry(
+            client.models.generate_content,
             model=self.model,
             contents=[{"role": "user", "parts": [{"text": f"{prompt}\n\n{user}"}]}],
             config={"temperature": 0.2, "max_output_tokens": 128},
