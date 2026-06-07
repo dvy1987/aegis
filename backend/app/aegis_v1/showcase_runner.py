@@ -6,6 +6,12 @@ from typing import Literal
 from app.aegis_v1.drafter_client import GeminiDrafterClient
 from app.aegis_v1.showcase_manifest import ShowcaseCase, load_showcase_manifest
 from app.aegis_v1.showcase_rollback import PromotionStack
+from app.aegis_v1.showcase_resilience import (
+    failure_message,
+    insufficient_training_message,
+    min_training_cases_required,
+    no_learning_signal_message,
+)
 from app.aegis_v1.showcase_session import ShowcaseSessionManager
 from app.aegis_v1.simulator_client import GeminiSimulatorClient
 from app.aegis_v1.tools import case_parser, phoenix_mcp_lookup
@@ -109,14 +115,35 @@ def _measure(
             completed_cases=index - 1,
             total_cases=len(cases),
         )
-        result = run_measurement_case(
-            _case_obj(case, dataset_split=f"showcase_{phase}_measure_{session_id}"),
-            drafter_client=drafter,
-            simulator_client=simulator,
-            drafter_prompt_version=drafter_prompt_version,
-            drafter_prompt_text=drafter_prompt_text,
-            playbook_override=(playbook_overrides or {}).get(_case_slice(case)),
-        )
+        # Per-case isolation: one bad case (LLM error, malformed response, etc.)
+        # is recorded and skipped so the rest of the batch still completes,
+        # instead of failing the whole session.
+        try:
+            result = run_measurement_case(
+                _case_obj(case, dataset_split=f"showcase_{phase}_measure_{session_id}"),
+                drafter_client=drafter,
+                simulator_client=simulator,
+                drafter_prompt_version=drafter_prompt_version,
+                drafter_prompt_text=drafter_prompt_text,
+                playbook_override=(playbook_overrides or {}).get(_case_slice(case)),
+            )
+        except Exception as exc:
+            logger.warning(
+                "measurement case failed; skipping",
+                extra={
+                    "session_id": session_id,
+                    "showcase_stage": stage,
+                    "case_id": case.case_id,
+                },
+                exc_info=True,
+            )
+            manager.record_case_failure(
+                session_id,
+                phase=f"measure_{phase}",
+                case_id=case.case_id,
+                error=str(exc) or exc.__class__.__name__,
+            )
+            continue
         results.append(result.model_dump())
         manager.set_stage(
             session_id,
@@ -156,13 +183,33 @@ def _seed_training_signal(
             completed_cases=index - 1,
             total_cases=len(cases),
         )
-        run = run_evaluated_case(
-            case.judge_case(dataset_split=dataset_split),
-            recorder=recorder,
-            drafter_client=drafter,
-            judge_client=judge,
-            run_simulator=False,
-        )
+        # Per-case isolation: a failed judge/draft on one case is recorded and
+        # skipped so the training stage still gathers signal from the rest.
+        try:
+            run = run_evaluated_case(
+                case.judge_case(dataset_split=dataset_split),
+                recorder=recorder,
+                drafter_client=drafter,
+                judge_client=judge,
+                run_simulator=False,
+            )
+        except Exception as exc:
+            logger.warning(
+                "training-signal case failed; skipping",
+                extra={
+                    "session_id": session_id,
+                    "showcase_stage": "train_gepa",
+                    "case_id": case.case_id,
+                },
+                exc_info=True,
+            )
+            manager.record_case_failure(
+                session_id,
+                phase="train_gepa",
+                case_id=case.case_id,
+                error=str(exc) or exc.__class__.__name__,
+            )
+            continue
         trace_ids.append(run.trace_ref)
         manager.set_stage(
             session_id,
@@ -251,134 +298,149 @@ def _regression_summary(before: list[dict], after: list[dict]) -> str | None:
     return None
 
 
-def run_quick_session(session_id: str) -> None:
+def _checkpoint(manager: ShowcaseSessionManager, session_id: str):
+    return manager.get(session_id).checkpoint
+
+
+def _run_learning_session(
+    session_id: str,
+    *,
+    run_type: str,
+    train_cases: list[ShowcaseCase],
+    holdout_cases: list[ShowcaseCase],
+    max_rounds: int,
+    train_split: str,
+) -> None:
+    """Shared quick/serious flow. Checkpoint-aware: each stage is skipped if the
+    session checkpoint already marks it done, so a failed/interrupted run can be
+    resumed (via the resume endpoint) without redoing completed work."""
     manager = ShowcaseSessionManager()
-    manifest = load_showcase_manifest()
-    train_split = f"showcase_quick_train_{session_id}"
     try:
         if not _creds_available():
             manager.fail_stage(
                 session_id,
                 stage="queued",
                 code="missing_live_credentials",
-                message="Live quick run requires PHOENIX_API_KEY and Google ADC.",
+                message=failure_message("missing_live_credentials"),
                 retryable=True,
             )
             return
-        quick_train = manifest.quick_train
-        quick_holdout = manifest.quick_holdout
-        slice_filters = _slice_filters(quick_train)
-        _measure(manager, session_id, phase="pre", cases=quick_holdout)
-        _measure(manager, session_id, phase="training_pre", cases=quick_train)
-        trace_ids = _seed_training_signal(
-            manager,
-            session_id,
-            cases=quick_train,
-            dataset_split=train_split,
-        )
-        session = manager.get(session_id)
-        session.diagnostics.phoenix_trace_ids = trace_ids
-        manager._save(session)
-        proposal = _optimize(
-            cases=quick_train,
-            slice_filters=slice_filters,
-            train_split=train_split,
-            holdout_split=train_split,
-            max_rounds=1,
-        )
-        if proposal is None:
+        slice_filters = _slice_filters(train_cases)
+
+        if not _checkpoint(manager, session_id).pre_measure_done:
+            _measure(manager, session_id, phase="pre", cases=holdout_cases)
+            manager.save_checkpoint(session_id, pre_measure_done=True)
+
+        if not _checkpoint(manager, session_id).training_pre_done:
+            _measure(manager, session_id, phase="training_pre", cases=train_cases)
+            manager.save_checkpoint(session_id, training_pre_done=True)
+
+        if not _checkpoint(manager, session_id).training_signal_done:
+            trace_ids = _seed_training_signal(
+                manager,
+                session_id,
+                cases=train_cases,
+                dataset_split=train_split,
+            )
+            session = manager.get(session_id)
+            session.diagnostics.phoenix_trace_ids = trace_ids
+            manager._save(session)
+            manager.save_checkpoint(
+                session_id,
+                training_signal_done=True,
+                training_trace_ids=trace_ids,
+            )
+        else:
+            trace_ids = _checkpoint(manager, session_id).training_trace_ids
+
+        required = min_training_cases_required(len(train_cases))
+        if len(trace_ids) < required:
             manager.fail_stage(
                 session_id,
                 stage="train_gepa",
-                code="no_learning_signal",
-                message="Phoenix did not return learning signal for this quick run.",
+                code="insufficient_training_data",
+                message=insufficient_training_message(
+                    succeeded=len(trace_ids),
+                    required=required,
+                    total=len(train_cases),
+                ),
                 retryable=True,
             )
             return
-        candidate_prompt_version, candidate_prompt_text = _candidate_prompt(proposal)
-        _measure(
-            manager,
-            session_id,
-            phase="training_post",
-            cases=quick_train,
-            drafter_prompt_version=candidate_prompt_version,
-            drafter_prompt_text=candidate_prompt_text,
-            playbook_overrides=_candidate_playbooks(proposal),
-        )
+
+        if not _checkpoint(manager, session_id).optimize_done:
+            proposal = _optimize(
+                cases=train_cases,
+                slice_filters=slice_filters,
+                train_split=train_split,
+                holdout_split=train_split,
+                max_rounds=max_rounds,
+            )
+            if proposal is None:
+                manager.fail_stage(
+                    session_id,
+                    stage="train_gepa",
+                    code="no_learning_signal",
+                    message=no_learning_signal_message(trace_count=len(trace_ids)),
+                    retryable=True,
+                )
+                return
+            manager.set_proposal(session_id, proposal=proposal.model_dump())
+            manager.save_checkpoint(session_id, optimize_done=True)
+        else:
+            proposal = PromotionProposal.model_validate(
+                manager.get(session_id).proposal
+            )
+
+        if not _checkpoint(manager, session_id).training_post_done:
+            candidate_prompt_version, candidate_prompt_text = _candidate_prompt(proposal)
+            _measure(
+                manager,
+                session_id,
+                phase="training_post",
+                cases=train_cases,
+                drafter_prompt_version=candidate_prompt_version,
+                drafter_prompt_text=candidate_prompt_text,
+                playbook_overrides=_candidate_playbooks(proposal),
+            )
+            manager.save_checkpoint(session_id, training_post_done=True)
+
         manager.mark_needs_approval(session_id, proposal=proposal.model_dump())
     except Exception as exc:
         manager.fail_stage(
             session_id,
             stage="train_gepa",
             code=exc.__class__.__name__,
-            message=str(exc) or "Showcase quick run failed.",
+            message=(
+                f"The {run_type} run hit an unexpected error and stopped. "
+                f"Technical detail: {str(exc) or exc.__class__.__name__}"
+            ),
             retryable=True,
         )
+
+
+def run_quick_session(session_id: str) -> None:
+    manifest = load_showcase_manifest()
+    _run_learning_session(
+        session_id,
+        run_type="quick",
+        train_cases=manifest.quick_train,
+        holdout_cases=manifest.quick_holdout,
+        max_rounds=1,
+        train_split=f"showcase_quick_train_{session_id}",
+    )
 
 
 def run_serious_session(session_id: str) -> None:
-    manager = ShowcaseSessionManager()
     manifest = load_showcase_manifest()
-    train_split = f"showcase_serious_train_{session_id}"
-    try:
-        if not _creds_available():
-            manager.fail_stage(
-                session_id,
-                stage="queued",
-                code="missing_live_credentials",
-                message="Live serious run requires PHOENIX_API_KEY and Google ADC.",
-                retryable=True,
-            )
-            return
-        serious_train = manifest.serious_train
-        serious_holdout = manifest.serious_holdout
-        slice_filters = _slice_filters(serious_train)
-        _measure(manager, session_id, phase="pre", cases=serious_holdout)
-        _measure(manager, session_id, phase="training_pre", cases=serious_train)
-        trace_ids = _seed_training_signal(
-            manager,
-            session_id,
-            cases=serious_train,
-            dataset_split=train_split,
-        )
-        session = manager.get(session_id)
-        session.diagnostics.phoenix_trace_ids = trace_ids
-        manager._save(session)
-        proposal = _optimize(
-            cases=serious_train,
-            slice_filters=slice_filters,
-            train_split=train_split,
-            holdout_split=train_split,
-            max_rounds=3,
-        )
-        if proposal is None:
-            manager.fail_stage(
-                session_id,
-                stage="train_gepa",
-                code="no_learning_signal",
-                message="Phoenix did not return learning signal for this serious run.",
-                retryable=True,
-            )
-            return
-        candidate_prompt_version, candidate_prompt_text = _candidate_prompt(proposal)
-        _measure(
-            manager,
-            session_id,
-            phase="training_post",
-            cases=serious_train,
-            drafter_prompt_version=candidate_prompt_version,
-            drafter_prompt_text=candidate_prompt_text,
-            playbook_overrides=_candidate_playbooks(proposal),
-        )
-        manager.mark_needs_approval(session_id, proposal=proposal.model_dump())
-    except Exception as exc:
-        manager.fail_stage(
-            session_id,
-            stage="train_gepa",
-            code=exc.__class__.__name__,
-            message=str(exc) or "Showcase serious run failed.",
-            retryable=True,
-        )
+    _run_learning_session(
+        session_id,
+        run_type="serious",
+        train_cases=manifest.serious_train,
+        holdout_cases=manifest.serious_holdout,
+        max_rounds=3,
+        train_split=f"showcase_serious_train_{session_id}",
+    )
 
 
 def approve_session(session_id: str, *, approver: str) -> None:
@@ -391,7 +453,7 @@ def approve_session(session_id: str, *, approver: str) -> None:
                 session_id,
                 stage="promote",
                 code="cancelled",
-                message="Cancelled runs cannot be promoted.",
+                message=failure_message("cancelled"),
                 retryable=False,
             )
             return
@@ -400,7 +462,7 @@ def approve_session(session_id: str, *, approver: str) -> None:
                 session_id,
                 stage="promote",
                 code="missing_proposal",
-                message="No GEPA proposal is ready for approval.",
+                message=failure_message("missing_proposal"),
                 retryable=False,
             )
             return
@@ -440,6 +502,9 @@ def approve_session(session_id: str, *, approver: str) -> None:
             session_id,
             stage="promote",
             code=exc.__class__.__name__,
-            message=str(exc) or "Showcase approval failed.",
+            message=(
+                "Approval/promotion hit an unexpected error and stopped. "
+                f"Technical detail: {str(exc) or exc.__class__.__name__}"
+            ),
             retryable=True,
         )

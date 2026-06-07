@@ -96,8 +96,6 @@ class GeminiSimulatorClient:
         from google.genai import types
         from pydantic import BaseModel, Field
 
-        from app.gemini_retry import generate_content_with_retry
-
         class _Mark(BaseModel):
             anchor: Literal[1, 3, 5]
             evidence: str = ""
@@ -117,33 +115,19 @@ class GeminiSimulatorClient:
         ]
         prompt = _build_assess_prompt(denial_text, clinical_context, appeal_letter)
         try:
+            from app.gemini_retry import generate_content_with_fallback
+
             client = genai.Client(vertexai=True, location=self.location)
-            try:
-                response = generate_content_with_retry(
-                    client.models.generate_content,
-                    model=self.model,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(
-                        response_mime_type="application/json",
-                        response_schema=_Assessment,
-                        temperature=0.2,
-                    ),
-                )
-            except Exception as e:
-                msg = str(e)
-                if ("404" in msg or "NOT_FOUND" in msg) and "gemini-3.1" in self.model:
-                    response = generate_content_with_retry(
-                        client.models.generate_content,
-                        model="gemini-2.5-pro",
-                        contents=prompt,
-                        config=types.GenerateContentConfig(
-                            response_mime_type="application/json",
-                            response_schema=_Assessment,
-                            temperature=0.2,
-                        ),
-                    )
-                else:
-                    raise
+            response = generate_content_with_fallback(
+                client.models.generate_content,
+                model=self.model,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    response_schema=_Assessment,
+                    temperature=0.2,
+                ),
+            )
             data = json.loads(response.text)
             return FeatureAssessment(
                 critique=data.get("critique", ""),

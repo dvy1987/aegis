@@ -256,12 +256,15 @@ class GeminiJudgeClient:
         from google import genai
         from google.genai import types
 
-        from app.gemini_retry import generate_content_with_retry
+        from app.gemini_retry import generate_content_with_fallback
 
         prompt = load_judge_prompt(judge_id)
         payload = json.dumps(context, indent=2, default=str)
         client = genai.Client(vertexai=True, location=self.location)
-        response = generate_content_with_retry(
+        # If gemini-3.1-pro-preview isn't available in this project/region, run
+        # the SAME judging task on a known-available model rather than crashing
+        # the whole training stage. Judges are never skipped.
+        response = generate_content_with_fallback(
             client.models.generate_content,
             model=self.model,
             contents=f"{prompt}\n\nCONTEXT JSON:\n{payload}",

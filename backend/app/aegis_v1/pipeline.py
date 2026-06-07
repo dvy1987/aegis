@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import logging
 from typing import TYPE_CHECKING, Any, Literal
 from uuid import uuid4
 
-from app.aegis_v1.library_context import prepare_library_context
+from app.aegis_v1.library_context import (
+    degraded_library_context,
+    prepare_library_context,
+)
 from app.aegis_v1.retrieval_context import (
     reset_controlled_retrieval,
     set_controlled_retrieval,
@@ -21,6 +25,8 @@ from app.aegis_v1.v1_config import build_v1_library_stack
 
 if TYPE_CHECKING:
     from app.aegis_v1.drafter_client import DrafterLLMClient
+
+logger = logging.getLogger(__name__)
 
 
 def run_aegis_v1_pipeline(
@@ -47,15 +53,35 @@ def run_aegis_v1_pipeline(
         case_id=case_id,
     )
 
-    stack = library_stack or build_v1_library_stack()
-    lib_ctx = prepare_library_context(
-        parsed,
-        case_id=parsed["case_id"],
-        corpus_store=stack["corpus_store"],
-        discovery=stack.get("discovery"),
-        refinement_client=stack.get("refinement_client"),
-        cloud_library_used=bool(stack.get("uses_vertex_store")),
-    )
+    # The library (cloud Vertex Search + optional discovery) is a best-effort
+    # enrichment, never on the critical path. If building the stack or preparing
+    # the context throws for any reason (auth, network, misconfig), degrade to a
+    # no-citation context with a risk flag so drafting and the showcase
+    # optimization loop still run.
+    try:
+        stack = library_stack or build_v1_library_stack()
+        lib_ctx = prepare_library_context(
+            parsed,
+            case_id=parsed["case_id"],
+            corpus_store=stack["corpus_store"],
+            discovery=stack.get("discovery"),
+            refinement_client=stack.get("refinement_client"),
+            cloud_library_used=bool(stack.get("uses_vertex_store")),
+        )
+    except Exception:
+        logger.warning(
+            "library stack/context failed for case_id=%s; continuing without "
+            "citations so drafting/optimization is unaffected",
+            parsed.get("case_id"),
+            exc_info=True,
+        )
+        try:
+            from app.aegis_v1.search_planner import build_baseline_query
+
+            fallback_query = build_baseline_query(parsed)
+        except Exception:
+            fallback_query = ""
+        lib_ctx = degraded_library_context(query=fallback_query)
 
     token = set_controlled_retrieval(lib_ctx.retrieval)
     try:

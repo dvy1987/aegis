@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import logging
 import os
 from typing import Protocol
 
 from app.learning.models import Component, DimensionSignal, ScoredRun
+
+logger = logging.getLogger(__name__)
 
 # Hard constraints injected into every reflection so safety/firewall survive optimization.
 _REFLECTION_CONSTRAINTS = (
@@ -103,18 +106,28 @@ class GeminiReflectionClient:
         from google import genai
         from google.genai import types
 
-        from app.gemini_retry import generate_content_with_retry
+        from app.gemini_retry import generate_content_with_fallback
 
         prompt = build_reflection_prompt(component=component, signal=signal, minibatch=minibatch)
         try:
             client = genai.Client(vertexai=True, location=self.location)
-            resp = generate_content_with_retry(
+            # Same model-availability fallback as the drafter/simulator/judge so
+            # a missing preview model name doesn't silently stall learning.
+            resp = generate_content_with_fallback(
                 client.models.generate_content,
                 model=self.model, contents=prompt,
                 config=types.GenerateContentConfig(temperature=0.7))
             return _apply_text_edit(component, resp.text)
         except Exception:
-            return component   # no-op edit on failure → loop simply finds no improvement
+            # No-op edit on failure → the loop simply finds no improvement and
+            # halts cleanly instead of crashing. Logged so a stalled run is
+            # diagnosable (otherwise it looks like "no learning signal").
+            logger.warning(
+                "reflection failed for component=%s; returning unchanged (no improvement)",
+                getattr(component, "component_id", "?"),
+                exc_info=True,
+            )
+            return component
 
 
 class AnthropicReflectionClient:

@@ -56,6 +56,25 @@ class StageError(BaseModel):
     message: str
 
 
+class CaseFailure(BaseModel):
+    case_id: str
+    phase: str
+    error: str
+
+
+class ShowcaseCheckpoint(BaseModel):
+    """Tracks completed work so a failed run can resume instead of restarting."""
+
+    pre_measure_done: bool = False
+    training_pre_done: bool = False
+    training_signal_done: bool = False
+    optimize_done: bool = False
+    training_post_done: bool = False
+    training_trace_ids: list[str] = Field(default_factory=list)
+    training_completed_case_ids: list[str] = Field(default_factory=list)
+    failed_cases: list[CaseFailure] = Field(default_factory=list)
+
+
 class RunDiagnostics(BaseModel):
     stage: StageName = "queued"
     stage_started_at: str | None = None
@@ -86,6 +105,7 @@ class ShowcaseSession(BaseModel):
     post_measure_results: list[dict] = Field(default_factory=list)
     regression_detected: bool = False
     regression_summary: str | None = None
+    checkpoint: ShowcaseCheckpoint = Field(default_factory=ShowcaseCheckpoint)
 
 
 class ShowcaseSessionManager:
@@ -202,6 +222,47 @@ class ShowcaseSessionManager:
         session.regression_detected = bool(summary)
         session.regression_summary = summary
         session.updated_at = _now()
+        return self._save(session)
+
+    def record_case_failure(
+        self,
+        session_id: str,
+        *,
+        phase: str,
+        case_id: str,
+        error: str,
+    ) -> ShowcaseSession:
+        session = self.get(session_id)
+        session.checkpoint.failed_cases.append(
+            CaseFailure(case_id=case_id, phase=phase, error=error)
+        )
+        session.updated_at = _now()
+        return self._save(session)
+
+    def save_checkpoint(self, session_id: str, **updates) -> ShowcaseSession:
+        session = self.get(session_id)
+        for key, value in updates.items():
+            setattr(session.checkpoint, key, value)
+        session.updated_at = _now()
+        return self._save(session)
+
+    def set_proposal(self, session_id: str, *, proposal: dict | None) -> ShowcaseSession:
+        """Persist the GEPA proposal without changing run status, so a resumed
+        run can reuse it instead of re-running the optimizer."""
+        session = self.get(session_id)
+        session.proposal = proposal
+        session.updated_at = _now()
+        return self._save(session)
+
+    def mark_resumable(self, session_id: str) -> ShowcaseSession:
+        """Reset a failed retryable session to running so resume can continue."""
+        session = self.get(session_id)
+        if session.status != "failed" or not session.diagnostics.retryable:
+            raise SessionBusyError("session is not in a retryable failed state")
+        session.status = "running"
+        session.updated_at = _now()
+        session.diagnostics.stage_finished_at = None
+        session.diagnostics.last_error = None
         return self._save(session)
 
     def cancel(self, session_id: str) -> ShowcaseSession:

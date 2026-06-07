@@ -1,7 +1,15 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-06 (showcase quick/serious redesign locally implemented)
-**Phase:** **Execution — Phoenix learning loop live; v1/backend/frontend deployed; showcase quick/serious redesign locally implemented; live credentialed rehearsal still pending.**
+**Updated:** 2026-06-07 (showcase learning-loop robustness pass — local, uncommitted)
+**Phase:** **Execution — Phoenix learning loop live; v1/backend/frontend deployed; showcase quick/serious redesign implemented; learning-loop robustness pass done locally; live credentialed rehearsal still pending.**
+
+### 2026-06-07 - Showcase learning-loop robustness (local, uncommitted)
+- Library search/discovery failures now degrade gracefully — drafting and optimization continue without citations.
+- Unified Gemini fallback: `gemini-3.5-flash` + `thinking_level=high` for drafter, simulator, judge, and reflection.
+- Showcase robustness: per-case isolation, plain-English errors, minimum-training guard (50%), checkpoint/resume (`POST /v1/showcase/runs/{id}/resume`).
+- Day-zero restore snapshot + `backend/scripts/reset_to_day_zero.py` for blank-slate demo recovery.
+- Verification: `aegis_v1` tests 80 passed; full unit 301 passed, 5 pre-existing failures (unrelated).
+- Remaining: commit when PM asks; live credentialed rehearsal; redeploy to Cloud Run.
 
 ### 2026-06-06 - Showcase redesign implementation pass
 - Manifest moved to the redesigned split: quick = 8 train + 2 holdout; serious = 80 train + 20 holdout; quick train/holdout are subsets of serious train/holdout respectively.

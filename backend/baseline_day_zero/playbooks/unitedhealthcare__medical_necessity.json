@@ -1,0 +1,8 @@
+{
+  "insurer": "UnitedHealthcare",
+  "denial_type": "medical_necessity",
+  "version": "day_zero",
+  "tactics": ["Write a polite appeal letter."],
+  "required_evidence": [],
+  "risk_flags": []
+}

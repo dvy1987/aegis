@@ -27,6 +27,7 @@ Quick navigation for agents picking up this project.
 
 | Date | Session | Handoff file |
 |---|---|---|
+| 2026-06-07 | Session (Cursor — showcase learning-loop robustness + day-zero reset) | [agent-handoffs.md](agent-handoffs.md#2026-06-07--handoff-cursor--showcase-learning-loop-robustness--day-zero-reset) |
 | 2026-06-06 | Session (Codex — showcase workflow controls + 6-box matrix) | [agent-handoffs.md](agent-handoffs.md#2026-06-06---handoff-codex---showcase-workflow-controls--6-box-matrix) |
 | 2026-06-06 | Session (Codex — showcase redesign backend implementation pass) | [agent-handoffs.md](agent-handoffs.md#2026-06-06---handoff-codex---showcase-redesign-backend-implementation-pass) |
 | 2026-06-06 | Session (Droid — showcase baseline reset + redesign plan) | [agent-handoffs.md](agent-handoffs.md#2026-06-06-1750---handoff-droid---showcase-reset-to-day-zero-baseline) |

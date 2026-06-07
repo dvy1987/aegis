@@ -2465,3 +2465,46 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - Dirty. Includes backend deploy/path hardening, Gemini pacing/backoff, teacher-packet reference changes, Phoenix-visibility change, tests, decision log, and this handoff.
+
+---
+
+## 2026-06-07 — Handoff (Cursor — showcase learning-loop robustness + day-zero reset)
+
+### Done
+- Investigated reported v1 deployment issues: `eval/` + `playbooks/` are now staged into Cloud Run build context (`deploy-v1.sh` + `Dockerfile`); local `corpus/` omission is intentional (cloud library only).
+- Made library failures non-critical: `library_context.py` + `pipeline.py` degrade to empty citations instead of crashing drafting/optimization.
+- Unified Gemini fallback: `gemini-3.5-flash` with `thinking_level="high"` via `generate_content_with_fallback()` in `gemini_retry.py`; wired into drafter, simulator, judge, and reflection clients.
+- Built four showcase learning-loop robustness features:
+  1. **Per-case isolation** — one bad case skips, does not kill the stage.
+  2. **Plain-English failure messages** — `showcase_resilience.py` helpers wired into runner fail paths.
+  3. **Minimum-data guard** — optimizer blocked unless ≥50% of training cases produce judge traces (env-overridable).
+  4. **Resume/checkpoint** — stages checkpointed; `POST /v1/showcase/runs/{id}/resume` skips completed work; quick/serious runners merged into shared `_run_learning_session()`.
+- Added day-zero blank-slate snapshot (`backend/baseline_day_zero/`) + restore script (`backend/scripts/reset_to_day_zero.py`).
+- Tests: `aegis_v1` unit suite **80 passed**; full unit suite **301 passed, 5 failed** (all pre-existing, unrelated).
+
+### Debated
+- **Teacher-packet test failure:** Diagnosed as stale test fixture — `_case_obj()` missing `denial_letter_references` while real cases have it. Production code is fine. PM chose to leave the red test (cosmetic noise only).
+
+### Decisions
+- **Fallback model:** `gemini-3.5-flash` + `thinking_level="high"` (PM-approved).
+- **Minimum training threshold:** default 50% of training pool (`AEGIS_SHOWCASE_MIN_TRAINING_RATIO=0.5`, floor 3 cases).
+- **Teacher-packet test:** intentionally not fixed this session.
+
+### Deferred
+- Commit all uncommitted robustness work (PM did not request commit).
+- Live credentialed showcase rehearsal (Phoenix + ADC + Gemini).
+- Fix 4 other pre-existing unit failures (case generator anchor, 3× gumloop offline runner) — PM considers case gen/gumloop mostly over.
+- Cloud Run background-session reliability decision if live runs flake.
+
+### Next Agent Should Know
+- All robustness changes are local and **uncommitted**. Do not assume they are deployed.
+- Resume endpoint exists but needs live validation on a failed-then-resumed run.
+- `reset_to_day_zero.py` is the explicit recovery path before a clean learning demo; use `--dry-run` first.
+- Judge/reflection now share the same fallback path as drafter/simulator — if primary `gemini-3.1-pro-preview` is unavailable, fallback kicks in instead of hard-crash (judge) or silent no-op (reflection).
+
+### Revisit Triggers
+- Revisit 50% minimum-training threshold if quick runs fail too often on partial judge outages.
+- Revisit teacher-packet test if PM wants an all-green suite.
+
+### Working Tree
+- **Dirty, uncommitted.** Key files: `showcase_runner.py`, `showcase_session.py`, `showcase_api.py`, `showcase_resilience.py` (new), `gemini_retry.py`, `library_context.py`, `pipeline.py`, client files, tests, `baseline_day_zero/`, `reset_to_day_zero.py`.

@@ -78,7 +78,12 @@ def test_quick_session_uses_holdout_and_training_rows_before_approval(
 
     monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
     monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
-    monkeypatch.setattr(showcase_runner, "_seed_training_signal", lambda *args, **kwargs: ["trace-1"])
+    # 8 training cases → guard needs 4 successful traces.
+    monkeypatch.setattr(
+        showcase_runner,
+        "_seed_training_signal",
+        lambda *args, **kwargs: ["t1", "t2", "t3", "t4"],
+    )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
 
     run_quick_session(session.session_id)
@@ -242,7 +247,12 @@ def test_serious_session_uses_serious_train_and_holdout_with_multi_slice(
 
     monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
     monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
-    monkeypatch.setattr(showcase_runner, "_seed_training_signal", lambda *args, **kwargs: ["trace-1"])
+    # 80 training cases → guard needs 40 successful traces.
+    monkeypatch.setattr(
+        showcase_runner,
+        "_seed_training_signal",
+        lambda *args, **kwargs: [f"t{i}" for i in range(40)],
+    )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
 
     run_serious_session(session.session_id)
@@ -293,6 +303,189 @@ def test_measure_stops_before_case_work_when_session_cancelled(
     assert called is False
 
 
+def test_insufficient_training_data_blocks_optimize(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    optimize_called = False
+
+    def fake_measure(manager, session_id, *, phase, cases, **kwargs):
+        manager.set_measure_results(session_id, phase=phase, results=[])
+        return []
+
+    def fake_optimize(**kwargs):
+        nonlocal optimize_called
+        optimize_called = True
+        return _proposal()
+
+    monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
+    monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
+    # Quick train has 8 cases → needs 4; only 1 produced a trace.
+    monkeypatch.setattr(
+        showcase_runner, "_seed_training_signal", lambda *a, **k: ["only-one"]
+    )
+    monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
+
+    run_quick_session(session.session_id)
+
+    assert optimize_called is False
+    reloaded = manager.get(session.session_id)
+    assert reloaded.status == "failed"
+    err = reloaded.diagnostics.last_error
+    assert err is not None and err.code == "insufficient_training_data"
+    assert "1 of 8" in err.message
+    assert reloaded.diagnostics.retryable is True
+
+
+def test_sufficient_training_data_allows_optimize(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    optimize_called = False
+
+    def fake_measure(manager, session_id, *, phase, cases, **kwargs):
+        manager.set_measure_results(session_id, phase=phase, results=[])
+        return []
+
+    def fake_optimize(**kwargs):
+        nonlocal optimize_called
+        optimize_called = True
+        return _proposal()
+
+    monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
+    monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
+    # 8 training cases → needs 4; provide 4 traces.
+    monkeypatch.setattr(
+        showcase_runner, "_seed_training_signal", lambda *a, **k: ["t1", "t2", "t3", "t4"]
+    )
+    monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
+
+    run_quick_session(session.session_id)
+
+    assert optimize_called is True
+    assert manager.get(session.session_id).status == "needs_approval"
+
+
+def test_no_learning_signal_uses_plain_english_message(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+
+    monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
+    monkeypatch.setattr(
+        showcase_runner,
+        "_measure",
+        lambda *a, **k: manager.set_measure_results(
+            a[1] if len(a) > 1 else k["session_id"], phase=k["phase"], results=[]
+        ),
+    )
+    # Provide enough traces to clear the minimum-data guard (8 train → needs 4),
+    # so the run reaches the no-learning-signal path.
+    monkeypatch.setattr(
+        showcase_runner, "_seed_training_signal", lambda *a, **k: ["t1", "t2", "t3", "t4"]
+    )
+    monkeypatch.setattr(showcase_runner, "_optimize", lambda **k: None)
+
+    run_quick_session(session.session_id)
+
+    reloaded = manager.get(session.session_id)
+    assert reloaded.status == "failed"
+    err = reloaded.diagnostics.last_error
+    assert err is not None and err.code == "no_learning_signal"
+    # Plain-English: mentions how many cases were judged, not a bare code.
+    assert "4 case" in err.message
+    assert reloaded.diagnostics.retryable is True
+
+
+def test_measure_skips_failing_case_and_continues(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+
+    class FakeResult:
+        def __init__(self, case_id: str) -> None:
+            self._case_id = case_id
+
+        def model_dump(self) -> dict:
+            return {"case_id": self._case_id}
+
+    seen: list[str] = []
+
+    def flaky_measure(case_obj, **kwargs):
+        case_id = case_obj["case_id"]
+        seen.append(case_id)
+        if case_id == "case_46_cigna_mednec":
+            raise RuntimeError("simulated model error")
+        return FakeResult(case_id)
+
+    monkeypatch.setattr(showcase_runner, "GeminiDrafterClient", lambda: object())
+    monkeypatch.setattr(showcase_runner, "GeminiSimulatorClient", lambda: object())
+    monkeypatch.setattr(showcase_runner, "run_measurement_case", flaky_measure)
+
+    results = showcase_runner._measure(
+        manager,
+        session.session_id,
+        phase="pre",
+        cases=load_showcase_manifest().quick_holdout,
+    )
+
+    # The good case is kept; the failing case is skipped, not fatal.
+    assert {r["case_id"] for r in results} == {"case_13_cigna_mednec"}
+    reloaded = manager.get(session.session_id)
+    failed_ids = [f.case_id for f in reloaded.checkpoint.failed_cases]
+    assert "case_46_cigna_mednec" in failed_ids
+    assert len(seen) == 2
+
+
+def test_training_signal_skips_failing_case_and_continues(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    cases = load_showcase_manifest().quick_train[:3]
+    fail_id = cases[1].case_id
+
+    class Run:
+        trace_ref = "trace-ok"
+
+    def flaky_eval(case_obj, **kwargs):
+        if case_obj["case_id"] == fail_id:
+            raise RuntimeError("judge error")
+        return Run()
+
+    monkeypatch.setattr(showcase_runner, "OtelPhoenixRecorder", lambda: object())
+    monkeypatch.setattr(showcase_runner, "GeminiDrafterClient", lambda: object())
+    monkeypatch.setattr(showcase_runner, "GeminiJudgeClient", lambda: object())
+    monkeypatch.setattr(showcase_runner, "run_evaluated_case", flaky_eval)
+
+    trace_ids = showcase_runner._seed_training_signal(
+        manager,
+        session.session_id,
+        cases=cases,
+        dataset_split="train_split",
+    )
+
+    # Two good cases produce traces; the failing one is recorded and skipped.
+    assert trace_ids == ["trace-ok", "trace-ok"]
+    reloaded = manager.get(session.session_id)
+    failed_ids = [f.case_id for f in reloaded.checkpoint.failed_cases]
+    assert failed_ids == [fail_id]
+
+
 def test_approval_marks_regression_when_holdout_score_drops(
     tmp_path: Path,
     monkeypatch,
@@ -335,3 +528,76 @@ def test_approval_marks_regression_when_holdout_score_drops(
     reloaded = manager.get(session.session_id)
     assert reloaded.regression_detected is True
     assert "consider rolling back" in (reloaded.regression_summary or "")
+
+
+def test_resume_skips_completed_stages_and_reuses_proposal(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    sid = session.session_id
+
+    # Simulate a run that already completed everything except the final
+    # post-training measurement before it was interrupted.
+    manager.set_proposal(sid, proposal=_proposal().model_dump())
+    manager.save_checkpoint(
+        sid,
+        pre_measure_done=True,
+        training_pre_done=True,
+        training_signal_done=True,
+        training_trace_ids=["t1", "t2", "t3", "t4"],
+        optimize_done=True,
+    )
+
+    measure_phases: list[str] = []
+
+    def fake_measure(manager, session_id, *, phase, cases, **kwargs):
+        measure_phases.append(phase)
+        manager.set_measure_results(session_id, phase=phase, results=[])
+        return []
+
+    def boom_seed(*args, **kwargs):
+        raise AssertionError("training signal should not re-run on resume")
+
+    def boom_optimize(**kwargs):
+        raise AssertionError("optimize should not re-run on resume")
+
+    monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
+    monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
+    monkeypatch.setattr(showcase_runner, "_seed_training_signal", boom_seed)
+    monkeypatch.setattr(showcase_runner, "_optimize", boom_optimize)
+
+    run_quick_session(sid)
+
+    # Only the remaining stage (training_post) runs; earlier stages are skipped.
+    assert measure_phases == ["training_post"]
+    reloaded = manager.get(sid)
+    assert reloaded.status == "needs_approval"
+    assert reloaded.checkpoint.training_post_done is True
+
+
+def test_resume_endpoint_relaunches_failed_retryable_run(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    monkeypatch.setenv("AEGIS_SHOWCASE_AUTORUN", "false")
+    from app.aegis_v1 import showcase_api
+
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    sid = session.session_id
+    manager.fail_stage(
+        sid,
+        stage="train_gepa",
+        code="no_learning_signal",
+        message="no signal",
+        retryable=True,
+    )
+
+    resumed = showcase_api.resume_run(sid)
+
+    assert resumed.status == "running"
+    assert resumed.diagnostics.last_error is None

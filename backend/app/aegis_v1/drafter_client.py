@@ -89,28 +89,14 @@ class GeminiDrafterClient:
         from google import genai
         from google.genai import types
 
-        from app.gemini_retry import generate_content_with_retry
+        from app.gemini_retry import generate_content_with_fallback
 
         client = genai.Client(vertexai=True, location=self.location)
         contents = _build_contents(prompt, parsed_case, citations, playbook, phoenix_summary)
-        try:
-            response = generate_content_with_retry(
-                client.models.generate_content,
-                model=self.model,
-                contents=contents,
-                config=types.GenerateContentConfig(temperature=0.3),
-            )
-        except Exception as e:
-            # If the preferred model isn't available in this project/location,
-            # retry once with a known-available fallback.
-            msg = str(e)
-            if ("404" in msg or "NOT_FOUND" in msg) and "gemini-3.1" in self.model:
-                response = generate_content_with_retry(
-                    client.models.generate_content,
-                    model="gemini-2.5-pro",
-                    contents=contents,
-                    config=types.GenerateContentConfig(temperature=0.3),
-                )
-            else:
-                raise
+        response = generate_content_with_fallback(
+            client.models.generate_content,
+            model=self.model,
+            contents=contents,
+            config=types.GenerateContentConfig(temperature=0.3),
+        )
         return response.text or ""

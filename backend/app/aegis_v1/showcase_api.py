@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field
 
 from app.aegis_v1.showcase_manifest import ShowcaseManifest, load_showcase_manifest
 from app.aegis_v1.showcase_session import (
+    SessionBusyError,
     SessionLockedError,
     ShowcaseSession,
     ShowcaseSessionManager,
@@ -121,6 +122,26 @@ def cancel_run(session_id: str) -> ShowcaseSession:
         return _manager().cancel(session_id)
     except FileNotFoundError as exc:
         raise HTTPException(status_code=404, detail="showcase session not found") from exc
+
+
+@router.post("/runs/{session_id}/resume", response_model=ShowcaseSession)
+def resume_run(session_id: str) -> ShowcaseSession:
+    """Resume a failed-but-retryable run from its last checkpoint. Completed
+    stages (measurements, training signal, optimization) are reused, not redone."""
+    manager = _manager()
+    try:
+        session = manager.get(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="showcase session not found") from exc
+    try:
+        manager.mark_resumable(session_id)
+    except SessionBusyError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    if session.run_type == "quick":
+        _launch_quick(session_id)
+    else:
+        _launch_serious(session_id)
+    return manager.get(session_id)
 
 
 @router.post("/runs/{session_id}/approve", response_model=ShowcaseSession)
