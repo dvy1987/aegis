@@ -2600,3 +2600,30 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - Untracked: `docs/plans/2026-06-07-aegis-v1-adk-migration-plan.md` (only change this session). No code changes, nothing committed.
+
+## 2026-06-07 17:00 - Handoff (Arize track assessment doc)
+
+### Done
+- Thorough audit of project vs Devpost general + Arize track requirements (excluding ADK runtime gap from main scorecard).
+- Wrote and expanded [docs/assessment-arize-track.md](../assessment-arize-track.md): summary table, Arize requirements, submission checklist, gaps, tracing/PHI/ADK appendices.
+- PM Q&A captured in doc: full ADK migration mostly fixes tracing richness if calls run through ADK Runner; lighter alt = `google-genai` instrumentor; PHI/content-capture caveat.
+
+### Debated
+- Whether ADK migration fixes tracing: **mostly yes** via ADK instrumentor, not by defining agents alone; content capture must be decided for `/appeal`.
+
+### Decisions
+- No new product/architecture decisions — assessment is documentation only.
+
+### Deferred
+- README update, demo video, Vertex Search on Cloud Run, ADK migration implementation (plan exists).
+- Commit when PM asks.
+
+### Next Agent Should Know
+- Arize track story is **strong** (MCP, evals, self-improvement, Cloud Run, license). Gaps: demo video, stale README, tracing thinness, possible `citations_used: 0` without Vertex env.
+- Single source for hackathon readiness: `docs/assessment-arize-track.md`.
+
+### Revisit Triggers
+- After ADK migration or adding `google-genai` instrumentor: re-run tracing + PHI sections of assessment.
+
+### Working Tree
+- Untracked: `docs/assessment-arize-track.md`, `docs/assessment-for-me.md`. No code changes, nothing committed.
