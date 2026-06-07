@@ -59,7 +59,7 @@ export default function ShowcasePage() {
       } catch (e) {
         setRunErr(e instanceof Error ? e.message : String(e));
       }
-    }, 3000);
+    }, 10000);
     return () => window.clearInterval(timer);
   }, [runSession]);
 

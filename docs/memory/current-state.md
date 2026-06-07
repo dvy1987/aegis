@@ -1,15 +1,21 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-07 (showcase learning-loop robustness pass — local, uncommitted)
-**Phase:** **Execution — Phoenix learning loop live; v1/backend/frontend deployed; showcase quick/serious redesign implemented; learning-loop robustness pass done locally; live credentialed rehearsal still pending.**
+**Updated:** 2026-06-07 (session end — robustness committed; docs + 10s poll uncommitted)
+**Phase:** **Execution — showcase learning-loop robustness committed (`19a644b`); Cloud Run deploy posture documented; live redeploy + credentialed rehearsal still pending.**
 
-### 2026-06-07 - Showcase learning-loop robustness (local, uncommitted)
+### 2026-06-07 - Session end (Cloud Run docs + demo cheatsheet + poll interval)
+- Verified Cloud Run background-thread / CPU-throttling concern: **real pattern**, **fixed in `deploy-v1.sh`** (`494556f`); production needs redeploy to pick up settings.
+- Documented rationale in decision log §2026-06-07, PRD §22a, plan docs; PM cheatsheet now has Cloud Run flags + showcase status/stage demo script.
+- Showcase frontend poll interval changed **3s → 10s** (uncommitted).
+- **Uncommitted:** 8 files (docs + `frontend/src/app/showcase/page.tsx`). Last commit: `19a644b`.
+
+### 2026-06-07 - Showcase learning-loop robustness (committed `19a644b`)
 - Library search/discovery failures now degrade gracefully — drafting and optimization continue without citations.
 - Unified Gemini fallback: `gemini-3.5-flash` + `thinking_level=high` for drafter, simulator, judge, and reflection.
 - Showcase robustness: per-case isolation, plain-English errors, minimum-training guard (50%), checkpoint/resume (`POST /v1/showcase/runs/{id}/resume`).
 - Day-zero restore snapshot + `backend/scripts/reset_to_day_zero.py` for blank-slate demo recovery.
 - Verification: `aegis_v1` tests 80 passed; full unit 301 passed, 5 pre-existing failures (unrelated).
-- Remaining: commit when PM asks; live credentialed rehearsal; redeploy to Cloud Run.
+- Remaining: live credentialed rehearsal; redeploy to Cloud Run with current `deploy-v1.sh`.
 
 ### 2026-06-06 - Showcase redesign implementation pass
 - Manifest moved to the redesigned split: quick = 8 train + 2 holdout; serious = 80 train + 20 holdout; quick train/holdout are subsets of serious train/holdout respectively.
@@ -21,7 +27,7 @@
 - Added mid-loop cancellation polling in measurement/training-signal loops and a conservative regression warning (`APPROVE→DENY` flip or mean score drop >5%).
 - Frontend now has the primary 6-box learning matrix: Demo and Serious columns, Pre/Training/Post boxes, before/after training rows, green/red case blocks, Reject, Roll back, disabled Serious button until quick success, and a regression banner.
 - Verification: focused backend showcase/measurement/coordinator tests 31 passed; frontend `tsc`, lint, tests, and build passed. Full backend unit suite: 286 passed, 5 known/pre-existing failures unrelated to showcase (case-generator anchor, missing `case_500_*`, `/tmp/harness` setup).
-- Remaining: live credentialed rehearsal in the real environment; PM visual review on a machine that can run the frontend; Cloud Run background-session reliability decision if live runs are flaky.
+- Remaining: live credentialed rehearsal in the real environment; PM visual review on a machine that can run the frontend; redeploy + smoke-test Cloud Run showcase with `--no-cpu-throttling` / single-instance settings (decision logged 2026-06-07).
 
 ### 2026-06-06 - Showcase baseline reset to day-zero
 - Active drafter prompt flipped from `drafter_v2` → `drafter_v1` everywhere (`/v1/appeal`, showcase pre-measure, GEPA seed all default to v1 now).

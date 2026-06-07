@@ -99,5 +99,6 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-06-06 | test-driven-development | backend/tests/unit/aegis_v1/test_showcase_runner.py, frontend/src/app/showcase/page.tsx | TDD: mid-loop cancellation, holdout regression warning, and primary 6-box showcase learning matrix |
 | 2026-06-06 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Handoff: showcase workflow controls + 6-box matrix; live rehearsal pending |
 | 2026-06-07 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session end: showcase learning-loop robustness pass + day-zero reset; uncommitted |
+| 2026-06-07 | memory-handoff | docs/memory/agent-handoffs.md, docs/memory/current-state.md, docs/memory/project-index.md | Session end: Cloud Run ops documented, demo cheatsheet expanded, showcase poll 10s; 8 files uncommitted |
 
 - memory-handoff: docs/memory/agent-handoffs.md

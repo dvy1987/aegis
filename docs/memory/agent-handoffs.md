@@ -2508,3 +2508,39 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - **Dirty, uncommitted.** Key files: `showcase_runner.py`, `showcase_session.py`, `showcase_api.py`, `showcase_resilience.py` (new), `gemini_retry.py`, `library_context.py`, `pipeline.py`, client files, tests, `baseline_day_zero/`, `reset_to_day_zero.py`.
+
+---
+
+## 2026-06-07 — Handoff (Cursor — Cloud Run ops clarity + demo cheatsheet + poll interval)
+
+### Done
+- Verified prior agent findings on Cloud Run background threads: **real issue, already fixed in repo** — `deploy-v1.sh` has `--no-cpu-throttling`, `--max-instances 1`, `--min-instances 1`, `--concurrency 1` (commit `494556f`). Live service only correct after redeploy.
+- Explained to PM (plain English): daemon thread + polling model; why `max-instances 1` couples to file-backed session ledger; `--timeout 300s` vs whole-run duration.
+- Documented Cloud Run posture in decision log §2026-06-07, PRD §22a + R9b, three plan docs; resolved "open" Cloud Run background decision in redesign plan.
+- Expanded `docs/demo-cheatsheet-pm.md`: **Cloud Run flags for PMs** + **Showcase run statuses** (happy path, approve/reject, failures, demo talking beat).
+- Changed showcase frontend poll interval **3s → 10s** (`frontend/src/app/showcase/page.tsx`).
+- Prior session robustness work **committed** as `19a644b` (learning loop hardening + day-zero reset).
+
+### Debated
+- **Whether Cloud Run CPU-throttling report was hallucination:** Concluded valid diagnosis against pre-`494556f` deploy script; stale as "still broken" claim against current repo.
+
+### Decisions
+- **Showcase poll interval:** 10 seconds (PM-requested).
+- **Cloud Run showcase posture:** documented as accepted in [decision-log.md §2026-06-07](decision-log.md); PM quick-reference tables in cheatsheet + decision log.
+
+### Deferred
+- Commit this session's doc + frontend poll change (PM did not request).
+- Live redeploy + end-to-end showcase smoke (quick run through approve).
+- Verify live Cloud Run service has `cpu-throttling: false` via `gcloud run services describe`.
+
+### Next Agent Should Know
+- **Demo day reference:** `docs/demo-cheatsheet-pm.md` — Cloud Run flags + full status/stage script for `/showcase`.
+- **`needs_approval`** = learning done, proposal ready; Approve promotes + holdout measure → `successful`; Reject → `rejected`.
+- HEAD is `19a644b`; **8 files dirty** (docs + showcase poll).
+
+### Revisit Triggers
+- Live runs freeze after redeploy → inspect Cloud Run CPU allocation + session ledger on same instance.
+- UI feels too slow during runs → reconsider 10s poll (was 3s).
+
+### Working Tree
+- **Dirty, uncommitted:** `docs/demo-cheatsheet-pm.md`, `docs/memory/decision-log.md`, `docs/memory/current-state.md`, `docs/plans/*` (3), `docs/prd/PRD.md`, `frontend/src/app/showcase/page.tsx`.

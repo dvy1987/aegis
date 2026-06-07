@@ -384,3 +384,51 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 - If judges or PM decide Phoenix runtime hints blur the "learned prompt/playbook improvement" story, flip normal/measurement drafting back to Phoenix-off while preserving learner access to Phoenix traces.
 - If any firewall test shows teacher-only metadata reaching drafter or learner inputs, revert immediately and repair before demo.
 
+---
+
+## 2026-06-07 — v1 showcase Cloud Run: always-on CPU + single instance (file-backed sessions)
+
+**Decision.** Deploy `aegis-v1-api` with `--no-cpu-throttling`, `--min-instances 1`, `--max-instances 1`, and `--concurrency 1`. The showcase learning loop runs in a background daemon thread after the start POST returns; these four settings are **mandatory** for live progress. Checkpoint/resume (showcase runner) is the safety net if that single instance restarts mid-run — not Cloud Tasks or a poll-driven `/advance` endpoint for the v1 demo.
+
+**Rationale.** This is a real Cloud Run constraint, not a theoretical one:
+
+1. **Background thread + immediate HTTP return.** `showcase_api.py` starts `run_quick_session` / `run_serious_session` via `threading.Thread(..., daemon=True)` and returns the session record right away. The frontend polls; it does not hold one long HTTP connection.
+2. **Default CPU throttling.** By default, Cloud Run allocates full CPU only while a request is in flight. After the POST returns, background work can stall or crawl unless CPU stays allocated (`--no-cpu-throttling`). This is the single most important infra setting for the showcase.
+3. **File-backed session ledger.** Showcase state is JSON on the instance's local disk (`/tmp/aegis_showcase_sessions`, overridable via `AEGIS_SHOWCASE_LEDGER_DIR`). It is **not** shared across instances.
+4. **Why `max-instances=1`.** With multiple instances, Cloud Run's load balancer can send the start request to Instance A (which creates the session file and starts the worker) and send poll requests to Instance B (which has no session file → "not found" or frozen UI). Pinning to one instance guarantees every request sees the same ledger. This would be wrong for a multi-user production app; it is correct for a single-operator hackathon demo until session state moves to shared storage (GCS JSON, Firestore, etc.).
+
+**What each setting does (plain English).**
+
+| Setting | Role |
+|---|---|
+| `--no-cpu-throttling` | Keep CPU on between HTTP requests so the background learning loop keeps running after "Start" returns. |
+| `--max-instances 1` | Force all traffic to one machine so file-backed session JSON is always found when polling. |
+| `--min-instances 1` | Keep one instance warm — avoids cold-start delay at demo time. |
+| `--concurrency 1` | One in-flight HTTP request at a time — predictable CPU for long sequential Gemini work. |
+
+**Alternatives considered.**
+- **Cloud Tasks / Pub/Sub worker** — more durable for long jobs; deferred (extra infra + wiring for hackathon window).
+- **Poll-driven `/advance` endpoint** — would work without always-on CPU but requires runner redesign; deferred.
+- **GCS-backed ledger + `max-instances > 1`** — correct production path; overkill for single-operator demo.
+
+**Status.** Accepted. Implemented in `backend/deploy-v1.sh` (commit `494556f`). Checkpoint/resume for retryable failures added in `19a644b`. **Live service is only correct after redeploy** with this script — repo state ≠ production state until `gcloud run deploy` runs.
+
+**Revisit triggers.**
+- Demo needs multiple concurrent operators → migrate session ledger to shared storage and raise `max-instances`.
+- Live runs still freeze after redeploy → verify `gcloud run services describe aegis-v1-api` shows CPU always allocated (no throttling).
+- Serious runs routinely exceed `--timeout 300s` → raise timeout or split stages.
+
+**Artifacts produced.** `backend/deploy-v1.sh`; `backend/app/aegis_v1/showcase_session.py` (ledger path); `backend/app/aegis_v1/showcase_runner.py` (checkpoint/resume); updated plan docs + PRD §22a; [demo-cheatsheet-pm.md §Cloud Run flags + §Showcase run statuses](../demo-cheatsheet-pm.md).
+
+**PM quick reference — Cloud Run flags (don't memorize; glance before deploy day).**
+
+| Flag | One line |
+|------|----------|
+| `--no-cpu-throttling` | Background learning keeps CPU after "Start" returns — without it, progress freezes. |
+| `--max-instances 1` | One machine only — session files live on local disk, not shared. |
+| `--min-instances 1` | Warm instance for demo. |
+| `--concurrency 1` | One HTTP request at a time — stable CPU for Gemini chains. |
+| `--timeout 300s` | Caps one HTTP call at 5 min — not the whole run (UI polls every 10s). |
+
+**PM quick reference — showcase status at decision point.** `needs_approval` = learning finished, proposal ready; **Approve** promotes prompt/playbook + runs holdout measure → `successful`; **Reject** discards proposal → `rejected`. Full stage-by-stage demo script: [demo-cheatsheet-pm.md §Showcase run statuses](../demo-cheatsheet-pm.md).
+

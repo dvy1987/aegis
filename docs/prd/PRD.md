@@ -530,7 +530,8 @@ No other Arize-track submission will have this data wall.
 | **R6 — Judges think 12 agents is overkill** | Low | Lead with the *learning result*, not the agent count. Swarm is in service of the result |
 | **R7 — Ethics/legal blowback** | Medium | Hard disclaimers everywhere; "simulated wins on synthetic benchmark" — never "wins real appeals" |
 | **R8 — Phoenix Cloud free tier limits hit** | Low | Monitor usage; upgrade to paid if needed (<$50) |
-| **R9 — Cloud Run cold start hurts demo** | Low | Min-instance count = 1 during demo period |
+| **R9 — Cloud Run cold start hurts demo** | Low | `--min-instances 1` during demo period |
+| **R9b — Showcase background thread stalls on Cloud Run** | High (if misconfigured) | `--no-cpu-throttling` + `--max-instances 1` + `--concurrency 1` in `deploy-v1.sh`; checkpoint/resume for retryable failures. See PRD §22a and [decision-log.md §2026-06-07](memory/decision-log.md) |
 | **R10 — Non-American framing backfires** | Medium | Use the *learning-from-traces* framing, not *learned US law*; cite public sources visibly |
 
 ---
@@ -584,6 +585,19 @@ These are locked-in regardless of phase:
 | UX Priority | Functional utility | Premium consumer-grade |
 | Build time | ~50 hours | ~160 hours (8 hrs/day × 20 days) |
 | Pitch energy | Safe and credible | Audacious and category-defining |
+
+## 22a. v1 Showcase — Cloud Run execution requirements
+
+The browser-triggered learning demo (`/showcase`) depends on infra settings that are easy to miss but fatal if wrong. Full rationale: [decision-log.md §2026-06-07](memory/decision-log.md).
+
+| Requirement | Setting | Why it matters |
+|---|---|---|
+| CPU between requests | `--no-cpu-throttling` | Start POST returns immediately; learning loop runs in a background thread. Default Cloud Run throttles CPU when no HTTP request is active → frozen progress. |
+| Single instance | `--max-instances 1` | Session state is local JSON on disk, not shared. Multiple instances → polling can hit a machine without the session file. |
+| Warm instance | `--min-instances 1` | Avoids cold-start delay during live demo. |
+| Serial requests | `--concurrency 1` | Predictable CPU for long sequential Gemini + judge chains. |
+
+**Safety net:** checkpoint/resume for retryable stage failures (not full pause across browser close). **Production path (post-hackathon):** shared session storage + worker queue if multi-user or multi-instance is needed.
 
 ## 23. Source References
 

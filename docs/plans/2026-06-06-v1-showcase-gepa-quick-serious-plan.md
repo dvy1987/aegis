@@ -665,7 +665,7 @@ Tasks:
 - Unit tests for backend manifest, measurement, promotion, session manager.
 - Frontend tests for locked serious state, approval flow, cancel flow.
 - Smoke run with tiny fixture mode.
-- Cloud Run deployment settings review.
+- Cloud Run deployment settings — **resolved in `deploy-v1.sh` (2026-06-07):** `--no-cpu-throttling`, `--max-instances 1`, `--min-instances 1`, `--concurrency 1`. Rationale: background showcase thread + file-backed session ledger. See [decision-log.md §2026-06-07](../memory/decision-log.md). Remaining: redeploy + live smoke.
 - End-to-end live rehearsal.
 
 Definition of done:
@@ -765,6 +765,6 @@ These should be resolved before implementation starts:
 
 Prioritize targeted learning signal over literal raw numbering if there is a conflict. The quick run is the proof that the product works; it should be coherent enough for GEPA to produce a visible update.
 
-Use local JSON session ledgers for fastest implementation unless Cloud Run persistence becomes a blocker. If persistence across deploys/restarts matters immediately, use GCS JSON.
+Use local JSON session ledgers for fastest implementation unless Cloud Run persistence becomes a blocker. If persistence across deploys/restarts matters immediately, use GCS JSON. **Coupling (2026-06-07):** local ledger ⇒ `--max-instances 1` on Cloud Run; background thread ⇒ `--no-cpu-throttling`. See [decision-log.md §2026-06-07](../memory/decision-log.md).
 
 Build v1 only. Do not switch to swarm.

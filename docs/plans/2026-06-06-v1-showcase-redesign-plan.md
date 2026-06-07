@@ -197,4 +197,4 @@ Frontend type updates:
 - Deploy/restart the backend and frontend in the real demo environment.
 - Run a live credentialed quick run with `PHOENIX_API_KEY` and Google ADC available.
 - PM visual review of `/showcase` on a machine that can run the frontend.
-- Decide Cloud Run execution posture if live background sessions prove unreliable: CPU-always-on, Cloud Tasks, or a poll-driven `/advance` endpoint.
+- ~~Decide Cloud Run execution posture~~ **Resolved (2026-06-07):** `--no-cpu-throttling` + `--max-instances 1` + `--min-instances 1` + `--concurrency 1` in `deploy-v1.sh`; checkpoint/resume as mid-run safety net. See [decision-log.md §2026-06-07](../memory/decision-log.md). Remaining: redeploy + live smoke test.

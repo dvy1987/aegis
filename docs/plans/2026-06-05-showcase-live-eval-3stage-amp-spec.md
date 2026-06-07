@@ -95,9 +95,20 @@ cases         session          session/{id}              session/{id}/cancel
 ```
 
 ### Cloud Run guardrails (must be set for the background thread to run)
-- `--max-instances=1` (already effectively the demo config; make it explicit)
-- single uvicorn worker (ADK default — do not add gunicorn workers)
-- **CPU always allocated** (`--no-cpu-throttling`) — otherwise the worker thread stalls after the create-session response returns and progress freezes. This is the single most important infra setting.
+
+**Status (2026-06-07):** Implemented in `backend/deploy-v1.sh`. Decision recorded in [decision-log.md §2026-06-07](../memory/decision-log.md). Redeploy required for live service to pick up settings.
+
+| Setting | Value | Why |
+|---|---|---|
+| `--no-cpu-throttling` | on | **Most important.** Showcase starts work in a background thread and returns HTTP immediately. Default Cloud Run throttles CPU when no request is in flight → progress freezes after create-session. |
+| `--max-instances` | `1` | Session ledger is local JSON (`/tmp/aegis_showcase_sessions`). Multiple instances → polls can hit a machine without the session file. |
+| `--min-instances` | `1` | Keeps one warm instance for demo; avoids cold-start delay. |
+| `--concurrency` | `1` | One request at a time; predictable CPU for long sequential Gemini chains. |
+| uvicorn workers | `1` (ADK default) | Do not add gunicorn workers — would split process memory and break single-file ledger assumptions. |
+
+**Residual risk:** If the single instance restarts mid-run (deploy, platform recycle), in-flight work is interrupted. Mitigation: checkpoint/resume in `showcase_runner.py` + `POST /v1/showcase/runs/{id}/resume` — not full pause-across-browser-close (still out of scope).
+
+**Deferred alternatives** (only if live demo still flakes after redeploy): Cloud Tasks worker, poll-driven `/advance` endpoint, GCS-backed ledger + multi-instance.
 
 ---
 
@@ -246,20 +257,21 @@ Frontend (`frontend/src/__tests__/...`):
 4. **Session manager + endpoints** — `showcase_session.py`, four endpoints, validation + tests 5. Catalog endpoint.
 5. **Frontend data layer + types** (6.1).
 6. **Modal + page wiring** (6.2, 6.3) + tests 9–11.
-7. **Cloud Run config** — set `--no-cpu-throttling`, `--max-instances=1`; redeploy backend + frontend; smoke-test a small session (test=2, train=2) end to end including cancel.
+7. **Cloud Run config** — ✅ `--no-cpu-throttling`, `--max-instances=1`, `--min-instances=1`, `--concurrency=1` in `deploy-v1.sh`. ⏭️ Redeploy backend + frontend; smoke-test a small session (test=2, train=2) end to end including cancel + resume.
 8. **Cleanup** — remove old `/v1/showcase/evaluate` path + the page's old `runLive` if fully replaced.
 
 ---
 
 ## 9. Out of scope (v1)
-- True pause/resume across page close or backend restart.
+- True pause/resume across page close or arbitrary instance restart without checkpoint state. *(Retryable-failure resume from checkpoint **is** in scope — see `showcase_runner.py` + resume endpoint.)*
 - Hard-killing in-flight Gemini calls.
 - Multi-slice training in one session.
 - Concurrent sessions / multi-instance Cloud Run.
 - Persisting session results (in-process only; lost on restart — frontend treats a missing session as "expired").
 
 ## 10. Risks
-- **CPU throttling not set** → progress freezes after create-session. *Mitigation:* explicit `--no-cpu-throttling` in step 7; smoke test.
+- **CPU throttling not set** → progress freezes after create-session. *Mitigation:* `--no-cpu-throttling` in `deploy-v1.sh` (done); verify live service after redeploy; smoke test.
+- **Multi-instance Cloud Run with file ledger** → polls miss session. *Mitigation:* `--max-instances=1` in `deploy-v1.sh` (done); revisit only if session state moves to GCS/shared storage.
 - **OTel suppression key name differs by version** → spans still export. *Mitigation:* verify against installed package during step 1; test asserts no export.
 - **Phoenix batching** → `acquire_signal` empty right after seeding. *Mitigation:* `force_flush()` + bounded retry + `no_signal` fallback.
 - **Cancellation latency** = longest LLM call. *Mitigation:* caps (D4) + `max_rounds=1` + UI copy "Stopping after current model call…".
