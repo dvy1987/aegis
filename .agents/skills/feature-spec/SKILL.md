@@ -14,9 +14,9 @@ description: >
 license: MIT
 metadata:
   author: dvy1987
-  version: "1.0"
+  version: "1.1"
   category: project-specific
-  sources: GitHub Spec Kit, AWS Kiro specs-first, agentskills.io
+  sources: GitHub Spec Kit, AWS Kiro specs-first, agentskills.io, addyosmani/agent-skills interview-me (HYPOTHESIS + CONFIDENCE % stop condition)
   resources:
     references:
       - feature-spec-schema.md
@@ -63,7 +63,13 @@ Ask only what cannot be inferred:
 
 If the request is too vague to draft FRs, mark them `[NEEDS CLARIFICATION]` and continue — don't loop in interview.
 
+### Step 2b — Reframe vague requirements
+
+Adjectives ("fast", "intuitive") → measurable criteria (latency, error rate, completion %) — confirm targets with user before drafting FRs.
+
 ### Step 3 — Write the spec
+
+Before drafting, if any requirement is inferred (stack, auth model, deployment target), list up to 5 bullets under `## Assumptions I'm Making` and ask the user to confirm or correct — do not silently fill gaps.
 
 Read `references/feature-spec-schema.md` for the full template. Required sections:
 - Frontmatter (artifact, status, constitution version, sources, slug)
@@ -120,10 +126,16 @@ For each `CL-N`:
 3. Update the relevant FR/NFR/AC. Replace the `[NEEDS CLARIFICATION]` marker with the answer.
 4. Remove `CL-N` from Needs Clarification list.
 
-### Step C3 — Update status
+### Step C3 — Update status (HYPOTHESIS + CONFIDENCE %)
 
-When CL list is empty, set status to `Clarifying-Complete` and ask:
-> "All clarifications resolved. Approve as final? (yes → status: Approved)"
+After every answered CL, record internally:
+- **HYPOTHESIS:** one sentence — what the spec now says about this CL.
+- **CONFIDENCE:** integer % (0–100) the resolved FR/NFR/AC is unambiguous enough for `spec-crosscheck` PASS and an implementing agent to plan from with zero follow-up.
+
+Promote to `Clarifying-Complete` only when every resolved CL has CONFIDENCE ≥ 70%. Any CL <70% gets a one-line `REASON` and is re-opened as `CL-N (revisit)` rather than silently closed.
+
+When CL list is empty AND all resolutions ≥70%, ask:
+> "All clarifications resolved (avg confidence: N%). Approve as final? (yes → status: Approved)"
 
 Only set `Approved` after explicit user confirmation.
 
@@ -141,9 +153,8 @@ Re-save to the same path. Append:
 - "WHAT not HOW" is the bright line. If you catch yourself writing "use Postgres" or "in `services/auth.ts`" — stop. That belongs in `implementation-plan`.
 - Acceptance criteria must be testable as written. "Login works" fails. "Given valid credentials, When user submits, Then JWT is returned within 500ms" passes.
 - Edge cases are not nice-to-have — they're how `spec-crosscheck` detects missing tasks. Brainstorm at least 3.
-- The `Out of Scope` section is the strongest tool against scope creep — keep it specific, not generic.
-- A spec with no `[NEEDS CLARIFICATION]` markers in Draft state probably has hidden assumptions — push back.
-- Constitution waivers MUST be explicit in a `## Constitution Waivers` section with rule ID + rationale. Implicit waivers fail crosscheck.
+- `Out of Scope` must be specific — strongest anti-scope-creep tool.
+- Constitution waivers need explicit `## Constitution Waivers` with rule ID + rationale.
 
 ---
 

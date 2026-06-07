@@ -14,9 +14,12 @@ description: >
 license: MIT
 metadata:
   author: dvy1987
-  version: "1.0"
+  version: "1.2"
   category: thinking
-  sources: DEBATE-arXiv:2405.09935, DeBono-BlackHat, Defence-RedTeam-Guide, GrowthMind-2025
+  sources: DEBATE-arXiv:2405.09935, DeBono-BlackHat, Defence-RedTeam-Guide, GrowthMind-2025, addyosmani/agent-skills doubt-driven-development (Phase 3 merge)
+  resources:
+    references:
+      - adversarial-prompt.md
 ---
 
 # Adversarial Hat
@@ -103,6 +106,31 @@ STRONGEST ELEMENTS (what to build on)
 
 ### Step 4 — Offer Integration
 > "Shall I add an `## Adversarial Review` section to the document with these findings?"
+
+---
+
+## In-Flight Doubt (code and architecture decisions)
+
+Use when a **non-trivial** decision is about to stand (branching logic, cross-module change, unverified invariant, irreversible deploy). Skip for formatting, obvious one-liners, or pure reads.
+
+Copy the checklist from `references/adversarial-prompt.md`:
+1. **CLAIM** — decision + why it matters (2–3 lines)
+2. **EXTRACT** — smallest artifact + contract only (no your reasoning)
+3. **DOUBT** — fresh-context reviewer with adversarial prompt (never pass CLAIM)
+4. **RECONCILE** — classify each finding (see prompt file)
+5. **STOP** — trivial findings, 3 cycles, or user override
+
+**TDD note:** a failing repro test from `test-driven-development` satisfies DOUBT for behavioral claims.
+
+**Interactive sessions:** after single-model doubt, offer cross-model second opinion; announce skip in CI/non-interactive runs.
+
+---
+
+## Fresh-Context Adversarial Mode (documents / strategy)
+
+For high-stakes **documents** (product-soul, PRD, design doc), run the three phases above, then escalate with `references/adversarial-prompt.md` (CLAIM list → EXTRACT evidence → DOUBT with fresh context → RECONCILE → STOP).
+
+Escalate when: external commit imminent; 0–1 critical findings on first pass; reviewer agreed too fast. Optional cross-model DOUBT for highest stakes. **Doubt Theater:** 2+ cycles, zero actionable findings → stop and escalate (you are validating).
 
 ---
 
