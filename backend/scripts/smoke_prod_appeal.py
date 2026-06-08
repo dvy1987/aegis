@@ -23,7 +23,10 @@ PAYLOAD = {
 
 
 def main() -> int:
-    base = (os.environ.get("AEGIS_API_URL") or sys.argv[1] if len(sys.argv) > 1 else "").rstrip("/")
+    base = (
+        os.environ.get("AEGIS_API_URL")
+        or (sys.argv[1] if len(sys.argv) > 1 else "")
+    ).rstrip("/")
     if not base:
         print("Usage: AEGIS_API_URL=https://... smoke_prod_appeal.py", file=sys.stderr)
         return 2
@@ -40,7 +43,7 @@ def main() -> int:
         with urllib.request.urlopen(health_url, timeout=30) as resp:
             health = json.loads(resp.read().decode())
         print("health:", health)
-        with urllib.request.urlopen(req, timeout=300) as resp:
+        with urllib.request.urlopen(req, timeout=600) as resp:
             body = json.loads(resp.read().decode())
     except urllib.error.HTTPError as exc:
         print("HTTP error:", exc.code, exc.read().decode(), file=sys.stderr)
@@ -52,6 +55,7 @@ def main() -> int:
     letter = body.get("appeal_letter", "")
     print("run_id:", body.get("run_id"))
     print("verdict:", body.get("outcome", {}).get("verdict"))
+    print("score:", body.get("outcome", {}).get("score"))
     print("letter_excerpt:", letter[:240].replace("\n", " "))
     failures: list[str] = []
     if not letter.strip():

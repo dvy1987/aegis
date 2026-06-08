@@ -30,13 +30,6 @@ def test_veto_on_hard_gate_regression():
     assert "safety_or_hard_gate_regression" in evaluate_vetoes(before, after, _cand())
 
 
-def test_veto_on_simulator_approve_but_judges_fail():
-    before = _exp("seed", 0.5, [])
-    after = _exp("c", 0.6, [CaseScore(case_id="a", composite=0.0, dimension_scores={}, hard_gate_pass=False, simulator_verdict="APPROVE")])
-    vetoes = evaluate_vetoes(before, after, _cand())
-    assert "simulator_approve_but_judges_fail" in vetoes
-
-
 def test_veto_on_oversized_diff():
     before = _exp("seed", 0.5, [])
     after = _exp("c", 0.9, [])

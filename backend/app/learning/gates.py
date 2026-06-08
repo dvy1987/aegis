@@ -25,8 +25,6 @@ def evaluate_vetoes(before: ExperimentResult, after: ExperimentResult,
         vetoes.append("held_out_regression")
     if any(not c.hard_gate_pass for c in after.per_case):
         vetoes.append("safety_or_hard_gate_regression")
-    if any(c.simulator_verdict == "APPROVE" and not c.hard_gate_pass for c in after.per_case):
-        vetoes.append("simulator_approve_but_judges_fail")   # INV-3
     if _diff_tokens(candidate) > diff_token_cap:
         vetoes.append("diff_too_large")
     return vetoes

@@ -310,7 +310,7 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
     - Logs the run + evaluations to Phoenix, and returns a direct Phoenix link.
     """
 
-    from app.aegis_v1.simulator_client import GeminiSimulatorClient
+    from app.aegis_v1.simulator_client import AdkSimulatorClient
 
     case_obj = {
         "case_id": req.case_id,
@@ -327,7 +327,9 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
     judge_model = os.environ.get("AEGIS_JUDGE_MODEL", "gemini-3.1-pro-preview")
     simulator_model = os.environ.get("AEGIS_SIMULATOR_MODEL", "gemini-3.1-pro-preview")
 
-    simulator_client = GeminiSimulatorClient(model=simulator_model, location=location)
+    from app.aegis_v1.adk_runtime import make_retry_model
+
+    simulator_client = AdkSimulatorClient(model=make_retry_model(model=simulator_model))
 
     judge_client = (
         GeminiJudgeClient(

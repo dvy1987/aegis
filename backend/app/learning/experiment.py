@@ -75,8 +75,7 @@ class LiveExperimentRunner:
             dims = verdict["dimension_scores"]
             gate = verdict["hard_gate_pass"]
             per_case.append(CaseScore(case_id=case["case_id"], composite=composite_score(dims, gate),
-                                      dimension_scores=dims, hard_gate_pass=gate,
-                                      simulator_verdict=verdict.get("simulator_verdict")))
+                                      dimension_scores=dims, hard_gate_pass=gate))
         mean = round(sum(c.composite for c in per_case) / len(per_case), 4) if per_case else 0.0
         return ExperimentResult(candidate_id=candidate.candidate_id, dataset_split=dataset_split,
                                 per_case=per_case, composite=mean,

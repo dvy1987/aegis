@@ -161,11 +161,6 @@ def rows_to_scored_runs(
             if isinstance(note, str) and note.strip():
                 improvement_notes[str(dim)] = note.strip()
 
-        sim_v_raw = payload.get("simulator_verdict")
-        simulator_verdict = (
-            sim_v_raw if sim_v_raw in ("APPROVE", "DENY") else None
-        )
-
         prompt_version = (
             _aegis_attribute(span, "prompt_version")
             or payload.get("prompt_version")
@@ -185,7 +180,7 @@ def rows_to_scored_runs(
                 hard_gate_pass=hard_gate_pass,
                 weighted_quality=weighted_quality,
                 improvement_notes=improvement_notes,
-                simulator_verdict=simulator_verdict,
+                simulator_verdict=None,
                 prompt_version=str(prompt_version),
                 playbook_version=str(playbook_version),
             )

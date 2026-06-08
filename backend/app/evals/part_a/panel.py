@@ -89,8 +89,11 @@ def run_panel(
 
     j1 = safety_scope_gate(appeal_package, teacher)
     citation = citation_precheck(appeal_package, teacher)
+    student_package = {
+        k: v for k, v in appeal_package.items() if k != "simulator_result"
+    }
     context = {
-        "appeal_package": appeal_package,
+        "appeal_package": student_package,
         "teacher_packet": teacher.model_dump(),
         "deterministic_results": {
             "safety_scope_gate": j1.model_dump(),
@@ -154,16 +157,6 @@ def run_panel(
         risk_flags.append("same_model_drafting_and_judging")
 
     verdict = "FAIL" if hard_gate_failures else "PASS"
-    
-    # Check for divergence between Insurer Simulator and Teacher Panel
-    simulator = appeal_package.get("simulator_result", {})
-    sim_verdict = simulator.get("verdict")
-    if sim_verdict == "APPROVE" and verdict == "FAIL":
-        risk_flags.append("evaluator_disagreement:simulator_approve_but_judges_fail")
-    elif sim_verdict == "DENY" and verdict == "PASS":
-        # Check if it was a high-quality PASS (e.g. all dimensions perfect) 
-        # or just a general divergence. We'll flag it regardless.
-        risk_flags.append("evaluator_disagreement:simulator_deny_but_judges_pass")
 
     return PanelReport(
         case_id=teacher.case_id,

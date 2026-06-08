@@ -13,8 +13,7 @@ class PanelJudgeAdapter:
     def __init__(self, judge_client: Any | None = None) -> None:
         self.judge_client = judge_client  # None -> run_panel uses OfflineHeuristicJudgeClient
 
-    def score(self, *, case: dict[str, Any], appeal_letter: str,
-              simulator_verdict: str | None = None) -> dict[str, Any]:
+    def score(self, *, case: dict[str, Any], appeal_letter: str) -> dict[str, Any]:
         from app.evals.part_a.panel import run_panel
         from app.evals.part_a.teacher_packet import build_teacher_grading_packet
 
@@ -25,6 +24,5 @@ class PanelJudgeAdapter:
         return {
             "dimension_scores": dict(report.dimension_scores),
             "hard_gate_pass": report.verdict == "PASS",
-            "simulator_verdict": simulator_verdict,
             "weighted_quality": report.weighted_quality,
         }
