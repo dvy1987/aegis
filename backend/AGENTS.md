@@ -48,6 +48,7 @@ Two Cloud Run backends share one repo but **must not share one Phoenix project**
 - `main_v1.py` sets `PHOENIX_PROJECT_NAME=default` authoritatively (host env cannot override).
 - `deploy-v1.sh` deploys with `PHOENIX_PROJECT=default`.
 - Showcase runs create session-scoped `dataset_split` names (e.g. `showcase_quick_train_<session_id>`). Noisy in Phoenix UI but fine on free tier.
+- **Showcase session ledger** (`showcase_ledger.py`): local dir in dev/tests; **GCS prefix in prod** via `AEGIS_SHOWCASE_LEDGER_GCS_URI` (auto-set from `AEGIS_LIBRARY_BUCKET` in `deploy-v1.sh`). Survives Cloud Run redeploys. See [ADR-009](../docs/adr/ADR-009-showcase-ledger-gcs.md).
 
 **swarm details:**
 - `main_swarm.py` and `Dockerfile.swarm` default to `PHOENIX_PROJECT_NAME=aegis-hackathon`.

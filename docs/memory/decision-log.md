@@ -455,3 +455,17 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 
 **PM quick reference — showcase status at decision point.** `needs_approval` = learning finished, proposal ready; **Approve** promotes prompt/playbook + runs holdout measure → `successful`; **Reject** discards proposal → `rejected`. Full stage-by-stage demo script: [demo-cheatsheet-pm.md §Showcase run statuses](../demo-cheatsheet-pm.md).
 
+---
+
+## 2026-06-08 — Showcase session ledger on GCS (ADR-009)
+
+**Decision.** Persist showcase session JSON + promotion rollback stack to a GCS prefix (`AEGIS_SHOWCASE_LEDGER_GCS_URI`) in production. Local `/tmp` or `AEGIS_SHOWCASE_LEDGER_DIR` remains the dev/test default.
+
+**Rationale.** Cloud Run redeploys wiped `/tmp` sessions — broke resume and approve after hotfix deploys during Phase 4 prod smoke.
+
+**Alternatives considered.** Firestore/SQL (deferred); GCS FUSE mount (unnecessary complexity).
+
+**Status.** Accepted. See [ADR-009](../adr/ADR-009-showcase-ledger-gcs.md).
+
+**Revisit triggers.** Multi-operator concurrent demos → shared DB or stronger consistency layer.
+

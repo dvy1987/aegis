@@ -148,6 +148,14 @@ bootstrap() {
     --role="roles/aiplatform.user" \
     --condition=None >/dev/null
 
+  if [[ -n "${AEGIS_LIBRARY_BUCKET:-}" ]]; then
+    echo "Granting Cloud Run SA object access on gs://${AEGIS_LIBRARY_BUCKET} (library + showcase ledger)..."
+    gcloud storage buckets add-iam-policy-binding "gs://${AEGIS_LIBRARY_BUCKET}" \
+      --project "${PROJECT_ID}" \
+      --member="serviceAccount:${RUN_SA}" \
+      --role="roles/storage.objectUser" >/dev/null
+  fi
+
   echo "Bootstrap complete."
   echo
 }
@@ -200,6 +208,11 @@ ENV_VARS=(
   "AEGIS_LIBRARY_BUCKET=${AEGIS_LIBRARY_BUCKET:-}"
   "ALLOW_ORIGINS=${ALLOW_ORIGINS:-*}"
 )
+if [[ -n "${AEGIS_SHOWCASE_LEDGER_GCS_URI:-}" ]]; then
+  ENV_VARS+=("AEGIS_SHOWCASE_LEDGER_GCS_URI=${AEGIS_SHOWCASE_LEDGER_GCS_URI}")
+elif [[ -n "${AEGIS_LIBRARY_BUCKET:-}" ]]; then
+  ENV_VARS+=("AEGIS_SHOWCASE_LEDGER_GCS_URI=gs://${AEGIS_LIBRARY_BUCKET}/aegis-showcase-ledger")
+fi
 if [[ -n "${PHOENIX_HOST_URL}" ]]; then
   ENV_VARS+=("PHOENIX_HOST=${PHOENIX_HOST_URL}")
 fi

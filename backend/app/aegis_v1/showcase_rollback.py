@@ -8,7 +8,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 
 from app.aegis_v1.drafter_client import PROMPT_DIR, get_active_drafter_prompt_version
-from app.aegis_v1.showcase_session import default_ledger_dir
+from app.aegis_v1.showcase_ledger import LedgerStore, default_ledger_dir, open_ledger_store
 from app.aegis_v1.tools import PLAYBOOK_DIR
 from app.learning.fs_store import _playbook_path
 from app.learning.models import Candidate
@@ -42,19 +42,25 @@ class PromotionStack:
         self,
         *,
         ledger_dir: Path | None = None,
+        store: LedgerStore | None = None,
         prompts_dir: Path | None = None,
         playbooks_dir: Path | None = None,
     ) -> None:
         self.ledger_dir = ledger_dir or default_ledger_dir()
+        self.store = store or open_ledger_store(ledger_dir=self.ledger_dir)
+        self.store.ensure_ready()
         self.prompts_dir = prompts_dir or PROMPT_DIR
         self.playbooks_dir = playbooks_dir or PLAYBOOK_DIR
-        self.ledger_dir.mkdir(parents=True, exist_ok=True)
         self.prompts_dir.mkdir(parents=True, exist_ok=True)
         self.playbooks_dir.mkdir(parents=True, exist_ok=True)
 
     @property
     def path(self) -> Path:
         return self.ledger_dir / "promotion_stack.json"
+
+    @property
+    def _stack_key(self) -> str:
+        return "promotion_stack.json"
 
     def push_checkpoint(
         self,
@@ -123,13 +129,13 @@ class PromotionStack:
         )
 
     def _read_stack(self) -> list[PromotionStackEntry]:
-        if not self.path.exists():
+        if not self.store.exists(self._stack_key):
             return []
-        raw = json.loads(self.path.read_text(encoding="utf-8"))
+        raw = json.loads(self.store.read_text(self._stack_key))
         return [PromotionStackEntry.model_validate(item) for item in raw]
 
     def _write_stack(self, stack: list[PromotionStackEntry]) -> None:
-        self.path.write_text(
+        self.store.write_text(
+            self._stack_key,
             json.dumps([entry.model_dump() for entry in stack], indent=2),
-            encoding="utf-8",
         )

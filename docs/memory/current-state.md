@@ -1,7 +1,13 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-07 (session — ADK Phase 1 audit-clean; uncommitted)
-**Phase:** **ADK migration Phase 1 COMPLETE (audit-clean). Phase 2 blocked until PM says "go".**
+**Updated:** 2026-06-08 (session — ADK Phase 5 coding in progress)
+**Phase:** **ADK migration Phases 0–4 COMPLETE on prod. Phase 5 (verification + cleanup) in progress.**
+
+### 2026-06-08 - ADK Phase 4 prod-verified + Phase 5 coding started
+- **Phase 4 exit met:** quick showcase → `needs_approval` on `aegis-v1-api-00020-99p` (~53 min, candidate `c1`).
+- **Commits (unpushed):** `afcb302` Phase 4; `27f388c` GEPA judge wiring fix + quick smoke script.
+- **Phase 5 landed (code, uncommitted):** GCS-backed showcase ledger (`showcase_ledger.py`), tier B/C MCP filter tests, `smoke_prod_showcase_approve.py`, ADR-009, deploy bootstrap GCS IAM. **377 unit tests pass.**
+- **Next:** commit Phase 5 chunk → deploy with GCS ledger → approve-flow prod smoke; Phoenix UI audit; legacy `_stash` cleanup after PM sign-off.
 
 ### 2026-06-07 - ADK Phase 1 audit-clean (uncommitted)
 - Closed §17 gaps: `can_write_phoenix()` guard, holdout no-write tests, library agent mock test, phoenix-before-drafter ordering test, chat `node_input` + `appeal_publish_node` for ADK streams.

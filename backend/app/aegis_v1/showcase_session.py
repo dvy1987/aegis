@@ -1,13 +1,18 @@
 from __future__ import annotations
 
 import json
-import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
 from uuid import uuid4
 
 from pydantic import BaseModel, Field
+
+from app.aegis_v1.showcase_ledger import (
+    LedgerStore,
+    default_ledger_dir,
+    open_ledger_store,
+)
 
 
 StageName = Literal[
@@ -45,10 +50,6 @@ class SessionBusyError(RuntimeError):
 
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
-
-
-def default_ledger_dir() -> Path:
-    return Path(os.environ.get("AEGIS_SHOWCASE_LEDGER_DIR", "/tmp/aegis_showcase_sessions"))
 
 
 class StageError(BaseModel):
@@ -114,9 +115,10 @@ class ShowcaseSession(BaseModel):
 
 
 class ShowcaseSessionManager:
-    def __init__(self, *, ledger_dir: Path | None = None) -> None:
+    def __init__(self, *, ledger_dir: Path | None = None, store: LedgerStore | None = None) -> None:
         self.ledger_dir = ledger_dir or default_ledger_dir()
-        self.ledger_dir.mkdir(parents=True, exist_ok=True)
+        self.store = store or open_ledger_store(ledger_dir=self.ledger_dir)
+        self.store.ensure_ready()
 
     def start_quick(self, *, case_ids: list[str] | None = None) -> ShowcaseSession:
         return self._create("quick", case_ids or [])
@@ -127,10 +129,10 @@ class ShowcaseSessionManager:
         return self._create("serious", case_ids or [])
 
     def get(self, session_id: str) -> ShowcaseSession:
-        path = self._path(session_id)
-        if not path.exists():
+        key = self._key(session_id)
+        if not self.store.exists(key):
             raise FileNotFoundError(session_id)
-        return ShowcaseSession.model_validate_json(path.read_text(encoding="utf-8"))
+        return ShowcaseSession.model_validate_json(self.store.read_text(key))
 
     def set_stage(
         self,
@@ -295,19 +297,25 @@ class ShowcaseSessionManager:
         return self._save(session)
 
     def _save(self, session: ShowcaseSession) -> ShowcaseSession:
-        self._path(session.session_id).write_text(
+        self.store.write_text(
+            self._key(session.session_id),
             json.dumps(session.model_dump(), indent=2),
-            encoding="utf-8",
         )
         return session
 
+    def _key(self, session_id: str) -> str:
+        return f"{session_id}.json"
+
     def _path(self, session_id: str) -> Path:
-        return self.ledger_dir / f"{session_id}.json"
+        """Local filesystem path (tests / legacy); prefer ``store`` in production."""
+        return self.ledger_dir / self._key(session_id)
 
     def _has_successful_quick(self) -> bool:
-        for path in self.ledger_dir.glob("quick_*.json"):
+        for key in self.store.list_keys("quick_"):
+            if not key.endswith(".json"):
+                continue
             try:
-                session = ShowcaseSession.model_validate_json(path.read_text(encoding="utf-8"))
+                session = ShowcaseSession.model_validate_json(self.store.read_text(key))
             except Exception:
                 continue
             if session.status == "successful":
