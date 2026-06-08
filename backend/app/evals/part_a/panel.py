@@ -4,6 +4,8 @@ from typing import Any
 
 from app.evals.part_a.deterministic_gates import citation_precheck
 from app.evals.part_a.deterministic_gates import safety_scope_gate
+from app.evals.part_a.judge_agents import AdkJudgeClient
+from app.evals.part_a.judge_workflow import run_judge_panel_workflow
 from app.evals.part_a.llm_judges import JudgeClient
 from app.evals.part_a.llm_judges import OfflineHeuristicJudgeClient
 from app.evals.part_a.schemas import JudgeResult
@@ -73,52 +75,13 @@ def _evidence_quote_risk_flags(
     return risks
 
 
-def run_panel(
+def _build_panel_report(
+    *,
     appeal_package: dict[str, Any],
-    teacher_packet: TeacherGradingPacket | dict[str, Any],
-    judge_client: JudgeClient | None = None,
+    teacher: TeacherGradingPacket,
+    judge_results: dict[str, JudgeResult],
+    client: JudgeClient,
 ) -> PanelReport:
-    """Run the Part A judge panel over one appeal package."""
-
-    teacher = (
-        teacher_packet
-        if isinstance(teacher_packet, TeacherGradingPacket)
-        else TeacherGradingPacket.model_validate(teacher_packet)
-    )
-    client = judge_client or OfflineHeuristicJudgeClient()
-
-    j1 = safety_scope_gate(appeal_package, teacher)
-    citation = citation_precheck(appeal_package, teacher)
-    student_package = {
-        k: v for k, v in appeal_package.items() if k != "simulator_result"
-    }
-    context = {
-        "appeal_package": student_package,
-        "teacher_packet": teacher.model_dump(),
-        "deterministic_results": {
-            "safety_scope_gate": j1.model_dump(),
-            "citation_precheck": citation.model_dump(),
-        },
-    }
-
-    judge_results: dict[str, JudgeResult] = {"safety_scope_gate": j1}
-
-    if citation.score == "FAIL":
-        j2 = JudgeResult(
-            dimension="faithfulness_hallucination_gate",
-            reasoning=citation.reasoning,
-            score="FAIL",
-            confidence=citation.confidence,
-            evidence_quotes=citation.evidence_quotes,
-            improvement=citation.improvement,
-        )
-    else:
-        j2 = client.judge(JUDGE_IDS["faithfulness_hallucination_gate"], context)
-    judge_results["faithfulness_hallucination_gate"] = j2
-
-    for dimension in QUALITY_WEIGHTS:
-        judge_results[dimension] = client.judge(JUDGE_IDS[dimension], context)
-
     hard_gate_failures = [
         dimension
         for dimension in ("safety_scope_gate", "faithfulness_hallucination_gate")
@@ -153,7 +116,7 @@ def run_panel(
     risk_flags.extend(_evidence_quote_risk_flags(judge_results, appeal_package, teacher))
     if getattr(client, "name", "") == "offline_heuristic_diagnostic_only":
         risk_flags.append("offline_scores_not_official")
-    if getattr(client, "name", "") == "gemini":
+    if getattr(client, "name", "") in {"gemini", "adk"}:
         risk_flags.append("same_model_drafting_and_judging")
 
     verdict = "FAIL" if hard_gate_failures else "PASS"
@@ -172,4 +135,107 @@ def run_panel(
             "judge_client": getattr(client, "name", "unknown"),
             "model_constraint": "Gemini 3.1 Pro accepted for both drafting and judging",
         },
+    )
+
+
+def _student_context(
+    appeal_package: dict[str, Any],
+    teacher: TeacherGradingPacket,
+) -> dict[str, Any]:
+    student_package = {
+        k: v for k, v in appeal_package.items() if k != "simulator_result"
+    }
+    j1 = safety_scope_gate(appeal_package, teacher)
+    citation = citation_precheck(appeal_package, teacher)
+    return {
+        "appeal_package": student_package,
+        "teacher_packet": teacher.model_dump(),
+        "deterministic_results": {
+            "safety_scope_gate": j1.model_dump(),
+            "citation_precheck": citation.model_dump(),
+        },
+    }
+
+
+def _run_panel_offline(
+    appeal_package: dict[str, Any],
+    teacher: TeacherGradingPacket,
+    client: OfflineHeuristicJudgeClient,
+) -> PanelReport:
+    j1 = safety_scope_gate(appeal_package, teacher)
+    citation = citation_precheck(appeal_package, teacher)
+    context = {
+        "appeal_package": {
+            k: v for k, v in appeal_package.items() if k != "simulator_result"
+        },
+        "teacher_packet": teacher.model_dump(),
+        "deterministic_results": {
+            "safety_scope_gate": j1.model_dump(),
+            "citation_precheck": citation.model_dump(),
+        },
+    }
+
+    judge_results: dict[str, JudgeResult] = {"safety_scope_gate": j1}
+
+    if citation.score == "FAIL":
+        j2 = JudgeResult(
+            dimension="faithfulness_hallucination_gate",
+            reasoning=citation.reasoning,
+            score="FAIL",
+            confidence=citation.confidence,
+            evidence_quotes=citation.evidence_quotes,
+            improvement=citation.improvement,
+        )
+    else:
+        j2 = client.judge(JUDGE_IDS["faithfulness_hallucination_gate"], context)
+    judge_results["faithfulness_hallucination_gate"] = j2
+
+    for dimension in QUALITY_WEIGHTS:
+        judge_results[dimension] = client.judge(JUDGE_IDS[dimension], context)
+
+    return _build_panel_report(
+        appeal_package=appeal_package,
+        teacher=teacher,
+        judge_results=judge_results,
+        client=client,
+    )
+
+
+def _run_panel_adk(
+    appeal_package: dict[str, Any],
+    teacher: TeacherGradingPacket,
+    client: AdkJudgeClient,
+) -> PanelReport:
+    context = _student_context(appeal_package, teacher)
+    judge_results = run_judge_panel_workflow(context=context, model=client.model)
+    return _build_panel_report(
+        appeal_package=appeal_package,
+        teacher=teacher,
+        judge_results=judge_results,
+        client=client,
+    )
+
+
+def run_panel(
+    appeal_package: dict[str, Any],
+    teacher_packet: TeacherGradingPacket | dict[str, Any],
+    judge_client: JudgeClient | None = None,
+) -> PanelReport:
+    """Run the Part A judge panel over one appeal package."""
+
+    teacher = (
+        teacher_packet
+        if isinstance(teacher_packet, TeacherGradingPacket)
+        else TeacherGradingPacket.model_validate(teacher_packet)
+    )
+    client = judge_client or OfflineHeuristicJudgeClient()
+
+    if isinstance(client, OfflineHeuristicJudgeClient):
+        return _run_panel_offline(appeal_package, teacher, client)
+    if isinstance(client, AdkJudgeClient):
+        return _run_panel_adk(appeal_package, teacher, client)
+
+    raise TypeError(
+        f"Unsupported judge client type: {type(client).__name__}. "
+        "Use OfflineHeuristicJudgeClient or AdkJudgeClient."
     )

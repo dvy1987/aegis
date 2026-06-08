@@ -238,40 +238,10 @@ class OfflineHeuristicJudgeClient:
         )
 
 
-class GeminiJudgeClient:
-    """Gemini-backed judge client for configured cloud environments."""
+def __getattr__(name: str):
+    """Lazy exports to avoid circular imports with judge_agents (Phase 3)."""
+    if name in {"AdkJudgeClient", "GeminiJudgeClient"}:
+        from app.evals.part_a import judge_agents
 
-    name = "gemini"
-
-    def __init__(self, model: str | None = None, location: str = "global") -> None:
-        self.model = (
-            model
-            or os.environ.get(
-                "AEGIS_JUDGE_MODEL", "gemini-3.1-pro-preview"
-            )
-        )
-        self.location = location
-
-    def judge(self, judge_id: str, context: dict[str, Any]) -> JudgeResult:
-        from google import genai
-        from google.genai import types
-
-        from app.gemini_retry import generate_content_with_fallback
-
-        prompt = load_judge_prompt(judge_id)
-        payload = json.dumps(context, indent=2, default=str)
-        client = genai.Client(vertexai=True, location=self.location)
-        # If gemini-3.1-pro-preview isn't available in this project/region, run
-        # the SAME judging task on a known-available model rather than crashing
-        # the whole training stage. Judges are never skipped.
-        response = generate_content_with_fallback(
-            client.models.generate_content,
-            model=self.model,
-            contents=f"{prompt}\n\nCONTEXT JSON:\n{payload}",
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-                temperature=0.0,
-            ),
-        )
-        text = response.text or "{}"
-        return JudgeResult.model_validate(json.loads(text))
+        return getattr(judge_agents, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
