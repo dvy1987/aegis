@@ -38,10 +38,10 @@ def get_drafter_client():
 
 
 def get_simulator_client():
-    """Production Outcome Simulator (Vertex/Gemini). Overridden with a stub in tests."""
-    from app.aegis_v1.simulator_client import GeminiSimulatorClient
+    """Production Outcome Simulator (ADK LlmAgent). Overridden with a stub in tests."""
+    from app.aegis_v1.simulator_client import AdkSimulatorClient
 
-    return GeminiSimulatorClient()
+    return AdkSimulatorClient()
 
 
 @router.post("/appeal", response_model=AppealResponse)

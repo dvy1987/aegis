@@ -27,3 +27,8 @@ _WRITE_MODES = frozenset(
 def can_write_phoenix(mode: PhoenixMode) -> bool:
     """Return True when app-level Phoenix record_run / appeal export is allowed."""
     return mode in _WRITE_MODES
+
+
+def should_suppress_otel_export(mode: PhoenixMode | None) -> bool:
+    """Return True when ADK/OpenInference spans must not be exported (D9 holdout)."""
+    return mode == PhoenixMode.HOLDOUT_READONLY

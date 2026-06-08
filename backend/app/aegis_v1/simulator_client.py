@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import os
-from typing import Literal, Protocol
+from typing import Any, Literal, Protocol
 
 from app.aegis_v1.schemas import (
     FeatureAssessment,
@@ -72,6 +72,32 @@ def _build_assess_prompt(denial_text: str, clinical_context: str, appeal_letter:
 
     Critique first, then output the features. Do NOT output a score or verdict.
     """
+
+
+class AdkSimulatorClient:
+    """ADK LlmAgent-backed Insurer Persona (Phase 2)."""
+
+    name = "adk_simulator"
+
+    def __init__(self, model: Any | None = None) -> None:
+        self._model = model
+
+    def assess(self, denial_text: str, clinical_context: str, appeal_letter: str) -> FeatureAssessment:
+        from app.aegis_v1.simulator_agent import run_simulator_agent
+
+        try:
+            return run_simulator_agent(
+                denial_text=denial_text,
+                clinical_context=clinical_context,
+                appeal_letter=appeal_letter,
+                model=self._model,
+            )
+        except Exception:
+            logging.getLogger(__name__).warning(
+                "AdkSimulatorClient.assess failed; falling back to weak assessment",
+                exc_info=True,
+            )
+            return uniform_assessment(1, critique="ADK Insurer Simulator unavailable; treated as weak.")
 
 
 class GeminiSimulatorClient:

@@ -97,8 +97,6 @@ def run_aegis_v1_adk_pipeline(
     from app.aegis_v1.library_context import LibraryPrepMetadata
     from app.aegis_v1.student_workflow import build_student_workflow
 
-    workflow = build_student_workflow()
-
     initial_state = {
         "denial_text": denial_text,
         "clinical_context": clinical_context,
@@ -120,12 +118,14 @@ def run_aegis_v1_adk_pipeline(
     # globals are visible from the @node functions in the same process.
     _configure_workflow_injection(drafter_client, library_stack)
     try:
+        workflow = build_student_workflow()
         result = run_workflow_sync(
             workflow,
             app_name="aegis_v1",
             user_id="pipeline",
             initial_state=initial_state,
             message=f"Process appeal case {case_id}",
+            phoenix_mode=phoenix_mode,
         )
     finally:
         _clear_workflow_injection()

@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import logging
 from collections.abc import AsyncGenerator, Iterable
+from contextlib import nullcontext
 from typing import Any
 
 from google.adk.agents import LlmAgent
@@ -177,33 +178,57 @@ def run_workflow_sync(
     user_id: str = "pipeline",
     initial_state: dict[str, Any] | None = None,
     message: str = "run",
+    phoenix_mode: Any | None = None,
 ) -> dict[str, Any]:
     """Run an ADK 2.2 Workflow graph to completion (Phase 1).
 
     Returns ``{"events": [...], "state": {...}}`` where *state* is the final
     ``ctx.state`` dict after all nodes have executed.
+
+    When ``phoenix_mode`` is ``HOLDOUT_READONLY``, OpenTelemetry export is
+    suppressed so holdout measure runs do not write ADK spans to Phoenix (D9).
     """
-    session_service = InMemorySessionService()
-    session = session_service.create_session_sync(
-        app_name=app_name,
-        user_id=user_id,
-        state=initial_state or {},
+    from opentelemetry.instrumentation.utils import suppress_instrumentation
+
+    from app.aegis_v1.phoenix_mode import PhoenixMode, should_suppress_otel_export
+
+    resolved_mode = phoenix_mode
+    if resolved_mode is None and initial_state:
+        raw_mode = initial_state.get("phoenix_mode")
+        if raw_mode:
+            try:
+                resolved_mode = PhoenixMode(str(raw_mode))
+            except ValueError:
+                resolved_mode = None
+
+    telemetry_ctx = (
+        suppress_instrumentation()
+        if should_suppress_otel_export(resolved_mode)
+        else nullcontext()
     )
-    runner = Runner(
-        agent=workflow,
-        session_service=session_service,
-        app_name=app_name,
-    )
-    content = types.Content(
-        role="user", parts=[types.Part.from_text(text=message)]
-    )
-    events = list(
-        runner.run(user_id=user_id, session_id=session.id, new_message=content)
-    )
-    updated = session_service.get_session_sync(
-        app_name=app_name, user_id=user_id, session_id=session.id
-    )
-    return {"events": events, "state": dict(updated.state) if updated else {}}
+
+    with telemetry_ctx:
+        session_service = InMemorySessionService()
+        session = session_service.create_session_sync(
+            app_name=app_name,
+            user_id=user_id,
+            state=initial_state or {},
+        )
+        runner = Runner(
+            agent=workflow,
+            session_service=session_service,
+            app_name=app_name,
+        )
+        content = types.Content(
+            role="user", parts=[types.Part.from_text(text=message)]
+        )
+        events = list(
+            runner.run(user_id=user_id, session_id=session.id, new_message=content)
+        )
+        updated = session_service.get_session_sync(
+            app_name=app_name, user_id=user_id, session_id=session.id
+        )
+        return {"events": events, "state": dict(updated.state) if updated else {}}
 
 
 def collect_text(events: Iterable[Any]) -> str:

@@ -551,12 +551,12 @@ def simulator(
     invoked by the orchestration/eval layer (D11). `self_check_result` is accepted
     for interface stability."""
     from app.aegis_v1.schemas import FeatureAssessment
-    from app.aegis_v1.simulator_client import GeminiSimulatorClient, SimulatorClient
+    from app.aegis_v1.simulator_client import AdkSimulatorClient, SimulatorClient
     from app.aegis_v1.simulator_scoring import load_simulator_rules, score_outcome
 
     case = ParsedCase.model_validate(parsed_case)
     draft = AppealDraft.model_validate(appeal_draft)
-    active: SimulatorClient = client or GeminiSimulatorClient()
+    active: SimulatorClient = client or AdkSimulatorClient()
     # `client` is an injected SimulatorClient boundary; model_validate coerces an
     # already-typed FeatureAssessment as a no-op but also accepts a dict from a
     # serialized/remote client impl, matching the parsed_case/appeal_draft validation above.

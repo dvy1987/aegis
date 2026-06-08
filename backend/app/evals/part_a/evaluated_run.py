@@ -65,9 +65,6 @@ def run_evaluated_case(
     # 4. Annotate the trace with the LAUNDERED signal + sim verdict (INV-2/INV-3).
     letter = appeal_package["appeal_package_draft"]["appeal_letter"]
     annotations = laundered_signal(panel_report, appeal_letter=letter)
-    if simulator_result is not None:
-        annotations["simulator_verdict"] = simulator_result["verdict"]
-        annotations["simulator_score"] = simulator_result["score"]
     recorder.annotate(trace_ref, annotations)
 
     return EvaluatedRun(

@@ -229,17 +229,19 @@ def test_phoenix_read_before_draft(monkeypatch) -> None:
             "risk_flags": ["phoenix_mcp_cold_start"],
         }
 
-    import app.aegis_v1.adk_runtime as adk_runtime
+    import app.aegis_v1.student_workflow as student_workflow_mod
+    from google.adk.workflow import node
 
-    original_run_llm = adk_runtime.run_llm_agent_sync
+    original_prep = student_workflow_mod.drafter_prep_node._func
 
-    def tracking_run_llm(agent, **kwargs):
-        if getattr(agent, "name", "") == "v1_drafter_agent":
-            call_order.append("drafter")
-        return original_run_llm(agent, **kwargs)
+    def tracking_prep(ctx):
+        call_order.append("drafter")
+        return original_prep(ctx)
 
     monkeypatch.setattr("app.aegis_v1.tools.phoenix_mcp_lookup", tracking_lookup)
-    monkeypatch.setattr(adk_runtime, "run_llm_agent_sync", tracking_run_llm)
+    monkeypatch.setattr(
+        student_workflow_mod, "drafter_prep_node", node(tracking_prep)
+    )
 
     result = run_aegis_v1_pipeline(
         denial_text=DENIAL,

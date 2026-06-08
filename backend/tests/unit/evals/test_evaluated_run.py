@@ -34,7 +34,8 @@ def test_run_evaluated_case_closes_the_loop_offline():
     assert "dimensions" in stored["annotations"]
 
 
-def test_run_evaluated_case_annotates_simulator_outcome_offline():
+def test_run_evaluated_case_does_not_annotate_simulator_on_phoenix() -> None:
+    """D12: simulator scores never written to Phoenix annotations."""
     rec = InMemoryPhoenixRecorder()
     result = run_evaluated_case(
         _case(),
@@ -46,5 +47,5 @@ def test_run_evaluated_case_annotates_simulator_outcome_offline():
     )
     assert result.simulator_result["verdict"] == "DENY"
     ann = rec.get(result.trace_ref)["annotations"]
-    assert ann["simulator_verdict"] == "DENY"   # INV-3: recorded as guardrail/demo signal
-    assert ann["simulator_score"] == 0.2
+    assert "simulator_verdict" not in ann
+    assert "simulator_score" not in ann

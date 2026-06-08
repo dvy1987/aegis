@@ -509,7 +509,7 @@ def test_measure_skips_failing_case_and_continues(
         return FakeResult(case_id)
 
     monkeypatch.setattr(showcase_runner, "GeminiDrafterClient", lambda: object())
-    monkeypatch.setattr(showcase_runner, "GeminiSimulatorClient", lambda: object())
+    monkeypatch.setattr(showcase_runner, "AdkSimulatorClient", lambda: object())
     monkeypatch.setattr(showcase_runner, "run_measurement_case", flaky_measure)
 
     results = showcase_runner._measure(

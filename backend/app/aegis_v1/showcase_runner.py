@@ -13,7 +13,7 @@ from app.aegis_v1.showcase_resilience import (
     no_learning_signal_message,
 )
 from app.aegis_v1.showcase_session import ShowcaseSessionManager
-from app.aegis_v1.simulator_client import GeminiSimulatorClient
+from app.aegis_v1.simulator_client import AdkSimulatorClient
 from app.aegis_v1.tools import case_parser, phoenix_mcp_lookup
 from app.evals.part_a.evaluated_run import run_evaluated_case
 from app.evals.part_a.llm_judges import GeminiJudgeClient
@@ -102,7 +102,7 @@ def _measure(
     manager.set_stage(session_id, stage=stage, total_cases=len(cases))
     _log(session_id, stage, "showcase measurement started", total_cases=len(cases))
     results: list[dict] = []
-    simulator = GeminiSimulatorClient()
+    simulator = AdkSimulatorClient()
     for index, case in enumerate(cases, start=1):
         if _is_cancelled(manager, session_id):
             _log(session_id, stage, "showcase measurement cancelled mid-loop")

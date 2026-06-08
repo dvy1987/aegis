@@ -12,6 +12,8 @@ if TYPE_CHECKING:
     from app.aegis_v1.drafter_client import DrafterLLMClient
     from app.aegis_v1.simulator_client import SimulatorClient
 
+MAX_APPEAL_ATTEMPTS = 5
+
 
 class AppealRunResult(BaseModel):
     """One product appeal run: the Student's appeal package + the insurer outcome.
@@ -45,27 +47,41 @@ def run_appeal_with_outcome(
     from app.aegis_v1.drafter_client import is_offline_pipeline_client
     from app.aegis_v1.tools import simulator
 
-    appeal_package = run_aegis_v1_pipeline(
-        denial_text=denial_text,
-        clinical_context=clinical_context,
-        case_id=case_id,
-        dataset_split=dataset_split,
-        run_mode=run_mode,
-        phoenix_mode=PhoenixMode.APPEAL,
-        drafter_client=drafter_client,
-        library_stack=library_stack,
-    )
-    write_appeal_phoenix_export(
-        appeal_package,
-        denial_text=denial_text,
-        clinical_context=clinical_context,
-        use_scrubber=not is_offline_pipeline_client(drafter_client),
-        phoenix_mode=PhoenixMode.APPEAL,
-    )
-    outcome = simulator(
-        parsed_case=appeal_package["parsed_case"],
-        appeal_draft=appeal_package["appeal_package_draft"],
-        self_check_result=appeal_package["self_check"],
-        client=simulator_client,
-    )
-    return AppealRunResult(appeal_package=appeal_package, outcome=outcome)
+    best_package: dict[str, Any] | None = None
+    best_outcome: dict[str, Any] | None = None
+
+    for attempt in range(1, MAX_APPEAL_ATTEMPTS + 1):
+        appeal_package = run_aegis_v1_pipeline(
+            denial_text=denial_text,
+            clinical_context=clinical_context,
+            case_id=case_id,
+            dataset_split=dataset_split,
+            run_mode=run_mode,
+            phoenix_mode=PhoenixMode.APPEAL,
+            drafter_client=drafter_client,
+            library_stack=library_stack,
+        )
+        if attempt == 1:
+            write_appeal_phoenix_export(
+                appeal_package,
+                denial_text=denial_text,
+                clinical_context=clinical_context,
+                use_scrubber=not is_offline_pipeline_client(drafter_client),
+                phoenix_mode=PhoenixMode.APPEAL,
+            )
+        outcome = simulator(
+            parsed_case=appeal_package["parsed_case"],
+            appeal_draft=appeal_package["appeal_package_draft"],
+            self_check_result=appeal_package["self_check"],
+            client=simulator_client,
+        )
+        if outcome.get("verdict") == "APPROVE":
+            return AppealRunResult(appeal_package=appeal_package, outcome=outcome)
+        if best_outcome is None or float(outcome.get("score", 0)) > float(
+            best_outcome.get("score", 0)
+        ):
+            best_package = appeal_package
+            best_outcome = outcome
+
+    assert best_package is not None and best_outcome is not None
+    return AppealRunResult(appeal_package=best_package, outcome=best_outcome)

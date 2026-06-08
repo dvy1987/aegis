@@ -3,12 +3,13 @@
 Plan reference: docs/plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md §3–§4.
 
 Step order (D7): case_parser → playbook_loader → phoenix_mcp_lookup (READ)
-  → library_finder_agent → v1-drafter-agent → self_check → appeal_publish.
+  → library_prep → library_finder_agent → library_finalize
+  → drafter_prep → v1_drafter_agent → drafter_finalize
+  → self_check → appeal_publish.
 
-All steps are @node FunctionNodes that read/write ``ctx.state``.  LLM-dependent
-steps (library finder, drafter) internally create and run ``LlmAgent`` instances
-via ``run_llm_agent_sync``, so ADK instrumentors trace every LLM call while
-state management stays explicit and testable.
+``library_finder_agent`` and ``v1_drafter_agent`` are ``LlmAgent`` instances
+passed directly in ``Workflow`` edges (plan §3.4). Prep/finalize ``@node``
+steps bind state and post-process structured outputs.
 """
 
 from __future__ import annotations
@@ -72,6 +73,7 @@ class StudentWorkflowState(BaseModel):
     library_retrieval: dict[str, Any] = Field(default_factory=dict)
     library_risk_flags: list[str] = Field(default_factory=list)
     library_metadata: dict[str, Any] = Field(default_factory=dict)
+    library_agent_done: bool = False
     appeal_draft: dict[str, Any] = Field(default_factory=dict)
     self_check_result: dict[str, Any] = Field(default_factory=dict)
     active_prompt_version: str = ""
@@ -198,42 +200,100 @@ def phoenix_read_node(ctx: Any) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Node 4 — library_finder_agent (ADK LlmAgent + search_library tool)
+# Node 4 — library prep / finalize (LlmAgent graph node between them)
 # ---------------------------------------------------------------------------
 
 
 @node
-def library_finder_node(ctx: Any) -> None:
-    """Library search via ADK LlmAgent with corpus tool calls (D7, §3.4)."""
+def library_prep_node(ctx: Any) -> str:
+    """Build library-finder input, or run offline search when tests inject stub."""
     from app.aegis_v1.library_context import (
         degraded_library_context,
         finalize_library_from_agent_retrieval,
     )
-    from app.aegis_v1.library_finder_agent import (
-        run_library_finder_agent,
-        run_offline_library_search,
-    )
+    from app.aegis_v1.library_finder_agent import run_offline_library_search
     from app.aegis_v1.search_planner import build_baseline_query
     from app.aegis_v1.v1_config import build_v1_library_stack
 
     parsed = ctx.state.get("parsed_case", {})
     playbook = ctx.state.get("playbook", {})
     phoenix_summary = ctx.state.get("phoenix_summary", {})
-    library_stack = _injected_library_stack
     case_id = parsed.get("case_id", "interactive_case")
+    library_stack = _injected_library_stack
+
+    if _injected_offline_pipeline:
+        try:
+            stack = library_stack or build_v1_library_stack()
+            retrieval, search_error = run_offline_library_search(parsed, stack)
+            lib_ctx = finalize_library_from_agent_retrieval(
+                parsed,
+                retrieval,
+                case_id=case_id,
+                corpus_store=stack["corpus_store"],
+                discovery=stack.get("discovery"),
+                refinement_client=stack.get("refinement_client"),
+                cloud_library_used=bool(stack.get("uses_vertex_store")),
+                search_error=search_error,
+            )
+            ctx.state["library_retrieval"] = lib_ctx.retrieval
+            ctx.state["library_risk_flags"] = lib_ctx.risk_flags
+            ctx.state["library_metadata"] = lib_ctx.metadata.model_dump()
+            ctx.state["library_agent_done"] = True
+        except Exception:
+            logger.warning(
+                "library_prep_node: offline library failed; degrading",
+                exc_info=True,
+            )
+            try:
+                fallback_query = build_baseline_query(parsed)
+            except Exception:
+                fallback_query = ""
+            degraded = degraded_library_context(
+                query=fallback_query, reason="library_search_error"
+            )
+            ctx.state["library_retrieval"] = degraded.retrieval
+            ctx.state["library_risk_flags"] = degraded.risk_flags
+            ctx.state["library_metadata"] = degraded.metadata.model_dump()
+            ctx.state["library_agent_done"] = True
+        return ""
+
+    context_payload = {
+        "parsed_case": parsed,
+        "playbook": playbook,
+        "phoenix_summary": phoenix_summary,
+    }
+    return (
+        "Find library citations for this appeal case.\n\nCONTEXT JSON:\n"
+        f"{json.dumps(context_payload, indent=2, default=str)}"
+    )
+
+
+@node
+def library_finalize_node(ctx: Any, node_input: Any = None) -> None:
+    """Parse library_finder_agent output and finalize library context in state."""
+    if ctx.state.get("library_agent_done"):
+        return
+
+    from app.aegis_v1.adk_runtime import collect_text
+    from app.aegis_v1.library_context import (
+        degraded_library_context,
+        finalize_library_from_agent_retrieval,
+    )
+    from app.aegis_v1.library_finder_agent import parse_library_finder_response
+    from app.aegis_v1.search_planner import build_baseline_query
+    from app.aegis_v1.v1_config import build_v1_library_stack
+
+    parsed = ctx.state.get("parsed_case", {})
+    case_id = parsed.get("case_id", "interactive_case")
+    library_stack = _injected_library_stack
+
+    raw = _node_input_to_text(node_input)
+    if not raw.strip():
+        raw = collect_text([node_input]) if node_input is not None else ""
 
     try:
         stack = library_stack or build_v1_library_stack()
-        if _injected_offline_pipeline:
-            # Offline tests: deterministic baseline query + tool (no live Gemini).
-            retrieval, search_error = run_offline_library_search(parsed, stack)
-        else:
-            retrieval, search_error = run_library_finder_agent(
-                parsed=parsed,
-                playbook=playbook,
-                phoenix_summary=phoenix_summary,
-                library_stack=stack,
-            )
+        retrieval, search_error = parse_library_finder_response(raw)
         lib_ctx = finalize_library_from_agent_retrieval(
             parsed,
             retrieval,
@@ -249,7 +309,7 @@ def library_finder_node(ctx: Any) -> None:
         ctx.state["library_metadata"] = lib_ctx.metadata.model_dump()
     except Exception:
         logger.warning(
-            "library_finder_node: library agent failed; degrading to no citations",
+            "library_finalize_node: library agent failed; degrading to no citations",
             exc_info=True,
         )
         try:
@@ -265,49 +325,35 @@ def library_finder_node(ctx: Any) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Node 5 — v1-drafter-agent (LLM drafting)
+# Node 5 — drafter prep / finalize (LlmAgent graph node between them)
 # ---------------------------------------------------------------------------
 
 
-_DRAFTER_AGENT_NAME = "v1_drafter_agent"
-
-
 @node
-def drafter_node(ctx: Any) -> None:
-    """Draft the appeal letter via an ADK LlmAgent.
-
-    Reads all accumulated context from state; runs the drafter LlmAgent with
-    the active (or overridden) prompt; applies guardrails; writes the structured
-    AppealDraft to state.
-    """
-    from app.aegis_v1.adk_runtime import make_retry_model, run_llm_agent_sync
+def drafter_prep_node(ctx: Any) -> str:
+    """Resolve prompt + build drafter context message for v1_drafter_agent."""
     from app.aegis_v1.drafter_client import (
         get_active_drafter_prompt_version,
         load_drafter_prompt,
     )
-    from app.aegis_v1.guardrails import apply_guardrails
     from app.aegis_v1.schemas import (
-        AppealDraft,
         ParsedCase,
         PhoenixSummary,
         Playbook,
         RetrievalResult,
     )
-    from google.adk.agents import LlmAgent
 
     parsed = ctx.state.get("parsed_case", {})
     playbook_data = ctx.state.get("playbook", {})
     phoenix_data = ctx.state.get("phoenix_summary", {})
     retrieval_data = ctx.state.get("library_retrieval", {})
 
-    # Resolve prompt version / text.
     prompt_version = ctx.state.get("drafter_prompt_version", "") or ""
     prompt_text = ctx.state.get("drafter_prompt_text", "") or ""
     active_version = prompt_version or get_active_drafter_prompt_version()
     resolved_prompt = prompt_text if prompt_text else load_drafter_prompt(active_version)
     ctx.state["active_prompt_version"] = active_version
 
-    # Build the context JSON the drafter sees (same as legacy _build_contents).
     case_obj = ParsedCase.model_validate(parsed)
     retrieval_obj = RetrievalResult.model_validate(retrieval_data)
     playbook_obj = Playbook.model_validate(playbook_data)
@@ -320,37 +366,46 @@ def drafter_node(ctx: Any) -> None:
         "playbook": playbook_obj.model_dump(),
         "phoenix_summary": phoenix_obj.model_dump(),
     }
-    user_message = (
+    return (
         f"{resolved_prompt}\n\nCONTEXT JSON:\n"
         f"{json.dumps(context_payload, indent=2, default=str)}"
     )
 
-    # Run the drafter LlmAgent.
-    injected_model = _injected_drafter_model
-    drafter_agent = LlmAgent(
-        name=_DRAFTER_AGENT_NAME,
-        model=injected_model or make_retry_model(),
-        instruction=(
-            "You are a health-insurance appeal letter drafter.  "
-            "Write the appeal letter body based on the prompt and context provided.  "
-            "Not legal or medical advice. Draft assistance only."
-        ),
-    )
-    result = run_llm_agent_sync(
-        drafter_agent,
-        app_name="aegis_v1",
-        user_id="pipeline",
-        message=user_message,
-    )
 
-    # Extract the raw letter text from the agent's response.
+@node
+def drafter_finalize_node(ctx: Any, node_input: Any = None) -> None:
+    """Apply guardrails and build structured AppealDraft from drafter output."""
     from app.aegis_v1.adk_runtime import collect_text
+    from app.aegis_v1.guardrails import apply_guardrails
+    from app.aegis_v1.schemas import (
+        AppealDraft,
+        ParsedCase,
+        PhoenixSummary,
+        Playbook,
+        RetrievalResult,
+    )
 
-    raw_body = collect_text(result.get("events", []))
-    if not raw_body:
+    parsed = ctx.state.get("parsed_case", {})
+    playbook_data = ctx.state.get("playbook", {})
+    phoenix_data = ctx.state.get("phoenix_summary", {})
+    retrieval_data = ctx.state.get("library_retrieval", {})
+    active_version = ctx.state.get("active_prompt_version", "drafter_v1")
+
+    case_obj = ParsedCase.model_validate(parsed)
+    retrieval_obj = RetrievalResult.model_validate(retrieval_data)
+    playbook_obj = Playbook.model_validate(playbook_data)
+    phoenix_obj = PhoenixSummary.model_validate(phoenix_data)
+    citations = retrieval_obj.hits[:3]
+
+    raw_body = _node_input_to_text(node_input)
+    if not raw_body.strip() and node_input is not None:
+        if hasattr(node_input, "content"):
+            raw_body = collect_text([node_input])
+        elif isinstance(node_input, (list, tuple)):
+            raw_body = collect_text(node_input)
+    if not raw_body.strip():
         raw_body = "(No draft produced.)"
 
-    # Apply guardrails + build structured AppealDraft (same as legacy draft_appeal).
     allowed_doc_ids = {hit.corpus_doc_id for hit in citations}
     letter = apply_guardrails(raw_body, allowed_doc_ids=allowed_doc_ids)
 
@@ -429,7 +484,24 @@ def appeal_publish_node(ctx: Any) -> types.Content:
 
 
 def build_student_workflow() -> Workflow:
-    """Construct the v1 student Workflow graph (D7 order)."""
+    """Construct the v1 student Workflow graph (D7 order).
+
+    Reads module-level injection globals set by ``run_aegis_v1_adk_pipeline``
+    before this is called so offline tests and library stack are wired correctly.
+    """
+    from app.aegis_v1.adk_runtime import EchoLlm, make_retry_model
+    from app.aegis_v1.drafter_agent import build_v1_drafter_agent
+    from app.aegis_v1.library_finder_agent import build_library_finder_agent
+
+    drafter_model = _injected_drafter_model or make_retry_model()
+    library_model = EchoLlm() if _injected_offline_pipeline else make_retry_model()
+
+    library_finder_agent = build_library_finder_agent(
+        model=library_model,
+        library_stack=_injected_library_stack,
+    )
+    v1_drafter_agent = build_v1_drafter_agent(model=drafter_model)
+
     return Workflow(
         name="v1_student_workflow",
         state_schema=StudentWorkflowState,
@@ -439,8 +511,12 @@ def build_student_workflow() -> Workflow:
                 case_parser_node,
                 playbook_loader_node,
                 phoenix_read_node,
-                library_finder_node,
-                drafter_node,
+                library_prep_node,
+                library_finder_agent,
+                library_finalize_node,
+                drafter_prep_node,
+                v1_drafter_agent,
+                drafter_finalize_node,
                 self_check_node,
                 appeal_publish_node,
             ),
@@ -448,5 +524,5 @@ def build_student_workflow() -> Workflow:
     )
 
 
-# Module-level singleton for App mounting / import convenience.
+# Default singleton for App mounting — production model; tests rebuild after injection.
 v1_student_workflow = build_student_workflow()
