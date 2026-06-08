@@ -73,7 +73,9 @@ class LearningCoordinator:
             return None
 
         seed = self._seed()
-        results: dict[str, ExperimentResult] = {seed.candidate_id: self.runner.run(seed, dataset_split=self.holdout_split)}
+        results: dict[str, ExperimentResult] = {
+            seed.candidate_id: self.runner.run(seed, dataset_split=self.holdout_split, gepa_round=0)
+        }
         pool: list[Candidate] = [seed]
         scores = {seed.candidate_id: self._case_scores(results[seed.candidate_id])}
         best = seed
@@ -92,7 +94,7 @@ class LearningCoordinator:
             counter += 1
             child = reflective_mutate(parent, signal, self.reflection_client,
                                       minibatch=minibatch, next_id=f"c{counter}")
-            res = self.runner.run(child, dataset_split=self.holdout_split)
+            res = self.runner.run(child, dataset_split=self.holdout_split, gepa_round=round_index + 1)
             pool.append(child)
             results[child.candidate_id] = res
             scores[child.candidate_id] = self._case_scores(res)
@@ -103,7 +105,9 @@ class LearningCoordinator:
             if merges < self.max_merges and len(pool) >= 3:
                 merged = system_aware_merge(best, child, base=seed, next_id=f"m{counter}")
                 if merged is not None:
-                    mres = self.runner.run(merged, dataset_split=self.holdout_split)
+                    mres = self.runner.run(
+                        merged, dataset_split=self.holdout_split, gepa_round=round_index + 1
+                    )
                     pool.append(merged)
                     results[merged.candidate_id] = mres
                     scores[merged.candidate_id] = self._case_scores(mres)

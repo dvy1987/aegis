@@ -99,6 +99,35 @@ def write_appeal_phoenix_export(
         return None
 
 
+def write_training_phoenix_checkpoint(
+    appeal_package: dict[str, Any],
+    *,
+    checkpoint: str,
+    train_split: str = "",
+    recorder: PhoenixRecorder | None = None,
+) -> str | None:
+    """Synthetic training drafter trace (D10 checkpoints A/B — no redaction)."""
+    if checkpoint not in {"a", "b"}:
+        raise ValueError(f"unknown training checkpoint: {checkpoint!r}")
+    resolved = recorder or OtelPhoenixRecorder()
+    base_meta = dict(appeal_package.get("trace_metadata") or {})
+    if hasattr(base_meta, "model_dump"):
+        base_meta = base_meta.model_dump()
+    trace_metadata = {
+        **base_meta,
+        "memory_eligible": "true",
+        "phoenix_mode": PhoenixMode.TRAINING_WRITE.value,
+        "training_checkpoint": checkpoint,
+        "run_mode": f"training_checkpoint_{checkpoint}",
+        "dataset_split": train_split or base_meta.get("dataset_split", ""),
+    }
+    try:
+        return resolved.record_run(appeal_package, trace_metadata)
+    except Exception:
+        logger.warning("training Phoenix checkpoint %s failed", checkpoint, exc_info=True)
+        return None
+
+
 def in_memory_recorder() -> InMemoryPhoenixRecorder:
     """Test helper."""
     return InMemoryPhoenixRecorder()

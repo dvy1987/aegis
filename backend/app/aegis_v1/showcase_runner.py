@@ -3,7 +3,9 @@ from __future__ import annotations
 import logging
 from typing import Literal
 
-from app.aegis_v1.drafter_client import GeminiDrafterClient
+from app.aegis_v1.appeal_phoenix_export import write_training_phoenix_checkpoint
+from app.aegis_v1.phoenix_mode import PhoenixMode
+from app.aegis_v1.pipeline import run_aegis_v1_pipeline
 from app.aegis_v1.showcase_manifest import ShowcaseCase, load_showcase_manifest
 from app.aegis_v1.showcase_rollback import PromotionStack
 from app.aegis_v1.showcase_resilience import (
@@ -24,7 +26,7 @@ from app.learning.experiment import LiveExperimentRunner
 from app.learning.judge_adapter import PanelJudgeAdapter
 from app.learning.models import PromotionAudit, PromotionProposal
 from app.learning.phoenix_live import LivePhoenixLearningStore
-from app.learning.reflection_client import GeminiReflectionClient
+from app.learning.reflection_agent import AdkReflectionClient
 from app.learning.run_live import _creds_available
 
 logger = logging.getLogger(__name__)
@@ -194,6 +196,13 @@ def _seed_training_signal(
                 drafter_client=None,
                 judge_client=judge,
                 run_simulator=False,
+                run_mode="gepa_seed",
+                trace_tags={
+                    "memory_eligible": "true",
+                    "candidate_id": "seed",
+                    "run_mode": "gepa_seed",
+                    "dataset_split": dataset_split,
+                },
             )
         except Exception as exc:
             logger.warning(
@@ -234,13 +243,15 @@ def _optimize(
     store = LivePhoenixLearningStore()
     runner = LiveExperimentRunner(
         dataset=_dataset(cases),
-        drafter_client=GeminiDrafterClient(),
         judge_client=PanelJudgeAdapter(judge_client=GeminiJudgeClient()),
+        recorder=OtelPhoenixRecorder(),
+        memory_eligible=False,
+        run_mode="gepa_optimize_candidate",
     )
     coordinator = LearningCoordinator(
         store=store,
         runner=runner,
-        reflection_client=GeminiReflectionClient(),
+        reflection_client=AdkReflectionClient(),
         slice_filter=slice_filters[0],
         slice_filters=slice_filters,
         train_split=train_split,
@@ -248,6 +259,122 @@ def _optimize(
         max_rounds=max_rounds,
     )
     return coordinator.optimize()
+
+
+def _write_training_checkpoint(
+    manager: ShowcaseSessionManager,
+    session_id: str,
+    *,
+    cases: list[ShowcaseCase],
+    train_split: str,
+    checkpoint: Literal["a", "b"],
+    proposal: PromotionProposal | None = None,
+) -> list[str]:
+    if not cases:
+        return []
+    if _is_cancelled(manager, session_id):
+        return []
+    case = cases[0]
+    parsed = case_parser(
+        denial_text=case.denial_letter_text,
+        clinical_context=case.clinical_context,
+        case_id=case.case_id,
+    )
+    slice_key = f"{parsed['insurer']}:{parsed['denial_type']}"
+    prompt_version: str | None = None
+    prompt_text: str | None = None
+    playbook_override: dict | None = None
+    if checkpoint == "b" and proposal is not None:
+        prompt_version, prompt_text = _candidate_prompt(proposal)
+        playbook_override = _candidate_playbooks(proposal).get(slice_key)
+    package = run_aegis_v1_pipeline(
+        denial_text=case.denial_letter_text,
+        clinical_context=case.clinical_context,
+        case_id=case.case_id,
+        dataset_split=train_split,
+        run_mode=f"training_checkpoint_{checkpoint}",
+        drafter_client=None,
+        drafter_prompt_version=prompt_version,
+        drafter_prompt_text=prompt_text,
+        playbook_override=playbook_override,
+        phoenix_mode=PhoenixMode.TRAINING_READWRITE,
+    )
+    trace_ref = write_training_phoenix_checkpoint(
+        package,
+        checkpoint=checkpoint,
+        train_split=train_split,
+    )
+    return [trace_ref] if trace_ref else []
+
+
+def _eval_post_gepa_candidate(
+    manager: ShowcaseSessionManager,
+    session_id: str,
+    *,
+    cases: list[ShowcaseCase],
+    train_split: str,
+    proposal: PromotionProposal,
+) -> list[str]:
+    if _is_cancelled(manager, session_id):
+        return []
+    from app import gemini_retry
+
+    recorder = OtelPhoenixRecorder()
+    prompt_version, prompt_text = _candidate_prompt(proposal)
+    playbooks = _candidate_playbooks(proposal)
+    trace_ids: list[str] = []
+    manager.set_stage(session_id, stage="train_gepa", total_cases=len(cases))
+    for index, case in enumerate(cases, start=1):
+        if index > 1:
+            gemini_retry.pace_gemini_call()
+        if _is_cancelled(manager, session_id):
+            return trace_ids
+        parsed = case_parser(
+            denial_text=case.denial_letter_text,
+            clinical_context=case.clinical_context,
+            case_id=case.case_id,
+        )
+        slice_key = f"{parsed['insurer']}:{parsed['denial_type']}"
+        try:
+            run = run_evaluated_case(
+                case.judge_case(dataset_split=train_split),
+                recorder=recorder,
+                drafter_client=None,
+                judge_client=GeminiJudgeClient(),
+                run_simulator=False,
+                drafter_prompt_version=prompt_version,
+                drafter_prompt_text=prompt_text,
+                playbook_override=playbooks.get(slice_key),
+                run_mode="training_checkpoint_post_gepa",
+                trace_tags={
+                    "memory_eligible": "true",
+                    "candidate_id": proposal.candidate.candidate_id,
+                    "run_mode": "training_checkpoint_post_gepa",
+                    "dataset_split": train_split,
+                },
+            )
+        except Exception as exc:
+            logger.warning(
+                "post-gepa candidate eval failed; skipping",
+                extra={"session_id": session_id, "case_id": case.case_id},
+                exc_info=True,
+            )
+            manager.record_case_failure(
+                session_id,
+                phase="train_gepa_candidate",
+                case_id=case.case_id,
+                error=str(exc) or exc.__class__.__name__,
+            )
+            continue
+        trace_ids.append(run.trace_ref)
+        manager.set_stage(
+            session_id,
+            stage="train_gepa",
+            current_case_id=case.case_id,
+            completed_cases=index,
+            total_cases=len(cases),
+        )
+    return trace_ids
 
 
 def _candidate_prompt(proposal: PromotionProposal) -> tuple[str | None, str | None]:
@@ -337,6 +464,16 @@ def _run_learning_session(
             _measure(manager, session_id, phase="training_pre", cases=train_cases)
             manager.save_checkpoint(session_id, training_pre_done=True)
 
+        if not _checkpoint(manager, session_id).training_checkpoint_a_done:
+            _write_training_checkpoint(
+                manager,
+                session_id,
+                cases=train_cases,
+                train_split=train_split,
+                checkpoint="a",
+            )
+            manager.save_checkpoint(session_id, training_checkpoint_a_done=True)
+
         if not _checkpoint(manager, session_id).training_signal_done:
             trace_ids = _seed_training_signal(
                 manager,
@@ -393,6 +530,30 @@ def _run_learning_session(
             proposal = PromotionProposal.model_validate(
                 manager.get(session_id).proposal
             )
+
+        if not _checkpoint(manager, session_id).train_gepa_candidate_done:
+            candidate_trace_ids = _eval_post_gepa_candidate(
+                manager,
+                session_id,
+                cases=train_cases,
+                train_split=train_split,
+                proposal=proposal,
+            )
+            session = manager.get(session_id)
+            session.diagnostics.phoenix_trace_ids.extend(candidate_trace_ids)
+            manager._save(session)
+            manager.save_checkpoint(session_id, train_gepa_candidate_done=True)
+
+        if not _checkpoint(manager, session_id).training_checkpoint_b_done:
+            _write_training_checkpoint(
+                manager,
+                session_id,
+                cases=train_cases,
+                train_split=train_split,
+                checkpoint="b",
+                proposal=proposal,
+            )
+            manager.save_checkpoint(session_id, training_checkpoint_b_done=True)
 
         if not _checkpoint(manager, session_id).training_post_done:
             candidate_prompt_version, candidate_prompt_text = _candidate_prompt(proposal)

@@ -68,7 +68,10 @@ class ShowcaseCheckpoint(BaseModel):
     pre_measure_done: bool = False
     training_pre_done: bool = False
     training_signal_done: bool = False
+    training_checkpoint_a_done: bool = False
     optimize_done: bool = False
+    train_gepa_candidate_done: bool = False
+    training_checkpoint_b_done: bool = False
     training_post_done: bool = False
     promotion_done: bool = False
     post_measure_done: bool = False

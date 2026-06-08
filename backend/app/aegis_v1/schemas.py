@@ -204,9 +204,7 @@ class TraceMetadata(BaseModel):
     prompt_version: str = "aegis_v1_weak"
     playbook_version: str = "cold-start"
     dataset_split: str = "interactive"
-    run_mode: Literal["interactive", "benchmark", "autonomous_promotion"] = (
-        "interactive"
-    )
+    run_mode: str = "interactive"
     search_planner_version: str = "search_planner_v1"
     library_search_query: str = ""
     library_available: bool = True

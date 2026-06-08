@@ -85,6 +85,8 @@ def test_quick_session_uses_holdout_and_training_rows_before_approval(
         lambda *args, **kwargs: ["t1", "t2", "t3", "t4"],
     )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
+    monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
+    monkeypatch.setattr(showcase_runner, "_eval_post_gepa_candidate", lambda *a, **k: [])
 
     run_quick_session(session.session_id)
 
@@ -135,7 +137,6 @@ def test_training_signal_gives_teacher_packet_only_to_judges(
         return Run()
 
     monkeypatch.setattr(showcase_runner, "OtelPhoenixRecorder", FakeRecorder)
-    monkeypatch.setattr(showcase_runner, "GeminiDrafterClient", FakeDrafter)
     monkeypatch.setattr(showcase_runner, "GeminiJudgeClient", FakeJudge)
     monkeypatch.setattr(showcase_runner, "run_evaluated_case", fake_run_evaluated_case)
 
@@ -332,6 +333,8 @@ def test_serious_session_uses_serious_train_and_holdout_with_multi_slice(
         lambda *args, **kwargs: [f"t{i}" for i in range(40)],
     )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
+    monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
+    monkeypatch.setattr(showcase_runner, "_eval_post_gepa_candidate", lambda *a, **k: [])
 
     run_serious_session(session.session_id)
 
@@ -406,6 +409,7 @@ def test_insufficient_training_data_blocks_optimize(
         showcase_runner, "_seed_training_signal", lambda *a, **k: ["only-one"]
     )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
+    monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
 
     run_quick_session(session.session_id)
 
@@ -443,6 +447,8 @@ def test_sufficient_training_data_allows_optimize(
         showcase_runner, "_seed_training_signal", lambda *a, **k: ["t1", "t2", "t3", "t4"]
     )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
+    monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
+    monkeypatch.setattr(showcase_runner, "_eval_post_gepa_candidate", lambda *a, **k: [])
 
     run_quick_session(session.session_id)
 
@@ -472,6 +478,7 @@ def test_no_learning_signal_uses_plain_english_message(
         showcase_runner, "_seed_training_signal", lambda *a, **k: ["t1", "t2", "t3", "t4"]
     )
     monkeypatch.setattr(showcase_runner, "_optimize", lambda **k: None)
+    monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
 
     run_quick_session(session.session_id)
 
@@ -508,7 +515,6 @@ def test_measure_skips_failing_case_and_continues(
             raise RuntimeError("simulated model error")
         return FakeResult(case_id)
 
-    monkeypatch.setattr(showcase_runner, "GeminiDrafterClient", lambda: object())
     monkeypatch.setattr(showcase_runner, "AdkSimulatorClient", lambda: object())
     monkeypatch.setattr(showcase_runner, "run_measurement_case", flaky_measure)
 
@@ -546,7 +552,6 @@ def test_training_signal_skips_failing_case_and_continues(
         return Run()
 
     monkeypatch.setattr(showcase_runner, "OtelPhoenixRecorder", lambda: object())
-    monkeypatch.setattr(showcase_runner, "GeminiDrafterClient", lambda: object())
     monkeypatch.setattr(showcase_runner, "GeminiJudgeClient", lambda: object())
     monkeypatch.setattr(showcase_runner, "run_evaluated_case", flaky_eval)
 
@@ -624,9 +629,12 @@ def test_resume_skips_completed_stages_and_reuses_proposal(
         sid,
         pre_measure_done=True,
         training_pre_done=True,
+        training_checkpoint_a_done=True,
         training_signal_done=True,
         training_trace_ids=["t1", "t2", "t3", "t4"],
         optimize_done=True,
+        train_gepa_candidate_done=True,
+        training_checkpoint_b_done=True,
     )
 
     measure_phases: list[str] = []

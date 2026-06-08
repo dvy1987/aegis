@@ -23,6 +23,19 @@ class EvaluatedRun(BaseModel):
     trace_ref: str
 
 
+def _trace_metadata_dict(appeal_package: dict[str, Any], trace_tags: dict[str, Any] | None) -> dict[str, Any]:
+    raw = appeal_package.get("trace_metadata") or {}
+    if hasattr(raw, "model_dump"):
+        meta = dict(raw.model_dump())
+    elif isinstance(raw, dict):
+        meta = dict(raw)
+    else:
+        meta = {}
+    if trace_tags:
+        meta.update({k: str(v) for k, v in trace_tags.items() if v is not None and v != ""})
+    return meta
+
+
 def run_evaluated_case(
     case_obj: dict[str, Any],
     recorder: PhoenixRecorder,
@@ -31,22 +44,33 @@ def run_evaluated_case(
     run_simulator: bool = True,
     simulator_client: "SimulatorClient | None" = None,
     drafter_prompt_version: str | None = None,
+    drafter_prompt_text: str | None = None,
+    playbook_override: dict[str, Any] | None = None,
+    run_mode: str = "benchmark",
+    trace_tags: dict[str, Any] | None = None,
 ) -> EvaluatedRun:
     """Student → record run → eval layer (judges [+ simulator]) → annotate trace."""
+
+    dataset_split = str(case_obj.get("dataset_split", "benchmark"))
 
     # 1. Student (blind to answer key): produce the appeal package.
     appeal_package = run_aegis_v1_pipeline(
         denial_text=case_obj.get("denial_letter_text", ""),
         clinical_context=case_obj.get("clinical_context", ""),
         case_id=case_obj.get("case_id", "interactive_case"),
-        dataset_split=case_obj.get("dataset_split", "benchmark"),
-        run_mode="benchmark",
+        dataset_split=dataset_split,
+        run_mode=run_mode,
         drafter_client=drafter_client,
         drafter_prompt_version=drafter_prompt_version,
+        drafter_prompt_text=drafter_prompt_text,
+        playbook_override=playbook_override,
     )
 
     # 2. Record the run trace (tagged metadata) BEFORE evaluation.
-    trace_ref = recorder.record_run(appeal_package, appeal_package["trace_metadata"])
+    trace_ref = recorder.record_run(
+        appeal_package,
+        _trace_metadata_dict(appeal_package, trace_tags),
+    )
 
     # 3. Eval layer — independent of the Student.
     teacher = build_teacher_grading_packet(case_obj, appeal_package)

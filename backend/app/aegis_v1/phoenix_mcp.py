@@ -70,12 +70,22 @@ def _decode_text(content: Any) -> str:
     return str(content)
 
 
+def _memory_eligible(span_attrs: dict[str, Any]) -> bool:
+    """D23: exclude GEPA optimize-round (tier B) spans from runtime drafter memory."""
+    raw = span_attrs.get("aegis.memory_eligible")
+    if raw is None:
+        return True
+    return str(raw).strip().lower() not in {"false", "0", "no"}
+
+
 def _slice_filter(span_attrs: dict[str, Any], *, insurer: str, denial_type: str) -> bool:
     """True iff this span's tagged metadata matches the requested slice."""
     try:
         attr_insurer = (span_attrs.get("aegis.insurer") or "").strip().lower()
         attr_denial = (span_attrs.get("aegis.denial_type") or "").strip().lower()
     except AttributeError:
+        return False
+    if not _memory_eligible(span_attrs):
         return False
     return attr_insurer == insurer.strip().lower() and attr_denial == denial_type.strip().lower()
 

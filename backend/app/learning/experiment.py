@@ -2,13 +2,20 @@ from __future__ import annotations
 
 from typing import Any, Protocol
 
+from app.evals.part_a.evaluated_run import run_evaluated_case as _run_evaluated_case
 from app.learning.models import (
     Candidate, CaseScore, DIMENSIONS, ExperimentResult, composite_score,
 )
 
 
 class ExperimentRunner(Protocol):
-    def run(self, candidate: Candidate, *, dataset_split: str) -> ExperimentResult: ...
+    def run(
+        self,
+        candidate: Candidate,
+        *,
+        dataset_split: str,
+        gepa_round: int | None = None,
+    ) -> ExperimentResult: ...
 
 
 def _targeted_dimensions(candidate: Candidate, slice_: str) -> list[str]:
@@ -26,6 +33,20 @@ def _targeted_dimensions(candidate: Candidate, slice_: str) -> list[str]:
     return [d for d in targets if d in DIMENSIONS]
 
 
+def _case_obj(case: dict[str, Any], dataset_split: str) -> dict[str, Any]:
+    teacher = case.get("_teacher_case")
+    if isinstance(teacher, dict):
+        obj = dict(teacher)
+        obj["dataset_split"] = dataset_split
+        return obj
+    return {
+        "case_id": case["case_id"],
+        "denial_letter_text": case.get("denial_letter_text", ""),
+        "clinical_context": case.get("clinical_context", ""),
+        "dataset_split": dataset_split,
+    }
+
+
 class StubExperimentRunner:
     """Deterministic offline scorer: each targeted dimension is bumped two anchor steps
     (1->3->5). Gives the Coordinator a real, monotone gradient to climb in tests."""
@@ -35,7 +56,13 @@ class StubExperimentRunner:
     def __init__(self, dataset: list[dict[str, Any]]) -> None:
         self.dataset = dataset
 
-    def run(self, candidate: Candidate, *, dataset_split: str) -> ExperimentResult:
+    def run(
+        self,
+        candidate: Candidate,
+        *,
+        dataset_split: str,
+        gepa_round: int | None = None,
+    ) -> ExperimentResult:
         per_case: list[CaseScore] = []
         for case in self.dataset:
             dims = dict(case["base"])
@@ -51,32 +78,93 @@ class StubExperimentRunner:
 
 
 class LiveExperimentRunner:
-    """Real scorer: draft each case with the candidate's components, judge it, compute the
-    composite. Used by the efficacy harness (Claude/Gemini) and the GCP plan. Construction
-    is offline-safe; `run` makes model calls and is exercised only with a live backend."""
+    """Real scorer: draft each case with the candidate's components via ADK pipeline,
+    judge it, persist tier-B Phoenix annotations when a recorder is wired."""
 
     name = "live_experiment_runner"
 
-    def __init__(self, dataset: list[dict[str, Any]], drafter_client: Any, judge_client: Any) -> None:
+    def __init__(
+        self,
+        dataset: list[dict[str, Any]],
+        judge_client: Any,
+        *,
+        drafter_client: Any | None = None,
+        recorder: Any | None = None,
+        memory_eligible: bool = False,
+        run_mode: str = "gepa_optimize_candidate",
+    ) -> None:
         self.dataset = dataset
         self.drafter_client = drafter_client
         self.judge_client = judge_client
+        self.recorder = recorder
+        self.memory_eligible = memory_eligible
+        self.run_mode = run_mode
 
-    def run(self, candidate: Candidate, *, dataset_split: str) -> ExperimentResult:
+    def run(
+        self,
+        candidate: Candidate,
+        *,
+        dataset_split: str,
+        gepa_round: int | None = None,
+    ) -> ExperimentResult:
         per_case: list[CaseScore] = []
-        for case in self.dataset:
-            letter = self.drafter_client.draft(
-                prompt=candidate.components["drafter_system_prompt"].text or "",
-                parsed_case=case["parsed_case"], citations=case.get("citations", []),
-                playbook=(candidate.components.get(f"playbook:{case['slice']}").playbook
-                          if candidate.components.get(f"playbook:{case['slice']}") else {}),
-                phoenix_summary=case.get("phoenix_summary", {}))
-            verdict = self.judge_client.score(case=case, appeal_letter=letter)  # -> dict-like
-            dims = verdict["dimension_scores"]
-            gate = verdict["hard_gate_pass"]
-            per_case.append(CaseScore(case_id=case["case_id"], composite=composite_score(dims, gate),
-                                      dimension_scores=dims, hard_gate_pass=gate))
+        prompt_comp = candidate.components["drafter_system_prompt"]
+        for index, case in enumerate(self.dataset):
+            if index > 0:
+                from app import gemini_retry
+
+                gemini_retry.pace_gemini_call()
+            pb_comp = candidate.components.get(f"playbook:{case['slice']}")
+            playbook_override = pb_comp.playbook if pb_comp and pb_comp.playbook else None
+            if self.recorder is not None and self.drafter_client is None:
+                evaluated = _run_evaluated_case(
+                    _case_obj(case, dataset_split),
+                    recorder=self.recorder,
+                    drafter_client=None,
+                    judge_client=self.judge_client,
+                    run_simulator=False,
+                    drafter_prompt_version=prompt_comp.version,
+                    drafter_prompt_text=prompt_comp.text,
+                    playbook_override=playbook_override,
+                    run_mode=self.run_mode,
+                    trace_tags={
+                        "memory_eligible": "true" if self.memory_eligible else "false",
+                        "candidate_id": candidate.candidate_id,
+                        "gepa_round": gepa_round,
+                        "run_mode": self.run_mode,
+                        "dataset_split": dataset_split,
+                        "prompt_version": prompt_comp.version,
+                    },
+                )
+                report = evaluated.panel_report
+                dims = dict(report.dimension_scores)
+                gate = report.verdict == "PASS"
+            elif self.drafter_client is not None:
+                letter = self.drafter_client.draft(
+                    prompt=prompt_comp.text or "",
+                    parsed_case=case["parsed_case"],
+                    citations=case.get("citations", []),
+                    playbook=playbook_override or {},
+                    phoenix_summary=case.get("phoenix_summary", {}),
+                )
+                verdict = self.judge_client.score(case=case, appeal_letter=letter)
+                dims = verdict["dimension_scores"]
+                gate = verdict["hard_gate_pass"]
+            else:
+                raise ValueError("LiveExperimentRunner requires recorder or drafter_client")
+            per_case.append(
+                CaseScore(
+                    case_id=case["case_id"],
+                    composite=composite_score(dims, gate),
+                    dimension_scores=dims,
+                    hard_gate_pass=gate,
+                )
+            )
         mean = round(sum(c.composite for c in per_case) / len(per_case), 4) if per_case else 0.0
-        return ExperimentResult(candidate_id=candidate.candidate_id, dataset_split=dataset_split,
-                                per_case=per_case, composite=mean,
-                                experiment_id=f"exp_{candidate.candidate_id}_{dataset_split}")
+        return ExperimentResult(
+            candidate_id=candidate.candidate_id,
+            dataset_split=dataset_split,
+            per_case=per_case,
+            composite=mean,
+            experiment_id=f"exp_{candidate.candidate_id}_{dataset_split}",
+        )
