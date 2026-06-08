@@ -310,7 +310,6 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
     - Logs the run + evaluations to Phoenix, and returns a direct Phoenix link.
     """
 
-    from app.aegis_v1.drafter_client import GeminiDrafterClient
     from app.aegis_v1.simulator_client import GeminiSimulatorClient
 
     case_obj = {
@@ -325,12 +324,10 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
     # model family everywhere. Gemini 3.1 Pro is currently exposed on Vertex as a
     # preview model (suffix matters).
     location = os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
-    drafter_model = os.environ.get("AEGIS_DRAFTER_MODEL", "gemini-3.1-pro-preview")
     judge_model = os.environ.get("AEGIS_JUDGE_MODEL", "gemini-3.1-pro-preview")
     simulator_model = os.environ.get("AEGIS_SIMULATOR_MODEL", "gemini-3.1-pro-preview")
 
     simulator_client = GeminiSimulatorClient(model=simulator_model, location=location)
-    drafter_client = GeminiDrafterClient(model=drafter_model, location=location)
 
     judge_client = (
         GeminiJudgeClient(
@@ -344,7 +341,7 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
     baseline = run_evaluated_case(
         case_obj,
         recorder=recorder,
-        drafter_client=drafter_client,
+        drafter_client=None,
         judge_client=judge_client,
         simulator_client=simulator_client,
         drafter_prompt_version=req.baseline_prompt_version,
@@ -352,7 +349,7 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
     candidate = run_evaluated_case(
         case_obj,
         recorder=recorder,
-        drafter_client=drafter_client,
+        drafter_client=None,
         judge_client=judge_client,
         simulator_client=simulator_client,
         drafter_prompt_version=req.candidate_prompt_version,
@@ -369,7 +366,7 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
             off = run_evaluated_case(
                 case_obj,
                 recorder=recorder,
-                drafter_client=drafter_client,
+                drafter_client=None,
                 judge_client=judge_client,
                 simulator_client=simulator_client,
                 drafter_prompt_version=req.candidate_prompt_version,

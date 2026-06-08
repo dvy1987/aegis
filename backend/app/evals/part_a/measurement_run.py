@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, Any, Literal
 from pydantic import BaseModel
 
 from app.aegis_v1.drafter_client import DrafterLLMClient
+from app.aegis_v1.phoenix_mode import PhoenixMode
 from app.aegis_v1.pipeline import run_aegis_v1_pipeline
 
 if TYPE_CHECKING:
@@ -48,6 +49,7 @@ def run_measurement_case(
         case_id=case_obj.get("case_id", "interactive_case"),
         dataset_split=case_obj.get("dataset_split", "showcase_measure"),
         run_mode="benchmark",
+        phoenix_mode=PhoenixMode.HOLDOUT_READONLY,
         drafter_client=drafter_client,
         drafter_prompt_version=drafter_prompt_version,
         drafter_prompt_text=drafter_prompt_text,

@@ -28,6 +28,36 @@ class CapturingDrafterClient:
         return StubDrafterClient().draft(prompt, parsed_case, citations, playbook, phoenix_summary)
 
 
+def test_holdout_measure_does_not_write_phoenix(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Plan §17.4: holdout measure must never call record_run."""
+    calls: list[str] = []
+
+    def _blocked_record(self, appeal_package, trace_metadata) -> str:
+        calls.append("record_run")
+        return "blocked"
+
+    monkeypatch.setattr(
+        "app.evals.part_a.recorder.OtelPhoenixRecorder.record_run",
+        _blocked_record,
+    )
+
+    def _blocked_export(*args, **kwargs):
+        calls.append("write_appeal_phoenix_export")
+        return None
+
+    monkeypatch.setattr(
+        "app.aegis_v1.appeal_phoenix_export.write_appeal_phoenix_export",
+        _blocked_export,
+    )
+
+    run_measurement_case(
+        CASE,
+        drafter_client=StubDrafterClient(),
+        simulator_client=StubSimulatorClient(uniform_assessment(5)),
+    )
+    assert calls == []
+
+
 def test_measurement_runner_returns_simulator_outcome() -> None:
     result = run_measurement_case(
         CASE,

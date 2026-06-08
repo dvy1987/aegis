@@ -14,6 +14,30 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+def _configure_workflow_injection(
+    drafter_client: "DrafterLLMClient | None",
+    library_stack: dict[str, Any] | None,
+) -> bool:
+    """Set module-level Workflow DI flags. Returns True when offline test mode is active."""
+    import app.aegis_v1.student_workflow as _sw
+    from app.aegis_v1.adk_runtime import EchoLlm
+    from app.aegis_v1.drafter_client import is_offline_pipeline_client
+
+    offline = is_offline_pipeline_client(drafter_client)
+    _sw._injected_library_stack = library_stack
+    _sw._injected_offline_pipeline = offline
+    _sw._injected_drafter_model = EchoLlm() if offline else None
+    return offline
+
+
+def _clear_workflow_injection() -> None:
+    import app.aegis_v1.student_workflow as _sw
+
+    _sw._injected_library_stack = None
+    _sw._injected_drafter_model = None
+    _sw._injected_offline_pipeline = False
+
+
 def run_aegis_v1_pipeline(
     denial_text: str,
     clinical_context: str = "",
@@ -28,6 +52,7 @@ def run_aegis_v1_pipeline(
     playbook_override: dict[str, Any] | None = None,
     library_stack: dict[str, Any] | None = None,
     use_phoenix_memory: bool = True,
+    phoenix_mode: PhoenixMode = PhoenixMode.APPEAL,
 ) -> dict[str, Any]:
     """Run the six-tool v1 Student flow via ADK 2.2 Workflow (D21 seam).
 
@@ -40,6 +65,7 @@ def run_aegis_v1_pipeline(
         case_id=case_id,
         dataset_split=dataset_split,
         run_mode=run_mode,
+        phoenix_mode=phoenix_mode,
         drafter_client=drafter_client,
         drafter_prompt_version=drafter_prompt_version,
         drafter_prompt_text=drafter_prompt_text,
@@ -67,10 +93,9 @@ def run_aegis_v1_adk_pipeline(
 
     This is the single production path (D4 — no feature flag).
     """
-    from app.aegis_v1.adk_runtime import EchoLlm, run_workflow_sync
+    from app.aegis_v1.adk_runtime import run_workflow_sync
     from app.aegis_v1.library_context import LibraryPrepMetadata
     from app.aegis_v1.student_workflow import build_student_workflow
-    import app.aegis_v1.student_workflow as _sw
 
     workflow = build_student_workflow()
 
@@ -93,10 +118,7 @@ def run_aegis_v1_adk_pipeline(
     # Inject non-serializable DI objects via module globals.  ADK's Runner
     # spawns a new asyncio context so contextvars don't propagate, but module
     # globals are visible from the @node functions in the same process.
-    _sw._injected_library_stack = library_stack
-    # When a legacy StubDrafterClient is passed for offline tests, use EchoLlm
-    # so the ADK drafter agent runs without real API credentials.
-    _sw._injected_drafter_model = EchoLlm() if drafter_client is not None else None
+    _configure_workflow_injection(drafter_client, library_stack)
     try:
         result = run_workflow_sync(
             workflow,
@@ -106,8 +128,7 @@ def run_aegis_v1_adk_pipeline(
             message=f"Process appeal case {case_id}",
         )
     finally:
-        _sw._injected_library_stack = None
-        _sw._injected_drafter_model = None
+        _clear_workflow_injection()
     state = result["state"]
 
     # --- Assemble AppealPackage from final workflow state ---

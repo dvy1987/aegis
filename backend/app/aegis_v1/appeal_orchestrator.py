@@ -4,6 +4,8 @@ from typing import TYPE_CHECKING, Any, Literal
 
 from pydantic import BaseModel
 
+from app.aegis_v1.appeal_phoenix_export import write_appeal_phoenix_export
+from app.aegis_v1.phoenix_mode import PhoenixMode
 from app.aegis_v1.pipeline import run_aegis_v1_pipeline
 
 if TYPE_CHECKING:
@@ -40,6 +42,7 @@ def run_appeal_with_outcome(
     teacher answer key, which does not exist for a real user-submitted appeal.
     Grading lives in `app.evals.part_a.evaluated_run.run_evaluated_case`.
     """
+    from app.aegis_v1.drafter_client import is_offline_pipeline_client
     from app.aegis_v1.tools import simulator
 
     appeal_package = run_aegis_v1_pipeline(
@@ -48,8 +51,16 @@ def run_appeal_with_outcome(
         case_id=case_id,
         dataset_split=dataset_split,
         run_mode=run_mode,
+        phoenix_mode=PhoenixMode.APPEAL,
         drafter_client=drafter_client,
         library_stack=library_stack,
+    )
+    write_appeal_phoenix_export(
+        appeal_package,
+        denial_text=denial_text,
+        clinical_context=clinical_context,
+        use_scrubber=not is_offline_pipeline_client(drafter_client),
+        phoenix_mode=PhoenixMode.APPEAL,
     )
     outcome = simulator(
         parsed_case=appeal_package["parsed_case"],

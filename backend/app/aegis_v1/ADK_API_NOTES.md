@@ -108,7 +108,7 @@ final = session_service.get_session_sync(
 - `isinstance(root_agent, Workflow)` → `DynamicNodeScheduler` path in `google.adk.runners`
 - `create_session_sync` / `get_session_sync` on `InMemorySessionService`
 
-**Planned helper (Phase 1):** `run_workflow_sync(...)` in `adk_runtime.py` — not implemented yet.
+**Helper (Phase 1 ✅):** `run_workflow_sync(...)` in `adk_runtime.py` — runs Workflow to completion; returns final state + events.
 
 ## Model layer
 
@@ -148,4 +148,4 @@ Re-run the introspection snippet in this file after any `google-adk` version bum
 
 ## FastAPI
 
-`get_fast_api_app` in `main_v1.py` mounts `app` from `agent.py`. Today: Phase 0 placeholder `LlmAgent`. Phase 1 target: `App(root_agent=v1_student_workflow)`.
+`get_fast_api_app` in `main_v1.py` mounts `app` from `agent.py`. Phase 1 ✅: `App(root_agent=v1_student_workflow)`. Chat streams receive the appeal letter via `appeal_publish_node` (final Workflow step).

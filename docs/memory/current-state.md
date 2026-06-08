@@ -1,16 +1,19 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-07 (session — ADK Phase 1 built; uncommitted)
-**Phase:** **ADK migration Phase 1 DONE. Phase 2+ next (simulator agent + best-of-5).**
+**Updated:** 2026-06-07 (session — ADK Phase 1 audit-clean; uncommitted)
+**Phase:** **ADK migration Phase 1 COMPLETE (audit-clean). Phase 2 blocked until PM says "go".**
 
-### 2026-06-07 - ADK Phase 1 built (uncommitted)
-- **Student pipeline runs through ADK 2.2 `Workflow` graph.** `student_workflow.py` has 6 `@node` steps (D7 order): case_parser → playbook_loader → phoenix_read → library_finder → drafter → self_check.
-- **`pipeline.py`** dispatches to `run_aegis_v1_adk_pipeline` — single production path (D4, no feature flag).
-- **`agent.py`** mounts `v1_student_workflow` as `App` root (`Workflow` is valid `BaseNode`).
-- **`adk_runtime.py`** gained `run_workflow_sync()` for running Workflow graphs.
-- Drafter and library finder internally run `LlmAgent` via `run_llm_agent_sync`; `EchoLlm` for offline tests.
-- DI uses module globals (ADK Runner's async context breaks `contextvars`).
-- Verification: backend **325 passed / 0 failures**.
+### 2026-06-07 - ADK Phase 1 audit-clean (uncommitted)
+- Closed §17 gaps: `can_write_phoenix()` guard, holdout no-write tests, library agent mock test, phoenix-before-drafter ordering test, chat `node_input` + `appeal_publish_node` for ADK streams.
+- Integration: `test_agent_stream` + `test_chat_stream` pass with Workflow root.
+- Verification: backend **342 passed** (full suite incl. integration).
+
+### 2026-06-07 - ADK Phase 1 complete (gap closure; uncommitted)
+- **Library finder is a real ADK `LlmAgent`** with `search_library` tool (`library_finder_agent.py`). Offline tests use baseline query + tool (no live Gemini when `EchoLlm` injected).
+- **Appeal Phoenix export:** post-draft redacted write via `appeal_phoenix_export.py`; wired in `appeal_orchestrator.py`. User sees unredacted letter; Phoenix gets rule-redacted copy (`memory_eligible=true`, `phoenix_mode=appeal`).
+- **Holdout measure:** `measurement_run.py` passes `phoenix_mode=HOLDOUT_READONLY` (read-only; no appeal export write on measure path).
+- **Student `Workflow` graph** unchanged D7 order; `finalize_library_from_agent_retrieval` in `library_context.py`.
+- Verification: backend **333 passed** (unit + non-integration).
 - Next: **Phase 2** — simulator `LlmAgent` + best-of-5 `/appeal` gatekeeper + remove simulator from Phoenix annotations.
 
 ### 2026-06-07 - ADK migration Phase 0 complete (uncommitted)
@@ -30,8 +33,8 @@
 ### RESOLVED (2026-06-07): v1 pipeline now runs through ADK Workflow
 - **Phase 1 built:** all v1 pipeline steps run as `@node` functions in an ADK 2.2 `Workflow`. Drafter and library finder internally create `LlmAgent` instances via `run_llm_agent_sync`. `App(root_agent=v1_student_workflow)`.
 - **Still raw `google.genai`:** simulator, 6 judges, reflector (Phases 2–4 of migration plan).
-- Denial-letter text latent-risk note still applies — ADK instrumentor now traces drafter LLM calls, but redacted-export path is not yet wired (`/appeal` Phoenix write is Phase 1 deferred item).
-- Migration plan v2: [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md). Phase 1 done; Phases 2–5 next.
+- `/appeal` redacted Phoenix export wired (Phase 1). Holdout measure remains read-only via `PhoenixMode.HOLDOUT_READONLY`.
+- Migration plan v2: [plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md](../plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md). Phase 1 complete; Phases 2–5 next.
 
 ### Hackathon readiness (Arize track)
 - Assessment doc: [assessment-arize-track.md](../assessment-arize-track.md) — MCP/evals/self-improvement **strong**; gaps: demo video, stale README, tracing thinness (raw genai not instrumented), verify Vertex Search on Cloud Run for live citations.

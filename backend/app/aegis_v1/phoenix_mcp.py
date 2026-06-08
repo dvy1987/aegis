@@ -19,7 +19,18 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any
+
+
+def _run_coro_sync(coro):
+    """Run an async coroutine from sync code even if an event loop is active."""
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        return asyncio.run(coro)
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        return pool.submit(asyncio.run, coro).result()
 
 
 WORKING_AUTH_RECIPE = """\
@@ -158,7 +169,9 @@ async def _async_fetch_via_mcp(
 def _fetch_via_mcp(
     insurer: str, denial_type: str, project: str, limit: int
 ) -> list[dict[str, Any]]:
-    return asyncio.run(_async_fetch_via_mcp(insurer, denial_type, project, limit))
+    return _run_coro_sync(
+        _async_fetch_via_mcp(insurer, denial_type, project, limit)
+    )
 
 
 def _fetch_via_client(

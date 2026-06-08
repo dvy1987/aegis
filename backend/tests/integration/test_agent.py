@@ -20,6 +20,8 @@ from google.genai import types
 
 from app.aegis_v1.agent import root_agent
 
+from tests.integration.workflow_stream_utils import stream_has_user_visible_text
+
 
 def _adc_available() -> bool:
     try:
@@ -73,14 +75,6 @@ def test_agent_stream() -> None:
         )
     )
     assert len(events) > 0, "Expected at least one message"
-
-    has_text_content = False
-    for event in events:
-        if (
-            event.content
-            and event.content.parts
-            and any(part.text for part in event.content.parts)
-        ):
-            has_text_content = True
-            break
-    assert has_text_content, "Expected at least one message with text content"
+    assert stream_has_user_visible_text(events), (
+        "Expected at least one message with text content or appeal draft"
+    )

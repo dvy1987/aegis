@@ -139,11 +139,84 @@ def test_holdout_mode_produces_valid_package() -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_phoenix_read_before_draft(monkeypatch) -> None:
-    """Phoenix MCP lookup must execute before the drafter (D8)."""
-    call_order: list[str] = []
+def test_holdout_measure_does_not_call_phoenix_export(monkeypatch) -> None:
+    """Plan §17.4: pipeline holdout path must not invoke appeal Phoenix export."""
+    calls: list[str] = []
 
-    original_lookup = None
+    def _blocked_export(*args, **kwargs):
+        calls.append("write")
+        return None
+
+    monkeypatch.setattr(
+        "app.aegis_v1.appeal_phoenix_export.write_appeal_phoenix_export",
+        _blocked_export,
+    )
+
+    run_aegis_v1_pipeline(
+        denial_text=DENIAL,
+        clinical_context=CLINICAL,
+        case_id="holdout_no_write",
+        phoenix_mode=PhoenixMode.HOLDOUT_READONLY,
+        drafter_client=StubDrafterClient(),
+    )
+    assert calls == []
+
+
+def test_workflow_chat_node_input_parses_denial(monkeypatch) -> None:
+    """ADK chat passes denial text via node_input when state denial_text is empty."""
+    from app.aegis_v1.adk_runtime import EchoLlm, run_workflow_sync
+    from app.aegis_v1.student_workflow import build_student_workflow
+    import app.aegis_v1.student_workflow as _sw
+
+    _sw._injected_offline_pipeline = True
+    _sw._injected_drafter_model = EchoLlm()
+    try:
+        result = run_workflow_sync(
+            build_student_workflow(),
+            app_name="aegis_v1",
+            user_id="chat_test",
+            initial_state={},
+            message=DENIAL,
+        )
+    finally:
+        _sw._injected_drafter_model = None
+        _sw._injected_offline_pipeline = False
+
+    parsed = result["state"].get("parsed_case", {})
+    assert parsed.get("insurer") == "Cigna"
+    assert result["state"].get("appeal_draft", {}).get("appeal_letter")
+
+
+def test_holdout_mode_passed_to_pipeline(monkeypatch) -> None:
+    """Showcase measure must use holdout_readonly (D9)."""
+    captured: list[PhoenixMode] = []
+
+    import app.aegis_v1.pipeline as pipeline_mod
+
+    original = pipeline_mod.run_aegis_v1_adk_pipeline
+
+    def capture_mode(**kwargs):
+        captured.append(kwargs.get("phoenix_mode"))
+        return original(**kwargs)
+
+    monkeypatch.setattr(pipeline_mod, "run_aegis_v1_adk_pipeline", capture_mode)
+
+    from app.evals.part_a.measurement_run import run_measurement_case
+
+    run_measurement_case(
+        {
+            "case_id": "holdout_mode",
+            "denial_letter_text": DENIAL,
+            "clinical_context": CLINICAL,
+        },
+        drafter_client=StubDrafterClient(),
+    )
+    assert captured == [PhoenixMode.HOLDOUT_READONLY]
+
+
+def test_phoenix_read_before_draft(monkeypatch) -> None:
+    """Phoenix MCP lookup must execute before the drafter LlmAgent (D8)."""
+    call_order: list[str] = []
 
     def tracking_lookup(*args, **kwargs):
         call_order.append("phoenix_read")
@@ -156,22 +229,23 @@ def test_phoenix_read_before_draft(monkeypatch) -> None:
             "risk_flags": ["phoenix_mcp_cold_start"],
         }
 
+    import app.aegis_v1.adk_runtime as adk_runtime
+
+    original_run_llm = adk_runtime.run_llm_agent_sync
+
+    def tracking_run_llm(agent, **kwargs):
+        if getattr(agent, "name", "") == "v1_drafter_agent":
+            call_order.append("drafter")
+        return original_run_llm(agent, **kwargs)
+
     monkeypatch.setattr("app.aegis_v1.tools.phoenix_mcp_lookup", tracking_lookup)
+    monkeypatch.setattr(adk_runtime, "run_llm_agent_sync", tracking_run_llm)
 
-    import app.aegis_v1.student_workflow as _sw
-    original_drafter_node = _sw.drafter_node._func
-
-    def tracking_drafter(ctx):
-        call_order.append("drafter")
-        return original_drafter_node(ctx)
-
-    # Can't easily monkey-patch a @node; instead verify order via risk flags
     result = run_aegis_v1_pipeline(
         denial_text=DENIAL,
         clinical_context=CLINICAL,
         case_id="order_test",
         drafter_client=StubDrafterClient(),
     )
-    # If phoenix ran, its risk flag should be in the output
     assert "phoenix_mcp_cold_start" in result["risk_flags"]
-    assert "phoenix_read" in call_order
+    assert call_order.index("phoenix_read") < call_order.index("drafter")

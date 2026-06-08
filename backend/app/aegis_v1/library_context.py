@@ -167,3 +167,91 @@ def prepare_library_context(
         metadata=meta,
         risk_flags=risk_flags,
     )
+
+
+def finalize_library_from_agent_retrieval(
+    parsed: dict[str, Any] | ParsedCase,
+    retrieval: dict[str, Any],
+    *,
+    case_id: str,
+    corpus_store: CorpusStore,
+    discovery: LiteratureDiscovery | None = None,
+    refinement_client: PlannerRefinementClient | None = None,
+    cloud_library_used: bool = False,
+    search_error: bool = False,
+) -> LibraryContext:
+    """Build library metadata + optional discovery after the library-finder agent."""
+    case = parsed if isinstance(parsed, ParsedCase) else ParsedCase.model_validate(parsed)
+    discovery = discovery or LiteratureDiscovery()
+    meta = LibraryPrepMetadata(
+        discovery_enabled=discovery.config.enabled,
+        cloud_library_used=cloud_library_used,
+        library_search_query=str(retrieval.get("query", "")),
+    )
+    risk_flags: list[str] = []
+    if search_error:
+        risk_flags.append("library_search_error")
+        meta.library_available = False
+    if not retrieval.get("hits") and not cloud_library_used:
+        meta.library_available = False
+        risk_flags.append("library_unavailable_no_cloud_index")
+
+    if library_is_thin(case, _citation_hits(retrieval)):
+        if not discovery.config.enabled:
+            risk_flags.append("library_thin_no_discovery")
+        else:
+            domain = discovery_domain_for_denial(case.denial_type)
+            meta.discovery_ran = True
+            discovery_queries: list[str] = []
+            total_ingested = 0
+            total_rejected = 0
+            baseline = meta.library_search_query or build_baseline_query(case.model_dump())
+
+            try:
+                for fetch_idx in range(V1_MAX_DISCOVERY_FETCHES):
+                    if not library_is_thin(case, _citation_hits(retrieval)):
+                        break
+
+                    if fetch_idx == 0:
+                        query = baseline
+                    else:
+                        query, layer3_ran = refine_discovery_query(
+                            parsed_case=case.model_dump(),
+                            fetch_index=fetch_idx,
+                            prior_queries=discovery_queries,
+                            hit_count=len(retrieval.get("hits", [])),
+                            ingest_count=total_ingested,
+                            reject_count=total_rejected,
+                            client=refinement_client,
+                        )
+                        if layer3_ran:
+                            meta.layer3_refinement_ran = True
+
+                    discovery_queries.append(query)
+                    meta.discovery_fetch_count += 1
+                    result = discovery.maybe_discover(domain, query, case_id, limit=1)
+                    total_ingested += len(result.ingested)
+                    total_rejected += len(result.rejected)
+
+                    hits = search_unified_library(corpus_store, baseline, top_k=3)
+                    retrieval = hits_to_retrieval(baseline, hits)
+            except Exception:
+                logger.warning(
+                    "library discovery failed for case_id=%s; keeping agent retrieval",
+                    case_id,
+                    exc_info=True,
+                )
+                risk_flags.append("library_discovery_error")
+
+            meta.discovery_queries = discovery_queries
+            meta.discovery_ingested_count = total_ingested
+            meta.discovery_rejected_count = total_rejected
+
+            if library_is_thin(case, _citation_hits(retrieval)):
+                risk_flags.append("library_thin_after_discovery")
+
+    return LibraryContext(
+        retrieval=retrieval,
+        metadata=meta,
+        risk_flags=risk_flags,
+    )

@@ -17,3 +17,13 @@ class PhoenixMode(str, Enum):
 
     TRAINING_READWRITE = "training_readwrite"
     """Synthetic training: read before draft + write after (checkpoints A/B)."""
+
+
+_WRITE_MODES = frozenset(
+    {PhoenixMode.APPEAL, PhoenixMode.TRAINING_WRITE, PhoenixMode.TRAINING_READWRITE}
+)
+
+
+def can_write_phoenix(mode: PhoenixMode) -> bool:
+    """Return True when app-level Phoenix record_run / appeal export is allowed."""
+    return mode in _WRITE_MODES

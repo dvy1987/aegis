@@ -28,10 +28,13 @@ class AppealResponse(BaseModel):
 
 
 def get_drafter_client():
-    """Production drafter (Vertex/Gemini). Overridden with a stub in tests."""
-    from app.aegis_v1.drafter_client import GeminiDrafterClient
+    """Offline pipeline stub for tests only.
 
-    return GeminiDrafterClient()
+    Production drafting runs through the ADK ``LlmAgent`` inside the student
+    Workflow (Vertex via ``make_retry_model()``). Return ``None`` here; override
+  with ``StubDrafterClient`` in unit tests for offline HTTP checks.
+    """
+    return None
 
 
 def get_simulator_client():

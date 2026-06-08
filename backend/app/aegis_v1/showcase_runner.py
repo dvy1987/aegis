@@ -102,7 +102,6 @@ def _measure(
     manager.set_stage(session_id, stage=stage, total_cases=len(cases))
     _log(session_id, stage, "showcase measurement started", total_cases=len(cases))
     results: list[dict] = []
-    drafter = GeminiDrafterClient()
     simulator = GeminiSimulatorClient()
     for index, case in enumerate(cases, start=1):
         if _is_cancelled(manager, session_id):
@@ -121,7 +120,7 @@ def _measure(
         try:
             result = run_measurement_case(
                 _case_obj(case, dataset_split=f"showcase_{phase}_measure_{session_id}"),
-                drafter_client=drafter,
+                drafter_client=None,
                 simulator_client=simulator,
                 drafter_prompt_version=drafter_prompt_version,
                 drafter_prompt_text=drafter_prompt_text,
@@ -169,7 +168,6 @@ def _seed_training_signal(
         return []
     manager.set_stage(session_id, stage="train_gepa", total_cases=len(cases))
     recorder = OtelPhoenixRecorder()
-    drafter = GeminiDrafterClient()
     judge = GeminiJudgeClient()
     trace_ids: list[str] = []
     for index, case in enumerate(cases, start=1):
@@ -189,7 +187,7 @@ def _seed_training_signal(
             run = run_evaluated_case(
                 case.judge_case(dataset_split=dataset_split),
                 recorder=recorder,
-                drafter_client=drafter,
+                drafter_client=None,
                 judge_client=judge,
                 run_simulator=False,
             )

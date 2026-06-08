@@ -3,7 +3,7 @@
 Plan reference: docs/plans/2026-06-07-aegis-v1-adk-migration-plan-v2.md §3–§4.
 
 Step order (D7): case_parser → playbook_loader → phoenix_mcp_lookup (READ)
-  → library_finder_agent → v1-drafter-agent → self_check.
+  → library_finder_agent → v1-drafter-agent → self_check → appeal_publish.
 
 All steps are @node FunctionNodes that read/write ``ctx.state``.  LLM-dependent
 steps (library finder, drafter) internally create and run ``LlmAgent`` instances
@@ -21,6 +21,7 @@ from pydantic import BaseModel, Field
 
 from google.adk import Workflow
 from google.adk.workflow import START, node
+from google.genai import types
 
 from app.aegis_v1.phoenix_mode import PhoenixMode
 
@@ -37,6 +38,7 @@ logger = logging.getLogger(__name__)
 
 _injected_library_stack: dict[str, Any] | None = None
 _injected_drafter_model: Any | None = None
+_injected_offline_pipeline: bool = False
 
 # ---------------------------------------------------------------------------
 # State schema — every field is a shared register between nodes.
@@ -77,6 +79,38 @@ class StudentWorkflowState(BaseModel):
 
 
 # ---------------------------------------------------------------------------
+# Helpers — ADK chat passes user text via node_input; pipeline via state.
+# ---------------------------------------------------------------------------
+
+
+def _node_input_to_text(node_input: Any) -> str:
+    """Extract user text from ADK START node_input (Content, str, or dict)."""
+    if node_input is None:
+        return ""
+    if isinstance(node_input, str):
+        return node_input
+    if isinstance(node_input, types.Content):
+        parts: list[str] = []
+        for part in node_input.parts or []:
+            if part.text:
+                parts.append(part.text)
+        return "".join(parts)
+    if isinstance(node_input, dict):
+        content = node_input.get("content")
+        if isinstance(content, dict):
+            text_parts: list[str] = []
+            for part in content.get("parts") or []:
+                if isinstance(part, dict) and part.get("text"):
+                    text_parts.append(str(part["text"]))
+            if text_parts:
+                return "".join(text_parts)
+        text = node_input.get("text")
+        if text:
+            return str(text)
+    return str(node_input)
+
+
+# ---------------------------------------------------------------------------
 # Node 1 — case_parser
 # ---------------------------------------------------------------------------
 
@@ -84,12 +118,19 @@ class StudentWorkflowState(BaseModel):
 @node
 def case_parser_node(
     ctx: Any,
+    node_input: Any = None,
     denial_text: str = "",
     clinical_context: str = "",
     case_id: str = "interactive_case",
 ) -> None:
     """Parse the denial into structured case fields."""
     from app.aegis_v1.tools import case_parser
+
+    if not (denial_text or "").strip():
+        denial_text = _node_input_to_text(node_input)
+    ctx.state["denial_text"] = denial_text
+    ctx.state["clinical_context"] = clinical_context
+    ctx.state["case_id"] = case_id
 
     result = case_parser(
         denial_text=denial_text,
@@ -132,10 +173,9 @@ def playbook_loader_node(ctx: Any) -> None:
 def phoenix_read_node(ctx: Any) -> None:
     """Read Phoenix memory before drafting (D8).  Respects phoenix_mode."""
     parsed = ctx.state.get("parsed_case", {})
-    mode = PhoenixMode(ctx.state.get("phoenix_mode", PhoenixMode.APPEAL.value))
     use_memory = ctx.state.get("use_phoenix_memory", True)
 
-    # All modes allow reading; only writes are mode-gated (later).
+    # All modes allow reading; app-level writes are gated via can_write_phoenix().
     if not use_memory:
         ctx.state["phoenix_summary"] = {
             "status": "disabled",
@@ -158,92 +198,58 @@ def phoenix_read_node(ctx: Any) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Node 4 — library_finder (LLM-driven search)
+# Node 4 — library_finder_agent (ADK LlmAgent + search_library tool)
 # ---------------------------------------------------------------------------
-
-
-def _build_library_search_tool(library_stack: dict[str, Any] | None):
-    """Return a plain function the library-finder LlmAgent can call as a tool."""
-
-    def search_library(query: str, top_k: int = 3) -> str:
-        """Search the medical/legal corpus for sources relevant to *query*.
-
-        Returns a JSON array of citation hits with corpus_doc_id, title, quote,
-        and relevance_score.
-        """
-        from app.aegis_v1.corpus_bridge import (
-            hits_to_retrieval,
-            search_unified_library,
-        )
-        from app.aegis_v1.v1_config import build_v1_library_stack
-
-        stack = library_stack or build_v1_library_stack()
-        corpus_store = stack.get("corpus_store")
-        if corpus_store is None:
-            from app.aegis_v1.v1_config import build_v1_library_stack as _build
-            corpus_store = _build().get("corpus_store")
-
-        try:
-            hits = search_unified_library(corpus_store, query, top_k=top_k)
-        except Exception:
-            hits = []
-        retrieval = hits_to_retrieval(query, hits)
-        return json.dumps(retrieval, default=str)
-
-    return search_library
-
-
-_LIBRARY_FINDER_INSTRUCTION = """\
-You are a legal/medical research assistant for health-insurance appeal letters.
-
-Given a parsed insurance denial case, the loaded playbook, and Phoenix memory
-summary, search the library for the most relevant citations that will
-strengthen the appeal.  Call the ``search_library`` tool with a focused query
-derived from the case facts (insurer, denial type, service, diagnosis, denial
-reason).  Return the search results as-is — do not invent citations.
-
-If the search returns no hits, return an empty hits array.
-
-Respond ONLY with valid JSON matching this schema:
-{"query": "<your query>", "hits": [{"corpus_doc_id": "...", "title": "...", "quote": "...", "relevance_score": 0.0}]}
-"""
 
 
 @node
 def library_finder_node(ctx: Any) -> None:
-    """LLM-driven library search via an ADK LlmAgent with a search tool."""
-    from app.aegis_v1.adk_runtime import EchoLlm, make_retry_model, run_llm_agent_sync
+    """Library search via ADK LlmAgent with corpus tool calls (D7, §3.4)."""
     from app.aegis_v1.library_context import (
         degraded_library_context,
-        prepare_library_context,
+        finalize_library_from_agent_retrieval,
+    )
+    from app.aegis_v1.library_finder_agent import (
+        run_library_finder_agent,
+        run_offline_library_search,
     )
     from app.aegis_v1.search_planner import build_baseline_query
     from app.aegis_v1.v1_config import build_v1_library_stack
-    from google.adk.agents import LlmAgent
 
     parsed = ctx.state.get("parsed_case", {})
-    # Prefer injected stack (non-serializable objects like corpus_store);
-    # fall back to building a fresh one.
+    playbook = ctx.state.get("playbook", {})
+    phoenix_summary = ctx.state.get("phoenix_summary", {})
     library_stack = _injected_library_stack
+    case_id = parsed.get("case_id", "interactive_case")
 
-    # Best-effort: if library stack or LLM search fails, degrade gracefully.
     try:
         stack = library_stack or build_v1_library_stack()
-        lib_ctx = prepare_library_context(
+        if _injected_offline_pipeline:
+            # Offline tests: deterministic baseline query + tool (no live Gemini).
+            retrieval, search_error = run_offline_library_search(parsed, stack)
+        else:
+            retrieval, search_error = run_library_finder_agent(
+                parsed=parsed,
+                playbook=playbook,
+                phoenix_summary=phoenix_summary,
+                library_stack=stack,
+            )
+        lib_ctx = finalize_library_from_agent_retrieval(
             parsed,
-            case_id=parsed.get("case_id", "interactive_case"),
+            retrieval,
+            case_id=case_id,
             corpus_store=stack["corpus_store"],
             discovery=stack.get("discovery"),
             refinement_client=stack.get("refinement_client"),
             cloud_library_used=bool(stack.get("uses_vertex_store")),
+            search_error=search_error,
         )
         ctx.state["library_retrieval"] = lib_ctx.retrieval
         ctx.state["library_risk_flags"] = lib_ctx.risk_flags
-        # Store metadata for trace
         ctx.state["library_metadata"] = lib_ctx.metadata.model_dump()
     except Exception:
         logger.warning(
-            "library_finder_node: library search failed; degrading to no citations",
+            "library_finder_node: library agent failed; degrading to no citations",
             exc_info=True,
         )
         try:
@@ -400,6 +406,24 @@ def self_check_node(ctx: Any) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Node 7 — appeal_publish (chat / ADK Runner visible response)
+# ---------------------------------------------------------------------------
+
+
+@node
+def appeal_publish_node(ctx: Any) -> types.Content:
+    """Emit the drafted appeal letter as user-visible text for ADK chat streams."""
+    draft = ctx.state.get("appeal_draft", {})
+    letter = str(draft.get("appeal_letter", "")).strip()
+    if not letter:
+        letter = (
+            "Not legal or medical advice. Draft assistance only.\n\n"
+            "(No draft produced.)"
+        )
+    return types.Content(role="model", parts=[types.Part.from_text(text=letter)])
+
+
+# ---------------------------------------------------------------------------
 # Workflow graph
 # ---------------------------------------------------------------------------
 
@@ -418,6 +442,7 @@ def build_student_workflow() -> Workflow:
                 library_finder_node,
                 drafter_node,
                 self_check_node,
+                appeal_publish_node,
             ),
         ],
     )

@@ -1,6 +1,6 @@
 # Plan v2: Make aegis-v1 genuinely built on ADK
 
-- **Status:** Phase 0 **complete** (2026-06-07). Phase 1+ **blocked until PM says "go"**.
+- **Status:** Phase 0 **complete** (2026-06-07). Phase 1 **complete** (2026-06-07). Phase 2+ **blocked until PM says "go"**.
 - **Orchestration (PM 2026-06-07):** All multi-step ADK graphs use **`google.adk.Workflow`** — not `SequentialAgent`, not `ParallelAgent`. See §3.4 and §12.4.
 - **Supersedes:** [2026-06-07-aegis-v1-adk-migration-plan.md](2026-06-07-aegis-v1-adk-migration-plan.md) for all product/architecture decisions. v1 remains useful only for historical API notes.
 - **Scope:** `aegis-v1` only (Part A). Swarm / Part B is out of scope.
@@ -680,7 +680,7 @@ After ADK migration, LLM spans should appear in Phoenix for ADK agent calls. App
 
 ## 15. Phase-by-phase implementation
 
-**Gate:** Phase 0 **complete** (2026-06-07). Phase 1+ blocked until PM **"go"**.
+**Gate:** Phase 0 **complete** (2026-06-07). Phase 1 **complete** (2026-06-07). Phase 2+ blocked until PM **"go"**.
 
 ### Phase 0 — Foundations ✅
 
@@ -693,19 +693,19 @@ After ADK migration, LLM spans should appear in Phoenix for ADK agent calls. App
 
 **Exit:** ✅ Trivial `LlmAgent` runs end-to-end with fake model. Full backend suite **323 passed / 1 skipped**.
 
-### Phase 1 — Student `Workflow` + drafter
+### Phase 1 — Student `Workflow` + drafter ✅
 
-- [ ] `student_workflow.py` — `google.adk.Workflow` graph per D7 + §3.4 (`state_schema`, linear `edges` chain)
-- [ ] `@node` wrappers for `case_parser`, `playbook_loader`, `phoenix_mcp_lookup`, `self_check`
-- [ ] `v1-drafter-agent` — `LlmAgent` workflow graph node; dynamic instruction from prompt version / override
-- [ ] `library_finder_agent` — `LlmAgent` workflow graph node
-- [ ] `run_workflow_sync` in `adk_runtime.py` + `run_aegis_v1_adk_pipeline` — assemble `AppealPackage` identical shape to today
-- [ ] `/appeal`: Phoenix READ before draft; post-draft redacted WRITE
-- [ ] Holdout: `phoenix_mode=holdout_readonly`
-- [ ] Wire dispatcher in `pipeline.py`; mount `v1_student_workflow` in `agent.py` / `App`
-- [ ] Tests: firewall (no teacher packet in workflow state), holdout no-write, appeal read-before-draft
+- [x] `student_workflow.py` — `google.adk.Workflow` graph per D7 + §3.4 (`state_schema`, linear `edges` chain)
+- [x] `@node` wrappers for `case_parser`, `playbook_loader`, `phoenix_mcp_lookup`, `self_check`
+- [x] `v1-drafter-agent` — `LlmAgent` workflow graph node; dynamic instruction from prompt version / override
+- [x] `library_finder_agent` — `LlmAgent` workflow graph node (`library_finder_agent.py` + `search_library` tool)
+- [x] `run_workflow_sync` in `adk_runtime.py` + `run_aegis_v1_adk_pipeline` — assemble `AppealPackage` identical shape to today
+- [x] `/appeal`: Phoenix READ before draft; post-draft redacted WRITE (`appeal_phoenix_export.py` + `appeal_orchestrator.py`)
+- [x] Holdout: `phoenix_mode=holdout_readonly` (`measurement_run.py`)
+- [x] Wire dispatcher in `pipeline.py`; mount `v1_student_workflow` in `agent.py` / `App`
+- [x] Tests: firewall, holdout no-write (`record_run` / export blocked), appeal read-before-draft ordering, library agent mock + offline path, redacted Phoenix export, chat `node_input` + `appeal_publish` stream text
 
-**Exit:** `/appeal` + holdout measure run on ADK `Workflow` path.
+**Exit:** ✅ `/appeal` + holdout measure run on ADK `Workflow` path. Backend suite **333 passed** (2026-06-07).
 
 ### Phase 2 — Simulator agent
 

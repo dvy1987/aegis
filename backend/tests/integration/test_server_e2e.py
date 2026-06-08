@@ -23,6 +23,8 @@ from collections.abc import Iterator
 from typing import Any
 
 import pytest
+
+from tests.integration.workflow_stream_utils import stream_has_user_visible_text
 import requests
 from requests.exceptions import RequestException
 
@@ -185,19 +187,9 @@ def test_chat_stream(server_fixture: subprocess.Popen[str]) -> None:
                 events.append(event)
 
     assert events, "No events received from stream"
-    # Check for valid content in the response
-    has_text_content = False
-    for event in events:
-        content = event.get("content")
-        if (
-            content is not None
-            and content.get("parts")
-            and any(part.get("text") for part in content["parts"])
-        ):
-            has_text_content = True
-            break
-
-    assert has_text_content, "Expected at least one event with text content"
+    assert stream_has_user_visible_text(events), (
+        "Expected at least one event with text content or appeal draft"
+    )
 
 
 def test_chat_stream_error_handling(server_fixture: subprocess.Popen[str]) -> None:

@@ -40,6 +40,16 @@ class DrafterLLMClient(Protocol):
         """Return the appeal-letter body text (no schema wrapping)."""
 
 
+def is_offline_pipeline_client(client: DrafterLLMClient | None) -> bool:
+    """True only for ``StubDrafterClient`` — triggers EchoLlm + offline library in ADK pipeline.
+
+    Production drafting uses the ADK ``LlmAgent`` (``make_retry_model()``). The legacy
+    ``GeminiDrafterClient`` is not used by the student Workflow; do not pass it to
+    ``run_aegis_v1_pipeline`` (pass ``None`` instead).
+    """
+    return isinstance(client, StubDrafterClient)
+
+
 class StubDrafterClient:
     """Deterministic offline drafter for tests/dry-runs. NOT for benchmarks."""
 

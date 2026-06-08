@@ -2898,3 +2898,31 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 ?? backend/app/aegis_v1/redaction_scrubber_agent.py
 ?? backend/tests/unit/aegis_v1/test_*.py (3 files)
 ```
+
+---
+
+## 2026-06-07 — ADK Phase 1 gap closure (library agent + Phoenix export + holdout)
+
+### Done
+- **`library_finder_agent.py`** — ADK `LlmAgent` with `search_library` tool; `library_finder_node` calls it in prod, offline baseline+tool when `EchoLlm` injected.
+- **`appeal_phoenix_export.py`** — rule-redacted Phoenix write after `/appeal` draft; wired in `appeal_orchestrator.py` (user sees unredacted letter).
+- **`measurement_run.py`** — `phoenix_mode=HOLDOUT_READONLY` on showcase holdout measure path.
+- Tests: `test_library_finder_agent.py`, `test_appeal_phoenix_export.py`, holdout mode + orchestrator export assertions.
+- Plan v2 §15 Phase 1 checkboxes marked complete. **333 passed** (backend, non-integration).
+
+### Deferred
+- **Phase 2** (simulator `LlmAgent`, best-of-5) — PM has not said go.
+- **Commit** — PM has not requested; gap-closure changes uncommitted on top of prior Phase 1 commit.
+
+### Next Agent Should Know
+- Phase 1 exit criteria met. Start Phase 2 only after PM **go**.
+- Integration tests (`test_agent_stream`, `test_chat_stream`) may still need ADC/live env — excluded from 333 count.
+
+### Working Tree (gap closure)
+```
+ M appeal_orchestrator.py, library_context.py, pipeline.py, student_workflow.py, measurement_run.py
+ M test_appeal_orchestrator.py, test_student_workflow.py
+?? appeal_phoenix_export.py, library_finder_agent.py
+?? test_appeal_phoenix_export.py, test_library_finder_agent.py
+ M docs/plans/...-v2.md, docs/memory/current-state.md
+```
