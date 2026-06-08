@@ -23,7 +23,6 @@ from app.evals.part_a.measurement_run import run_measurement_case
 from app.evals.part_a.recorder import OtelPhoenixRecorder
 from app.learning.coordinator import LearningCoordinator
 from app.learning.experiment import LiveExperimentRunner
-from app.learning.judge_adapter import PanelJudgeAdapter
 from app.learning.models import PromotionAudit, PromotionProposal
 from app.learning.phoenix_live import LivePhoenixLearningStore
 from app.learning.reflection_agent import AdkReflectionClient
@@ -243,7 +242,7 @@ def _optimize(
     store = LivePhoenixLearningStore()
     runner = LiveExperimentRunner(
         dataset=_dataset(cases),
-        judge_client=PanelJudgeAdapter(judge_client=GeminiJudgeClient()),
+        judge_client=GeminiJudgeClient(),
         recorder=OtelPhoenixRecorder(),
         memory_eligible=False,
         run_mode="gepa_optimize_candidate",
