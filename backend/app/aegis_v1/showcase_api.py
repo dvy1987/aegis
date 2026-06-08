@@ -16,6 +16,7 @@ from app.aegis_v1.showcase_session import (
     ShowcaseSessionManager,
 )
 from app.evals.part_a.evaluated_run import run_evaluated_case
+from app.evals.part_a.panel import run_panel
 from app.evals.part_a.llm_judges import GeminiJudgeClient, OfflineHeuristicJudgeClient
 from app.evals.part_a.recorder import OtelPhoenixRecorder
 
@@ -214,6 +215,36 @@ def rollback_latest() -> dict:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
+class JudgeSmokeRequest(BaseModel):
+    """Minimal payload for prod Phase 3 verification (judge Workflow only)."""
+
+    case_id: str = "prod_judge_smoke"
+    denial_letter_text: str
+    clinical_context: str = ""
+    appeal_letter: str | None = None
+    judge_mode: Literal["official", "fast"] = "official"
+
+
+class JudgeSmokeResponse(BaseModel):
+    case_id: str
+    verdict: Literal["PASS", "FAIL"]
+    weighted_quality: float | None
+    dimension_scores: dict[str, int] = Field(default_factory=dict)
+    judge_client: str
+    dimensions_scored: int
+
+
+class SeedSmokeResponse(BaseModel):
+    """GEPA seed path: student pipeline + ADK judges + Phoenix annotation (no simulator)."""
+
+    case_id: str
+    trace_ref: str
+    verdict: Literal["PASS", "FAIL"]
+    weighted_quality: float | None
+    judge_client: str
+    phoenix_url: str | None = None
+
+
 class ShowcaseEvaluateRequest(BaseModel):
     case_id: str
     denial_letter_text: str
@@ -288,6 +319,27 @@ def _lift(before: float, after: float) -> float:
     return round(((after - before) / denom) * 100.0, 2)
 
 
+def _benchmark_case_obj(
+    *,
+    case_id: str,
+    denial_letter_text: str,
+    clinical_context: str,
+    dataset_split: str = "benchmark",
+) -> dict:
+    """In-scope synthetic case fields for teacher/judge panels on showcase paths."""
+    return {
+        "case_id": case_id,
+        "insurer": "Cigna",
+        "denial_type": "Medical Necessity",
+        "patient_profile": {"plan_funding_type": "fully_insured"},
+        "denial_letter_text": denial_letter_text,
+        "clinical_context": clinical_context,
+        "denial_pattern_sources": [],
+        "synthetic_provenance": {"appeal_difficulty": {}},
+        "dataset_split": dataset_split,
+    }
+
+
 def _what_changed(before: dict, after: dict) -> list[str]:
     b = dict(before.get("dimension_scores", {}) or {})
     a = dict(after.get("dimension_scores", {}) or {})
@@ -301,6 +353,94 @@ def _what_changed(before: dict, after: dict) -> list[str]:
     return out[:6]
 
 
+@router.post("/judge-smoke", response_model=JudgeSmokeResponse)
+def judge_smoke(req: JudgeSmokeRequest) -> JudgeSmokeResponse:
+    """Run the ADK judge-panel Workflow only (no student pipeline).
+
+    Used by ``scripts/smoke_prod_phase3_judges.py`` to verify Phase 3 on Cloud Run
+    without the cost/latency of two full ``/evaluate`` pipeline passes.
+    """
+    from app.evals.part_a.schemas import CANONICAL_DISCLAIMER
+    from app.evals.part_a.teacher_packet import build_teacher_grading_packet
+
+    case_obj = _benchmark_case_obj(
+        case_id=req.case_id,
+        denial_letter_text=req.denial_letter_text,
+        clinical_context=req.clinical_context,
+    )
+    letter = req.appeal_letter or (
+        f"{CANONICAL_DISCLAIMER} I am appealing Cigna's denial of Intensive "
+        "Outpatient Program for severe OCD. Six months of failed weekly outpatient "
+        "therapy supports medical necessity. Requested action: approve IOP."
+    )
+    appeal_package = {
+        "appeal_package_draft": {
+            "appeal_letter": letter,
+            "citations_used": [
+                {
+                    "corpus_doc_id": "erisa_503.md",
+                    "title": "ERISA Section 503",
+                    "quote": "full and fair review",
+                }
+            ],
+            "missing_evidence_checklist": ["clinical notes", "treatment history"],
+        }
+    }
+    teacher = build_teacher_grading_packet(case_obj, appeal_package)
+    location = os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
+    judge_model = os.environ.get("AEGIS_JUDGE_MODEL", "gemini-3.1-pro-preview")
+    judge_client = (
+        GeminiJudgeClient(model=judge_model, location=location)
+        if req.judge_mode == "official"
+        else OfflineHeuristicJudgeClient()
+    )
+    report = run_panel(appeal_package, teacher, judge_client=judge_client)
+    return JudgeSmokeResponse(
+        case_id=report.case_id,
+        verdict=report.verdict,
+        weighted_quality=report.weighted_quality,
+        dimension_scores=dict(report.dimension_scores),
+        judge_client=str(report.metadata.get("judge_client", "unknown")),
+        dimensions_scored=len(report.judge_results),
+    )
+
+
+@router.post("/seed-smoke", response_model=SeedSmokeResponse)
+def seed_smoke(req: JudgeSmokeRequest) -> SeedSmokeResponse:
+    """Prod smoke for GEPA seed: pipeline → ADK judges → Phoenix annotation."""
+    case_obj = _benchmark_case_obj(
+        case_id=req.case_id,
+        denial_letter_text=req.denial_letter_text,
+        clinical_context=req.clinical_context,
+        dataset_split="training_seed_smoke",
+    )
+    recorder = OtelPhoenixRecorder()
+    location = os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
+    judge_model = os.environ.get("AEGIS_JUDGE_MODEL", "gemini-3.1-pro-preview")
+    judge_client = (
+        GeminiJudgeClient(model=judge_model, location=location)
+        if req.judge_mode == "official"
+        else OfflineHeuristicJudgeClient()
+    )
+    run = run_evaluated_case(
+        case_obj,
+        recorder=recorder,
+        drafter_client=None,
+        judge_client=judge_client,
+        run_simulator=False,
+        drafter_prompt_version="drafter_v1",
+    )
+    host = os.environ.get("PHOENIX_HOST", "https://app.phoenix.arize.com").rstrip("/")
+    return SeedSmokeResponse(
+        case_id=run.panel_report.case_id,
+        trace_ref=run.trace_ref,
+        verdict=run.panel_report.verdict,
+        weighted_quality=run.panel_report.weighted_quality,
+        judge_client=str(run.panel_report.metadata.get("judge_client", "unknown")),
+        phoenix_url=f"{host}/redirects/spans/{run.trace_ref}",
+    )
+
+
 @router.post("/evaluate", response_model=ShowcaseBundle)
 def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
     """
@@ -312,12 +452,11 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
 
     from app.aegis_v1.simulator_client import AdkSimulatorClient
 
-    case_obj = {
-        "case_id": req.case_id,
-        "denial_letter_text": req.denial_letter_text,
-        "clinical_context": req.clinical_context,
-        "dataset_split": "benchmark",
-    }
+    case_obj = _benchmark_case_obj(
+        case_id=req.case_id,
+        denial_letter_text=req.denial_letter_text,
+        clinical_context=req.clinical_context,
+    )
 
     recorder = OtelPhoenixRecorder()
     # For the hackathon demo, we want "official" runs to use the same Vertex-hosted
@@ -340,6 +479,8 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
         else OfflineHeuristicJudgeClient()
     )
 
+    from app import gemini_retry
+
     baseline = run_evaluated_case(
         case_obj,
         recorder=recorder,
@@ -348,14 +489,18 @@ def evaluate_showcase(req: ShowcaseEvaluateRequest) -> ShowcaseBundle:
         simulator_client=simulator_client,
         drafter_prompt_version=req.baseline_prompt_version,
     )
-    candidate = run_evaluated_case(
-        case_obj,
-        recorder=recorder,
-        drafter_client=None,
-        judge_client=judge_client,
-        simulator_client=simulator_client,
-        drafter_prompt_version=req.candidate_prompt_version,
-    )
+    if req.baseline_prompt_version == req.candidate_prompt_version:
+        candidate = baseline
+    else:
+        gemini_retry.pace_gemini_call()
+        candidate = run_evaluated_case(
+            case_obj,
+            recorder=recorder,
+            drafter_client=None,
+            judge_client=judge_client,
+            simulator_client=simulator_client,
+            drafter_prompt_version=req.candidate_prompt_version,
+        )
 
     bq = _composite(baseline.panel_report.weighted_quality)
     cq = _composite(candidate.panel_report.weighted_quality)

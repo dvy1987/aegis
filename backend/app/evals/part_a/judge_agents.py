@@ -43,18 +43,64 @@ def judge_instruction(judge_id: str) -> str:
     return load_judge_prompt(judge_id) + _VERBOSITY_SUFFIX
 
 
+def _normalize_judge_payload(data: dict[str, Any], expected_dimension: str) -> dict[str, Any]:
+    """Coerce common Gemini JSON quirks into JudgeResult-compatible fields."""
+    payload = dict(data)
+    payload["dimension"] = expected_dimension
+    payload.setdefault("reasoning", "")
+
+    confidence = payload.get("confidence", 0.5)
+    try:
+        payload["confidence"] = float(confidence)
+    except (TypeError, ValueError):
+        payload["confidence"] = 0.5
+
+    improvement = payload.get("improvement")
+    if isinstance(improvement, list):
+        payload["improvement"] = "; ".join(str(item) for item in improvement if item)
+    elif improvement is not None:
+        payload["improvement"] = str(improvement)
+
+    quotes = payload.get("evidence_quotes")
+    if quotes is None:
+        payload["evidence_quotes"] = []
+    elif isinstance(quotes, str):
+        payload["evidence_quotes"] = [quotes] if quotes.strip() else []
+    elif isinstance(quotes, list):
+        payload["evidence_quotes"] = [str(q) for q in quotes if q]
+
+    score = payload.get("score")
+    if expected_dimension in {"faithfulness_hallucination_gate", "safety_scope_gate"}:
+        normalized = str(score or "FAIL").strip().upper()
+        payload["score"] = normalized if normalized in {"PASS", "FAIL"} else "FAIL"
+    else:
+        if isinstance(score, str) and score.strip().isdigit():
+            score = int(score.strip())
+        if score not in (1, 3, 5):
+            if isinstance(score, (int, float)):
+                numeric = int(score)
+                score = 1 if numeric <= 1 else 3 if numeric <= 3 else 5
+            else:
+                score = 3
+        payload["score"] = score
+
+    return payload
+
+
 def parse_judge_response(text: str, expected_dimension: str) -> JudgeResult:
     """Parse judge LlmAgent JSON output into JudgeResult."""
     cleaned = text.strip()
+    if not cleaned:
+        raise ValueError(f"{expected_dimension} judge returned empty response")
     fence = _JSON_FENCE_RE.search(cleaned)
     if fence:
         cleaned = fence.group(1).strip()
     data = json.loads(cleaned)
-    result = JudgeResult.model_validate(data)
-    if result.dimension != expected_dimension:
-        data["dimension"] = expected_dimension
-        result = JudgeResult.model_validate(data)
-    return result
+    if not isinstance(data, dict):
+        raise ValueError(f"{expected_dimension} judge returned non-object JSON")
+    return JudgeResult.model_validate(
+        _normalize_judge_payload(data, expected_dimension)
+    )
 
 
 def build_judge_agent(*, judge_id: str, dimension: str, name: str, model: Any | None = None) -> LlmAgent:

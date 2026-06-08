@@ -167,10 +167,14 @@ def _seed_training_signal(
         _log(session_id, "train_gepa", "showcase training skipped because session is cancelled")
         return []
     manager.set_stage(session_id, stage="train_gepa", total_cases=len(cases))
+    from app import gemini_retry
+
     recorder = OtelPhoenixRecorder()
-    judge = GeminiJudgeClient()
     trace_ids: list[str] = []
     for index, case in enumerate(cases, start=1):
+        if index > 1:
+            gemini_retry.pace_gemini_call()
+        judge = GeminiJudgeClient()
         if _is_cancelled(manager, session_id):
             _log(session_id, "train_gepa", "showcase training cancelled mid-loop")
             return trace_ids

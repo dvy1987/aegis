@@ -9,7 +9,7 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from google.adk import Workflow
-from google.adk.workflow import START, JoinNode, node
+from google.adk.workflow import START, node
 from google.genai import types
 
 from app.evals.part_a.deterministic_gates import citation_precheck, safety_scope_gate
@@ -92,6 +92,8 @@ def _dimension_for_judge_id(judge_id: str) -> str:
 
 
 def _collect_text_from_join_value(value: Any) -> str:
+    if isinstance(value, dict):
+        return json.dumps(value)
     if isinstance(value, str):
         return value
     if isinstance(value, types.Content):
@@ -141,7 +143,7 @@ def faithfulness_shortcut_node(ctx, node_input):
         improvement=citation.get("improvement"),
     )
     _store_judge_result(ctx, "faithfulness_hallucination_gate", result)
-    return _quality_prep_content(ctx)
+    return node_input
 
 
 @node
@@ -154,6 +156,11 @@ def faithfulness_finalize_node(ctx, node_input):
     text = _collect_text_from_join_value(node_input)
     result = parse_judge_response(text, "faithfulness_hallucination_gate")
     _store_judge_result(ctx, "faithfulness_hallucination_gate", result)
+    return node_input
+
+
+@node
+def quality_judges_prep_node(ctx, node_input):
     return _quality_prep_content(ctx)
 
 
@@ -171,7 +178,7 @@ def grounding_finalize_node(ctx, node_input):
     _store_judge_result(
         ctx, "grounding", parse_judge_response(_collect_text_from_join_value(node_input), "grounding")
     )
-    return None
+    return _quality_prep_content(ctx)
 
 
 @node
@@ -183,7 +190,7 @@ def case_specific_finalize_node(ctx, node_input):
             _collect_text_from_join_value(node_input), "case_specific_clinical_rebuttal"
         ),
     )
-    return None
+    return _quality_prep_content(ctx)
 
 
 @node
@@ -195,7 +202,7 @@ def evidence_finalize_node(ctx, node_input):
             _collect_text_from_join_value(node_input), "evidence_completeness"
         ),
     )
-    return None
+    return _quality_prep_content(ctx)
 
 
 @node
@@ -207,7 +214,7 @@ def appeal_vector_finalize_node(ctx, node_input):
             _collect_text_from_join_value(node_input), "appeal_vector_capture"
         ),
     )
-    return None
+    return _quality_prep_content(ctx)
 
 
 @node
@@ -219,7 +226,7 @@ def persuasive_finalize_node(ctx, node_input):
             _collect_text_from_join_value(node_input), "persuasive_coherence"
         ),
     )
-    return None
+    return node_input
 
 
 @node
@@ -235,13 +242,12 @@ def aggregate_panel_node(ctx, node_input):
 
 
 def build_judge_panel_workflow() -> Workflow:
-    """Construct the judge-panel Workflow with parallel quality fan-out."""
+    """Construct the judge-panel Workflow (sequential quality judges for prod stability)."""
     from app.aegis_v1.adk_runtime import make_retry_model
 
     model = _injected_judge_model or make_retry_model()
     faithfulness = build_faithfulness_judge(model=model)
     quality = build_quality_judge_agents(model=model)
-    join_quality = JoinNode(name="join_quality_judges")
 
     return Workflow(
         name="judge_panel_workflow",
@@ -256,36 +262,22 @@ def build_judge_panel_workflow() -> Workflow:
                 },
             ),
             (faithfulness_prep_node, faithfulness, faithfulness_finalize_node),
+            (faithfulness_shortcut_node, quality_judges_prep_node),
+            (faithfulness_finalize_node, quality_judges_prep_node),
             (
-                faithfulness_shortcut_node,
-                (
-                    quality["grounding"],
-                    quality["case_specific_clinical_rebuttal"],
-                    quality["evidence_completeness"],
-                    quality["appeal_vector_capture"],
-                    quality["persuasive_coherence"],
-                ),
-            ),
-            (
-                faithfulness_finalize_node,
-                (
-                    quality["grounding"],
-                    quality["case_specific_clinical_rebuttal"],
-                    quality["evidence_completeness"],
-                    quality["appeal_vector_capture"],
-                    quality["persuasive_coherence"],
-                ),
-            ),
-            (quality["grounding"], grounding_finalize_node, join_quality),
-            (
+                quality_judges_prep_node,
+                quality["grounding"],
+                grounding_finalize_node,
                 quality["case_specific_clinical_rebuttal"],
                 case_specific_finalize_node,
-                join_quality,
+                quality["evidence_completeness"],
+                evidence_finalize_node,
+                quality["appeal_vector_capture"],
+                appeal_vector_finalize_node,
+                quality["persuasive_coherence"],
+                persuasive_finalize_node,
+                aggregate_panel_node,
             ),
-            (quality["evidence_completeness"], evidence_finalize_node, join_quality),
-            (quality["appeal_vector_capture"], appeal_vector_finalize_node, join_quality),
-            (quality["persuasive_coherence"], persuasive_finalize_node, join_quality),
-            (join_quality, aggregate_panel_node),
         ],
     )
 
@@ -300,12 +292,53 @@ def _clear_judge_model() -> None:
     _injected_judge_model = None
 
 
-def run_judge_panel_workflow(
+def _assemble_judge_results(
+    state: dict[str, Any], context: dict[str, Any]
+) -> dict[str, JudgeResult]:
+    """Build a complete judge map from workflow state with deterministic fallbacks."""
+    dimensions = (
+        "safety_scope_gate",
+        "faithfulness_hallucination_gate",
+        *QUALITY_DIMENSIONS,
+    )
+    assembled: dict[str, JudgeResult] = {}
+
+    bundled_raw = state.get("judge_results_json", "")
+    if bundled_raw:
+        try:
+            bundled = json.loads(bundled_raw)
+            if isinstance(bundled, dict):
+                for dimension, payload in bundled.items():
+                    assembled[str(dimension)] = JudgeResult.model_validate(payload)
+        except Exception:
+            logger.warning("judge_results_json parse failed", exc_info=True)
+
+    for dimension in dimensions:
+        if dimension in assembled:
+            continue
+        chunk = state.get(f"{dimension}_json", "")
+        if not chunk:
+            continue
+        assembled[dimension] = JudgeResult.model_validate(json.loads(chunk))
+
+    if "safety_scope_gate" not in assembled:
+        teacher = _teacher_from_context(context)
+        appeal = _appeal_from_context(context)
+        assembled["safety_scope_gate"] = safety_scope_gate(appeal, teacher)
+
+    missing = [dimension for dimension in dimensions if dimension not in assembled]
+    if missing:
+        raise ValueError(f"judge panel incomplete after workflow: missing {missing}")
+    return assembled
+
+
+def _run_judge_panel_workflow_once(
     *,
     context: dict[str, Any],
-    model: Any | None = None,
+    model: Any | None,
 ) -> dict[str, JudgeResult]:
-    """Run the full judge-panel ADK Workflow and return all judge results."""
+    import uuid
+
     from app.aegis_v1.adk_runtime import run_workflow_sync
 
     _configure_judge_model(model)
@@ -314,16 +347,50 @@ def run_judge_panel_workflow(
         result = run_workflow_sync(
             workflow,
             app_name="aegis_judge_panel",
-            user_id="judge_panel",
+            user_id=f"judge_panel_{uuid.uuid4().hex[:10]}",
             initial_state={"panel_context_json": json.dumps(context, default=str)},
             message="judge",
         )
     finally:
         _clear_judge_model()
 
-    raw = result["state"].get("judge_results_json", "{}")
-    data = json.loads(raw or "{}")
-    return {dimension: JudgeResult.model_validate(payload) for dimension, payload in data.items()}
+    return _assemble_judge_results(dict(result.get("state") or {}), context)
+
+
+def run_judge_panel_workflow(
+    *,
+    context: dict[str, Any],
+    model: Any | None = None,
+    max_attempts: int = 2,
+) -> dict[str, JudgeResult]:
+    """Run the full judge-panel ADK Workflow and return all judge results."""
+    import time
+
+    from app import gemini_retry
+
+    last_error: Exception | None = None
+    attempts = max(1, max_attempts)
+    for attempt in range(attempts):
+        if attempt > 0:
+            gemini_retry.pace_gemini_call()
+            time.sleep(1.0)
+            logger.warning(
+                "retrying judge_panel_workflow after incomplete/failed attempt %s",
+                attempt,
+            )
+        try:
+            return _run_judge_panel_workflow_once(context=context, model=model)
+        except ValueError as exc:
+            last_error = exc
+            if "incomplete" not in str(exc) or attempt >= attempts - 1:
+                raise
+        except Exception as exc:
+            last_error = exc
+            if attempt >= attempts - 1:
+                raise
+    if last_error is not None:
+        raise last_error
+    raise RuntimeError("judge_panel_workflow failed without raising")
 
 
 def run_single_judge_sync(

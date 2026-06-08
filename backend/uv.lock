@@ -33,6 +33,7 @@ dependencies = [
     { name = "mcp" },
     { name = "openinference-instrumentation-google-adk" },
     { name = "opentelemetry-exporter-gcp-logging" },
+    { name = "pandas" },
     { name = "rank-bm25" },
     { name = "uvicorn" },
 ]
@@ -67,6 +68,7 @@ requires-dist = [
     { name = "mcp", specifier = ">=1.27.2" },
     { name = "openinference-instrumentation-google-adk", specifier = ">=0.1.15" },
     { name = "opentelemetry-exporter-gcp-logging", specifier = ">=1.12.0a0" },
+    { name = "pandas", specifier = ">=2.2.0" },
     { name = "rank-bm25", specifier = ">=0.2.2" },
     { name = "ruff", marker = "extra == 'lint'", specifier = ">=0.4.6" },
     { name = "ty", marker = "extra == 'lint'", specifier = ">=0.0.1a0" },

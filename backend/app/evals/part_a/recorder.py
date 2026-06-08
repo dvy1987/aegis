@@ -96,8 +96,12 @@ class OtelPhoenixRecorder:
 
     def annotate(self, trace_ref, annotations) -> None:
         import json as _json
-        import pandas as pd
-        from phoenix.client import Client
+
+        try:
+            import pandas as pd
+            from phoenix.client import Client
+        except ImportError:
+            return
 
         # The Phoenix annotation API expects scalar columns. Nested dicts (the
         # laundered per-dimension payload) hang the dataframe serializer on

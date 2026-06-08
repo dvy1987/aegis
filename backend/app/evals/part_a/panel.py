@@ -201,13 +201,29 @@ def _run_panel_offline(
     )
 
 
+def _fresh_adk_judge_model(client: AdkJudgeClient):
+    """New model instance per panel run — avoids shared async state under burst load."""
+    import os
+
+    from app.aegis_v1.adk_runtime import RetryFallbackGemini, make_retry_model
+
+    if client.model is not None and not isinstance(client.model, RetryFallbackGemini):
+        return client.model
+    resolved = getattr(client.model, "model", None) or os.environ.get(
+        "AEGIS_JUDGE_MODEL", "gemini-3.1-pro-preview"
+    )
+    return make_retry_model(model=str(resolved))
+
+
 def _run_panel_adk(
     appeal_package: dict[str, Any],
     teacher: TeacherGradingPacket,
     client: AdkJudgeClient,
 ) -> PanelReport:
     context = _student_context(appeal_package, teacher)
-    judge_results = run_judge_panel_workflow(context=context, model=client.model)
+    judge_results = run_judge_panel_workflow(
+        context=context, model=_fresh_adk_judge_model(client)
+    )
     return _build_panel_report(
         appeal_package=appeal_package,
         teacher=teacher,
