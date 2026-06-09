@@ -2,6 +2,11 @@ export { BEAT_MS, DUR, EASE_OUT_EXPO, SC_BEAT_VAR, STAGGER, scBeatStyle } from "
 export { ScrollTrigger, gsap } from "./gsap";
 export { prefersReducedMotion, useGsapContext } from "./useGsapContext";
 export {
+  TheatricalProvider,
+  useTheatrical,
+  type TheatricalMomentId,
+} from "./theatrical";
+export {
   approvalReveal,
   dockState,
   sectionChild,

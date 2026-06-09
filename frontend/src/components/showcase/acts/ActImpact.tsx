@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
-import { gsap, useGsapContext } from "@/lib/motion";
+import { useEffect, useRef, type ReactNode } from "react";
+import { gsap, useGsapContext, useTheatrical } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { MetricCounter } from "@/components/showcase/primitives/MetricCounter";
 import { LivingGlyph } from "@/components/showcase/fx/LivingGlyph";
@@ -15,6 +15,12 @@ function replay() {
 
 export function ActImpact() {
   const root = useRef<HTMLElement>(null);
+  const { acquire, release } = useTheatrical();
+  const theatrical = useRef({ acquire, release });
+
+  useEffect(() => {
+    theatrical.current = { acquire, release };
+  });
 
   // GSAP finale timeline: headline → glyph settle → metrics (counters fire on
   // their own view) → footer hairline draws → stillness. Triggered on enter.
@@ -23,15 +29,26 @@ export function ActImpact() {
       gsap.set(".sc-im-headline, .sc-im-metric, .sc-im-endcard", { autoAlpha: 0, y: 20 });
       gsap.set(".sc-im-divider", { scaleX: 0, transformOrigin: "left center" });
 
-      gsap
-        .timeline({
-          defaults: { ease: "power3.out" },
-          scrollTrigger: { trigger: root.current, start: "top 70%", once: true },
-        })
-        .to(".sc-im-headline", { autoAlpha: 1, y: 0, duration: 0.8 })
+      const tl = gsap.timeline({
+        paused: true,
+        defaults: { ease: "power3.out" },
+        onComplete: () => theatrical.current.release("finale"),
+      });
+      tl.to(".sc-im-headline", { autoAlpha: 1, y: 0, duration: 0.8 })
         .to(".sc-im-metric", { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.18 }, "-=0.3")
         .to(".sc-im-divider", { scaleX: 1, duration: 0.9, ease: "power2.out" }, "-=0.2")
         .to(".sc-im-endcard", { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.5");
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: root.current,
+          start: "top 70%",
+          once: true,
+          onEnter: () => {
+            void theatrical.current.acquire("finale").then(() => tl.play());
+          },
+        },
+      });
     },
     { scope: root },
   );
@@ -40,6 +57,7 @@ export function ActImpact() {
     <section
       ref={root}
       id="impact"
+      data-theatrical-zone="finale"
       className="relative mx-auto flex min-h-dvh w-full flex-col justify-center gap-14 px-6 py-24 md:px-12"
       style={{ maxWidth: "var(--sc-container-max)" }}
     >

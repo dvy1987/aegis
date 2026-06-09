@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import type { ShowcaseBundle, Verdict } from "@/lib/types";
-import { gsap, useGsapContext } from "@/lib/motion";
+import { gsap, useGsapContext, useTheatrical } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
 import { ArrowUpRightIcon } from "@/icons";
@@ -18,6 +18,12 @@ const ARC_LEN = Math.PI * 84; // semicircle r=84
  */
 export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
   const root = useRef<HTMLDivElement>(null);
+  const { acquire, release } = useTheatrical();
+  const theatrical = useRef({ acquire, release });
+
+  useEffect(() => {
+    theatrical.current = { acquire, release };
+  });
 
   const v1 = bundle.v1.composite;
   const v3 = bundle.v3.composite;
@@ -41,8 +47,9 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
 
       const c = { l: 0, r: 0, lift: 0 };
       const tl = gsap.timeline({
+        paused: true,
         defaults: { ease: "power3.out" },
-        scrollTrigger: { trigger: r, start: "top 78%", once: true },
+        onComplete: () => theatrical.current.release("money-shot"),
       });
 
       tl.to(".sc-vs-fill-left", { width: `${v1 * 100}%`, duration: 0.9 }, 0)
@@ -69,12 +76,23 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
           },
           0.9,
         );
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: r,
+          start: "top 78%",
+          once: true,
+          onEnter: () => {
+            void theatrical.current.acquire("money-shot").then(() => tl.play());
+          },
+        },
+      });
     },
     { scope: root, dependencies: [bundle.case_id] },
   );
 
   return (
-    <div ref={root} className="flex flex-col gap-6">
+    <div ref={root} data-theatrical-zone="money-shot" className="flex flex-col gap-6">
       <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-[1fr_auto_1fr]">
         <DraftColumn
           title="Earlier draft"

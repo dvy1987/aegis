@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
+import { BEAT_MS, useTheatrical } from "@/lib/motion";
 import { Gauge } from "@/components/showcase/primitives/Gauge";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
@@ -15,10 +16,21 @@ import { MemoryToggle } from "@/components/showcase/fx/MemoryToggle";
  */
 export function CounterfactualCard({ on, off }: { on: number; off: number }) {
   const [memoryOn, setMemoryOn] = useState(true);
+  const { runMoment } = useTheatrical();
   const value = memoryOn ? on : off;
 
+  function handleMemoryChange(next: boolean) {
+    setMemoryOn(next);
+    if (!next) {
+      runMoment("memory-decay", () => undefined, BEAT_MS);
+    }
+  }
+
   return (
-    <GlassPanel className={cn("flex flex-col gap-5 p-6 transition-[filter]", !memoryOn && "sc-decayed")}>
+    <GlassPanel
+      data-theatrical-zone="memory-decay"
+      className={cn("flex flex-col gap-5 p-6 transition-[filter]", !memoryOn && "sc-decayed")}
+    >
       <div className="flex flex-col gap-1">
         <MonoLabel>Counterfactual · Phoenix MCP</MonoLabel>
         <h3 className="sc-h2" style={{ fontSize: "1.6rem" }}>
@@ -31,7 +43,7 @@ export function CounterfactualCard({ on, off }: { on: number; off: number }) {
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <MemoryToggle on={memoryOn} onChange={setMemoryOn} />
+        <MemoryToggle on={memoryOn} onChange={handleMemoryChange} />
         <motion.span
           key={memoryOn ? "on" : "off"}
           initial={{ opacity: 0, y: 4 }}

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useScroll, useReducedMotion } from "framer-motion";
+import { useEffect } from "react";
+import { MotionConfig, motion, useReducedMotion, useScroll } from "framer-motion";
 import type {
   CaseSummary,
   ShowcaseBundle,
@@ -8,6 +9,7 @@ import type {
   ShowcaseRollbackTarget,
   ShowcaseRunSession,
 } from "@/lib/types";
+import { ScrollTrigger, TheatricalProvider, useTheatrical } from "@/lib/motion";
 import { ActHero } from "@/components/showcase/acts/ActHero";
 import { ActThesis } from "@/components/showcase/acts/ActThesis";
 import { ActInstrument } from "@/components/showcase/acts/ActInstrument";
@@ -39,11 +41,34 @@ export interface ShowcaseFilmProps {
  * state lives in the page container and flows down as props (logic preserved).
  */
 export function ShowcaseFilm(props: ShowcaseFilmProps) {
+  return (
+    <MotionConfig reducedMotion="user">
+      <TheatricalProvider>
+        <ShowcaseFilmBody {...props} />
+      </TheatricalProvider>
+    </MotionConfig>
+  );
+}
+
+function ShowcaseFilmBody(props: ShowcaseFilmProps) {
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll();
+  const { active } = useTheatrical();
+
+  useEffect(() => {
+    if (reduce) return;
+    const refresh = () => ScrollTrigger.refresh();
+    refresh();
+    window.addEventListener("load", refresh);
+    window.addEventListener("resize", refresh);
+    return () => {
+      window.removeEventListener("load", refresh);
+      window.removeEventListener("resize", refresh);
+    };
+  }, [reduce]);
 
   return (
-    <>
+    <div className={active ? "sc-theatrical-busy" : undefined} data-theatrical={active ?? undefined}>
       {!reduce && (
         <motion.div
           className="sc-scroll-progress"
@@ -79,6 +104,6 @@ export function ShowcaseFilm(props: ShowcaseFilmProps) {
         off={props.bundle?.counterfactual.off_composite ?? 0}
       />
       <ActImpact />
-    </>
+    </div>
   );
 }

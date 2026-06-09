@@ -326,6 +326,25 @@
   transition: filter var(--sc-beat) cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ---- Tier-3 gate: calm ambient motion while a peak moment runs ---- */
+.sc-theatrical-busy .sc-breath,
+.sc-theatrical-busy .sc-pulse-soft,
+.sc-theatrical-busy .sc-blink {
+  animation-play-state: paused;
+}
+.sc-theatrical-busy[data-theatrical="hero"] #hero .sc-breath,
+.sc-theatrical-busy[data-theatrical="hero"] #hero .sc-pulse-soft,
+.sc-theatrical-busy[data-theatrical="hero"] #hero .sc-blink {
+  animation-play-state: running;
+}
+
+/* Matrix wake (Act III Tier-3 run ignition) */
+.sc-matrix-ignite {
+  box-shadow: 0 0 0 1px var(--sc-hairline-strong), 0 0 40px var(--sc-accent-glow);
+  border-radius: var(--sc-r-card);
+  transition: box-shadow var(--sc-beat) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sc-breath,
   .sc-pulse-soft,

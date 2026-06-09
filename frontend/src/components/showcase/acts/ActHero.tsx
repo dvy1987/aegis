@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import { gsap, useGsapContext } from "@/lib/motion";
+import { gsap, useGsapContext, useTheatrical } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { IgniteButton } from "@/components/showcase/fx/IgniteButton";
 import { LivingGlyph } from "@/components/showcase/fx/LivingGlyph";
@@ -26,7 +26,13 @@ function scrollToInstrument() {
 export function ActHero() {
   const reduce = useReducedMotion();
   const root = useRef<HTMLElement>(null);
+  const { acquire, release } = useTheatrical();
+  const theatrical = useRef({ acquire, release });
   const [glyphState, setGlyphState] = useState<"ignite" | "idle">(reduce ? "idle" : "ignite");
+
+  useEffect(() => {
+    theatrical.current = { acquire, release };
+  });
 
   useEffect(() => {
     if (reduce) return;
@@ -38,11 +44,16 @@ export function ActHero() {
   // hook, so elements render at their final, visible state.
   useGsapContext(
     () => {
+      void theatrical.current.acquire("hero");
+
       gsap.set(".sc-hero-eyebrow, .sc-hero-sub, .sc-hero-cta", { autoAlpha: 0, y: 16 });
       gsap.set(".sc-hero-word", { autoAlpha: 0, yPercent: 64, filter: "blur(10px)" });
       gsap.set(".sc-hero-telemetry", { autoAlpha: 0 });
 
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        onComplete: () => theatrical.current.release("hero"),
+      });
       tl.to(".sc-hero-eyebrow", { autoAlpha: 1, y: 0, duration: 0.6 }, 0.15)
         .to(
           ".sc-hero-word",
@@ -73,6 +84,7 @@ export function ActHero() {
     <section
       ref={root}
       id="hero"
+      data-theatrical-zone="hero"
       className="relative mx-auto flex min-h-dvh w-full flex-col justify-center px-6 py-24 md:px-12"
       style={{ maxWidth: "var(--sc-container-max)" }}
     >

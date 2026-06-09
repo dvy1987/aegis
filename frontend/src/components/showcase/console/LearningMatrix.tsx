@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { ShowcaseManifest, ShowcaseRunSession } from "@/lib/types";
+import { BEAT_MS, useTheatrical } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { VerdictCell } from "./VerdictCell";
 
@@ -20,6 +21,10 @@ export function LearningMatrix({
   manifest: ShowcaseManifest | null;
   session: ShowcaseRunSession | null;
 }) {
+  const reduce = useReducedMotion();
+  const { runMoment } = useTheatrical();
+  const ignitedSession = useRef<string | null>(null);
+  const [matrixIgnite, setMatrixIgnite] = useState(false);
   const sessionTab: Tab | null = session?.run_type ?? null;
   const [tab, setTab] = useState<Tab>(sessionTab ?? "quick");
   // Auto-follow the live run's cohort (React render-phase "adjust state on prop
@@ -30,6 +35,19 @@ export function LearningMatrix({
     if (sessionTab) setTab(sessionTab);
   }
   const tabSession = session?.run_type === tab ? session : null;
+
+  useEffect(() => {
+    if (reduce || !session?.session_id) return;
+    if (ignitedSession.current === session.session_id) return;
+    ignitedSession.current = session.session_id;
+    runMoment(
+      "run-ignite",
+      () => setMatrixIgnite(true),
+      BEAT_MS,
+    );
+    const off = window.setTimeout(() => setMatrixIgnite(false), BEAT_MS + 200);
+    return () => window.clearTimeout(off);
+  }, [reduce, runMoment, session?.session_id]);
 
   const tabs: { key: Tab; label: string; subtitle: string; locked: string }[] = [
     {
@@ -52,7 +70,10 @@ export function LearningMatrix({
   const activeMeta = tabs.find((t) => t.key === tab)!;
 
   return (
-    <section className="flex flex-col gap-5">
+    <section
+      data-theatrical-zone="run-ignite"
+      className={matrixIgnite ? "sc-matrix-ignite flex flex-col gap-5" : "flex flex-col gap-5"}
+    >
       <div className="flex items-end justify-between gap-4">
         <div className="flex flex-col gap-1">
           <MonoLabel>Learning matrix</MonoLabel>

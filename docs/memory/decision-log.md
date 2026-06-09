@@ -457,6 +457,16 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 
 ---
 
+## 2026-06-08 — PM principle: hackathon is not an excuse for bad code
+
+**Decision.** Do not treat the hackathon deadline as justification for shipping known structural weaknesses (e.g. duplicated logic that can silently diverge). Fix real maintainability risks when they are identified — especially before further work touches the same code path.
+
+**Rationale.** PM directive: *"Don't feel comfortable shipping bad code just because it is hackathon."* Short-term demos still need a single source of truth for core behaviour; duplicated paths create silent bugs that undermine demo credibility and post-hackathon velocity.
+
+**Status.** Accepted — applies to all agents and future sessions.
+
+---
+
 ## 2026-06-08 — Showcase session ledger on GCS (ADR-009)
 
 **Decision.** Persist showcase session JSON + promotion rollback stack to a GCS prefix (`AEGIS_SHOWCASE_LEDGER_GCS_URI`) in production. Local `/tmp` or `AEGIS_SHOWCASE_LEDGER_DIR` remains the dev/test default.
