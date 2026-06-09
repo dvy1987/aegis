@@ -27,6 +27,7 @@ Quick navigation for agents picking up this project.
 
 | Date | Session | Handoff file |
 |---|---|---|
+| 2026-06-09 | Session end (Cursor — showcase cinematic + polish) | [agent-handoffs.md](agent-handoffs.md#2026-06-09--handoff-cursor--showcase-cinematic--polish) |
 | 2026-06-07 | Session end (Cursor — ADK Phase 0 + Workflow D24) | [agent-handoffs.md](agent-handoffs.md#2026-06-07--session-end-cursor--adk-phase-0--workflow-decision) |
 | 2026-06-07 | Session (Cursor — ADK plan v2 finalized) | [agent-handoffs.md](agent-handoffs.md#2026-06-07--session-end-cursor--adk-plan-v2-finalized) |
 | 2026-06-07 | Session (Cursor — showcase learning-loop robustness + day-zero reset) | [agent-handoffs.md](agent-handoffs.md#2026-06-07--handoff-cursor--showcase-learning-loop-robustness--day-zero-reset) |

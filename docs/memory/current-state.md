@@ -1,7 +1,14 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-08 (session — ADK Phase 5 coding in progress)
-**Phase:** **ADK migration Phases 0–4 COMPLETE on prod. Phase 5 (verification + cleanup) in progress.**
+**Updated:** 2026-06-09 (session — showcase cinematic UI complete + UX polish on main)
+**Phase:** **ADK migration Phases 0–4 COMPLETE on prod. Phase 5 (verification + cleanup) in progress. Frontend `/showcase` cinematic redesign SHIPPED on `main`.**
+
+### 2026-06-09 - Showcase cinematic UI + polish (main)
+- Full six-act Obsidian Observatory redesign live on `/showcase` (`eb1c2b2`, `f9a768d`, polish `11f905f`).
+- Data layer preserved in `page.tsx` (4 effects, 10s polling, 6 handlers). Rive disabled; CSS/GSAP/framer fallbacks.
+- Motion: GSAP (hero, thesis pin, money shot, pipeline scrub, finale) + `TheatricalProvider` Tier-3 gate + global `MotionConfig`.
+- Checkpoints: `checkpoint/showcase-cinematic-built`, `checkpoint/showcase-cinematic-infra`.
+- **Next:** browser visual QA + live demo dry-run with backend; optional Rive Phase 12.
 
 ### 2026-06-08 - ADK Phase 4 prod-verified + Phase 5 coding started
 - **Phase 4 exit met:** quick showcase → `needs_approval` on `aegis-v1-api-00020-99p` (~53 min, candidate `c1`).

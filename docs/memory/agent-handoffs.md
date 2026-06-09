@@ -2926,3 +2926,35 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 ?? test_appeal_phoenix_export.py, test_library_finder_agent.py
  M docs/plans/...-v2.md, docs/memory/current-state.md
 ```
+
+---
+
+## 2026-06-09 — Handoff (Cursor — showcase cinematic + polish)
+
+### Done
+- Reviewed other agent's full `/showcase` cinematic redesign (`eb1c2b2`, `f9a768d`): six Acts, GSAP layer, `RiveOrFallback` (disabled), data layer preserved in `page.tsx`.
+- Installed frontend motion deps earlier in session: `gsap`, `@gsap/react`, `@rive-app/react-canvas`; infra: `lib/motion/*`, `styles/showcase.css`, placeholder `.riv` in `public/rive/`.
+- **Checkpoint tags:** `checkpoint/showcase-cinematic-infra` (deps + tokens), `checkpoint/showcase-cinematic-built` (pre-polish full build at `f9a768d`).
+- **UX polish committed** (`11f905f` on `main`): global `MotionConfig reducedMotion="user"`; Act III GSAP ScrollTrigger pin (≥lg); Tier-3 `TheatricalProvider` gate (hero / run-ignite / money-shot / memory-decay / finale); `ScrollTrigger.refresh` on load/resize.
+- Verification: `pnpm lint`, `pnpm test` (20/20), `pnpm build` green.
+
+### Debated
+- Rive: editor export may cost ~$9/mo; runtime free. Plan + execution use CSS/SVG/framer fallbacks via `SHOWCASE_RIVE_ENABLED=false` — correct for hackathon.
+- DrawSVGPlugin: agent doc wrongly marked paid; GSAP 3.13+ bundles it free. Showcase uses `strokeDashoffset` instead (works fine).
+
+### Deferred
+- **Visual QA in browser** — responsive (375/768/1024/1280), keyboard a11y, live demo dry-run with backend (`docs/demo-cheatsheet-pm.md`).
+- **Phase 12 Rive** — optional; flip `SHOWCASE_RIVE_ENABLED` only with custom `.riv` assets.
+- **Performance** — no IntersectionObserver lazy-mount for heavy FX yet.
+
+### Next Agent Should Know
+- `/showcase` is **built and polished on `main`** — not just planned. Rollback: `git reset --hard checkpoint/showcase-cinematic-built`.
+- Design docs: `docs/2026-06-08-showcase-cinematic-redesign-plan.md`, `docs/2026-06-09-showcase-build-execution-plan.md` (progress log through Phase 11 mostly done).
+- `/appeal` untouched; showcase dark theme scoped via `app/showcase/layout.tsx` (`data-theme="dark"` + `.showcase`).
+
+### Revisit Triggers
+- Demo recording shows scroll-pin jank or overlapping Tier-3 moments → tune `theatrical.tsx` or pin durations in `ActInstrument` / `ActThesis`.
+- fps drops on demo machine → add lazy-mount (execution plan §9.4).
+
+### Working Tree
+- Clean on `main` @ `11f905f`.
