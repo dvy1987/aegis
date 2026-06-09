@@ -1,0 +1,121 @@
+/* ============================================================
+   Showcase cinematic dark theme — scoped to /showcase only.
+   Source: docs/2026-06-08-showcase-cinematic-redesign-plan.md §2
+   Does NOT mutate :root tokens used by /appeal.
+============================================================ */
+
+[data-theme="showcase-dark"],
+.showcase {
+  /* -------- Motion beat (Tier 3 camera pacing) -------- */
+  --sc-beat: 1.4s;
+
+  /* -------- Surfaces (near-black blue-graphite) -------- */
+  --sc-bg: oklch(16% 0.012 250);
+  --sc-bg-top: oklch(18% 0.012 250);
+  --sc-bg-bottom: oklch(14% 0.012 250);
+  --sc-bg-raised: oklch(19% 0.013 250);
+  --sc-bg-sunken: oklch(13% 0.01 250);
+  --sc-bg-overlay: oklch(20% 0.013 250 / 0.72);
+
+  /* -------- Hairlines -------- */
+  --sc-hairline: oklch(100% 0 0 / 0.08);
+  --sc-hairline-strong: oklch(100% 0 0 / 0.16);
+
+  /* -------- Text -------- */
+  --sc-text: oklch(96% 0.005 250);
+  --sc-text-2: oklch(74% 0.008 250);
+  --sc-text-3: oklch(58% 0.01 250);
+  --sc-text-on-accent: oklch(16% 0.012 250);
+
+  /* -------- Accent + semantic signals -------- */
+  --sc-accent: oklch(78% 0.16 165);
+  --sc-accent-dim: oklch(62% 0.13 165);
+  --sc-accent-glow: oklch(80% 0.17 165 / 0.45);
+  --sc-warn: oklch(72% 0.15 55);
+  --sc-deny: oklch(64% 0.17 25);
+
+  /* -------- Radius -------- */
+  --sc-r-card: 16px;
+  --sc-r-chip: 999px;
+  --sc-r-cell: 3px;
+
+  /* -------- Typography (inherits families from layout next/font) -------- */
+  --sc-hero-size: clamp(3rem, 6vw, 5.5rem);
+  --sc-section-size: clamp(2rem, 3.5vw, 2.75rem);
+  --sc-body-size: 1.0625rem;
+  --sc-mono-label-size: 0.8125rem;
+  --sc-mono-label-tracking: 0.04em;
+
+  /* -------- Layout -------- */
+  --sc-container-max: 75rem; /* 1200px */
+  --sc-gutter: 24px;
+
+  /* -------- Depth -------- */
+  --sc-panel-inner-highlight: inset 0 1px 0 oklch(100% 0 0 / 0.04);
+  --sc-dock-shadow: 0 24px 48px oklch(0% 0 0 / 0.45);
+
+  color: var(--sc-text-2);
+  background-color: var(--sc-bg);
+  background-image: linear-gradient(
+    180deg,
+    var(--sc-bg-top) 0%,
+    var(--sc-bg-bottom) 100%
+  );
+}
+
+[data-theme="showcase-dark"]::before,
+.showcase::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 60% 45% at 32% 18%,
+    oklch(78% 0.16 165 / 0.06) 0%,
+    transparent 70%
+  );
+}
+
+[data-theme="showcase-dark"] > *,
+.showcase > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* -------- Showcase utilities -------- */
+
+.sc-glass-panel {
+  background: var(--sc-bg-overlay);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--sc-hairline);
+  border-radius: var(--sc-r-card);
+  box-shadow: var(--sc-panel-inner-highlight);
+}
+
+.sc-hairline {
+  border-color: var(--sc-hairline);
+}
+
+.sc-accent-glow {
+  box-shadow: 0 0 24px var(--sc-accent-glow);
+}
+
+.sc-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: var(--sc-scroll-progress, 0%);
+  background: var(--sc-accent);
+  z-index: 200;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="showcase-dark"],
+  .showcase {
+    --sc-beat: 1ms;
+  }
+}
