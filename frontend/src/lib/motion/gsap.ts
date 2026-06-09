@@ -1,9 +1,12 @@
 "use client";
 
 import { gsap } from "gsap";
-import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
+// NOTE: DrawSVGPlugin is a paid Club GreenSock plugin and is NOT in the public
+// `gsap` npm package — importing it breaks the build. SVG path-draw in the
+// showcase is done with framer-motion's `pathLength` instead. Only the free
+// ScrollTrigger plugin is registered here.
+gsap.registerPlugin(ScrollTrigger);
 
-export { DrawSVGPlugin, gsap, ScrollTrigger };
+export { gsap, ScrollTrigger };

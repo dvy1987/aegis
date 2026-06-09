@@ -1,0 +1,41 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+import { EASE_OUT_EXPO } from "@/lib/motion";
+import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
+
+/** "What changed, and why." — reflection notes that stagger in on enter. */
+export function DiffCard({ whatChanged }: { whatChanged: string[] }) {
+  const reduce = useReducedMotion();
+  if (!whatChanged.length) return null;
+  return (
+    <section className="flex flex-col gap-5">
+      <div className="flex flex-col gap-1">
+        <MonoLabel>Reflection</MonoLabel>
+        <h3 className="sc-h2" style={{ fontSize: "1.6rem" }}>
+          What changed, and why.
+        </h3>
+      </div>
+      <ul className="flex flex-col gap-3">
+        {whatChanged.map((line, i) => (
+          <motion.li
+            key={i}
+            className="flex items-start gap-3 sc-body"
+            style={{ fontSize: "0.98rem", color: "var(--sc-text-2)" }}
+            initial={{ opacity: 0, x: -8 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={reduce ? { duration: 0 } : { duration: 0.4, ease: EASE_OUT_EXPO, delay: i * 0.08 }}
+          >
+            <span
+              aria-hidden
+              className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
+              style={{ background: "var(--sc-accent)", boxShadow: "0 0 6px var(--sc-accent-glow)" }}
+            />
+            {line}
+          </motion.li>
+        ))}
+      </ul>
+    </section>
+  );
+}

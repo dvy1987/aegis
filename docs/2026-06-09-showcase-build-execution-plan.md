@@ -320,28 +320,55 @@ In `frontend/src/app/showcase/page.tsx`, these must keep identical behavior; onl
 
 > Format: `- [x] Step N.M — <what was done> — <anything the next agent must know>`
 
-- [ ] 0.1 Branch + deps
-- [ ] 0.2 Baseline captured
-- [ ] 0.3 Scaffold tree
-- [ ] 1.1 Dark tokens
-- [ ] 1.2 Motion helpers
-- [ ] 1.3 Primitives
-- [ ] 1.4 RiveOrFallback + fallback FX
-- [ ] 2.1 Container/presentational split (logic preserved) — MUST confirm handlers+polling identical
-- [ ] 3.1 RunControlDock
-- [ ] 3.2 RunStatusPanel
-- [ ] 3.3 VerdictCell + LearningMatrix
-- [ ] 3.4 ActInstrument + StatusHUD
-- [ ] 4 ActHero
-- [ ] 5 ActThesis
-- [ ] 6 ActBeforeAfter + CaseCycler (pills removed)
-- [ ] 7 ActIntelligence
-- [ ] 8 ActImpact
-- [ ] 9.1 Scroll spine
-- [ ] 9.2 Responsive
-- [ ] 9.3 Reduced-motion + a11y
-- [ ] 9.4 Performance
-- [ ] 10 Demo-resilience
-- [ ] 11 Final QA — SHIPPABLE HERE
-- [ ] 12 Rive (optional, only on explicit go)
+- [x] 0.1 Branch + deps — branch `feat/showcase-cinematic`. gsap/@gsap/react/@rive-app already in package.json (committed earlier). NOTE: node_modules on this machine is incomplete (offline registry) so the verification gate must be run on the build machine.
+- [x] 0.2 Baseline — couldn't run the app (deps not installed locally); instead read `page.tsx` + data layer in full and recorded the exact preserve-list (4 effects, 6 handlers, polling, seriousUnlocked).
+- [x] 0.3 Scaffold — built the full tree directly (not stubs). Final layout matches the plan with `versus/` holding the restyled Versus/Diff/Counterfactual + CaseCycler, and a new `primitives/ActSection.tsx`.
+- [x] 1.1 Dark tokens — already existed. FIXED a real build-breaker: `showcase/layout.tsx` imported `../styles/showcase.css` (nonexistent `src/app/styles/`) → corrected to `../../styles/showcase.css`. Switched the wrapper to `data-theme="dark"` + `.showcase` so shared chrome (Nav/Button/Settings) reads correctly on dark (scoped; `/appeal` untouched). Added a utility layer (typography/surfaces/cells/focus/ambient keyframes/ignite-button) to `showcase.css`.
+- [x] 1.2 Motion helpers — already existed. FIXED: `EASE_OUT_EXPO` was `as const` (readonly) → typed as mutable bezier tuple (framer compat). REMOVED `gsap/DrawSVGPlugin` from `lib/motion/gsap.ts` + barrel — it is a paid Club GreenSock plugin absent from public `gsap` and would fail the build for any barrel consumer.
+- [x] 1.3 Primitives — GlassPanel, MonoLabel, Gauge (+ `live` mode), MetricCounter, AccentLine, ActSection.
+- [x] 1.4 RiveOrFallback + fallback FX — boundary (`SHOWCASE_RIVE_ENABLED=false`) + LivingGlyph, StatusOrb, MemoryToggle, IgniteButton, LiftGauge, PipelineIcon (all non-Rive, reduced-motion aware).
+- [x] 2.1 Container/presentational split — done. **Data layer preserved byte-for-byte** in `page.tsx` (all 4 effects, 10s polling + terminal guard, 6 handlers, seriousUnlocked identical). JUDGMENT CALL: since this is a single-agent pass with full context, I built the dark-styled presentational components directly rather than doing a throwaway literal-move first — behavior is still fully preserved (state never left `page.tsx`).
+- [x] 3.1 RunControlDock
+- [x] 3.2 RunStatusPanel (morphing stage heading, captions, progress, regression/error banners, cinematic standby)
+- [x] 3.3 VerdictCell + LearningMatrix (Demo/Serious tabs w/ sliding underline, auto-follows live run)
+- [x] 3.4 ActInstrument + StatusHUD (dock sticky ≥lg via CSS; HUD fixed)
+- [x] 4 ActHero (framer ignition: glyph ignite→idle, word-by-word blur-in, streaming telemetry)
+- [x] 5 ActThesis (CSS `position: sticky` pin on ≥lg — not GSAP)
+- [x] 6 ActBeforeAfter + CaseCycler — pills removed; old flat `CasePicker/VersusPanel/DiffCard/CounterfactualCard` deleted; per-case re-animation via keying.
+- [x] 7 ActIntelligence — self-drawing pipeline via framer (connector scaleX + staggered node activation, not DrawSVG); counterfactual decay via `live` gauge + `.sc-decayed` filter.
+- [x] 8 ActImpact (sequenced count-ups, settled glyph, end-card, Replay control)
+- [x] 9.1 Scroll spine — top scroll-progress line (framer `useScroll` scaleX) + per-Act Tier-2 reveals.
+- [~] 9.2 Responsive — breakpoints applied in components (sm single-col, pins ≥lg, matrix internal scroll). NOT yet verified at 375/768/1024/1280/1440 (needs a running build).
+- [~] 9.3 Reduced-motion + a11y — implemented throughout (MotionConfig not added globally; each component guards via `useReducedMotion`/CSS). Focus-visible rule added. Keyboard-only walkthrough NOT yet verified.
+- [ ] 9.4 Performance — NOT done. No per-Act IntersectionObserver lazy-mount/unmount yet; relies on framer `whileInView`. Revisit if fps drops on the demo machine.
+- [~] 10 Demo-resilience — standby console + sticky HUD done; full dry-run recording not possible here (no backend/deps).
+- [ ] 11 Final QA — NOT done. **The verification gate (`pnpm tsc --noEmit && pnpm lint && pnpm test && pnpm build`) has NOT been run** — node_modules is incomplete on this machine. Run it first on the build machine; expect to iterate.
+- [ ] 12 Rive — not started (intentional; optional).
+
+### Engineering decisions (read before continuing)
+- **framer-motion + CSS, GSAP deferred.** All cinematic motion is framer-motion (installed/typed) + CSS `position: sticky` for pins. GSAP scrubbed timelines/true-pinning are optional upside, like Rive — the site is complete without them. `lib/motion/gsap.ts` still registers ScrollTrigger if a future agent wants it.
+- **Single-pass build.** Phase 2's throwaway "literal move" was skipped on purpose (single agent, full context). State never left `page.tsx`; the data layer is byte-for-byte identical to the pre-redesign version.
+
+### ✅ Verification status (2026-06-09, run after a full `pnpm install`)
+The complete gate was run on this machine and is **GREEN**:
+- `pnpm tsc --noEmit` → 0 errors (fixed one: icon `size={14}` → `16`; `IconSize` is `16|20|24|32`)
+- `pnpm lint` → 0 errors (fixed three `react-hooks/set-state-in-effect`: MetricCounter, LearningMatrix, ActIntelligence — see those files for the patterns used)
+- `pnpm test` → 20/20 pass (firewall test intact)
+- `pnpm build` → success; `/`, `/appeal`, `/showcase` all prerender static (so SSR of the showcase client tree does not crash)
+
+**This branch (`feat/showcase-cinematic`) builds and is shippable. Changes are NOT committed** (left in the working tree per the no-auto-commit rule).
+
+### Next-agent handoff — what's left (none of it blocks a build)
+1. **Visual / motion QA on a real browser (couldn't run localhost here).** `pnpm dev` (or `pnpm start` after build), open `/showcase`. Walk the six acts and confirm: hero ignition + word-by-word headline; thesis sticky pin ≥lg; instrument standby console + a live run (needs backend — see demo cheatsheet); before/after money shot + case cycler (pills gone); pipeline self-draw + memory-toggle decay; impact count-ups + end-card. Watch the fixed scroll-progress line + StatusHUD.
+2. **9.2 Responsive** — verify at 375 / 768 / 1024 / 1280 / 1440. Breakpoints are coded (sm single-col, pins ≥lg, matrix internal scroll) but unverified visually. Check no horizontal overflow.
+3. **9.3 a11y** — keyboard-only walkthrough; focus ring rule is in `showcase.css`. Confirm MemoryToggle/tabs/cycler roles. (Per-component reduced-motion guards exist; consider adding a global `<MotionConfig reducedMotion="user">` wrapper in `page.tsx` for belt-and-suspenders.)
+4. **9.4 Performance** — not implemented. If fps dips on the demo machine, add per-Act IntersectionObserver lazy-mount/unmount for the heavier FX (LivingGlyph, pipeline). Currently everything mounts; framer `whileInView` gates the animation but not the mount.
+5. **10 Demo dry-run** — do a full record following `docs/demo-cheatsheet-pm.md` §"Happy path" with the backend up; confirm the standby/running states read as suspense (no dead air) and the finale ends on stillness. Day-zero reset: `backend/scripts/reset_to_day_zero.py`.
+6. **11 Final QA** — run the design-doc §12 checklist on the live page; re-confirm data-layer integrity (diff network calls vs. before).
+7. **12 Rive (optional)** — only on explicit go. `RiveOrFallback` (`SHOWCASE_RIVE_ENABLED=false` in `fx/RiveOrFallback.tsx`) is the single switch; pass a `.riv`-backed node into the `rive` slot per element. Fallbacks stay as the failure path. No searching/authoring Rive.
+
+### Files changed this pass (for review)
+- Fixed: `app/showcase/layout.tsx` (CSS import path + `data-theme="dark"`+`.showcase`), `styles/showcase.css` (utility layer), `lib/motion/easings.ts` (ease tuple type), `lib/motion/gsap.ts` + `index.ts` (drop paid DrawSVGPlugin), `app/showcase/page.tsx` (render `ShowcaseFilm`; data layer unchanged).
+- Added: `components/showcase/ShowcaseFilm.tsx`, `acts/*` (6), `console/*` (5), `versus/*` (4), `primitives/*` (6), `fx/*` (7).
+- Deleted: old flat `components/showcase/{CasePicker,VersusPanel,DiffCard,CounterfactualCard}.tsx` (superseded; pills removed).
 ```

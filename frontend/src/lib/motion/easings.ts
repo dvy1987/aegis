@@ -3,8 +3,8 @@
  * Source: docs/2026-06-08-showcase-cinematic-redesign-plan.md §3–§10
  */
 
-/** Primary out-expo curve for Tier 1–2 motion. */
-export const EASE_OUT_EXPO = [0.22, 1, 0.36, 1] as const;
+/** Primary out-expo curve for Tier 1–2 motion (framer bezier tuple). */
+export const EASE_OUT_EXPO: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /** Narrative beat length for Tier 3 camera moments (~1.2–2.0s). */
 export const BEAT_MS = 1400;
