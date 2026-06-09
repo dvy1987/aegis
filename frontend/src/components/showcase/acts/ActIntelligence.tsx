@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
-import { ActSection } from "@/components/showcase/primitives/ActSection";
+import { useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { EASE_OUT_EXPO, ScrollTrigger, useGsapContext } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
 import { CounterfactualCard } from "@/components/showcase/versus/CounterfactualCard";
@@ -25,16 +25,20 @@ const NODES: { kind: PipelineKind; label: string; callout?: string }[] = [
   { kind: "promote", label: "Promote" },
 ];
 
-export function ActIntelligence({
-  on,
-  off,
-}: {
-  on: number;
-  off: number;
-}) {
+export function ActIntelligence({ on, off }: { on: number; off: number }) {
   return (
-    <ActSection id="intelligence" className="flex flex-col gap-14">
-      <div className="flex flex-col gap-2">
+    <section
+      id="intelligence"
+      className="mx-auto flex w-full flex-col gap-14 px-6 py-24 md:px-12 md:py-32"
+      style={{ maxWidth: "var(--sc-container-max)" }}
+    >
+      <motion.div
+        className="flex flex-col gap-2"
+        initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
+      >
         <MonoLabel>The intelligence layer</MonoLabel>
         <h2 className="sc-h2">How it gets better.</h2>
         <p className="max-w-prose sc-body">
@@ -42,44 +46,49 @@ export function ActIntelligence({
           and an optimizer rewrites its playbook from the pattern of its past failures. A person
           approves before anything ships.
         </p>
-      </div>
+      </motion.div>
 
       <Pipeline />
 
       <CounterfactualCard on={on} off={off} />
-    </ActSection>
+    </section>
   );
 }
 
 function Pipeline() {
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.4 });
-  const [rawStep, setRawStep] = useState(-1);
+  const root = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    if (!inView || reduce) return;
-    let i = -1;
-    const id = window.setInterval(() => {
-      i += 1;
-      setRawStep(i);
-      if (i >= NODES.length - 1) window.clearInterval(id);
-    }, 280);
-    return () => window.clearInterval(id);
-  }, [inView, reduce]);
+  // Scroll-scrubbed self-draw: connectors grow and nodes light as the section
+  // passes through the viewport. Reduced-motion shows the fully-drawn end state.
+  useGsapContext(
+    () => {
+      ScrollTrigger.create({
+        trigger: root.current,
+        start: "top 72%",
+        end: "bottom 58%",
+        scrub: 0.5,
+        onUpdate: (self) => setProgress(self.progress),
+      });
+    },
+    { scope: root },
+  );
 
-  const step = reduce ? NODES.length : rawStep;
+  const shown = reduce ? 1 : progress;
+  const pos = shown * (NODES.length - 1); // 0 → n-1
 
   return (
-    <div ref={ref} className="flex flex-col gap-6">
+    <div ref={root} className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
         {NODES.map((node, i) => {
-          const active = i <= step;
+          const active = i <= pos + 0.5;
+          const fill = Math.max(0, Math.min(1, pos - i));
           return (
             <div key={node.kind} className="flex flex-1 items-center gap-4 lg:flex-col lg:gap-3">
               <GlassPanel
                 variant={active ? "active" : "default"}
-                className="flex w-full flex-col items-center gap-3 p-4 text-center transition-all duration-500"
+                className="flex w-full flex-col items-center gap-3 p-4 text-center transition-all duration-300"
               >
                 <PipelineIcon kind={node.kind} active={active} size={28} />
                 <span
@@ -91,12 +100,13 @@ function Pipeline() {
               </GlassPanel>
               {i < NODES.length - 1 && (
                 <span className="relative hidden h-px flex-1 self-center lg:block" style={{ background: "var(--sc-hairline)" }}>
-                  <motion.span
+                  <span
                     className="absolute inset-0 origin-left"
-                    style={{ background: "var(--sc-accent)", boxShadow: "0 0 8px var(--sc-accent-glow)" }}
-                    initial={{ scaleX: reduce ? 1 : 0 }}
-                    animate={{ scaleX: i < step ? 1 : 0 }}
-                    transition={{ duration: 0.3 }}
+                    style={{
+                      background: "var(--sc-accent)",
+                      boxShadow: "0 0 8px var(--sc-accent-glow)",
+                      transform: `scaleX(${fill})`,
+                    }}
                   />
                 </span>
               )}

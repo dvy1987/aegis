@@ -346,8 +346,17 @@ In `frontend/src/app/showcase/page.tsx`, these must keep identical behavior; onl
 - [ ] 12 Rive — not started (intentional; optional).
 
 ### Engineering decisions (read before continuing)
-- **framer-motion + CSS, GSAP deferred.** All cinematic motion is framer-motion (installed/typed) + CSS `position: sticky` for pins. GSAP scrubbed timelines/true-pinning are optional upside, like Rive — the site is complete without them. `lib/motion/gsap.ts` still registers ScrollTrigger if a future agent wants it.
+- **GSAP cinematic layer is now IMPLEMENTED (no longer deferred).** All five design-doc §9 GSAP opportunities are in:
+  1. **Hero ignition** — `acts/ActHero.tsx`: a GSAP timeline owns the eyebrow/headline-words(blur-in)/subhead/CTA reveal + a scrubbed glyph parallax (`scrollTrigger scrub`).
+  2. **Pinned thesis** — `acts/ActThesis.tsx`: real `ScrollTrigger` **pin + scrub** via `gsap.matchMedia("(min-width:1024px)")`; degrades to static on mobile/reduced-motion.
+  3. **Money shot** — `versus/VersusPanel.tsx`: one GSAP timeline (ScrollTrigger `once` on enter) runs the gauge race → APPROVE-lamp bloom → lift arc draw (`strokeDashoffset`, no paid plugin) → needle spring (`svgOrigin`) → counters, in lockstep.
+  4. **Self-drawing pipeline** — `acts/ActIntelligence.tsx`: `ScrollTrigger` **scrub** drives a progress value; connectors grow (`scaleX`) and nodes light as you scroll.
+  5. **Finale** — `acts/ActImpact.tsx`: GSAP timeline sequences headline → metrics → footer hairline draw on enter.
+- **Ownership rule honored.** GSAP owns scrubbed/sequenced cinematic moments; **framer-motion still owns** the run state machine (`RunStatusPanel`/`LearningMatrix`), ambient loops (LivingGlyph breath, StatusOrb, MemoryToggle), hover, the scroll-progress bar, and simple section reveals. No element is animated by two systems.
+- **Reduced-motion / SSR pattern.** GSAP runs through `lib/motion/useGsapContext.ts` (useGSAP + auto-cleanup, skips when `prefers-reduced-motion`). Every GSAP-animated element renders at its FINAL/visible state in markup; GSAP sets the "from" state in `useLayoutEffect` (no flash). So reduced-motion users — for whom setup is skipped — see the finished state. `gsap/DrawSVGPlugin` stays removed (paid); path-draw uses native `strokeDashoffset`.
+- **Removed** `fx/LiftGauge.tsx` (framer) — superseded by the inline GSAP arc in the money shot. `primitives/ActSection.tsx` + `primitives/AccentLine.tsx` are now unused but kept as reusable primitives.
 - **Single-pass build.** Phase 2's throwaway "literal move" was skipped on purpose (single agent, full context). State never left `page.tsx`; the data layer is byte-for-byte identical to the pre-redesign version.
+- **Watch in QA:** the thesis pin (pin-spacer interplay with other ScrollTriggers — should be isolated, but verify no scroll jump), and the pipeline scrub driving React state each frame (fine for 6 nodes; if janky, switch to ref-driven). `ScrollTrigger.refresh()` runs automatically on load/resize.
 
 ### ✅ Verification status (2026-06-09, run after a full `pnpm install`)
 The complete gate was run on this machine and is **GREEN**:

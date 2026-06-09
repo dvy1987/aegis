@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { EASE_OUT_EXPO } from "@/lib/motion";
+import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
+import { gsap, useGsapContext } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { IgniteButton } from "@/components/showcase/fx/IgniteButton";
 import { LivingGlyph } from "@/components/showcase/fx/LivingGlyph";
@@ -25,6 +25,7 @@ function scrollToInstrument() {
 
 export function ActHero() {
   const reduce = useReducedMotion();
+  const root = useRef<HTMLElement>(null);
   const [glyphState, setGlyphState] = useState<"ignite" | "idle">(reduce ? "idle" : "ignite");
 
   useEffect(() => {
@@ -33,60 +34,75 @@ export function ActHero() {
     return () => window.clearTimeout(t);
   }, [reduce]);
 
+  // GSAP ignition timeline (owns all hero text). Reduced-motion: skipped by the
+  // hook, so elements render at their final, visible state.
+  useGsapContext(
+    () => {
+      gsap.set(".sc-hero-eyebrow, .sc-hero-sub, .sc-hero-cta", { autoAlpha: 0, y: 16 });
+      gsap.set(".sc-hero-word", { autoAlpha: 0, yPercent: 64, filter: "blur(10px)" });
+      gsap.set(".sc-hero-telemetry", { autoAlpha: 0 });
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.to(".sc-hero-eyebrow", { autoAlpha: 1, y: 0, duration: 0.6 }, 0.15)
+        .to(
+          ".sc-hero-word",
+          { autoAlpha: 1, yPercent: 0, filter: "blur(0px)", duration: 0.75, stagger: 0.08 },
+          0.3,
+        )
+        .to(".sc-hero-sub", { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.3")
+        .to(".sc-hero-cta", { autoAlpha: 1, y: 0, duration: 0.5 }, "-=0.35")
+        .to(".sc-hero-telemetry", { autoAlpha: 1, duration: 0.6 }, "-=0.3");
+
+      // Glyph drifts up + fades as the hero scrolls away (scrubbed).
+      gsap.to(".sc-hero-glyph", {
+        yPercent: -14,
+        autoAlpha: 0.35,
+        ease: "none",
+        scrollTrigger: {
+          trigger: root.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    },
+    { scope: root },
+  );
+
   return (
     <section
+      ref={root}
       id="hero"
       className="relative mx-auto flex min-h-dvh w-full flex-col justify-center px-6 py-24 md:px-12"
       style={{ maxWidth: "var(--sc-container-max)" }}
     >
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="flex flex-col gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
-          >
+          <div className="sc-hero-eyebrow">
             <MonoLabel>AEGIS · SELF-IMPROVING APPEAL ENGINE</MonoLabel>
-          </motion.div>
+          </div>
 
           <h1 className="sc-display" style={{ maxWidth: "16ch" }}>
             {HEADLINE.map((word, i) => (
-              <motion.span
-                key={i}
-                className="inline-block"
-                style={{ marginRight: "0.25em" }}
-                initial={reduce ? false : { opacity: 0, y: 16, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.2 + i * 0.07 }}
-              >
+              <span key={i} className="sc-hero-word inline-block" style={{ marginRight: "0.25em" }}>
                 {word}
-              </motion.span>
+              </span>
             ))}
           </h1>
 
-          <motion.p
-            className="max-w-prose sc-body"
-            style={{ fontSize: "1.15rem" }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-          >
+          <p className="sc-hero-sub max-w-prose sc-body" style={{ fontSize: "1.15rem" }}>
             Aegis drafts insurance-denial appeals, grades its own work against a held-out benchmark,
             and rewrites its own playbook from what it learns. No hand-tuning. Below, it does it live.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
-          >
+          <div className="sc-hero-cta">
             <IgniteButton variant="primary" onClick={scrollToInstrument}>
               Begin a live run
             </IgniteButton>
-          </motion.div>
+          </div>
         </div>
 
-        <div className="order-first lg:order-last">
+        <div className="sc-hero-glyph order-first lg:order-last">
           <RiveOrFallback fallback={<LivingGlyph state={glyphState} className="mx-auto" />} />
         </div>
       </div>
@@ -106,17 +122,9 @@ function TelemetryStrip() {
   }, [reduce]);
 
   return (
-    <div className="mt-16 flex items-center gap-3" aria-hidden>
+    <div className="sc-hero-telemetry mt-16 flex items-center gap-3" aria-hidden>
       <span className="h-1.5 w-1.5 rounded-full sc-pulse-soft" style={{ background: "var(--sc-accent)" }} />
-      <motion.span
-        key={i}
-        initial={reduce ? false : { opacity: 0, y: 4 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="sc-mono"
-      >
-        {TELEMETRY[i]}
-      </motion.span>
+      <span className="sc-mono">{TELEMETRY[i]}</span>
       <span className="sc-mono sc-blink">▌</span>
     </div>
   );

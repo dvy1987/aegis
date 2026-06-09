@@ -1,10 +1,8 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { EASE_OUT_EXPO } from "@/lib/motion";
+import { useRef, type ReactNode } from "react";
+import { gsap, useGsapContext } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
-import { AccentLine } from "@/components/showcase/primitives/AccentLine";
 import { MetricCounter } from "@/components/showcase/primitives/MetricCounter";
 import { LivingGlyph } from "@/components/showcase/fx/LivingGlyph";
 import { RiveOrFallback } from "@/components/showcase/fx/RiveOrFallback";
@@ -16,26 +14,42 @@ function replay() {
 }
 
 export function ActImpact() {
-  const reduce = useReducedMotion();
+  const root = useRef<HTMLElement>(null);
+
+  // GSAP finale timeline: headline → glyph settle → metrics (counters fire on
+  // their own view) → footer hairline draws → stillness. Triggered on enter.
+  useGsapContext(
+    () => {
+      gsap.set(".sc-im-headline, .sc-im-metric, .sc-im-endcard", { autoAlpha: 0, y: 20 });
+      gsap.set(".sc-im-divider", { scaleX: 0, transformOrigin: "left center" });
+
+      gsap
+        .timeline({
+          defaults: { ease: "power3.out" },
+          scrollTrigger: { trigger: root.current, start: "top 70%", once: true },
+        })
+        .to(".sc-im-headline", { autoAlpha: 1, y: 0, duration: 0.8 })
+        .to(".sc-im-metric", { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.18 }, "-=0.3")
+        .to(".sc-im-divider", { scaleX: 1, duration: 0.9, ease: "power2.out" }, "-=0.2")
+        .to(".sc-im-endcard", { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.5");
+    },
+    { scope: root },
+  );
+
   return (
     <section
+      ref={root}
       id="impact"
       className="relative mx-auto flex min-h-dvh w-full flex-col justify-center gap-14 px-6 py-24 md:px-12"
       style={{ maxWidth: "var(--sc-container-max)" }}
     >
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
-        <motion.div
-          className="flex flex-col gap-6"
-          initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
-        >
+        <div className="sc-im-headline flex flex-col gap-6">
           <MonoLabel>Why this matters</MonoLabel>
           <h2 className="sc-display" style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)", maxWidth: "18ch" }}>
             99% of denied claims are never appealed. Aegis keeps getting better at the fight.
           </h2>
-        </motion.div>
+        </div>
 
         <div>
           <RiveOrFallback fallback={<LivingGlyph state="settled" parallax={false} className="mx-auto" />} />
@@ -57,30 +71,21 @@ export function ActImpact() {
           />
         </Metric>
         <Metric label="Judge dimensions">
-          <MetricCounter
-            to={7}
-            delay={0.4}
-            className="sc-c1"
-            style={{ fontSize: "1.6rem", fontWeight: 600, letterSpacing: "0" }}
-          />
+          <MetricCounter to={7} delay={0.4} className="sc-c1" style={{ fontSize: "1.6rem", fontWeight: 600, letterSpacing: "0" }} />
         </Metric>
         <Metric label="Human-approved">
-          <motion.span
-            className="sc-c1"
-            style={{ fontFamily: "var(--font-mono)", fontSize: "1.6rem", fontWeight: 600 }}
-            initial={reduce ? false : { opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
+          <span className="sc-c1" style={{ fontFamily: "var(--font-mono)", fontSize: "1.6rem", fontWeight: 600 }}>
             ALWAYS
-          </motion.span>
+          </span>
         </Metric>
       </div>
 
       <div className="flex flex-col gap-6">
-        <AccentLine />
-        <div className="flex flex-wrap items-center justify-between gap-4">
+        <span
+          className="sc-im-divider block h-px w-full"
+          style={{ background: "var(--sc-accent)", boxShadow: "0 0 10px var(--sc-accent-glow)" }}
+        />
+        <div className="sc-im-endcard flex flex-wrap items-center justify-between gap-4">
           <MonoLabel style={{ letterSpacing: "0.06em" }}>
             AEGIS · built on Google ADK + Gemini · observability by Arize Phoenix
           </MonoLabel>
@@ -95,7 +100,7 @@ export function ActImpact() {
 
 function Metric({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="sc-im-metric flex flex-col gap-2">
       <MonoLabel>{label}</MonoLabel>
       <div className="flex items-baseline">{children}</div>
     </div>

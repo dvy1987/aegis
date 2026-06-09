@@ -1,60 +1,80 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { EASE_OUT_EXPO } from "@/lib/motion";
+import { useRef, type ReactNode } from "react";
+import { gsap, useGsapContext } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
-import { AccentLine } from "@/components/showcase/primitives/AccentLine";
 
 /**
- * The thesis beat. Uses CSS `position: sticky` for a robust "pin" on ≥lg (no
- * GSAP dependency); content resolves on scroll into view. 90% negative space.
+ * The thesis beat. On ≥lg it is a true GSAP ScrollTrigger pin + scrub: the page
+ * holds while the statement, the turn, the two nodes, and "learns" resolve in
+ * sequence. On smaller screens / reduced-motion it degrades to a static layout
+ * (elements render visible; the GSAP setup is skipped).
  */
 export function ActThesis() {
-  const reduce = useReducedMotion();
+  const root = useRef<HTMLElement>(null);
+  const pin = useRef<HTMLDivElement>(null);
+
+  useGsapContext(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1024px)", () => {
+        gsap.set(
+          [".sc-th-statement", ".sc-th-turn", ".sc-th-node", ".sc-th-learns", ".sc-th-foreshadow"],
+          { autoAlpha: 0, y: 28 },
+        );
+
+        const tl = gsap.timeline({
+          defaults: { ease: "power2.out" },
+          scrollTrigger: {
+            trigger: pin.current,
+            start: "top top",
+            end: "+=150%",
+            pin: pin.current,
+            scrub: 0.6,
+          },
+        });
+
+        tl.to(".sc-th-statement", { autoAlpha: 1, y: 0, duration: 1 })
+          .to(".sc-th-turn", { autoAlpha: 1, y: 0, duration: 1 }, ">+0.2")
+          .to(".sc-th-node", { autoAlpha: 1, y: 0, duration: 1, stagger: 0.5 }, ">+0.1")
+          .to(".sc-th-learns", { autoAlpha: 1, y: 0, duration: 0.8 }, ">-0.1")
+          .to(".sc-th-foreshadow", { autoAlpha: 1, y: 0, duration: 0.8 }, ">+0.2");
+      });
+      return () => mm.revert();
+    },
+    { scope: root },
+  );
+
   return (
-    <section id="thesis" className="lg:min-h-[150vh]">
-      <div className="sticky top-0 flex min-h-dvh items-center">
+    <section ref={root} id="thesis">
+      <div ref={pin} className="flex min-h-dvh items-center">
         <div
           className="mx-auto flex w-full flex-col gap-12 px-6 md:px-12"
           style={{ maxWidth: "var(--sc-container-max)" }}
         >
-          <motion.div
-            className="flex max-w-3xl flex-col gap-5"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-          >
-            <motion.h2
-              className="sc-serif"
+          <div className="flex max-w-3xl flex-col gap-5">
+            <h2
+              className="sc-th-statement sc-serif"
               style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)", fontWeight: 600, color: "var(--sc-text)", lineHeight: 1.15 }}
-              variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
             >
               Most AI agents never improve. They answer the same way on day one and day one thousand.
-            </motion.h2>
-            <motion.p
-              className="sc-serif"
+            </h2>
+            <p
+              className="sc-th-turn sc-serif"
               style={{ fontSize: "clamp(1.4rem, 3vw, 2.1rem)", color: "var(--sc-accent)", lineHeight: 1.2 }}
-              variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.15 }}
             >
               Aegis reads its own past evaluations before it drafts — and gets measurably better.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-12">
-            <ThesisNode
-              label="Static-prompt agents"
-              inert
-              caption="One prompt. Frozen at launch."
-            />
-            <ThesisNode
-              label="Aegis"
-              caption="Reads its traces. Rewrites its playbook."
-            >
-              <div className="mt-3 flex flex-col gap-1.5">
-                <AccentLine className="w-24" />
+            <ThesisNode label="Static-prompt agents" inert caption="One prompt. Frozen at launch." />
+            <ThesisNode label="Aegis" caption="Reads its traces. Rewrites its playbook.">
+              <div className="sc-th-learns mt-3 flex flex-col gap-1.5">
+                <span
+                  className="block h-px w-24"
+                  style={{ background: "var(--sc-accent)", boxShadow: "0 0 10px var(--sc-accent-glow)" }}
+                />
                 <span className="sc-serif" style={{ color: "var(--sc-accent)", fontSize: "1.1rem" }}>
                   learns
                 </span>
@@ -62,17 +82,12 @@ export function ActThesis() {
             </ThesisNode>
           </div>
 
-          <motion.div
-            initial={reduce ? false : { opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
+          <div className="sc-th-foreshadow">
             <MonoLabel style={{ textTransform: "none", letterSpacing: "0.04em", color: "var(--sc-text-3)" }}>
               THESIS — if turning memory off doesn&apos;t degrade quality, the idea has failed. So we
               turn it off later and show you.
             </MonoLabel>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -90,18 +105,11 @@ function ThesisNode({
   inert?: boolean;
   children?: ReactNode;
 }) {
-  const reduce = useReducedMotion();
   const color = inert ? "var(--sc-text-3)" : "var(--sc-accent)";
   return (
-    <motion.div
-      className="flex items-start gap-4"
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.6 }}
-      transition={{ duration: 0.6, ease: EASE_OUT_EXPO, delay: inert ? 0.1 : 0.25 }}
-    >
+    <div className="sc-th-node flex items-start gap-4">
       <span
-        className={inert || reduce ? "" : "sc-breath"}
+        className={inert ? "" : "sc-breath"}
         style={{
           display: "inline-block",
           width: 14,
@@ -122,6 +130,6 @@ function ThesisNode({
         </span>
         {children}
       </div>
-    </motion.div>
+    </div>
   );
 }
