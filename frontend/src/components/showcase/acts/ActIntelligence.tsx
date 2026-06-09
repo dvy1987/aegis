@@ -5,25 +5,17 @@ import { motion, useReducedMotion } from "framer-motion";
 import { EASE_OUT_EXPO, ScrollTrigger, useGsapContext } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
+import { GepaSpotlight } from "@/components/showcase/acts/GepaSpotlight";
 import { CounterfactualCard } from "@/components/showcase/versus/CounterfactualCard";
+import {
+  INTELLIGENCE_BODY,
+  INTELLIGENCE_EYEBROW,
+  INTELLIGENCE_HEADLINE,
+  PIPELINE_NODES,
+} from "@/components/showcase/copy";
 import { PipelineIcon, type PipelineKind } from "@/components/showcase/fx/PipelineIcon";
 
-const NODES: { kind: PipelineKind; label: string; callout?: string }[] = [
-  { kind: "draft", label: "Draft" },
-  {
-    kind: "judge",
-    label: "Judge panel",
-    callout: "Seven-dimension panel: two hard safety gates + five weighted scores. Six run as ADK agents.",
-  },
-  {
-    kind: "memory",
-    label: "Phoenix memory",
-    callout: "It reads its own past traces before drafting.",
-  },
-  { kind: "optimize", label: "GEPA optimizer" },
-  { kind: "approve", label: "Human approval" },
-  { kind: "promote", label: "Promote" },
-];
+const NODES: { kind: PipelineKind; label: string; callout?: string }[] = [...PIPELINE_NODES];
 
 export function ActIntelligence({ on, off }: { on: number; off: number }) {
   return (
@@ -39,14 +31,12 @@ export function ActIntelligence({ on, off }: { on: number; off: number }) {
         viewport={{ once: true, amount: 0.6 }}
         transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
       >
-        <MonoLabel>The intelligence layer</MonoLabel>
-        <h2 className="sc-h2">How it gets better.</h2>
-        <p className="max-w-prose sc-body">
-          Aegis grades every draft against a held-out benchmark, writes the result to its own memory,
-          and an optimizer rewrites its playbook from the pattern of its past failures. A person
-          approves before anything ships.
-        </p>
+        <MonoLabel>{INTELLIGENCE_EYEBROW}</MonoLabel>
+        <h2 className="sc-h2">{INTELLIGENCE_HEADLINE}</h2>
+        <p className="max-w-prose sc-body">{INTELLIGENCE_BODY}</p>
       </motion.div>
+
+      <GepaSpotlight />
 
       <Pipeline />
 

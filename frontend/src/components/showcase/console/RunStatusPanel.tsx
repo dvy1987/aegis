@@ -6,20 +6,16 @@ import { EASE_OUT_EXPO, statusMorph } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
 import { IgniteButton } from "@/components/showcase/fx/IgniteButton";
+import {
+  APPROVE_CTA,
+  CANCEL_CTA,
+  REJECT_CTA,
+  STAGE_CAPTIONS,
+  STATUS_AWAITING,
+  STATUS_EYEBROW,
+  STATUS_STANDBY,
+} from "@/components/showcase/copy";
 import { StatusOrb } from "@/components/showcase/fx/StatusOrb";
-
-const STAGE_CAPTIONS: Record<string, string> = {
-  queued: "Queued — work starts on the server.",
-  measure_before: "Measuring held-out cases with the current prompt — no learning yet.",
-  train_gepa: "Drafting, judging, and running the optimizer on training cases.",
-  waiting_for_approval: "Proposed changes ready — you decide whether to ship them.",
-  promote: "Promoting the approved changes.",
-  measure_after: "Re-measuring held-out cases with the promoted prompt.",
-  failed: "The run stopped. See the error below.",
-  cancelled: "Run cancelled. No promotion happened.",
-  rejected: "Proposal discarded. Nothing was promoted.",
-  rolled_back: "Previous prompt and playbook restored.",
-};
 
 const TERMINAL = ["successful", "failed", "cancelled", "rejected", "rolled_back"];
 
@@ -50,7 +46,7 @@ export function RunStatusPanel({
     <GlassPanel variant={needsApproval ? "active" : "default"} className="flex flex-col gap-5 p-6">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <MonoLabel>Run status</MonoLabel>
+          <MonoLabel>{STATUS_EYEBROW}</MonoLabel>
           <span className="break-all sc-mono" style={{ color: "var(--sc-text-2)" }}>
             {session.session_id}
           </span>
@@ -127,17 +123,17 @@ export function RunStatusPanel({
               className="flex flex-wrap gap-3"
             >
               <IgniteButton variant="primary" onClick={onApprove}>
-                Approve update
+                {APPROVE_CTA}
               </IgniteButton>
               <IgniteButton variant="secondary" onClick={onReject}>
-                Reject update
+                {REJECT_CTA}
               </IgniteButton>
             </motion.div>
           )}
         </AnimatePresence>
         {canCancel && (
           <IgniteButton variant="ghost" onClick={onCancel}>
-            Cancel run
+            {CANCEL_CTA}
           </IgniteButton>
         )}
       </div>
@@ -173,9 +169,9 @@ function StandbyConsole({ runErr }: { runErr?: string | null }) {
     <GlassPanel className="flex min-h-72 flex-col justify-between gap-6 p-6">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <MonoLabel>Run status</MonoLabel>
+          <MonoLabel>{STATUS_EYEBROW}</MonoLabel>
           <span className="sc-mono sc-blink" style={{ color: "var(--sc-text-2)" }}>
-            AWAITING SESSION
+            {STATUS_AWAITING}
           </span>
         </div>
         <StatusOrb status={null} />
@@ -191,7 +187,7 @@ function StandbyConsole({ runErr }: { runErr?: string | null }) {
       <div className="flex items-center gap-3">
         <span className="h-2 w-2 rounded-full sc-pulse-soft" style={{ background: "var(--sc-accent)" }} />
         <p className="sc-body" style={{ fontSize: "0.95rem", color: "var(--sc-text-2)" }}>
-          Begin a live run to watch the session id, stage, and evidence appear here.
+          {STATUS_STANDBY}
         </p>
       </div>
       {runErr && (

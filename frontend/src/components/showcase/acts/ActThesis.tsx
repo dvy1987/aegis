@@ -2,6 +2,15 @@
 
 import { useRef, type ReactNode } from "react";
 import { gsap, useGsapContext } from "@/lib/motion";
+import {
+  THESIS_AEGIS_CAPTION,
+  THESIS_AEGIS_LABEL,
+  THESIS_FORESHADOW,
+  THESIS_STATIC_CAPTION,
+  THESIS_STATIC_LABEL,
+  THESIS_STATEMENT,
+  THESIS_TURN,
+} from "@/components/showcase/copy";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 
 /**
@@ -57,19 +66,19 @@ export function ActThesis() {
               className="sc-th-statement sc-serif"
               style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)", fontWeight: 600, color: "var(--sc-text)", lineHeight: 1.15 }}
             >
-              Most AI agents never improve. They answer the same way on day one and day one thousand.
+              {THESIS_STATEMENT}
             </h2>
             <p
               className="sc-th-turn sc-serif"
               style={{ fontSize: "clamp(1.4rem, 3vw, 2.1rem)", color: "var(--sc-accent)", lineHeight: 1.2 }}
             >
-              Aegis reads its own past evaluations before it drafts — and gets measurably better.
+              {THESIS_TURN}
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-12">
-            <ThesisNode label="Static-prompt agents" inert caption="One prompt. Frozen at launch." />
-            <ThesisNode label="Aegis" caption="Reads its traces. Rewrites its playbook.">
+            <ThesisNode label={THESIS_STATIC_LABEL} inert caption={THESIS_STATIC_CAPTION} />
+            <ThesisNode label={THESIS_AEGIS_LABEL} caption={THESIS_AEGIS_CAPTION}>
               <div className="sc-th-learns mt-3 flex flex-col gap-1.5">
                 <span
                   className="block h-px w-24"
@@ -84,8 +93,7 @@ export function ActThesis() {
 
           <div className="sc-th-foreshadow">
             <MonoLabel style={{ textTransform: "none", letterSpacing: "0.04em", color: "var(--sc-text-3)" }}>
-              THESIS — if turning memory off doesn&apos;t degrade quality, the idea has failed. So we
-              turn it off later and show you.
+              {THESIS_FORESHADOW}
             </MonoLabel>
           </div>
         </div>

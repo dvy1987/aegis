@@ -6,6 +6,7 @@ import { EASE_OUT_EXPO } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { CaseCycler } from "@/components/showcase/versus/CaseCycler";
 import { VersusPanel } from "@/components/showcase/versus/VersusPanel";
+import { BEFORE_AFTER_EYEBROW, BEFORE_AFTER_HEADLINE } from "@/components/showcase/copy";
 import { DiffCard } from "@/components/showcase/versus/DiffCard";
 
 /**
@@ -37,8 +38,8 @@ export function ActBeforeAfter({
         viewport={{ once: true, amount: 0.6 }}
         transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
       >
-        <MonoLabel>Before / after</MonoLabel>
-        <h2 className="sc-h2">The same denial. Before and after it learned.</h2>
+        <MonoLabel>{BEFORE_AFTER_EYEBROW}</MonoLabel>
+        <h2 className="sc-h2">{BEFORE_AFTER_HEADLINE}</h2>
       </motion.div>
 
       <CaseCycler cases={cases} selected={selected} onSelect={onSelect} />

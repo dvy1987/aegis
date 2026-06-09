@@ -5,6 +5,13 @@ import type { ShowcaseBundle, Verdict } from "@/lib/types";
 import { gsap, useGsapContext, useTheatrical } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
+import {
+  VERSUS_DRAFT_AFTER,
+  VERSUS_DRAFT_BEFORE,
+  VERSUS_ILLUSTRATIVE,
+  VERSUS_LIFT_LABEL,
+  VERSUS_PHOENIX_LINK,
+} from "@/components/showcase/copy";
 import { ArrowUpRightIcon } from "@/icons";
 
 const ARC_LEN = Math.PI * 84; // semicircle r=84
@@ -95,7 +102,7 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
     <div ref={root} data-theatrical-zone="money-shot" className="flex flex-col gap-6">
       <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-[1fr_auto_1fr]">
         <DraftColumn
-          title="Earlier draft"
+          title={VERSUS_DRAFT_BEFORE}
           version="v1"
           composite={v1}
           verdict={bundle.v1.verdict}
@@ -103,7 +110,7 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
         />
 
         <div className="flex flex-col items-center justify-center gap-2 px-2 py-4">
-          <MonoLabel>Measured lift · held-out</MonoLabel>
+          <MonoLabel>{VERSUS_LIFT_LABEL}</MonoLabel>
           <svg viewBox="0 0 200 116" className="w-full max-w-[220px]" aria-hidden role="img">
             <path d="M 16 100 A 84 84 0 0 1 184 100" fill="none" stroke="var(--sc-bg-sunken)" strokeWidth={10} strokeLinecap="round" />
             <path
@@ -131,7 +138,7 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
         </div>
 
         <DraftColumn
-          title="Improved draft"
+          title={VERSUS_DRAFT_AFTER}
           version="v3"
           composite={v3}
           verdict={bundle.v3.verdict}
@@ -143,7 +150,7 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         {!bundle.measured && (
           <p className="sc-mono" style={{ color: "var(--sc-text-3)" }}>
-            Illustrative for this case. Measured numbers shown where a run is recorded.
+            {VERSUS_ILLUSTRATIVE}
           </p>
         )}
         {bundle.phoenix_url && (
@@ -154,7 +161,7 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
             className="inline-flex items-center gap-1.5 sc-mono transition-colors hover:opacity-80"
             style={{ color: "var(--sc-accent)" }}
           >
-            INSPECT THE UNDERLYING TRACE
+            {VERSUS_PHOENIX_LINK}
             <ArrowUpRightIcon size={16} />
           </a>
         )}

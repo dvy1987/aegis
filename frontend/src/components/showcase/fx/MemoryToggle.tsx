@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { MEMORY_TOGGLE_LABEL } from "@/components/showcase/copy";
 import { cn } from "@/lib/cn";
 
 /**
@@ -11,7 +12,7 @@ import { cn } from "@/lib/cn";
 export function MemoryToggle({
   on,
   onChange,
-  label = "Phoenix memory",
+  label,
   className,
 }: {
   on: boolean;
@@ -19,6 +20,7 @@ export function MemoryToggle({
   label?: string;
   className?: string;
 }) {
+  const resolvedLabel = label ?? MEMORY_TOGGLE_LABEL;
   const reduce = useReducedMotion();
 
   return (
@@ -26,7 +28,7 @@ export function MemoryToggle({
       type="button"
       role="switch"
       aria-checked={on}
-      aria-label={`${label}: ${on ? "on" : "off"}`}
+      aria-label={`${resolvedLabel}: ${on ? "on" : "off"}`}
       onClick={() => onChange(!on)}
       className={cn(
         "group inline-flex items-center gap-3 rounded-full focus-visible:outline-2 focus-visible:outline-offset-2",
@@ -53,7 +55,7 @@ export function MemoryToggle({
         />
       </span>
       <span className="sc-label" style={{ color: on ? "var(--sc-text-2)" : "var(--sc-text-3)" }}>
-        {label} · {on ? "ON" : "OFF"}
+        {resolvedLabel} · {on ? "ON" : "OFF"}
       </span>
     </button>
   );

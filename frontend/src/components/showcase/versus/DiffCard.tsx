@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { EASE_OUT_EXPO } from "@/lib/motion";
+import { DIFF_EYEBROW, DIFF_HEADLINE } from "@/components/showcase/copy";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 
 /** "What changed, and why." — reflection notes that stagger in on enter. */
@@ -11,9 +12,9 @@ export function DiffCard({ whatChanged }: { whatChanged: string[] }) {
   return (
     <section className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
-        <MonoLabel>Reflection</MonoLabel>
+        <MonoLabel>{DIFF_EYEBROW}</MonoLabel>
         <h3 className="sc-h2" style={{ fontSize: "1.6rem" }}>
-          What changed, and why.
+          {DIFF_HEADLINE}
         </h3>
       </div>
       <ul className="flex flex-col gap-3">

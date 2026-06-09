@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type { CaseSummary } from "@/lib/types";
 import { cn } from "@/lib/cn";
+import { CASE_CYCLER_LABEL } from "@/components/showcase/copy";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 
 /**
@@ -31,7 +32,7 @@ export function CaseCycler({
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-4">
         <MonoLabel>
-          Featured case · {idx + 1} / {cases.length}
+          {CASE_CYCLER_LABEL} · {idx + 1} / {cases.length}
         </MonoLabel>
         <div className="flex items-center gap-2">
           <CyclerButton label="Previous case" onClick={() => go(-1)} dir="prev" />

@@ -2958,3 +2958,40 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - Clean on `main` @ `11f905f`.
+
+---
+
+## 2026-06-09 — Handoff (Cursor — showcase copy rejig)
+
+### Done
+- PM disliked `/showcase` copy (too academic / generic vs cinematic direction). Rewrote all judge-facing strings.
+- **New single source of truth:** `frontend/src/components/showcase/copy.ts` — hero, thesis, console, matrix, before/after, intelligence loop, counterfactual, impact.
+- Wired all Act + console + versus components to import from `copy.ts`. **No data layer changes** (handlers, polling, effects untouched).
+- Hero headline: **"Every score rewrites the next draft."** (replaces "Watch a system teach itself.")
+- Verification: `pnpm test` **20/20** green.
+
+### Debated
+- Centralized `copy.ts` vs inline strings — chose centralized so PM can tune one file without hunting components.
+
+### Deferred
+- **Commit + deploy** — PM has not requested commit; changes uncommitted on `main`.
+- **Browser visual QA** on Railway deploy — still open from prior handoff.
+- PM may want further copy passes on specific acts — edit `copy.ts` only.
+
+### Next Agent Should Know
+- To change showcase wording: edit `frontend/src/components/showcase/copy.ts`, not scattered components.
+- Deployed site (Railway) still has old copy until frontend redeploy.
+- Mid-session tool batch was interrupted once; all files completed before session end.
+
+### Revisit Triggers
+- PM records demo and copy feels too long on camera → shorten hero subhead + stage captions in `copy.ts`.
+- PM wants consumer-voice rules on showcase → **don't** — showcase explicitly allows Phoenix/judge/GEPA naming per `docs/2026-06-08-showcase-cinematic-redesign-plan.md` §0.1.
+
+### Working Tree
+```
+ M frontend/src/components/showcase/acts/*.tsx (6)
+ M frontend/src/components/showcase/console/*.tsx (3)
+ M frontend/src/components/showcase/versus/*.tsx (4)
+ M frontend/src/components/showcase/fx/MemoryToggle.tsx
+?? frontend/src/components/showcase/copy.ts
+```

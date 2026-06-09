@@ -7,16 +7,13 @@ import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { IgniteButton } from "@/components/showcase/fx/IgniteButton";
 import { LivingGlyph } from "@/components/showcase/fx/LivingGlyph";
 import { RiveOrFallback } from "@/components/showcase/fx/RiveOrFallback";
-
-const HEADLINE = ["Watch", "a", "system", "teach", "itself."];
-
-const TELEMETRY = [
-  "SESSION 0x… · STAGE measure_before · 14/20",
-  "JUDGE J3 grounding 0.62 → 0.81",
-  "PHOENIX trace ingested · 312 spans",
-  "GEPA candidate proposed · awaiting approval",
-  "HOLD-OUT composite 0.40 → 0.75 (target)",
-];
+import {
+  HERO_CTA,
+  HERO_EYEBROW,
+  HERO_HEADLINE,
+  HERO_SUBHEAD,
+  HERO_TELEMETRY,
+} from "@/components/showcase/copy";
 
 function scrollToInstrument() {
   if (typeof document === "undefined") return;
@@ -91,11 +88,11 @@ export function ActHero() {
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="flex flex-col gap-6">
           <div className="sc-hero-eyebrow">
-            <MonoLabel>AEGIS · SELF-IMPROVING APPEAL ENGINE</MonoLabel>
+            <MonoLabel>{HERO_EYEBROW}</MonoLabel>
           </div>
 
           <h1 className="sc-display" style={{ maxWidth: "16ch" }}>
-            {HEADLINE.map((word, i) => (
+            {HERO_HEADLINE.map((word, i) => (
               <span key={i} className="sc-hero-word inline-block" style={{ marginRight: "0.25em" }}>
                 {word}
               </span>
@@ -103,13 +100,12 @@ export function ActHero() {
           </h1>
 
           <p className="sc-hero-sub max-w-prose sc-body" style={{ fontSize: "1.15rem" }}>
-            Aegis drafts insurance-denial appeals, grades its own work against a held-out benchmark,
-            and rewrites its own playbook from what it learns. No hand-tuning. Below, it does it live.
+            {HERO_SUBHEAD}
           </p>
 
           <div className="sc-hero-cta">
             <IgniteButton variant="primary" onClick={scrollToInstrument}>
-              Begin a live run
+              {HERO_CTA}
             </IgniteButton>
           </div>
         </div>
@@ -129,14 +125,14 @@ function TelemetryStrip() {
   const [i, setI] = useState(0);
   useEffect(() => {
     if (reduce) return;
-    const t = window.setInterval(() => setI((n) => (n + 1) % TELEMETRY.length), 2600);
+    const t = window.setInterval(() => setI((n) => (n + 1) % HERO_TELEMETRY.length), 2600);
     return () => window.clearInterval(t);
   }, [reduce]);
 
   return (
     <div className="sc-hero-telemetry mt-16 flex items-center gap-3" aria-hidden>
       <span className="h-1.5 w-1.5 rounded-full sc-pulse-soft" style={{ background: "var(--sc-accent)" }} />
-      <span className="sc-mono">{TELEMETRY[i]}</span>
+      <span className="sc-mono">{HERO_TELEMETRY[i]}</span>
       <span className="sc-mono sc-blink">▌</span>
     </div>
   );

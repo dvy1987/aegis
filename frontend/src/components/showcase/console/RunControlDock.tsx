@@ -3,6 +3,16 @@
 import type { ShowcaseManifest, ShowcaseRollbackTarget } from "@/lib/types";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
+import {
+  DOCK_EYEBROW,
+  DOCK_HEADLINE,
+  DOCK_QUICK_CTA,
+  DOCK_QUICK_TITLE,
+  DOCK_ROLLBACK,
+  DOCK_SERIOUS_CTA,
+  DOCK_SERIOUS_LOCKED,
+  DOCK_SERIOUS_TITLE,
+} from "@/components/showcase/copy";
 import { IgniteButton } from "@/components/showcase/fx/IgniteButton";
 
 /**
@@ -28,11 +38,11 @@ export function RunControlDock({
   rollbackLatestRun: () => void;
 }) {
   const quickSub = manifest
-    ? `${manifest.quick_train.length} TRAIN · ${manifest.quick_holdout.length} HOLDOUT · SLICE ${manifest.quick_slice.replaceAll("_", " ").toUpperCase()}`
-    : "TARGETED QUICK SET";
+    ? `${manifest.quick_train.length} TRAINING · ${manifest.quick_holdout.length} HOLDOUT`
+    : "PREVIEW RUN SET";
   const seriousSub = manifest
-    ? `${manifest.serious_train_count} TRAIN · ${manifest.serious_holdout.length} HOLDOUT`
-    : "FULL POOL";
+    ? `${manifest.serious_train_count} TRAINING · ${manifest.serious_holdout.length} HOLDOUT`
+    : "PRODUCTION RUN SET";
 
   return (
     <GlassPanel
@@ -41,9 +51,9 @@ export function RunControlDock({
       style={{ boxShadow: "var(--sc-dock-shadow)" }}
     >
       <div className="flex flex-col gap-1">
-        <MonoLabel>Current mode</MonoLabel>
+        <MonoLabel>{DOCK_EYEBROW}</MonoLabel>
         <h2 className="sc-h2" style={{ fontSize: "1.4rem" }}>
-          Human-approved learning
+          {DOCK_HEADLINE}
         </h2>
       </div>
 
@@ -51,30 +61,30 @@ export function RunControlDock({
         <div className="sc-panel-sunken flex flex-col gap-3 p-4">
           <div className="flex flex-col gap-1">
             <span className="sc-serif" style={{ color: "var(--sc-text)", fontSize: "1.05rem" }}>
-              Quick learning check
+              {DOCK_QUICK_TITLE}
             </span>
             <MonoLabel style={{ letterSpacing: "0.08em" }}>{quickSub}</MonoLabel>
           </div>
           <IgniteButton variant="primary" onClick={startQuick} disabled={starting}>
-            {starting ? "Starting…" : "Run quick check"}
+            {starting ? "Starting…" : DOCK_QUICK_CTA}
           </IgniteButton>
         </div>
 
         <div className="sc-panel-sunken flex flex-col gap-3 p-4">
           <div className="flex flex-col gap-1">
             <span className="sc-serif" style={{ color: "var(--sc-text)", fontSize: "1.05rem" }}>
-              Serious learning pass
+              {DOCK_SERIOUS_TITLE}
             </span>
             <MonoLabel style={{ letterSpacing: "0.08em" }}>
-              {seriousUnlocked ? seriousSub : "LOCKED UNTIL QUICK SUCCEEDS"}
+              {seriousUnlocked ? seriousSub : DOCK_SERIOUS_LOCKED}
             </MonoLabel>
           </div>
           <IgniteButton variant="secondary" onClick={startSerious} disabled={!seriousUnlocked}>
-            Run serious pass
+            {DOCK_SERIOUS_CTA}
           </IgniteButton>
           {rollbackTarget && (
             <IgniteButton variant="ghost" onClick={rollbackLatestRun}>
-              Roll back latest update
+              {DOCK_ROLLBACK}
             </IgniteButton>
           )}
         </div>

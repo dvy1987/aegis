@@ -5,14 +5,37 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { ShowcaseManifest, ShowcaseRunSession } from "@/lib/types";
 import { BEAT_MS, useTheatrical } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
+import {
+  MATRIX_EYEBROW,
+  MATRIX_HEADLINE,
+  MATRIX_POST_CAPTION,
+  MATRIX_POST_TITLE,
+  MATRIX_PRE_CAPTION,
+  MATRIX_PRE_TITLE,
+  MATRIX_QUICK_LOCKED,
+  MATRIX_SERIOUS_LOCKED,
+  MATRIX_TAB_DEMO,
+  MATRIX_TAB_SERIOUS,
+  MATRIX_TRAIN_AFTER_CAPTION,
+  MATRIX_TRAIN_AFTER_TITLE,
+  MATRIX_TRAIN_BEFORE_CAPTION,
+  MATRIX_TRAIN_BEFORE_TITLE,
+  MATRIX_WAIT_POST,
+  MATRIX_WAIT_PRE,
+  MATRIX_WAIT_TRAIN,
+} from "@/components/showcase/copy";
+import {
+  mergeResultSlots,
+  productionRowColumns,
+  resolveMatrixCohort,
+  type MatrixSlot,
+  type MatrixTab,
+} from "./matrixSlots";
 import { VerdictCell } from "./VerdictCell";
 
-type Tab = "quick" | "serious";
-
 /**
- * The signature widget. Demo / Serious act as tabs (sliding accent underline);
- * each shows Pre-training / Training[before·after] / Post-training. Cells light
- * up as poll data arrives. Same data the old matrix consumed — restyled only.
+ * Evidence grid — fixed slot counts from manifest (preview: 2 holdout, 8×2 train).
+ * Cells stay grey until measured; APPROVE/DENY paint green/red when results land.
  */
 export function LearningMatrix({
   manifest,
@@ -25,11 +48,9 @@ export function LearningMatrix({
   const { runMoment } = useTheatrical();
   const ignitedSession = useRef<string | null>(null);
   const [matrixIgnite, setMatrixIgnite] = useState(false);
-  const sessionTab: Tab | null = session?.run_type ?? null;
-  const [tab, setTab] = useState<Tab>(sessionTab ?? "quick");
-  // Auto-follow the live run's cohort (React render-phase "adjust state on prop
-  // change" pattern — avoids a setState-in-effect cascade).
-  const [seenSessionTab, setSeenSessionTab] = useState<Tab | null>(sessionTab);
+  const sessionTab: MatrixTab | null = session?.run_type ?? null;
+  const [tab, setTab] = useState<MatrixTab>(sessionTab ?? "quick");
+  const [seenSessionTab, setSeenSessionTab] = useState<MatrixTab | null>(sessionTab);
   if (sessionTab !== seenSessionTab) {
     setSeenSessionTab(sessionTab);
     if (sessionTab) setTab(sessionTab);
@@ -40,34 +61,44 @@ export function LearningMatrix({
     if (reduce || !session?.session_id) return;
     if (ignitedSession.current === session.session_id) return;
     ignitedSession.current = session.session_id;
-    runMoment(
-      "run-ignite",
-      () => setMatrixIgnite(true),
-      BEAT_MS,
-    );
+    runMoment("run-ignite", () => setMatrixIgnite(true), BEAT_MS);
     const off = window.setTimeout(() => setMatrixIgnite(false), BEAT_MS + 200);
     return () => window.clearTimeout(off);
   }, [reduce, runMoment, session?.session_id]);
 
-  const tabs: { key: Tab; label: string; subtitle: string; locked: string }[] = [
+  const tabs: { key: MatrixTab; label: string; subtitle: string; locked: string }[] = [
     {
       key: "quick",
-      label: "Demo",
+      label: MATRIX_TAB_DEMO,
       subtitle: manifest
-        ? `${manifest.quick_train.length} train · ${manifest.quick_holdout.length} holdout`
-        : "Quick check",
-      locked: "Run quick check to populate this view.",
+        ? `${manifest.quick_train.length} training · ${manifest.quick_holdout.length} holdout`
+        : "Preview run",
+      locked: MATRIX_QUICK_LOCKED,
     },
     {
       key: "serious",
-      label: "Serious",
+      label: MATRIX_TAB_SERIOUS,
       subtitle: manifest
-        ? `${manifest.serious_train_count} train · ${manifest.serious_holdout.length} holdout`
-        : "Serious pass",
-      locked: "Locked until the quick check succeeds.",
+        ? `${manifest.serious_train_count} training · ${manifest.serious_holdout.length} holdout`
+        : "Production run",
+      locked: MATRIX_SERIOUS_LOCKED,
     },
   ];
   const activeMeta = tabs.find((t) => t.key === tab)!;
+  const cohort =
+    manifest != null ? resolveMatrixCohort(manifest, tab, tabSession) : { holdoutIds: [], trainIds: [] };
+  const showLockedHint = !tabSession && tab === "serious";
+
+  const preSlots = mergeResultSlots(cohort.holdoutIds, tabSession?.pre_measure_results ?? []);
+  const trainBeforeSlots = mergeResultSlots(
+    cohort.trainIds,
+    tabSession?.training_pre_measure_results ?? [],
+  );
+  const trainAfterSlots = mergeResultSlots(
+    cohort.trainIds,
+    tabSession?.training_post_measure_results ?? [],
+  );
+  const postSlots = mergeResultSlots(cohort.holdoutIds, tabSession?.post_measure_results ?? []);
 
   return (
     <section
@@ -76,9 +107,9 @@ export function LearningMatrix({
     >
       <div className="flex items-end justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <MonoLabel>Learning matrix</MonoLabel>
+          <MonoLabel>{MATRIX_EYEBROW}</MonoLabel>
           <h3 className="sc-h2" style={{ fontSize: "1.5rem" }}>
-            Evidence as it arrives
+            {MATRIX_HEADLINE}
           </h3>
         </div>
         {tabSession && (
@@ -91,7 +122,6 @@ export function LearningMatrix({
         )}
       </div>
 
-      {/* tabs */}
       <div className="flex gap-1" role="tablist" aria-label="Run cohort">
         {tabs.map((t) => {
           const isActive = t.key === tab;
@@ -138,65 +168,105 @@ export function LearningMatrix({
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="grid gap-3"
         >
-          <StageBox
-            title="Pre-training"
-            caption="Held-out baseline · current prompt"
-            results={tabSession?.pre_measure_results ?? []}
-            emptyMessage={tabSession ? "Waiting for held-out measurement." : activeMeta.locked}
-          />
-          <TrainingBox
-            before={tabSession?.training_pre_measure_results ?? []}
-            after={tabSession?.training_post_measure_results ?? []}
-            emptyMessage={tabSession ? "Waiting for training measurements." : activeMeta.locked}
-          />
-          <StageBox
-            title="Post-training"
-            caption="Held-out · promoted prompt"
-            results={tabSession?.post_measure_results ?? []}
-            emptyMessage={tabSession ? "Waiting for approval." : activeMeta.locked}
-          />
+          {showLockedHint && (
+            <p className="sc-body" style={{ fontSize: "0.875rem", color: "var(--sc-text-3)" }}>
+              {activeMeta.locked}
+            </p>
+          )}
+
+          {!manifest ? (
+            <p className="sc-body" style={{ fontSize: "0.875rem", color: "var(--sc-text-3)" }}>
+              {MATRIX_WAIT_PRE}
+            </p>
+          ) : (
+            <>
+              <StageBox
+                tab={tab}
+                title={MATRIX_PRE_TITLE}
+                caption={MATRIX_PRE_CAPTION}
+                slots={preSlots}
+                waitHint={tabSession ? MATRIX_WAIT_PRE : undefined}
+              />
+              <TrainingSections
+                tab={tab}
+                beforeSlots={trainBeforeSlots}
+                afterSlots={trainAfterSlots}
+                waitHint={tabSession ? MATRIX_WAIT_TRAIN : undefined}
+              />
+              <StageBox
+                tab={tab}
+                title={MATRIX_POST_TITLE}
+                caption={MATRIX_POST_CAPTION}
+                slots={postSlots}
+                waitHint={tabSession ? MATRIX_WAIT_POST : undefined}
+              />
+            </>
+          )}
         </motion.div>
       </AnimatePresence>
     </section>
   );
 }
 
-function readCell(result: Record<string, unknown>, index: number) {
-  return {
-    verdict: String(result.verdict ?? ""),
-    caseId: String(result.case_id ?? `case_${index + 1}`),
-  };
-}
+function CellGrid({ slots, tab }: { slots: MatrixSlot[]; tab: MatrixTab }) {
+  if (slots.length === 0) return null;
 
-function CellGrid({ results, rowLabel }: { results: Record<string, unknown>[]; rowLabel?: string }) {
+  const prodCols = productionRowColumns(slots.length, tab);
+  if (prodCols == null) {
+    return (
+      <div
+        className="grid max-h-36 grid-cols-[repeat(auto-fill,minmax(1.25rem,1fr))] gap-1 overflow-auto"
+        role="list"
+        aria-label={`${slots.length} cases`}
+      >
+        {slots.map((slot, i) => (
+          <VerdictCell key={`${slot.caseId}-${i}`} verdict={slot.verdict} caseId={slot.caseId} index={i} />
+        ))}
+      </div>
+    );
+  }
+
+  const top = slots.slice(0, prodCols);
+  const bottom = slots.slice(prodCols);
+
   return (
-    <div className="flex items-center gap-2">
-      {rowLabel && (
-        <span className="w-14 shrink-0 sc-mono" aria-hidden>
-          {rowLabel}
-        </span>
-      )}
-      <div className="grid max-h-36 flex-1 grid-cols-[repeat(auto-fill,minmax(1.25rem,1fr))] gap-1 overflow-auto">
-        {results.map((r, i) => {
-          const { verdict, caseId } = readCell(r, i);
-          return <VerdictCell key={`${caseId}-${i}`} verdict={verdict} caseId={caseId} index={i} />;
-        })}
+    <div className="max-h-36 overflow-auto" role="list" aria-label={`${slots.length} cases`}>
+      <div className="flex w-max flex-col gap-1">
+        {[top, bottom].map((row, rowIndex) => (
+          <div
+            key={rowIndex}
+            className="grid gap-1"
+            style={{ gridTemplateColumns: `repeat(${prodCols}, 1.25rem)` }}
+          >
+            {row.map((slot, i) => (
+              <VerdictCell
+                key={`${slot.caseId}-${rowIndex}-${i}`}
+                verdict={slot.verdict}
+                caseId={slot.caseId}
+                index={rowIndex * prodCols + i}
+              />
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
 function StageBox({
+  tab,
   title,
   caption,
-  results,
-  emptyMessage,
+  slots,
+  waitHint,
 }: {
+  tab: MatrixTab;
   title: string;
   caption: string;
-  results: Record<string, unknown>[];
-  emptyMessage: string;
+  slots: MatrixSlot[];
+  waitHint?: string;
 }) {
+  const filled = slots.filter((s) => s.verdict).length;
   return (
     <div className="sc-panel-sunken p-4">
       <div className="mb-3 flex items-center justify-between gap-3">
@@ -206,53 +276,50 @@ function StageBox({
           </h4>
           <span className="sc-mono">{caption}</span>
         </div>
-        {results.length > 0 && (
-          <span className="sc-mono">
-            {results.length} {results.length === 1 ? "case" : "cases"}
-          </span>
-        )}
+        <span className="sc-mono">
+          {filled}/{slots.length} scored
+        </span>
       </div>
-      {results.length > 0 ? (
-        <CellGrid results={results} />
-      ) : (
-        <p className="sc-body" style={{ fontSize: "0.875rem", color: "var(--sc-text-3)" }}>
-          {emptyMessage}
+      <CellGrid slots={slots} tab={tab} />
+      {waitHint && filled === 0 && (
+        <p className="mt-3 sc-body" style={{ fontSize: "0.8125rem", color: "var(--sc-text-3)" }}>
+          {waitHint}
         </p>
       )}
     </div>
   );
 }
 
-function TrainingBox({
-  before,
-  after,
-  emptyMessage,
+function TrainingSections({
+  tab,
+  beforeSlots,
+  afterSlots,
+  waitHint,
 }: {
-  before: Record<string, unknown>[];
-  after: Record<string, unknown>[];
-  emptyMessage: string;
+  tab: MatrixTab;
+  beforeSlots: MatrixSlot[];
+  afterSlots: MatrixSlot[];
+  waitHint?: string;
 }) {
-  const hasData = before.length > 0 || after.length > 0;
+  const beforeFilled = beforeSlots.filter((s) => s.verdict).length;
+  const afterFilled = afterSlots.filter((s) => s.verdict).length;
+
   return (
-    <div className="sc-panel-sunken p-4">
-      <div className="mb-3 flex items-center justify-between gap-3">
-        <div className="flex flex-col">
-          <h4 className="sc-serif" style={{ fontSize: "0.95rem", color: "var(--sc-text)" }}>
-            Training
-          </h4>
-          <span className="sc-mono">Train set · before vs after learning</span>
-        </div>
-      </div>
-      {hasData ? (
-        <div className="grid gap-2">
-          <CellGrid results={before} rowLabel="Before" />
-          <CellGrid results={after} rowLabel="After" />
-        </div>
-      ) : (
-        <p className="sc-body" style={{ fontSize: "0.875rem", color: "var(--sc-text-3)" }}>
-          {emptyMessage}
-        </p>
-      )}
+    <div className="grid gap-3">
+      <StageBox
+        tab={tab}
+        title={MATRIX_TRAIN_BEFORE_TITLE}
+        caption={MATRIX_TRAIN_BEFORE_CAPTION}
+        slots={beforeSlots}
+        waitHint={waitHint && beforeFilled === 0 ? waitHint : undefined}
+      />
+      <StageBox
+        tab={tab}
+        title={MATRIX_TRAIN_AFTER_TITLE}
+        caption={MATRIX_TRAIN_AFTER_CAPTION}
+        slots={afterSlots}
+        waitHint={waitHint && afterFilled === 0 && beforeFilled > 0 ? waitHint : undefined}
+      />
     </div>
   );
 }

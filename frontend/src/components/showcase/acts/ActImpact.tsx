@@ -6,6 +6,16 @@ import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { MetricCounter } from "@/components/showcase/primitives/MetricCounter";
 import { LivingGlyph } from "@/components/showcase/fx/LivingGlyph";
 import { RiveOrFallback } from "@/components/showcase/fx/RiveOrFallback";
+import {
+  IMPACT_ENDCARD,
+  IMPACT_EYEBROW,
+  IMPACT_HEADLINE,
+  IMPACT_METRIC_APPROVAL,
+  IMPACT_METRIC_APPROVAL_VALUE,
+  IMPACT_METRIC_JUDGES,
+  IMPACT_METRIC_QUALITY,
+  IMPACT_REPLAY,
+} from "@/components/showcase/copy";
 import { IgniteButton } from "@/components/showcase/fx/IgniteButton";
 
 function replay() {
@@ -63,9 +73,9 @@ export function ActImpact() {
     >
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="sc-im-headline flex flex-col gap-6">
-          <MonoLabel>Why this matters</MonoLabel>
+          <MonoLabel>{IMPACT_EYEBROW}</MonoLabel>
           <h2 className="sc-display" style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)", maxWidth: "18ch" }}>
-            99% of denied claims are never appealed. Aegis keeps getting better at the fight.
+            {IMPACT_HEADLINE}
           </h2>
         </div>
 
@@ -75,7 +85,7 @@ export function ActImpact() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-        <Metric label="Benchmark quality · target">
+        <Metric label={IMPACT_METRIC_QUALITY}>
           <span className="sc-mono" style={{ fontSize: "1.6rem", color: "var(--sc-text-3)" }}>
             0.40&nbsp;→&nbsp;
           </span>
@@ -88,12 +98,12 @@ export function ActImpact() {
             style={{ fontSize: "1.6rem", fontWeight: 600, letterSpacing: "0" }}
           />
         </Metric>
-        <Metric label="Judge dimensions">
+        <Metric label={IMPACT_METRIC_JUDGES}>
           <MetricCounter to={7} delay={0.4} className="sc-c1" style={{ fontSize: "1.6rem", fontWeight: 600, letterSpacing: "0" }} />
         </Metric>
-        <Metric label="Human-approved">
+        <Metric label={IMPACT_METRIC_APPROVAL}>
           <span className="sc-c1" style={{ fontFamily: "var(--font-mono)", fontSize: "1.6rem", fontWeight: 600 }}>
-            ALWAYS
+            {IMPACT_METRIC_APPROVAL_VALUE}
           </span>
         </Metric>
       </div>
@@ -104,11 +114,9 @@ export function ActImpact() {
           style={{ background: "var(--sc-accent)", boxShadow: "0 0 10px var(--sc-accent-glow)" }}
         />
         <div className="sc-im-endcard flex flex-wrap items-center justify-between gap-4">
-          <MonoLabel style={{ letterSpacing: "0.06em" }}>
-            AEGIS · built on Google ADK + Gemini · observability by Arize Phoenix
-          </MonoLabel>
+          <MonoLabel style={{ letterSpacing: "0.06em" }}>{IMPACT_ENDCARD}</MonoLabel>
           <IgniteButton variant="ghost" onClick={replay}>
-            Replay the run
+            {IMPACT_REPLAY}
           </IgniteButton>
         </div>
       </div>

@@ -1,7 +1,13 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-09 (session — showcase cinematic UI complete + UX polish on main)
-**Phase:** **ADK migration Phases 0–4 COMPLETE on prod. Phase 5 (verification + cleanup) in progress. Frontend `/showcase` cinematic redesign SHIPPED on `main`.**
+**Updated:** 2026-06-09 (session — showcase copy rejig, uncommitted)
+**Phase:** **ADK migration Phases 0–4 COMPLETE on prod. Phase 5 (verification + cleanup) in progress. Frontend `/showcase` cinematic redesign SHIPPED on `main`; copy pass landed locally, not deployed.**
+
+### 2026-06-09 - Showcase copy rejig (uncommitted)
+- All `/showcase` judge-facing copy centralized in `frontend/src/components/showcase/copy.ts`.
+- Tone shift: concrete demo language (held-out, promotion gate, evidence grid) vs academic "self-improving agent" phrasing.
+- Hero: **"Every score rewrites the next draft."** Components import copy only — data layer unchanged.
+- Verification: frontend **20/20** tests pass. **Next:** PM copy review → commit → redeploy Railway frontend.
 
 ### 2026-06-09 - Showcase cinematic UI + polish (main)
 - Full six-act Obsidian Observatory redesign live on `/showcase` (`eb1c2b2`, `f9a768d`, polish `11f905f`).

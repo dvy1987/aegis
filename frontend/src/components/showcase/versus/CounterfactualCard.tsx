@@ -7,6 +7,16 @@ import { BEAT_MS, useTheatrical } from "@/lib/motion";
 import { Gauge } from "@/components/showcase/primitives/Gauge";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
+import {
+  COUNTERFACTUAL_BODY,
+  COUNTERFACTUAL_EYEBROW,
+  COUNTERFACTUAL_FOOTNOTE,
+  COUNTERFACTUAL_GAUGE_OFF,
+  COUNTERFACTUAL_GAUGE_ON,
+  COUNTERFACTUAL_HEADLINE,
+  COUNTERFACTUAL_MEMORY_OFF,
+  COUNTERFACTUAL_MEMORY_ON,
+} from "@/components/showcase/copy";
 import { MemoryToggle } from "@/components/showcase/fx/MemoryToggle";
 
 /**
@@ -32,13 +42,12 @@ export function CounterfactualCard({ on, off }: { on: number; off: number }) {
       className={cn("flex flex-col gap-5 p-6 transition-[filter]", !memoryOn && "sc-decayed")}
     >
       <div className="flex flex-col gap-1">
-        <MonoLabel>Counterfactual · Phoenix MCP</MonoLabel>
+        <MonoLabel>{COUNTERFACTUAL_EYEBROW}</MonoLabel>
         <h3 className="sc-h2" style={{ fontSize: "1.6rem" }}>
-          Switch off its memory, and quality drops.
+          {COUNTERFACTUAL_HEADLINE}
         </h3>
         <p className="mt-1 max-w-prose sc-body" style={{ fontSize: "0.95rem", color: "var(--sc-text-2)" }}>
-          The agent reads its own past evaluations before it drafts. Take that memory away and the
-          same case scores lower — the memory is doing real work, not decorating the system.
+          {COUNTERFACTUAL_BODY}
         </p>
       </div>
 
@@ -52,7 +61,7 @@ export function CounterfactualCard({ on, off }: { on: number; off: number }) {
           className="sc-mono"
           style={{ color: memoryOn ? "var(--sc-accent)" : "var(--sc-warn)" }}
         >
-          {memoryOn ? "MEMORY ON" : "MEMORY OFF — DEGRADED"}
+          {memoryOn ? COUNTERFACTUAL_MEMORY_ON : COUNTERFACTUAL_MEMORY_OFF}
         </motion.span>
       </div>
 
