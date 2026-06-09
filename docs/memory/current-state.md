@@ -1,7 +1,15 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-09 (session — showcase copy rejig, uncommitted)
-**Phase:** **ADK migration Phases 0–4 COMPLETE on prod. Phase 5 (verification + cleanup) in progress. Frontend `/showcase` cinematic redesign SHIPPED on `main`; copy pass landed locally, not deployed.**
+**Updated:** 2026-06-09 (session end — simulator fix committed; showcase GEPA failure diagnosed)
+**Phase:** **ADK Phases 0–5 largely on prod. Simulator bug fixed on `main` (`c1b1d97`) — needs redeploy. Quick showcase run failed at GEPA optimize (judge flake).**
+
+### 2026-06-09 - Simulator fix + showcase failure diagnosis (committed `c1b1d97`)
+- **Bug:** ADK `simulator_agent` + `output_schema` → empty events → all measure scores **DENY 0.2** (fallback), not real insurer judgment.
+- **Fix:** JSON mime + `collect_llm_response_text()` + Gemini fallback; local `case_30` → **APPROVE 1.0**.
+- **Showcase:** `quick_20260609_124504_d7fb13` — 8/8 training seed OK; failed at GEPA optimize (`judge panel incomplete`). Resume API exists; **no UI button**.
+- **Phoenix:** Judge payloads in API (`explanation` JSON); dashboard does not show prose.
+- **Post-hackathon:** `docs/Post-hackathon.md` — duplicate drafter packaging tracked.
+- **Next:** deploy `aegis-v1-api` → re-run showcase; optional Resume button + optimize resilience.
 
 ### 2026-06-09 - Showcase copy rejig (uncommitted)
 - All `/showcase` judge-facing copy centralized in `frontend/src/components/showcase/copy.ts`.

@@ -2995,3 +2995,38 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
  M frontend/src/components/showcase/fx/MemoryToggle.tsx
 ?? frontend/src/components/showcase/copy.ts
 ```
+
+---
+
+## 2026-06-09 — Handoff (Cursor — showcase debug, simulator fix, Phoenix annotations)
+
+### Done
+- Diagnosed failed quick showcase `quick_20260609_124504_d7fb13`: GEPA optimize crashed with `judge panel incomplete` (6 LLM judges empty); training seed had completed (8 Phoenix traces).
+- Root-caused **simulator DENY 0.2 on all measure cases**: `output_schema` on ADK `simulator_agent` → `collect_text()` empty → silent `uniform_assessment(1)` fallback. Cloud Run logs confirmed `simulator_agent returned empty response`.
+- **Fixed simulator** (committed on `main` @ `c1b1d97`): removed `output_schema`, added `collect_llm_response_text()`, ADK → `GeminiSimulatorClient` fallback chain; tests added (`test_simulator_agent.py`).
+- Verified locally: `case_30_cigna_mednec` drafter + simulator → **APPROVE 1.0** (all feature anchors 5).
+- Phoenix API check: all 8 training seed annotations exist (`aegis_part_a_panel` on project `default`); judge reasoning lives in JSON `explanation` — **not visible in Phoenix UI**.
+- PM discussion: duplicate drafter packaging deferred → `docs/Post-hackathon.md` item 1.
+- Explained judges vs simulator (different rubrics; judges see teacher packet; measure path had broken simulator not real DENY).
+
+### Debated
+- Resume exists on API (`POST /v1/showcase/runs/{id}/resume`) but **no Resume button** in showcase UI — deferred.
+- GEPA optimize lacks per-case judge isolation (unlike training seed) — hard-fails whole run on one bad panel.
+
+### Deferred
+- **Deploy** simulator fix to `aegis-v1-api` (prod still on broken simulator).
+- **Resume button** + judge-panel retry hardening for showcase GEPA optimize.
+- **Phoenix UI**: surface `explanation` JSON or Evaluations view for demo readability.
+- Re-run quick showcase after deploy (resume or fresh).
+
+### Next Agent Should Know
+- Simulator fix is on `main` but **not prod** until redeploy.
+- False DENY 0.2 in showcase matrix = simulator fallback, not insurer rejection.
+- Judge annotations are in Phoenix API under span annotations `aegis_part_a_panel`, project **`default`**.
+
+### Revisit Triggers
+- After deploy: re-run measure on 1 case on prod; expect non-0.2 simulator score.
+- GEPA fails again with `judge panel incomplete` → rate-limit / ADK judge flake; add resume UI + optimize isolation.
+
+### Working Tree
+- Clean on `main` @ `c1b1d97` (simulator fix + `docs/Post-hackathon.md` included).
