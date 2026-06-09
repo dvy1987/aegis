@@ -132,7 +132,9 @@ export function ActInstrument({
               rollbackLatestRun={rollbackLatestRun}
             />
             <RunStatusPanel
+              manifest={manifest}
               session={session}
+              seriousUnlocked={seriousUnlocked}
               runErr={runErr}
               onCancel={cancelCurrentRun}
               onApprove={approveCurrentRun}

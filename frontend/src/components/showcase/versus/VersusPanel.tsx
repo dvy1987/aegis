@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { useReducedMotion } from "framer-motion";
 import type { ShowcaseBundle, Verdict } from "@/lib/types";
 import { gsap, useGsapContext, useTheatrical } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
@@ -14,7 +15,22 @@ import {
 } from "@/components/showcase/copy";
 import { ArrowUpRightIcon } from "@/icons";
 
-const ARC_LEN = Math.PI * 84; // semicircle r=84
+const ARC_PATH = "M 16 100 A 84 84 0 0 1 184 100";
+const GAUGE_CX = 100;
+const GAUGE_CY = 100;
+
+/** Drive arc length + needle from the same point on the path so they stay aligned. */
+function setLiftDial(arc: SVGPathElement, needle: SVGGElement, liftRelativePct: number) {
+  const t = Math.max(0, Math.min(1, liftRelativePct / 100));
+  const len = arc.getTotalLength();
+  arc.setAttribute("stroke-dasharray", String(len));
+  arc.setAttribute("stroke-dashoffset", String(len * (1 - t)));
+
+  const point = arc.getPointAtLength(len * t);
+  const angle = (Math.atan2(point.y - GAUGE_CY, point.x - GAUGE_CX) * 180) / Math.PI;
+  // Default needle points up (−90°); rotate to sit on the arc radius.
+  needle.setAttribute("transform", `rotate(${angle + 90} ${GAUGE_CX} ${GAUGE_CY})`);
+}
 
 /**
  * The page's one symmetric moment — v1 vs v3, with the lift in the middle.
@@ -25,6 +41,9 @@ const ARC_LEN = Math.PI * 84; // semicircle r=84
  */
 export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
   const root = useRef<HTMLDivElement>(null);
+  const needleRef = useRef<SVGGElement>(null);
+  const arcRef = useRef<SVGPathElement>(null);
+  const reduce = useReducedMotion();
   const { acquire, release } = useTheatrical();
   const theatrical = useRef({ acquire, release });
 
@@ -35,28 +54,45 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
   const v1 = bundle.v1.composite;
   const v3 = bundle.v3.composite;
   const lift = bundle.lift_relative_pct;
-  const liftFrac = Math.max(0, Math.min(1, lift / 100));
-  const liftAngle = -90 + liftFrac * 180;
   const liftDecimals = lift % 1 === 0 ? 0 : 1;
+
+  useLayoutEffect(() => {
+    const arc = arcRef.current;
+    const needle = needleRef.current;
+    if (!arc || !needle) return;
+    setLiftDial(arc, needle, 0);
+  }, [bundle.case_id]);
+
+  useLayoutEffect(() => {
+    if (!reduce) return;
+    const arc = arcRef.current;
+    const needle = needleRef.current;
+    if (!arc || !needle) return;
+    setLiftDial(arc, needle, lift);
+  }, [reduce, lift, bundle.case_id]);
 
   useGsapContext(
     () => {
       const r = root.current;
-      if (!r) return;
+      const needle = needleRef.current;
+      const arc = arcRef.current;
+      if (!r || !needle || !arc) return;
       const leftNum = r.querySelector<HTMLElement>(".sc-vs-num-left");
       const rightNum = r.querySelector<HTMLElement>(".sc-vs-num-right");
       const liftNum = r.querySelector<HTMLElement>(".sc-vs-lift");
 
       gsap.set(".sc-vs-fill-left, .sc-vs-fill-right", { width: 0 });
       gsap.set(".sc-vs-approve-lamp", { boxShadow: "0 0 0 rgba(0,0,0,0)" });
-      gsap.set(".sc-vs-arc", { strokeDashoffset: ARC_LEN });
-      gsap.set(".sc-vs-needle", { rotation: -90, svgOrigin: "100 100" });
+      setLiftDial(arc, needle, 0);
 
       const c = { l: 0, r: 0, lift: 0 };
       const tl = gsap.timeline({
         paused: true,
         defaults: { ease: "power3.out" },
-        onComplete: () => theatrical.current.release("money-shot"),
+        onComplete: () => {
+          setLiftDial(arc, needle, lift);
+          theatrical.current.release("money-shot");
+        },
       });
 
       tl.to(".sc-vs-fill-left", { width: `${v1 * 100}%`, duration: 0.9 }, 0)
@@ -72,14 +108,16 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
           0.5,
         )
         .to(".sc-vs-approve-lamp", { boxShadow: "0 0 26px var(--sc-accent-glow)", duration: 0.6 }, 1.0)
-        .to(".sc-vs-arc", { strokeDashoffset: ARC_LEN * (1 - liftFrac), duration: 1.1, ease: "power2.out" }, 0.9)
-        .to(".sc-vs-needle", { rotation: liftAngle, svgOrigin: "100 100", duration: 1.1, ease: "back.out(1.4)" }, 0.9)
         .to(
           c,
           {
             lift,
             duration: 1.1,
-            onUpdate: () => liftNum && (liftNum.textContent = `+${c.lift.toFixed(liftDecimals)}%`),
+            ease: "power2.out",
+            onUpdate: () => {
+              setLiftDial(arc, needle, c.lift);
+              if (liftNum) liftNum.textContent = `+${c.lift.toFixed(liftDecimals)}%`;
+            },
           },
           0.9,
         );
@@ -112,22 +150,29 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
         <div className="flex flex-col items-center justify-center gap-2 px-2 py-4">
           <MonoLabel>{VERSUS_LIFT_LABEL}</MonoLabel>
           <svg viewBox="0 0 200 116" className="w-full max-w-[220px]" aria-hidden role="img">
-            <path d="M 16 100 A 84 84 0 0 1 184 100" fill="none" stroke="var(--sc-bg-sunken)" strokeWidth={10} strokeLinecap="round" />
+            <path d={ARC_PATH} fill="none" stroke="var(--sc-bg-sunken)" strokeWidth={10} strokeLinecap="round" />
             <path
+              ref={arcRef}
               className="sc-vs-arc"
-              d="M 16 100 A 84 84 0 0 1 184 100"
+              d={ARC_PATH}
               fill="none"
               stroke="var(--sc-accent)"
               strokeWidth={10}
               strokeLinecap="round"
-              strokeDasharray={ARC_LEN}
-              strokeDashoffset={ARC_LEN * (1 - liftFrac)}
               style={{ filter: "drop-shadow(0 0 8px var(--sc-accent-glow))" }}
             />
-            <g className="sc-vs-needle" style={{ transform: `rotate(${liftAngle}deg)`, transformOrigin: "100px 100px" }}>
-              <line x1={100} y1={100} x2={100} y2={32} stroke="var(--sc-text)" strokeWidth={2.5} strokeLinecap="round" />
+            <g ref={needleRef} className="sc-vs-needle">
+              <line
+                x1={GAUGE_CX}
+                y1={GAUGE_CY}
+                x2={GAUGE_CX}
+                y2={32}
+                stroke="var(--sc-text)"
+                strokeWidth={2.5}
+                strokeLinecap="round"
+              />
             </g>
-            <circle cx={100} cy={100} r={6} fill="var(--sc-text)" />
+            <circle cx={GAUGE_CX} cy={GAUGE_CY} r={6} fill="var(--sc-text)" />
           </svg>
           <span
             className="sc-vs-lift sc-c-accent"

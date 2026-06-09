@@ -70,9 +70,9 @@ export const DOCK_SERIOUS_LOCKED = "UNLOCKS AFTER PREVIEW RUN SUCCEEDS";
 export const DOCK_ROLLBACK = "Restore previous prompt";
 
 export const STATUS_EYEBROW = "SESSION STATUS";
-export const STATUS_AWAITING = "NO ACTIVE SESSION";
-export const STATUS_STANDBY =
-  "Start a preview run. Session id, stage, and the evidence grid populate as results return.";
+export const STATUS_AWAITING = "Yet to start";
+export const STATUS_JUST_NOW_EYEBROW = "JUST NOW";
+export const STATUS_UP_NEXT_EYEBROW = "WHAT'S NEXT";
 
 export const STAGE_CAPTIONS: Record<string, string> = {
   queued: "Queued on the server — work begins in the background.",

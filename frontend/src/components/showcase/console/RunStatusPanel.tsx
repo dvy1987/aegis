@@ -1,7 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import type { ShowcaseRunSession } from "@/lib/types";
+import type { ShowcaseManifest, ShowcaseRunSession } from "@/lib/types";
+import { resolveInactiveStatusNarrative } from "./statusNarrative";
+import { resolveStatusPreviewBatch } from "./statusPreviewBatch";
 import { EASE_OUT_EXPO, statusMorph } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
@@ -13,26 +15,42 @@ import {
   STAGE_CAPTIONS,
   STATUS_AWAITING,
   STATUS_EYEBROW,
-  STATUS_STANDBY,
+  STATUS_JUST_NOW_EYEBROW,
+  STATUS_UP_NEXT_EYEBROW,
 } from "@/components/showcase/copy";
 import { StatusOrb } from "@/components/showcase/fx/StatusOrb";
 
 const TERMINAL = ["successful", "failed", "cancelled", "rejected", "rolled_back"];
 
 export function RunStatusPanel({
+  manifest,
   session,
+  seriousUnlocked,
   runErr,
   onCancel,
   onApprove,
   onReject,
 }: {
+  manifest: ShowcaseManifest | null;
   session: ShowcaseRunSession | null;
+  seriousUnlocked: boolean;
   runErr?: string | null;
   onCancel: () => void;
   onApprove: () => void;
   onReject: () => void;
 }) {
-  if (!session) return <StandbyConsole runErr={runErr} />;
+  const preview = resolveStatusPreviewBatch(manifest, session, seriousUnlocked);
+
+  if (!session) {
+    return (
+      <StandbyConsole
+        manifest={manifest}
+        seriousUnlocked={seriousUnlocked}
+        preview={preview}
+        runErr={runErr}
+      />
+    );
+  }
 
   const { diagnostics, status } = session;
   const total = diagnostics.total_cases;
@@ -72,6 +90,8 @@ export function RunStatusPanel({
           {STAGE_CAPTIONS[stage] ?? " "}
         </p>
       </div>
+
+      <StatusPreviewGrid count={preview.count} verdicts={preview.verdicts} />
 
       <ProgressBar done={done} total={total} pct={pct} />
 
@@ -164,9 +184,54 @@ function ProgressBar({ done, total, pct }: { done: number; total: number; pct: n
   );
 }
 
-function StandbyConsole({ runErr }: { runErr?: string | null }) {
+function StatusPreviewGrid({ count, verdicts }: { count: number; verdicts: string[] }) {
+  if (count === 0) return null;
+
+  const compact = count <= 20;
+
   return (
-    <GlassPanel className="flex min-h-72 flex-col justify-between gap-6 p-6">
+    <div
+      className={
+        compact
+          ? "inline-grid gap-1"
+          : "grid max-h-36 grid-cols-[repeat(auto-fill,minmax(1.25rem,1fr))] gap-1 overflow-auto"
+      }
+      style={compact ? { gridTemplateColumns: `repeat(${count}, 1.25rem)` } : undefined}
+      role="img"
+      aria-label={`${count} case${count === 1 ? "" : "s"} in the next batch`}
+    >
+      {Array.from({ length: count }, (_, i) => {
+        const verdict = verdicts[i];
+        const tone =
+          verdict === "APPROVE" ? "sc-cell--approve" : verdict === "DENY" ? "sc-cell--deny" : "sc-cell--pending";
+        const pending = !verdict;
+        return (
+          <span
+            key={i}
+            className={`sc-cell block min-h-5 min-w-5 ${tone}${pending ? " sc-pulse-soft" : ""}`}
+            style={pending ? { animationDelay: `${(i % 12) * 0.12}s` } : undefined}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function StandbyConsole({
+  manifest,
+  seriousUnlocked,
+  preview,
+  runErr,
+}: {
+  manifest: ShowcaseManifest | null;
+  seriousUnlocked: boolean;
+  preview: { count: number; verdicts: string[] };
+  runErr?: string | null;
+}) {
+  const narrative = resolveInactiveStatusNarrative(manifest, seriousUnlocked);
+
+  return (
+    <GlassPanel className="flex min-h-72 flex-col gap-6 p-6">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
           <MonoLabel>{STATUS_EYEBROW}</MonoLabel>
@@ -177,19 +242,25 @@ function StandbyConsole({ runErr }: { runErr?: string | null }) {
         <StatusOrb status={null} />
       </div>
 
-      {/* dim matrix outline */}
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(1.1rem,1fr))] gap-1" aria-hidden>
-        {Array.from({ length: 36 }).map((_, i) => (
-          <span key={i} className="sc-cell sc-cell--pending sc-pulse-soft" style={{ animationDelay: `${(i % 12) * 0.12}s` }} />
-        ))}
+      <StatusPreviewGrid count={preview.count} verdicts={preview.verdicts} />
+
+      <div className="grid gap-4">
+        {narrative.justNow && (
+          <div>
+            <MonoLabel>{STATUS_JUST_NOW_EYEBROW}</MonoLabel>
+            <p className="mt-1.5 sc-body" style={{ fontSize: "0.9rem", color: "var(--sc-text-2)", lineHeight: 1.5 }}>
+              {narrative.justNow}
+            </p>
+          </div>
+        )}
+        <div>
+          <MonoLabel>{STATUS_UP_NEXT_EYEBROW}</MonoLabel>
+          <p className="mt-1.5 sc-body" style={{ fontSize: "0.9rem", color: "var(--sc-text)", lineHeight: 1.5 }}>
+            {narrative.upNext}
+          </p>
+        </div>
       </div>
 
-      <div className="flex items-center gap-3">
-        <span className="h-2 w-2 rounded-full sc-pulse-soft" style={{ background: "var(--sc-accent)" }} />
-        <p className="sc-body" style={{ fontSize: "0.95rem", color: "var(--sc-text-2)" }}>
-          {STATUS_STANDBY}
-        </p>
-      </div>
       {runErr && (
         <p className="sc-body" style={{ fontSize: "0.875rem", color: "var(--sc-text-2)" }}>
           {runErr}
