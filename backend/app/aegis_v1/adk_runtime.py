@@ -241,3 +241,40 @@ def collect_text(events: Iterable[Any]) -> str:
             if part.text:
                 chunks.append(part.text)
     return "".join(chunks)
+
+
+def collect_llm_response_text(
+    events: Iterable[Any],
+    *,
+    state: dict[str, Any] | None = None,
+) -> str:
+    """Collect model output text from ADK runner events (and optional session state).
+
+    ``LlmAgent`` with ``output_schema`` often omits ``part.text`` on events; the
+    payload may land on ``event.output`` instead. Judges avoid ``output_schema``
+    and use JSON mime + parse — simulator follows that pattern after this helper
+    covers legacy structured-output paths.
+    """
+    import json as _json
+
+    text = collect_text(events).strip()
+    if text:
+        return text
+
+    for event in events:
+        output = getattr(event, "output", None)
+        if output is None:
+            continue
+        if isinstance(output, str) and output.strip():
+            return output.strip()
+        if isinstance(output, dict):
+            return _json.dumps(output, default=str)
+
+    if state:
+        for value in state.values():
+            if isinstance(value, str) and value.strip().startswith("{"):
+                return value.strip()
+            if isinstance(value, dict) and "features" in value:
+                return _json.dumps(value, default=str)
+
+    return ""

@@ -71,7 +71,8 @@ def test_parse_simulator_response_accepts_nested_features() -> None:
     assert assessment.features["credible_tone"].anchor == 5
 
 
-def test_build_simulator_agent_uses_feature_assessment_schema() -> None:
+def test_build_simulator_agent_uses_json_mime_without_output_schema() -> None:
     agent = build_simulator_agent()
     assert agent.name == "simulator_agent"
-    assert agent.output_schema is not None
+    assert agent.output_schema is None
+    assert agent.generate_content_config.response_mime_type == "application/json"

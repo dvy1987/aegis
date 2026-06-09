@@ -94,10 +94,24 @@ class AdkSimulatorClient:
             )
         except Exception:
             logging.getLogger(__name__).warning(
-                "AdkSimulatorClient.assess failed; falling back to weak assessment",
+                "AdkSimulatorClient.assess failed; retrying via GeminiSimulatorClient",
                 exc_info=True,
             )
-            return uniform_assessment(1, critique="ADK Insurer Simulator unavailable; treated as weak.")
+            try:
+                return GeminiSimulatorClient().assess(
+                    denial_text=denial_text,
+                    clinical_context=clinical_context,
+                    appeal_letter=appeal_letter,
+                )
+            except Exception:
+                logging.getLogger(__name__).warning(
+                    "GeminiSimulatorClient fallback failed; using weak assessment",
+                    exc_info=True,
+                )
+                return uniform_assessment(
+                    1,
+                    critique="Insurer Simulator unavailable; treated as weak.",
+                )
 
 
 class GeminiSimulatorClient:

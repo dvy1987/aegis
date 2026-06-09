@@ -55,11 +55,13 @@ def parse_simulator_response(text: str) -> FeatureAssessment:
 
 def build_simulator_agent(*, model: Any | None = None) -> LlmAgent:
     """Construct the Outcome Simulator ADK agent (single-shot, outside student graph)."""
+    # Do not set output_schema here — ADK structured output often leaves
+    # event.content.parts empty, which broke collect_text() in production.
+    # Match the judge-panel pattern: JSON mime + parse_simulator_response().
     return LlmAgent(
         name="simulator_agent",
         model=model or make_retry_model(),
         instruction=_SIMULATOR_INSTRUCTION,
-        output_schema=FeatureAssessment,
         generate_content_config=types.GenerateContentConfig(
             response_mime_type="application/json",
             temperature=0.2,
@@ -75,7 +77,7 @@ def run_simulator_agent(
     model: Any | None = None,
 ) -> FeatureAssessment:
     """Run simulator_agent via ADK and return FeatureAssessment."""
-    from app.aegis_v1.adk_runtime import collect_text, run_llm_agent_sync
+    from app.aegis_v1.adk_runtime import collect_llm_response_text, run_llm_agent_sync
 
     agent = build_simulator_agent(model=model)
     message = _build_assess_prompt(denial_text, clinical_context, appeal_letter)
@@ -85,7 +87,10 @@ def run_simulator_agent(
         user_id="simulator",
         message=message,
     )
-    raw = collect_text(result.get("events", [])).strip()
+    raw = collect_llm_response_text(
+        result.get("events", []),
+        state=result.get("state"),
+    ).strip()
     if not raw:
         raise ValueError("simulator_agent returned empty response")
     return parse_simulator_response(raw)
