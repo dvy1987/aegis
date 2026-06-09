@@ -101,7 +101,7 @@ Per-directory specifics: [frontend/AGENTS.md](frontend/AGENTS.md) · [backend/AG
 | Spec-driven development | `spec-driven-development` → `project-constitution` (/constitution) → `feature-spec` (/specify, /clarify) → `implementation-plan` (/plan) → `problem-to-plan` (/tasks) → `spec-crosscheck` (/analyze) → `test-driven-development` (/implement) |
 | Eval design | `eval-output` → `eval-rubric-design` → `eval-judge` → `eval-pipeline` |
 | Architecture | `agent-system-architecture` · `agent-builder` · `create-agent-prompt` · `tool-finder` · `architectural-decision-log` |
-| Design | `frontend-design` → `design-archetype` → `design-tokens-craft` → `icon-craft` → `design-review` |
+| Design | `frontend-design` → `design-archetype` → `design-tokens-craft` → `icon-craft` → `ux-browsing` → `design-review` |
 | Backend lifecycle (ADK) | `google-agents-cli-workflow` · `google-agents-cli-adk-code` · `google-agents-cli-scaffold` · `google-agents-cli-eval` · `google-agents-cli-deploy` · `google-agents-cli-observability` (installed via `uvx google-agents-cli setup`) |
 | Build | `test-driven-development` · `debug-and-fix` · `code-review-crsp` |
 | Security (on external content) | `secure-skill` · `secure-skill-content-sanitization` · `secure-skill-repo-ingestion` · `secure-skill-runtime` |

@@ -11,7 +11,7 @@ description: >
   "build me a frontend", "make this not look AI-generated", "design this
   interface", "give this real design polish", "frontend design". Single
   entry point — defers to design-archetype, design-tokens-craft, icon-craft,
-  design-review for the heavy lifting.
+  ux-browsing, design-review for the heavy lifting.
 license: MIT
 metadata:
   author: dvy1987
@@ -93,11 +93,15 @@ Mandatory gates before declaring done:
 - [ ] Motion follows the archetype's curve and duration budget
 - [ ] At least one distinctive move present (custom illustration, hand-tuned spacing, unusual layout grid, signature interaction) — generic = fail
 
-### Step 7 — Run `design-review`
+### Step 7 — Run `ux-browsing` (when a live URL exists)
 
-Invoke `design-review` against the build. If review flags drift back to AI defaults or the `feels like X` claim is not honored, loop back to Step 6 with specific fixes. Maximum 2 review loops before escalating to user.
+If the build runs locally or on a preview URL, invoke `ux-browsing` to capture the shotcap matrix and write `CAPTURE-MANIFEST.md` + `AUTOMATED-AUDIT.md`. Skip only when the user supplied screenshots or the UI is not runnable.
 
-### Step 8 — Deliver
+### Step 8 — Run `design-review`
+
+Invoke `design-review` against the build and captures. If review flags drift back to AI defaults or the `feels like X` claim is not honored, loop back to Step 6 with specific fixes. Maximum 2 review loops before escalating to user.
+
+### Step 9 — Deliver
 
 Output the file tree, the running app, and the impact report.
 
@@ -136,7 +140,8 @@ Review loops: [N]
 - `design-archetype` — picks product archetype from curated catalog (B2B-productivity, enterprise-trust, premium-consumer, playful-consumer, editorial, brutalist-distinctive, dev-tool, marketing-landing)
 - `design-tokens-craft` — generates archetype-driven semantic tokens, banning generic defaults
 - `icon-craft` — picks icon strategy and produces a coherent set; solves the "Lucide everywhere" problem
-- `design-review` — screenshot/Playwright review against the archetype's `feels like X` claim
+- `ux-browsing` — live UI capture via shotcap + playwright-cli for design-grade screenshots
+- `design-review` — screenshot review against the archetype's `feels like X` claim
 
 ---
 

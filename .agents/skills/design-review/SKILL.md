@@ -47,10 +47,14 @@ Read in order:
 
 ### Step 2 — Capture Screens
 
-If Playwright MCP is available, read `references/playwright-flow.md` for automated capture script. If not, instruct the user:
-> "Paste screenshots: (1) hero/landing in light mode, (2) same in dark mode, (3) one inner page in both modes, (4) mobile width (375px) of the same. Or run the Playwright flow."
+**Preferred:** invoke `ux-browsing` to run the local shotcap + playwright-cli capture matrix and produce `AUTOMATED-AUDIT.md`.
 
-If neither is possible, proceed with code-only review and flag the gap.
+If captures already exist under `.design/<feature>/screenshots/`, read `AUTOMATED-AUDIT.md` and proceed.
+
+If `ux-browsing` is unavailable, read `references/playwright-flow.md` (Playwright MCP fallback). If neither is possible, instruct the user:
+> "Paste screenshots: (1) hero/landing in light mode, (2) same in dark mode, (3) one inner page in both modes, (4) mobile width (375px) of the same. Or run ux-browsing / shotcap."
+
+If no captures are possible, proceed with code-only review and flag the gap.
 
 ### Step 3 — Score Against the Rubric
 
