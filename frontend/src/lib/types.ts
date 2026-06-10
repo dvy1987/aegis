@@ -201,10 +201,17 @@ export interface ShowcaseRunSession {
   regression_summary?: string | null;
 }
 
+export interface ShowcaseRollbackFileSnapshot {
+  path: string;
+  exists: boolean;
+  content?: string | null;
+  sha256?: string | null;
+}
+
 export interface ShowcaseRollbackTarget {
   run_type: string;
   session_id: string;
   promoted_at: string;
   candidate_id: string;
-  files: Record<string, unknown>[];
+  files: ShowcaseRollbackFileSnapshot[];
 }

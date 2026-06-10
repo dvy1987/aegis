@@ -1,50 +1,31 @@
 import { describe, expect, it } from "vitest";
 import { resolveStatusPreviewBatch } from "@/components/showcase/console/statusPreviewBatch";
-import type { ShowcaseManifest, ShowcaseRunSession } from "@/lib/types";
+import type { CaseSummary, ShowcaseManifest, ShowcaseRunSession } from "@/lib/types";
+
+function caseStub(case_id: string): CaseSummary {
+  return {
+    case_id,
+    insurer: "Cigna",
+    denial_type: "medical_necessity",
+    headline: "h",
+    denial_letter_text: "d",
+    patient_age: 42,
+    patient_gender: "F",
+  };
+}
 
 const manifest: ShowcaseManifest = {
   benchmark_id: "test",
   version: "1",
   quick_slice: "Cigna:medical_necessity",
-  quick_train: Array.from({ length: 5 }, (_, i) => ({
-    case_id: `q_train_${i}`,
-    insurer: "Cigna",
-    denial_type: "medical_necessity",
-    headline: "h",
-    denial_letter_text: "d",
-    clinical_context: "c",
-  })),
-  quick_holdout: [
-    {
-      case_id: "q_h0",
-      insurer: "Cigna",
-      denial_type: "medical_necessity",
-      headline: "h",
-      denial_letter_text: "d",
-      clinical_context: "c",
-    },
-    {
-      case_id: "q_h1",
-      insurer: "Cigna",
-      denial_type: "medical_necessity",
-      headline: "h",
-      denial_letter_text: "d",
-      clinical_context: "c",
-    },
-  ],
-  serious_train_count: 80,
-  serious_holdout: Array.from({ length: 20 }, (_, i) => ({
-    case_id: `s_h_${i}`,
-    insurer: "Cigna",
-    denial_type: "medical_necessity",
-    headline: "h",
-    denial_letter_text: "d",
-    clinical_context: "c",
-  })),
+  quick_train: Array.from({ length: 5 }, (_, i) => caseStub(`q_train_${i}`)),
+  quick_holdout: [caseStub("q_h0"), caseStub("q_h1")],
+  serious_train_count: 50,
+  serious_holdout: Array.from({ length: 20 }, (_, i) => caseStub(`s_h_${i}`)),
 };
 
-function session(partial: Partial<ShowcaseRunSession>): ShowcaseRunSession {
-  return {
+function session(partial: Partial<ShowcaseRunSession> = {}): ShowcaseRunSession {
+  const base: ShowcaseRunSession = {
     session_id: "sess",
     run_type: "quick",
     status: "running",
@@ -65,14 +46,12 @@ function session(partial: Partial<ShowcaseRunSession>): ShowcaseRunSession {
     training_post_measure_results: [],
     post_measure_results: [],
     regression_detected: false,
+  };
+  return {
+    ...base,
     ...partial,
     diagnostics: {
-      stage: "queued",
-      completed_cases: 0,
-      total_cases: 0,
-      retryable: false,
-      phoenix_trace_ids: [],
-      cloud_log_filter: "",
+      ...base.diagnostics,
       ...partial.diagnostics,
     },
   };

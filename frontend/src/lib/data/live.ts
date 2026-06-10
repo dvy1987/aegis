@@ -130,6 +130,14 @@ export async function cancelRun(sessionId: string): Promise<ShowcaseRunSession> 
   );
 }
 
+export async function resumeRun(sessionId: string): Promise<ShowcaseRunSession> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseRunSession>(
+    await fetch(`${base}/v1/showcase/runs/${sessionId}/resume`, { method: "POST" }),
+    "resume run",
+  );
+}
+
 export async function approveRun(sessionId: string): Promise<ShowcaseRunSession> {
   const base = getApiBase();
   return jsonOrThrow<ShowcaseRunSession>(

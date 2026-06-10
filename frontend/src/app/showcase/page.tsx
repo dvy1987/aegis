@@ -8,6 +8,7 @@ import {
   getRunSession,
   getShowcaseManifest,
   rejectRun,
+  resumeRun,
   rollbackRun,
   startQuickRun,
   startSeriousRun,
@@ -117,6 +118,16 @@ export default function ShowcasePage() {
     }
   }
 
+  async function resumeCurrentRun() {
+    if (!runSession) return;
+    setRunErr(null);
+    try {
+      setRunSession(await resumeRun(runSession.session_id));
+    } catch (e) {
+      setRunErr(e instanceof Error ? e.message : String(e));
+    }
+  }
+
   async function rollbackLatestRun() {
     setRunErr(null);
     try {
@@ -146,6 +157,7 @@ export default function ShowcasePage() {
           startQuick={startQuick}
           startSerious={startSerious}
           cancelCurrentRun={cancelCurrentRun}
+          resumeCurrentRun={resumeCurrentRun}
           approveCurrentRun={approveCurrentRun}
           rejectCurrentRun={rejectCurrentRun}
           rollbackLatestRun={rollbackLatestRun}

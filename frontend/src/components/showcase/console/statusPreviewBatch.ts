@@ -10,7 +10,7 @@ const FALLBACK_COHORT = {
   quickHoldout: 2,
   quickTrain: 5,
   seriousHoldout: 20,
-  seriousTrain: 80,
+  seriousTrain: 50,
 } as const;
 
 function cohortSizes(manifest: ShowcaseManifest, runType: "quick" | "serious") {

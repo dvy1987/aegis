@@ -9,14 +9,14 @@ export const HERO_HEADLINE = ["Every", "score", "rewrites", "the", "next", "draf
 export const HERO_EYEBROW = "AEGIS · LIVE LEARNING OBSERVATORY";
 
 export const HERO_SUBHEAD =
-  "Ten real denial cases. A held-out benchmark the model never trains on. GEPA turns judge feedback into prompt and playbook edits — then pauses for your approval before anything ships. Scroll to see measured lift — or start a preview run below.";
+  "Synthetic denial cases on a held-out benchmark the model never trains on. GEPA turns judge feedback into prompt, question-agent, and playbook edits — then pauses for your approval before anything ships. Scroll to see measured lift — or start a preview run below.";
 
 export const HERO_CTA = "Start preview run";
 
 export const HERO_TELEMETRY = [
   "HOLDOUT · baseline measure · no learning yet",
   "GEPA · reflective mutation on train failures",
-  "JUDGES · seven dimensions · laundered feedback in",
+  "JUDGES · six dimensions · laundered feedback in",
   "GATE · GEPA proposal · waiting for approval",
   "COMPOSITE · 0.40 → 0.75 on held-out",
   "PHOENIX · traces ingested · memory eligible",
@@ -52,7 +52,7 @@ export const INSTRUMENT_STEPS = [
   },
   {
     title: "Review Proposal",
-    body: "Review suggested improvements to the appeal drafting agent.",
+    body: "Review proposed changes to the drafter, question agent, slice playbooks, and US rules.",
   },
   {
     title: "Holdout Lift",
@@ -67,7 +67,7 @@ export const DOCK_SERIOUS_TITLE = "Production run";
 export const DOCK_QUICK_CTA = "Start preview run";
 export const DOCK_SERIOUS_CTA = "Start production run";
 export const DOCK_SERIOUS_LOCKED = "UNLOCKS AFTER PREVIEW RUN SUCCEEDS";
-export const DOCK_ROLLBACK = "Restore previous prompt";
+export const DOCK_ROLLBACK = "Rollback last promotion";
 
 export const STATUS_EYEBROW = "SESSION STATUS";
 export const STATUS_AWAITING = "Yet to start";
@@ -80,7 +80,7 @@ export const STAGE_CAPTIONS: Record<string, string> = {
   train_gepa:
     "Drafting and judging the train set. GEPA reads the failure pattern and proposes a new prompt and playbook.",
   waiting_for_approval: "GEPA proposal ready. Promote the rewrite, or discard it.",
-  promote: "Shipping the GEPA-approved prompt and playbook.",
+  promote: "Shipping the GEPA-approved prompt, question-agent, and playbook changes.",
   measure_after: "Re-scoring holdout with the promoted version.",
   failed: "Run stopped. See the error below.",
   cancelled: "Cancelled. Nothing was promoted.",
@@ -96,6 +96,7 @@ export const PROMOTION_REVIEW_LEAD =
   "Scroll through every proposed change. Nothing promotes until you approve here.";
 export const REJECT_CTA = "Discard proposal";
 export const CANCEL_CTA = "Cancel run";
+export const RESUME_CTA = "Resume from checkpoint";
 
 export const MATRIX_EYEBROW = "EVIDENCE GRID";
 export const MATRIX_HEADLINE = "Map how learning happens";
@@ -134,7 +135,7 @@ export const DIFF_HEADLINE = "What GEPA changed in the proposal";
 export const INTELLIGENCE_EYEBROW = "GEPA · THE LEARNING LOOP";
 export const INTELLIGENCE_HEADLINE = "Score, remember, evolve — then you approve.";
 export const INTELLIGENCE_BODY =
-  "Every draft is graded on seven dimensions. Scores land in Phoenix. GEPA reads that feedback and mutates the drafter prompt and per-insurer playbooks — sample-efficient reflective evolution, not gradient descent. You approve before anything reaches production.";
+  "Every draft is graded on six dimensions — one faithfulness hard gate plus five weighted scores. Scores land in Phoenix. GEPA reads that feedback and mutates the drafter prompt, question-agent prompt, slice playbooks, and US federal rules — sample-efficient reflective evolution, not gradient descent. You approve before anything reaches production.";
 
 export const GEPA_SPOTLIGHT_EYEBROW = "GEPA · REFLECTIVE PROMPT EVOLUTION";
 export const GEPA_SPOTLIGHT_HEADLINE = "Judge feedback becomes the next prompt.";
@@ -167,7 +168,7 @@ export const PIPELINE_NODES = [
   {
     kind: "judge" as const,
     label: "Judge panel",
-    callout: "Seven dimensions — two hard safety gates, five weighted scores. Six run as ADK agents.",
+    callout: "Six dimensions — one faithfulness hard gate, five weighted scores. Five run as ADK judge agents.",
   },
   {
     kind: "memory" as const,
@@ -178,7 +179,7 @@ export const PIPELINE_NODES = [
     kind: "optimize" as const,
     label: "GEPA",
     callout:
-      "Reflective mutation on judge feedback — evolves the drafter and per-slice playbooks, scored on held-out cases before promote.",
+      "Reflective mutation on judge feedback — evolves drafter, question agent, slice playbooks, and US rules, scored on held-out cases before promote.",
   },
   { kind: "approve" as const, label: "Your approval" },
   { kind: "promote" as const, label: "Promote" },

@@ -10,6 +10,7 @@ import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
 import { IgniteButton } from "@/components/showcase/fx/IgniteButton";
 import {
   CANCEL_CTA,
+  RESUME_CTA,
   REJECT_CTA,
   REVIEW_PROMOTION_CTA,
   STAGE_CAPTIONS,
@@ -28,6 +29,7 @@ export function RunStatusPanel({
   seriousUnlocked,
   runErr,
   onCancel,
+  onResume,
   onOpenReview,
   onReject,
 }: {
@@ -36,6 +38,7 @@ export function RunStatusPanel({
   seriousUnlocked: boolean;
   runErr?: string | null;
   onCancel: () => void;
+  onResume: () => void;
   onOpenReview: () => void;
   onReject: () => void;
 }) {
@@ -58,7 +61,8 @@ export function RunStatusPanel({
   const pct = total ? Math.round((done / total) * 100) : 0;
   const stage = diagnostics.stage;
   const needsApproval = status === "needs_approval";
-  const canCancel = !TERMINAL.includes(status);
+  const canResume = status === "failed" && diagnostics.retryable;
+  const canCancel = !TERMINAL.includes(status) && status !== "failed";
 
   return (
     <GlassPanel variant={needsApproval ? "active" : "default"} className="flex flex-col gap-5 p-6">
@@ -151,6 +155,11 @@ export function RunStatusPanel({
             </motion.div>
           )}
         </AnimatePresence>
+        {canResume && (
+          <IgniteButton variant="primary" onClick={onResume}>
+            {RESUME_CTA}
+          </IgniteButton>
+        )}
         {canCancel && (
           <IgniteButton variant="ghost" onClick={onCancel}>
             {CANCEL_CTA}

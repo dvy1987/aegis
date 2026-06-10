@@ -8,7 +8,7 @@ const manifest: ShowcaseManifest = {
   quick_slice: "Cigna:medical_necessity",
   quick_train: [],
   quick_holdout: [{ case_id: "a" }, { case_id: "b" }] as ShowcaseManifest["quick_holdout"],
-  serious_train_count: 80,
+  serious_train_count: 50,
   serious_holdout: Array.from({ length: 20 }, (_, i) => ({ case_id: `s_${i}` })) as ShowcaseManifest["serious_holdout"],
 };
 

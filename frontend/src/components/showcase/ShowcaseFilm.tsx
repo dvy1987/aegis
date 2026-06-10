@@ -31,6 +31,7 @@ export interface ShowcaseFilmProps {
   startQuick: () => void;
   startSerious: () => void;
   cancelCurrentRun: () => void;
+  resumeCurrentRun: () => void;
   approveCurrentRun: () => void;
   rejectCurrentRun: () => void;
   rollbackLatestRun: () => void;
@@ -89,6 +90,7 @@ function ShowcaseFilmBody(props: ShowcaseFilmProps) {
         startQuick={props.startQuick}
         startSerious={props.startSerious}
         cancelCurrentRun={props.cancelCurrentRun}
+        resumeCurrentRun={props.resumeCurrentRun}
         approveCurrentRun={props.approveCurrentRun}
         rejectCurrentRun={props.rejectCurrentRun}
         rollbackLatestRun={props.rollbackLatestRun}

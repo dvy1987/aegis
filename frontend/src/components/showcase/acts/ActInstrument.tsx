@@ -40,6 +40,7 @@ export function ActInstrument({
   startQuick,
   startSerious,
   cancelCurrentRun,
+  resumeCurrentRun,
   approveCurrentRun,
   rejectCurrentRun,
   rollbackLatestRun,
@@ -52,6 +53,7 @@ export function ActInstrument({
   startQuick: () => void;
   startSerious: () => void;
   cancelCurrentRun: () => void;
+  resumeCurrentRun: () => void;
   approveCurrentRun: () => void;
   rejectCurrentRun: () => void;
   rollbackLatestRun: () => void;
@@ -142,6 +144,7 @@ export function ActInstrument({
               seriousUnlocked={seriousUnlocked}
               runErr={runErr}
               onCancel={cancelCurrentRun}
+              onResume={resumeCurrentRun}
               onOpenReview={() => setReviewOpen(true)}
               onReject={rejectCurrentRun}
             />

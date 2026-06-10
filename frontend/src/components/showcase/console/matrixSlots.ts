@@ -55,8 +55,8 @@ export function mergeResultSlots(caseIds: string[], results: Record<string, unkn
   }));
 }
 
-/** Production training only: 80 cases → 40 + 40. Everything else uses the default small grid. */
+/** Production training only: 50 cases → 25 + 25. Everything else uses the default small grid. */
 export function productionRowColumns(count: number, tab: MatrixTab): number | null {
-  if (tab !== "serious" || count !== 80) return null;
-  return 40;
+  if (tab !== "serious" || count !== 50) return null;
+  return 25;
 }

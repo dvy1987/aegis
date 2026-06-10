@@ -99,7 +99,7 @@ export function ActImpact() {
           />
         </Metric>
         <Metric label={IMPACT_METRIC_JUDGES}>
-          <MetricCounter to={7} delay={0.4} className="sc-c1" style={{ fontSize: "1.6rem", fontWeight: 600, letterSpacing: "0" }} />
+          <MetricCounter to={6} delay={0.4} className="sc-c1" style={{ fontSize: "1.6rem", fontWeight: 600, letterSpacing: "0" }} />
         </Metric>
         <Metric label={IMPACT_METRIC_APPROVAL}>
           <span className="sc-c1" style={{ fontFamily: "var(--font-mono)", fontSize: "1.6rem", fontWeight: 600 }}>
