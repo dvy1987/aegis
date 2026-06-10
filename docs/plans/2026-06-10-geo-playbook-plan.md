@@ -1,7 +1,7 @@
 # Plan — Geo playbook (insurer-agnostic, geography-scoped rules)
 
 **Date:** 2026-06-10  
-**Status:** Draft — awaiting PM answers on §9 before implementation  
+**Status:** Implemented (2026-06-10) — see `docs/2026-06-10-question-agent-test-handoff.md` §Round 2 item 7  
 **Builds on:** slice-key work (`insurer:denial_type:sub_tactic`), Learning Coordinator GEPA loop, showcase Preview/Production runs
 
 ---

@@ -3298,3 +3298,36 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - **Clean** on `main` @ `712af93` (2 commits ahead of origin).
+
+---
+
+## 2026-06-10 — Handoff (Cursor — question agent closeout)
+
+### Done
+- Gap re-check: Round 2 largely complete; **446** backend unit tests pass.
+- **Committed `ac628c1`:** question-agent prompt activation on promote (`active_question_agent_prompt.txt` + versioned `.md`).
+- **Uncommitted:** approval modal shows question-agent prompt diffs (`promotion_preview` + frontend); handoff + geo plan docs refreshed.
+- Session doc: `docs/2026-06-10-session-handoff-question-agent-closeout.md`
+
+### Debated
+- None — execution followed prior PM decisions from question-agent design.
+
+### Decisions
+- No new product decisions; closed implementation gaps only.
+
+### Deferred
+- Showcase rollback for question-agent + US-playbook active files.
+- Commit dirty promotion-preview + doc updates (PM has not requested yet).
+- Push to remote.
+
+### Next Agent Should Know
+- GEPA can mutate question prompt; after `ac628c1` promote activates runtime; modal diff is in dirty tree (not committed).
+- Question judge playbook recs bake into playbook mutations in the proposal — not a separate UI list.
+
+### Revisit Triggers
+- Rollback after question-agent/geo promote → extend `showcase_rollback.py`.
+- Modal missing question-agent section → verify `kind: question_agent` end-to-end.
+
+### Working Tree
+- **Dirty (6 files):** `promotion_preview.py`, `test_promotion_preview.py`, `PromotionReviewModal.tsx`, `promotionPreview.ts`, question-agent handoff doc, geo playbook plan.
+- **Committed ahead of origin:** 2 commits (`dddc813`, `ac628c1` on top of prior `712af93` chain).

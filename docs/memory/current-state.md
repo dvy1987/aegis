@@ -1,7 +1,13 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-10 (session end — US-playbook wired + committed `712af93`)
-**Phase:** **ADK Phases 0–5 on prod. US-playbook in draft + showcase GEPA. `main` clean, 2 commits ahead of origin (not pushed).**
+**Updated:** 2026-06-10 (session end — question agent closeout)
+**Phase:** **Question agent + US-playbook + showcase GEPA wired. Question prompt activates on promote (`ac628c1`). Approval modal diff for question agent in dirty tree. `main` 2 commits ahead of origin, 6 files uncommitted.**
+
+### 2026-06-10 - Question agent closeout (see `docs/2026-06-10-session-handoff-question-agent-closeout.md`)
+- **Committed:** `ac628c1` — promoted `question_agent_system_prompt` writes `active_question_agent_prompt.txt` (mirrors drafter).
+- **Dirty:** showcase approval modal shows question-agent prompt diff; handoff + geo plan docs updated.
+- **Verified:** 446 backend unit tests pass; 28 frontend vitest pass.
+- **Next:** PM commit dirty files; optional rollback extension; push/deploy when ready.
 
 ### 2026-06-10 - US-playbook end-to-end (committed `712af93`)
 - **Runtime:** `geo_playbook_loader_node` + `question_agent_prep_bundle` — insurer playbooks + US rules on every US case (appeal + showcase).

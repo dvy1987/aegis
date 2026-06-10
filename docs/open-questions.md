@@ -141,6 +141,29 @@ For clarity, these are **locked**:
 - ✅ **Infrastructure:** Google Cloud account, Phoenix Cloud, GitHub, Devpost accounts are assumed ready or will be created on Day 1 (Resolved E1, E2, H1, H2)
 - ✅ **Phoenix MCP:** Installed via npx, backend container has Node.js (Resolved E6)
 - ✅ **Pre-commit PHI scanner:** Implemented as cheap insurance (Resolved G3)
+- ✅ **Hackathon runtime:** v1 Student + showcase GEPA (not 12-agent swarm) — June 2026
+- ✅ **Part B swarm:** Deferred post-hackathon; assess G1/G2 first (June 2026)
+
+---
+
+## G. Post-Hackathon — Quality & Economics (🔴 assess before Part B)
+
+### G1. Library agent — online search vs controlled corpus
+**Question:** If the library agent can search **online sources more freely** (beyond `corpus/` + current Vertex discovery), how much does held-out appeal quality improve?
+**Why it matters:** Broader sources may improve grounding and appeal_vector_capture; they also increase hallucination risk, latency, and cost.
+**How to assess:** A/B on a fixed held-out set — corpus-only vs corpus + bounded web/Vertex; same judges; report composite and grounding dimension.
+**Default until assessed:** Keep corpus-first; online expansion is opt-in experiments only.
+
+### G2. GEPA loop — cost vs lift
+**Question:** Is the quality/simulator lift from showcase GEPA **worth the API spend** at preview (7 cases) and production (70 cases) scale?
+**Why it matters:** Each GEPA cycle runs many Gemini calls (student drafts, judge panel, question judge, reflection, re-score, measurement). Cost scales with cohort size and `max_rounds`.
+**How to assess:** Instrument token usage per showcase stage; compute $/run and $ per +0.01 composite on held-out measurement; compare to manual prompt edits.
+**Default until assessed:** Keep Apprentice (human approve); do not enable autonomous promotion or enlarge cohorts without a cost ceiling.
+
+### G3. Part B swarm — still worth building?
+**Question:** After G1 and G2, does the 12-agent swarm (`aegis_swarm/`) outperform an improved v1 Student enough to justify orchestration complexity?
+**Status:** **Deferred post-hackathon** (June 2026). Hackathon submission uses v1 Student only.
+**Default:** Do not resume swarm until G1/G2 readouts exist.
 
 ---
 

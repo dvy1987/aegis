@@ -5,7 +5,7 @@
 | **Project** | Aegis — A calm, learning agent that helps people draft US health-insurance appeals |
 | **Author** | PM (with Amp orchestration) |
 | **Date** | 2026-05-27 |
-| **Status** | Draft v4 — UX promoted to first-class pillar; Next.js frontend; competitive landscape and Arize rubric alignment added |
+| **Status** | **v5 — June 2026 delivery snapshot.** Part A shipped for hackathon submission. **Part B (12-agent swarm) deferred post-hackathon.** See [§0.1 Current delivery](#01-current-delivery-june-2026). |
 | **Submission track** | Google Cloud Rapid Agent Hackathon — Arize partner bucket |
 | **Primary goal** | Win 1st place ($5,000) in the Arize partner bucket |
 | **Secondary goal** | A submission whose user experience is good enough that a stressed person filing an appeal at 11pm finds it usable, and that holds up as a portfolio-grade PM artifact |
@@ -19,9 +19,40 @@
 This PRD has **two nested specifications**:
 
 - **Part A — MVP (Days 1–7).** A single-agent, narrow-scope, fully shippable submission. This is the safety-net version. If everything in Part B fails, this is what we submit.
-- **Part B — Full Plan (Days 8–20).** The 12-agent swarm with autonomous learning loop on top of the MVP foundation. This is the version designed to win.
+- **Part B — Full Plan (Days 8–20).** The 12-agent swarm with autonomous learning loop — **deferred to post-hackathon** (June 2026 PM decision). Code scaffold exists under `backend/app/aegis_swarm/` but is **not** the submission runtime.
 
-Each part is independently shippable. Build the MVP first; if life lets us, layer the full plan on top.
+Each part was designed to be independently shippable. **The hackathon submission is an evolved Part A**, not Part B.
+
+### 0.1 Current delivery (June 2026)
+
+**What ships for Devpost / Arize:**
+
+| Capability | Status |
+|---|---|
+| v1 Student (ADK workflow): parse → playbooks → Phoenix → library → drafter | ✅ Shipped |
+| Question agent (pre-draft interview; appeal HTTP + showcase in-workflow) | ✅ Shipped |
+| Insurer **slice playbooks** (`insurer × denial × sub_tactic`) | ✅ Shipped + GEPA-learnable |
+| **US-playbook** (`geo_playbooks/us_playbook.json`) | ✅ Shipped + GEPA-learnable |
+| Outcome simulator (orchestrator layer, not Student tool) | ✅ Shipped |
+| Judge panel (5 dimensions + question judge on training runs) | ✅ Shipped |
+| Showcase: preview 5+2 · production 50+20 cohorts | ✅ Shipped |
+| Showcase GEPA + promotion review modal (human approve) | ✅ Shipped (Apprentice only) |
+| 12-agent Aegis swarm | ⏸ **Deferred post-hackathon** |
+| Autonomous Journeyman / Master promotion ladder | ⏸ Deferred |
+| 100-case × 7-denial-type full matrix | ⏸ Deferred |
+
+**Appeal path invariant:** `/appeal` drafts only — **no learning, no promotion.**
+
+**Showcase path:** training signal → GEPA → proposal → PM approve → write prompts/playbooks to disk.
+
+### 0.2 Post-hackathon assessments (PM priority)
+
+Before investing in Part B swarm or autonomous learning, assess:
+
+1. **Library retrieval expansion** — Allow the library agent to search **online sources more freely** (beyond controlled corpus / current Vertex stack). Measure: held-out judge composite and grounding dimension vs baseline. Hypothesis: broader sources help grounding and appeal_vector_capture; risk: hallucination and citation discipline.
+2. **GEPA cost vs quality** — Instrument cost per showcase run (tokens × price × case count × GEPA rounds). Compare lift on held-out simulator measurement to total spend. Hypothesis: GEPA loops are justified only if lift is stable at production cohort (70 cases) scale; may need cheaper reflection signal or fewer rounds.
+
+See [open-questions.md §G](../open-questions.md).
 
 ```diagram
 ╭──────────────────────────────────────────────────────────────╮
@@ -45,8 +76,8 @@ Each part is independently shippable. Build the MVP first; if life lets us, laye
 | Stage | Shippable As | Win probability estimate |
 |---|---|---|
 | End of MVP (Day 7) | Complete single-agent submission with Phoenix MCP | Top 3 plausible |
-| End of Week 2 swarm (Day 14) | 9-agent system + 60-case benchmark | Top 2 plausible |
-| End of Full Plan (Day 20) | Full Aegis swarm + autonomous learning + 100-case benchmark | **Win** |
+| End of Week 2 swarm (Day 14) | 9-agent system + 60-case benchmark | **Deferred post-hackathon** |
+| End of Full Plan (Day 20) | Full Aegis swarm + autonomous learning + 100-case benchmark | **Deferred** — submission = evolved Part A |
 
 ---
 
@@ -277,9 +308,11 @@ If we submit at end of Week 1, this is the demo:
 
 ---
 
-# PART B — Full Plan (Days 8–20)
+# PART B — Full Plan (Days 8–20) — DEFERRED POST-HACKATHON
 
-> Builds on the MVP. Adds 8 specialist agents, autonomous learning loop, expanded benchmark, and the audacious demo.
+> **Status (June 2026):** Not in scope for the hackathon submission. Retained as the north-star architecture for post-hackathon work. Runtime code lives in `backend/app/aegis_swarm/` as scaffold only.
+>
+> Builds on the MVP. Would add 8 specialist agents, autonomous learning loop, expanded benchmark, and the audacious demo.
 
 ## 10. The Audacious Thesis
 
@@ -616,9 +649,23 @@ The browser-triggered learning demo (`/showcase`) depends on infra settings that
 
 See [docs/open-questions.md](../open-questions.md). Must be resolved before code begins.
 
-## 25. Out-of-Scope Ideas (Post-Hackathon Backlog)
+## 25. Post-Hackathon Priority Assessments
+
+Before Part B swarm or autonomous promotion:
+
+| Assessment | Question | Success metric | Kill criterion |
+|---|---|---|---|
+| **G1. Library online search** | Does freer online retrieval improve appeals vs corpus-only? | +Δ composite on held-out; grounding dimension stable | No lift or grounding regression |
+| **G2. GEPA economics** | Is showcase GEPA cost justified by held-out lift at 7 vs 70 case scale? | Document $/run and $/+0.01 composite | Lift below cost of one production showcase cycle |
+
+Implementation notes:
+- G1: A/B library stack (corpus-only vs corpus + bounded web/Vertex discovery) on fixed held-out set; same judges.
+- G2: Log token usage per showcase stage (`train_gepa`, `measure_before`, `measure_after`); multiply by model tariff; compare to simulator APPROVE rate delta.
+
+## 25a. Out-of-Scope Ideas (Post-Hackathon Backlog)
 
 - External / IRO appeals automation
+- **12-agent Aegis swarm** (Part B — after G1/G2 assessments)
 - Medicare appeals (different stack, ALJ hearings)
 - Mobile / WhatsApp interface
 - Multi-language (Spanish first, given US Hispanic patient population)
@@ -629,14 +676,10 @@ See [docs/open-questions.md](../open-questions.md). Must be resolved before code
 
 ---
 
-## 26. The Bet
+## 26. The Bet (revised June 2026)
 
-Two paths exist within this PRD:
-- **Part A optimizes for *not losing*.** Ships a credible, complete Arize-track submission by Day 7.
-- **Part B optimizes for *winning by a landslide*.** Builds on Part A through Day 20.
+**Hackathon submission:** An **evolved Part A** — v1 Student, question agent, three-layer playbooks (drafter + slice + US), showcase GEPA with human approval, Phoenix-visible learning arc. Credible UX + measurable held-out lift beats an unfinished swarm.
 
-In a hackathon with 6 separate $5,000 buckets, "not losing" gets you 3rd place at best. **Winning** requires being the one submission judges talk about after the event. That requires audacity.
+**Post-hackathon:** Part B swarm and autonomous promotion **only if** library-quality (G1) and GEPA economics (G2) assessments justify the complexity and cost.
 
-You have 20 days. You have a vibe-coding stack that turns a PM into an effective builder. **Build the Full Plan, with the MVP as your Day 7 safety net.**
-
-Aegis isn't a hackathon submission. It's a manifesto: *agents should improve from their own observability data, autonomously, with safety gates, in production.* That's the Arize thesis. Be the one team that actually built it.
+Aegis is still a manifesto: *agents should improve from their own observability data, with safety gates and human oversight.* The hackathon proves the loop on a single disciplined Student; the swarm is chapter two, not chapter one.

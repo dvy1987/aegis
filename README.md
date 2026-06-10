@@ -1,6 +1,6 @@
 # Aegis
 
-> **A self-improving multi-agent system that drafts US health-insurance appeal letters and gets measurably better at them by introspecting its own Arize Phoenix traces via MCP.**
+> **A self-improving appeal-drafting system that helps patients respond to US health-insurance denials — and gets measurably better by learning from Arize Phoenix traces via MCP.**
 
 **Hackathon submission for the [Google Cloud Rapid Agent Hackathon](https://rapid-agent.devpost.com/) — Arize partner track.**
 
@@ -28,62 +28,46 @@ The Arize partner track judges submissions on:
 4. **Quality of the agent's self-improvement loop** ← Aegis's core mechanic
 5. Bonus: agents that use observability data to improve over time
 
-Most submissions will be single-agent chatbots with Phoenix bolted on. Aegis makes Phoenix MCP **structurally load-bearing** — without it, the agents cannot work well, and you can see this in the demo by toggling it off and watching the quality collapse.
+Most submissions will be single-agent chatbots with Phoenix bolted on. Aegis makes Phoenix MCP **structurally load-bearing** — training signal and runtime memory flow through Phoenix; the showcase demo runs a GEPA-style learning loop that proposes prompt and playbook changes you approve before they ship.
 
 ---
 
-## How it works
+## How it works (hackathon submission)
 
-```diagram
-                            ╭─────────────────────╮
-                            │   Orchestrator      │
-                            ╰──┬──────────┬───────╯
-                               │          │
-              ╭────────────────┤          ├──────────────╮
-              │                │          │              │
-       ╭──────▼──────╮  ╭──────▼──────╮  ╭▼─────────────────╮
-       │  Triage     │  │  Insurer    │  │  Learning        │
-       │  Agent      │  │  Intel      │  │  Coordinator     │
-       │             │  │  Agent      │  │  (meta-agent)    │
-       ╰──────┬──────╯  ╰──────┬──────╯  ╰──────────┬───────╯
-              │                │                    │
-              ▼                ▼                    │ continuously
-    ╭────────────────────────────────╮              │ rewrites prompts
-    │  Specialist Researcher Pool    │              │ / playbooks via
-    │  • Policy Detective            │              │ Phoenix MCP
-    │  • Medical Necessity Researcher│              │
-    │  • Legal Researcher            │              │
-    │  • Precedent Miner             │              │
-    ╰──────────────┬─────────────────╯              │
-                   ▼                                │
-            ╭──────────────╮                        │
-            │ Strategist   │◄──── playbook ◄───────┤
-            ╰──────┬───────╯                        │
-                   ▼                                │
-            ╭──────────────╮                        │
-            │ Drafter      │◄──── prompt v_n ◄─────┤
-            ╰──────┬───────╯                        │
-                   ▼                                │
-            ╭──────────────╮                        │
-            │ Adversarial  │                        │
-            │ Reviewer     │                        │
-            ╰──────┬───────╯                        │
-                   ▼                                │
-            ╭──────────────╮                        │
-            │ Quality      │◄── 7 LLM judges ──────┤
-            │ Judge Panel  │                        │
-            ╰──────┬───────╯                        │
-                   ▼                                │
-                                                    │
-            ALL traces stream to ───────────────────┘
-            Phoenix Cloud continuously.
+The **shipped product** is a **v1 Student** (Google ADK workflow), not the 12-agent swarm. The swarm in `backend/app/aegis_swarm/` is **deferred to post-hackathon** (see [PRD Part B](docs/prd/PRD.md)).
 
-            Learning Coordinator queries Phoenix MCP ~200 times during
-            the 20-day build to evolve prompts and playbooks. Each
-            version is a Phoenix experiment.
+```text
+Denial + clinical context
+        │
+        ▼
+┌───────────────────┐     ┌─────────────────────┐
+│ Question agent    │────▶│ Enriched patient    │  (showcase + appeal)
+│ (optional)        │     │ context for drafter │
+└───────────────────┘     └─────────────────────┘
+        │
+        ▼
+┌───────────────────────────────────────────────────┐
+│ v1 Student workflow (ADK)                         │
+│  parse → insurer playbook + US-playbook → Phoenix │
+│  → library retrieval → drafter → self-check       │
+└───────────────────────────────────────────────────┘
+        │
+        ▼
+┌───────────────────┐     ┌─────────────────────┐
+│ Appeal letter     │     │ Outcome simulator   │  (orchestrator, not Student)
+└───────────────────┘     └─────────────────────┘
+
+Showcase path (training / learning):
+  judges + question judge → Phoenix traces → GEPA loop
+  → promotion proposal (drafter + slice playbooks + US-playbook)
+  → human approve in UI → write to disk
+
+Appeal path: draft only. No learning, no promotion.
 ```
 
-For the full system blueprint, see [docs/architecture.md](docs/architecture.md).
+**Three learnable layers:** drafter prompt · insurer slice playbooks (`insurer × denial × sub-tactic`) · US-playbook (federal / state-scoped rules).
+
+For architecture detail, see [docs/architecture.md](docs/architecture.md).
 
 ---
 
@@ -91,26 +75,26 @@ For the full system blueprint, see [docs/architecture.md](docs/architecture.md).
 
 Aegis learns in three graduating stages — a **competency-gated autonomy ladder**:
 
-| Stage | Mode | Graduation criteria |
+| Stage | Mode (hackathon) | Post-hackathon (Part B, deferred) |
 |---|---|---|
-| 🟢 **Apprentice** | Every improvement requires PM approval | After 50 reviewed proposals AND held-out composite ≥ 0.55 |
-| 🟡 **Journeyman** | Auto-promote on hard safety gates (lift ≥ +3%, no safety regression, no hallucinations, ≤5/day) | After 100 auto-promotions AND held-out composite ≥ 0.75 |
-| 🔴 **Master** | Aggressive: relaxed gates (lift ≥ +1%), higher rate limit, broader patch types | Auto-demotes to Journeyman if composite drops > 10% |
+| 🟢 **Apprentice** | **Active.** Showcase GEPA proposes changes; PM approves in the promotion modal | Same |
+| 🟡 **Journeyman** | Not enabled | Auto-promote on hard safety gates |
+| 🔴 **Master** | Not enabled | Relaxed gates + higher autonomy |
 
-The system **knows when it's competent** and **knows when it isn't** — that's the Arize thesis embodied.
+Appeal runs never promote — only the showcase training path can change prompts or playbooks.
 
 ---
 
-## What's in scope
+## What's in scope (hackathon submission)
 
-| Dimension | MVP (Days 1–7) | Full Plan (Days 8–20) |
+| Dimension | Shipped (June 2026) | Deferred post-hackathon |
 |---|---|---|
-| Agents | 1 + 1 offline learning job | 12 specialist agents + Learning Coordinator |
-| Insurers benchmarked | 3 (Aetna, Cigna, UHC) | 10 (+ Anthem, Humana, Kaiser, Centene, Molina, 2× BCBS) |
-| Denial types | 2 (medical necessity, prior auth) | 7 (+ coverage exclusion, network adequacy, experimental, MHPAEA parity, step therapy) |
-| Benchmark cases | 12 (6 train + 6 held-out) | 100 (60 train + 40 held-out) |
-| Learning loop | Manual, ~3 runs | Continuous, ~200 runs |
-| Promotion | Human-approved | Staged autonomy ladder |
+| Runtime | v1 Student (ADK) + question agent + library finder | 12-agent **Aegis swarm** (`aegis_swarm/`) |
+| Insurers | 3 (Aetna, Cigna, UHC) in benchmark / showcase | 10 insurers |
+| Denial types | 2 (medical necessity, prior auth) | 5 additional types |
+| Showcase cohort | Preview 5+2 · Production 50+20 (cases 101–200) | Full 100-case matrix |
+| Learning | Showcase GEPA + human approve (Apprentice) | Autonomous Journeyman / Master ladder |
+| Playbooks | Slice + US-playbook (`geo_playbooks/`) | State-scoped geo rules when cases carry `us_state` |
 
 ## What's NOT in scope (and never will be)
 
@@ -133,32 +117,29 @@ The system **knows when it's competent** and **knows when it isn't** — that's 
 | Runtime introspection | **`@arizeai/phoenix-mcp`** | Lets the agent query its own past traces at runtime |
 | Instrumentation | **`openinference-instrumentation-google-adk`** | Auto-tracing for ADK |
 | Frontend | **Next.js** (React) | Consumer-grade UX is a first-class product pillar |
-| Backend | **FastAPI** | Hosts the ADK orchestrator and specialist swarm |
+| Backend | **FastAPI** | Hosts the v1 ADK Student + showcase learning API |
 | Hosting | **Google Cloud Run** | 2 services (Frontend + Backend); scales to zero |
 
 ---
 
-## Build plan (20 days)
+## Post-hackathon assessments (open)
 
-- **Week 1 (Days 1–7) — MVP.** Single ADK agent + 6-tool Student (the insurer Outcome Simulator runs in the wrapping orchestrator, not as a Student tool) + 12-case benchmark + Phoenix MCP wired. Shippable as standalone submission on Day 7 if anything goes wrong.
-- **Week 2 (Days 8–14) — Swarm.** Decompose into 9-agent runtime swarm. Expand benchmark to 60 cases.
-- **Week 3 (Days 15–20) — Autonomous learning + demo.** Add Learning Coordinator. Run ~200 learning iterations across slices. Expand benchmark to 100 cases. Record demo. Submit.
+Two economics questions are **not answered yet** — they should drive the next roadmap after submission:
 
-| Milestone | Win probability estimate |
-|---|---|
-| End of Day 7 (MVP shippable) | Top 3 plausible |
-| End of Day 14 (swarm shippable) | Top 2 plausible |
-| End of Day 20 (Full Plan shippable) | **Win** |
+1. **Library retrieval quality** — If the library agent can search **online sources more freely** (beyond the controlled local corpus + Vertex search), how much does appeal quality actually improve on held-out cases?
+2. **GEPA cost vs lift** — Showcase GEPA loops are **expensive** (many Gemini calls: drafter, judges, question judge, reflection, re-score). Is the measured quality delta large enough to justify that cost at preview vs production cohort scale?
+
+Tracked in [docs/open-questions.md](docs/open-questions.md) §G.
 
 ---
 
 ## Status
 
-**Phase:** Pre-build planning. PRD drafted. Architecture defined. **No code yet.** Build starts Day 1 once open questions clear.
+**Phase:** Hackathon submission build. v1 Student, question agent, US-playbook, showcase GEPA, and promotion UI are implemented. **Aegis swarm (Part B) deferred post-hackathon.** 446 backend unit tests passing.
 
-**Latest handoff:** [docs/memory/agent-handoffs.md](docs/memory/agent-handoffs.md)
-**Current state:** [docs/memory/current-state.md](docs/memory/current-state.md)
-**Open questions:** [docs/open-questions.md](docs/open-questions.md)
+**Latest handoff:** [docs/memory/agent-handoffs.md](docs/memory/agent-handoffs.md)  
+**Current state:** [docs/memory/current-state.md](docs/memory/current-state.md)  
+**PRD:** [docs/prd/PRD.md](docs/prd/PRD.md) (Part A = submission; Part B = deferred reference)
 
 ---
 
@@ -184,10 +165,11 @@ aegis/
 │
 ├── frontend/                      ← Next.js App Router UI
 ├── backend/                       ← Python ADK FastAPI service + `google-agents-cli`
-├── corpus/                        ← (TBD) authorities
-├── playbooks/                     ← (TBD) learning patches and tactics
-├── eval/                          ← (TBD) benchmark cases + judges + simulator rules
-└── scripts/                       ← (TBD) deployment and eval execution
+├── corpus/                        ← controlled local authority snippets
+├── playbooks/                     ← promoted insurer slice playbooks
+├── geo_playbooks/                 ← US-playbook (insurer-agnostic rules)
+├── eval/                          ← benchmark cases, simulator rules, showcase manifest
+└── scripts/                       ← deploy, eval CLI, learning runners
 ```
 
 ---

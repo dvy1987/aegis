@@ -1,10 +1,34 @@
 # Post-hackathon backlog
 
-Items we noticed during the hackathon build but chose **not** to fix before submission. Append here at our discretion — not a commitment to do everything.
+Items we noticed during the hackathon build but chose **not** to fix before submission — plus **priority assessments** to run before Part B (swarm, autonomous learning). Append at our discretion; not a commitment to do everything.
 
-**Severity key:** `now` = blocks correctness or demo · `soon` = fix before next touch on that area · `later` = tech debt, no active bug
+**Severity key:** `now` = blocks correctness or demo · `soon` = fix before next touch · `later` = tech debt · `assess` = experiment before committing engineering
+
+## Priority order (June 2026)
+
+Assess **before** resuming Part B swarm or autonomous promotion:
+
+| # | Item | Question |
+|---|------|----------|
+| **G1** | [§4 Library online search](#4-library-agent--freer-online-search-vs-controlled-corpus--assess-priority) | Does freer online retrieval improve held-out quality enough to justify risk and cost? |
+| **G2** | [§5 GEPA economics](#5-gepa-showcase-loop--cost-vs-quality-lift--assess-priority) | Is showcase GEPA spend justified by simulator/judge lift at preview (7) and production (70) scale? |
+| **G3** | [§3 Swarm vs v1](#3-evaluate-agent-swarm-vs-aegis-v1--assess-gated) | After G1/G2 — does the 12-agent swarm beat an improved v1 Student? |
+
+### Hackathon submission snapshot
+
+| Shipped | Deferred |
+|---------|----------|
+| v1 ADK Student workflow | 12-agent Aegis swarm (`aegis_swarm/`) |
+| Question agent (appeal + showcase) | Autonomous Journeyman / Master promotion |
+| Slice playbooks + US-playbook + GEPA | Full 100-case × 7-denial matrix |
+| Showcase preview 5+2 · production 50+20 | State-scoped US rules (no `us_state` on cases yet) |
+
+**Invariants:** `/appeal` = draft only, no learning/promotion · showcase **Approve** = only promotion path · reflection decides append vs edit on playbooks; modal warns on rule edits, does not block.
+
+Cross-ref: [PRD §0.1](prd/PRD.md) · [product-soul](product-soul.md) · [open-questions §G](open-questions.md).
 
 ---
+
 
 ## 1. Duplicate drafter packaging logic — `later`
 
@@ -64,32 +88,110 @@ Today: `/appeal` redacts via `appeal_phoenix_export.py`; showcase/GEPA/eval path
 
 ---
 
-## 3. Evaluate agent swarm vs aegis-v1 — `later`
+## 3. Evaluate agent swarm vs aegis-v1 — `assess` (gated)
 
-**Logged:** 2026-06-10  
-**Status:** Hackathon ships **aegis-v1** (single pipeline: library → drafter → simulator → judges). Part B swarm code exists but is not the production path.
+**Logged:** 2026-06-10 · **Updated:** 2026-06-10 (PM: swarm **deferred post-hackathon**, not submission path)
+
+**Status:** Hackathon ships **aegis-v1 only**. Swarm scaffold exists; **do not resume until §4 and §5 readouts exist.**
 
 ### What
 
-After submission, run a structured comparison: keep aegis-v1 as the baseline and expand (or fully switch) to the **12-agent swarm** architecture to test whether quality improves and whether total cost per good appeal drops over time.
-
-Today aegis-v1 is the right bet for the demo — one traceable pipeline, fewer moving parts, faster iteration. The swarm was designed for parallel specialist roles (retrieval, clinical framing, insurer-specific tactics, etc.) but was not validated head-to-head against v1 on the same benchmark.
+Run a structured comparison: v1 baseline vs **12-agent swarm** on the same held-out cohorts. Question is not “can we build swarm?” (we can) but “does swarm beat an improved v1 enough to justify orchestration complexity and cost?”
 
 ### Why it matters
 
-- **Quality:** Swarm may beat v1 on hard slices (e.g. multi-hook denials, weak clinical packets) if specialization helps — or it may not, if coordination overhead and duplicate LLM calls hurt.
-- **Cost:** v1 is simpler per request; swarm may look more expensive per draft but could be **more cost-effective** if it reaches APPROVE in fewer retries, needs less human rework, or uses cheaper models on narrow sub-agents while reserving a strong model for the drafter only.
-- **Learning loop:** Slice playbooks and GEPA already assume per-slice improvement; swarm credit assignment (`swarm_scored_run`, coordinator) is built for Part B — we have not proven it beats v1 learning on the 100-case showcase.
+- **Quality:** Specialization may help multi-hook denials — or coordination overhead may hurt.
+- **Cost:** Swarm multiplies LLM calls per case; only worth it if APPROVE rate or judge composite improves materially per dollar.
+- **Learning:** v1 GEPA already mutates drafter + slice playbooks + US-playbook; swarm `swarm_scored_run` credit assignment is unproven vs v1 on showcase cohorts.
 
-### Proposed exploration (when we pick it up)
+### Proposed exploration
 
-1. **Same benchmark, same rubric** — run v1 and swarm on held-out cases (e.g. showcase quick/serious splits); compare weighted quality, simulator APPROVE rate, faithfulness gate, and $/case (tokens + retries).
-2. **Cost model** — track attempts-to-APPROVE, wall time, and token spend per architecture; include “cost to first acceptable draft” not just single-shot.
-3. **Go/no-go** — promote swarm only if it wins on primary quality metrics without blowing cost guardrails; otherwise keep v1 and mine swarm ideas (e.g. optional specialist agents) incrementally.
+1. Same benchmark, same rubric — quick + serious holdouts; weighted quality, simulator APPROVE, grounding.
+2. Cost model — $/case, attempts-to-APPROVE, wall time per architecture.
+3. **Go/no-go** — swarm only if it wins on quality **and** passes cost guardrails from §5.
 
 ### PM note
 
-Not a commitment to build the full swarm in production — an experiment to see if the Part B design pays off after the hackathon safety net (v1) is shipped.
+Deferred, not cancelled. Chapter two after v1 economics are understood.
+
+---
+
+## 4. Library agent — freer online search vs controlled corpus — `assess` (priority)
+
+**Logged:** 2026-06-10  
+**Status:** Corpus-first at submission. Vertex / discovery stack exists; **broader online retrieval not validated for quality lift.**
+
+### What
+
+Today the library path is bounded: local `corpus/` snippets + configured Vertex search. Post-hackathon question: **if the library agent can search online sources more freely**, how much does appeal quality improve on held-out cases?
+
+### Why it matters
+
+- **Upside:** Better grounding and appeal_vector_capture when denial hooks need statutes, plan language, or insurer policy text not in corpus.
+- **Downside:** Hallucination risk, citation discipline, latency, and per-draft API cost — judges explicitly score grounding; uncontrolled web text may hurt as often as help.
+
+### Proposed experiment
+
+| Arm | Library stack |
+|-----|----------------|
+| A (baseline) | Current corpus + Vertex as shipped |
+| B (treatment) | A + bounded online / broader discovery (define cap: domains, result count, cache) |
+
+**Metrics:** held-out composite; grounding dimension; hard-gate PASS rate; faithfulness / citation checks; $/draft.
+
+**Kill:** No composite lift or grounding regression vs A.
+
+### PM note
+
+Assess **before** scaling GEPA or swarm — cheap retrieval wins may beat expensive multi-agent coordination.
+
+---
+
+## 5. GEPA showcase loop — cost vs quality lift — `assess` (priority)
+
+**Logged:** 2026-06-10  
+**Status:** Showcase GEPA + human approve ships for hackathon. **No cost/lift accounting yet.**
+
+### What
+
+Showcase training is expensive. Per promotion cycle (preview 7 cases or production 70 cases), the system runs:
+
+- Training seed: student draft + full judge panel + question judge per case
+- GEPA: reflection + re-score on holdout/train split (`max_rounds` × components: drafter, question prompt, slice playbooks, US-playbook)
+- Post-candidate eval + before/after **simulator measurement** (no judges on measure path)
+
+Each step is multiple Gemini calls. Cost scales with cohort size and rounds.
+
+### Why it matters
+
+- A small composite lift on 7 cases may **not** justify production-scale GEPA if 70-case runs cost tens of dollars per cycle.
+- PM needs a **$/+0.01 composite** or **$/APPROVE flip** number before enabling larger cohorts, more rounds, or autonomous promotion.
+
+### Proposed instrumentation
+
+1. Log token usage (or estimate from provider billing) per showcase stage: `train_gepa`, `measure_before`, `measure_after`, `promote`.
+2. Run at least one full **preview** and one **production** cycle with accounting.
+3. Compare held-out simulator APPROVE delta (before vs after approved promotion) to total spend.
+
+| Outcome | Action |
+|---------|--------|
+| Lift clear, cost acceptable | Keep GEPA; consider more rounds / cohorts |
+| Lift clear, cost high | Cheaper reflection signal, fewer rounds, or smaller minibatch |
+| Lift weak | Pause GEPA; fix judges/signal before spending more |
+| Lift negative | Rollback; treat as regression |
+
+### PM note
+
+Apprentice (human approve) stays until this readout. Journeyman/Master autonomous promotion **blocked** until economics are documented.
+
+---
+
+## 6. State-scoped US-playbook rules — `later`
+
+**Logged:** 2026-06-10  
+**Status:** US-playbook ships with federal rules only; cases lack `us_state` so state-tagged rules are filtered at runtime.
+
+When benchmark cases carry `us_state` and `plan_funding_type`, enable state-scoped rule learning (mirror slice isolation: only mutate CA rules when CA cases are in training).
 
 ---
 

@@ -27,6 +27,7 @@ Quick navigation for agents picking up this project.
 
 | Date | Session | Handoff file |
 |---|---|---|
+| 2026-06-10 | Session end (Cursor — question agent closeout) | [2026-06-10-session-handoff-question-agent-closeout.md](../2026-06-10-session-handoff-question-agent-closeout.md) · [agent-handoffs.md](agent-handoffs.md#2026-06-10--handoff-cursor--question-agent-closeout) |
 | 2026-06-10 | Session end (Cursor — US-playbook wired) | [agent-handoffs.md](agent-handoffs.md#2026-06-10--handoff-cursor--us-playbook-wired-end-to-end) |
 | 2026-06-10 | Session end (Cursor — showcase approved cohorts + prod 50/20) | [agent-handoffs.md](agent-handoffs.md#2026-06-10--handoff-cursor--showcase-cohort-paths--production-5020) |
 | 2026-06-10 | Session end (Cursor — appeal retry caps) | [agent-handoffs.md](agent-handoffs.md#2026-06-10--handoff-cursor--appeal-retry-caps--libraryorchestrator-clarity) |
