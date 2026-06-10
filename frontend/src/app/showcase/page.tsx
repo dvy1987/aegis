@@ -22,7 +22,7 @@ import type {
 import { Nav } from "@/components/Nav";
 import { ShowcaseFilm } from "@/components/showcase/ShowcaseFilm";
 
-const DEFAULT_CASE = "case_13_cigna_mednec";
+const DEFAULT_CASE = "case_126_cigna_mednec";
 
 export default function ShowcasePage() {
   const ds = showcaseSource;

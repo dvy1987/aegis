@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from app.aegis_v1.showcase_manifest import load_showcase_manifest
+from app.aegis_v1.showcase_manifest import _case_number, load_showcase_manifest
 
 
 def test_manifest_loads_targeted_quick_cohort() -> None:
@@ -15,20 +15,22 @@ def test_manifest_loads_targeted_quick_cohort() -> None:
     assert {case.denial_type for case in manifest.quick_holdout} == {"medical_necessity"}
 
 
-def test_manifest_quick_sets_are_subsets_of_serious_sets() -> None:
+def test_manifest_quick_cohort_is_separate_from_serious_benchmark() -> None:
     manifest = load_showcase_manifest()
 
     quick_train_ids = {case.case_id for case in manifest.quick_train}
     quick_holdout_ids = {case.case_id for case in manifest.quick_holdout}
     serious_train_ids = {case.case_id for case in manifest.serious_train}
     holdout_ids = {case.case_id for case in manifest.serious_holdout}
+    quick_ids = quick_train_ids | quick_holdout_ids
 
     assert len(manifest.serious_train) == 80
     assert len(manifest.serious_holdout) == 20
     assert serious_train_ids.isdisjoint(holdout_ids)
-    assert quick_train_ids <= serious_train_ids
-    assert quick_holdout_ids <= holdout_ids
-    assert len(quick_train_ids | quick_holdout_ids | serious_train_ids | holdout_ids) == 100
+    assert quick_ids.isdisjoint(serious_train_ids | holdout_ids)
+    for case_id in quick_ids:
+        assert 101 <= _case_number(case_id) <= 200
+    assert len(quick_ids | serious_train_ids | holdout_ids) == 110
 
 
 def test_manifest_case_metadata_is_student_safe() -> None:

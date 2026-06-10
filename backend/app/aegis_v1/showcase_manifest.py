@@ -84,6 +84,13 @@ def _load_case(case_id: str) -> ShowcaseCase:
     )
 
 
+def _case_number(case_id: str) -> int:
+    parts = case_id.split("_")
+    if len(parts) < 2 or parts[0] != "case" or not parts[1].isdigit():
+        raise ValueError(f"Unrecognized case id format: {case_id}")
+    return int(parts[1])
+
+
 def _load_cases(case_ids: list[str]) -> list[ShowcaseCase]:
     seen: set[str] = set()
     out: list[ShowcaseCase] = []
@@ -119,10 +126,13 @@ def load_showcase_manifest(path: Path | None = None) -> ShowcaseManifest:
         raise ValueError("quick_train and quick_holdout must not overlap")
     if train_ids & holdout_ids:
         raise ValueError("serious_train and serious_holdout must not overlap")
-    if not quick_train_ids <= train_ids:
-        raise ValueError("quick_train must be a subset of serious_train")
-    if not quick_holdout_ids <= holdout_ids:
-        raise ValueError("quick_holdout must be a subset of serious_holdout")
+    serious_ids = train_ids | holdout_ids
+    if quick_train_ids & serious_ids or quick_holdout_ids & serious_ids:
+        raise ValueError("quick cohort must not overlap cases 1-100 serious benchmark")
+    for case_id in quick_train_ids | quick_holdout_ids:
+        number = _case_number(case_id)
+        if not 101 <= number <= 200:
+            raise ValueError(f"quick cohort case must be numbered 101-200: {case_id}")
 
     return ShowcaseManifest(
         benchmark_id=str(raw["benchmark_id"]),

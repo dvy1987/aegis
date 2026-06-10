@@ -1,50 +1,31 @@
 # V1 Showcase 100 Selection Report
 
-Date: 2026-06-06
+Date: 2026-06-09 (preview cohort updated)
 
-## Decision
+## Quick preview cohort (cases 101–200)
 
-The quick run uses a targeted Cigna + medical-necessity cohort rather than literal `case_01` through `case_10`.
+The preview run uses a **separate** 10-case bundle from the Gumloop-reviewed `case_101`–`case_200` batch. It does **not** overlap the serious benchmark (cases 1–100).
 
-Selected quick training cohort:
+| Role | Insurer | Denial type | Cases |
+|---|---|---|---|
+| Training (8) | Cigna | Medical necessity | `case_101`, `case_116`, `case_118`, `case_124`, `case_132`, `case_134`, `case_145`, `case_146` |
+| Holdout (2) | Cigna | Medical necessity | `case_126`, `case_131` |
 
-- Insurer: Cigna
-- Denial type: medical necessity
-- Cases: `case_01`, `case_07`, `case_19`, `case_22`, `case_30`, `case_35`, `case_45`, `case_48`
+### Holdout selection note
 
-Selected quick holdout cohort:
+The 101–200 batch has no `appeal_difficulty.score == 3` (medium) Cigna medical-necessity cases. Holdout cases were chosen as the **closest-to-medium** pair in that slice (fewest exploitable weaknesses among score-5 cases).
 
-- Insurer: Cigna
-- Denial type: medical necessity
-- Difficulty: medium (`synthetic_provenance.appeal_difficulty.score == 3`)
-- Cases: `case_13`, `case_46`
+## Serious benchmark (cases 1–100)
 
-## Rationale
+Unchanged from 2026-06-06:
 
-Literal cases 1-10 are mixed across three insurers and two denial types. That would make the quick run a noisier learning signal and a weaker demo. The selected quick cohort is single-insurer and single-denial-type, which matches the PM-approved priority for a targeted quick learning check.
+- `serious_train`: 80 cases (all of 1–100 except holdout)
+- `serious_holdout`: 20 medium-difficulty cases balanced across insurer × denial-type slices
 
-The quick holdout is split out so the quick demo has a clean pre/post measurement set. The quick train cases merge into `serious_train`; the quick holdout cases merge into `serious_holdout`.
-
-## Serious Split
-
-- `serious_train`: first-100 cases excluding `serious_holdout`, 80 cases. Includes every `quick_train` case.
-- `serious_holdout`: 20 medium-difficulty cases balanced across insurer + denial-type slices. Includes every `quick_holdout` case.
-
-The serious holdout is not used for GEPA training.
-
-Selected serious holdout:
-
-- Aetna + medical necessity: `case_37`, `case_52`, `case_85`
-- Aetna + prior authorization: `case_04`, `case_28`, `case_55`, `case_73`
-- Cigna + medical necessity: `case_13`, `case_46`, `case_64`
-- Cigna + prior authorization: `case_16`, `case_76`, `case_100`
-- UHC + medical necessity: `case_34`, `case_61`, `case_91`, `case_97`
-- UHC + prior authorization: `case_10`, `case_40`, `case_88`
-
-Each holdout case has at least one same-insurer + same-denial-type case remaining in `serious_train`.
+The serious holdout is not used for GEPA training during the quick preview run.
 
 ## Guardrails
 
 - Draft case files are read-only inputs.
-- The manifest references case ids; it does not modify or copy case content.
-- Frontend metadata must expose only student-safe fields.
+- The manifest references case ids; it does not modify case content.
+- Quick cohort cases must be numbered 101–200 and must not overlap the 1–100 serious benchmark.

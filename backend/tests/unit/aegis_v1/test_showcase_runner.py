@@ -88,21 +88,13 @@ def test_quick_session_uses_holdout_and_training_rows_before_approval(
     monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
     monkeypatch.setattr(showcase_runner, "_eval_post_gepa_candidate", lambda *a, **k: [])
 
+    manifest = load_showcase_manifest()
     run_quick_session(session.session_id)
 
     assert calls[0]["phase"] == "pre"
-    assert calls[0]["case_ids"] == ["case_13_cigna_mednec", "case_46_cigna_mednec"]
+    assert calls[0]["case_ids"] == [case.case_id for case in manifest.quick_holdout]
     assert calls[1]["phase"] == "training_pre"
-    assert calls[1]["case_ids"] == [
-        "case_01_cigna_mednec",
-        "case_07_cigna_mednec",
-        "case_19_cigna_mednec",
-        "case_22_cigna_mednec",
-        "case_30_cigna_mednec",
-        "case_35_cigna_mednec",
-        "case_45_cigna_mednec",
-        "case_48_cigna_mednec",
-    ]
+    assert calls[1]["case_ids"] == [case.case_id for case in manifest.quick_train]
     assert calls[2]["phase"] == "training_post"
     assert calls[2]["prompt_text"] == "candidate prompt"
     assert calls[2]["playbook_overrides"]
@@ -208,8 +200,9 @@ def test_approve_session_writes_rollback_checkpoint_before_promotion(
         f"checkpoint:quick:{session.session_id}:c1",
         "promote:c1:pm",
     ]
+    manifest = load_showcase_manifest()
     assert measure_calls == [
-        {"phase": "post", "case_ids": ["case_13_cigna_mednec", "case_46_cigna_mednec"]}
+        {"phase": "post", "case_ids": [case.case_id for case in manifest.quick_holdout]}
     ]
     assert manager.get(session.session_id).status == "successful"
 
@@ -506,12 +499,16 @@ def test_measure_skips_failing_case_and_continues(
         def model_dump(self) -> dict:
             return {"case_id": self._case_id}
 
+    manifest = load_showcase_manifest()
+    holdout = manifest.quick_holdout
+    fail_id = holdout[1].case_id
+    good_id = holdout[0].case_id
     seen: list[str] = []
 
     def flaky_measure(case_obj, **kwargs):
         case_id = case_obj["case_id"]
         seen.append(case_id)
-        if case_id == "case_46_cigna_mednec":
+        if case_id == fail_id:
             raise RuntimeError("simulated model error")
         return FakeResult(case_id)
 
@@ -522,14 +519,14 @@ def test_measure_skips_failing_case_and_continues(
         manager,
         session.session_id,
         phase="pre",
-        cases=load_showcase_manifest().quick_holdout,
+        cases=holdout,
     )
 
     # The good case is kept; the failing case is skipped, not fatal.
-    assert {r["case_id"] for r in results} == {"case_13_cigna_mednec"}
+    assert {r["case_id"] for r in results} == {good_id}
     reloaded = manager.get(session.session_id)
     failed_ids = [f.case_id for f in reloaded.checkpoint.failed_cases]
-    assert "case_46_cigna_mednec" in failed_ids
+    assert fail_id in failed_ids
     assert len(seen) == 2
 
 
@@ -576,12 +573,14 @@ def test_approval_marks_regression_when_holdout_score_drops(
     monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
     manager = ShowcaseSessionManager()
     session = manager.start_quick()
+    manifest = load_showcase_manifest()
+    holdout = manifest.quick_holdout
     manager.set_measure_results(
         session.session_id,
         phase="pre",
         results=[
-            {"case_id": "case_13_cigna_mednec", "verdict": "APPROVE", "score": 0.9},
-            {"case_id": "case_46_cigna_mednec", "verdict": "APPROVE", "score": 0.8},
+            {"case_id": holdout[0].case_id, "verdict": "APPROVE", "score": 0.9},
+            {"case_id": holdout[1].case_id, "verdict": "APPROVE", "score": 0.8},
         ],
     )
     manager.mark_needs_approval(session.session_id, proposal=_proposal().model_dump())
@@ -596,8 +595,8 @@ def test_approval_marks_regression_when_holdout_score_drops(
 
     def fake_measure(manager, session_id, *, phase, cases, **kwargs):
         results = [
-            {"case_id": "case_13_cigna_mednec", "verdict": "DENY", "score": 0.3},
-            {"case_id": "case_46_cigna_mednec", "verdict": "APPROVE", "score": 0.75},
+            {"case_id": holdout[0].case_id, "verdict": "DENY", "score": 0.3},
+            {"case_id": holdout[1].case_id, "verdict": "APPROVE", "score": 0.75},
         ]
         manager.set_measure_results(session_id, phase=phase, results=results)
         return results
