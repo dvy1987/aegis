@@ -94,17 +94,32 @@ class ExperimentRunner(Protocol):
 
 def _targeted_dimensions(candidate: Candidate, slice_: str) -> list[str]:
     """Which dimensions this candidate explicitly aims to improve, from playbook
-    dimension_targets and `dim:<name>` lines in the drafter prompt."""
-    targets: set[str] = set()
+    dimension_targets, `dim:<name>` lines in evolvable prompts, and reflection
+    credit on the candidate."""
+    targets: set[str] = set(candidate.dimension_targets)
     pb = candidate.components.get(f"playbook:{slice_}")
     if pb and pb.playbook:
         targets |= set(pb.playbook.get("dimension_targets", []))
-    prompt = candidate.components.get("drafter_system_prompt")
-    if prompt and prompt.text:
-        for line in prompt.text.splitlines():
-            if "dim:" in line:
-                targets.add(line.split("dim:")[1].strip().rstrip("."))
+    for comp_id in ("drafter_system_prompt", "question_agent_system_prompt"):
+        prompt = candidate.components.get(comp_id)
+        if prompt and prompt.text:
+            for line in prompt.text.splitlines():
+                if "dim:" in line:
+                    targets.add(line.split("dim:")[1].strip().rstrip("."))
     return [d for d in targets if d in DIMENSIONS]
+
+
+def _question_agent_client_for_candidate(candidate: Candidate) -> Any:
+    """Build a live question-agent client from the candidate's evolvable prompt."""
+    from app.aegis_v1.question_agent import GeminiQuestionAgentClient
+
+    comp = candidate.components.get("question_agent_system_prompt")
+    if comp is None:
+        return GeminiQuestionAgentClient()
+    return GeminiQuestionAgentClient(
+        prompt_version=comp.version,
+        prompt_text=comp.text,
+    )
 
 
 def _case_obj(case: dict[str, Any], dataset_split: str) -> dict[str, Any]:
@@ -195,6 +210,7 @@ class LiveExperimentRunner:
             geo_comp = candidate.components.get(US_PLAYBOOK_COMPONENT_ID)
             geo_playbook_override = geo_comp.playbook if geo_comp and geo_comp.playbook else None
             if self.recorder is not None and self.drafter_client is None:
+                qa_comp = candidate.components.get("question_agent_system_prompt")
                 evaluated = _run_evaluated_case(
                     _case_obj(case, dataset_split),
                     recorder=self.recorder,
@@ -205,6 +221,8 @@ class LiveExperimentRunner:
                     drafter_prompt_text=prompt_comp.text,
                     playbook_override=playbook_override,
                     geo_playbook_override=geo_playbook_override,
+                    run_question_agent=True,
+                    question_agent_client=_question_agent_client_for_candidate(candidate),
                     run_mode=self.run_mode,
                     trace_tags={
                         "memory_eligible": "true" if self.memory_eligible else "false",
@@ -213,6 +231,9 @@ class LiveExperimentRunner:
                         "run_mode": self.run_mode,
                         "dataset_split": dataset_split,
                         "prompt_version": prompt_comp.version,
+                        "question_agent_prompt_version": (
+                            qa_comp.version if qa_comp is not None else ""
+                        ),
                     },
                 )
                 report = evaluated.panel_report

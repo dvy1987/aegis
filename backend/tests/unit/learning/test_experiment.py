@@ -32,3 +32,23 @@ def test_targeting_the_weak_dimension_raises_the_composite():
     seed_score = StubExperimentRunner(DATASET).run(_seed(), dataset_split="benchmark_holdout").composite
     improved_score = StubExperimentRunner(DATASET).run(_improved(), dataset_split="benchmark_holdout").composite
     assert improved_score > seed_score   # the loop has real signal to climb
+
+
+def test_stub_runner_honors_question_agent_dimension_targets():
+    candidate = _seed().model_copy(
+        update={
+            "candidate_id": "qa_child",
+            "dimension_targets": ["question_agent"],
+            "components": {
+                **_seed().components,
+                "question_agent_system_prompt": Component(
+                    component_id="question_agent_system_prompt",
+                    kind="prompt",
+                    version="v2",
+                    text="Ask patient-knowable questions.\n- Strengthen dim:question_agent.",
+                ),
+            },
+        }
+    )
+    res = StubExperimentRunner(DATASET).run(candidate, dataset_split="benchmark_holdout")
+    assert all(case.dimension_scores["question_agent"] == 3 for case in res.per_case)

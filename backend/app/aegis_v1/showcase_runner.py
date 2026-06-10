@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Literal
+from typing import Any, Literal
 
 from app.aegis_v1.appeal_phoenix_export import write_training_phoenix_checkpoint
 from app.aegis_v1.phoenix_mode import PhoenixMode
@@ -23,7 +23,9 @@ from app.evals.part_a.evaluated_run import run_evaluated_case
 from app.evals.part_a.llm_judges import GeminiJudgeClient
 from app.evals.part_a.measurement_run import run_measurement_case
 from app.evals.part_a.recorder import OtelPhoenixRecorder
+from app.aegis_v1.geo_playbook import US_PLAYBOOK_COMPONENT_ID
 from app.learning.coordinator import LearningCoordinator
+from app.learning.slice_key import playbook_component_id
 from app.learning.slice_key import format_slice_key
 from app.learning.experiment import LiveExperimentRunner
 from app.learning.models import PromotionAudit, PromotionProposal
@@ -102,6 +104,7 @@ def _measure(
     drafter_prompt_text: str | None = None,
     playbook_overrides: dict[str, dict] | None = None,
     geo_playbook_override: dict | None = None,
+    question_agent_client: Any | None = None,
 ) -> list[dict]:
     stage = "measure_before" if phase in {"pre", "training_pre"} else "measure_after"
     if _is_cancelled(manager, session_id):
@@ -140,6 +143,7 @@ def _measure(
                 playbook_override=(playbook_overrides or {}).get(_case_slice(case)),
                 geo_playbook_override=geo_playbook_override,
                 run_question_agent=True,
+                question_agent_client=question_agent_client,
                 teacher_clinical_context=str(teacher_case.get("clinical_context") or ""),
             )
         except Exception as exc:
@@ -247,6 +251,16 @@ def _seed_training_signal(
     return trace_ids
 
 
+def _training_gepa_mutate_targets(slice_filters: list[str]) -> list[str]:
+    """GEPA round targets: drafter, question agent, every training-cohort slice playbook, US geo."""
+    return [
+        "drafter_system_prompt",
+        "question_agent_system_prompt",
+        *[playbook_component_id(slice_key) for slice_key in slice_filters],
+        US_PLAYBOOK_COMPONENT_ID,
+    ]
+
+
 def _optimize(
     *,
     cases: list[ShowcaseCase],
@@ -254,6 +268,7 @@ def _optimize(
     train_split: str,
     holdout_split: str,
     max_rounds: int,
+    mutate_component_ids_per_round: list[str] | None = None,
 ):
     store = LivePhoenixLearningStore()
     runner = LiveExperimentRunner(
@@ -272,6 +287,7 @@ def _optimize(
         train_split=train_split,
         holdout_split=holdout_split,
         max_rounds=max_rounds,
+        mutate_component_ids_per_round=mutate_component_ids_per_round,
     )
     return coordinator.optimize()
 
@@ -345,6 +361,7 @@ def _eval_post_gepa_candidate(
     prompt_version, prompt_text = _candidate_prompt(proposal)
     playbooks = _candidate_playbooks(proposal)
     geo_playbook = _candidate_geo_playbook(proposal)
+    question_agent_client = _candidate_question_agent_client(proposal)
     trace_ids: list[str] = []
     manager.set_stage(session_id, stage="train_gepa", total_cases=len(cases))
     for index, case in enumerate(cases, start=1):
@@ -371,11 +388,12 @@ def _eval_post_gepa_candidate(
                 drafter_client=None,
                 judge_client=GeminiJudgeClient(),
                 run_simulator=False,
-                run_question_agent=True,
                 drafter_prompt_version=prompt_version,
                 drafter_prompt_text=prompt_text,
                 playbook_override=playbooks.get(slice_key),
                 geo_playbook_override=geo_playbook,
+                run_question_agent=True,
+                question_agent_client=question_agent_client,
                 run_mode="training_checkpoint_post_gepa",
                 trace_tags={
                     "memory_eligible": "true",
@@ -413,6 +431,18 @@ def _candidate_prompt(proposal: PromotionProposal) -> tuple[str | None, str | No
     if comp is None:
         return None, None
     return comp.version, comp.text
+
+
+def _candidate_question_agent_client(proposal: PromotionProposal) -> Any | None:
+    from app.aegis_v1.question_agent import GeminiQuestionAgentClient
+
+    comp = proposal.candidate.components.get("question_agent_system_prompt")
+    if comp is None:
+        return None
+    return GeminiQuestionAgentClient(
+        prompt_version=comp.version,
+        prompt_text=comp.text,
+    )
 
 
 def _candidate_playbooks(proposal: PromotionProposal) -> dict[str, dict]:
@@ -554,6 +584,7 @@ def _run_learning_session(
                 train_split=train_split,
                 holdout_split=train_split,
                 max_rounds=max_rounds,
+                mutate_component_ids_per_round=_training_gepa_mutate_targets(slice_filters),
             )
             if proposal is None:
                 manager.fail_stage(
@@ -606,6 +637,7 @@ def _run_learning_session(
                 drafter_prompt_text=candidate_prompt_text,
                 playbook_overrides=_candidate_playbooks(proposal),
                 geo_playbook_override=_candidate_geo_playbook(proposal),
+                question_agent_client=_candidate_question_agent_client(proposal),
             )
             manager.save_checkpoint(session_id, training_post_done=True)
 

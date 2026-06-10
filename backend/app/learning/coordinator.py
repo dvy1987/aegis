@@ -29,7 +29,8 @@ class LearningCoordinator:
                  slice_filters: list[str] | None = None,
                  holdout_split: str = "benchmark_holdout", train_split: str = "benchmark_train",
                  max_rounds: int = 8, max_merges: int = 5,
-                 minibatch_size: int = 3) -> None:
+                 minibatch_size: int = 3,
+                 mutate_component_ids_per_round: list[str] | None = None) -> None:
         self.store = store
         self.runner = runner
         self.reflection_client = reflection_client
@@ -40,6 +41,7 @@ class LearningCoordinator:
         self.max_rounds = max_rounds
         self.max_merges = max_merges
         self.minibatch_size = minibatch_size
+        self.mutate_component_ids_per_round = list(mutate_component_ids_per_round or [])
 
     def _eligible_component_ids(self) -> frozenset[str]:
         return frozenset(
@@ -162,30 +164,47 @@ class LearningCoordinator:
         allowed = self._eligible_component_ids()
         for round_index in range(self.max_rounds):
             parent = pareto_select(pool, scores)
-            comp_id = select_component(parent, round_index, allowed=allowed)
-            signal = acquire_signal(self.store, component_id=comp_id,
-                                    dataset_split=self.train_split,
-                                    slice_filter=self._component_slice_filter(comp_id))
-            if signal is None:
-                break
-            minibatch = signal.failing_cases[: self.minibatch_size]
-            counter += 1
-            if comp_id == US_PLAYBOOK_COMPONENT_ID:
-                child = reflective_mutate_geo(
-                    parent,
-                    signal,
-                    self.reflection_client,
-                    minibatch=minibatch,
-                    next_id=f"c{counter}",
-                )
+            if self.mutate_component_ids_per_round:
+                target_ids = [
+                    comp_id
+                    for comp_id in self.mutate_component_ids_per_round
+                    if comp_id in allowed and comp_id in parent.components
+                ]
             else:
-                child = reflective_mutate(
-                    parent,
-                    signal,
-                    self.reflection_client,
-                    minibatch=minibatch,
-                    next_id=f"c{counter}",
+                target_ids = [select_component(parent, round_index, allowed=allowed)]
+
+            child = parent
+            mutated = False
+            for comp_id in target_ids:
+                signal = acquire_signal(
+                    self.store,
+                    component_id=comp_id,
+                    dataset_split=self.train_split,
+                    slice_filter=self._component_slice_filter(comp_id),
                 )
+                if signal is None:
+                    continue
+                minibatch = signal.failing_cases[: self.minibatch_size]
+                counter += 1
+                if comp_id == US_PLAYBOOK_COMPONENT_ID:
+                    child = reflective_mutate_geo(
+                        child,
+                        signal,
+                        self.reflection_client,
+                        minibatch=minibatch,
+                        next_id=f"c{counter}",
+                    )
+                else:
+                    child = reflective_mutate(
+                        child,
+                        signal,
+                        self.reflection_client,
+                        minibatch=minibatch,
+                        next_id=f"c{counter}",
+                    )
+                mutated = True
+            if not mutated:
+                break
             res = self.runner.run(child, dataset_split=self.holdout_split, gepa_round=round_index + 1)
             pool.append(child)
             results[child.candidate_id] = res

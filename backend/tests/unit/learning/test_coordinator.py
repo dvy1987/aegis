@@ -127,6 +127,42 @@ def test_coordinator_can_seed_and_optimize_multiple_playbook_slices():
     assert proposal.after.composite > proposal.before.composite
 
 
+def test_coordinator_preview_mutates_drafter_question_agent_and_playbook_in_one_round():
+    store = _seeded_store()
+    store.seed_component(
+        Component(
+            component_id="question_agent_system_prompt",
+            kind="prompt",
+            version="v1",
+            text="probe",
+        )
+    )
+    coord = LearningCoordinator(
+        store=store,
+        runner=StubExperimentRunner(DATASET),
+        reflection_client=StubReflectionClient(),
+        slice_filter=SLICE,
+        slice_filters=[SLICE],
+        holdout_split="benchmark_holdout",
+        train_split="benchmark_train",
+        max_rounds=1,
+        mutate_component_ids_per_round=[
+            "drafter_system_prompt",
+            "question_agent_system_prompt",
+            f"playbook:{SLICE}",
+            "geo_playbook:us",
+        ],
+    )
+    proposal = coord.optimize()
+    assert proposal is not None
+    child = proposal.candidate
+    assert child.components["drafter_system_prompt"].version != "v1"
+    assert child.components["question_agent_system_prompt"].version != "v1"
+    assert child.components[f"playbook:{SLICE}"].version != "v1"
+    assert child.components["geo_playbook:us"].version != "cold-start"
+    assert child.candidate_id == "c4"
+
+
 def test_promote_skips_playbooks_outside_active_slices():
     store = InMemoryPhoenixLearningStore()
     store.seed_component(Component(component_id="drafter_system_prompt", kind="prompt", version="v1", text="draft"))

@@ -70,6 +70,12 @@ def test_live_runner_persists_tier_b_metadata(monkeypatch) -> None:
                 version="v2",
                 text="prompt",
             ),
+            "question_agent_system_prompt": Component(
+                component_id="question_agent_system_prompt",
+                kind="prompt",
+                version="question_agent_v2",
+                text="Ask sharper patient-knowable questions.",
+            ),
             "playbook:Cigna:medical_necessity:not_evidence_based": Component(
                 component_id="playbook:Cigna:medical_necessity:not_evidence_based",
                 kind="playbook",
@@ -89,3 +95,7 @@ def test_live_runner_persists_tier_b_metadata(monkeypatch) -> None:
     assert result.composite > 0
     assert len(seen) == 1
     assert seen[0]["trace_tags"]["gepa_round"] == 1
+    assert seen[0]["run_question_agent"] is True
+    client = seen[0]["question_agent_client"]
+    assert client._prompt_version == "question_agent_v2"
+    assert client._prompt_text == "Ask sharper patient-knowable questions."
