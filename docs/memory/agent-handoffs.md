@@ -3381,3 +3381,39 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - **Committed (4 ahead of origin):** `e6ee11c` question-agent substantive/gap routing · `5259ef2` promotion preview question-agent diff · `c0f186f` showcase resume + status tests · `06b3467` PRD/README/Post-hackathon + spare-cases archive.
+
+---
+
+## 2026-06-10 — Handoff (Cursor — GEPA multi-mutate + cost/session Q&A)
+
+### Done
+- **Diagnosed preview run `quick_20260609_124504_d7fb13`:** failed at GEPA optimize (`judge panel incomplete`); ~**$1.97 Gemini** actual spend from Phoenix traces (~77% GEPA judges); measurement not fully trace-tagged.
+- **Clarified for PM:** drafter active prompt = day-zero **`drafter_v1.md`** (no `active_drafter_prompt.txt` on disk); short ADK instruction in `drafter_agent.py` is separate; **child eval** = draft+judge training cases with mutated candidate.
+- **Clarified playbook layout:** insurer slice playbooks in `playbooks/` (6 day-zero = 3 insurers × 2 denial types); US rules in `geo_playbooks/us_playbook.json`; GEPA only loads slices present in training cohort.
+- **Shipped `992fb7b`:** showcase GEPA now **chains one round of reflections** on drafter + question agent + **all `slice_filters` playbooks** + US geo before one child eval; `LiveExperimentRunner` passes candidate question-agent prompt into eval; tests 11/11 on learning slice.
+
+### Debated
+- **Round-robin vs multi-mutate:** PM wanted all training insurers/slices touched without raising `max_rounds` → **multi-mutate per round** (more reflection calls, same round count).
+- **Serious run:** same mutate list applies each of 3 rounds (higher Gemini cost than old round-robin).
+
+### Decisions
+- Preview + serious showcase both use `_training_gepa_mutate_targets(slice_filters)` — not quick-only.
+
+### Deferred
+- **Push/deploy** — PM has not requested.
+- **Rollback stack** still may not snapshot question-agent + US-playbook files (pre-existing gap).
+- **Question judge still stubbed** in panel — mutating question-agent prompt won't move composite until real judge ships.
+- Untracked `eval/GUINEA-PIG-RUNS/` + `run_guinea_pig_measure.py` — not part of this session.
+
+### Next Agent Should Know
+- Failed preview never approved → no promoted files; still baseline `drafter_v1`.
+- GEPA optimize duplicates work: measurement → gepa_seed (judge) → optimize seed re-eval + child — main cost driver.
+- Re-run preview after deploy to validate multi-mutate + judge stability.
+
+### Revisit Triggers
+- Serious run cost/latency too high → consider signal-driven single-component rounds for rounds 2–3 only.
+- `judge panel incomplete` again → check Vertex 429 / judge workflow empty spans.
+
+### Working Tree
+- **Committed:** `992fb7b` on `main`, **1 commit ahead of origin**.
+- **Clean** except untracked guinea-pig artifacts.

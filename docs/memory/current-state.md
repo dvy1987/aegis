@@ -1,7 +1,15 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-10 (session end — showcase frontend sync + doc alignment)
-**Phase:** **Question-agent closeout + showcase FE sync committed (`e6ee11c`–`06b3467`). `main` 4 commits ahead of origin (5 after memory commit).**
+**Updated:** 2026-06-10 (session end — GEPA multi-mutate)
+**Phase:** **GEPA showcase optimize chains drafter + question agent + all training slice playbooks + US geo per round (`992fb7b`). `main` 1 commit ahead of origin (+ memory commit pending).**
+
+### 2026-06-10 - GEPA multi-mutate per showcase round (`992fb7b`)
+- **Problem:** Quick preview `max_rounds=1` only mutated one component (round-robin → usually drafter).
+- **Fix:** `mutate_component_ids_per_round` on `LearningCoordinator`; showcase passes `_training_gepa_mutate_targets(slice_filters)` for quick + serious.
+- **Child eval:** `LiveExperimentRunner` uses candidate `question_agent_system_prompt` during GEPA eval.
+- **Cost context:** Failed preview `quick_20260609_124504_d7fb13` ≈ **$1.97 Gemini** (Phoenix token meter); GEPA judges ~77%.
+- **Runtime prompt:** Still day-zero `drafter_v1.md` (no promotion from failed run).
+- **Next:** push when PM asks; re-run preview live; watch serious 3× multi-mutate cost.
 
 ### 2026-06-10 - Showcase frontend gap fixes (`06b3467`)
 - **Cohort UI:** production grid 50 train (25+25 layout); fallbacks/tests updated from stale 80.
