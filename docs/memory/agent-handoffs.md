@@ -3331,3 +3331,38 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 ### Working Tree
 - **Dirty (6 files):** `promotion_preview.py`, `test_promotion_preview.py`, `PromotionReviewModal.tsx`, `promotionPreview.ts`, question-agent handoff doc, geo playbook plan.
 - **Committed ahead of origin:** 2 commits (`dddc813`, `ac628c1` on top of prior `712af93` chain).
+
+---
+
+## 2026-06-10 — Handoff (Cursor — showcase frontend sync)
+
+### Done
+- Audited showcase FE vs backend API/contracts; closed main gaps in one pass.
+- **Production cohort:** `matrixSlots.ts` + `statusPreviewBatch.ts` — 50 train (was 80); evidence grid 25+25.
+- **Resume:** `resumeRun()` in `live.ts` + Run Status **Resume from checkpoint** when `failed` && `retryable`.
+- **Copy/types:** six judge dimensions (not seven); GEPA copy names question agent + US-playbook; rollback CTA; `ShowcaseRollbackFileSnapshot` type.
+- **Tests:** `statusPreviewBatch.test.ts` rewritten (fixes prior `tsc` errors); vitest **28/28** pass.
+- **Promotion preview (carried forward):** question-agent section in modal + `promotion_preview.py` baseline load.
+
+### Debated
+- None — aligned FE to existing backend contracts and PM-locked GEPA scope.
+
+### Decisions
+- No new product decisions.
+
+### Deferred
+- **Backend rollback** still snapshots drafter + slice playbooks only (not question-agent or US-playbook files).
+- **Push/deploy** — committed `06b3467`; PM has not requested push.
+- **`tsc` re-verify** after final edits (environment was flaky mid-session).
+
+### Next Agent Should Know
+- Showcase manifest drives counts — never hardcode 80 serious train.
+- Approval flow: poll stops at `needs_approval`; after approve, status → `running` (promote/post-measure) and polling resumes.
+- Dirty tree is large (showcase FE + promotion preview + eval case moves + docs); review `git status` before commit.
+
+### Revisit Triggers
+- Live modal missing question-agent or US sections → trace `promotion_preview` payload on session.
+- Failed run not resumable → check `diagnostics.retryable` from backend.
+
+### Working Tree
+- **Committed (4 ahead of origin):** `e6ee11c` question-agent substantive/gap routing · `5259ef2` promotion preview question-agent diff · `c0f186f` showcase resume + status tests · `06b3467` PRD/README/Post-hackathon + spare-cases archive.

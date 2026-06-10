@@ -1,7 +1,15 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-10 (session end — question agent closeout)
-**Phase:** **Question agent + US-playbook + showcase GEPA wired. Question prompt activates on promote (`ac628c1`). Approval modal diff for question agent in dirty tree. `main` 2 commits ahead of origin, 6 files uncommitted.**
+**Updated:** 2026-06-10 (session end — showcase frontend sync + doc alignment)
+**Phase:** **Question-agent closeout + showcase FE sync committed (`e6ee11c`–`06b3467`). `main` 4 commits ahead of origin (5 after memory commit).**
+
+### 2026-06-10 - Showcase frontend gap fixes (`06b3467`)
+- **Cohort UI:** production grid 50 train (25+25 layout); fallbacks/tests updated from stale 80.
+- **Resume:** `POST /v1/showcase/runs/{id}/resume` wired — button when `failed` + `retryable`.
+- **Copy:** six judge dimensions; GEPA mentions question agent + US rules; rollback CTA clarified.
+- **Promotion modal:** question-agent prompt diff (`kind: question_agent`) + US rule edits (prior session + this session).
+- **Tests:** `statusPreviewBatch.test.ts` rewritten for `CaseSummary` + tsc; vitest **28/28** pass (pre-final-edit run).
+- **Next:** push when PM asks; run `npx tsc --noEmit` to confirm; live showcase approval smoke; optional rollback backend extension.
 
 ### 2026-06-10 - Question agent closeout (see `docs/2026-06-10-session-handoff-question-agent-closeout.md`)
 - **Committed:** `ac628c1` — promoted `question_agent_system_prompt` writes `active_question_agent_prompt.txt` (mirrors drafter).
