@@ -36,8 +36,8 @@
 
 The `backend/test_mcp_standalone.py` spike connects to `@arizeai/phoenix-mcp` but `list-traces` returned an auth/version error (see `agent-handoffs.md`). Fix auth, confirm reads, and **record real payloads as fixtures** — those fixtures make every downstream transform offline-testable forever.
 
-- [ ] **Step 1** — In the env, set `PHOENIX_API_KEY`, `PHOENIX_HOST=https://app.phoenix.arize.com`, and (if Arize Cloud needs it) `PHOENIX_CLIENT_HEADERS="api_key=$PHOENIX_API_KEY"` and `PHOENIX_PROJECT=aegis-hackathon`. Re-run the spike: `cd backend && env UV_CACHE_DIR=/tmp/uv-cache uv run python test_mcp_standalone.py`. Acceptance: it lists tools AND a `get-spans` (or `list-datasets`) call returns without auth error.
-- [ ] **Step 2** — First produce real spans: run a few benchmark cases through `run_evaluated_case` with the `OtelPhoenixRecorder` so tagged spans + annotations exist in `aegis-hackathon`. (`cd backend && env UV_CACHE_DIR=/tmp/uv-cache uv run python -m app.learning.run_live --record-only` — added in Task 4, or a one-off script.)
+- [ ] **Step 1** — In the env, set `PHOENIX_API_KEY`, `PHOENIX_HOST=https://app.phoenix.arize.com`, and (if Arize Cloud needs it) `PHOENIX_CLIENT_HEADERS="api_key=$PHOENIX_API_KEY"` and `PHOENIX_PROJECT=aegis-swarm`. Re-run the spike: `cd backend && env UV_CACHE_DIR=/tmp/uv-cache uv run python test_mcp_standalone.py`. Acceptance: it lists tools AND a `get-spans` (or `list-datasets`) call returns without auth error.
+- [ ] **Step 2** — First produce real spans: run a few benchmark cases through `run_evaluated_case` with the `OtelPhoenixRecorder` so tagged spans + annotations exist in `aegis-swarm`. (`cd backend && env UV_CACHE_DIR=/tmp/uv-cache uv run python -m app.learning.run_live --record-only` — added in Task 4, or a one-off script.)
 - [ ] **Step 3** — Call `get-spans` + `get-span-annotations` for the slice and **save the raw JSON** to `backend/tests/fixtures/phoenix/spans_sample.json` and `annotations_sample.json`; save a `list-traces`/`get-trace` payload to `traces_sample.json`. Redact nothing structural — these pin the real column/field names the transforms parse.
 - [ ] **Step 4** — Document the working auth recipe in `.env.example` (uncomment + annotate the exact vars) and in a comment atop `phoenix_mcp.py`. Commit the fixtures + `.env.example`.
 
@@ -198,7 +198,7 @@ def _summarize_traces(traces: list[dict], *, insurer: str, denial_type: str, que
 
 - [ ] **Step 4: Run offline test** — `... pytest tests/unit/aegis_v1/test_phoenix_summary_transform.py -q` → 2 passed. Confirm the whole offline suite still green.
 
-- [ ] **Step 5: Gated live smoke test** — `backend/tests/integration/test_live_phoenix.py`: `pytestmark = skipif(not _creds_available())`; call `fetch_slice_traces("Cigna","medical_necessity",project="aegis-hackathon")` and assert it returns a list (≥0) without raising; call `phoenix_mcp_lookup(...)` and assert `status in {"available","cold_start"}`. (Skips cleanly here.)
+- [ ] **Step 5: Gated live smoke test** — `backend/tests/integration/test_live_phoenix.py`: `pytestmark = skipif(not _creds_available())`; call `fetch_slice_traces("Cigna","medical_necessity",project="aegis-swarm")` and assert it returns a list (≥0) without raising; call `phoenix_mcp_lookup(...)` and assert `status in {"available","cold_start"}`. (Skips cleanly here.)
 
 - [ ] **Step 6: Commit**
 

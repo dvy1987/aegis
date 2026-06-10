@@ -4,7 +4,7 @@ This document tracks all deferred and outstanding tasks aggregated across Sessio
 
 ## 1. High-Priority Code & Audit Fixes
 - [x] **Stale File References:** Fix the ~9+ files referencing the deleted `fast_api_app.py`, port `8000`, and `app.agent`. Ensure `pytest tests/unit` passes.
-- [x] **Phoenix Project Name Decision:** Keep `default` for v1 and `aegis-hackathon` for swarm. No new projects.
+- [x] **Phoenix Project Name Decision:** Keep `default` for v1 and `aegis-swarm` for swarm. No new projects.
 - [x] **Simulator Threshold Logic:** Explicitly document the v1 simulator threshold (requires 10/10 to approve) as an intentional design choice for the demo arc.
 
 ## 2. Demo & Tracing

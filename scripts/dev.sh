@@ -157,7 +157,7 @@ start_backend_v1() {
 }
 
 start_backend_swarm() {
-  info "starting backend swarm on http://$BACKEND_HOST:$BACKEND_SWARM_PORT (Phoenix: aegis-hackathon)"
+  info "starting backend swarm on http://$BACKEND_HOST:$BACKEND_SWARM_PORT (Phoenix: aegis-swarm)"
   (
     cd "$BACKEND_DIR" || exit 1
     if [ -f "$ROOT/.env" ]; then

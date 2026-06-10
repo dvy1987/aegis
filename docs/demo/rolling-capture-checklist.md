@@ -26,7 +26,7 @@
 
 **Before you record, open these:**
 1. Browser left tab: `http://localhost:3000` (Aegis app — the workbench page, once built)
-2. Browser right tab: `https://app.arize.com` → log in → open Phoenix project **`default`** (v1 / Part A traces — not `aegis-hackathon`, which is swarm-only)
+2. Browser right tab: `https://app.arize.com` → log in → open Phoenix project **`default`** (v1 / Part A traces — not `aegis-swarm`, which is swarm-only)
 
 **What to record (2-3 minutes):**
 

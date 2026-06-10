@@ -42,7 +42,7 @@ Open the newly created `.env` file in your editor (e.g., VS Code or Notepad) and
 ```env
 PHOENIX_API_KEY=*************** (your API key here)
 # Do not set PHOENIX_PROJECT_NAME here — each backend pins its own project at startup:
-#   main_v1.py → default; main_swarm.py → aegis-hackathon
+#   main_v1.py → default; main_swarm.py → aegis-swarm
 PHOENIX_HOST=https://app.phoenix.arize.com/s/iitk-divya
 GOOGLE_CLOUD_PROJECT=gen-lang-client-0362343014
 GOOGLE_CLOUD_LOCATION=global
@@ -96,5 +96,5 @@ To start both backend services and the frontend, use the dev launcher:
 
 This starts:
 - **Backend v1** on port 8001 (Phoenix project: **`default`** — pinned in `main_v1.py`)
-- **Backend swarm** on port 8002 (Phoenix project: **`aegis-hackathon`** — pinned in `main_swarm.py`)
+- **Backend swarm** on port 8002 (Phoenix project: **`aegis-swarm`** — pinned in `main_swarm.py`)
 - **Frontend** on port 3000

@@ -68,7 +68,7 @@ Two-service Cloud Run deployment:
 | Task | Description | DoD | Traces to |
 |---|---|---|---|
 | T0.1 | Resolve open blockers in `docs/open-questions.md` (J1 observability conflict, J2 deploy compat, account creation, account limits) | All 🔴 BLOCKER items closed or explicitly deferred with rationale | PRD §24 |
-| T0.2 | Google Cloud project created; billing alert at $30; `gcloud auth login` works locally; Cloud Run + Artifact Registry APIs enabled | `gcloud projects describe aegis-hackathon` succeeds | G1 |
+| T0.2 | Google Cloud project created; billing alert at $30; `gcloud auth login` works locally; Cloud Run + Artifact Registry APIs enabled | `gcloud projects describe $GOOGLE_CLOUD_PROJECT` succeeds | G1 |
 | T0.3 | Phoenix Cloud account created; API key in local `.env` (gitignored); `PHOENIX_API_KEY` resolves in a Python shell | `from phoenix.otel import register; register()` runs without error | G2, FR5 |
 | T0.4 | `git init` clean checkpoint + initial push to `origin/main` (or new public repo if not yet created); Apache 2.0 LICENSE file at root visible | `git log` shows ≥1 commit on `origin/main` | G6 |
 | T0.5 | Install `uv`, `uvx`, `google-agents-cli`; run `uvx google-agents-cli setup` and confirm 7 ADK skills appear | `agents-cli --version` succeeds; `/skills` shows the 7 bundled skills | backend/AGENTS.md |
@@ -88,7 +88,7 @@ Two-service Cloud Run deployment:
 |---|---|---|---|
 | T1.1 | `agents-cli create aegis-backend` scaffold inside `backend/`; FastAPI `/health` endpoint returns 200 on both services | `curl localhost:8001/health` and `curl localhost:8002/health` both return `{"ok":true}` | G1 |
 | T1.2 | Next.js scaffold inside `frontend/` (Tailwind + shadcn/ui + framer-motion + Lucide installed) | `pnpm dev` serves a hero page on `localhost:3000` | G8, FR10 |
-| T1.3 | Wire `openinference-instrumentation-google-adk`; instantiate a stub "echo agent"; emit ≥1 trace to Phoenix Cloud | One trace visible in Phoenix UI tagged `aegis-hackathon` | G2, NFR4 |
+| T1.3 | Wire `openinference-instrumentation-google-adk`; instantiate a stub "echo agent"; emit ≥1 trace to Phoenix Cloud | One trace visible in Phoenix UI tagged `default` | G2, NFR4 |
 | T1.4 | **A4 spike — part 1:** Configure `@arizeai/phoenix-mcp` server as an ADK tool; toy "query my own traces" call returns a structured summary | MCP roundtrip latency logged; result printed to stdout in structured form | A4, FR5 |
 | T1.5 | Resolve J1 (`google-agents-cli` observability skill vs Phoenix MCP) — confirm both can coexist or document the workaround | Note added to backend/AGENTS.md + decision logged | open-q J1 |
 

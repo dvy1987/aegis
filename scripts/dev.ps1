@@ -179,7 +179,7 @@ function Start-BackendV1 {
 }
 
 function Start-BackendSwarm {
-  Write-Info "starting backend swarm on http://${BackendHost}:${BackendSwarmPort} (Phoenix: aegis-hackathon)"
+  Write-Info "starting backend swarm on http://${BackendHost}:${BackendSwarmPort} (Phoenix: aegis-swarm)"
   $args = @(
     "run", "uvicorn", "app.main_swarm:app",
     "--host", $BackendHost,
@@ -187,7 +187,7 @@ function Start-BackendSwarm {
     "--reload"
   )
   $extra = @{
-    PHOENIX_PROJECT_NAME = "aegis-hackathon"
+    PHOENIX_PROJECT_NAME = "aegis-swarm"
   }
   $p = Start-StreamingProcess `
     -Label "back-swarm" -Color Cyan `

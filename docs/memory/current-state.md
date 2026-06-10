@@ -124,7 +124,7 @@
 ### 2026-06-07 - Stack upgrade refactor (uncommitted)
 - Fixed ADK 2.2 breakage: `VertexGemini`, `App(name="aegis_v1")`, `main_swarm.py` imports, GCP OTel logging dep, Phoenix client dep, Pydantic 2.13 schema coercion.
 - Verification: backend **316 passed / 1 skipped**; frontend test/lint/build **green**.
-- Both backends import: v1 (`default` Phoenix) + swarm (`aegis-hackathon` when run via `main_swarm.py` alone).
+- Both backends import: v1 (`default` Phoenix) + swarm (`aegis-swarm` when run via `main_swarm.py` alone).
 - Handoff: [agent-handoffs.md §2026-06-07 19:35](agent-handoffs.md).
 
 ### RESOLVED (2026-06-07): v1 pipeline now runs through ADK Workflow
@@ -140,13 +140,13 @@
 | Service | Phoenix project | Recorder |
 |---|---|---|
 | v1 `aegis-v1-api` | **`default`** | `OtelPhoenixRecorder` |
-| swarm `aegis-swarm-api` | **`aegis-hackathon`** | `OtelSwarmTraceRecorder` |
+| swarm `aegis-swarm-api` | **`aegis-swarm`** | `OtelSwarmTraceRecorder` |
 
 No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main_swarm.py` / `Dockerfile.swarm`. Full rationale: [decision-log.md §2026-06-07 Phoenix project split](decision-log.md).
 
 ### 2026-06-07 - Session end (async approve + Phoenix project docs)
 - **Async approve:** `POST /approve` returns immediately; promotion + post-measure run in background; checkpointed so promotion never runs twice; resume continues half-finished approval. Frontend polls to completion.
-- **Phoenix split documented:** v1 → `default` + `OtelPhoenixRecorder`; swarm → `aegis-hackathon` + `OtelSwarmTraceRecorder`. `main_swarm.py` stale `aegis-swarm` default fixed. Decision log §2026-06-07 + AGENTS.md + demo cheatsheet + ADRs.
+- **Phoenix split documented:** v1 → `default` + `OtelPhoenixRecorder`; swarm → `aegis-swarm` + `OtelSwarmTraceRecorder`. `main_swarm.py` stale `aegis-swarm` default fixed. Decision log §2026-06-07 + AGENTS.md + demo cheatsheet + ADRs.
 - **Earlier this day (committed `b62738b`):** Cloud Run docs, 10s poll, demo status script.
 - **Earlier this day (committed `19a644b`):** learning-loop robustness + day-zero reset.
 - **Uncommitted:** 21 files (backend approve/async, Phoenix docs, showcase poll, tests). Last commit: `b62738b`.
@@ -381,7 +381,7 @@ No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main
 - ✅ **Manual Evaluation Prompts created** for ChatGPT and Perplexity (Mega-Prompt spot-check mode) with JSON schema output.
 
 ### Session 9 (Concurrent — Phoenix telemetry + A4 gate)
-- ✅ **T1.3 Phoenix telemetry wired** — traces actively appearing in Phoenix under project `aegis-hackathon` via `openinference-instrumentation-google-adk`.
+- ✅ **T1.3 Phoenix telemetry wired** — traces actively appearing in Phoenix under project `aegis-swarm` via `openinference-instrumentation-google-adk`.
 - ✅ **T1.4 A4 spike pt.1 complete** — MCP query successfully round-tripped and fetched trace data.
 - ✅ **T1.5 J1 conflict resolved** — Phoenix is primary; agents-cli observability skill skipped.
 - ✅ **T2.1 A4 spike pt.2 complete** — 20 MCP queries, 20/20 successes, p50=1.24s, p95=2.52s. **A4 GATE PASSED.** Phoenix MCP is a load-bearing dependency.
@@ -502,7 +502,7 @@ No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main
 - ✅ Confirmed architectural direction is sound; inconsistencies are execution-layer cleanup, not design corrections.
 - ⚠️ **dev.sh is broken** — duplicate C_RESET + orphaned else/fi block causes bash syntax error. Must fix before any dev work.
 - ⚠️ **9+ files reference deleted `fast_api_app.py` and port 8000** — stale references across tests, Dockerfile, docs, scripts.
-- ✅ **Phoenix project split documented (2026-06-07)** — v1 → `default` (`OtelPhoenixRecorder`); swarm → `aegis-hackathon` (`OtelSwarmTraceRecorder`). `main_swarm.py` stale `aegis-swarm` default fixed. See decision log §2026-06-07.
+- ✅ **Phoenix project split documented (2026-06-07)** — v1 → `default` (`OtelPhoenixRecorder`); swarm → `aegis-swarm` (`OtelSwarmTraceRecorder`). `main_swarm.py` stale `aegis-swarm` default fixed. See decision log §2026-06-07.
 
 ### Session 19 (Part A Judge Panel)
 - ✅ Approved and documented the Part A judge panel firewall: Aegis v1 gets a `StudentCasePacket`; judges get a teacher-only grading packet with provenance, expected appeal vectors, and exploitable weaknesses.
@@ -670,7 +670,7 @@ ahead of GCP/Phoenix setup, TDD, commits `8a35860`,`5720eaf`. Full unit **103 pa
   HELD because they parse real Phoenix payloads whose field names Task 0's fixtures pin — building them against guessed
   schemas would be false-green. **Task 4** (`run_live.py` live coordinator), **Task 7** (demo capture), and all gated
   smoke tests need `gcloud auth application-default login` (ADC) + `PHOENIX_API_KEY`
-  (+ likely `PHOENIX_CLIENT_HEADERS="api_key=$PHOENIX_API_KEY"`, `PHOENIX_HOST`, `PHOENIX_PROJECT=aegis-hackathon`).
+  (+ likely `PHOENIX_CLIENT_HEADERS="api_key=$PHOENIX_API_KEY"`, `PHOENIX_HOST`, `PHOENIX_PROJECT=aegis-swarm`).
 
 ## 2026-06-02 — v1 librarian + consumer UX wiring (uncommitted)
 

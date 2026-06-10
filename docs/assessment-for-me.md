@@ -344,6 +344,6 @@ If each LLM step becomes an `LlmAgent` invoked via `Runner` (per the hybrid migr
 
 ### Explicitly out of scope for this assessment
 
-- Swarm / Part B (`aegis-hackathon` Phoenix project)
+- Swarm / Part B (`aegis-swarm` Phoenix project)
 - Formal design-review score
 - ADK implementation (plan written, not executed)

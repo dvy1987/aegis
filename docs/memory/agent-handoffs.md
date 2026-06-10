@@ -591,7 +591,7 @@ Follow-up session closing Session 4 gaps. All 6 TODOs in the corrective plan are
 ## 2026-05-27 — Session 9 Handoff (Antigravity)
 
 ### Done
-- T1.3 (Phoenix telemetry) marked complete. Traces are actively appearing in Phoenix under project `aegis-hackathon` via `openinference-instrumentation-google-adk`.
+- T1.3 (Phoenix telemetry) marked complete. Traces are actively appearing in Phoenix under project `aegis-swarm` via `openinference-instrumentation-google-adk`.
 - T1.4 (A4 spike pt.1) marked complete. The MCP query successfully round-tripped and fetched trace data.
 - T1.5 (agents-cli vs Phoenix MCP) marked complete. Already resolved in `decision-log.md` (Phoenix is primary).
 - T2.1 (A4 spike pt.2) completed. Executed 20 MCP queries to `list-traces`. Results: 20/20 successes, p50 latency = 1.24s, p95 latency = 2.52s. Logged GO DECISION for Phoenix MCP as a load-bearing dependency.
@@ -645,7 +645,7 @@ PM requested: build a **synthetic-case generation swarm** (a drafter pipeline, p
   - Approved cases later promoted to `eval/cases/approved/...`.
 - MVP scope (PRD Part A): **3 insurers (Aetna, Cigna, UHC) × 2 denial types (medical necessity, prior auth)**. Commercial plans only. No PHI.
 - AGENTS.md: ask PM about every architecture / vendor / scope decision before making it.
-- Backend stack: Python 3.11 + uv + Google ADK + Gemini 3.1-pro-preview via Vertex AI ADC + Phoenix telemetry on project `aegis-hackathon`.
+- Backend stack: Python 3.11 + uv + Google ADK + Gemini 3.1-pro-preview via Vertex AI ADC + Phoenix telemetry on project `aegis-swarm`.
 
 ### What was done this session
 - Explored: `eval/`, `eval/cases/drafts/part-a/{train,test}/`, `eval/dataset_card.md`, `eval/simulator_rules.json`, `gumloop/` (architecture + 8 prompts), `docs/evals/` (rubric + judges + pipeline), `docs/plans/2026-05-27-alphaeval-alignment-plan.md`.
@@ -683,7 +683,7 @@ PM correctly pointed out that AlphaEval mandates **independent critics at every 
   - Different model family for critic vs drafter where available.
   - JSON output: `{dimension, reasoning, score|verdict, confidence, evidence_quotes, improvement}`.
 - Failure handling: 1 on weighted-dim critic → up to 2 stage-local revisions, then bubble to ScenarioPlanner. Binary HARD GATE FAIL → stage rewind; 2nd FAIL → discard scenario.
-- Phoenix project `aegis-case-gen` (separate from `aegis-hackathon`).
+- Phoenix project `aegis-case-gen` (separate from `aegis-swarm`).
 - Diversity matrix + banned-topic list externalized to JSON configs (`eval/diversity_matrix.json`, `eval/banned_topics.json`).
 
 ### PM's answered decisions (so far)
@@ -820,7 +820,7 @@ Estimated total effort 3–4 hours; full breakdown in the plan doc.
 
 | Workstream | Session(s) | Status |
 |---|---|---|
-| Phoenix telemetry (T1.3) | 9 | ✅ Traces emitting to `aegis-hackathon` |
+| Phoenix telemetry (T1.3) | 9 | ✅ Traces emitting to `aegis-swarm` |
 | A4 gate (T1.4, T1.5, T2.1) | 9 | ✅ PASSED — 20/20 MCP queries, p50=1.24s, p95=2.52s |
 | Case generator swarm | 10 | ✅ Built + smoke-tested (1 valid Aetna case) |
 | Claude-on-Vertex plan (G1) | 10 | 📋 Plan written, awaiting next-session execution |
@@ -1078,9 +1078,9 @@ Estimated total effort 3–4 hours; full breakdown in the plan doc.
 
 1. **aegis_v1 tools are all deterministic Python, not actual LLM tool calls.** The `drafter` tool concatenates strings into a template. The `simulator` is a feature-count with threshold=10 and max possible score=10 (so it only APPROVEs if every feature is true). This means the simulator will basically always DENY — which serves the weak-v1 demo arc, but it's a fragile coincidence rather than an intentional design choice. The threshold should be documented as deliberately unreachable, or the agent may later "fix" it and break the demo arc.
 
-2. **phoenix_mcp_lookup is a stub** that returns hardcoded cold-start data regardless of input. The query string inside it references project `aegis-hackathon`, but dev.sh now sets `aegis-baseline` for v1. When T4.1 wires this to live MCP, the project name mismatch will cause trace lookups to fail silently.
+2. **phoenix_mcp_lookup is a stub** that returns hardcoded cold-start data regardless of input. The query string inside it references project `aegis-swarm`, but dev.sh now sets `aegis-baseline` for v1. When T4.1 wires this to live MCP, the project name mismatch will cause trace lookups to fail silently.
 
-3. **telemetry.py `setdefault` fallback is stale.** If anyone runs the backend directly (not via dev.sh), traces go to `aegis-hackathon` instead of `aegis-baseline` / `aegis-swarm`. The dev.sh env-var override works correctly, but the default is misleading.
+3. **telemetry.py `setdefault` fallback is stale.** If anyone runs the backend directly (not via dev.sh), traces go to `aegis-swarm` instead of `aegis-baseline` / `aegis-swarm`. The dev.sh env-var override works correctly, but the default is misleading.
 
 4. **Case generator drafter + critic still use same model** (`gemini-3.1-pro-preview`). AlphaEval violation (self-enhancement bias). Already tracked in G1 plan, but still not fixed.
 
@@ -1099,12 +1099,12 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 | 7 | MEDIUM | `backend/README.md` | Lists `fast_api_app.py` in directory structure — file no longer exists. | Update tree to show `main_v1.py`, `main_swarm.py`, `aegis_v1/`, `aegis_swarm/`. | [ ] |
 | 8 | MEDIUM | `docs/plans/2026-05-27-aegis-implementation-tasks.md` T1.1 | DoD says `curl localhost:8000/health` → `{"ok":true}`. | Update DoD to `curl localhost:8001/health` for v1 + `curl localhost:8002/health` for swarm. Also update implementation-plan.md T1.1. | [ ] |
 | 9 | MEDIUM | `docs/plans/2026-05-27-aegis-implementation-plan.md` T1.1 | Same port 8000 reference. | Same fix as #8. | [ ] |
-| 10 | MEDIUM | `backend/AGENTS.md` Phoenix config section | Says "Project name: `aegis-hackathon`". Contradicts ADR-006 and dev.sh which use `aegis-baseline` / `aegis-swarm`. | Update to document the two-project split per ADR-006. Decide whether `aegis-hackathon` is retired or kept as a legacy alias. | [ ] |
-| 11 | MEDIUM | `backend/app/app_utils/telemetry.py` | Default `PHOENIX_PROJECT_NAME` = `aegis-hackathon`. Dev.sh overrides this per-process, but running backend directly uses stale default. | Change default to `aegis-baseline` (the v1 project). Swarm dev.sh overrides to `aegis-swarm` already. | [ ] |
-| 12 | MEDIUM | `backend/app/aegis_v1/tools.py` `phoenix_mcp_lookup` | Hardcodes query `project='aegis-hackathon'`. When MCP goes live, this will query the wrong project. | Change to `aegis-baseline` (or read from env var). | [ ] |
+| 10 | MEDIUM | `backend/AGENTS.md` Phoenix config section | Says "Project name: `aegis-swarm`". Contradicts ADR-006 and dev.sh which use `aegis-baseline` / `aegis-swarm`. | Update to document the two-project split per ADR-006. Decide whether `aegis-swarm` is retired or kept as a legacy alias. | [ ] |
+| 11 | MEDIUM | `backend/app/app_utils/telemetry.py` | Default `PHOENIX_PROJECT_NAME` = `aegis-swarm`. Dev.sh overrides this per-process, but running backend directly uses stale default. | Change default to `aegis-baseline` (the v1 project). Swarm dev.sh overrides to `aegis-swarm` already. | [ ] |
+| 12 | MEDIUM | `backend/app/aegis_v1/tools.py` `phoenix_mcp_lookup` | Hardcodes query `project='aegis-swarm'`. When MCP goes live, this will query the wrong project. | Change to `aegis-baseline` (or read from env var). | [ ] |
 | 13 | LOW | `docs/memory/agent-handoffs.md` Session 8 handoff | Says "Backend on :8000" — stale. | Append correction or rely on this session's handoff to supersede. | [ ] |
 | 14 | LOW | `docs/architecture/2026-05-27-aegis-arch.md` | New section 8 (Case Generation Pipeline) inserted, old sections 8–12 renumbered to 9–13. Internal cross-references may point to old section numbers. | Verify all internal `§` references still resolve correctly (e.g. "see §6.2" is still valid). | [ ] |
-| 15 | LOW | `docs/demo/rolling-capture-checklist.md` + `phoenix-shotlist.md` | Reference `aegis-hackathon` project name for Phoenix UI. | Update to reflect dual-project view or confirm demo shows both projects. | [ ] |
+| 15 | LOW | `docs/demo/rolling-capture-checklist.md` + `phoenix-shotlist.md` | Reference `aegis-swarm` project name for Phoenix UI. | Update to reflect dual-project view or confirm demo shows both projects. | [ ] |
 | 16 | DEFERRED | `backend/app/case_generator/config.py` line 17 | `CRITIC_MODEL` = same as `DEFAULT_MODEL` (Gemini). AlphaEval self-enhancement bias. Comment in code admits this. | Already tracked in `docs/plans/2026-05-28-case-generator-harness-claude-plan.md` G1. Not a new finding, just confirming it's still open. | [ ] |
 
 ### Opinions and Recommendations for PM Review
@@ -1113,7 +1113,7 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 
 **Issues #2–#9 (stale file references) are mechanical updates.** No design judgment needed — `fast_api_app.py` is deleted, port 8000 is obsolete, `agent.py` moved. These are find-and-replace consistency fixes. Recommend batch-fixing all of them in one commit.
 
-**Issues #10–#12 (Phoenix project name) require a design decision.** The question is: does `aegis-hackathon` still exist as a Phoenix project, or is it fully replaced by `aegis-baseline` + `aegis-swarm`? The old telemetry data lives in `aegis-hackathon`. The dev.sh routes new data to the split projects. The demo needs to show the "before/after" contrast. I recommend keeping `aegis-hackathon` as a read-only archive of T1.3–T2.1 traces, and pointing all new code to the split project names. But this is a PM call.
+**Issues #10–#12 (Phoenix project name) require a design decision.** The question is: does `aegis-swarm` still exist as a Phoenix project, or is it fully replaced by `aegis-baseline` + `aegis-swarm`? The old telemetry data lives in `aegis-swarm`. The dev.sh routes new data to the split projects. The demo needs to show the "before/after" contrast. I recommend keeping `aegis-swarm` as a read-only archive of T1.3–T2.1 traces, and pointing all new code to the split project names. But this is a PM call.
 
 **Issue regarding the simulator threshold** — The v1 simulator has threshold=10 and max possible score=10, meaning APPROVE is only possible if every single feature is true. This is effectively unreachable (especially `uses_playbook_or_phoenix_memory` which requires BOTH playbook AND phoenix memory to be available, which won't happen on cold start). This means the simulator always returns DENY for v1. This is actually desirable for the demo arc, but it should be documented explicitly in the code and architecture as an intentional design choice — otherwise a future agent might "fix" the threshold and break the arc.
 
@@ -2135,7 +2135,7 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 - ✅ **Phase F (partial):** v1 backend deployed to Cloud Run (`https://aegis-v1-api-v6a3eydpoq-uc.a.run.app`). Frontend build **fails** in Cloud Build — `pnpm@latest` (v11.5.1) requires Node v22.13+, but Dockerfile uses `node:20`. Fix committed (`pnpm@10` pin) but deploy was cancelled by user before it ran.
 
 ### Debated
-- PM clarified: v1 backend project = `default`, swarm = `aegis-swarm` (deliberately different so traces don't mix). Previous `main_v1.py` had `aegis-hackathon` which was wrong.
+- PM clarified: v1 backend project = `default`, swarm = `aegis-swarm` (deliberately different so traces don't mix). Previous `main_v1.py` had `aegis-swarm` which was wrong.
 - PM chose "MCP first; Phoenix client only as fallback" for the read path (judge-credibility max).
 - PM chose to pin project name authoritatively (not `setdefault`) + log it at startup.
 - PM chose to push + deploy both backend and frontend to Cloud Run.
@@ -2548,24 +2548,24 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 ## 2026-06-07 — Handoff (Cursor — Phoenix project split docs + async approve)
 
 ### Done
-- **Code:** `main_swarm.py` default `PHOENIX_PROJECT_NAME` corrected `aegis-swarm` → `aegis-hackathon` (only code change this session).
+- **Code:** `main_swarm.py` default `PHOENIX_PROJECT_NAME` corrected `aegis-swarm` → `aegis-swarm` (only code change this session).
 - **Async approve (earlier in session):** serious-run approval runs in background thread; checkpointed promotion/post-measure; resume routes to approval when `promotion_done`; frontend polls after approve.
 - **Phoenix documentation pass:** authoritative split documented so next agent does not confuse projects or recorders:
   - v1 → Phoenix **`default`**, recorder **`OtelPhoenixRecorder`**
-  - swarm → Phoenix **`aegis-hackathon`**, recorder **`OtelSwarmTraceRecorder`** (separate class — not shared)
+  - swarm → Phoenix **`aegis-swarm`**, recorder **`OtelSwarmTraceRecorder`** (separate class — not shared)
   - No Phoenix project named `aegis-swarm`
 - Updated: `backend/AGENTS.md`, `docs/memory/decision-log.md` (new §2026-06-07), `docs/memory/current-state.md`, `docs/adr/ADR-006`, `docs/adr/ADR-002`, `docs/architecture/*`, `docs/demo-cheatsheet-pm.md`, `docs/demo/phoenix-shotlist.md`, `docs/demo/rolling-capture-checklist.md`, `.env.example`, `backend/WINDOWS_SETUP.md`, showcase redesign plan.
 
 ### Decisions (confirmed with PM)
 - v1 Phoenix project = **`default`** (pinned in `main_v1.py`, `deploy-v1.sh`).
-- swarm Phoenix project = **`aegis-hackathon`** (not `aegis-swarm`).
+- swarm Phoenix project = **`aegis-swarm`** (not `aegis-swarm`).
 - `OtelPhoenixRecorder` is v1-only; swarm uses `OtelSwarmTraceRecorder`.
 
 ### Next Agent Should Know
 - **Do not say** v1 and swarm share `OtelPhoenixRecorder` — they do not.
-- **Demo Phoenix UI:** v1/showcase → open project `default`; swarm Part B → `aegis-hackathon`.
+- **Demo Phoenix UI:** v1/showcase → open project `default`; swarm Part B → `aegis-swarm`.
 - ADR-006 original names (`aegis-baseline`, `aegis-swarm`) were never deployed; superseded by decision log §2026-06-07.
-- `scripts/dev.ps1` already sets v1=`default`, swarm=`aegis-hackathon` for local dev.
+- `scripts/dev.ps1` already sets v1=`default`, swarm=`aegis-swarm` for local dev.
 
 ### Deferred
 - Commit (PM has not requested).

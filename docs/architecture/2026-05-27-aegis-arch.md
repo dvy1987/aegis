@@ -263,8 +263,8 @@ prompt_version, playbook_version, dataset_split, run_mode, agent_role
 
 **Phoenix project structure (amended 2026-06-07):**
 - **v1 (`aegis-v1-api`):** Phoenix project **`default`**. Recorder: `OtelPhoenixRecorder`. Showcase + `/v1/appeal` + learning loop traces land here.
-- **swarm (`aegis-swarm-api`):** Phoenix project **`aegis-hackathon`**. Recorder: `OtelSwarmTraceRecorder` (one span per agent role). There is no Phoenix project named `aegis-swarm`.
-- Early MVP telemetry (T1.3) may remain in `aegis-hackathon` as a read-only archive; new v1 work goes to `default`.
+- **swarm (`aegis-swarm-api`):** Phoenix project **`aegis-swarm`**. Recorder: `OtelSwarmTraceRecorder` (one span per agent role). There is no Phoenix project named `aegis-swarm`.
+- v1 telemetry and showcase learning go to `default` only.
 - Datasets: `benchmark_train_v1`, `benchmark_holdout_v1` (12 cases MVP); expand to v2 (60 cases mid-build) and v3 (100 cases Full Plan).
 - Prompts: one version-history per agent role (`system_prompt_v1`, `system_prompt_v2`, ..., per agent).
 - Evals: one per judge dimension (`eval_grounding`, `eval_specificity`, `eval_evidence`, `eval_tactic_alignment`, `eval_legal_soundness`, `eval_safety_binary_gate`, `eval_persuasive_coherence`, `eval_hallucination_binary_gate`).

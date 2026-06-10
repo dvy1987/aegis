@@ -11,7 +11,7 @@
 ## Phase 0 — Setup (STOP-AND-ASK gate)
 
 - [ ] **T0.1** Resolve open blockers in `docs/open-questions.md` (J1, J2, accounts, scope). **DoD:** All 🔴 BLOCKER items closed or explicitly deferred. **Trace:** PRD §24.
-- [ ] **T0.2** Create Google Cloud project; set $30 billing alert; `gcloud auth login`; enable Cloud Run + Artifact Registry APIs. **DoD:** `gcloud projects describe aegis-hackathon` succeeds. **Trace:** G1.
+- [ ] **T0.2** Create Google Cloud project; set $30 billing alert; `gcloud auth login`; enable Cloud Run + Artifact Registry APIs. **DoD:** `gcloud projects describe $GOOGLE_CLOUD_PROJECT` succeeds. **Trace:** G1.
 - [ ] **T0.3** Sign up for Phoenix Cloud free tier; put `PHOENIX_API_KEY` in `.env`; verify in Python shell. **DoD:** `register()` succeeds. **Trace:** G2, FR5.
 - [ ] **T0.4** Initial `git push` of clean checkpoint to `origin/main` with `LICENSE` (Apache 2.0). **DoD:** `git log` shows ≥1 commit on remote. **Trace:** G6.
 - [ ] **T0.5** Install `uv`, `uvx`, `google-agents-cli`; run `uvx google-agents-cli setup`. **DoD:** `agents-cli --version` succeeds; 7 bundled skills visible. **Trace:** backend/AGENTS.md.
@@ -24,7 +24,7 @@
 ### Day 1 — Scaffold + A4 spike
 - [ ] **T1.1** `agents-cli create` backend scaffold; FastAPI `/health` returns 200. **DoD:** `curl localhost:8001/health` → `{"ok":true}` AND `curl localhost:8002/health` → `{"ok":true}`. **Trace:** G1.
 - [ ] **T1.2** Next.js scaffold + Tailwind + shadcn/ui + framer-motion + Lucide. **DoD:** `pnpm dev` serves a hero page. **Trace:** G8, FR10.
-- [x] **T1.3** Wire `openinference-instrumentation-google-adk` on a stub agent; emit ≥1 trace to Phoenix. **DoD:** Trace visible in Phoenix UI tagged `aegis-hackathon`. **Trace:** G2, NFR4.
+- [x] **T1.3** Wire `openinference-instrumentation-google-adk` on a stub agent; emit ≥1 trace to Phoenix. **DoD:** Trace visible in Phoenix UI tagged `default`. **Trace:** G2, NFR4.
 - [x] **T1.4** **A4 spike pt.1:** Configure `@arizeai/phoenix-mcp` as ADK tool; one toy query returns structured summary. **DoD:** MCP roundtrip latency logged; structured result in stdout. **Trace:** A4, FR5.
 - [x] **T1.5** Resolve **Open-Q J1** (agents-cli observability vs Phoenix MCP). **DoD:** Note in backend/AGENTS.md + decision-log entry. **Trace:** Open Q J1.
 

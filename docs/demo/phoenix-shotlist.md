@@ -11,7 +11,7 @@ Per the PRD, the Phoenix Cloud UI must be visibly on screen for ≥60 seconds of
 **Duration:** ~25 seconds (Demo arc: 0:40–1:10 "Hero Case Live")
 
 **What to show:**
-- The Phoenix `Traces` view filtered to `project: aegis-hackathon`.
+- The Phoenix `Traces` view filtered to `project: aegis-swarm`.
 - Click into the hero case's trace to expand the waterfall view.
 
 **Visual anchors to highlight:** 
@@ -66,7 +66,7 @@ If we submit at the end of Week 1, the demo focuses on a single agent and human-
 **Duration:** ~40 seconds (Demo arc: 0:50–1:30 "Phoenix protagonist")
 
 **What to show:**
-- The Phoenix `Traces` view filtered to **`project: default`** (v1 backend — not `aegis-hackathon`, which is swarm-only).
+- The Phoenix `Traces` view filtered to **`project: default`** (v1 backend — not `aegis-swarm`, which is swarm-only).
 - A v1 (failed) appeal trace.
 - Expand the span showing the `list-traces` MCP call.
 - **Visual anchors to highlight:** 

@@ -42,7 +42,7 @@ Two Cloud Run backends share one repo but **must not share one Phoenix project**
 | Service | Cloud Run name | Phoenix project | Trace recorder class |
 |---|---|---|---|
 | **v1 (Part A)** | `aegis-v1-api` | `default` | `OtelPhoenixRecorder` (`app/evals/part_a/recorder.py`) — eval runs, showcase learning, `/v1/appeal` ADK spans |
-| **swarm (Part B)** | `aegis-swarm-api` | `aegis-hackathon` | `OtelSwarmTraceRecorder` (`app/aegis_swarm/trace_recorder.py`) — one OTel span per agent role |
+| **swarm (Part B)** | `aegis-swarm-api` | `aegis-swarm` | `OtelSwarmTraceRecorder` (`app/aegis_swarm/trace_recorder.py`) — one OTel span per agent role |
 
 **v1 details:**
 - `main_v1.py` sets `PHOENIX_PROJECT_NAME=default` authoritatively (host env cannot override).
@@ -51,10 +51,11 @@ Two Cloud Run backends share one repo but **must not share one Phoenix project**
 - **Showcase session ledger** (`showcase_ledger.py`): local dir in dev/tests; **GCS prefix in prod** via `AEGIS_SHOWCASE_LEDGER_GCS_URI` (auto-set from `AEGIS_LIBRARY_BUCKET` in `deploy-v1.sh`). Survives Cloud Run redeploys. See [ADR-009](../docs/adr/ADR-009-showcase-ledger-gcs.md).
 
 **swarm details:**
-- `main_swarm.py` and `Dockerfile.swarm` default to `PHOENIX_PROJECT_NAME=aegis-hackathon`.
-- There is **no** Phoenix project named `aegis-swarm` — that name was a stale default, now corrected.
+- `main_swarm.py` and `Dockerfile.swarm` default to `PHOENIX_PROJECT_NAME=aegis-swarm`.
 
-**Other Phoenix projects (out of band):** `aegis-case-gen` for the offline case generator only. Early MVP traces (T1.3) may still live in `aegis-hackathon` as a read-only archive.
+**Other Phoenix projects (out of band):** `aegis-case-gen` for the offline case generator only.
+
+**v1/showcase does not use the swarm Phoenix project.** Appeal, showcase, GEPA, and learning all run under `main_v1.py` → project **`default`** only.
 
 - API key in `.env` (`PHOENIX_API_KEY`); never hardcoded.
 - MCP server config goes in agent runtime — see `docs/adr/ADR-002-phoenix-mcp-load-bearing.md`.

@@ -8292,7 +8292,7 @@
       "norm_label": "backend swarm service (main_swarm)"
     },
     {
-      "label": "Phoenix Tracing (project: aegis-hackathon)",
+      "label": "Phoenix Tracing (project: aegis-swarm)",
       "file_type": "rationale",
       "source_file": "scripts/dev.ps1",
       "source_location": null,
@@ -8302,7 +8302,7 @@
       "contributor": null,
       "id": "phoenix_tracing",
       "community": 10,
-      "norm_label": "phoenix tracing (project: aegis-hackathon)"
+      "norm_label": "phoenix tracing (project: aegis-swarm)"
     },
     {
       "label": "Judge Panel Teacher Packet",

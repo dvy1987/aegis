@@ -25,7 +25,7 @@ async def test_latency():
             for i in range(20):
                 start_time = time.time()
                 try:
-                    res = await session.call_tool("list-traces", arguments={"projectIdentifier": "aegis-hackathon", "limit": 1})
+                    res = await session.call_tool("list-traces", arguments={"projectIdentifier": "aegis-swarm", "limit": 1})
                     latency = time.time() - start_time
                     latencies.append(latency)
                     successes += 1

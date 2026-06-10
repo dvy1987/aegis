@@ -15,7 +15,7 @@ def _ipv4_first_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
 socket.getaddrinfo = _ipv4_first_getaddrinfo
 
 os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
-os.environ.setdefault("PHOENIX_PROJECT_NAME", "aegis-hackathon")
+os.environ.setdefault("PHOENIX_PROJECT_NAME", "aegis-swarm")
 print(f"[main_swarm] PHOENIX_PROJECT_NAME={os.environ['PHOENIX_PROJECT_NAME']}")
 
 from fastapi import FastAPI

@@ -10,4 +10,4 @@ Companion architectural decisions live in [docs/adr/](adr/).
 
 When the system shape changes, update the dated architecture file first, then add an ADR if the change is non-trivial, then update this pointer's date stamp.
 
-**Last refreshed:** 2026-06-07 (Phoenix project split: v1 → `default`, swarm → `aegis-hackathon`; see `docs/memory/decision-log.md` §2026-06-07).
+**Last refreshed:** 2026-06-07 (Phoenix project split: v1 → `default`, swarm → `aegis-swarm`; see `docs/memory/decision-log.md` §2026-06-07).
