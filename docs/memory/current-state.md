@@ -1,9 +1,15 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-10 (session end — showcase approved cohort paths + production 50/20)
-**Phase:** **ADK Phases 0–5 on prod. Showcase cohorts 101–200 in `eval/cases/approved/{preview-run,prod-run}`. Dirty tree (cohort moves + prior question-agent WIP uncommitted).**
+**Updated:** 2026-06-10 (session end — US-playbook wired + committed `712af93`)
+**Phase:** **ADK Phases 0–5 on prod. US-playbook in draft + showcase GEPA. `main` clean, 2 commits ahead of origin (not pushed).**
 
-### 2026-06-10 - Showcase approved cohort paths + production 50/20 (uncommitted)
+### 2026-06-10 - US-playbook end-to-end (committed `712af93`)
+- **Runtime:** `geo_playbook_loader_node` + `question_agent_prep_bundle` — insurer playbooks + US rules on every US case (appeal + showcase).
+- **GEPA:** `geo_playbook:us` in LearningCoordinator; question-judge “global playbook” recs route to US reflection; promote → `geo_playbooks/us_playbook.json`.
+- **UX:** promotion modal warns on rule edits (no hard block).
+- **Next:** PM push when ready; live showcase run to validate US rule lift.
+
+### 2026-06-10 - Showcase approved cohort paths + production 50/20 (in `712af93`)
 - **Preview (quick):** 5 train + 2 holdout → `eval/cases/approved/preview-run/`.
 - **Production (serious):** 50 train + 20 holdout → `eval/cases/approved/prod-run/`; mixed slices; holdout slices have train siblings; no overlap with preview.
 - **Manifest:** `case_paths` in `eval/benchmarks/v1_showcase_100/manifest.json`; loader in `showcase_manifest.py`.

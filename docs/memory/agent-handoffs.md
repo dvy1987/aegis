@@ -3264,3 +3264,37 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - **Dirty, uncommitted:** manifest, `showcase_manifest.py`, moved case JSONs (77 files), test updates; plus prior uncommitted question-agent/geo work from other sessions.
+
+---
+
+## 2026-06-10 — Handoff (Cursor — US-playbook wired end-to-end)
+
+### Done
+- **US-playbook (`geo_playbook:us`)** loaded on every draft + question-agent prep (insurer bundle + `us_playbook`); separate `US-PLAYBOOK` section in drafter message.
+- **Showcase GEPA:** US-playbook in coordinator seed/eligible/mutate/promote; writes `geo_playbooks/us_playbook.json` on approve.
+- **Question judge routing:** “Add to global playbook” → US reflection; insurer-specific → slice playbook reflection.
+- **Reflection:** append-first; edit/revoke judgment in reflection prompt (no hard promotion block); approve modal shows yellow **notice** on rule edits.
+- **Bug fix:** `US_PLAYBOOK_PATH` repo root (`parents[3]` not `backend/`).
+- **Tests:** geo playbook, reflection routing, coordinator, promotion preview pass.
+- **Committed:** `712af93` — showcase cohorts + question agent + geo playbook learning (ahead of `origin/main` by 2).
+
+### Debated
+- PM rejected redundant product questions — follow existing slice/showcase pattern; no separate approve flows or blocking gates on US rule edits.
+
+### Decisions
+- Appeal path: read US rules only; **no learning/promotion** (same as slice playbooks).
+- Edit vs append: reflection agent’s job; soft nudge in modal, not veto.
+
+### Deferred
+- **Push to remote** — PM has not requested (`main` ahead by 2).
+- **State-scoped rules** — cases lack `us_state`; only US federal rules apply at runtime until cases carry state.
+
+### Next Agent Should Know
+- Question agent + drafter both get US-playbook; question judge full transcript graded on **training** runs only (not simulator measurement).
+- `gates._diff_tokens` caps **drafter prompt** size only (playbooks append freely).
+
+### Revisit Triggers
+- Cases gain `us_state` / `plan_funding_type` → `applicable_geo_rules` already filters; state-scoped learning isolation may need tightening.
+
+### Working Tree
+- **Clean** on `main` @ `712af93` (2 commits ahead of origin).
