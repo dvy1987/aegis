@@ -23,7 +23,7 @@ def test_manifest_endpoint_returns_quick_slice(tmp_path, monkeypatch) -> None:
     body = res.json()
     assert body["benchmark_id"] == "v1_showcase_100"
     assert body["quick_slice"] == "Cigna:medical_necessity"
-    assert len(body["quick_train"]) == 8
+    assert len(body["quick_train"]) == 5
     assert len(body["quick_holdout"]) == 2
     assert body["serious_train_count"] == 80
     assert len(body["serious_holdout"]) == 20
@@ -37,7 +37,7 @@ def test_quick_run_start_returns_pollable_session(tmp_path, monkeypatch) -> None
     assert start.status_code == 200
     session_id = start.json()["session_id"]
     assert session_id.startswith("quick_")
-    assert len(start.json()["case_ids"]) == 10
+    assert len(start.json()["case_ids"]) == 7
 
     poll = client.get(f"/v1/showcase/runs/{session_id}")
     assert poll.status_code == 200

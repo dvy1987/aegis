@@ -8,7 +8,7 @@ export type StatusPreviewBatch = {
 /** Manifest API fallback — matches v1_showcase_100 quick/serious split. */
 const FALLBACK_COHORT = {
   quickHoldout: 2,
-  quickTrain: 8,
+  quickTrain: 5,
   seriousHoldout: 20,
   seriousTrain: 80,
 } as const;

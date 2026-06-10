@@ -1,9 +1,15 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-10 (session end — appeal retry caps; library/orchestrator clarity)
-**Phase:** **ADK Phases 0–5 largely on prod. `/appeal` best-of-2 + showcase measure single-draft wired in code (uncommitted). Large prior simulator/judge tree still may need commit/deploy.**
+**Updated:** 2026-06-10 (session end — safe pull + preview cohort committed; appeal difficulty audit)
+**Phase:** **ADK Phases 0–5 on prod. `main` @ `3ed6637` (data selection / preview cohort 101–200). Unit tests 403/405 pass (2 Windows/env failures).**
 
-### 2026-06-10 - Appeal retry caps (uncommitted)
+### 2026-06-10 - Safe pull + preview cohort merge (committed `3ed6637`)
+- Pulled remote simulator/judge/patient-context tree; merged local quick cohort (cases 101–200 Cigna med-nec) with remote `showcase_manifest` student packet (insurer + age/gender).
+- **Appeal difficulty:** 101–200 has no medium Cigna med-nec holdouts (all score 5); 1–100 has 9 medium Cigna med-nec. Holdout policy still open.
+- **Tests:** `pytest tests/unit` 403 pass / 2 fail (counterfactual fixture, harness `/tmp` on Windows). Integration/live Gemini excluded.
+- **Git:** clean `main`; 2 old stashes untouched.
+
+### 2026-06-10 - Appeal retry caps (committed on remote)
 - **`/appeal`:** `MAX_APPEAL_ATTEMPTS = 2` (was 5).
 - **Showcase measurement:** `SHOWCASE_MEASUREMENT_MAX_ATTEMPTS = 1` via `run_measurement_case` → orchestrator.
 - **Next:** PM commit when ready; deploy `aegis-v1-api`.

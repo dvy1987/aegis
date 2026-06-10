@@ -3195,3 +3195,36 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - **Dirty, uncommitted** on `main`: `appeal_orchestrator.py`, `measurement_run.py`, `test_appeal_best_of_five.py`, `test_measurement_run.py`, memory docs. No commit this session.
+
+---
+
+## 2026-06-10 — Session Handoff (Cursor)
+
+### Done
+- **Safe pull** from `origin/main` (2 commits: `94105e0` stuff, `6bb4fbc` handoffs mainly); local preview-cohort work auto-merged with remote `showcase_manifest` patient age/gender changes — **no conflicts**.
+- **Appeal difficulty audit** (cases 1–100 vs 101–200): 1–100 balanced (32 hard / 35 medium / 33 easy); 101–200 Gumloop batch skews easy (99× score 5, 1× medium `case_102_aetna_priorauth`, 0 hard). **Zero** medium Cigna med-nec in 101–200.
+- **Unit tests** (`pytest tests/unit`, integration excluded): **403 passed, 2 failed** (~10 min). Showcase manifest+runner **20/20** after merge. No live Gemini calls (stubs/mocks only).
+- **Older git stashes** (`stash@{0}` packages, `stash@{1}` showcase workflow) — explicitly **not** popped.
+
+### Debated
+- Quick holdout medium difficulty: cannot satisfy true medium + Cigna med-nec + 101–200 simultaneously with current case files. Prior picks `case_126`/`case_131` are score **5** (easy), not medium.
+
+### Decisions
+- Pull strategy: stash → pull → stash pop (no commit required first). User confirmed do not merge old stashes.
+
+### Deferred
+- **Holdout selection policy** — PM to choose: relax 101–200 rule, use 1–100 medium holdouts (`case_13`/`case_46`), accept score-5 proxy, or re-run appeal_difficulty critic.
+- **2 unit test failures** (non-blocking): `test_swarm_counterfactual_mcp_on_beats_off` (0.0 vs 0.0 composites); `test_harness_io_state_machine` (Windows `/tmp/harness` path).
+- **Commit** `3ed6637` "data selection changes" on `main` — preview cohort + merged remote already committed by PM this session.
+
+### Next Agent Should Know
+- `main` at `3ed6637`, clean working tree. Local `.env.local` points frontend dev at deployed API (gitignored).
+- Two old stashes remain — do not pop without PM ask.
+- Integration tests (`tests/integration/`) make live Gemini calls only when GCP ADC present; they auto-skip offline.
+
+### Revisit Triggers
+- PM picks medium holdout strategy for quick preview cohort.
+- PM asks to run live integration tests on wired GCP machine.
+
+### Working Tree
+- **Clean** on `main` @ `3ed6637`.

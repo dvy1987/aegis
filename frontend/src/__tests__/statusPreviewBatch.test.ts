@@ -6,7 +6,7 @@ const manifest: ShowcaseManifest = {
   benchmark_id: "test",
   version: "1",
   quick_slice: "Cigna:medical_necessity",
-  quick_train: Array.from({ length: 8 }, (_, i) => ({
+  quick_train: Array.from({ length: 5 }, (_, i) => ({
     case_id: `q_train_${i}`,
     insurer: "Cigna",
     denial_type: "medical_necessity",
@@ -94,22 +94,22 @@ describe("resolveStatusPreviewBatch", () => {
 
   it("shows training count during GEPA", () => {
     const gepa = session({
-      diagnostics: { stage: "train_gepa", completed_cases: 0, total_cases: 8 },
+      diagnostics: { stage: "train_gepa", completed_cases: 0, total_cases: 5 },
     });
-    expect(resolveStatusPreviewBatch(manifest, gepa, false)).toEqual({ count: 8, verdicts: [] });
+    expect(resolveStatusPreviewBatch(manifest, gepa, false)).toEqual({ count: 5, verdicts: [] });
   });
 
   it("shows scored training post at approval", () => {
     const waiting = session({
       status: "needs_approval",
-      diagnostics: { stage: "waiting_for_approval", completed_cases: 8, total_cases: 8 },
+      diagnostics: { stage: "waiting_for_approval", completed_cases: 5, total_cases: 5 },
       training_post_measure_results: [
         { case_id: "a", verdict: "APPROVE" },
         { case_id: "b", verdict: "DENY" },
       ],
     });
     expect(resolveStatusPreviewBatch(manifest, waiting, false)).toEqual({
-      count: 8,
+      count: 5,
       verdicts: ["APPROVE", "DENY"],
     });
   });

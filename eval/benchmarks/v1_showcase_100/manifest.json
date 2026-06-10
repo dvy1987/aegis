@@ -3,7 +3,7 @@
   "version": "2026-06-06",
   "source": "eval/cases/drafts case numbers 1-100, read-only",
   "selection_policy": {
-    "quick_train": "Cigna medical_necessity cohort from cases 101-200 (Gumloop-reviewed batch); 8 training cases",
+    "quick_train": "Cigna medical_necessity cohort from cases 101-200 (Gumloop-reviewed batch); 5 training cases",
     "quick_holdout": "2 holdout cases from the same 101-200 Cigna medical_necessity slice (closest-to-medium among available)",
     "serious_train": "all first-100 cases excluding serious_holdout; 80 cases",
     "serious_holdout": "20 medium-difficulty cases balanced across insurer and denial-type slices (cases 1-100 only)"
@@ -11,12 +11,9 @@
   "quick_train": [
     "case_101_cigna_mednec",
     "case_116_cigna_mednec",
-    "case_118_cigna_mednec",
-    "case_124_cigna_mednec",
     "case_132_cigna_mednec",
-    "case_134_cigna_mednec",
     "case_145_cigna_mednec",
-    "case_146_cigna_mednec"
+    "case_184_cigna_mednec"
   ],
   "quick_holdout": [
     "case_126_cigna_mednec",

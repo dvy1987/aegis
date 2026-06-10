@@ -110,8 +110,8 @@ def load_showcase_manifest(path: Path | None = None) -> ShowcaseManifest:
     serious_train = _load_cases(list(raw.get("serious_train") or []))
     serious_holdout = _load_cases(list(raw.get("serious_holdout") or []))
 
-    if len(quick) != 8:
-        raise ValueError("quick_train must contain exactly 8 cases")
+    if len(quick) != 5:
+        raise ValueError("quick_train must contain exactly 5 cases")
     if len(quick_holdout) != 2:
         raise ValueError("quick_holdout must contain exactly 2 cases")
     if len(serious_train) != 80:

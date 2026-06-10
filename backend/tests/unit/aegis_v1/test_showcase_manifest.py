@@ -7,7 +7,7 @@ def test_manifest_loads_targeted_quick_cohort() -> None:
     manifest = load_showcase_manifest()
 
     assert manifest.benchmark_id == "v1_showcase_100"
-    assert len(manifest.quick_train) == 8
+    assert len(manifest.quick_train) == 5
     assert len(manifest.quick_holdout) == 2
     assert {case.insurer for case in manifest.quick_train} == {"Cigna"}
     assert {case.denial_type for case in manifest.quick_train} == {"medical_necessity"}
@@ -30,7 +30,7 @@ def test_manifest_quick_cohort_is_separate_from_serious_benchmark() -> None:
     assert quick_ids.isdisjoint(serious_train_ids | holdout_ids)
     for case_id in quick_ids:
         assert 101 <= _case_number(case_id) <= 200
-    assert len(quick_ids | serious_train_ids | holdout_ids) == 110
+    assert len(quick_ids | serious_train_ids | holdout_ids) == 107
 
 
 def test_manifest_case_metadata_is_student_safe() -> None:

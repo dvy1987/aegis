@@ -78,11 +78,11 @@ def test_quick_session_uses_holdout_and_training_rows_before_approval(
 
     monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
     monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
-    # 8 training cases → guard needs 4 successful traces.
+    # 5 training cases → guard needs 3 successful traces (absolute floor).
     monkeypatch.setattr(
         showcase_runner,
         "_seed_training_signal",
-        lambda *args, **kwargs: ["t1", "t2", "t3", "t4"],
+        lambda *args, **kwargs: ["t1", "t2", "t3"],
     )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
     monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
@@ -397,7 +397,7 @@ def test_insufficient_training_data_blocks_optimize(
 
     monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
     monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
-    # Quick train has 8 cases → needs 4; only 1 produced a trace.
+    # Quick train has 5 cases → needs 3; only 1 produced a trace.
     monkeypatch.setattr(
         showcase_runner, "_seed_training_signal", lambda *a, **k: ["only-one"]
     )
@@ -411,7 +411,7 @@ def test_insufficient_training_data_blocks_optimize(
     assert reloaded.status == "failed"
     err = reloaded.diagnostics.last_error
     assert err is not None and err.code == "insufficient_training_data"
-    assert "1 of 8" in err.message
+    assert "1 of 5" in err.message
     assert reloaded.diagnostics.retryable is True
 
 
@@ -435,9 +435,9 @@ def test_sufficient_training_data_allows_optimize(
 
     monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
     monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
-    # 8 training cases → needs 4; provide 4 traces.
+    # 5 training cases → needs 3; provide 3 traces.
     monkeypatch.setattr(
-        showcase_runner, "_seed_training_signal", lambda *a, **k: ["t1", "t2", "t3", "t4"]
+        showcase_runner, "_seed_training_signal", lambda *a, **k: ["t1", "t2", "t3"]
     )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
     monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
