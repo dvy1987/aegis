@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Restore the Aegis v1 drafter prompt + playbooks to their day-zero blank slate.
+"""Restore Aegis v1 day-zero prompts + playbooks to their blank slate.
 
 This copies the read-only snapshot in ``backend/baseline_day_zero/`` back over the
 live files the learning loop writes to:
 
-- ``backend/app/aegis_v1/prompts/drafter_v1.md``        (starter prompt)
-- ``backend/app/aegis_v1/prompts/active_drafter_prompt.txt`` (active pointer)
-- repo-root ``playbooks/<insurer>__<denial>.json``      (six day-zero playbooks)
+- ``backend/app/aegis_v1/prompts/drafter_v1.md``
+- ``backend/app/aegis_v1/prompts/question_agent_v1.md``
+- ``backend/app/aegis_v1/prompts/search_planner_v1.md``
+- ``backend/app/aegis_v1/prompts/active_drafter_prompt.txt``
+- ``backend/app/aegis_v1/prompts/active_question_agent_prompt.txt``
+- repo-root ``playbooks/<insurer>__<denial>.json`` (six day-zero playbooks)
 
 Before overwriting, it saves a timestamped backup of the current live state under
 ``backend/baseline_day_zero/.pre_reset_backups/<timestamp>/`` so a reset is itself
@@ -35,6 +38,17 @@ SNAPSHOT = BACKEND_ROOT / "baseline_day_zero"
 LIVE_PROMPT_DIR = BACKEND_ROOT / "app" / "aegis_v1" / "prompts"
 LIVE_PLAYBOOK_DIR = REPO_ROOT / "playbooks"
 
+PROMPT_V1_FILES = [
+    "drafter_v1.md",
+    "question_agent_v1.md",
+    "search_planner_v1.md",
+]
+
+ACTIVE_PROMPT_POINTERS = [
+    "active_drafter_prompt.txt",
+    "active_question_agent_prompt.txt",
+]
+
 PLAYBOOK_FILES = [
     "aetna__medical_necessity.json",
     "aetna__prior_authorization.json",
@@ -48,12 +62,11 @@ PLAYBOOK_FILES = [
 def _planned_copies() -> list[tuple[Path, Path]]:
     """(source in snapshot, destination live) pairs."""
     pairs: list[tuple[Path, Path]] = [
-        (SNAPSHOT / "prompts" / "drafter_v1.md", LIVE_PROMPT_DIR / "drafter_v1.md"),
-        (
-            SNAPSHOT / "active_drafter_prompt.txt",
-            LIVE_PROMPT_DIR / "active_drafter_prompt.txt",
-        ),
+        (SNAPSHOT / "prompts" / name, LIVE_PROMPT_DIR / name) for name in PROMPT_V1_FILES
     ]
+    pairs.extend(
+        (SNAPSHOT / name, LIVE_PROMPT_DIR / name) for name in ACTIVE_PROMPT_POINTERS
+    )
     for name in PLAYBOOK_FILES:
         pairs.append((SNAPSHOT / "playbooks" / name, LIVE_PLAYBOOK_DIR / name))
     return pairs
@@ -112,7 +125,8 @@ def main() -> None:
         shutil.copy2(src, dest)
 
     print(f"\nDone. Previous live state backed up to:\n  {backup_dir}")
-    print("Active drafter prompt reset to: drafter_v1")
+    print("Active prompts reset to: drafter_v1, question_agent_v1")
+    print("Search planner reset to: search_planner_v1")
     print("Remember to delete Phoenix traces manually for a full restart.")
 
 

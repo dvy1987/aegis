@@ -1,13 +1,13 @@
 # Day-Zero Blank Slate (Aegis v1)
 
 This folder is a **read-only backup** of the starter (pre-learning) state of the
-Aegis v1 drafter prompt and the six insurer × denial-type playbooks. It exists so
-you can **restart learning from a clean slate** if a learning run goes wrong.
+Aegis v1 prompts and the six insurer × denial-type playbooks. It exists so you can
+**restart learning from a clean slate** if a learning run goes wrong.
 
 It is deliberately kept **outside** the paths the learning loop writes to:
 
-- The loop writes evolved drafter prompts into `app/aegis_v1/prompts/` and updates
-  `app/aegis_v1/prompts/active_drafter_prompt.txt`.
+- The loop writes evolved drafter/question-agent prompts into `app/aegis_v1/prompts/`
+  and updates `active_drafter_prompt.txt` / `active_question_agent_prompt.txt`.
 - The loop writes promoted playbooks into the repo-root `playbooks/`.
 
 Because this snapshot lives in `backend/baseline_day_zero/`, the loop never
@@ -15,9 +15,12 @@ touches it.
 
 ## What's in here
 
-- `prompts/drafter_v1.md` — the starter (weak baseline) drafter prompt
+- `prompts/drafter_v1.md` — starter (weak baseline) drafter prompt
+- `prompts/question_agent_v1.md` — starter question-agent prompt
+- `prompts/search_planner_v1.md` — starter library search-planner prompt
 - `playbooks/*.json` — the six day-zero playbooks (one harmless tactic each)
-- `active_drafter_prompt.txt` — points the active prompt back to `drafter_v1`
+- `active_drafter_prompt.txt` — active drafter pointer (`drafter_v1`)
+- `active_question_agent_prompt.txt` — active question-agent pointer (`question_agent_v1`)
 - `MANIFEST.json` — what this snapshot is and how to restore it
 
 ## How to restart learning from a blank slate

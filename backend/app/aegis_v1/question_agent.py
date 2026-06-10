@@ -34,6 +34,60 @@ ACTIVE_QUESTION_PROMPT_FILE = PROMPT_DIR / "active_question_agent_prompt.txt"
 QUESTION_AGENT_COMPONENT_ID = "question_agent_system_prompt"
 MAX_QUESTIONS = 5
 
+# GEPA/reflection must never remove these blocks — re-injected by ensure_question_agent_prompt_invariants.
+QUESTION_AGENT_REGULATORY_FIREWALL_BLOCK = """Never ask for regulatory gaps.
+- **Regulatory / policy / legal** (plan language, coverage criteria, statutes,
+  FDA rules, filing deadlines, appeal-rights law, clinical guidelines): do NOT
+  ask the patient. You look these up via the playbook/library. The patient does
+  not know them, and asking makes you lazy."""
+
+QUESTION_AGENT_INTERVIEW_LIMITS_BLOCK = """- Ask at most **5** questions total. Stop early (2–3) if nothing useful remains.
+- Ask **one** question at a time, in plain language a stressed person understands."""
+
+QUESTION_AGENT_PROMPT_INVARIANTS: tuple[str, ...] = (
+    QUESTION_AGENT_REGULATORY_FIREWALL_BLOCK,
+    QUESTION_AGENT_INTERVIEW_LIMITS_BLOCK,
+)
+
+_HOW_TO_INTERVIEW_ANCHOR = "## How to interview"
+_TWO_KINDS_ANCHOR = "## Two kinds of gaps"  # legacy promoted prompts
+
+
+def ensure_question_agent_prompt_invariants(text: str) -> str:
+    """Re-inject hard-coded question-agent rules if reflection/GEPA stripped them."""
+    body = (text or "").strip()
+    if QUESTION_AGENT_REGULATORY_FIREWALL_BLOCK not in body:
+        if _HOW_TO_INTERVIEW_ANCHOR in body:
+            body = body.replace(
+                _HOW_TO_INTERVIEW_ANCHOR,
+                QUESTION_AGENT_REGULATORY_FIREWALL_BLOCK + "\n\n" + _HOW_TO_INTERVIEW_ANCHOR,
+                1,
+            )
+        elif _TWO_KINDS_ANCHOR in body:
+            body = body.replace(
+                _TWO_KINDS_ANCHOR,
+                QUESTION_AGENT_REGULATORY_FIREWALL_BLOCK + "\n\n" + _TWO_KINDS_ANCHOR,
+                1,
+            )
+        else:
+            body = body + "\n\n" + QUESTION_AGENT_REGULATORY_FIREWALL_BLOCK
+    if QUESTION_AGENT_INTERVIEW_LIMITS_BLOCK not in body:
+        if _HOW_TO_INTERVIEW_ANCHOR in body:
+            body = body.replace(
+                _HOW_TO_INTERVIEW_ANCHOR,
+                _HOW_TO_INTERVIEW_ANCHOR + "\n" + QUESTION_AGENT_INTERVIEW_LIMITS_BLOCK,
+                1,
+            )
+        else:
+            body = (
+                body
+                + "\n\n"
+                + _HOW_TO_INTERVIEW_ANCHOR
+                + "\n"
+                + QUESTION_AGENT_INTERVIEW_LIMITS_BLOCK
+            )
+    return body
+
 # Answers that carry no usable patient fact — do not feed the drafter, and surface
 # the question as a gap instead.
 _NON_ANSWERS = (
@@ -436,25 +490,56 @@ def classify_interview(
     gap_questions: list[str] | None = None,
     on_stop: bool = False,
 ) -> tuple[list[str], list[str]]:
-    """Return (substantive_questions, gap_questions) for drafter vs gap-note routing.
+    """Return (substantive_questions, gap_questions) derived from the transcript.
 
-    On interview end (``on_stop=True``), the agent's lists are authoritative when
-    present. Heuristic derivation is only a safety net when the model omits them.
+    The question agent's ``substantive_questions`` / ``gap_questions`` fields are
+    ignored for routing — the live agent often mis-labels them. The question
+    judge re-classifies from ``qa_transcript`` for GEPA scoring; gap notes use
+    this same heuristic at interview end.
     """
-    asked = {turn.question for turn in transcript}
-    not_asked = [question for question in planned_questions if question not in asked]
-
-    if on_stop:
-        if substantive_questions or gap_questions:
-            substantive = [question for question in substantive_questions if question in asked]
-            gaps = list(dict.fromkeys([*gap_questions, *not_asked]))
-            gaps = [question for question in gaps if question not in substantive]
-            return substantive, gaps
-        if transcript:
-            return _derive_classification(planned_questions, transcript)
+    del substantive_questions, gap_questions
+    if on_stop and not transcript:
         return [], list(planned_questions)
-
     return _derive_classification(planned_questions, transcript)
+
+
+def _transcript_turns(question_interview: dict[str, Any]) -> list[QATurn]:
+    transcript: list[QATurn] = []
+    for item in question_interview.get("qa_transcript") or []:
+        if isinstance(item, QATurn):
+            transcript.append(item)
+        elif isinstance(item, dict):
+            transcript.append(QATurn.model_validate(item))
+    return transcript
+
+
+def classify_transcript_routing(
+    question_interview: dict[str, Any],
+) -> tuple[list[str], list[str]]:
+    """Classify substantive vs gap questions from a stored interview artifact."""
+    planned = [str(q) for q in (question_interview.get("planned_questions") or [])]
+    return classify_interview(
+        planned_questions=planned,
+        transcript=_transcript_turns(question_interview),
+        on_stop=True,
+    )
+
+
+def refresh_interview_artifact(
+    question_interview: dict[str, Any],
+    *,
+    notes: str,
+) -> dict[str, Any]:
+    """Re-derive routing + drafter context from ``qa_transcript`` (ignores stale labels)."""
+    transcript = _transcript_turns(question_interview)
+    substantive, gaps = classify_transcript_routing(question_interview)
+    enriched = build_enriched_context(notes, transcript)
+    refreshed = dict(question_interview)
+    refreshed["substantive_questions"] = substantive
+    refreshed["gap_questions"] = gaps
+    refreshed["enriched_context"] = enriched
+    refreshed["patient_gap_note"] = build_patient_gap_note(gaps)
+    return refreshed
 
 
 def _derive_classification(
@@ -480,13 +565,18 @@ def build_enriched_context(
     *,
     substantive_questions: list[str] | None = None,
 ) -> str:
-    """Patient-knowable text for the drafter: notes + agent-approved Q&A only."""
+    """Patient-knowable text for the drafter: notes + full interview transcript.
+
+    Every asked question with a substantive patient answer is included. We do
+    not gate on the agent's ``substantive_questions`` list — that list is for
+    gap-note routing only. Blank / unsure answers are still omitted.
+    """
+    del substantive_questions  # gap routing only; drafter gets the full transcript
     base = (notes or "").strip()
-    substantive_set = set(substantive_questions or [])
     qa_lines = [
         f"Q: {turn.question}\nA: {turn.answer.strip()}"
         for turn in transcript
-        if turn.question in substantive_set
+        if turn.answer.strip() and not _is_non_answer(turn.answer)
     ]
     if not qa_lines:
         return base
@@ -520,8 +610,6 @@ def finalize_interview_result(
     substantive, gaps = classify_interview(
         planned_questions=planned,
         transcript=transcript,
-        substantive_questions=decision.substantive_questions,
-        gap_questions=decision.gap_questions,
         on_stop=True,
     )
     return QuestionInterviewResult(

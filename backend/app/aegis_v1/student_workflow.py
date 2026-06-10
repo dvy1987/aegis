@@ -391,7 +391,19 @@ def question_agent_node(ctx: Any) -> None:
     pre = ctx.state.get("question_interview_json", "")
     if pre:
         try:
-            ctx.state["question_interview"] = json.loads(pre)
+            from app.aegis_v1.question_agent import refresh_interview_artifact
+
+            parsed = ctx.state.get("parsed_case", {})
+            notes = str(
+                parsed.get("clinical_context") or ctx.state.get("clinical_context", "")
+            )
+            interview = refresh_interview_artifact(json.loads(pre), notes=notes)
+            ctx.state["question_interview"] = interview
+            if interview.get("qa_transcript"):
+                ctx.state["clinical_context"] = interview["enriched_context"]
+                updated = dict(parsed)
+                updated["clinical_context"] = interview["enriched_context"]
+                ctx.state["parsed_case"] = updated
         except Exception:
             logger.warning(
                 "question_agent_node: invalid question_interview_json; ignoring",
@@ -431,8 +443,8 @@ def question_agent_node(ctx: Any) -> None:
             client=_injected_question_client,
         )
         ctx.state["question_interview"] = result.model_dump()
-        if result.qa_transcript and result.enriched_context:
-            # The drafter sees ONLY the patient-knowable enriched context.
+        if result.qa_transcript:
+            # Drafter sees notes + full patient Q&A transcript (minus blank/unsure).
             ctx.state["clinical_context"] = result.enriched_context
             updated = dict(parsed)
             updated["clinical_context"] = result.enriched_context

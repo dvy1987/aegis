@@ -111,6 +111,13 @@ class OtelPhoenixRecorder:
         self.project_name = project_name or os.environ.get("PHOENIX_PROJECT_NAME", "default")
 
     def record_run(self, appeal_package, trace_metadata) -> str:
+        try:
+            from app.aegis_v1.phoenix_retention import ensure_phoenix_span_budget
+
+            ensure_phoenix_span_budget(project_name=self.project_name)
+        except Exception:
+            pass
+
         from opentelemetry import trace as otel_trace
 
         tracer = otel_trace.get_tracer("aegis.evaluated_run")
@@ -162,14 +169,39 @@ class OtelPhoenixRecorder:
         host = os.environ.get("PHOENIX_HOST")
         base_url = (host.rstrip("/") + "/") if host else None
         try:
-            Client(base_url=base_url).spans.log_span_annotations_dataframe(
+            from app.aegis_v1.phoenix_retention import ensure_phoenix_span_budget
+
+            ensure_phoenix_span_budget(project_name=self.project_name)
+        except Exception:
+            pass
+
+        client = Client(base_url=base_url)
+        try:
+            client.spans.log_span_annotations_dataframe(
                 dataframe=df,
                 annotator_kind="CODE",
                 annotation_name="aegis_part_a_panel",
                 sync=True,
             )
         except Exception:
-            # Best-effort: recording the span itself is the load-bearing demo artifact.
-            # Annotation upload depends on Phoenix client/endpoint wiring and must not
-            # fail the product or showcase path.
+            try:
+                from app.aegis_v1.phoenix_retention import ensure_phoenix_span_budget
+
+                ensure_phoenix_span_budget(project_name=self.project_name)
+                client.spans.log_span_annotations_dataframe(
+                    dataframe=df,
+                    annotator_kind="CODE",
+                    annotation_name="aegis_part_a_panel",
+                    sync=True,
+                )
+            except Exception:
+                # Best-effort: recording the span itself is the load-bearing demo artifact.
+                # Annotation upload depends on Phoenix client/endpoint wiring and must not
+                # fail the product or showcase path.
+                return
+        try:
+            from app.aegis_v1.phoenix_retention import ensure_phoenix_span_budget
+
+            ensure_phoenix_span_budget(project_name=self.project_name)
+        except Exception:
             return

@@ -41,11 +41,76 @@ logger = logging.getLogger(__name__)
 
 MAX_PLAYBOOK_ADDITIONS = 5
 
+# Playbook-mining notes belong in playbook reflection — never question-agent prompt mutation.
+_PLAYBOOK_NOTE_MARKERS = (
+    "playbook addition",
+    "add to playbook",
+    "add to global playbook",
+)
+
+_PATIENT_ASK_MARKERS = (
+    "ask the patient",
+    "ask patient",
+    "ask them",
+    "ask about",
+    "ask whether",
+    "interview the patient about",
+)
+
+
+def advises_regulatory_patient_ask(text: str) -> bool:
+    """True when text tells GEPA to have the question agent ask regulatory facts."""
+    low = (text or "").strip().lower()
+    if not low:
+        return False
+    if any(marker in low for marker in _PLAYBOOK_NOTE_MARKERS):
+        return True
+    has_patient_ask = any(marker in low for marker in _PATIENT_ASK_MARKERS)
+    if not has_patient_ask:
+        return False
+    if is_regulatory_question(low):
+        return True
+    return any(
+        term in low
+        for term in (
+            "regulatory",
+            "policy",
+            "legal",
+            "statute",
+            "coverage criteria",
+            "plan language",
+            "filing deadline",
+            "appeal rights",
+            "clinical guideline",
+        )
+    )
+
+
+def filter_question_agent_reflection_notes(notes: list[str]) -> list[str]:
+    """Drop judge notes that would steer GEPA to weaken the regulatory firewall."""
+    return [n for n in notes if n.strip() and not advises_regulatory_patient_ask(n)]
+
+
+def sanitize_question_agent_improvement(
+    improvement: str | None,
+    *,
+    playbook_additions: list[str],
+) -> str | None:
+    """Launder improvement for Phoenix/GEPA — playbook facts go to playbooks only."""
+    if playbook_additions:
+        return "Playbook additions (append-first): " + "; ".join(playbook_additions)
+    cleaned = (improvement or "").strip()
+    if not cleaned or advises_regulatory_patient_ask(cleaned):
+        return None
+    return cleaned
+
 
 class QuestionJudgeOutput(BaseModel):
     result: JudgeResult
     playbook_additions: list[str] = Field(default_factory=list)
     graded: bool = False
+    substantive_questions: list[str] = Field(default_factory=list)
+    gap_questions: list[str] = Field(default_factory=list)
 
 
 def _neutral_result(reasoning: str) -> JudgeResult:
@@ -136,7 +201,7 @@ def _grade_transcript(question_interview: dict[str, Any]) -> tuple[int, str, lis
             5,
             f"Interview gathered {len(substantive)} substantive patient answers "
             f"over {len(transcript)} turns with no repeats and no regulatory "
-            "questions; answers were folded into the drafter's enriched context.",
+            "questions; full transcript passed to the drafter.",
             questions,
         )
     if len(substantive) >= 1:
@@ -156,15 +221,24 @@ def _grade_transcript(question_interview: dict[str, Any]) -> tuple[int, str, lis
     )
 
 
+def _routing_from_transcript(
+    question_interview: dict[str, Any],
+) -> tuple[list[str], list[str]]:
+    from app.aegis_v1.question_agent import classify_transcript_routing
+
+    return classify_transcript_routing(question_interview)
+
+
 def _offline_judge(
     question_interview: dict[str, Any],
     teacher: TeacherGradingPacket | None,
 ) -> QuestionJudgeOutput:
     score, reasoning, questions = _grade_transcript(question_interview)
+    substantive, gaps = _routing_from_transcript(question_interview)
     additions = extract_playbook_additions(teacher)
-    improvement = None
-    if additions:
-        improvement = "Playbook additions (append-first): " + "; ".join(additions)
+    improvement = sanitize_question_agent_improvement(
+        None, playbook_additions=additions
+    )
     return QuestionJudgeOutput(
         result=JudgeResult(
             dimension="question_agent",
@@ -176,6 +250,8 @@ def _offline_judge(
         ),
         playbook_additions=additions,
         graded=True,
+        substantive_questions=substantive,
+        gap_questions=gaps,
     )
 
 
@@ -197,15 +273,29 @@ wasted turns, never asked the patient a regulatory/policy/legal question.
 3 = partial value. 1 = no useful facts, or it asked the patient a regulatory
 question (firewall breach — automatic 1).
 
-JOB 2 — MINE PLAYBOOK GAPS (not grading):
+JOB 1b — CLASSIFY EACH ASKED QUESTION (for GEPA; not shown to the patient):
+From the transcript only, list which asked questions yielded substantive
+patient facts (`substantive_questions`) vs unresolved gaps (`gap_questions`:
+never asked, blank, or "I don't know"). Ignore any pre-existing labels on the
+artifact — you are the source of truth.
+
+JOB 2 — MINE PLAYBOOK GAPS (not grading; NOT question-agent mutations):
 The synthetic clinical file below embeds regulatory / legal / insurer-specific
-facts that a real patient would never know and the question agent could not
-ask about. Extract each such fact and write ONE detailed append-first
-instruction stating exactly where it belongs:
+facts that a real patient would never know. The question agent must NEVER ask
+the patient these — it looks them up via playbook/library. Extract each such
+fact and write ONE detailed append-first instruction stating exactly where it
+belongs:
 - insurer/plan-specific rules -> "Add to playbook:{slice_key}: <rule>"
 - broadly applicable legal/regulatory rules -> "Add to global playbook: <rule>"
-Only include rules likely missing from standard playbooks. These instructions
-flow to Phoenix and are pulled into the GEPA learning loop automatically.
+Only include rules likely missing from standard playbooks. Put these ONLY in
+`playbook_additions` — they flow to playbook GEPA reflection, NOT to the
+question-agent prompt.
+
+JOB 3 — IMPROVEMENT FIELD (interview technique only):
+At most one sentence on patient-knowable interview gaps or technique. NEVER
+suggest mutating the question agent to ask regulatory/policy/legal/plan-language
+questions of the patient. If the only fix is a regulatory fact, use
+`playbook_additions` and leave `improvement` empty.
 
 INTERVIEW TRANSCRIPT:
 {transcript}
@@ -218,8 +308,10 @@ SKIPPED: {bool(question_interview.get("skipped"))}
 HIDDEN TEACHER CLINICAL FILE (answer key; never shown to the student):
 {teacher_context}
 
-Return JSON: score (1|3|5), reasoning, playbook_additions (list of instruction
-strings), improvement (one sentence of advice for the question agent)."""
+Return JSON: score (1|3|5), reasoning, substantive_questions (list of question
+strings from the transcript), gap_questions (list of question strings),
+playbook_additions (list of instruction strings), improvement (optional one
+sentence on patient-knowable interview technique — never regulatory asks)."""
 
 
 _ANCHOR_CLAMP = {1: 1, 2: 3, 3: 3, 4: 5, 5: 5}
@@ -252,6 +344,8 @@ class GeminiQuestionJudgeClient:
             class _Out(BaseModel):
                 score: int
                 reasoning: str = ""
+                substantive_questions: list[str] = Field(default_factory=list)
+                gap_questions: list[str] = Field(default_factory=list)
                 playbook_additions: list[str] = Field(default_factory=list)
                 improvement: str = ""
 
@@ -267,16 +361,32 @@ class GeminiQuestionJudgeClient:
                 ),
             )
             data = _Out.model_validate(json.loads(response.text))
+            transcript = list(question_interview.get("qa_transcript") or [])
+            questions = [str(t.get("question", "")) for t in transcript]
+            regulatory = [q for q in questions if is_regulatory_question(q)]
             score = _ANCHOR_CLAMP.get(int(data.score), 3)
+            reasoning = data.reasoning.strip() or "LLM question judge verdict."
+            if regulatory:
+                score = 1
+                reasoning = (
+                    "Firewall breach: the agent asked the patient a regulatory/policy "
+                    f"question ({regulatory[0]!r}). Regulatory gaps must be looked up "
+                    "via playbook/library/Phoenix, never asked of the patient."
+                )
             additions = [a.strip() for a in data.playbook_additions if a.strip()]
             additions = additions[:MAX_PLAYBOOK_ADDITIONS]
-            improvement = data.improvement.strip() or None
-            if additions:
-                improvement = "Playbook additions (append-first): " + "; ".join(additions)
+            improvement = sanitize_question_agent_improvement(
+                data.improvement.strip() or None,
+                playbook_additions=additions,
+            )
+            substantive, gaps = _routing_from_transcript(question_interview)
+            if data.substantive_questions or data.gap_questions:
+                substantive = [q.strip() for q in data.substantive_questions if q.strip()]
+                gaps = [q.strip() for q in data.gap_questions if q.strip()]
             return QuestionJudgeOutput(
                 result=JudgeResult(
                     dimension="question_agent",
-                    reasoning=data.reasoning.strip() or "LLM question judge verdict.",
+                    reasoning=reasoning,
                     score=score,
                     confidence=0.85,
                     evidence_quotes=[],
@@ -284,6 +394,8 @@ class GeminiQuestionJudgeClient:
                 ),
                 playbook_additions=additions,
                 graded=True,
+                substantive_questions=substantive,
+                gap_questions=gaps,
             )
         except Exception:
             logger.warning(

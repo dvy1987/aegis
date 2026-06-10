@@ -11,8 +11,11 @@ from __future__ import annotations
 from typing import Any
 
 from app.evals.part_a.question_judge import (
+    advises_regulatory_patient_ask,
     extract_playbook_additions,
+    filter_question_agent_reflection_notes,
     judge_question_interview,
+    sanitize_question_agent_improvement,
 )
 from app.evals.part_a.schemas import TeacherGradingPacket
 
@@ -69,6 +72,8 @@ def test_good_showcase_interview_scores_5_and_is_graded() -> None:
     assert out.graded is True
     assert out.result.score == 5
     assert out.result.dimension == "question_agent"
+    assert len(out.substantive_questions) == 2
+    assert "Do you have recent medical records" in " ".join(out.gap_questions)
 
 
 def test_regulatory_question_is_firewall_breach_score_1() -> None:
@@ -118,6 +123,36 @@ def test_part_b_ignores_plain_clinical_facts() -> None:
 def test_no_teacher_means_no_playbook_additions() -> None:
     out = judge_question_interview(_interview())
     assert out.playbook_additions == []
+
+
+def test_bad_improvement_suggesting_regulatory_ask_is_dropped() -> None:
+    out = sanitize_question_agent_improvement(
+        "Ask the patient about the plan coverage criteria on step therapy.",
+        playbook_additions=[],
+    )
+    assert out is None
+
+
+def test_playbook_additions_never_route_to_question_agent_improvement_as_ask() -> None:
+    additions = ["Add to playbook:Cigna:medical_necessity:step_therapy: require step therapy doc"]
+    out = sanitize_question_agent_improvement(
+        "Ask the patient what the plan says about step therapy.",
+        playbook_additions=additions,
+    )
+    assert out is not None
+    assert out.startswith("Playbook additions")
+    assert "Ask the patient" not in out
+
+
+def test_filter_question_agent_reflection_notes_strips_playbook_and_regulatory_asks() -> None:
+    notes = [
+        "Playbook additions (append-first): Add to global playbook: ERISA 1133",
+        "Ask the patient about filing deadlines for this insurer.",
+        "Probe symptom timeline more directly before stopping.",
+    ]
+    filtered = filter_question_agent_reflection_notes(notes)
+    assert filtered == ["Probe symptom timeline more directly before stopping."]
+    assert advises_regulatory_patient_ask("Ask the patient about coverage criteria.")
 
 
 def test_non_substantive_answers_score_low() -> None:

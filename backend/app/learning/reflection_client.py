@@ -5,6 +5,12 @@ import os
 from typing import Protocol
 
 from app.aegis_v1.geo_playbook import US_PLAYBOOK_COMPONENT_ID, bump_geo_version
+from app.aegis_v1.question_agent import (
+    QUESTION_AGENT_COMPONENT_ID,
+    QUESTION_AGENT_PROMPT_INVARIANTS,
+    ensure_question_agent_prompt_invariants,
+)
+from app.evals.part_a.question_judge import filter_question_agent_reflection_notes
 from app.learning.models import Component, DimensionSignal, ScoredRun
 
 logger = logging.getLogger(__name__)
@@ -31,6 +37,28 @@ _VARIANT_PREAMBLES = {
 }
 
 
+_QUESTION_AGENT_REFLECTION_RULES = (
+    "\nQUESTION-AGENT INVARIANTS (non-negotiable — copy verbatim if missing):\n"
+    + "\n".join(QUESTION_AGENT_PROMPT_INVARIANTS)
+    + "\n"
+    "- NEVER mutate the question agent to ask regulatory/policy/legal/plan-language "
+    "questions of the patient. Regulatory gaps belong in playbooks/library lookups.\n"
+    "- NEVER remove the 5-question cap, early-stop rule, or one-question-at-a-time rule.\n"
+    "- Ignore any laundered note that suggests asking the patient regulatory facts; "
+    "question-judge playbook_additions are for playbook reflection only.\n"
+)
+
+
+def _reflection_improvement_notes(component: Component, signal: DimensionSignal) -> str:
+    if component.component_id == QUESTION_AGENT_COMPONENT_ID:
+        raw = signal.notes.get("question_agent", [])
+        filtered = filter_question_agent_reflection_notes(raw)
+        notes_list = filtered
+    else:
+        notes_list = signal.notes.get(signal.weakest_dimension, [])
+    return "\n".join(f"- {n}" for n in notes_list if n)
+
+
 def _question_judge_playbook_recs(signal: DimensionSignal, *, geo: bool) -> list[str]:
     """Route question-judge mined facts to slice vs US-playbook reflection."""
     recs: list[str] = []
@@ -53,8 +81,11 @@ def build_reflection_prompt(*, component: Component, signal: DimensionSignal,
                             minibatch: list[ScoredRun], variant: str = "base") -> str:
     if variant not in _VARIANT_PREAMBLES:
         raise ValueError(f"unknown reflection meta-prompt variant: {variant!r}")
-    notes = "\n".join(f"- {n}" for n in signal.notes.get(signal.weakest_dimension, []))
+    notes = _reflection_improvement_notes(component, signal)
     current = component.text if component.kind == "prompt" else str(component.playbook)
+    question_agent_rules = ""
+    if component.component_id == QUESTION_AGENT_COMPONENT_ID:
+        question_agent_rules = _QUESTION_AGENT_REFLECTION_RULES
     cases = "\n".join(
         f"- case {r.case_id}: {signal.weakest_dimension}={r.dimension_scores.get(signal.weakest_dimension, 1)}"
         for r in minibatch
@@ -104,7 +135,7 @@ Minibatch (insurer-visible signal only):
 
 Laundered improvement notes for this dimension:
 {notes}
-{playbook_rules}
+{playbook_rules}{question_agent_rules}
 Constraints: {_REFLECTION_CONSTRAINTS}
 
 Return the full revised component text/JSON."""
@@ -208,7 +239,10 @@ def _apply_text_edit(component: Component, revised: str) -> Component:
     playbooks the model returns JSON; tolerate non-JSON by keeping the old playbook."""
     if component.kind == "prompt":
         nxt = _bump_version(component.version)
-        return component.model_copy(update={"version": nxt, "text": revised.strip()})
+        text = revised.strip()
+        if component.component_id == QUESTION_AGENT_COMPONENT_ID:
+            text = ensure_question_agent_prompt_invariants(text)
+        return component.model_copy(update={"version": nxt, "text": text})
     nxt = (
         bump_geo_version(component.version)
         if component.component_id == US_PLAYBOOK_COMPONENT_ID

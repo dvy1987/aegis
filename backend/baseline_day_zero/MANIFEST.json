@@ -1,8 +1,17 @@
 {
-  "description": "Read-only day-zero blank slate for Aegis v1 learning. Restore from here to reset the drafter prompt + playbooks to their pre-learning state. Phoenix traces are deleted manually by the PM.",
-  "captured_at": "2026-06-07",
+  "description": "Read-only day-zero blank slate for Aegis v1 learning. Restore from here to reset prompts + playbooks to their pre-learning state. Phoenix traces are deleted manually by the PM.",
+  "captured_at": "2026-06-10",
   "active_drafter_prompt_version": "drafter_v1",
-  "drafter_prompt": "prompts/drafter_v1.md",
+  "active_question_agent_prompt_version": "question_agent_v1",
+  "prompts": [
+    "prompts/drafter_v1.md",
+    "prompts/question_agent_v1.md",
+    "prompts/search_planner_v1.md"
+  ],
+  "active_prompt_pointers": [
+    "active_drafter_prompt.txt",
+    "active_question_agent_prompt.txt"
+  ],
   "playbooks": [
     "playbooks/aetna__medical_necessity.json",
     "playbooks/aetna__prior_authorization.json",

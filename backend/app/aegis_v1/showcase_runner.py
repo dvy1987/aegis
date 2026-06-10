@@ -513,6 +513,12 @@ def _run_learning_session(
     """Shared quick/serious flow. Checkpoint-aware: each stage is skipped if the
     session checkpoint already marks it done, so a failed/interrupted run can be
     resumed (via the resume endpoint) without redoing completed work."""
+    from app.aegis_v1.phoenix_retention import (
+        clear_protected_dataset_splits,
+        register_showcase_session_splits,
+    )
+
+    register_showcase_session_splits(session_id, train_split)
     manager = ShowcaseSessionManager()
     try:
         if not _creds_available():
@@ -657,6 +663,20 @@ def _run_learning_session(
             ),
             retryable=True,
         )
+    finally:
+        clear_protected_dataset_splits()
+
+
+def run_guinea_pig_session(session_id: str, *, case: ShowcaseCase) -> None:
+    """Single-case GEPA run (preview-shaped): one round, all component types mutated."""
+    _run_learning_session(
+        session_id,
+        run_type="quick",
+        train_cases=[case],
+        holdout_cases=[case],
+        max_rounds=1,
+        train_split=f"guinea_pig_gepa_{session_id}",
+    )
 
 
 def run_quick_session(session_id: str) -> None:
@@ -683,7 +703,22 @@ def run_serious_session(session_id: str) -> None:
     )
 
 
-def approve_session(session_id: str, *, approver: str) -> None:
+def approve_guinea_pig_session(
+    session_id: str,
+    *,
+    approver: str = "guinea_pig_cli",
+) -> None:
+    """Promote guinea-pig GEPA candidate to live prompts/playbooks (no holdout post-measure)."""
+    approve_session(session_id, approver=approver, skip_post_measure=True)
+
+
+def approve_session(
+    session_id: str,
+    *,
+    approver: str,
+    post_cases: list[ShowcaseCase] | None = None,
+    skip_post_measure: bool = False,
+) -> None:
     manager = ShowcaseSessionManager()
     manifest = load_showcase_manifest()
     try:
@@ -738,18 +773,27 @@ def approve_session(session_id: str, *, approver: str) -> None:
         # (rollback stays available). The whole phase is checkpointed; on resume
         # the holdout is simply re-measured from the persisted pre-measure baseline.
         if not _checkpoint(manager, session_id).post_measure_done:
-            post_cases = (
-                manifest.quick_holdout
-                if session.run_type == "quick"
-                else manifest.serious_holdout
-            )
-            post_results = _measure(manager, session_id, phase="post", cases=post_cases)
-            session = manager.get(session_id)
-            manager.set_regression_warning(
-                session_id,
-                summary=_regression_summary(session.pre_measure_results, post_results),
-            )
-            manager.save_checkpoint(session_id, post_measure_done=True)
+            if skip_post_measure:
+                manager.save_checkpoint(session_id, post_measure_done=True)
+            else:
+                resolved_post_cases = (
+                    post_cases
+                    if post_cases is not None
+                    else (
+                        manifest.quick_holdout
+                        if session.run_type == "quick"
+                        else manifest.serious_holdout
+                    )
+                )
+                post_results = _measure(
+                    manager, session_id, phase="post", cases=resolved_post_cases
+                )
+                session = manager.get(session_id)
+                manager.set_regression_warning(
+                    session_id,
+                    summary=_regression_summary(session.pre_measure_results, post_results),
+                )
+                manager.save_checkpoint(session_id, post_measure_done=True)
 
         manager.mark_success(session_id)
         _log(session_id, "measure_after", "showcase approved run completed")

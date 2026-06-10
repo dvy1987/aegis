@@ -205,6 +205,8 @@ def _run_panel_offline(
         extra_metadata={
             "question_graded": question.graded,
             "question_playbook_additions": question.playbook_additions,
+            "question_substantive_questions": question.substantive_questions,
+            "question_gap_questions": question.gap_questions,
         },
     )
 
@@ -247,6 +249,8 @@ def _run_panel_adk(
         extra_metadata={
             "question_graded": question.graded,
             "question_playbook_additions": question.playbook_additions,
+            "question_substantive_questions": question.substantive_questions,
+            "question_gap_questions": question.gap_questions,
         },
     )
 

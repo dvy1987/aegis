@@ -71,21 +71,25 @@ def _resolve_cases_dir(raw: dict[str, Any], *, cohort: str) -> Path:
     return DEFAULT_QUICK_CASES_DIR
 
 
-def _load_case(case_id: str, *, cases_dir: Path) -> ShowcaseCase:
-    path = cases_dir / f"{case_id}.json"
-    if not path.exists():
-        raise FileNotFoundError(f"Manifest case not found: {case_id}")
-    data: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
-    actual_id = data.get("case_id") or path.stem
-    if actual_id != case_id:
-        raise ValueError(f"Manifest case id mismatch: {case_id} != {actual_id}")
+def showcase_case_from_json(
+    data: dict[str, Any],
+    *,
+    path: Path,
+    case_id: str | None = None,
+) -> ShowcaseCase:
+    """Build a ``ShowcaseCase`` from a case JSON dict (manifest, guinea pig, etc.)."""
+    resolved_id = case_id or str(data.get("case_id") or path.stem)
     profile = data.get("patient_profile") or {}
     matrix_cell = (data.get("synthetic_provenance") or {}).get("matrix_cell") or {}
     sub_tactic = str(matrix_cell.get("sub_tactic") or "unknown")
+    try:
+        rel_path = str(path.resolve().relative_to(REPO_ROOT.resolve()))
+    except ValueError:
+        rel_path = str(path)
     return ShowcaseCase(
-        case_id=case_id,
-        headline=case_id,
-        path=str(path.relative_to(REPO_ROOT)),
+        case_id=resolved_id,
+        headline=resolved_id,
+        path=rel_path,
         insurer=str(data.get("insurer") or "unknown"),
         denial_type=str(data.get("denial_type") or "unknown").replace(" ", "_").lower(),
         sub_tactic=sub_tactic,
@@ -95,6 +99,26 @@ def _load_case(case_id: str, *, cases_dir: Path) -> ShowcaseCase:
         patient_gender=str(profile.get("gender") or ""),
         teacher_case=data,
     )
+
+
+def load_showcase_case_from_path(path: Path | str) -> ShowcaseCase:
+    """Load a single showcase-compatible case from any JSON path."""
+    case_path = Path(path)
+    if not case_path.exists():
+        raise FileNotFoundError(f"Case not found: {case_path}")
+    data: dict[str, Any] = json.loads(case_path.read_text(encoding="utf-8"))
+    return showcase_case_from_json(data, path=case_path)
+
+
+def _load_case(case_id: str, *, cases_dir: Path) -> ShowcaseCase:
+    path = cases_dir / f"{case_id}.json"
+    if not path.exists():
+        raise FileNotFoundError(f"Manifest case not found: {case_id}")
+    data: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+    actual_id = data.get("case_id") or path.stem
+    if actual_id != case_id:
+        raise ValueError(f"Manifest case id mismatch: {case_id} != {actual_id}")
+    return showcase_case_from_json(data, path=path, case_id=case_id)
 
 
 def _case_slice(case: ShowcaseCase) -> tuple[str, str, str]:

@@ -182,6 +182,22 @@ def test_patient_unsure_routes_to_gap_not_drafter_context() -> None:
     assert "SSRI" in result.enriched_context
 
 
+def test_enriched_context_includes_full_transcript_when_agent_omits_substantive_tags() -> None:
+    """Regression: drafter must get Q&A even if the model leaves substantive_questions empty."""
+    seizure_q = "Do you have a history of withdrawal seizures?"
+    result = run_question_interview(
+        denial_text=DENIAL,
+        notes="Patient wants to appeal.",
+        playbook=PLAYBOOK,
+        responder=lambda question: "I had a seizure during withdrawal two years ago.",
+        client=RoutingQuestionAgentClient(),
+    )
+
+    assert result.substantive_questions  # derived from transcript, not agent tags
+    assert "PATIENT Q&A:" in result.enriched_context
+    assert "seizure" in result.enriched_context.lower()
+
+
 def test_finalize_trusts_agent_routing_on_stop() -> None:
     symptom_q = "When did your symptoms start, and how do they affect your daily life?"
     result = run_question_interview(
