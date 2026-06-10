@@ -8,6 +8,7 @@ import { getDiscoveryEnabled, SETTINGS_CHANGED_EVENT } from "@/lib/settings";
 import { Nav } from "@/components/Nav";
 import { ProgressHairline } from "@/components/ui/ProgressHairline";
 import { IntakePanel } from "@/components/flow/IntakePanel";
+import { QuestionChat } from "@/components/flow/QuestionChat";
 import { WorkingProgress } from "@/components/flow/WorkingProgress";
 import { MirrorCard } from "@/components/flow/MirrorCard";
 import { DraftEditor } from "@/components/flow/DraftEditor";
@@ -15,8 +16,9 @@ import { DecideBar } from "@/components/flow/DecideBar";
 
 const STEP_RATIO: Record<FlowStep, number> = {
   intake: 0.1,
-  working: 0.35,
-  mirror: 0.6,
+  questions: 0.25,
+  working: 0.45,
+  mirror: 0.65,
   draft: 0.85,
   decide: 1,
 };
@@ -39,14 +41,19 @@ export default function AppealPage() {
     return () => window.removeEventListener(SETTINGS_CHANGED_EVENT, onSettings);
   }, []);
 
-  async function submit(req: AppealRequest) {
-    const withSettings: AppealRequest = {
-      ...req,
-      discovery_enabled: getDiscoveryEnabled(),
-    };
-    dispatch({ type: "SUBMIT", req: withSettings });
+  function submit(req: AppealRequest) {
+    // The questions step runs between intake and drafting (traced, not graded).
+    dispatch({
+      type: "BEGIN_QUESTIONS",
+      req: { ...req, discovery_enabled: getDiscoveryEnabled() },
+    });
+  }
+
+  async function draft(baseReq: AppealRequest, interviewId?: string) {
+    const req: AppealRequest = { ...baseReq, interview_id: interviewId };
+    dispatch({ type: "SUBMIT", req });
     try {
-      dispatch({ type: "RESULT", result: await ds.draftAppeal(withSettings) });
+      dispatch({ type: "RESULT", result: await ds.draftAppeal(req) });
     } catch {
       dispatch({ type: "ERROR", error: "Something's not working on our side. Try again, or come back later." });
     }
@@ -71,6 +78,13 @@ export default function AppealPage() {
             transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
           >
             {state.step === "intake" && <IntakePanel cases={cases} onSubmit={submit} />}
+            {state.step === "questions" && state.req && (
+              <QuestionChat
+                req={state.req}
+                source={ds}
+                onFinish={(interviewId) => void draft(state.req as AppealRequest, interviewId)}
+              />
+            )}
             {state.step === "working" && <WorkingProgress />}
             {state.step === "mirror" && state.result && (
               <MirrorCard mirror={state.result.mirror} onContinue={() => dispatch({ type: "ADVANCE" })} />

@@ -16,6 +16,9 @@ export const showcaseSource: DataSource = {
   listCases: demoSource.listCases,
   getShowcase: demoSource.getShowcase,
   draftAppeal: liveSource.draftAppeal,
+  startQuestions: liveSource.startQuestions,
+  answerQuestion: liveSource.answerQuestion,
+  skipQuestions: liveSource.skipQuestions,
 };
 
 /** @deprecated Use consumerSource or showcaseSource. */

@@ -8,6 +8,7 @@ export type PromotionRuleChange = {
   text?: string;
   before_text?: string;
   justification?: string | null;
+  notice?: string | null;
 };
 
 export type PromotionPreviewSection =

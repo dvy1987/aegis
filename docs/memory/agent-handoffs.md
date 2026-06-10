@@ -3228,3 +3228,39 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - **Clean** on `main` @ `3ed6637`.
+
+---
+
+## 2026-06-10 — Handoff (Cursor — showcase cohort paths + production 50/20)
+
+### Done
+- **Production cohort (serious):** 50 train + 20 holdout from cases 101–200; mixed insurers/denial types/sub-tactics; each holdout slice has ≥1 train sibling; excludes 7 preview cases.
+- **Case file moves:** 70 cases → `eval/cases/approved/prod-run/`; 7 preview cases → `eval/cases/approved/preview-run/` (out of `drafts/`).
+- **Manifest:** `eval/benchmarks/v1_showcase_100/manifest.json` — `case_paths.quick` → preview-run, `case_paths.serious` → prod-run; `serious_train`/`serious_holdout` lists updated.
+- **Loader:** `showcase_manifest.py` resolves paths per cohort; validates 50/20 counts, 101–200 range, holdout-slice sibling rule, no preview/production overlap.
+- **Tests:** `test_showcase_manifest.py` updated (5 pass); `test_showcase_api_runs.py` + `test_showcase_runner.py` counts 50 train.
+- **Verified:** all 77 manifest case files exist on disk; `deploy-v1.sh` copies full `eval/cases/` (approved included).
+
+### Debated
+- PM confirmed excluding preview cases from production is fine (slice playbook guard is per-run via `slice_filters` from training cases only).
+
+### Decisions
+- Production run = serious cohort in code; preview = quick cohort; both live under `eval/cases/approved/`.
+- Question agent spec approved in parallel thread (`docs/specs/2026-06-10-question-agent-design.md`); geo playbook out of scope for that work.
+
+### Deferred
+- **Commit + deploy** — PM has not requested.
+- **Question agent** — largely built in another session (`docs/2026-06-10-question-agent-test-handoff.md`); tests not fully run; uncommitted.
+- **Scratch scripts** (`scratch/list_preview_cohort_patterns.py`) still reference old `drafts/` paths — dev-only, not showcase runtime.
+
+### Next Agent Should Know
+- Showcase loads cases only via `load_showcase_manifest()` + `case_paths` in manifest — do not hardcode `drafts/` for cohort 101–200.
+- Preview: 5 train + 2 holdout (Cigna med-nec). Production: 50 train + 20 holdout (mixed).
+- `eval/gumloop_runs/` historical indexes still say `drafts/` — artifacts only, not runtime.
+
+### Revisit Triggers
+- PM wants different production case mix → edit manifest lists + move files; keep `case_paths` + validation rules.
+- PM says go on question agent → run test handoff suites before commit.
+
+### Working Tree
+- **Dirty, uncommitted:** manifest, `showcase_manifest.py`, moved case JSONs (77 files), test updates; plus prior uncommitted question-agent/geo work from other sessions.

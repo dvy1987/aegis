@@ -38,12 +38,21 @@ def run_measurement_case(
     drafter_prompt_version: str | None = None,
     drafter_prompt_text: str | None = None,
     playbook_override: dict[str, Any] | None = None,
+    geo_playbook_override: dict[str, Any] | None = None,
+    run_question_agent: bool = False,
+    question_agent_client: Any | None = None,
+    patient_simulator_client: Any | None = None,
+    teacher_clinical_context: str = "",
 ) -> MeasurementResult:
     """Run clean measurement: v1 drafter plus simulator only.
 
     This path deliberately bypasses `run_evaluated_case`: no recorder, no judges,
     no Phoenix annotations, and no LearningCoordinator signal. The drafter still
     receives the same sanitized Phoenix memory summary used by normal v1 drafting.
+
+    When ``run_question_agent`` is set, the pre-draft interview runs first against
+    the patient simulator (seeded with ``teacher_clinical_context``) so measure
+    drafts use the same enriched context as training drafts.
     """
 
     from app.aegis_v1.patient_context import pipeline_inputs_from_case
@@ -59,6 +68,12 @@ def run_measurement_case(
         drafter_prompt_version=drafter_prompt_version,
         drafter_prompt_text=drafter_prompt_text,
         playbook_override=playbook_override,
+        geo_playbook_override=geo_playbook_override,
+        run_question_agent=run_question_agent,
+        question_agent_client=question_agent_client,
+        patient_simulator_client=patient_simulator_client,
+        teacher_clinical_context=teacher_clinical_context,
+        patient_profile=case_obj.get("patient_profile"),
     )
     package = appeal.appeal_package
     sim = appeal.outcome

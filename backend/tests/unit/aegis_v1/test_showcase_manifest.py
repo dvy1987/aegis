@@ -24,13 +24,14 @@ def test_manifest_quick_cohort_is_separate_from_serious_benchmark() -> None:
     holdout_ids = {case.case_id for case in manifest.serious_holdout}
     quick_ids = quick_train_ids | quick_holdout_ids
 
-    assert len(manifest.serious_train) == 80
+    assert len(manifest.serious_train) == 50
     assert len(manifest.serious_holdout) == 20
     assert serious_train_ids.isdisjoint(holdout_ids)
     assert quick_ids.isdisjoint(serious_train_ids | holdout_ids)
-    for case_id in quick_ids:
+    production_ids = serious_train_ids | holdout_ids
+    for case_id in quick_ids | production_ids:
         assert 101 <= _case_number(case_id) <= 200
-    assert len(quick_ids | serious_train_ids | holdout_ids) == 107
+    assert len(quick_ids | production_ids) == 77
 
 
 def test_manifest_case_metadata_is_student_safe() -> None:
@@ -57,6 +58,13 @@ def test_manifest_case_metadata_is_student_safe() -> None:
     }
     assert case.patient_age > 0
     assert case.patient_gender in {"F", "M", "X"}
+
+
+def test_manifest_loads_production_cases_from_approved_prod_run() -> None:
+    manifest = load_showcase_manifest()
+
+    assert "approved/prod-run" in manifest.serious_train[0].path.replace("\\", "/")
+    assert "approved/preview-run" in manifest.quick_train[0].path.replace("\\", "/")
 
 
 def test_manifest_keeps_teacher_metadata_for_judges_only() -> None:

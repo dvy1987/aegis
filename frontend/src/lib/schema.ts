@@ -22,10 +22,33 @@ export const traceMetadataSchema = z.object({
   run_mode: z.enum(["interactive", "benchmark", "autonomous_promotion"]),
 });
 
+export const qaTurnSchema = z.object({
+  turn: z.number(), question: z.string(), answer: z.string().default(""),
+});
+
+// Consumer-safe projection of the backend QuestionInterviewResult; unknown
+// (internal) fields are dropped by zod.
+export const questionInterviewSchema = z.object({
+  qa_transcript: z.array(qaTurnSchema).default([]),
+  planned_questions: z.array(z.string()).default([]),
+  patient_gap_note: z.string().default(""),
+  skipped: z.boolean().default(false),
+});
+
+export const questionTurnSchema = z.object({
+  interview_id: z.string(),
+  question: z.string().nullable().default(null),
+  turn: z.number().default(0),
+  done: z.boolean().default(false),
+  planned_questions: z.array(z.string()).default([]),
+  patient_gap_note: z.string().default(""),
+});
+
 export const appealResponseSchema = z.object({
   run_id: z.string(), appeal_letter: z.string(),
   outcome: simulatorResultSchema, risk_flags: z.array(z.string()).default([]),
   trace_metadata: traceMetadataSchema,
+  question_interview: questionInterviewSchema.nullish().default(null),
 });
 
 export const mirrorBlockSchema = z.object({
@@ -47,3 +70,4 @@ export const FORBIDDEN_FIXTURE_KEYS = [
 
 export function parseAppealResponse(x: unknown) { return appealResponseSchema.parse(x); }
 export function parseAppealFixture(x: unknown) { return appealFixtureSchema.parse(x); }
+export function parseQuestionTurn(x: unknown) { return questionTurnSchema.parse(x); }

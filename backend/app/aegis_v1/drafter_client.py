@@ -33,6 +33,7 @@ def build_drafter_message(
     clinical_context: str = "",
     citations: list[dict[str, Any]] | None = None,
     playbook: dict[str, Any] | None = None,
+    geo_playbook: dict[str, Any] | None = None,
     phoenix_summary: dict[str, Any] | None = None,
 ) -> str:
     """Full drafter user message: patient plain text + internal pipeline context."""
@@ -51,6 +52,11 @@ def build_drafter_message(
         sections.append(
             "\nPLAYBOOK:\n"
             + json.dumps(playbook, indent=2, ensure_ascii=False, default=str)
+        )
+    if geo_playbook:
+        sections.append(
+            "\nUS-PLAYBOOK (insurer-agnostic):\n"
+            + json.dumps(geo_playbook, indent=2, ensure_ascii=False, default=str)
         )
     if phoenix_summary:
         sections.append(

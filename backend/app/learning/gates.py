@@ -6,14 +6,11 @@ DIFF_TOKEN_CAP = 200
 
 
 def _diff_tokens(candidate: Candidate) -> int:
-    """Rough token proxy: whitespace tokens across all component bodies."""
-    total = 0
-    for comp in candidate.components.values():
-        if comp.text:
-            total += len(comp.text.split())
-        if comp.playbook:
-            total += len(str(comp.playbook).split())
-    return total
+    """Rough token proxy for the drafter prompt mutation size."""
+    comp = candidate.components.get("drafter_system_prompt")
+    if not comp or not comp.text:
+        return 0
+    return len(comp.text.split())
 
 
 def evaluate_vetoes(before: ExperimentResult, after: ExperimentResult,

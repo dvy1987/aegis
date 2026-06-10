@@ -6,7 +6,9 @@ from app.learning.merge import system_aware_merge
 from app.learning.models import (
     Candidate, Component, DIMENSIONS, ExperimentResult, PromotionAudit, PromotionProposal,
 )
+from app.aegis_v1.geo_playbook import US_PLAYBOOK_COMPONENT_ID, load_us_playbook
 from app.learning.mutation import reflective_mutate
+from app.learning.mutation_geo import reflective_mutate_geo
 from app.learning.reflection_client import ReflectionClient
 from app.learning.selection import pareto_select, select_component
 from app.learning.signal import acquire_signal
@@ -41,7 +43,7 @@ class LearningCoordinator:
 
     def _eligible_component_ids(self) -> frozenset[str]:
         return frozenset(
-            {"drafter_system_prompt"}
+            {"drafter_system_prompt", "question_agent_system_prompt", US_PLAYBOOK_COMPONENT_ID}
             | {playbook_component_id(slice_key) for slice_key in self.slice_filters}
         )
 
@@ -68,18 +70,61 @@ class LearningCoordinator:
             playbook=raw,
         )
 
+    def _load_us_playbook_component(self) -> Component:
+        versions = self.store.list_prompt_versions(US_PLAYBOOK_COMPONENT_ID)
+        if versions:
+            stored = self.store.read_prompt_version(US_PLAYBOOK_COMPONENT_ID)
+            if stored.playbook:
+                return Component(
+                    component_id=US_PLAYBOOK_COMPONENT_ID,
+                    kind="playbook",
+                    version=stored.version,
+                    playbook=stored.playbook,
+                )
+        raw = load_us_playbook()
+        return Component(
+            component_id=US_PLAYBOOK_COMPONENT_ID,
+            kind="playbook",
+            version=str(raw.get("version") or "cold-start"),
+            playbook=raw,
+        )
+
+    def _load_question_agent_component(self) -> Component:
+        """Evolvable question-agent prompt (pinned id: question_agent_system_prompt).
+        Store version wins; falls back to the active on-disk prompt file."""
+        comp_id = "question_agent_system_prompt"
+        if self.store.list_prompt_versions(comp_id):
+            prompt = self.store.read_prompt_version(comp_id)
+            if prompt.text:
+                return Component(component_id=comp_id, kind="prompt",
+                                 version=prompt.version, text=prompt.text)
+        from app.aegis_v1.question_agent import (
+            get_active_question_agent_prompt_version,
+            load_question_agent_prompt,
+        )
+
+        version = get_active_question_agent_prompt_version()
+        return Component(component_id=comp_id, kind="prompt", version=version,
+                         text=load_question_agent_prompt(version))
+
     def _seed(self) -> Candidate:
         prompt = self.store.read_prompt_version("drafter_system_prompt")
         components = {
             "drafter_system_prompt": Component(component_id="drafter_system_prompt", kind="prompt",
                                                version=prompt.version, text=prompt.text),
+            "question_agent_system_prompt": self._load_question_agent_component(),
         }
         for slice_key in self.slice_filters:
             components[playbook_component_id(slice_key)] = self._load_playbook_component(slice_key)
+        components[US_PLAYBOOK_COMPONENT_ID] = self._load_us_playbook_component()
         return Candidate(candidate_id="seed", components=components, origin="seed")
 
     def _component_slice_filter(self, component_id: str) -> str | None:
-        if component_id == "drafter_system_prompt":
+        if component_id in {
+            "drafter_system_prompt",
+            "question_agent_system_prompt",
+            US_PLAYBOOK_COMPONENT_ID,
+        }:
             return None
         if component_id.startswith("playbook:"):
             return component_id.removeprefix("playbook:")
@@ -125,8 +170,22 @@ class LearningCoordinator:
                 break
             minibatch = signal.failing_cases[: self.minibatch_size]
             counter += 1
-            child = reflective_mutate(parent, signal, self.reflection_client,
-                                      minibatch=minibatch, next_id=f"c{counter}")
+            if comp_id == US_PLAYBOOK_COMPONENT_ID:
+                child = reflective_mutate_geo(
+                    parent,
+                    signal,
+                    self.reflection_client,
+                    minibatch=minibatch,
+                    next_id=f"c{counter}",
+                )
+            else:
+                child = reflective_mutate(
+                    parent,
+                    signal,
+                    self.reflection_client,
+                    minibatch=minibatch,
+                    next_id=f"c{counter}",
+                )
             res = self.runner.run(child, dataset_split=self.holdout_split, gepa_round=round_index + 1)
             pool.append(child)
             results[child.candidate_id] = res

@@ -40,6 +40,11 @@ logger = logging.getLogger(__name__)
 _injected_library_stack: dict[str, Any] | None = None
 _injected_drafter_model: Any | None = None
 _injected_offline_pipeline: bool = False
+# Question-agent seams. The responder is a closure; on showcase it wraps the
+# patient simulator seeded with the TEACHER clinical file — that file lives
+# ONLY inside the closure, never in workflow state (INV-QA).
+_injected_question_responder: Any | None = None
+_injected_question_client: Any | None = None
 
 # ---------------------------------------------------------------------------
 # State schema — every field is a shared register between nodes.
@@ -65,18 +70,26 @@ class StudentWorkflowState(BaseModel):
     drafter_prompt_version: str = ""
     drafter_prompt_text: str = ""
     playbook_override_json: str = ""  # JSON-encoded; empty = no override
+    geo_playbook_override_json: str = ""  # JSON-encoded US-playbook override (GEPA)
     use_phoenix_memory: bool = True
     # Library stack config — JSON-encoded dict or empty
     library_stack_json: str = ""
+    # Pre-draft question agent (D-QA). On appeal the turn-based interview ran
+    # over HTTP already and is injected as JSON; on showcase the node runs the
+    # interview live against the injected simulator responder.
+    run_question_agent: bool = False
+    question_interview_json: str = ""
 
     # --- Outputs (populated by nodes) ---
     parsed_case: dict[str, Any] = Field(default_factory=dict)
     playbook: dict[str, Any] = Field(default_factory=dict)
+    geo_playbook: dict[str, Any] = Field(default_factory=dict)
     phoenix_summary: dict[str, Any] = Field(default_factory=dict)
     library_retrieval: dict[str, Any] = Field(default_factory=dict)
     library_risk_flags: list[str] = Field(default_factory=list)
     library_metadata: dict[str, Any] = Field(default_factory=dict)
     library_agent_done: bool = False
+    question_interview: dict[str, Any] = Field(default_factory=dict)
     appeal_draft: dict[str, Any] = Field(default_factory=dict)
     self_check_result: dict[str, Any] = Field(default_factory=dict)
     active_prompt_version: str = ""
@@ -178,6 +191,22 @@ def playbook_loader_node(ctx: Any) -> None:
             sub_tactic=parsed.get("sub_tactic"),
         )
     ctx.state["playbook"] = playbook
+
+
+# ---------------------------------------------------------------------------
+# Node 2b — geo_playbook_loader (US-wide rules)
+# ---------------------------------------------------------------------------
+
+
+@node
+def geo_playbook_loader_node(ctx: Any) -> None:
+    """Load insurer-agnostic US-playbook rules for this case."""
+    from app.aegis_v1.geo_playbook import geo_playbook_for_case
+
+    parsed = ctx.state.get("parsed_case", {})
+    override_json = ctx.state.get("geo_playbook_override_json", "")
+    override = json.loads(override_json) if override_json else None
+    ctx.state["geo_playbook"] = geo_playbook_for_case(parsed, override=override)
 
 
 # ---------------------------------------------------------------------------
@@ -339,7 +368,84 @@ def library_finalize_node(ctx: Any, node_input: Any = None) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Node 5 — drafter prep / finalize (LlmAgent graph node between them)
+# Node 5 — question_agent (pre-draft interview, INSIDE the student workflow)
+# ---------------------------------------------------------------------------
+
+
+@node
+def question_agent_node(ctx: Any) -> None:
+    """Pre-draft question agent: runs after playbook/Phoenix/library prep and
+    before the drafter (D7+ — part of the Student workflow, not a wrapper).
+
+    - Appeal: the turn-based interview already happened over HTTP; the result
+      arrives via ``question_interview_json`` and is recorded for the trace
+      (traced, not graded).
+    - Showcase: the patient-simulator responder is injected as a module global;
+      the teacher clinical file exists ONLY inside that closure (INV-QA).
+    - Prep sources: the COMPLETE insurer playbook bundle (denial type is not
+      knowable a priori), Phoenix memory, and library retrieval — the agent
+      must not ask the patient anything those already answer; max 5 questions.
+
+    Best-effort: any failure leaves the draft path untouched.
+    """
+    pre = ctx.state.get("question_interview_json", "")
+    if pre:
+        try:
+            ctx.state["question_interview"] = json.loads(pre)
+        except Exception:
+            logger.warning(
+                "question_agent_node: invalid question_interview_json; ignoring",
+                exc_info=True,
+            )
+        return
+
+    if not ctx.state.get("run_question_agent"):
+        return
+
+    try:
+        from app.aegis_v1.geo_playbook import question_agent_prep_bundle
+        from app.aegis_v1.question_agent import run_question_interview
+
+        parsed = ctx.state.get("parsed_case", {})
+        override_json = ctx.state.get("geo_playbook_override_json", "")
+        geo_override = json.loads(override_json) if override_json else None
+        retrieval = ctx.state.get("library_retrieval", {})
+        library_context = "\n".join(
+            f"- {hit.get('title', '')}: {hit.get('quote', '')}"
+            for hit in (retrieval.get("hits") or [])
+            if isinstance(hit, dict)
+        )
+        result = run_question_interview(
+            denial_text=str(ctx.state.get("denial_text", "")),
+            notes=str(
+                parsed.get("clinical_context")
+                or ctx.state.get("clinical_context", "")
+            ),
+            playbook=question_agent_prep_bundle(
+                str(parsed.get("insurer", "unknown")),
+                us_playbook_override=geo_override,
+            ),
+            phoenix_summary=ctx.state.get("phoenix_summary", {}),
+            library_context=library_context,
+            responder=_injected_question_responder,
+            client=_injected_question_client,
+        )
+        ctx.state["question_interview"] = result.model_dump()
+        if result.qa_transcript and result.enriched_context:
+            # The drafter sees ONLY the patient-knowable enriched context.
+            ctx.state["clinical_context"] = result.enriched_context
+            updated = dict(parsed)
+            updated["clinical_context"] = result.enriched_context
+            ctx.state["parsed_case"] = updated
+    except Exception:
+        logger.warning(
+            "question_agent_node failed; drafting without interview",
+            exc_info=True,
+        )
+
+
+# ---------------------------------------------------------------------------
+# Node 6 — drafter prep / finalize (LlmAgent graph node between them)
 # ---------------------------------------------------------------------------
 
 
@@ -355,6 +461,7 @@ def drafter_prep_node(ctx: Any) -> str:
 
     parsed = ctx.state.get("parsed_case", {})
     playbook_data = ctx.state.get("playbook", {})
+    geo_playbook_data = ctx.state.get("geo_playbook", {})
     phoenix_data = ctx.state.get("phoenix_summary", {})
     retrieval_data = ctx.state.get("library_retrieval", {})
 
@@ -374,6 +481,7 @@ def drafter_prep_node(ctx: Any) -> str:
         clinical_context=str(parsed.get("clinical_context", "")),
         citations=citations,
         playbook=playbook_obj.model_dump(),
+        geo_playbook=geo_playbook_data or None,
         phoenix_summary=phoenix_obj.model_dump(),
     )
     return f"{resolved_prompt}\n\n{message}"
@@ -517,10 +625,12 @@ def build_student_workflow() -> Workflow:
                 START,
                 case_parser_node,
                 playbook_loader_node,
+                geo_playbook_loader_node,
                 phoenix_read_node,
                 library_prep_node,
                 library_finder_agent,
                 library_finalize_node,
+                question_agent_node,
                 drafter_prep_node,
                 v1_drafter_agent,
                 drafter_finalize_node,

@@ -101,6 +101,7 @@ def _measure(
     drafter_prompt_version: str | None = None,
     drafter_prompt_text: str | None = None,
     playbook_overrides: dict[str, dict] | None = None,
+    geo_playbook_override: dict | None = None,
 ) -> list[dict]:
     stage = "measure_before" if phase in {"pre", "training_pre"} else "measure_after"
     if _is_cancelled(manager, session_id):
@@ -125,6 +126,11 @@ def _measure(
         # is recorded and skipped so the rest of the batch still completes,
         # instead of failing the whole session.
         try:
+            # Question agent ON: the interview runs inside the Student workflow;
+            # the teacher clinical file reaches only the simulator responder.
+            teacher_case = case.judge_case(
+                dataset_split=f"showcase_{phase}_measure_{session_id}"
+            )
             result = run_measurement_case(
                 _case_obj(case, dataset_split=f"showcase_{phase}_measure_{session_id}"),
                 drafter_client=None,
@@ -132,6 +138,9 @@ def _measure(
                 drafter_prompt_version=drafter_prompt_version,
                 drafter_prompt_text=drafter_prompt_text,
                 playbook_override=(playbook_overrides or {}).get(_case_slice(case)),
+                geo_playbook_override=geo_playbook_override,
+                run_question_agent=True,
+                teacher_clinical_context=str(teacher_case.get("clinical_context") or ""),
             )
         except Exception as exc:
             logger.warning(
@@ -201,6 +210,7 @@ def _seed_training_signal(
                 drafter_client=None,
                 judge_client=judge,
                 run_simulator=False,
+                run_question_agent=True,
                 run_mode="gepa_seed",
                 trace_tags={
                     "memory_eligible": "true",
@@ -295,9 +305,11 @@ def _write_training_checkpoint(
     prompt_version: str | None = None
     prompt_text: str | None = None
     playbook_override: dict | None = None
+    geo_playbook_override: dict | None = None
     if checkpoint == "b" and proposal is not None:
         prompt_version, prompt_text = _candidate_prompt(proposal)
         playbook_override = _candidate_playbooks(proposal).get(slice_key)
+        geo_playbook_override = _candidate_geo_playbook(proposal)
     package = run_aegis_v1_pipeline(
         **student_inputs,
         dataset_split=train_split,
@@ -306,6 +318,7 @@ def _write_training_checkpoint(
         drafter_prompt_version=prompt_version,
         drafter_prompt_text=prompt_text,
         playbook_override=playbook_override,
+        geo_playbook_override=geo_playbook_override,
         phoenix_mode=PhoenixMode.TRAINING_READWRITE,
     )
     trace_ref = write_training_phoenix_checkpoint(
@@ -331,6 +344,7 @@ def _eval_post_gepa_candidate(
     recorder = OtelPhoenixRecorder()
     prompt_version, prompt_text = _candidate_prompt(proposal)
     playbooks = _candidate_playbooks(proposal)
+    geo_playbook = _candidate_geo_playbook(proposal)
     trace_ids: list[str] = []
     manager.set_stage(session_id, stage="train_gepa", total_cases=len(cases))
     for index, case in enumerate(cases, start=1):
@@ -357,9 +371,11 @@ def _eval_post_gepa_candidate(
                 drafter_client=None,
                 judge_client=GeminiJudgeClient(),
                 run_simulator=False,
+                run_question_agent=True,
                 drafter_prompt_version=prompt_version,
                 drafter_prompt_text=prompt_text,
                 playbook_override=playbooks.get(slice_key),
+                geo_playbook_override=geo_playbook,
                 run_mode="training_checkpoint_post_gepa",
                 trace_tags={
                     "memory_eligible": "true",
@@ -406,6 +422,15 @@ def _candidate_playbooks(proposal: PromotionProposal) -> dict[str, dict]:
             continue
         out[comp_id.removeprefix("playbook:")] = comp.playbook
     return out
+
+
+def _candidate_geo_playbook(proposal: PromotionProposal) -> dict | None:
+    from app.aegis_v1.geo_playbook import US_PLAYBOOK_COMPONENT_ID
+
+    comp = proposal.candidate.components.get(US_PLAYBOOK_COMPONENT_ID)
+    if comp is None or comp.playbook is None:
+        return None
+    return comp.playbook
 
 
 def _regression_summary(before: list[dict], after: list[dict]) -> str | None:
@@ -580,6 +605,7 @@ def _run_learning_session(
                 drafter_prompt_version=candidate_prompt_version,
                 drafter_prompt_text=candidate_prompt_text,
                 playbook_overrides=_candidate_playbooks(proposal),
+                geo_playbook_override=_candidate_geo_playbook(proposal),
             )
             manager.save_checkpoint(session_id, training_post_done=True)
 

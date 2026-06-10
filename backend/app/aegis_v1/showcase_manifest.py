@@ -9,7 +9,8 @@ from pydantic import BaseModel, Field
 
 REPO_ROOT = Path(os.environ.get("AEGIS_REPO_ROOT", Path(__file__).resolve().parents[3]))
 DEFAULT_MANIFEST_PATH = REPO_ROOT / "eval" / "benchmarks" / "v1_showcase_100" / "manifest.json"
-CASES_DIR = REPO_ROOT / "eval" / "cases" / "drafts"
+DEFAULT_QUICK_CASES_DIR = REPO_ROOT / "eval" / "cases" / "approved" / "preview-run"
+DEFAULT_SERIOUS_CASES_DIR = REPO_ROOT / "eval" / "cases" / "approved" / "prod-run"
 
 
 class ShowcaseCase(BaseModel):
@@ -60,12 +61,18 @@ class ShowcaseManifest(BaseModel):
         return format_slice_key(first.insurer, first.denial_type, first.sub_tactic)
 
 
-def _case_path(case_id: str) -> Path:
-    return CASES_DIR / f"{case_id}.json"
+def _resolve_cases_dir(raw: dict[str, Any], *, cohort: str) -> Path:
+    paths = raw.get("case_paths") or {}
+    rel = paths.get(cohort)
+    if isinstance(rel, str) and rel.strip():
+        return REPO_ROOT / rel
+    if cohort == "serious":
+        return DEFAULT_SERIOUS_CASES_DIR
+    return DEFAULT_QUICK_CASES_DIR
 
 
-def _load_case(case_id: str) -> ShowcaseCase:
-    path = _case_path(case_id)
+def _load_case(case_id: str, *, cases_dir: Path) -> ShowcaseCase:
+    path = cases_dir / f"{case_id}.json"
     if not path.exists():
         raise FileNotFoundError(f"Manifest case not found: {case_id}")
     data: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
@@ -90,6 +97,10 @@ def _load_case(case_id: str) -> ShowcaseCase:
     )
 
 
+def _case_slice(case: ShowcaseCase) -> tuple[str, str, str]:
+    return (case.insurer, case.denial_type, case.sub_tactic)
+
+
 def _case_number(case_id: str) -> int:
     parts = case_id.split("_")
     if len(parts) < 2 or parts[0] != "case" or not parts[1].isdigit():
@@ -97,31 +108,33 @@ def _case_number(case_id: str) -> int:
     return int(parts[1])
 
 
-def _load_cases(case_ids: list[str]) -> list[ShowcaseCase]:
+def _load_cases(case_ids: list[str], *, cases_dir: Path) -> list[ShowcaseCase]:
     seen: set[str] = set()
     out: list[ShowcaseCase] = []
     for case_id in case_ids:
         if case_id in seen:
             raise ValueError(f"Duplicate case in manifest: {case_id}")
         seen.add(case_id)
-        out.append(_load_case(case_id))
+        out.append(_load_case(case_id, cases_dir=cases_dir))
     return out
 
 
 def load_showcase_manifest(path: Path | None = None) -> ShowcaseManifest:
     manifest_path = path or DEFAULT_MANIFEST_PATH
     raw = json.loads(manifest_path.read_text(encoding="utf-8"))
-    quick = _load_cases(list(raw.get("quick_train") or []))
-    quick_holdout = _load_cases(list(raw.get("quick_holdout") or []))
-    serious_train = _load_cases(list(raw.get("serious_train") or []))
-    serious_holdout = _load_cases(list(raw.get("serious_holdout") or []))
+    quick_dir = _resolve_cases_dir(raw, cohort="quick")
+    serious_dir = _resolve_cases_dir(raw, cohort="serious")
+    quick = _load_cases(list(raw.get("quick_train") or []), cases_dir=quick_dir)
+    quick_holdout = _load_cases(list(raw.get("quick_holdout") or []), cases_dir=quick_dir)
+    serious_train = _load_cases(list(raw.get("serious_train") or []), cases_dir=serious_dir)
+    serious_holdout = _load_cases(list(raw.get("serious_holdout") or []), cases_dir=serious_dir)
 
     if len(quick) != 5:
         raise ValueError("quick_train must contain exactly 5 cases")
     if len(quick_holdout) != 2:
         raise ValueError("quick_holdout must contain exactly 2 cases")
-    if len(serious_train) != 80:
-        raise ValueError("serious_train must contain exactly 80 cases")
+    if len(serious_train) != 50:
+        raise ValueError("serious_train must contain exactly 50 cases")
     if len(serious_holdout) != 20:
         raise ValueError("serious_holdout must contain exactly 20 cases")
     quick_train_ids = {case.case_id for case in quick}
@@ -132,13 +145,20 @@ def load_showcase_manifest(path: Path | None = None) -> ShowcaseManifest:
         raise ValueError("quick_train and quick_holdout must not overlap")
     if train_ids & holdout_ids:
         raise ValueError("serious_train and serious_holdout must not overlap")
+    train_slices = {_case_slice(case) for case in serious_train}
+    for case in serious_holdout:
+        if _case_slice(case) not in train_slices:
+            raise ValueError(
+                f"serious_holdout case {case.case_id} has no same-slice sibling in serious_train"
+            )
     serious_ids = train_ids | holdout_ids
     if quick_train_ids & serious_ids or quick_holdout_ids & serious_ids:
-        raise ValueError("quick cohort must not overlap cases 1-100 serious benchmark")
-    for case_id in quick_train_ids | quick_holdout_ids:
+        raise ValueError("quick cohort must not overlap production cohort cases")
+    cohort_101_200 = quick_train_ids | quick_holdout_ids | serious_ids
+    for case_id in cohort_101_200:
         number = _case_number(case_id)
         if not 101 <= number <= 200:
-            raise ValueError(f"quick cohort case must be numbered 101-200: {case_id}")
+            raise ValueError(f"showcase cohort case must be numbered 101-200: {case_id}")
 
     return ShowcaseManifest(
         benchmark_id=str(raw["benchmark_id"]),

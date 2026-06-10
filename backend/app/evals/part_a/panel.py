@@ -7,6 +7,7 @@ from app.evals.part_a.judge_agents import AdkJudgeClient
 from app.evals.part_a.judge_workflow import run_judge_panel_workflow
 from app.evals.part_a.llm_judges import JudgeClient
 from app.evals.part_a.llm_judges import OfflineHeuristicJudgeClient
+from app.evals.part_a.question_judge import judge_question_interview
 from app.evals.part_a.schemas import JudgeResult
 from app.evals.part_a.schemas import PanelReport
 from app.evals.part_a.schemas import TeacherGradingPacket
@@ -28,28 +29,6 @@ JUDGE_IDS = {
     "appeal_vector_capture": "j6_appeal_vector_capture",
     "persuasive_coherence": "j7_persuasive_coherence",
 }
-
-STUBBED_QUALITY_DIMENSIONS = frozenset({"question_agent"})
-
-
-def _question_agent_stub_result() -> JudgeResult:
-    """Placeholder until the question-agent probing flow ships on appeal + showcase."""
-    return JudgeResult(
-        dimension="question_agent",
-        reasoning=(
-            "Question agent not yet implemented; default placeholder score until "
-            "the targeted Q&A probing flow is built."
-        ),
-        score=5,
-        confidence=1.0,
-        evidence_quotes=[],
-        improvement=None,
-    )
-
-
-def _apply_stubbed_quality_dimensions(judge_results: dict[str, JudgeResult]) -> None:
-    for dimension in STUBBED_QUALITY_DIMENSIONS:
-        judge_results[dimension] = _question_agent_stub_result()
 
 
 def _normalize_anchor(score: int, *, dimension: str | None = None) -> float:
@@ -113,6 +92,7 @@ def _build_panel_report(
     teacher: TeacherGradingPacket,
     judge_results: dict[str, JudgeResult],
     client: JudgeClient,
+    extra_metadata: dict[str, Any] | None = None,
 ) -> PanelReport:
     hard_gate_failures = [
         dimension
@@ -169,6 +149,7 @@ def _build_panel_report(
         metadata={
             "judge_client": getattr(client, "name", "unknown"),
             "model_constraint": "Gemini 3.1 Pro accepted for both drafting and judging",
+            **(extra_metadata or {}),
         },
     )
 
@@ -189,6 +170,7 @@ def _run_panel_offline(
     appeal_package: dict[str, Any],
     teacher: TeacherGradingPacket,
     client: OfflineHeuristicJudgeClient,
+    question_interview: dict[str, Any] | None = None,
 ) -> PanelReport:
     context = _student_context(appeal_package, teacher)
     citation = citation_precheck(appeal_package, teacher)
@@ -209,16 +191,21 @@ def _run_panel_offline(
     judge_results["faithfulness_hallucination_gate"] = j2
 
     for dimension in QUALITY_WEIGHTS:
-        if dimension in STUBBED_QUALITY_DIMENSIONS:
+        if dimension == "question_agent":
             continue
         judge_results[dimension] = client.judge(JUDGE_IDS[dimension], context)
-    _apply_stubbed_quality_dimensions(judge_results)
+    question = judge_question_interview(question_interview, teacher=teacher)
+    judge_results["question_agent"] = question.result
 
     return _build_panel_report(
         appeal_package=appeal_package,
         teacher=teacher,
         judge_results=judge_results,
         client=client,
+        extra_metadata={
+            "question_graded": question.graded,
+            "question_playbook_additions": question.playbook_additions,
+        },
     )
 
 
@@ -240,18 +227,27 @@ def _run_panel_adk(
     appeal_package: dict[str, Any],
     teacher: TeacherGradingPacket,
     client: AdkJudgeClient,
+    question_interview: dict[str, Any] | None = None,
 ) -> PanelReport:
     context = _student_context(appeal_package, teacher)
     judge_results = run_judge_panel_workflow(
         context=context,
         model=_fresh_adk_judge_model(client),
     )
-    _apply_stubbed_quality_dimensions(judge_results)
+    # Live panel → LLM question judge (offline fallback inside on failure).
+    question = judge_question_interview(
+        question_interview, teacher=teacher, use_llm=True
+    )
+    judge_results["question_agent"] = question.result
     return _build_panel_report(
         appeal_package=appeal_package,
         teacher=teacher,
         judge_results=judge_results,
         client=client,
+        extra_metadata={
+            "question_graded": question.graded,
+            "question_playbook_additions": question.playbook_additions,
+        },
     )
 
 
@@ -261,8 +257,14 @@ def run_panel(
     judge_client: JudgeClient | None = None,
     *,
     run_mode: str | None = None,
+    question_interview: dict[str, Any] | None = None,
 ) -> PanelReport:
-    """Run the Part A judge panel over one appeal package."""
+    """Run the Part A judge panel over one appeal package.
+
+    ``question_interview`` is the showcase pre-draft interview artifact; when
+    present the question_agent dimension is graded for real (appeal runs pass
+    None and receive the neutral default — traced, not graded).
+    """
 
     del run_mode  # retained for call-site compatibility; safety gate removed from panel
     teacher = (
@@ -273,9 +275,9 @@ def run_panel(
     client = judge_client or OfflineHeuristicJudgeClient()
 
     if isinstance(client, OfflineHeuristicJudgeClient):
-        return _run_panel_offline(appeal_package, teacher, client)
+        return _run_panel_offline(appeal_package, teacher, client, question_interview)
     if isinstance(client, AdkJudgeClient):
-        return _run_panel_adk(appeal_package, teacher, client)
+        return _run_panel_adk(appeal_package, teacher, client, question_interview)
 
     raise TypeError(
         f"Unsupported judge client type: {type(client).__name__}. "

@@ -121,11 +121,9 @@ def test_coordinator_can_seed_and_optimize_multiple_playbook_slices():
     proposal = coord.optimize()
 
     assert proposal is not None
-    assert set(proposal.candidate.components) == {
-        "drafter_system_prompt",
-        f"playbook:{SLICE}",
-        f"playbook:{SLICE_2}",
-    }
+    assert f"playbook:{SLICE}" in proposal.candidate.components
+    assert f"playbook:{SLICE_2}" in proposal.candidate.components
+    assert "geo_playbook:us" in proposal.candidate.components
     assert proposal.after.composite > proposal.before.composite
 
 

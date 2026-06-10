@@ -46,12 +46,25 @@ def run_appeal_with_outcome(
     drafter_prompt_version: str | None = None,
     drafter_prompt_text: str | None = None,
     playbook_override: dict[str, Any] | None = None,
+    geo_playbook_override: dict[str, Any] | None = None,
+    run_question_agent: bool = False,
+    question_agent_client: Any | None = None,
+    patient_simulator_client: Any | None = None,
+    teacher_clinical_context: str = "",
+    patient_profile: dict[str, Any] | None = None,
+    question_interview: dict[str, Any] | None = None,
 ) -> AppealRunResult:
     """Run the Student, then the Outcome Simulator, and return both.
 
     The eval/grading panel is deliberately NOT run here — judges need the
     teacher answer key, which does not exist for a real user-submitted appeal.
     Grading lives in `app.evals.part_a.evaluated_run.run_evaluated_case`.
+
+    The question agent runs as a node INSIDE the Student workflow. On showcase
+    measurement (``run_question_agent``) the patient simulator answers from
+    ``teacher_clinical_context``, which lives ONLY in the responder closure —
+    never in workflow state (firewall INV-QA). On a real appeal, pass the
+    pre-completed ``question_interview`` artifact instead (traced, not graded).
     """
     from app.aegis_v1.drafter_client import is_offline_pipeline_client
     from app.aegis_v1.tools import simulator
@@ -60,10 +73,23 @@ def run_appeal_with_outcome(
     if attempts < 1:
         raise ValueError("max_attempts must be at least 1")
 
+    question_responder = None
+    if run_question_agent:
+        from app.aegis_v1.patient_simulator import GeminiPatientSimulatorClient
+        from app.aegis_v1.question_agent import responder_from_simulator
+
+        simulator_client_qa = patient_simulator_client or GeminiPatientSimulatorClient()
+        question_responder = responder_from_simulator(
+            simulator_client_qa,
+            clinical_context=teacher_clinical_context,
+            patient_profile=patient_profile,
+        )
+
     best_package: dict[str, Any] | None = None
     best_outcome: dict[str, Any] | None = None
 
     for attempt in range(1, attempts + 1):
+        first_attempt = attempt == 1
         appeal_package = run_aegis_v1_pipeline(
             denial_text=denial_text,
             clinical_context=clinical_context,
@@ -79,7 +105,20 @@ def run_appeal_with_outcome(
             drafter_prompt_version=drafter_prompt_version,
             drafter_prompt_text=drafter_prompt_text,
             playbook_override=playbook_override,
+            geo_playbook_override=geo_playbook_override,
+            run_question_agent=run_question_agent and first_attempt,
+            question_responder=question_responder if first_attempt else None,
+            question_agent_client=question_agent_client,
+            question_interview=question_interview,
         )
+        if first_attempt and run_question_agent:
+            # Interview once; carry the artifact + enriched context to retries.
+            artifact = appeal_package.get("question_interview") or None
+            if artifact:
+                question_interview = artifact
+                enriched = str(artifact.get("enriched_context") or "")
+                if artifact.get("qa_transcript") and enriched:
+                    clinical_context = enriched
         if attempt == 1 and phoenix_mode == PhoenixMode.APPEAL:
             write_appeal_phoenix_export(
                 appeal_package,

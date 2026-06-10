@@ -231,7 +231,12 @@ class FileSystemPhoenixLearningStore:
                 )
 
             if comp.kind == "playbook" and comp.playbook is not None:
-                self._write_playbook(comp)
+                from app.aegis_v1.geo_playbook import US_PLAYBOOK_COMPONENT_ID
+
+                if comp.component_id == US_PLAYBOOK_COMPONENT_ID:
+                    self._write_us_playbook(comp)
+                else:
+                    self._write_playbook(comp)
 
             elif comp.kind == "prompt" and comp.text is not None:
                 self._write_prompt(comp)
@@ -246,6 +251,17 @@ class FileSystemPhoenixLearningStore:
         path = _playbook_path(self._playbooks_dir, comp.component_id)
         payload = _playbook_json(comp)
         path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    def _write_us_playbook(self, comp: Component) -> None:
+        from app.aegis_v1.geo_playbook import US_PLAYBOOK_PATH
+
+        US_PLAYBOOK_PATH.parent.mkdir(parents=True, exist_ok=True)
+        payload = dict(comp.playbook or {})
+        payload["version"] = comp.version
+        US_PLAYBOOK_PATH.write_text(
+            json.dumps(payload, indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
 
     def _write_prompt(self, comp: Component) -> None:
         if self._prompts_dir is None:

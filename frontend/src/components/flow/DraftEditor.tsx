@@ -75,6 +75,15 @@ export function DraftEditor({
           />
           <RailSection title="Evidence still worth gathering" items={result.missing_evidence_checklist} />
 
+          {result.question_interview?.patient_gap_note && (
+            <div className="flex flex-col gap-2">
+              <p className="font-body text-sm text-text-secondary">From your Q&amp;A</p>
+              <p className="font-body text-sm whitespace-pre-line text-text-tertiary">
+                {result.question_interview.patient_gap_note}
+              </p>
+            </div>
+          )}
+
           {result.risk_flags.length > 0 && (
             <Callout tone="clay" label="Worth knowing">
               {result.risk_flags.join(" ")}

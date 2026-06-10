@@ -1,6 +1,6 @@
 import type { AppealRequest, AppealFixture } from "@/lib/types";
 
-export type FlowStep = "intake" | "working" | "mirror" | "draft" | "decide";
+export type FlowStep = "intake" | "questions" | "working" | "mirror" | "draft" | "decide";
 
 export interface FlowState {
   step: FlowStep;
@@ -11,9 +11,10 @@ export interface FlowState {
 
 export const initialFlow: FlowState = { step: "intake" };
 
-const ORDER: FlowStep[] = ["intake", "working", "mirror", "draft", "decide"];
+const ORDER: FlowStep[] = ["intake", "questions", "working", "mirror", "draft", "decide"];
 
 export type FlowAction =
+  | { type: "BEGIN_QUESTIONS"; req: AppealRequest }
   | { type: "SUBMIT"; req: AppealRequest }
   | { type: "RESULT"; result: AppealFixture }
   | { type: "ERROR"; error: string }
@@ -23,6 +24,8 @@ export type FlowAction =
 
 export function flowReducer(state: FlowState, action: FlowAction): FlowState {
   switch (action.type) {
+    case "BEGIN_QUESTIONS":
+      return { step: "questions", req: action.req };
     case "SUBMIT":
       return { step: "working", req: action.req };
     case "RESULT":

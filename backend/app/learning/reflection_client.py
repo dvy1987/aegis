@@ -4,6 +4,7 @@ import logging
 import os
 from typing import Protocol
 
+from app.aegis_v1.geo_playbook import US_PLAYBOOK_COMPONENT_ID, bump_geo_version
 from app.learning.models import Component, DimensionSignal, ScoredRun
 
 logger = logging.getLogger(__name__)
@@ -30,6 +31,24 @@ _VARIANT_PREAMBLES = {
 }
 
 
+def _question_judge_playbook_recs(signal: DimensionSignal, *, geo: bool) -> list[str]:
+    """Route question-judge mined facts to slice vs US-playbook reflection."""
+    recs: list[str] = []
+    for note in signal.notes.get("question_agent", []):
+        low = note.lower()
+        if not any(
+            key in low
+            for key in ("playbook addition", "add to playbook", "add to global playbook")
+        ):
+            continue
+        is_global = "global playbook" in low
+        if geo and is_global:
+            recs.append(note)
+        elif not geo and not is_global and "add to playbook:" in low:
+            recs.append(note)
+    return recs
+
+
 def build_reflection_prompt(*, component: Component, signal: DimensionSignal,
                             minibatch: list[ScoredRun], variant: str = "base") -> str:
     if variant not in _VARIANT_PREAMBLES:
@@ -40,6 +59,37 @@ def build_reflection_prompt(*, component: Component, signal: DimensionSignal,
         f"- case {r.case_id}: {signal.weakest_dimension}={r.dimension_scores.get(signal.weakest_dimension, 1)}"
         for r in minibatch
     )
+    playbook_rules = ""
+    if component.component_id == US_PLAYBOOK_COMPONENT_ID:
+        recs = _question_judge_playbook_recs(signal, geo=True)
+        rec_block = (
+            "\nQuestion-agent judge recommendations for US-playbook (append-first):\n"
+            + "\n".join(f"- {n}" for n in recs) + "\n"
+        ) if recs else ""
+        playbook_rules = (
+            "\nUS-PLAYBOOK RULES:\n"
+            "- DEFAULT: append a NEW rule with a NEW rule_id.\n"
+            "- Before editing or revoking an existing rule, decide whether append "
+            "would fix the gap without contradicting prior rules. Only edit/revoke "
+            "when append is insufficient.\n"
+            "- If you edit, set edit_justification on that rule. If you revoke, set "
+            "revoke_justification and status=revoked. Never hard-delete rule ids.\n"
+            "- scope is 'US federal' or a US state name. funding_scope is optional.\n"
+            "- No invented statutes or case law — controlled corpus / letter facts only.\n"
+            + rec_block
+        )
+    elif component.kind == "playbook":
+        recs = _question_judge_playbook_recs(signal, geo=False)
+        rec_block = (
+            "\nQuestion-agent judge recommendations (append-first):\n"
+            + "\n".join(f"- {n}" for n in recs) + "\n"
+        ) if recs else ""
+        playbook_rules = (
+            "\nPLAYBOOK RULE — append-first: keep every existing tactic and "
+            "required_evidence entry; ADD new entries instead of rewriting or "
+            "deleting. Insurer-specific rules only — do not add US-wide geo rules here.\n"
+            + rec_block
+        )
     return f"""You are improving one component of an appeal-drafting system.
 
 {_VARIANT_PREAMBLES[variant]}FIRST CRITIQUE, THEN EDIT. Diagnose why the component underperforms on the weakest
@@ -54,7 +104,7 @@ Minibatch (insurer-visible signal only):
 
 Laundered improvement notes for this dimension:
 {notes}
-
+{playbook_rules}
 Constraints: {_REFLECTION_CONSTRAINTS}
 
 Return the full revised component text/JSON."""
@@ -71,6 +121,10 @@ class ReflectionClient(Protocol):
 def _tag_component(component: Component, dimension: str) -> Component:
     """Deterministic constructive edit: tag the component with the target dimension so
     downstream scoring can attribute and reward the improvement."""
+    if component.component_id == US_PLAYBOOK_COMPONENT_ID:
+        from app.learning.mutation_geo import stub_append_geo_rule
+
+        return stub_append_geo_rule(component, dimension)
     nxt = _bump_version(component.version)
     if component.kind == "playbook":
         pb = dict(component.playbook or {})
@@ -152,11 +206,19 @@ class AnthropicReflectionClient:
 def _apply_text_edit(component: Component, revised: str) -> Component:
     """Wrap an LLM's revised text back into a Component, bumping the version. For
     playbooks the model returns JSON; tolerate non-JSON by keeping the old playbook."""
-    nxt = _bump_version(component.version)
     if component.kind == "prompt":
+        nxt = _bump_version(component.version)
         return component.model_copy(update={"version": nxt, "text": revised.strip()})
+    nxt = (
+        bump_geo_version(component.version)
+        if component.component_id == US_PLAYBOOK_COMPONENT_ID
+        else _bump_version(component.version)
+    )
     import json
     try:
-        return component.model_copy(update={"version": nxt, "playbook": json.loads(revised)})
+        parsed = json.loads(revised)
+        if component.component_id == US_PLAYBOOK_COMPONENT_ID and isinstance(parsed, dict):
+            parsed["version"] = nxt
+        return component.model_copy(update={"version": nxt, "playbook": parsed})
     except Exception:
         return component.model_copy(update={"version": nxt})

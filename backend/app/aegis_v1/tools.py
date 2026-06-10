@@ -326,6 +326,39 @@ def playbook_loader(
     ).model_dump()
 
 
+def insurer_playbook_bundle(insurer: str) -> dict[str, Any]:
+    """Load EVERY promoted playbook for an insurer (question-agent prep).
+
+    On a real appeal the denial type is NOT knowable a priori (it is parsed
+    metadata, stripped from what the Student sees), so the question agent gets
+    the complete insurer bundle and must reason across all of it instead of
+    being handed the answer via a denial-type-filtered playbook.
+    """
+    playbooks: list[dict[str, Any]] = []
+    prefix = f"{_slug(insurer)}__"
+    if PLAYBOOK_DIR.exists():
+        for path in sorted(PLAYBOOK_DIR.glob(f"{prefix}*.json")):
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            playbooks.append(
+                Playbook(
+                    insurer=data.get("insurer", insurer),
+                    denial_type=data.get("denial_type", "unknown"),
+                    version=data.get("version", "unknown"),
+                    status="loaded",
+                    tactics=data.get("tactics", []),
+                    required_evidence=data.get("required_evidence", []),
+                    risk_flags=data.get("risk_flags", []),
+                ).model_dump()
+            )
+    if not playbooks:
+        # Cold start: generic playbook, explicitly NOT denial-type-specific.
+        playbooks.append(playbook_loader(insurer, "unknown"))
+    return {"insurer": insurer, "playbooks": playbooks, "count": len(playbooks)}
+
+
 _LAUNDERED_FORBIDDEN = (
     "expected_appeal_vectors",
     "exploitable_weaknesses",

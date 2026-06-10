@@ -285,6 +285,11 @@ function RuleChangeCard({ change }: { change: PromotionRuleChange }) {
           </p>
         </div>
       )}
+      {change.notice && (
+        <p className="sc-body" style={{ fontSize: "0.85rem", color: "var(--sc-warn)" }}>
+          {change.notice}
+        </p>
+      )}
       {change.justification && (
         <div>
           <MonoLabel>Why</MonoLabel>

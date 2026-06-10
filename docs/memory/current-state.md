@@ -1,7 +1,14 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-10 (session end — safe pull + preview cohort committed; appeal difficulty audit)
-**Phase:** **ADK Phases 0–5 on prod. `main` @ `3ed6637` (data selection / preview cohort 101–200). Unit tests 403/405 pass (2 Windows/env failures).**
+**Updated:** 2026-06-10 (session end — showcase approved cohort paths + production 50/20)
+**Phase:** **ADK Phases 0–5 on prod. Showcase cohorts 101–200 in `eval/cases/approved/{preview-run,prod-run}`. Dirty tree (cohort moves + prior question-agent WIP uncommitted).**
+
+### 2026-06-10 - Showcase approved cohort paths + production 50/20 (uncommitted)
+- **Preview (quick):** 5 train + 2 holdout → `eval/cases/approved/preview-run/`.
+- **Production (serious):** 50 train + 20 holdout → `eval/cases/approved/prod-run/`; mixed slices; holdout slices have train siblings; no overlap with preview.
+- **Manifest:** `case_paths` in `eval/benchmarks/v1_showcase_100/manifest.json`; loader in `showcase_manifest.py`.
+- **Tests:** manifest unit tests 5/5 pass; all 77 case files verified on disk.
+- **Next:** PM commit when ready; question agent test pass from `docs/2026-06-10-question-agent-test-handoff.md` if shipping that next.
 
 ### 2026-06-10 - Safe pull + preview cohort merge (committed `3ed6637`)
 - Pulled remote simulator/judge/patient-context tree; merged local quick cohort (cases 101–200 Cigna med-nec) with remote `showcase_manifest` student packet (insurer + age/gender).

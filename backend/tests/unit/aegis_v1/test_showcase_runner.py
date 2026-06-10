@@ -320,11 +320,11 @@ def test_serious_session_uses_serious_train_and_holdout_with_multi_slice(
 
     monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
     monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
-    # 80 training cases → guard needs 40 successful traces.
+    # 50 training cases → guard needs 25 successful traces.
     monkeypatch.setattr(
         showcase_runner,
         "_seed_training_signal",
-        lambda *args, **kwargs: [f"t{i}" for i in range(40)],
+        lambda *args, **kwargs: [f"t{i}" for i in range(25)],
     )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
     monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
@@ -335,9 +335,9 @@ def test_serious_session_uses_serious_train_and_holdout_with_multi_slice(
     assert calls[0]["phase"] == "pre"
     assert len(calls[0]["case_ids"]) == 20
     assert calls[1]["phase"] == "training_pre"
-    assert len(calls[1]["case_ids"]) == 80
+    assert len(calls[1]["case_ids"]) == 50
     assert calls[2]["phase"] == "training_post"
-    assert len(calls[2]["case_ids"]) == 80
+    assert len(calls[2]["case_ids"]) == 50
     assert calls[2]["prompt_text"] == "candidate prompt"
     manifest = load_showcase_manifest()
     assert set(optimize_kwargs["slice_filters"]) == set(_slice_filters(manifest.serious_train))

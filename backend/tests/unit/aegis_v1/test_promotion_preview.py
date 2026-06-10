@@ -83,5 +83,15 @@ def test_us_playbook_rule_diff() -> None:
     assert any(c["change"] == "appended" and c["scope"] == "California" for c in changes)
 
 
+def test_us_playbook_edit_includes_notice() -> None:
+    from app.aegis_v1.promotion_preview import _us_playbook_rule_changes
+
+    before = {"rules": [{"rule_id": "us_001", "scope": "US federal", "text": "Old.", "status": "active"}]}
+    after = {"rules": [{"rule_id": "us_001", "scope": "US federal", "text": "New.", "status": "active"}]}
+    changes = _us_playbook_rule_changes(before, after)
+    assert changes[0]["change"] == "edited"
+    assert changes[0].get("notice")
+
+
 def test_us_playbook_title_constant() -> None:
     assert US_PLAYBOOK_TITLE == "US-playbook"

@@ -2,12 +2,14 @@ import type { DataSource } from "./source";
 import type {
   AppealRequest,
   AppealFixture,
+  QuestionStartRequest,
+  QuestionTurn,
   ShowcaseBundle,
   ShowcaseManifest,
   ShowcaseRollbackTarget,
   ShowcaseRunSession,
 } from "@/lib/types";
-import { parseAppealResponse } from "@/lib/schema";
+import { parseAppealResponse, parseQuestionTurn } from "@/lib/schema";
 import { getApiBase, getDiscoveryEnabled } from "@/lib/settings";
 import { demoSource } from "./demo";
 
@@ -55,6 +57,34 @@ export const liveSource: DataSource = {
       citations_used: [],
       missing_evidence_checklist: [],
     };
+  },
+  async startQuestions(req: QuestionStartRequest): Promise<QuestionTurn> {
+    const base = getApiBase();
+    const res = await fetch(`${base}/v1/appeal/questions/start`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(req),
+    });
+    if (!res.ok) throw new Error(`questions start failed: ${res.status}`);
+    return parseQuestionTurn(await res.json());
+  },
+  async answerQuestion(interviewId: string, answer: string): Promise<QuestionTurn> {
+    const base = getApiBase();
+    const res = await fetch(`${base}/v1/appeal/questions/${interviewId}/answer`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ answer }),
+    });
+    if (!res.ok) throw new Error(`questions answer failed: ${res.status}`);
+    return parseQuestionTurn(await res.json());
+  },
+  async skipQuestions(interviewId: string): Promise<QuestionTurn> {
+    const base = getApiBase();
+    const res = await fetch(`${base}/v1/appeal/questions/${interviewId}/skip`, {
+      method: "POST",
+    });
+    if (!res.ok) throw new Error(`questions skip failed: ${res.status}`);
+    return parseQuestionTurn(await res.json());
   },
 };
 

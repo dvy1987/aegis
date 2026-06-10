@@ -200,6 +200,34 @@ class SimulatorResult(BaseModel):
     rationale: list[str] = Field(default_factory=list)
 
 
+class QATurn(BaseModel):
+    """One question/answer exchange in the pre-draft interview."""
+
+    turn: int
+    question: str
+    answer: str = ""
+
+
+class QuestionInterviewResult(BaseModel):
+    """Output of the pre-draft question agent (appeal user or showcase simulator).
+
+    - ``enriched_context`` is the patient-knowable text handed to the drafter
+      (original notes + substantive Q&A answers).
+    - ``planned_questions`` are the questions the agent would ask; surfaced on the
+      draft page when the user skips.
+    - ``patient_gap_note`` is plain-English UX copy for the draft page (never the
+      letter).
+    - ``internal_gap_analysis`` is for judges/Phoenix only.
+    """
+
+    qa_transcript: list[QATurn] = Field(default_factory=list)
+    enriched_context: str = ""
+    planned_questions: list[str] = Field(default_factory=list)
+    patient_gap_note: str = ""
+    internal_gap_analysis: str = ""
+    skipped: bool = False
+
+
 class TraceMetadata(BaseModel):
     case_id: str
     insurer: str
@@ -230,3 +258,5 @@ class AppealPackage(BaseModel):
     self_check: SelfCheckResult
     risk_flags: list[str] = Field(default_factory=list)
     trace_metadata: TraceMetadata
+    # Pre-draft interview artifact (appeal: traced not graded; showcase: graded).
+    question_interview: dict[str, Any] | None = None

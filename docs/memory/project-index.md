@@ -27,6 +27,7 @@ Quick navigation for agents picking up this project.
 
 | Date | Session | Handoff file |
 |---|---|---|
+| 2026-06-10 | Session end (Cursor — showcase approved cohorts + prod 50/20) | [agent-handoffs.md](agent-handoffs.md#2026-06-10--handoff-cursor--showcase-cohort-paths--production-5020) |
 | 2026-06-10 | Session end (Cursor — appeal retry caps) | [agent-handoffs.md](agent-handoffs.md#2026-06-10--handoff-cursor--appeal-retry-caps--libraryorchestrator-clarity) |
 | 2026-06-09 | Session end (Cursor — simulator hard gates + drafter) | [agent-handoffs.md](agent-handoffs.md#2026-06-09--handoff-cursor--simulator-hard-gates--drafter-inputs) |
 | 2026-06-09 | Session end (Cursor — GEPA judges + faithfulness) | [agent-handoffs.md](agent-handoffs.md#2026-06-09--handoff-cursor--gepa-judges--faithfulness-rubric) |

@@ -190,6 +190,10 @@ class LiveExperimentRunner:
                 gemini_retry.pace_gemini_call()
             pb_comp = candidate.components.get(f"playbook:{case['slice']}")
             playbook_override = pb_comp.playbook if pb_comp and pb_comp.playbook else None
+            from app.aegis_v1.geo_playbook import US_PLAYBOOK_COMPONENT_ID
+
+            geo_comp = candidate.components.get(US_PLAYBOOK_COMPONENT_ID)
+            geo_playbook_override = geo_comp.playbook if geo_comp and geo_comp.playbook else None
             if self.recorder is not None and self.drafter_client is None:
                 evaluated = _run_evaluated_case(
                     _case_obj(case, dataset_split),
@@ -200,6 +204,7 @@ class LiveExperimentRunner:
                     drafter_prompt_version=prompt_comp.version,
                     drafter_prompt_text=prompt_comp.text,
                     playbook_override=playbook_override,
+                    geo_playbook_override=geo_playbook_override,
                     run_mode=self.run_mode,
                     trace_tags={
                         "memory_eligible": "true" if self.memory_eligible else "false",

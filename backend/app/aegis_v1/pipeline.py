@@ -17,6 +17,8 @@ logger = logging.getLogger(__name__)
 def _configure_workflow_injection(
     drafter_client: "DrafterLLMClient | None",
     library_stack: dict[str, Any] | None,
+    question_responder: Any | None = None,
+    question_agent_client: Any | None = None,
 ) -> bool:
     """Set module-level Workflow DI flags. Returns True when offline test mode is active."""
     import app.aegis_v1.student_workflow as _sw
@@ -27,6 +29,8 @@ def _configure_workflow_injection(
     _sw._injected_library_stack = library_stack
     _sw._injected_offline_pipeline = offline
     _sw._injected_drafter_model = EchoLlm() if offline else None
+    _sw._injected_question_responder = question_responder
+    _sw._injected_question_client = question_agent_client
     return offline
 
 
@@ -36,6 +40,8 @@ def _clear_workflow_injection() -> None:
     _sw._injected_library_stack = None
     _sw._injected_drafter_model = None
     _sw._injected_offline_pipeline = False
+    _sw._injected_question_responder = None
+    _sw._injected_question_client = None
 
 
 def run_aegis_v1_pipeline(
@@ -53,14 +59,22 @@ def run_aegis_v1_pipeline(
     drafter_prompt_version: str | None = None,
     drafter_prompt_text: str | None = None,
     playbook_override: dict[str, Any] | None = None,
+    geo_playbook_override: dict[str, Any] | None = None,
     library_stack: dict[str, Any] | None = None,
     use_phoenix_memory: bool = True,
     phoenix_mode: PhoenixMode = PhoenixMode.APPEAL,
+    run_question_agent: bool = False,
+    question_responder: Any | None = None,
+    question_agent_client: Any | None = None,
+    question_interview: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Run the six-tool v1 Student flow via ADK 2.2 Workflow (D21 seam).
 
     The Outcome Simulator is no longer part of the Student — it runs in the
-    eval layer (``run_evaluated_case``).
+    eval layer (``run_evaluated_case``). The pre-draft question agent IS part
+    of the Student workflow: pass ``run_question_agent`` plus a
+    ``question_responder`` closure (showcase) or a pre-completed
+    ``question_interview`` artifact (appeal).
     """
     return run_aegis_v1_adk_pipeline(
         denial_text=denial_text,
@@ -76,8 +90,13 @@ def run_aegis_v1_pipeline(
         drafter_prompt_version=drafter_prompt_version,
         drafter_prompt_text=drafter_prompt_text,
         playbook_override=playbook_override,
+        geo_playbook_override=geo_playbook_override,
         library_stack=library_stack,
         use_phoenix_memory=use_phoenix_memory,
+        run_question_agent=run_question_agent,
+        question_responder=question_responder,
+        question_agent_client=question_agent_client,
+        question_interview=question_interview,
     )
 
 
@@ -95,8 +114,13 @@ def run_aegis_v1_adk_pipeline(
     drafter_prompt_version: str | None = None,
     drafter_prompt_text: str | None = None,
     playbook_override: dict[str, Any] | None = None,
+    geo_playbook_override: dict[str, Any] | None = None,
     library_stack: dict[str, Any] | None = None,
     use_phoenix_memory: bool = True,
+    run_question_agent: bool = False,
+    question_responder: Any | None = None,
+    question_agent_client: Any | None = None,
+    question_interview: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Run the v1 Student via ADK 2.2 Workflow and return an AppealPackage dict.
 
@@ -121,14 +145,26 @@ def run_aegis_v1_adk_pipeline(
         "playbook_override_json": (
             json.dumps(playbook_override) if playbook_override is not None else ""
         ),
+        "geo_playbook_override_json": (
+            json.dumps(geo_playbook_override) if geo_playbook_override is not None else ""
+        ),
         "use_phoenix_memory": use_phoenix_memory,
         "library_stack_json": "",
+        "run_question_agent": run_question_agent,
+        "question_interview_json": (
+            json.dumps(question_interview, default=str) if question_interview else ""
+        ),
     }
 
     # Inject non-serializable DI objects via module globals.  ADK's Runner
     # spawns a new asyncio context so contextvars don't propagate, but module
     # globals are visible from the @node functions in the same process.
-    _configure_workflow_injection(drafter_client, library_stack)
+    _configure_workflow_injection(
+        drafter_client,
+        library_stack,
+        question_responder=question_responder,
+        question_agent_client=question_agent_client,
+    )
     try:
         workflow = build_student_workflow()
         result = run_workflow_sync(
@@ -172,6 +208,7 @@ def run_aegis_v1_adk_pipeline(
         appeal_package_draft=draft,
         self_check=check,
         risk_flags=risk_flags,
+        question_interview=state.get("question_interview") or None,
         trace_metadata=TraceMetadata(
             case_id=parsed.get("case_id", case_id),
             insurer=parsed.get("insurer", "unknown"),

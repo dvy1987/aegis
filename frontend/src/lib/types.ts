@@ -46,6 +46,41 @@ export interface AppealRequest {
   clinical_context?: string;
   /** When true (live mode only), backend may fetch up to 5 trusted sources if library is thin. */
   discovery_enabled?: boolean;
+  /** Finished pre-draft interview (questions step); enriches the draft context. */
+  interview_id?: string;
+}
+
+// One question/answer exchange in the pre-draft interview.
+export interface QATurn {
+  turn: number;
+  question: string;
+  answer: string;
+}
+
+// Mirrors backend QuestionInterviewResult (consumer-safe fields only).
+// Appeal Q&A is traced and shown back to the user — never graded.
+export interface QuestionInterview {
+  qa_transcript: QATurn[];
+  planned_questions: string[];
+  patient_gap_note: string;
+  skipped: boolean;
+}
+
+// Mirrors backend QuestionTurnResponse (/v1/appeal/questions/*).
+export interface QuestionTurn {
+  interview_id: string;
+  question: string | null;
+  turn: number;
+  done: boolean;
+  planned_questions: string[];
+  patient_gap_note: string;
+}
+
+export interface QuestionStartRequest {
+  denial_text: string;
+  clinical_context?: string;
+  /** Insurer only — denial type is never knowable a priori on appeal. */
+  insurer?: string;
 }
 
 // The live /v1/appeal response.
@@ -55,6 +90,7 @@ export interface AppealResponse {
   outcome: SimulatorResult;
   risk_flags: string[];
   trace_metadata: TraceMetadata;
+  question_interview?: QuestionInterview | null;
 }
 
 // Plain-English "here's what we heard" — present in demo fixtures, optional live (spec §6).

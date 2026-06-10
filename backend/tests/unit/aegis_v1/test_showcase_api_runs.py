@@ -25,7 +25,7 @@ def test_manifest_endpoint_returns_quick_slice(tmp_path, monkeypatch) -> None:
     assert body["quick_slice"] == "Cigna:medical_necessity:not_evidence_based"
     assert len(body["quick_train"]) == 5
     assert len(body["quick_holdout"]) == 2
-    assert body["serious_train_count"] == 80
+    assert body["serious_train_count"] == 50
     assert len(body["serious_holdout"]) == 20
 
 

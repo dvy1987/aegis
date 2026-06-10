@@ -25,13 +25,15 @@ def test_internal_pipeline_context_is_attached_separately() -> None:
         clinical_context="PHQ-9 23",
         citations=[{"corpus_doc_id": "erisa_503.md", "title": "ERISA", "quote": "review"}],
         playbook={"tactics": ["Rebut medical necessity."], "version": "day_zero"},
+        geo_playbook={"rules": [{"rule_id": "us_001", "text": "Cite deadline."}]},
         phoenix_summary={"status": "cold_start", "success_traits": []},
     )
     assert "DENIAL LETTER:" in message
     assert "LIBRARY CITATIONS:" in message
     assert "PLAYBOOK:" in message
+    assert "US-PLAYBOOK" in message
     assert "PHOENIX MEMORY:" in message
-    assert "insurer" not in message
+    assert "diagnosis_summary" not in message
 
 
 def test_drafter_llm_message_excludes_parsed_case_scaffolding() -> None:

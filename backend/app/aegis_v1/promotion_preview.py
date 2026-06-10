@@ -51,9 +51,10 @@ def _us_playbook_rule_changes(
         if prior.get("status") == "revoked" and rule.get("status") != "revoked":
             continue
         if prior.get("text") != rule.get("text") or prior.get("status") != rule.get("status"):
+            change_type = "edited" if rule.get("status") != "revoked" else "revoked"
             changes.append(
                 {
-                    "change": "edited" if rule.get("status") != "revoked" else "revoked",
+                    "change": change_type,
                     "rule_id": rule_id,
                     "scope": rule.get("scope", prior.get("scope", "US federal")),
                     "funding_scope": rule.get("funding_scope", prior.get("funding_scope")),
@@ -62,6 +63,10 @@ def _us_playbook_rule_changes(
                     "justification": rule.get("edit_justification")
                     or rule.get("revoke_justification")
                     or rule.get("justification"),
+                    "notice": (
+                        "This changes an existing US rule — review the justification "
+                        "before approving."
+                    ),
                 }
             )
 
@@ -78,6 +83,9 @@ def _us_playbook_rule_changes(
                 "funding_scope": prior.get("funding_scope"),
                 "before_text": str(prior.get("text") or ""),
                 "text": "",
+                "notice": (
+                    "A rule was removed from the proposed playbook — review before approving."
+                ),
             }
         )
     return changes
