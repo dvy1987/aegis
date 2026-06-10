@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from app.learning.experiment import ExperimentRunner
+from app.learning.experiment import ExperimentRunner, baseline_experiment_from_phoenix
 from app.learning.gates import evaluate_vetoes
 from app.learning.merge import system_aware_merge
 from app.learning.models import (
@@ -73,9 +73,17 @@ class LearningCoordinator:
             return None
 
         seed = self._seed()
-        results: dict[str, ExperimentResult] = {
-            seed.candidate_id: self.runner.run(seed, dataset_split=self.holdout_split, gepa_round=0)
-        }
+        seed_baseline = baseline_experiment_from_phoenix(
+            self.store,
+            seed,
+            train_split=self.train_split,
+            dataset_split=self.holdout_split,
+        )
+        if seed_baseline is None:
+            seed_baseline = self.runner.run(
+                seed, dataset_split=self.holdout_split, gepa_round=0
+            )
+        results: dict[str, ExperimentResult] = {seed.candidate_id: seed_baseline}
         pool: list[Candidate] = [seed]
         scores = {seed.candidate_id: self._case_scores(results[seed.candidate_id])}
         best = seed

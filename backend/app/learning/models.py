@@ -68,6 +68,7 @@ class ScoredRun(BaseModel):
     simulator_verdict: Literal["APPROVE", "DENY"] | None = None
     prompt_version: str = ""
     playbook_version: str = ""
+    run_mode: str = ""
     # Firewall-safe per-agent trace snapshots (role, status, risk_flags, counts only).
     swarm_trace_signals: list[dict[str, Any]] = Field(default_factory=list)
 

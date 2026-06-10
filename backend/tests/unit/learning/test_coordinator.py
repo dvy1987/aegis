@@ -21,19 +21,40 @@ def _seeded_store():
     store.seed_component(Component(component_id="drafter_system_prompt", kind="prompt", version="v1", text="draft"))
     store.seed_component(Component(component_id=f"playbook:{SLICE}", kind="playbook", version="v1",
                                    playbook={"tactics": [], "dimension_targets": []}))
-    for cid in ("t1", "t2"):
+    for cid in ("h1", "h2"):
         store.add_run("benchmark_train", ScoredRun(
             case_id=cid, slice=SLICE, dimension_scores={"appeal_vector_capture": 1, "grounding": 3},
             hard_gate_pass=True, weighted_quality=composite_score({"appeal_vector_capture": 1, "grounding": 3}, True),
-            improvement_notes={"appeal_vector_capture": "missed the specific denial flaw"}))
+            improvement_notes={"appeal_vector_capture": "missed the specific denial flaw"},
+            prompt_version="v1", run_mode="gepa_seed"))
     return store
 
 
-def _coordinator(store):
+def _coordinator(store, runner=None):
     return LearningCoordinator(
-        store=store, runner=StubExperimentRunner(DATASET), reflection_client=StubReflectionClient(),
-        slice_filter=SLICE, holdout_split="benchmark_holdout", train_split="benchmark_train",
-        max_rounds=6)
+        store=store,
+        runner=runner or StubExperimentRunner(DATASET),
+        reflection_client=StubReflectionClient(),
+        slice_filter=SLICE,
+        holdout_split="benchmark_holdout",
+        train_split="benchmark_train",
+        max_rounds=6,
+    )
+
+
+def test_coordinator_seed_baseline_reuses_phoenix_without_rerunning_judges():
+    store = _seeded_store()
+    calls: list[tuple[str, int | None]] = []
+
+    class _TrackingRunner(StubExperimentRunner):
+        def run(self, candidate, *, dataset_split, gepa_round=None):
+            calls.append((candidate.candidate_id, gepa_round))
+            return super().run(candidate, dataset_split=dataset_split, gepa_round=gepa_round)
+
+    proposal = _coordinator(store, runner=_TrackingRunner(DATASET)).optimize()
+    assert proposal is not None
+    assert ("seed", 0) not in calls
+    assert proposal.before.experiment_id.endswith("_phoenix_baseline")
 
 
 def test_coordinator_proposes_a_promotable_lift():
@@ -70,12 +91,14 @@ def test_coordinator_can_seed_and_optimize_multiple_playbook_slices():
     for slice_key in (SLICE, SLICE_2):
         store.seed_component(Component(component_id=f"playbook:{slice_key}", kind="playbook", version="v1",
                                        playbook={"tactics": [], "dimension_targets": []}))
+    for case in MULTI_SLICE_DATASET:
         store.add_run("benchmark_train", ScoredRun(
-            case_id=f"train_{slice_key}", slice=slice_key,
+            case_id=case["case_id"], slice=case["slice"],
             dimension_scores={"appeal_vector_capture": 1, "grounding": 3},
             hard_gate_pass=True,
             weighted_quality=composite_score({"appeal_vector_capture": 1, "grounding": 3}, True),
-            improvement_notes={"appeal_vector_capture": "missed the denial-specific rebuttal"}))
+            improvement_notes={"appeal_vector_capture": "missed the denial-specific rebuttal"},
+            prompt_version="v1", run_mode="gepa_seed"))
 
     coord = LearningCoordinator(
         store=store,

@@ -5,8 +5,15 @@ from typing import Any, Protocol
 
 from app.evals.part_a.schemas import PanelReport
 
+ANNOTATION_SCHEMA_VERSION = "v2_verbose"
 
-def laundered_signal(panel: PanelReport, appeal_letter: str) -> dict[str, Any]:
+
+def laundered_signal(
+    panel: PanelReport,
+    appeal_letter: str,
+    *,
+    trace_metadata: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Firewall-safe projection of a PanelReport for the Optimizer (INV-2).
 
     Keeps scores, gates, reasoning, improvement notes. Keeps an evidence quote
@@ -14,24 +21,44 @@ def laundered_signal(panel: PanelReport, appeal_letter: str) -> dict[str, Any]:
     answer-key strings (e.g. expected appeal vectors) can never leak.
     """
     letter = appeal_letter or ""
+    meta = dict(trace_metadata or {})
     dimensions: dict[str, Any] = {}
     for name, result in panel.judge_results.items():
         safe_quotes = [q for q in result.evidence_quotes if q and q in letter]
         dimensions[name] = {
             "score": result.score,
             "reasoning": result.reasoning,
+            "confidence": result.confidence,
             "improvement": result.improvement,
             "evidence_quotes": safe_quotes,
         }
+    try:
+        composite = float(panel.weighted_quality or 0.0)
+    except (TypeError, ValueError):
+        composite = 0.0
+    if panel.verdict != "PASS":
+        composite = 0.0
     return {
+        "annotation_schema_version": ANNOTATION_SCHEMA_VERSION,
         "case_id": panel.case_id,
         "verdict": panel.verdict,
         "weighted_quality": panel.weighted_quality,
+        "composite": composite,
         "hard_gate_failures": panel.hard_gate_failures,
         "promotion_blockers": panel.promotion_blockers,
         "dimension_scores": panel.dimension_scores,
         "weights": panel.weights,
         "dimensions": dimensions,
+        "risk_flags": list(panel.risk_flags),
+        "judge_metadata": dict(panel.metadata),
+        "prompt_version": str(meta.get("prompt_version") or ""),
+        "playbook_version": str(meta.get("playbook_version") or ""),
+        "run_mode": str(meta.get("run_mode") or ""),
+        "candidate_id": str(meta.get("candidate_id") or ""),
+        "dataset_split": str(meta.get("dataset_split") or ""),
+        "memory_eligible": str(meta.get("memory_eligible") or ""),
+        "insurer": str(meta.get("insurer") or ""),
+        "denial_type": str(meta.get("denial_type") or ""),
     }
 
 

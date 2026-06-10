@@ -4,8 +4,82 @@ from typing import Any, Protocol
 
 from app.evals.part_a.evaluated_run import run_evaluated_case as _run_evaluated_case
 from app.learning.models import (
-    Candidate, CaseScore, DIMENSIONS, ExperimentResult, composite_score,
+    Candidate,
+    CaseScore,
+    DIMENSIONS,
+    ExperimentResult,
+    ScoredRun,
+    composite_score,
+    normalize_dimension_scores,
 )
+from app.learning.store import PhoenixLearningStore
+
+SEED_BASELINE_RUN_MODES = frozenset({"", "gepa_seed"})
+
+
+def _dedupe_scored_runs_by_case(runs: list[ScoredRun]) -> list[ScoredRun]:
+    by_case: dict[str, ScoredRun] = {}
+    for run in runs:
+        by_case[run.case_id] = run
+    return list(by_case.values())
+
+
+def experiment_result_from_scored_runs(
+    candidate_id: str,
+    dataset_split: str,
+    runs: list[ScoredRun],
+    *,
+    experiment_id: str | None = None,
+) -> ExperimentResult:
+    """Build an ExperimentResult from Phoenix seed annotations (no re-judging)."""
+    per_case: list[CaseScore] = []
+    for run in runs:
+        dims = normalize_dimension_scores(run.dimension_scores)
+        per_case.append(
+            CaseScore(
+                case_id=run.case_id,
+                composite=composite_score(dims, run.hard_gate_pass),
+                dimension_scores=dims,
+                hard_gate_pass=run.hard_gate_pass,
+                simulator_verdict=run.simulator_verdict,
+            )
+        )
+    mean = round(sum(c.composite for c in per_case) / len(per_case), 4) if per_case else 0.0
+    return ExperimentResult(
+        candidate_id=candidate_id,
+        dataset_split=dataset_split,
+        per_case=per_case,
+        composite=mean,
+        experiment_id=experiment_id or f"exp_{candidate_id}_{dataset_split}_phoenix_baseline",
+    )
+
+
+def baseline_experiment_from_phoenix(
+    store: PhoenixLearningStore,
+    seed: Candidate,
+    *,
+    train_split: str,
+    dataset_split: str,
+) -> ExperimentResult | None:
+    """Reuse training-seed judge annotations as the GEPA baseline (collapse pass 1+2)."""
+    prompt_version = seed.components["drafter_system_prompt"].version
+    runs = store.read_scored_runs(
+        dataset_split=train_split,
+        prompt_version=prompt_version,
+    )
+    if not runs:
+        runs = store.read_scored_runs(dataset_split=train_split)
+    seed_runs = [r for r in runs if r.run_mode in SEED_BASELINE_RUN_MODES]
+    if not seed_runs:
+        seed_runs = list(runs)
+    seed_runs = _dedupe_scored_runs_by_case(seed_runs)
+    if not seed_runs:
+        return None
+    return experiment_result_from_scored_runs(
+        seed.candidate_id,
+        dataset_split,
+        seed_runs,
+    )
 
 
 class ExperimentRunner(Protocol):

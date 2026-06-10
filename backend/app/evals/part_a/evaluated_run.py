@@ -95,7 +95,25 @@ def run_evaluated_case(
 
     # 4. Annotate the trace with the LAUNDERED signal + sim verdict (INV-2/INV-3).
     letter = appeal_package["appeal_package_draft"]["appeal_letter"]
-    annotations = laundered_signal(panel_report, appeal_letter=letter)
+    trace_meta = _trace_metadata_dict(appeal_package, trace_tags)
+    parsed = appeal_package.get("parsed_case") or {}
+    trace_meta.setdefault("case_id", str(parsed.get("case_id") or case_obj.get("case_id") or ""))
+    trace_meta.setdefault("insurer", str(parsed.get("insurer") or ""))
+    trace_meta.setdefault("denial_type", str(parsed.get("denial_type") or ""))
+    raw_tm = appeal_package.get("trace_metadata")
+    if not trace_meta.get("prompt_version") and raw_tm is not None:
+        trace_meta["prompt_version"] = str(
+            getattr(raw_tm, "prompt_version", None) or (raw_tm or {}).get("prompt_version") or ""
+        )
+    if not trace_meta.get("playbook_version") and raw_tm is not None:
+        trace_meta["playbook_version"] = str(
+            getattr(raw_tm, "playbook_version", None) or (raw_tm or {}).get("playbook_version") or ""
+        )
+    annotations = laundered_signal(
+        panel_report,
+        appeal_letter=letter,
+        trace_metadata=trace_meta,
+    )
     recorder.annotate(trace_ref, annotations)
 
     return EvaluatedRun(

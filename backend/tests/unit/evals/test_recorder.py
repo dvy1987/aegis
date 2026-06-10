@@ -21,11 +21,21 @@ def _panel_with_leaky_quote():
 
 def test_laundered_signal_drops_quotes_not_in_letter():
     letter = "We request a full and fair review of the denial."
-    out = laundered_signal(_panel_with_leaky_quote(), appeal_letter=letter)
+    out = laundered_signal(
+        _panel_with_leaky_quote(),
+        appeal_letter=letter,
+        trace_metadata={"run_mode": "gepa_seed", "prompt_version": "drafter_v1"},
+    )
     dim = out["dimensions"]["appeal_vector_capture"]
     assert dim["improvement"] == "Attack the specific denial defect."
+    assert dim["reasoning"] == "missed the embedded flaw"
+    assert dim["confidence"] == 0.6
     assert "full and fair review" in dim["evidence_quotes"]
     assert "SECRET expected vector" not in dim["evidence_quotes"]   # firewall
+    assert out["annotation_schema_version"] == "v2_verbose"
+    assert out["run_mode"] == "gepa_seed"
+    assert out["prompt_version"] == "drafter_v1"
+    assert out["composite"] > 0
 
 
 def test_in_memory_recorder_round_trips_run_and_annotation():

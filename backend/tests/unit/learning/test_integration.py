@@ -18,14 +18,15 @@ def test_full_offline_learning_loop():
     store.seed_component(Component(component_id="drafter_system_prompt", kind="prompt", version="v1", text="Draft an appeal."))
     store.seed_component(Component(component_id=f"playbook:{SLICE}", kind="playbook", version="v1",
                                    playbook={"tactics": [], "dimension_targets": []}))
-    for cid in ("t1", "t2", "t3"):
+    for cid in ("h1", "h2"):
         store.add_run("benchmark_train", ScoredRun(
             case_id=cid, slice=SLICE,
             dimension_scores={"appeal_vector_capture": 1, "grounding": 3, "question_agent": 5},
             hard_gate_pass=True,
             weighted_quality=composite_score({"appeal_vector_capture": 1, "grounding": 3, "question_agent": 5}, True),
             improvement_notes={"appeal_vector_capture": "did not rebut the specific defect",
-                               "grounding": "thin authority citations"}))
+                               "grounding": "thin authority citations"},
+            prompt_version="v1", run_mode="gepa_seed"))
 
     coord = LearningCoordinator(store=store, runner=StubExperimentRunner(HOLDOUT),
                                 reflection_client=StubReflectionClient(), slice_filter=SLICE, max_rounds=8)

@@ -158,8 +158,11 @@ def rows_to_scored_runs(
             if not isinstance(rec, dict):
                 continue
             note = rec.get("improvement")
+            reasoning = rec.get("reasoning")
             if isinstance(note, str) and note.strip():
                 improvement_notes[str(dim)] = note.strip()
+            elif isinstance(reasoning, str) and reasoning.strip():
+                improvement_notes[str(dim)] = reasoning.strip()
 
         prompt_version = (
             _aegis_attribute(span, "prompt_version")
@@ -171,6 +174,7 @@ def rows_to_scored_runs(
             or payload.get("playbook_version")
             or ""
         )
+        run_mode = _aegis_attribute(span, "run_mode") or str(payload.get("run_mode") or "")
 
         runs.append(
             ScoredRun(
@@ -183,6 +187,7 @@ def rows_to_scored_runs(
                 simulator_verdict=None,
                 prompt_version=str(prompt_version),
                 playbook_version=str(playbook_version),
+                run_mode=str(run_mode),
             )
         )
     return runs

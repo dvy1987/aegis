@@ -52,10 +52,13 @@ def test_rows_to_scored_runs_parses_minimal_pair() -> None:
                         "question_agent": 5,
                         "persuasive_coherence": 3,
                     },
+                    "run_mode": "gepa_seed",
                     "dimensions": {
                         "appeal_vector_capture": {
                             "score": 3,
+                            "reasoning": "the denial flaw is mentioned but not rebutted",
                             "improvement": "tighten the rebuttal of the cited reason",
+                            "confidence": 0.72,
                         },
                     },
                 }),
@@ -72,7 +75,45 @@ def test_rows_to_scored_runs_parses_minimal_pair() -> None:
     assert run.prompt_version == "drafter_v2"
     assert run.playbook_version == "v1"
     assert run.dimension_scores["appeal_vector_capture"] == 3
-    assert "appeal_vector_capture" in run.improvement_notes
+    assert run.improvement_notes["appeal_vector_capture"] == "tighten the rebuttal of the cited reason"
+    assert run.run_mode == "gepa_seed"
+
+
+def test_rows_to_scored_runs_uses_reasoning_when_improvement_missing() -> None:
+    spans = [
+        {
+            "context": {"span_id": "r1"},
+            "attributes": {
+                "aegis.case_id": "case_x",
+                "aegis.insurer": "Cigna",
+                "aegis.denial_type": "medical_necessity",
+            },
+        }
+    ]
+    annotations = [
+        {
+            "span_id": "r1",
+            "name": "aegis_part_a_panel",
+            "result": {
+                "label": "PASS",
+                "score": 0.5,
+                "explanation": json.dumps({
+                    "case_id": "case_x",
+                    "verdict": "PASS",
+                    "weighted_quality": 0.5,
+                    "dimension_scores": {"grounding": 3},
+                    "dimensions": {
+                        "grounding": {
+                            "score": 3,
+                            "reasoning": "major claims lack subsection citations",
+                        },
+                    },
+                }),
+            },
+        }
+    ]
+    runs = rows_to_scored_runs(spans, annotations)
+    assert runs[0].improvement_notes["grounding"] == "major claims lack subsection citations"
 
 
 def test_rows_to_scored_runs_drops_spans_without_annotation() -> None:
