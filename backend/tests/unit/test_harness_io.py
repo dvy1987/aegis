@@ -7,6 +7,7 @@ from app.case_generator import harness_io
 @pytest.fixture
 def mock_run_dir(tmp_path, monkeypatch):
     monkeypatch.setattr(harness_io, "RUN_DIR", tmp_path)
+    monkeypatch.setattr(harness_io, "STATE_FILE", tmp_path / "state.json")
     monkeypatch.setattr(harness_io, "DRAFTS", tmp_path / "drafts")
     (tmp_path / "drafts").mkdir()
     return tmp_path

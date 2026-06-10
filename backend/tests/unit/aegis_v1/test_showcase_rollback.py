@@ -4,7 +4,10 @@ import json
 from pathlib import Path
 
 from app.aegis_v1.showcase_rollback import PromotionStack
+from app.learning.fs_store import _playbook_path
 from app.learning.models import Candidate, Component
+
+_SLICE_PLAYBOOK_ID = "playbook:Cigna:medical_necessity:not_evidence_based"
 
 
 def test_promotion_stack_snapshots_and_restores_changed_files(tmp_path: Path) -> None:
@@ -16,7 +19,7 @@ def test_promotion_stack_snapshots_and_restores_changed_files(tmp_path: Path) ->
 
     (prompts_dir / "drafter_v1.md").write_text("day zero prompt", encoding="utf-8")
     (prompts_dir / "active_drafter_prompt.txt").write_text("drafter_v1", encoding="utf-8")
-    playbook_path = playbooks_dir / "cigna__medical_necessity.json"
+    playbook_path = _playbook_path(playbooks_dir, _SLICE_PLAYBOOK_ID)
     playbook_path.write_text(
         json.dumps(
             {
@@ -39,8 +42,8 @@ def test_promotion_stack_snapshots_and_restores_changed_files(tmp_path: Path) ->
                 version="drafter_v3",
                 text="candidate prompt",
             ),
-            "playbook:Cigna:medical_necessity:not_evidence_based": Component(
-                component_id="playbook:Cigna:medical_necessity:not_evidence_based",
+            _SLICE_PLAYBOOK_ID: Component(
+                component_id=_SLICE_PLAYBOOK_ID,
                 kind="playbook",
                 version="cigna_mednec_v3",
                 playbook={"tactics": ["Use criteria."]},

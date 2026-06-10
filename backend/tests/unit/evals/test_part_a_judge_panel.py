@@ -110,7 +110,7 @@ def test_teacher_packet_parses_pattern_id_prefixes() -> None:
     assert any("IRO notice" in v for v in teacher.expected_appeal_vectors)
 
 
-def test_question_agent_dimension_is_stubbed_at_five() -> None:
+def test_question_agent_dimension_neutral_without_interview_artifact() -> None:
     appeal = _appeal_package(f"{CANONICAL_DISCLAIMER} Please review this denial.")
     teacher = build_teacher_grading_packet(_case_obj(), appeal)
 
@@ -118,7 +118,7 @@ def test_question_agent_dimension_is_stubbed_at_five() -> None:
 
     assert report.dimension_scores["question_agent"] == 5
     assert report.judge_results["question_agent"].score == 5
-    assert "not yet implemented" in report.judge_results["question_agent"].reasoning.lower()
+    assert "no pre-draft interview" in report.judge_results["question_agent"].reasoning.lower()
 
 
 def test_panel_has_no_safety_scope_gate() -> None:

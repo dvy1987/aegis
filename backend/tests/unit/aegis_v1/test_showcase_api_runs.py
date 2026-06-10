@@ -63,7 +63,7 @@ def test_serious_run_starts_after_successful_quick(tmp_path, monkeypatch) -> Non
 
     assert res.status_code == 200
     assert res.json()["session_id"].startswith("serious_")
-    assert len(res.json()["case_ids"]) == 100
+    assert len(res.json()["case_ids"]) == 70  # 50 train + 20 holdout (production cohort)
 
 
 def test_cancel_run_persists_cancel_state(tmp_path, monkeypatch) -> None:
