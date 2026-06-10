@@ -9,12 +9,39 @@ from app.aegis_v1.patient_simulator import (
 from app.aegis_v1.question_agent import (
     MAX_QUESTIONS,
     GeminiQuestionAgentClient,
+    QuestionDecision,
     StubQuestionAgentClient,
     is_substantive_answer,
     responder_from_simulator,
     run_question_interview,
 )
 from app.aegis_v1.schemas import QATurn
+
+
+class RoutingQuestionAgentClient:
+    """Agent that owns final substantive vs gap routing on stop."""
+
+    name = "routing_question_agent"
+
+    def decide(self, **kwargs: object) -> QuestionDecision:
+        transcript = kwargs["transcript"]  # type: ignore[index]
+        symptom_q = "When did your symptoms start, and how do they affect your daily life?"
+        treatment_q = "Have you tried other treatments for this before, and what happened?"
+        planned = [symptom_q, treatment_q]
+        if not transcript:
+            return QuestionDecision(
+                action="ask",
+                question=symptom_q,
+                planned_questions=planned,
+                gap_analysis="Need symptom timeline.",
+            )
+        return QuestionDecision(
+            action="stop",
+            planned_questions=planned,
+            gap_analysis="Symptom timeline unresolved.",
+            substantive_questions=[],
+            gap_questions=[symptom_q, treatment_q],
+        )
 
 PLAYBOOK = {
     "insurer": "Cigna",
@@ -153,6 +180,22 @@ def test_patient_unsure_routes_to_gap_not_drafter_context() -> None:
     assert symptom_q in result.patient_gap_note
     assert PATIENT_UNSURE not in result.enriched_context
     assert "SSRI" in result.enriched_context
+
+
+def test_finalize_trusts_agent_routing_on_stop() -> None:
+    symptom_q = "When did your symptoms start, and how do they affect your daily life?"
+    result = run_question_interview(
+        denial_text=DENIAL,
+        notes="Patient wants to appeal.",
+        playbook=PLAYBOOK,
+        responder=lambda question: PATIENT_UNSURE,
+        client=RoutingQuestionAgentClient(),
+    )
+
+    assert symptom_q in result.gap_questions
+    assert result.substantive_questions == []
+    assert PATIENT_UNSURE not in result.enriched_context
+    assert symptom_q in result.patient_gap_note
 
 
 def test_stub_decision_returns_agent_classification_fields() -> None:

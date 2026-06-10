@@ -345,13 +345,11 @@ class GeminiQuestionAgentClient:
             )
             data = json.loads(response.text)
             decision = QuestionDecision.model_validate(data)
-            decision = _with_resolved_classification(
-                decision,
-                planned_questions=decision.planned_questions or candidate_specs(
-                    denial_text, notes, playbook
-                )[:MAX_QUESTIONS],
-                transcript=transcript,
-            )
+            planned = list(
+                decision.planned_questions
+                or [q for _, q in candidate_specs(denial_text, notes, playbook)]
+            )[:MAX_QUESTIONS]
+            decision = decision.model_copy(update={"planned_questions": planned})
             # Firewall: never ask the patient a regulatory question.
             if decision.action == "ask" and is_regulatory_question(decision.question):
                 return StubQuestionAgentClient().decide(
@@ -402,7 +400,13 @@ class GeminiQuestionAgentClient:
             "excerpts already answer a candidate question, do NOT ask it — ask a "
             "fresher, more meaningful patient-knowable question instead, or stop. "
             "Ask at most one more question. Never ask the patient about "
-            "regulatory/policy/legal content."
+            "regulatory/policy/legal content.\n\n"
+            "After each step, refresh `substantive_questions` and `gap_questions` "
+            "from the full transcript: substantive = asked questions with usable "
+            "patient facts for the drafter; gaps = still-unresolved patient questions "
+            "(never asked, or asked but blank / unsure / 'I don't know'). When you "
+            "set `action` to `stop`, those two lists are final routing — they decide "
+            "what the drafter receives vs what the patient sees as still missing."
         )
 
 
@@ -430,17 +434,26 @@ def classify_interview(
     transcript: list[QATurn],
     substantive_questions: list[str] | None = None,
     gap_questions: list[str] | None = None,
+    on_stop: bool = False,
 ) -> tuple[list[str], list[str]]:
-    """Return (substantive_questions, gap_questions) for drafter vs gap-note routing."""
+    """Return (substantive_questions, gap_questions) for drafter vs gap-note routing.
+
+    On interview end (``on_stop=True``), the agent's lists are authoritative when
+    present. Heuristic derivation is only a safety net when the model omits them.
+    """
     asked = {turn.question for turn in transcript}
-    if substantive_questions is not None or gap_questions is not None:
-        substantive = [q for q in (substantive_questions or []) if q in asked]
-        gaps = list(gap_questions or [])
-        if substantive or gaps:
-            not_asked = [question for question in planned_questions if question not in asked]
-            gaps = list(dict.fromkeys(gaps + not_asked))
+    not_asked = [question for question in planned_questions if question not in asked]
+
+    if on_stop:
+        if substantive_questions or gap_questions:
+            substantive = [question for question in substantive_questions if question in asked]
+            gaps = list(dict.fromkeys([*gap_questions, *not_asked]))
             gaps = [question for question in gaps if question not in substantive]
             return substantive, gaps
+        if transcript:
+            return _derive_classification(planned_questions, transcript)
+        return [], list(planned_questions)
+
     return _derive_classification(planned_questions, transcript)
 
 
@@ -448,6 +461,7 @@ def _derive_classification(
     planned_questions: list[str],
     transcript: list[QATurn],
 ) -> tuple[list[str], list[str]]:
+    """Offline stub + safety-net fallback when the live agent omits routing."""
     answered = {turn.question for turn in transcript}
     substantive = [
         turn.question for turn in transcript if not _is_non_answer(turn.answer)
@@ -458,29 +472,6 @@ def _derive_classification(
     not_asked = [question for question in planned_questions if question not in answered]
     gaps = list(dict.fromkeys(not_asked + dont_know))
     return substantive, gaps
-
-
-def _with_resolved_classification(
-    decision: QuestionDecision,
-    *,
-    planned_questions: list[str],
-    transcript: list[QATurn],
-) -> QuestionDecision:
-    """Use agent classification when present; derive when the model omits fields."""
-    planned = list(decision.planned_questions or planned_questions)[:MAX_QUESTIONS]
-    substantive, gaps = classify_interview(
-        planned_questions=planned,
-        transcript=transcript,
-        substantive_questions=decision.substantive_questions or None,
-        gap_questions=decision.gap_questions or None,
-    )
-    return decision.model_copy(
-        update={
-            "planned_questions": planned,
-            "substantive_questions": substantive,
-            "gap_questions": gaps,
-        }
-    )
 
 
 def build_enriched_context(
@@ -519,6 +510,8 @@ def finalize_interview_result(
             qa_transcript=[],
             enriched_context=(notes or "").strip(),
             planned_questions=planned,
+            substantive_questions=[],
+            gap_questions=planned,
             patient_gap_note=build_patient_gap_note(planned),
             internal_gap_analysis=gap_analysis,
             skipped=True,
@@ -529,6 +522,7 @@ def finalize_interview_result(
         transcript=transcript,
         substantive_questions=decision.substantive_questions,
         gap_questions=decision.gap_questions,
+        on_stop=True,
     )
     return QuestionInterviewResult(
         qa_transcript=list(transcript),
@@ -536,8 +530,10 @@ def finalize_interview_result(
             notes, transcript, substantive_questions=substantive
         ),
         planned_questions=planned,
+        substantive_questions=substantive,
+        gap_questions=gaps,
         patient_gap_note=build_patient_gap_note(gaps),
-        internal_gap_analysis=gap_analysis,
+        internal_gap_analysis=gap_analysis or decision.gap_analysis,
         skipped=skipped,
     )
 
@@ -622,11 +618,6 @@ def run_question_interview(
             library_context=library_context,
         )
 
-    decision = _with_resolved_classification(
-        decision,
-        planned_questions=planned,
-        transcript=transcript,
-    )
     return finalize_interview_result(
         notes=notes,
         transcript=transcript,

@@ -3329,8 +3329,23 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 - Modal missing question-agent section → verify `kind: question_agent` end-to-end.
 
 ### Working Tree
-- **Dirty (6 files):** `promotion_preview.py`, `test_promotion_preview.py`, `PromotionReviewModal.tsx`, `promotionPreview.ts`, question-agent handoff doc, geo playbook plan.
-- **Committed ahead of origin:** 2 commits (`dddc813`, `ac628c1` on top of prior `712af93` chain).
+- Session closeout commits on `main` (activation, gap routing, approval modal, docs).
+- Final refinement: trust agent `substantive_questions` / `gap_questions` on stop (`on_stop=True` finalize).
+
+---
+
+## 2026-06-10 — Handoff (Cursor — session end, agent routing finalize)
+
+### Done
+- Trust question-agent **stop** routing: `substantive_questions` → drafter, `gap_questions` → draft-page gap note; heuristics only when model omits lists.
+- `QuestionInterviewResult` stores routing lists; tests for PATIENT_UNSURE + agent-owned stop routing.
+- Session handoff doc updated (`docs/2026-06-10-session-handoff-question-agent-closeout.md`).
+
+### Next Agent Should Know
+- Full session arc (activation, modal diff, gap routing, docs) is on `main`; see session handoff doc for commit map.
+
+### Working Tree
+- Unrelated dirty files may remain (eval case moves, showcase manifest WIP) — not part of question-agent session.
 
 ---
 

@@ -25,6 +25,9 @@ slice. Use them to decide what is still missing.
   question.
 - Keep a running list of the questions you would still ask (`planned_questions`)
   so the product can show them if the patient skips.
+- **Track routing as you go.** You are the only component that knows which
+  patient answers are usable vs which questions remain open. By the time you
+  stop, you must have a clear final split.
 
 ## Output (one step at a time)
 Return JSON:

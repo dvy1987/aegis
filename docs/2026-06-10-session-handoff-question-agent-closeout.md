@@ -19,19 +19,20 @@ Close remaining question-agent / showcase-learning gaps after Round 2 build: ver
 - Backend unit suite verified: **446 passed, 0 failed** (`uv run pytest tests/unit` from `backend/`).
 - Frontend vitest: **28 passed**. Frontend `tsc`: **8 errors** — pre-existing in `statusPreviewBatch.test.ts` only.
 
-### 2. Question agent prompt activation on promote — **committed**
-- **Commit:** `ac628c1` — `fix: activate promoted question agent prompts on promote`
+### 2. Question agent prompt activation on promote — **committed** (`ac628c1` / merged on `main`)
 - **Change:** `backend/app/learning/fs_store.py` — `_write_prompt` now writes `active_question_agent_prompt.txt` + `{version}.md` for `question_agent_system_prompt` (mirrors drafter).
 - **Test:** `backend/tests/unit/learning/test_promotion_wiring.py` — `test_question_agent_prompt_promotion_writes_runtime_loadable_filename`
 
-### 3. Approval modal — question agent prompt diffs — **uncommitted**
-- **Backend:** `promotion_preview.py` — baseline load + `kind: question_agent` section with before/after text.
-- **Frontend:** `promotionPreview.ts` type union + `PromotionReviewModal.tsx` renders same text diff as drafter.
-- **Test:** `test_build_promotion_preview_includes_question_agent_section` in `test_promotion_preview.py` — passes.
+### 3. Approval modal — question agent prompt diffs — **committed** (`5259ef2`)
+- `promotion_preview.py`, `promotionPreview.ts`, `PromotionReviewModal.tsx`, tests.
 
-### 4. Stale docs — **uncommitted**
-- `docs/2026-06-10-question-agent-test-handoff.md` — removed “geo deferred”; added Round 2 items 7–8 (geo wired, activation + modal); updated status to verified.
-- `docs/plans/2026-06-10-geo-playbook-plan.md` — status → **Implemented**.
+### 4. Agent-owned gap routing — **committed** (`e6ee11c` + final refinement this commit)
+- Question agent returns `substantive_questions` + `gap_questions` on each step; **on stop these lists are authoritative** for drafter vs draft-page gap note (Python heuristics only if the model omits them).
+- `QuestionInterviewResult` carries routing lists for traces.
+- Fixes “I'm not totally sure” simulator replies routing to gaps, not drafter.
+
+### 5. Stale docs — **committed** (`06b3467`)
+- Question-agent test handoff + geo playbook plan marked implemented; session handoff + memory updated.
 
 ---
 
@@ -96,9 +97,8 @@ Question-judge “Add to playbook” / “Add to global playbook” strings flow
 ## Git snapshot
 
 ```
-Branch: main (ahead of origin/main by 2 commits)
-Latest commit: ac628c1 — question agent prompt activation
-Dirty: 6 files (see table above)
+Branch: main (synced with origin after session commits)
+Session commits: prompt activation, gap routing, approval modal diff, docs/handoff
 ```
 
 ---

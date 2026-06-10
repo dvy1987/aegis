@@ -223,6 +223,8 @@ class QuestionInterviewResult(BaseModel):
     qa_transcript: list[QATurn] = Field(default_factory=list)
     enriched_context: str = ""
     planned_questions: list[str] = Field(default_factory=list)
+    substantive_questions: list[str] = Field(default_factory=list)
+    gap_questions: list[str] = Field(default_factory=list)
     patient_gap_note: str = ""
     internal_gap_analysis: str = ""
     skipped: bool = False
