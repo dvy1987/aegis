@@ -134,7 +134,10 @@ def link5_simulator() -> bool:
             "denial_reason": "Service not medically necessary",
             "appeal_letter": "Dear Aetna, the requested service is medically necessary per ACOG guidelines.",
         }
-        result = client.assess(case)
+        result = client.assess(
+            denial_text=case["denial_reason"],
+            appeal_letter=case["appeal_letter"],
+        )
         _print("OK", "L5 outcome simulator", f"assess returned {len(str(result))} chars")
         return True
     except Exception as e:

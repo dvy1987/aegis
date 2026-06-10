@@ -11,8 +11,8 @@ HOLDOUT = ["test_case_01_uhc_mednec", "test_case_02_aetna_priorauth",
 
 
 def test_score_split_reproduces_run1_baseline_and_candidate():
-    assert score_split(RUN1, "v1", HOLDOUT)["composite"] == 0.73
-    assert score_split(RUN1, "v2", HOLDOUT)["composite"] == 0.88
+    assert score_split(RUN1, "v1", HOLDOUT)["composite"] == 0.71
+    assert score_split(RUN1, "v2", HOLDOUT)["composite"] == 0.90
 
 
 def test_weakest_promptable_excludes_corpus_bound_grounding():
@@ -25,8 +25,8 @@ def test_weakest_promptable_excludes_corpus_bound_grounding():
 def test_lift_report_matches_run1_result_and_gates_clean():
     rep = lift_report(RUN1, holdout_ids=HOLDOUT, baseline_version="v1", candidate_version="v2",
                       diff_added_tokens=131, target_dimension="appeal_vector_capture")
-    assert rep["lift_absolute"] == 0.15
-    assert rep["lift_relative_pct"] == 20.5
+    assert rep["lift_absolute"] == 0.19
+    assert rep["lift_relative_pct"] == 26.8
     assert rep["vetoes"] == [] and rep["promotable"] is True
 
 

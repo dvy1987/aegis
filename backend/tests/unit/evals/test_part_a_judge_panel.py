@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from app.evals.part_a.deterministic_gates import safety_scope_gate
 from app.evals.part_a.llm_judges import OfflineHeuristicJudgeClient
 from app.evals.part_a.panel import run_panel
 from app.evals.part_a.schemas import CANONICAL_DISCLAIMER
@@ -111,12 +110,25 @@ def test_teacher_packet_parses_pattern_id_prefixes() -> None:
     assert any("IRO notice" in v for v in teacher.expected_appeal_vectors)
 
 
-def test_safety_scope_gate_fails_missing_disclaimer() -> None:
-    teacher = build_teacher_grading_packet(_case_obj(), _appeal_package("x"))
-    result = safety_scope_gate(_appeal_package("This appeal will win."), teacher)
+def test_question_agent_dimension_is_stubbed_at_five() -> None:
+    appeal = _appeal_package(f"{CANONICAL_DISCLAIMER} Please review this denial.")
+    teacher = build_teacher_grading_packet(_case_obj(), appeal)
 
-    assert result.score == "FAIL"
-    assert "missing canonical disclaimer" in result.reasoning
+    report = run_panel(appeal, teacher, OfflineHeuristicJudgeClient())
+
+    assert report.dimension_scores["question_agent"] == 5
+    assert report.judge_results["question_agent"].score == 5
+    assert "not yet implemented" in report.judge_results["question_agent"].reasoning.lower()
+
+
+def test_panel_has_no_safety_scope_gate() -> None:
+    appeal = _appeal_package("This appeal will win.")
+    teacher = build_teacher_grading_packet(_case_obj(), appeal)
+
+    report = run_panel(appeal, teacher, OfflineHeuristicJudgeClient())
+
+    assert "safety_scope_gate" not in report.judge_results
+    assert len(report.judge_results) == 6
 
 
 def test_panel_runs_offline_and_returns_all_dimensions() -> None:
@@ -136,7 +148,7 @@ def test_panel_runs_offline_and_returns_all_dimensions() -> None:
 
     report = run_panel(appeal, teacher, OfflineHeuristicJudgeClient())
 
-    assert len(report.judge_results) == 7
+    assert len(report.judge_results) == 6
     assert report.verdict == "PASS"
     assert report.weighted_quality is not None
     assert "offline_scores_not_official" in report.risk_flags

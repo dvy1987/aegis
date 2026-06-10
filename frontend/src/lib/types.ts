@@ -33,10 +33,17 @@ export interface TraceMetadata {
   run_mode: "interactive" | "benchmark" | "autonomous_promotion";
 }
 
+export type InsurerPin = "Aetna" | "Cigna" | "UHC";
+export type PatientGender = "F" | "M" | "X";
+
 export interface AppealRequest {
   denial_text: string;
-  clinical_context: string;
   case_id: string;
+  insurer: InsurerPin;
+  patient_age: number;
+  patient_gender: PatientGender;
+  /** Optional free-form clinical note from the person or their doctor. */
+  clinical_context?: string;
   /** When true (live mode only), backend may fetch up to 5 trusted sources if library is thin. */
   discovery_enabled?: boolean;
 }
@@ -69,11 +76,14 @@ export interface AppealFixture extends AppealResponse {
 // Student-safe case summary for both pickers. NO answer-key fields.
 export interface CaseSummary {
   case_id: string;
-  insurer: string;
+  insurer: InsurerPin;
   denial_type: string;      // human label, e.g. "Medical necessity"
   headline: string;         // one calm line, e.g. "Wegovy denied as a plan exclusion"
   denial_letter_text: string;
-  clinical_context: string;
+  patient_age: number;
+  patient_gender: PatientGender;
+  /** Retained for showcase fixtures; not sent to the drafter on /appeal. */
+  clinical_context?: string;
 }
 
 // Showcase bundle for one case.

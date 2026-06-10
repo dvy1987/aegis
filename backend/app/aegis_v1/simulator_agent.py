@@ -13,17 +13,22 @@ from app.aegis_v1.simulator_client import _build_assess_prompt
 from app.aegis_v1.simulator_scoring import load_simulator_rules
 
 _SIMULATOR_INSTRUCTION = """\
-You are a strict Insurer Claims Adjuster reviewing an appeal letter.
+You are a skeptical Utilization Management reviewer upholding a denial unless the
+appeal letter proves the decision wrong with specific facts. Default stance: deny.
 
-You can see ONLY the denial letter, clinical context, and appeal letter provided.
-First CRITIQUE the appeal, then mark each rubric feature on a 1/3/5 scale with
-evidence quoted verbatim from the appeal letter.
+You see ONLY the denial letter and appeal letter. First CRITIQUE the appeal harshly,
+then mark each rubric feature on
+a 1/3/5 scale with evidence quoted verbatim from the appeal letter where relevant.
 
 Return JSON with:
 - "critique": string
 - "features": object mapping each feature name to {"anchor": 1|3|5, "evidence": "..."}
+- "unrebutted_denial_points": array of strings — each denial hook from the denial
+  letter that the appeal still fails to rebut with concrete facts ([] only if all
+  hooks are rebutted)
 
-Do NOT output a final APPROVE/DENY verdict or numeric composite score.
+Score 5 only for specific, case-grounded proof in the letter — not promises of
+future attachments. Do NOT output a score or verdict.
 """
 
 _JSON_FENCE_RE = re.compile(r"```(?:json)?\s*([\s\S]*?)\s*```", re.IGNORECASE)
@@ -39,8 +44,16 @@ def parse_simulator_response(text: str) -> FeatureAssessment:
         cleaned = fence.group(1).strip()
     data = json.loads(cleaned)
 
+    unrebutted = [
+        str(point).strip()
+        for point in data.get("unrebutted_denial_points", []) or []
+        if str(point).strip()
+    ]
+
     if "features" in data and isinstance(data["features"], dict):
-        return FeatureAssessment.model_validate(data)
+        payload = dict(data)
+        payload["unrebutted_denial_points"] = unrebutted
+        return FeatureAssessment.model_validate(payload)
 
     features: dict[str, FeatureMark] = {}
     for key in _FEATURE_KEYS:
@@ -50,7 +63,11 @@ def parse_simulator_response(text: str) -> FeatureAssessment:
         raw_anchor = mark.get("anchor", 1)
         anchor = int(raw_anchor) if not isinstance(raw_anchor, str) else int(raw_anchor)
         features[key] = FeatureMark(anchor=anchor, evidence=str(mark.get("evidence", "")))
-    return FeatureAssessment(critique=str(data.get("critique", "")), features=features)
+    return FeatureAssessment(
+        critique=str(data.get("critique", "")),
+        features=features,
+        unrebutted_denial_points=unrebutted,
+    )
 
 
 def build_simulator_agent(*, model: Any | None = None) -> LlmAgent:
@@ -72,7 +89,6 @@ def build_simulator_agent(*, model: Any | None = None) -> LlmAgent:
 def run_simulator_agent(
     *,
     denial_text: str,
-    clinical_context: str,
     appeal_letter: str,
     model: Any | None = None,
 ) -> FeatureAssessment:
@@ -80,7 +96,7 @@ def run_simulator_agent(
     from app.aegis_v1.adk_runtime import collect_llm_response_text, run_llm_agent_sync
 
     agent = build_simulator_agent(model=model)
-    message = _build_assess_prompt(denial_text, clinical_context, appeal_letter)
+    message = _build_assess_prompt(denial_text, appeal_letter)
     result = run_llm_agent_sync(
         agent,
         app_name="aegis_v1",

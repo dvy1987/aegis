@@ -55,22 +55,9 @@ def _expected_vectors_for_sources(sources: list[str]) -> list[str]:
 def _corpus_excerpts_from_appeal_package(
     appeal_package: dict[str, Any] | None,
 ) -> list[CorpusExcerpt]:
-    if not appeal_package:
-        return []
-    draft = appeal_package.get("appeal_package_draft", {})
-    excerpts: list[CorpusExcerpt] = []
-    for hit in draft.get("citations_used", []) or []:
-        doc_id = str(hit.get("corpus_doc_id", ""))
-        quote = str(hit.get("quote", ""))
-        if doc_id and quote:
-            excerpts.append(
-                CorpusExcerpt(
-                    corpus_doc_id=doc_id,
-                    title=str(hit.get("title", "")),
-                    quote=quote,
-                )
-            )
-    return excerpts
+    """Judges score appeal letter prose only — not librarian citations_used metadata."""
+    del appeal_package
+    return []
 
 
 def build_student_case_packet(case_obj: dict[str, Any]) -> StudentCasePacket:

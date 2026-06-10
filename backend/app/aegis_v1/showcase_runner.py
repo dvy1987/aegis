@@ -16,6 +16,7 @@ from app.aegis_v1.showcase_resilience import (
 )
 from app.aegis_v1.showcase_session import ShowcaseSessionManager
 from app.aegis_v1.simulator_client import AdkSimulatorClient
+from app.aegis_v1.patient_context import pipeline_inputs_from_case
 from app.aegis_v1.tools import case_parser, phoenix_mcp_lookup
 from app.evals.part_a.evaluated_run import run_evaluated_case
 from app.evals.part_a.llm_judges import GeminiJudgeClient
@@ -62,10 +63,14 @@ def _slice_filters(cases: list[ShowcaseCase]) -> list[str]:
 def _dataset(cases: list[ShowcaseCase]) -> list[dict]:
     out: list[dict] = []
     for case in cases:
+        student_inputs = pipeline_inputs_from_case(case.student_case(dataset_split="showcase_optimizer"))
         parsed = case_parser(
-            denial_text=case.denial_letter_text,
-            clinical_context=case.clinical_context,
-            case_id=case.case_id,
+            denial_text=student_inputs["denial_text"],
+            clinical_context=student_inputs["clinical_context"],
+            case_id=student_inputs["case_id"],
+            insurer=student_inputs["insurer"],
+            patient_age=student_inputs["patient_age"],
+            patient_gender=student_inputs["patient_gender"],
         )
         out.append(
             {
@@ -79,7 +84,7 @@ def _dataset(cases: list[ShowcaseCase]) -> list[dict]:
                     case_id=parsed["case_id"],
                 ),
                 "denial_letter_text": case.denial_letter_text,
-                "clinical_context": case.clinical_context,
+                "clinical_context": student_inputs["clinical_context"],
                 "_teacher_case": case.judge_case(dataset_split="showcase_optimizer"),
             }
         )
@@ -274,10 +279,16 @@ def _write_training_checkpoint(
     if _is_cancelled(manager, session_id):
         return []
     case = cases[0]
+    student_inputs = pipeline_inputs_from_case(
+        case.student_case(dataset_split=train_split),
+    )
     parsed = case_parser(
-        denial_text=case.denial_letter_text,
-        clinical_context=case.clinical_context,
-        case_id=case.case_id,
+        denial_text=student_inputs["denial_text"],
+        clinical_context=student_inputs["clinical_context"],
+        case_id=student_inputs["case_id"],
+        insurer=student_inputs["insurer"],
+        patient_age=student_inputs["patient_age"],
+        patient_gender=student_inputs["patient_gender"],
     )
     slice_key = f"{parsed['insurer']}:{parsed['denial_type']}"
     prompt_version: str | None = None
@@ -287,9 +298,7 @@ def _write_training_checkpoint(
         prompt_version, prompt_text = _candidate_prompt(proposal)
         playbook_override = _candidate_playbooks(proposal).get(slice_key)
     package = run_aegis_v1_pipeline(
-        denial_text=case.denial_letter_text,
-        clinical_context=case.clinical_context,
-        case_id=case.case_id,
+        **student_inputs,
         dataset_split=train_split,
         run_mode=f"training_checkpoint_{checkpoint}",
         drafter_client=None,
@@ -328,10 +337,16 @@ def _eval_post_gepa_candidate(
             gemini_retry.pace_gemini_call()
         if _is_cancelled(manager, session_id):
             return trace_ids
+        student_inputs = pipeline_inputs_from_case(
+            case.student_case(dataset_split=train_split),
+        )
         parsed = case_parser(
-            denial_text=case.denial_letter_text,
-            clinical_context=case.clinical_context,
-            case_id=case.case_id,
+            denial_text=student_inputs["denial_text"],
+            clinical_context=student_inputs["clinical_context"],
+            case_id=student_inputs["case_id"],
+            insurer=student_inputs["insurer"],
+            patient_age=student_inputs["patient_age"],
+            patient_gender=student_inputs["patient_gender"],
         )
         slice_key = f"{parsed['insurer']}:{parsed['denial_type']}"
         try:

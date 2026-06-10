@@ -20,13 +20,17 @@ class ShowcaseCase(BaseModel):
     denial_type: str
     denial_letter_text: str
     clinical_context: str = ""
+    patient_age: int = 0
+    patient_gender: str = ""
     teacher_case: dict[str, Any] = Field(default_factory=dict, exclude=True)
 
     def student_case(self, *, dataset_split: str) -> dict[str, Any]:
         return {
             "case_id": self.case_id,
             "denial_letter_text": self.denial_letter_text,
-            "clinical_context": self.clinical_context,
+            "insurer": self.insurer,
+            "patient_age": self.patient_age,
+            "patient_gender": self.patient_gender,
             "dataset_split": dataset_split,
         }
 
@@ -65,6 +69,7 @@ def _load_case(case_id: str) -> ShowcaseCase:
     actual_id = data.get("case_id") or path.stem
     if actual_id != case_id:
         raise ValueError(f"Manifest case id mismatch: {case_id} != {actual_id}")
+    profile = data.get("patient_profile") or {}
     return ShowcaseCase(
         case_id=case_id,
         headline=case_id,
@@ -73,6 +78,8 @@ def _load_case(case_id: str) -> ShowcaseCase:
         denial_type=str(data.get("denial_type") or "unknown").replace(" ", "_").lower(),
         denial_letter_text=str(data.get("denial_letter_text") or ""),
         clinical_context=str(data.get("clinical_context") or ""),
+        patient_age=int(profile.get("age") or 0),
+        patient_gender=str(profile.get("gender") or ""),
         teacher_case=data,
     )
 

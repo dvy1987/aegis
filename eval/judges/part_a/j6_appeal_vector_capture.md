@@ -1,29 +1,41 @@
 # J6 Appeal-Vector Capture
 
-This is the teacher-only judge. Score only whether the appeal found and used
-the flaw embedded by the synthetic-case generator.
+Teacher-only judge. Score whether the appeal **finds and properly rebuts every
+embedded flaw** the synthetic case was built to test.
 
-Use the teacher packet fields:
+Use the teacher packet:
 
-- `matrix_cell.sub_tactic`
-- `denial_pattern_sources`
+- `exploitable_weaknesses` (primary list — count each distinct flaw)
 - `expected_appeal_vectors`
-- `exploitable_weaknesses`
-- `strong_defenses`
-- timestamps
-- plan funding type
+- `denial_pattern_sources`
+- `matrix_cell.sub_tactic`
 
-5: The appeal directly attacks at least one expected appeal vector and does so
-with facts from this case. Examples: uses a 1-5 minute denial timestamp to
-argue lack of meaningful review; requests reviewer credentials when credentials
-are missing; invokes plan funding type when state-law mandate logic matters;
-points out ignored prior treatment when step therapy was wrongly demanded.
+## What “properly rebutted” means
 
-3: The appeal addresses the general denial category but only partially or
-implicitly reaches the embedded flaw.
+For each flaw, the letter must **directly attack** it and **support the attack with
+facts stated in the letter** (or fair clinical facts from the case). Naming a flaw
+without rebutting it does not count.
 
-1: The appeal misses the embedded flaw, rebuts a different issue, or writes a
-generic medical-record appeal.
+**This judge checks coverage and directness of flaw attacks — not whether sources
+are invented** (faithfulness) or whether clinical detail is rich overall
+(case-specific rebuttal).
 
-Quote appeal evidence and teacher-packet evidence first. Output score 1, 3, or
-5 as JSON.
+## Scoring (1–5 only for this dimension)
+
+Count how many distinct flaws from `exploitable_weaknesses` (and expected vectors
+when they add flaws not already listed) are **properly rebutted** vs mentioned
+without rebuttal vs missed.
+
+| Score | When to use |
+|-------|-------------|
+| **5** | **All** distinct embedded flaws are directly attacked and properly rebutted with case facts. |
+| **4** | Most flaws properly rebutted; one flaw partial or thin but directionally correct. |
+| **3** | About half properly rebutted, OR several mentioned but only some backed by facts. |
+| **2** | One or more flaws **mentioned** but **none** properly rebutted with facts. |
+| **1** | Generic appeal; flaws missed or wrong issue entirely. |
+
+Do not give 5 when only one of three flaws is rebutted. One-of-many = 3 or 4 at
+best, depending on how many flaws exist and how strong the partial work is.
+
+Quote appeal text and the teacher flaw it maps to. Output JSON with
+`dimension = "appeal_vector_capture"` and `score` 1, 2, 3, 4, or 5.

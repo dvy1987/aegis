@@ -8,8 +8,8 @@ from app.learning.store import InMemoryPhoenixLearningStore
 
 SLICE = "Aetna:prior_authorization"
 HOLDOUT = [
-    {"case_id": "h1", "slice": SLICE, "base": {"appeal_vector_capture": 1, "evidence_completeness": 1, "grounding": 3}},
-    {"case_id": "h2", "slice": SLICE, "base": {"appeal_vector_capture": 1, "evidence_completeness": 1, "grounding": 3}},
+    {"case_id": "h1", "slice": SLICE, "base": {"appeal_vector_capture": 1, "grounding": 3}},
+    {"case_id": "h2", "slice": SLICE, "base": {"appeal_vector_capture": 1, "grounding": 3}},
 ]
 
 
@@ -21,11 +21,11 @@ def test_full_offline_learning_loop():
     for cid in ("t1", "t2", "t3"):
         store.add_run("benchmark_train", ScoredRun(
             case_id=cid, slice=SLICE,
-            dimension_scores={"appeal_vector_capture": 1, "evidence_completeness": 1, "grounding": 3},
+            dimension_scores={"appeal_vector_capture": 1, "grounding": 3, "question_agent": 5},
             hard_gate_pass=True,
-            weighted_quality=composite_score({"appeal_vector_capture": 1, "evidence_completeness": 1, "grounding": 3}, True),
+            weighted_quality=composite_score({"appeal_vector_capture": 1, "grounding": 3, "question_agent": 5}, True),
             improvement_notes={"appeal_vector_capture": "did not rebut the specific defect",
-                               "evidence_completeness": "omitted required evidence"}))
+                               "grounding": "thin authority citations"}))
 
     coord = LearningCoordinator(store=store, runner=StubExperimentRunner(HOLDOUT),
                                 reflection_client=StubReflectionClient(), slice_filter=SLICE, max_rounds=8)

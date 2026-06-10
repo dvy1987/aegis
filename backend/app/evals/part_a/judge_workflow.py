@@ -12,7 +12,7 @@ from google.adk import Workflow
 from google.adk.workflow import START, node
 from google.genai import types
 
-from app.evals.part_a.deterministic_gates import citation_precheck, safety_scope_gate
+from app.evals.part_a.deterministic_gates import citation_precheck
 from app.evals.part_a.judge_agents import (
     build_faithfulness_judge,
     build_quality_judge_agents,
@@ -28,7 +28,6 @@ _injected_judge_model: Any | None = None
 QUALITY_DIMENSIONS = (
     "grounding",
     "case_specific_clinical_rebuttal",
-    "evidence_completeness",
     "appeal_vector_capture",
     "persuasive_coherence",
 )
@@ -37,22 +36,21 @@ _JUDGE_ID_BY_DIMENSION = {
     "faithfulness_hallucination_gate": "j2_faithfulness_hallucination",
     "grounding": "j3_grounding",
     "case_specific_clinical_rebuttal": "j4_case_specific_rebuttal",
-    "evidence_completeness": "j5_evidence_completeness",
     "appeal_vector_capture": "j6_appeal_vector_capture",
     "persuasive_coherence": "j7_persuasive_coherence",
 }
+
+_PANEL_DIMENSIONS = ("faithfulness_hallucination_gate", *QUALITY_DIMENSIONS)
 
 
 class JudgePanelState(BaseModel):
     """Shared state for the judge-panel Workflow."""
 
     panel_context_json: str = ""
-    safety_scope_gate_json: str = ""
     citation_precheck_json: str = ""
     faithfulness_hallucination_gate_json: str = ""
     grounding_json: str = ""
     case_specific_clinical_rebuttal_json: str = ""
-    evidence_completeness_json: str = ""
     appeal_vector_capture_json: str = ""
     persuasive_coherence_json: str = ""
     judge_results_json: str = ""
@@ -106,26 +104,13 @@ def _collect_text_from_join_value(value: Any) -> str:
 
 
 @node
-def safety_scope_gate_node(ctx, node_input):
-    context = _context_from_state(ctx)
-    teacher = _teacher_from_context(context)
-    appeal = _appeal_from_context(context)
-    result = safety_scope_gate(appeal, teacher)
-    _store_judge_result(ctx, "safety_scope_gate", result)
-    return node_input
-
-
-@node
 def citation_precheck_node(ctx, node_input):
     context = _context_from_state(ctx)
     teacher = _teacher_from_context(context)
     appeal = _appeal_from_context(context)
     citation = citation_precheck(appeal, teacher)
     ctx.state["citation_precheck_json"] = citation.model_dump_json()
-    context["deterministic_results"] = {
-        "safety_scope_gate": json.loads(ctx.state["safety_scope_gate_json"]),
-        "citation_precheck": citation.model_dump(),
-    }
+    context["deterministic_results"] = {"citation_precheck": citation.model_dump()}
     ctx.state["panel_context_json"] = json.dumps(context, default=str)
     ctx.route = "fail" if citation.score == "FAIL" else "pass"
     return node_input
@@ -194,18 +179,6 @@ def case_specific_finalize_node(ctx, node_input):
 
 
 @node
-def evidence_finalize_node(ctx, node_input):
-    _store_judge_result(
-        ctx,
-        "evidence_completeness",
-        parse_judge_response(
-            _collect_text_from_join_value(node_input), "evidence_completeness"
-        ),
-    )
-    return _quality_prep_content(ctx)
-
-
-@node
 def appeal_vector_finalize_node(ctx, node_input):
     _store_judge_result(
         ctx,
@@ -233,7 +206,7 @@ def persuasive_finalize_node(ctx, node_input):
 def aggregate_panel_node(ctx, node_input):
     del node_input
     results: dict[str, Any] = {}
-    for dimension in ("safety_scope_gate", "faithfulness_hallucination_gate", *QUALITY_DIMENSIONS):
+    for dimension in _PANEL_DIMENSIONS:
         raw = ctx.state.get(f"{dimension}_json", "")
         if raw:
             results[dimension] = json.loads(raw)
@@ -253,7 +226,7 @@ def build_judge_panel_workflow() -> Workflow:
         name="judge_panel_workflow",
         state_schema=JudgePanelState,
         edges=[
-            (START, safety_scope_gate_node, citation_precheck_node),
+            (START, citation_precheck_node),
             (
                 citation_precheck_node,
                 {
@@ -266,8 +239,7 @@ def build_judge_panel_workflow() -> Workflow:
             (faithfulness_finalize_node, quality_judges_prep_node),
             (quality_judges_prep_node, quality["grounding"], grounding_finalize_node),
             (grounding_finalize_node, quality["case_specific_clinical_rebuttal"], case_specific_finalize_node),
-            (case_specific_finalize_node, quality["evidence_completeness"], evidence_finalize_node),
-            (evidence_finalize_node, quality["appeal_vector_capture"], appeal_vector_finalize_node),
+            (case_specific_finalize_node, quality["appeal_vector_capture"], appeal_vector_finalize_node),
             (appeal_vector_finalize_node, quality["persuasive_coherence"], persuasive_finalize_node),
             (persuasive_finalize_node, aggregate_panel_node),
         ],
@@ -285,14 +257,11 @@ def _clear_judge_model() -> None:
 
 
 def _assemble_judge_results(
-    state: dict[str, Any], context: dict[str, Any]
+    state: dict[str, Any],
+    context: dict[str, Any],
 ) -> dict[str, JudgeResult]:
     """Build a complete judge map from workflow state with deterministic fallbacks."""
-    dimensions = (
-        "safety_scope_gate",
-        "faithfulness_hallucination_gate",
-        *QUALITY_DIMENSIONS,
-    )
+    del context
     assembled: dict[str, JudgeResult] = {}
 
     bundled_raw = state.get("judge_results_json", "")
@@ -305,7 +274,7 @@ def _assemble_judge_results(
         except Exception:
             logger.warning("judge_results_json parse failed", exc_info=True)
 
-    for dimension in dimensions:
+    for dimension in _PANEL_DIMENSIONS:
         if dimension in assembled:
             continue
         chunk = state.get(f"{dimension}_json", "")
@@ -313,12 +282,7 @@ def _assemble_judge_results(
             continue
         assembled[dimension] = JudgeResult.model_validate(json.loads(chunk))
 
-    if "safety_scope_gate" not in assembled:
-        teacher = _teacher_from_context(context)
-        appeal = _appeal_from_context(context)
-        assembled["safety_scope_gate"] = safety_scope_gate(appeal, teacher)
-
-    missing = [dimension for dimension in dimensions if dimension not in assembled]
+    missing = [dimension for dimension in _PANEL_DIMENSIONS if dimension not in assembled]
     if missing:
         raise ValueError(f"judge panel incomplete after workflow: missing {missing}")
     return assembled

@@ -43,7 +43,6 @@ class _StubJudgeLlm(VertexGemini):
             "faithfulness_hallucination_gate",
             "grounding",
             "case_specific_clinical_rebuttal",
-            "evidence_completeness",
             "appeal_vector_capture",
             "persuasive_coherence",
         ):
@@ -94,13 +93,17 @@ def test_judge_workflow_not_reachable_from_student_graph() -> None:
     assert not judge_names & student_names
 
 
-def test_judge_workflow_includes_six_llm_agents() -> None:
+def test_judge_workflow_has_no_safety_scope_gate_node() -> None:
+    names = _graph_node_names(build_judge_panel_workflow())
+    assert "safety_scope_gate_node" not in names
+
+
+def test_judge_workflow_includes_five_llm_agents() -> None:
     llm_names = _graph_llm_agent_names(build_judge_panel_workflow())
     assert llm_names == {
         "faithfulness_hallucination_judge",
         "grounding_judge",
         "case_specific_clinical_rebuttal_judge",
-        "evidence_completeness_judge",
         "appeal_vector_capture_judge",
         "persuasive_coherence_judge",
     }
@@ -139,7 +142,7 @@ def test_run_panel_adk_client_returns_panel_report_shape() -> None:
     report = run_panel(appeal, teacher, judge_client=client)
 
     assert report.verdict == "PASS"
-    assert len(report.judge_results) == 7
+    assert len(report.judge_results) == 6
     assert report.dimension_scores
     assert report.metadata["judge_client"] == "adk"
 

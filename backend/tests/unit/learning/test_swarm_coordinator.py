@@ -18,7 +18,7 @@ def _seed_store(*, dimension: str, component_hint: str | None = None) -> InMemor
         "grounding": 5,
         "appeal_vector_capture": 5,
         "case_specific_clinical_rebuttal": 5,
-        "evidence_completeness": 5,
+        "question_agent": 5,
         "persuasive_coherence": 5,
     }
     dims[dimension] = 1

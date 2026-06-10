@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 
 GateVerdict = Literal["PASS", "FAIL"]
 AnchorScore = Literal[1, 3, 5]
-JudgeScore = Literal[1, 3, 5, "PASS", "FAIL"]
+JudgeScore = Literal[1, 2, 3, 4, 5, "PASS", "FAIL"]
 
 
 CANONICAL_DISCLAIMER = "Not legal or medical advice. Draft assistance only."

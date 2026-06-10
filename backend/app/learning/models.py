@@ -5,14 +5,28 @@ from typing import Any, Literal
 from pydantic import BaseModel, Field
 
 DIMENSIONS = [
-    "grounding", "appeal_vector_capture", "case_specific_clinical_rebuttal",
-    "evidence_completeness", "persuasive_coherence",
+    "grounding",
+    "appeal_vector_capture",
+    "case_specific_clinical_rebuttal",
+    "question_agent",
+    "persuasive_coherence",
 ]
 DIMENSION_WEIGHTS = {
-    "grounding": 0.30, "appeal_vector_capture": 0.25,
-    "case_specific_clinical_rebuttal": 0.20, "evidence_completeness": 0.15,
+    "grounding": 0.25,
+    "appeal_vector_capture": 0.35,
+    "case_specific_clinical_rebuttal": 0.20,
+    "question_agent": 0.10,
     "persuasive_coherence": 0.10,
 }
+
+
+def normalize_dimension_scores(dimension_scores: dict[str, int]) -> dict[str, int]:
+    """Map legacy evidence_completeness judgments to the question-agent stub score."""
+    scores = {str(k): int(v) for k, v in dimension_scores.items()}
+    if "evidence_completeness" in scores:
+        scores.pop("evidence_completeness")
+        scores.setdefault("question_agent", 5)
+    return scores
 
 
 def composite_score(dimension_scores: dict[str, int], hard_gate_pass: bool) -> float:
@@ -20,9 +34,8 @@ def composite_score(dimension_scores: dict[str, int], hard_gate_pass: bool) -> f
     missing dimensions default to anchor 1; all-5 → 1.0, all-1 → 0.2."""
     if not hard_gate_pass:
         return 0.0
-    total = sum(
-        DIMENSION_WEIGHTS[d] * (dimension_scores.get(d, 1) / 5.0) for d in DIMENSIONS
-    )
+    scores = normalize_dimension_scores(dimension_scores)
+    total = sum(DIMENSION_WEIGHTS[d] * (scores.get(d, 1) / 5.0) for d in DIMENSIONS)
     return round(total, 4)
 
 

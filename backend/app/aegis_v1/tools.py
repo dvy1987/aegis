@@ -131,10 +131,37 @@ def case_parser(
     denial_text: str,
     clinical_context: str = "",
     case_id: str = "interactive_case",
+    *,
+    insurer: str | None = None,
+    patient_age: int | None = None,
+    patient_gender: str | None = None,
 ) -> dict[str, Any]:
     """Parse a synthetic health-insurance denial into the MVP CaseJSON fields."""
 
-    full_text = f"{denial_text}\n{clinical_context}".strip()
+    from app.aegis_v1.patient_context import (
+        format_patient_clinical_context,
+        normalize_gender,
+        normalize_insurer,
+    )
+
+    structured = (
+        insurer is not None
+        and patient_age is not None
+        and patient_gender is not None
+    )
+    if structured:
+        resolved_insurer = normalize_insurer(insurer)
+        resolved_gender = normalize_gender(patient_gender)
+        if not clinical_context.strip():
+            clinical_context = format_patient_clinical_context(
+                patient_age=patient_age,
+                patient_gender=resolved_gender,
+            )
+        full_text = denial_text.strip()
+    else:
+        resolved_insurer = None
+        resolved_gender = ""
+        full_text = f"{denial_text}\n{clinical_context}".strip()
     deadlines = sorted(set(re.findall(r"\b\d+\s+days\b", full_text, re.IGNORECASE)))
     diagnosis = _first_match(
         [
@@ -156,20 +183,28 @@ def case_parser(
     )
 
     missing_facts: list[str] = []
-    if _detect_insurer(full_text) == "unknown":
-        missing_facts.append("insurer_name")
+    if structured:
+        if resolved_insurer == "unknown":
+            missing_facts.append("insurer_name")
+        if patient_age is None or patient_age < 1:
+            missing_facts.append("patient_age")
+        if not resolved_gender:
+            missing_facts.append("patient_gender")
+    else:
+        if _detect_insurer(full_text) == "unknown":
+            missing_facts.append("insurer_name")
+        if not clinical_context:
+            missing_facts.append("clinical_context")
     if diagnosis == "Diagnosis not clearly stated.":
         missing_facts.append("diagnosis")
     if service == "Requested service not clearly stated.":
         missing_facts.append("service_or_procedure")
     if "plan" not in full_text.lower():
         missing_facts.append("plan_document_language")
-    if not clinical_context:
-        missing_facts.append("clinical_context")
 
     parsed = ParsedCase(
         case_id=case_id or "interactive_case",
-        insurer=_detect_insurer(full_text),
+        insurer=resolved_insurer if structured else _detect_insurer(full_text),
         denial_type=_normalize_denial_type(full_text),
         plan_type=_detect_plan_type(full_text),
         service_or_procedure=service,
@@ -180,6 +215,8 @@ def case_parser(
         missing_facts=missing_facts,
         denial_text=denial_text,
         clinical_context=clinical_context,
+        patient_age=patient_age if structured else None,
+        patient_gender=resolved_gender if structured else "",
     )
     return parsed.model_dump()
 
@@ -563,7 +600,6 @@ def simulator(
     assessment = FeatureAssessment.model_validate(
         active.assess(
             denial_text=case.denial_text,
-            clinical_context=case.clinical_context,
             appeal_letter=draft.appeal_letter,
         )
     )

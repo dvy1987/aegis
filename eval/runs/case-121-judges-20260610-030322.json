@@ -1,0 +1,88 @@
+{
+  "run_id": "case-121-judges-20260610-030322",
+  "case_id": "case_121_aetna_mednec",
+  "results": [
+    {
+      "label": "denial_only",
+      "clinical_context_provided": false,
+      "letter_length": 1820,
+      "citation_precheck": "PASS",
+      "panel_verdict": "PASS",
+      "weighted_quality": 0.45,
+      "hard_gate_failures": [],
+      "promotion_blockers": [
+        "appeal_vector_capture_mentioned_not_rebutted"
+      ],
+      "dimension_scores": {
+        "grounding": 3,
+        "case_specific_clinical_rebuttal": 1,
+        "evidence_completeness": 1,
+        "appeal_vector_capture": 2,
+        "persuasive_coherence": 5
+      },
+      "weights": {
+        "grounding": 0.25,
+        "case_specific_clinical_rebuttal": 0.2,
+        "evidence_completeness": 0.1,
+        "appeal_vector_capture": 0.35,
+        "persuasive_coherence": 0.1
+      },
+      "judge_scores": {
+        "faithfulness_hallucination_gate": "PASS",
+        "grounding": 3,
+        "case_specific_clinical_rebuttal": 1,
+        "evidence_completeness": 1,
+        "appeal_vector_capture": 2,
+        "persuasive_coherence": 5
+      },
+      "judge_reasoning": {
+        "faithfulness_hallucination_gate": "The appeal letter cites the Mental Health Parity and Addiction Equity Act (MHPAEA) to argue against the strict application of an age window as a Non-Quantitative Treatment Limitation (NQTL). This is a real, relevant statute and is accurately represented in the context of behavioral health parity. No fabricated sources or misrepresentations were found.",
+        "grounding": "The letter grounds its legal argument in the Mental Health Parity and Addiction Equity Act (MHPAEA), but the citation is coarse, referencing the entire Act rather than specific provisions or regulations regarding NQTLs. Medical claims are broadly attributed to 'clinical documentation' without specific details, though this is largely due to the drafter lacking the full clinical context.",
+        "case_specific_clinical_rebuttal": "The appeal letter fails to include any specific clinical facts from the case, such as the patient's diagnosis (severe treatment-resistant major depressive disorder), age (21), failed medications (sertraline, venlafaxine), or the specific requested duration (36 sessions). Instead, it relies on generic statements about medical necessity and legal arguments regarding MHPAEA without weaving in the patient's actual clinical trajectory.",
+        "evidence_completeness": "The appeal letter claims that updated clinical documentation is already enclosed and attached, which is premature for a draft. Furthermore, the missing evidence checklist only contains generic system keys ('clinical_context', 'service_or_procedure') rather than a case-specific list of required records.",
+        "appeal_vector_capture": "The appeal mentions the denial's reasons (duration limits and age 22-68 restriction) but fails to rebut them with case facts. Instead of pointing out that 36 sessions is the standard FDA-cleared acute protocol and that TMS is FDA-cleared for ages 15+ (covering the 21-year-old patient), the appeal accepts the premise of an 'extended duration' and argues against the age restriction using generic MHPAEA parity language.",
+        "persuasive_coherence": "The appeal letter follows a highly logical structure, clearly identifying the denial, summarizing the insurer's rationale, and systematically rebutting each point. The tone remains calm, professional, and dignified throughout, without any exclamation marks, and it concludes with a crisp, specific call to action."
+      }
+    },
+    {
+      "label": "full_context",
+      "clinical_context_provided": true,
+      "letter_length": 2225,
+      "citation_precheck": "PASS",
+      "panel_verdict": "PASS",
+      "weighted_quality": 0.82,
+      "hard_gate_failures": [],
+      "promotion_blockers": [],
+      "dimension_scores": {
+        "grounding": 3,
+        "case_specific_clinical_rebuttal": 5,
+        "evidence_completeness": 1,
+        "appeal_vector_capture": 5,
+        "persuasive_coherence": 5
+      },
+      "weights": {
+        "grounding": 0.25,
+        "case_specific_clinical_rebuttal": 0.2,
+        "evidence_completeness": 0.1,
+        "appeal_vector_capture": 0.35,
+        "persuasive_coherence": 0.1
+      },
+      "judge_scores": {
+        "faithfulness_hallucination_gate": "PASS",
+        "grounding": 3,
+        "case_specific_clinical_rebuttal": 5,
+        "evidence_completeness": 1,
+        "appeal_vector_capture": 5,
+        "persuasive_coherence": 5
+      },
+      "judge_reasoning": {
+        "faithfulness_hallucination_gate": "The appeal letter cites the Mental Health Parity and Addiction Equity Act (MHPAEA) and accurately describes its regulation of medical management standards as non-quantitative treatment limitations (NQTLs). It also references FDA clearance parameters, which are directly grounded in the provided clinical context. No fake sources or misrepresentations are present.",
+        "grounding": "The letter successfully grounds its clinical arguments in the provided case facts, accurately reflecting the patient's history and the FDA-cleared parameters for TMS. However, the legal claim regarding the Mental Health Parity and Addiction Equity Act (MHPAEA) is coarse; it references the entire Act without pointing to a specific statute, regulation (e.g., CFR section), or agency guidance to verify the claim about non-quantitative treatment limitations.",
+        "case_specific_clinical_rebuttal": "The appeal letter explicitly incorporates the patient's age (21), diagnosis (severe, recurrent, treatment-resistant MDD with PHQ-9 of 23), failed alternatives (sertraline and venlafaxine with specific dosages and durations, plus psychotherapy), and the requested treatment (36 sessions of TMS). It directly uses these clinical facts to effectively rebut the insurer's specific claims regarding age restrictions and session limits.",
+        "evidence_completeness": "The appeal letter does not include an evidence checklist or instruct the filer on what specific documents need to be attached to the appeal. While it mentions that clinical records were submitted with the initial request, it fails to provide clear next actions or a list of records (such as the FDA label or a letter of medical necessity) to include with the appeal submission.",
+        "appeal_vector_capture": "The appeal successfully identifies and rebuts all embedded flaws. It directly addresses the incorrect age restriction (22-68) by noting FDA clearance for ages 15+ and the patient's age of 21. It refutes the experimental label using the same FDA clearance. It also corrects the false claim about excessive duration by explaining that 36 sessions is the standard acute protocol, not a continuation, and confirms that the required clinical documentation was already submitted.",
+        "persuasive_coherence": "The appeal letter follows a clear, logical structure, identifying the denial, systematically rebutting the age and duration restrictions, and citing specific clinical evidence. The tone is calm, factual, and dignified, with a crisp closing request and no exclamation marks."
+      }
+    }
+  ]
+}

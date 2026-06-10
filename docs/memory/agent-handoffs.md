@@ -3030,3 +3030,106 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - Clean on `main` @ `c1b1d97` (simulator fix + `docs/Post-hackathon.md` included).
+
+---
+
+## 2026-06-09 — Handoff (Cursor — GEPA judges + faithfulness rubric)
+
+### Done
+- **GEPA judges:** removed `safety_scope_gate` on GEPA run modes (`gepa_seed`, `gepa_optimize_candidate`, `training_checkpoint_*`) via `gepa_judge_modes.py`, `panel.py`, `judge_workflow.py`, `evaluated_run.py`; `seed-smoke` uses `run_mode=gepa_seed`.
+- **Post-hackathon:** added item 2 — future judge for PHI/PII leakage into Phoenix traces (`docs/Post-hackathon.md`).
+- **Faithfulness rubric rewritten:** J2 now checks only whether **cited sources exist, are relevant, and are accurately represented** — not corpus-only traceability. Real statutes (e.g. 29 U.S.C. § 1133) in prose are allowed when true.
+- **Deterministic precheck:** `faithfulness_citation_precheck` — fake corpus IDs, missing on-disk `.md` files, quote mismatch vs corpus content. Empty `citations_used` → structural PASS.
+- **case_07 sanity check:** faithfulness FAIL on optimize “before” trace `f374d1bc87be6744` was a **false negative** — § 1133 is the designed appeal vector for `missing_erisa_disclosures`; appeal_vector_capture scored 5/5 on same run.
+- Tests: `test_faithfulness_citation_gate.py` + judge panel tests — **21 passing** on faithfulness/judge slice.
+
+### Debated
+- Old faithfulness required every legal claim to trace to retrieval/corpus → blocked good ERISA procedural arguments on self-funded cases.
+- New scope: hallucinated **sources** fail; case-grounded facts and real external authorities pass.
+
+### Deferred
+- **Commit + deploy** all uncommitted judge/faithfulness/GEPA changes (and other dirty files on tree — see below).
+- **Deploy** simulator fix from prior session if not yet on prod.
+- **Resume button** for showcase GEPA optimize; judge-panel flake hardening.
+- Implement post-hackathon Phoenix PHI leakage judge (item 2).
+
+### Next Agent Should Know
+- Faithfulness no longer fails case_07-style ERISA prose when citations are empty or real law is cited accurately.
+- GEPA training judges are 6 dimensions (no safety gate); benchmark/smoke still use full 7.
+- Prod showcase may still run old judge logic until backend redeploy.
+
+### Revisit Triggers
+- After deploy: re-run case_07 GEPA e2e; optimize “before” should not hard-fail faithfulness on § 1133 alone.
+- Structured citation with fake `corpus_doc_id` or mismatched quote should still FAIL precheck.
+
+### Working Tree
+- **Dirty, uncommitted** on `main` @ `dda3211`. Key judge files: `deterministic_gates.py`, `j2_faithfulness_hallucination.md`, `gepa_judge_modes.py`, `panel.py`, `judge_workflow.py`, `llm_judges.py`, `test_faithfulness_citation_gate.py`, `Post-hackathon.md`.
+- Also modified (may be prior in-session work): drafter, simulator, student_workflow, showcase_api, multiple tests — review `git diff` before commit.
+
+---
+
+## 2026-06-09 — Handoff (Cursor — simulator hard gates + drafter inputs)
+
+### Done
+- **Drafter inputs:** patient-facing message is denial + clinical context only (plain text); playbook/library/Phoenix stay internal (`drafter_client.py`, `student_workflow.py`, `drafter_v1.md`).
+- **Simulator inputs:** removed clinical context — sees denial letter, appeal letter, `citations_used`, parsed insurer/denial type (`simulator_client.py`, `tools.py`).
+- **Simulator `v2_strict`:** threshold 0.80; clinical evidence must-have; `unrebutted_denial_points` → instant DENY.
+- **New feature `cites_applicable_authority`:** wrong-insurer / irrelevant statute detection (e.g. Cigna cite on Aetna case).
+- **Hard gates (not weighted):** `cites_applicable_authority`, `addresses_denial_rationale`, `rebuts_specific_flaw` — anchor &lt; 5 = instant DENY; `unrebutted_denial_points` non-empty = instant DENY.
+- **case_121 live runs:** denial-only → simulator DENY + J2 FAIL (irrelevant cites); full-context → simulator APPROVE + panel PASS.
+- **Faithfulness (J2) verified:** structural precheck PASS on real corpus quotes; J2 FAIL on Cigna/NSA padding — not “MHPAEA forbidden.”
+- Tests: simulator scoring/client/agent slice green (~29+).
+
+### Debated
+- Simulator vs J2 overlap on source applicability — intentional; simulator = demo APPROVE/DENY, J2 = grading gate.
+- PM confusion on `/showcase`: **Quick/Serious runs use live backend + new simulator**; UI shows verdict only, not gaps.
+- Future: 3-question intake + patient_LLM for showcase (approved concept, not built).
+
+### Deferred
+- **Commit** large dirty tree (drafter + simulator + judges from prior handoff).
+- **Deploy** backend so prod showcase picks up changes.
+- Optional: deterministic insurer-slug precheck before simulator LLM; expose simulator `gaps` in showcase UI.
+- Layer 1 deterministic hard fails for insurer/doc mismatch (discussed, not built).
+
+### Next Agent Should Know
+- Denial-only drafts lean on **library retrieval** (often `mhpaea_parity.md`); weak letters can still fail simulator on hooks + bad structured cites even when letter body says “Aetna.”
+- Showcase **Quick/Serious** → `run_measurement_case` → `tools.simulator()` — all session simulator changes apply there.
+
+### Revisit Triggers
+- After deploy: re-run case_121 denial-only on prod; expect DENY with hard gate on `cites_applicable_authority` if Cigna cite attached.
+- If simulator APPROVES thin denial-only letters again → check prod is on latest `simulator_rules.json`.
+
+### Working Tree
+- **Dirty, uncommitted** on `main`. ~31 files: simulator*, drafter*, judges/faithfulness*, tests, `simulator_rules.json`. No commit this session (PM did not request).
+
+---
+
+## 2026-06-10 — Handoff (Cursor — simulator/judge firewall + legal gate removed)
+
+### Done
+- **Simulator firewall (INV-S4):** sees **only** denial letter + appeal letter — no `citations_used`, no parsed-case metadata (`simulator_client.py`, `tools.py`).
+- **Hard-gate fail → composite score 0** (`simulator_scoring.py`).
+- **Hard gates remain:** `addresses_denial_rationale`, `cites_applicable_authority` (letter prose only), `rebuts_specific_flaw`, `medical_director_persuasion`, `unrebutted_denial_points`.
+- **Removed `legal_rebuttal_viability`** entirely (PM request) — from rules, prompt, schema, tests.
+- **Judges:** score appeal **body only** — strip `citations_used` from judge context; `corpus_excerpts` empty; J2/J3 prompts updated; faithfulness precheck ignores librarian metadata (`panel.py`, `teacher_packet.py`, `deterministic_gates.py`, `j2`/`j3` judge md).
+- **case_121 live re-run:** denial-only **DENY 0.0** (no clinical facts); full clinical **APPROVE 1.0**. Both letters still mention MHPAEA in prose (drafter/library behavior).
+
+### Debated
+- Legal viability gate intent vs implementation — gate removed rather than further tuning.
+- `cites_applicable_authority` still checks authorities **named in letter** (e.g. MHPAEA) — separate from removed legal gate.
+
+### Deferred
+- **Commit + deploy** large dirty tree (~40 files).
+- Drafter still injects MHPAEA from library on denial-only runs — optional playbook/drafter tweak if PM wants zero law without clinical context.
+- Showcase UI still shows verdict only (not simulator gaps).
+
+### Next Agent Should Know
+- Do not reintroduce `citations_used` into simulator or judge scoring without PM approval.
+- case_121 denial-only fails on **clinical rebuttal**, not librarian metadata.
+
+### Revisit Triggers
+- PM wants law/regulatory truth-check again → design as **weighted** feature or J2-only, not hard gate.
+- After deploy: spot-check Quick/Serious on case_121.
+
+### Working Tree
+- **Dirty, uncommitted** on `main`. Simulator rules v2_strict (8 features). No commit (PM did not request).

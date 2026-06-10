@@ -9,8 +9,9 @@ from app.aegis_v1.adk_runtime import make_retry_model
 _DRAFTER_INSTRUCTION = """\
 You are a health-insurance appeal letter drafter.
 
-Write the appeal letter body based on the prompt and context in the user message.
-Not legal or medical advice. Draft assistance only.
+The patient supplies a denial letter and clinical context. The message may also
+include internal playbook, library citations, and Phoenix memory from the pipeline.
+Use only what is in the message. Not legal or medical advice. Draft assistance only.
 
 Return only the appeal letter body text — no JSON wrapper, no commentary.
 """

@@ -19,9 +19,9 @@ def _store_with_researcher_gap() -> InMemoryPhoenixLearningStore:
         store.seed_component(comp)
     dims = {d: 5 for d in [
         "grounding", "appeal_vector_capture", "case_specific_clinical_rebuttal",
-        "evidence_completeness", "persuasive_coherence",
+        "question_agent", "persuasive_coherence",
     ]}
-    dims["evidence_completeness"] = 1
+    dims["grounding"] = 1
     trace = [{
         "role": "policy_detective",
         "status": "empty",
@@ -35,7 +35,7 @@ def _store_with_researcher_gap() -> InMemoryPhoenixLearningStore:
             dimension_scores=dims,
             hard_gate_pass=True,
             weighted_quality=composite_score(dims, True),
-            improvement_notes={"evidence_completeness": "missing plan policy"},
+            improvement_notes={"appeal_vector_capture": "wrong archetype"},
             swarm_trace_signals=trace,
         ),
     )
@@ -47,7 +47,7 @@ def _store_with_researcher_gap() -> InMemoryPhoenixLearningStore:
             dimension_scores=dims,
             hard_gate_pass=True,
             weighted_quality=composite_score(dims, True),
-            improvement_notes={"evidence_completeness": "missing plan policy"},
+            improvement_notes={"appeal_vector_capture": "wrong archetype"},
             swarm_trace_signals=trace,
         ),
     )

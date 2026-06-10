@@ -48,9 +48,13 @@ def test_manifest_case_metadata_is_student_safe() -> None:
     assert student == {
         "case_id": case.case_id,
         "denial_letter_text": case.denial_letter_text,
-        "clinical_context": case.clinical_context,
+        "insurer": case.insurer,
+        "patient_age": case.patient_age,
+        "patient_gender": case.patient_gender,
         "dataset_split": "test_split",
     }
+    assert case.patient_age > 0
+    assert case.patient_gender in {"F", "M", "X"}
 
 
 def test_manifest_keeps_teacher_metadata_for_judges_only() -> None:

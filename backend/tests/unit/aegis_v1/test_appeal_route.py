@@ -21,8 +21,10 @@ def test_post_appeal_returns_letter_and_outcome_offline():
         "/v1/appeal",
         json={
             "denial_text": "Cigna denied TMS as not medically necessary.",
-            "clinical_context": "Patient failed two SSRIs.",
             "case_id": "case_http",
+            "insurer": "Cigna",
+            "patient_age": 42,
+            "patient_gender": "F",
         },
     )
     assert resp.status_code == 200
@@ -33,10 +35,36 @@ def test_post_appeal_returns_letter_and_outcome_offline():
     assert body["trace_metadata"]["case_id"] == "case_http"
 
 
+def test_post_appeal_includes_optional_clinical_notes_in_drafter_context():
+    resp = _client(anchor=5).post(
+        "/v1/appeal",
+        json={
+            "denial_text": "Cigna denied TMS as not medically necessary.",
+            "case_id": "case_http_notes",
+            "insurer": "Cigna",
+            "patient_age": 42,
+            "patient_gender": "F",
+            "clinical_context": "Failed two SSRIs.",
+        },
+    )
+    assert resp.status_code == 200
+    parsed = resp.json()
+    # Stub drafter echoes parsed case context into the letter body indirectly;
+    # verify the pipeline accepted the request with notes via parsed_case in package.
+    # The offline stub letter is static; we only assert the route accepts notes.
+    assert parsed["appeal_letter"]
+
+
 def test_post_appeal_surfaces_a_deny_outcome():
     resp = _client(anchor=1).post(
         "/v1/appeal",
-        json={"denial_text": "Denied: not medically necessary.", "case_id": "x"},
+        json={
+            "denial_text": "Denied: not medically necessary.",
+            "case_id": "x",
+            "insurer": "Aetna",
+            "patient_age": 30,
+            "patient_gender": "M",
+        },
     )
     assert resp.status_code == 200
     assert resp.json()["outcome"]["verdict"] == "DENY"

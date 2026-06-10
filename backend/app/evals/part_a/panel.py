@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import Any
 
 from app.evals.part_a.deterministic_gates import citation_precheck
-from app.evals.part_a.deterministic_gates import safety_scope_gate
 from app.evals.part_a.judge_agents import AdkJudgeClient
 from app.evals.part_a.judge_workflow import run_judge_panel_workflow
 from app.evals.part_a.llm_judges import JudgeClient
@@ -12,12 +11,13 @@ from app.evals.part_a.schemas import JudgeResult
 from app.evals.part_a.schemas import PanelReport
 from app.evals.part_a.schemas import TeacherGradingPacket
 
+HARD_GATE_DIMENSIONS = ("faithfulness_hallucination_gate",)
 
 QUALITY_WEIGHTS = {
-    "grounding": 0.30,
+    "grounding": 0.25,
     "case_specific_clinical_rebuttal": 0.20,
-    "evidence_completeness": 0.15,
-    "appeal_vector_capture": 0.25,
+    "appeal_vector_capture": 0.35,
+    "question_agent": 0.10,
     "persuasive_coherence": 0.10,
 }
 
@@ -25,18 +25,50 @@ JUDGE_IDS = {
     "faithfulness_hallucination_gate": "j2_faithfulness_hallucination",
     "grounding": "j3_grounding",
     "case_specific_clinical_rebuttal": "j4_case_specific_rebuttal",
-    "evidence_completeness": "j5_evidence_completeness",
     "appeal_vector_capture": "j6_appeal_vector_capture",
     "persuasive_coherence": "j7_persuasive_coherence",
 }
 
+STUBBED_QUALITY_DIMENSIONS = frozenset({"question_agent"})
 
-def _normalize_anchor(score: int) -> float:
-    return {1: 0.2, 3: 0.6, 5: 1.0}[score]
+
+def _question_agent_stub_result() -> JudgeResult:
+    """Placeholder until the question-agent probing flow ships on appeal + showcase."""
+    return JudgeResult(
+        dimension="question_agent",
+        reasoning=(
+            "Question agent not yet implemented; default placeholder score until "
+            "the targeted Q&A probing flow is built."
+        ),
+        score=5,
+        confidence=1.0,
+        evidence_quotes=[],
+        improvement=None,
+    )
+
+
+def _apply_stubbed_quality_dimensions(judge_results: dict[str, JudgeResult]) -> None:
+    for dimension in STUBBED_QUALITY_DIMENSIONS:
+        judge_results[dimension] = _question_agent_stub_result()
+
+
+def _normalize_anchor(score: int, *, dimension: str | None = None) -> float:
+    if dimension == "appeal_vector_capture":
+        return {1: 0.2, 2: 0.4, 3: 0.6, 4: 0.8, 5: 1.0}.get(score, 0.2)
+    return {1: 0.2, 3: 0.6, 5: 1.0}.get(score, 0.2)
 
 
 def _score_int(result: JudgeResult) -> int | None:
     return result.score if isinstance(result.score, int) else None
+
+
+def _judge_visible_appeal_package(appeal_package: dict[str, Any]) -> dict[str, Any]:
+    """Appeal package copy for judges: letter prose only, no librarian metadata."""
+    pkg = {k: v for k, v in appeal_package.items() if k != "simulator_result"}
+    draft = dict(pkg.get("appeal_package_draft", {}))
+    draft.pop("citations_used", None)
+    pkg["appeal_package_draft"] = draft
+    return pkg
 
 
 def _quote_pool(appeal_package: dict[str, Any], teacher: TeacherGradingPacket) -> str:
@@ -84,7 +116,7 @@ def _build_panel_report(
 ) -> PanelReport:
     hard_gate_failures = [
         dimension
-        for dimension in ("safety_scope_gate", "faithfulness_hallucination_gate")
+        for dimension in HARD_GATE_DIMENSIONS
         if judge_results[dimension].score == "FAIL"
     ]
 
@@ -99,7 +131,7 @@ def _build_panel_report(
                 weighted_quality = None
                 break
             dimension_scores[dimension] = score
-            weighted_quality += weight * _normalize_anchor(score)
+            weighted_quality += weight * _normalize_anchor(score, dimension=dimension)
         if weighted_quality is not None:
             weighted_quality = round(weighted_quality, 4)
     else:
@@ -109,8 +141,11 @@ def _build_panel_report(
                 dimension_scores[dimension] = score
 
     promotion_blockers: list[str] = []
-    if dimension_scores.get("appeal_vector_capture") == 1:
+    avc = dimension_scores.get("appeal_vector_capture")
+    if avc == 1:
         promotion_blockers.append("appeal_vector_capture_score_1")
+    elif avc == 2:
+        promotion_blockers.append("appeal_vector_capture_mentioned_not_rebutted")
 
     risk_flags = list(teacher.risk_flags)
     risk_flags.extend(_evidence_quote_risk_flags(judge_results, appeal_package, teacher))
@@ -142,18 +177,11 @@ def _student_context(
     appeal_package: dict[str, Any],
     teacher: TeacherGradingPacket,
 ) -> dict[str, Any]:
-    student_package = {
-        k: v for k, v in appeal_package.items() if k != "simulator_result"
-    }
-    j1 = safety_scope_gate(appeal_package, teacher)
     citation = citation_precheck(appeal_package, teacher)
     return {
-        "appeal_package": student_package,
+        "appeal_package": _judge_visible_appeal_package(appeal_package),
         "teacher_packet": teacher.model_dump(),
-        "deterministic_results": {
-            "safety_scope_gate": j1.model_dump(),
-            "citation_precheck": citation.model_dump(),
-        },
+        "deterministic_results": {"citation_precheck": citation.model_dump()},
     }
 
 
@@ -162,20 +190,10 @@ def _run_panel_offline(
     teacher: TeacherGradingPacket,
     client: OfflineHeuristicJudgeClient,
 ) -> PanelReport:
-    j1 = safety_scope_gate(appeal_package, teacher)
+    context = _student_context(appeal_package, teacher)
     citation = citation_precheck(appeal_package, teacher)
-    context = {
-        "appeal_package": {
-            k: v for k, v in appeal_package.items() if k != "simulator_result"
-        },
-        "teacher_packet": teacher.model_dump(),
-        "deterministic_results": {
-            "safety_scope_gate": j1.model_dump(),
-            "citation_precheck": citation.model_dump(),
-        },
-    }
 
-    judge_results: dict[str, JudgeResult] = {"safety_scope_gate": j1}
+    judge_results: dict[str, JudgeResult] = {}
 
     if citation.score == "FAIL":
         j2 = JudgeResult(
@@ -191,7 +209,10 @@ def _run_panel_offline(
     judge_results["faithfulness_hallucination_gate"] = j2
 
     for dimension in QUALITY_WEIGHTS:
+        if dimension in STUBBED_QUALITY_DIMENSIONS:
+            continue
         judge_results[dimension] = client.judge(JUDGE_IDS[dimension], context)
+    _apply_stubbed_quality_dimensions(judge_results)
 
     return _build_panel_report(
         appeal_package=appeal_package,
@@ -222,8 +243,10 @@ def _run_panel_adk(
 ) -> PanelReport:
     context = _student_context(appeal_package, teacher)
     judge_results = run_judge_panel_workflow(
-        context=context, model=_fresh_adk_judge_model(client)
+        context=context,
+        model=_fresh_adk_judge_model(client),
     )
+    _apply_stubbed_quality_dimensions(judge_results)
     return _build_panel_report(
         appeal_package=appeal_package,
         teacher=teacher,
@@ -236,9 +259,12 @@ def run_panel(
     appeal_package: dict[str, Any],
     teacher_packet: TeacherGradingPacket | dict[str, Any],
     judge_client: JudgeClient | None = None,
+    *,
+    run_mode: str | None = None,
 ) -> PanelReport:
     """Run the Part A judge panel over one appeal package."""
 
+    del run_mode  # retained for call-site compatibility; safety gate removed from panel
     teacher = (
         teacher_packet
         if isinstance(teacher_packet, TeacherGradingPacket)

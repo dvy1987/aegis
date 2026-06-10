@@ -5,7 +5,12 @@ from app.aegis_v1.v1_config import build_v1_library_stack
 
 
 def test_appeal_request_discovery_defaults_off() -> None:
-    req = AppealRequest(denial_text="Denied.")
+    req = AppealRequest(
+        denial_text="Denied.",
+        insurer="Cigna",
+        patient_age=42,
+        patient_gender="F",
+    )
     assert req.discovery_enabled is False
 
 

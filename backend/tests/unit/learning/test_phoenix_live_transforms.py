@@ -49,7 +49,7 @@ def test_rows_to_scored_runs_parses_minimal_pair() -> None:
                         "grounding": 5,
                         "appeal_vector_capture": 3,
                         "case_specific_clinical_rebuttal": 3,
-                        "evidence_completeness": 5,
+                        "question_agent": 5,
                         "persuasive_coherence": 3,
                     },
                     "dimensions": {

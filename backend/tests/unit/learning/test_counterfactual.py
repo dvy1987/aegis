@@ -1,7 +1,7 @@
 from app.learning.counterfactual import run_counterfactual
 
 DIMS = ["grounding", "appeal_vector_capture", "case_specific_clinical_rebuttal",
-        "evidence_completeness", "persuasive_coherence"]
+        "question_agent", "persuasive_coherence"]
 
 
 def _lookup_on(case):

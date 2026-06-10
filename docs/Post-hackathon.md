@@ -45,4 +45,23 @@ Recorded principle ([decision-log](memory/decision-log.md), 2026-06-08): don’t
 
 ---
 
+## 2. Phoenix PHI/PII leakage judge — `later`
+
+**Logged:** 2026-06-09  
+**Status:** Not in hackathon scope; GEPA judges no longer run the safety scope gate.
+
+### What
+
+Add a dedicated judge (or deterministic gate) that checks whether patient PII/PHI from the appeal draft leaked into Phoenix traces/annotations — separate from the user-facing letter (which should keep member IDs and clinical detail for filing).
+
+Today: `/appeal` redacts via `appeal_phoenix_export.py`; showcase/GEPA/eval paths write to Phoenix without that redaction (synthetic cases assumption).
+
+### Proposed fix (when we pick it up)
+
+- New judge dimension, e.g. `phoenix_export_phi_leakage_gate`, run on Phoenix-bound payloads only.
+- Compare exported span/annotation text against a PHI pattern set (SSN, MRN, DOB, etc.) and fail promotion if leakage is detected.
+- Wire into benchmark + post-`/appeal` export paths; keep GEPA training judges focused on appeal quality.
+
+---
+
 <!-- Append new items below with the next number. -->

@@ -20,7 +20,7 @@ def test_appeal_best_of_five_returns_first_approve(monkeypatch) -> None:
     class SequenceSimulator:
         name = "seq_sim"
 
-        def assess(self, denial_text, clinical_context, appeal_letter):
+        def assess(self, denial_text, appeal_letter, **kwargs):
             calls["n"] += 1
             anchor = 5 if calls["n"] >= 3 else 1
             return uniform_assessment(anchor, critique=f"attempt {calls['n']}")
@@ -49,7 +49,7 @@ def test_appeal_best_of_five_all_deny_returns_highest_score(monkeypatch) -> None
     class ScoredSimulator:
         name = "scored_sim"
 
-        def assess(self, denial_text, clinical_context, appeal_letter):
+        def assess(self, denial_text, appeal_letter, **kwargs):
             i = idx["i"]
             idx["i"] += 1
             anchor = {0.2: 1, 0.38: 1, 0.55: 3, 0.41: 3, 0.33: 1}[scores[min(i, 4)]]

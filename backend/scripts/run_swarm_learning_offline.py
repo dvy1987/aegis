@@ -36,7 +36,7 @@ def main() -> None:
 
     dims = {d: 5 for d in [
         "grounding", "appeal_vector_capture", "case_specific_clinical_rebuttal",
-        "evidence_completeness", "persuasive_coherence",
+        "question_agent", "persuasive_coherence",
     ]}
     dims[args.dimension] = 1
     for case in micro_benchmark_fixture():

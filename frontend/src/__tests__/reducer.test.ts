@@ -20,7 +20,13 @@ describe("flowReducer", () => {
   it("submit goes to working and keeps the request", () => {
     const s = flowReducer(initialFlow, {
       type: "SUBMIT",
-      req: { denial_text: "x", clinical_context: "", case_id: "c" },
+      req: {
+        denial_text: "x",
+        case_id: "c",
+        insurer: "Cigna",
+        patient_age: 40,
+        patient_gender: "F",
+      },
     });
     expect(s.step).toBe("working");
     expect(s.req?.denial_text).toBe("x");

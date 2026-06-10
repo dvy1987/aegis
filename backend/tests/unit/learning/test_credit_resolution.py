@@ -10,7 +10,7 @@ def _run(case_id: str, dims: dict, signals: list | None = None) -> ScoredRun:
         "grounding": 5,
         "appeal_vector_capture": 5,
         "case_specific_clinical_rebuttal": 5,
-        "evidence_completeness": 5,
+        "question_agent": 5,
         "persuasive_coherence": 5,
     }
     full.update(dims)
@@ -51,7 +51,7 @@ def test_researcher_override_on_empty_retrieval():
     runs = [
         _run(
             "a",
-            {"evidence_completeness": 1, "grounding": 5},
+            {"grounding": 1},
             signals=signals,
         )
     ]

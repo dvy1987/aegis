@@ -15,14 +15,17 @@ def test_adapter_returns_score_dict_with_five_dims_and_hard_gate():
     out = PanelJudgeAdapter().score(case=CASE, appeal_letter=LETTER)  # default offline heuristic judge
     assert set(out["dimension_scores"]) >= {
         "grounding", "appeal_vector_capture", "case_specific_clinical_rebuttal",
-        "evidence_completeness", "persuasive_coherence"}
+        "question_agent", "persuasive_coherence"}
     assert isinstance(out["hard_gate_pass"], bool)
     assert all(v in (1, 3, 5) for v in out["dimension_scores"].values())
 
 
-def test_adapter_hard_gate_fails_without_disclaimer():
-    out = PanelJudgeAdapter().score(case=CASE, appeal_letter="Overturn this denial.")
-    assert out["hard_gate_pass"] is False   # missing canonical disclaimer -> j1 FAIL
+def test_adapter_hard_gate_fails_on_invented_source():
+    out = PanelJudgeAdapter().score(
+        case=CASE,
+        appeal_letter="Overturn this denial under 42 U.S.C. 9999.",
+    )
+    assert out["hard_gate_pass"] is False
 
 
 def test_adapter_uses_private_teacher_case_for_judges(monkeypatch):

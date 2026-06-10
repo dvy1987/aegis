@@ -53,11 +53,13 @@ def run_evaluated_case(
 
     dataset_split = str(case_obj.get("dataset_split", "benchmark"))
 
+    from app.aegis_v1.patient_context import pipeline_inputs_from_case
+
+    student_inputs = pipeline_inputs_from_case(case_obj)
+
     # 1. Student (blind to answer key): produce the appeal package.
     appeal_package = run_aegis_v1_pipeline(
-        denial_text=case_obj.get("denial_letter_text", ""),
-        clinical_context=case_obj.get("clinical_context", ""),
-        case_id=case_obj.get("case_id", "interactive_case"),
+        **student_inputs,
         dataset_split=dataset_split,
         run_mode=run_mode,
         drafter_client=drafter_client,
@@ -74,7 +76,12 @@ def run_evaluated_case(
 
     # 3. Eval layer — independent of the Student.
     teacher = build_teacher_grading_packet(case_obj, appeal_package)
-    panel_report = run_panel(appeal_package, teacher, judge_client=judge_client)
+    panel_report = run_panel(
+        appeal_package,
+        teacher,
+        judge_client=judge_client,
+        run_mode=run_mode,
+    )
 
     simulator_result = None
     if run_simulator:

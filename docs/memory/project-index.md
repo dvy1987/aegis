@@ -27,6 +27,8 @@ Quick navigation for agents picking up this project.
 
 | Date | Session | Handoff file |
 |---|---|---|
+| 2026-06-09 | Session end (Cursor — simulator hard gates + drafter) | [agent-handoffs.md](agent-handoffs.md#2026-06-09--handoff-cursor--simulator-hard-gates--drafter-inputs) |
+| 2026-06-09 | Session end (Cursor — GEPA judges + faithfulness) | [agent-handoffs.md](agent-handoffs.md#2026-06-09--handoff-cursor--gepa-judges--faithfulness-rubric) |
 | 2026-06-09 | Session end (Cursor — showcase copy rejig) | [agent-handoffs.md](agent-handoffs.md#2026-06-09--handoff-cursor--showcase-copy-rejig) |
 | 2026-06-09 | Session end (Cursor — showcase cinematic + polish) | [agent-handoffs.md](agent-handoffs.md#2026-06-09--handoff-cursor--showcase-cinematic--polish) |
 | 2026-06-07 | Session end (Cursor — ADK Phase 0 + Workflow D24) | [agent-handoffs.md](agent-handoffs.md#2026-06-07--session-end-cursor--adk-phase-0--workflow-decision) |

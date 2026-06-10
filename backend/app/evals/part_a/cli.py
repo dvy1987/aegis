@@ -31,10 +31,10 @@ def _client(name: str):
 
 def _run_one(path: Path, judge_client: Any) -> dict[str, Any]:
     case_obj = load_case(path)
+    from app.aegis_v1.patient_context import pipeline_inputs_from_case
+
     appeal_package = run_aegis_v1_pipeline(
-        denial_text=case_obj.get("denial_letter_text", ""),
-        clinical_context=case_obj.get("clinical_context", ""),
-        case_id=case_obj.get("case_id", path.stem),
+        **pipeline_inputs_from_case(case_obj),
         dataset_split="benchmark",
         run_mode="benchmark",
     )

@@ -39,11 +39,11 @@ def test_live_appeal_run_produces_letter_and_outcome():
             "We denied coverage for TMS for treatment-resistant depression as not "
             "medically necessary. You may appeal within 180 days."
         ),
-        clinical_context=(
-            "Patient failed two adequate SSRI trials and documented severe, "
-            "treatment-resistant depression."
-        ),
+        clinical_context="Patient age: 45. Patient gender: female.",
         case_id="live_smoke",
+        insurer="Cigna",
+        patient_age=45,
+        patient_gender="F",
     )
 
     letter = result.appeal_package["appeal_package_draft"]["appeal_letter"]
@@ -54,7 +54,7 @@ def test_live_appeal_run_produces_letter_and_outcome():
     # a real outcome came back, scored deterministically from LLM features
     assert result.outcome["verdict"] in {"APPROVE", "DENY"}
     assert 0.0 <= result.outcome["score"] <= 1.0
-    assert result.outcome["threshold"] == 0.70
+    assert result.outcome["threshold"] == 0.80
     assert result.outcome["feature_scores"]  # transparent breakdown present
 
 
@@ -69,7 +69,11 @@ def test_live_evaluated_case_writes_real_phoenix_annotation():
         "case_id": "live_eval_smoke", "insurer": "Cigna", "denial_type": "Medical Necessity",
         "denial_letter_text": "We denied coverage for TMS as not medically necessary.",
         "clinical_context": "Patient failed two SSRIs; severe treatment-resistant depression.",
-        "patient_profile": {"plan_funding_type": "fully_insured"},
+        "patient_profile": {
+            "age": 45,
+            "gender": "F",
+            "plan_funding_type": "fully_insured",
+        },
         "denial_pattern_sources": [], "synthetic_provenance": {"appeal_difficulty": {}},
     }
     result = run_evaluated_case(

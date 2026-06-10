@@ -34,7 +34,7 @@ def test_summary_marks_available_with_failure_patterns_and_success_traits() -> N
             "weighted_quality": 0.81,
             "dimensions": {
                 "appeal_vector_capture": {"score": 5, "improvement": ""},
-                "evidence_completeness": {"score": 5, "improvement": ""},
+                "question_agent": {"score": 5, "improvement": ""},
             },
         },
         {
@@ -101,7 +101,7 @@ def test_summary_caps_returned_patterns_and_traits_at_five() -> None:
             "verdict": "PASS",
             "weighted_quality": 0.9,
             "dimensions": {
-                "evidence_completeness": {"score": 5, "improvement": ""},
+                "question_agent": {"score": 5, "improvement": ""},
             },
         })
     s = _summarize_traces(

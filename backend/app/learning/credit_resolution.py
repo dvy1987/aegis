@@ -30,7 +30,7 @@ DIMENSION_PRIMARY_COMPONENT: dict[str, str] = {
     "grounding": "drafter",
     "appeal_vector_capture": "strategist",
     "case_specific_clinical_rebuttal": "medical_necessity",
-    "evidence_completeness": "strategist",
+    "question_agent": "question_agent",
     "persuasive_coherence": "drafter",
 }
 
@@ -38,7 +38,6 @@ DIMENSION_PRIMARY_COMPONENT: dict[str, str] = {
 CORPUS_GAP_PLAUSIBLE: frozenset[str] = frozenset({
     "grounding",
     "case_specific_clinical_rebuttal",
-    "evidence_completeness",
 })
 
 # Map empty-retrieval risk flags to the researcher role that reported them.
@@ -101,7 +100,6 @@ def _failing_runs(runs: list[ScoredRun], dimension: str) -> list[ScoredRun]:
 _DIMENSION_RESEARCHERS: dict[str, tuple[str, ...]] = {
     "grounding": ("medical_necessity", "legal_researcher", "policy_detective"),
     "case_specific_clinical_rebuttal": ("medical_necessity",),
-    "evidence_completeness": ("policy_detective", "medical_necessity"),
 }
 
 

@@ -51,7 +51,6 @@ def test_collect_llm_response_text_reads_event_output() -> None:
 def test_run_simulator_agent_parses_json_from_stub_model() -> None:
     assessment = run_simulator_agent(
         denial_text="Denied as not medically necessary.",
-        clinical_context="Failed two prior treatments.",
         appeal_letter="We request overturn of the denial with clinical support.",
         model=_StubSimulatorLlm(model="stub-simulator"),
     )
@@ -64,8 +63,7 @@ def test_build_simulator_agent_runs_end_to_end() -> None:
     assert isinstance(agent, LlmAgent)
     result = run_simulator_agent(
         denial_text="Denied.",
-        clinical_context="Clinical context.",
         appeal_letter="Appeal letter body.",
         model=_StubSimulatorLlm(model="stub-simulator"),
     )
-    assert len(result.features) == 6
+    assert len(result.features) == 8

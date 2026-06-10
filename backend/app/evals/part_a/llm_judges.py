@@ -106,11 +106,13 @@ class OfflineHeuristicJudgeClient:
         if citation.get("score") == "FAIL":
             return JudgeResult(
                 dimension="faithfulness_hallucination_gate",
-                reasoning="Citation precheck failed, so the appeal contains untraceable structured citations.",
+                reasoning=str(
+                    citation.get("reasoning", "Structured citation precheck failed.")
+                ),
                 score="FAIL",
                 confidence=1.0,
-                evidence_quotes=citation.get("evidence_quotes", []),
-                improvement="Remove or replace untraceable citations.",
+                evidence_quotes=list(citation.get("evidence_quotes", []) or []),
+                improvement=citation.get("improvement"),
             )
         letter = _letter(context).lower()
         invented_markers = [
@@ -123,15 +125,18 @@ class OfflineHeuristicJudgeClient:
         if hit:
             return JudgeResult(
                 dimension="faithfulness_hallucination_gate",
-                reasoning=f"The appeal includes an obvious unsupported or invented marker: {hit}.",
+                reasoning=f"The appeal cites an obvious invented source marker: {hit}.",
                 score="FAIL",
                 confidence=0.95,
                 evidence_quotes=[hit],
-                improvement="Use only facts and authorities available in the case and controlled corpus.",
+                improvement="Remove fabricated sources or correct the citation.",
             )
         return JudgeResult(
             dimension="faithfulness_hallucination_gate",
-            reasoning="Offline heuristic found no untraceable citation IDs or obvious invented-law markers.",
+            reasoning=(
+                "Offline heuristic found no obvious invented source markers in appeal "
+                "letter prose; librarian citations_used metadata is not scored."
+            ),
             score="PASS",
             confidence=0.65,
             evidence_quotes=[],
@@ -139,24 +144,28 @@ class OfflineHeuristicJudgeClient:
         )
 
     def _judge_j3_grounding(self, context: dict[str, Any]) -> JudgeResult:
-        draft = _draft(context)
-        citations = draft.get("citations_used", []) or []
         letter = _letter(context).lower()
-        if citations and any("erisa" in str(hit).lower() for hit in citations):
+        named_sources = [
+            term
+            for term in ("erisa", "mhpaea", "29 u.s.c", "29 c.f.r", "medical necessity")
+            if term in letter
+        ]
+        if any(term in letter for term in ("erisa", "mhpaea", "29 u.s.c")):
             score = 5
-        elif citations:
-            score = 3
-        elif any(term in letter for term in ("erisa", "mhpaea", "medical necessity")):
+        elif named_sources:
             score = 3
         else:
             score = 1
         return JudgeResult(
             dimension="grounding",
-            reasoning=f"Offline heuristic found {len(citations)} structured citations and checked for controlled-source language.",
+            reasoning=(
+                "Offline heuristic checked appeal letter prose for named legal/policy "
+                f"references ({len(named_sources)} hits); citations_used metadata ignored."
+            ),
             score=score,
             confidence=0.6,
-            evidence_quotes=[str(hit.get("corpus_doc_id", "")) for hit in citations],
-            improvement=None if score == 5 else "Add precise citations from retrieved local corpus excerpts.",
+            evidence_quotes=[],
+            improvement=None if score == 5 else "Tie major claims in the letter to named, verifiable sources.",
         )
 
     def _judge_j4_case_specific_rebuttal(self, context: dict[str, Any]) -> JudgeResult:
@@ -179,24 +188,6 @@ class OfflineHeuristicJudgeClient:
                 str(profile.get("treatment_requested", "")),
             ],
             improvement=None if score == 5 else "Use the specific diagnosis, treatment, failed alternatives, and severity facts in the argument.",
-        )
-
-    def _judge_j5_evidence_completeness(self, context: dict[str, Any]) -> JudgeResult:
-        draft = _draft(context)
-        checklist = draft.get("missing_evidence_checklist", []) or []
-        if len(checklist) >= 4:
-            score = 5
-        elif checklist:
-            score = 3
-        else:
-            score = 1
-        return JudgeResult(
-            dimension="evidence_completeness",
-            reasoning=f"Offline heuristic found {len(checklist)} evidence checklist items.",
-            score=score,
-            confidence=0.7,
-            evidence_quotes=[str(item) for item in checklist[:5]],
-            improvement=None if score == 5 else "Add a case-specific evidence checklist with attachment status.",
         )
 
     def _judge_j6_appeal_vector_capture(self, context: dict[str, Any]) -> JudgeResult:

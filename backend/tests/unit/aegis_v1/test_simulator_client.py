@@ -42,7 +42,7 @@ def test_simulator_tool_denies_on_weak_assessment():
     out = simulator(parsed_case=_parsed(), appeal_draft=_draft(),
                     self_check_result={}, client=StubSimulatorClient(assessment=uniform_assessment(1)))
     assert out["verdict"] == "DENY"
-    assert out["score"] == 0.2
+    assert out["score"] == 0.0
     assert out["gaps"]
 
 
@@ -58,16 +58,15 @@ def test_uniform_assessment_marks_all_rubric_features():
     fa = uniform_assessment(5)
     assert isinstance(fa, FeatureAssessment)
     assert fa.features["rebuts_specific_flaw"].anchor == 5
-    assert len(fa.features) == 6
+    assert len(fa.features) == 8
 
 
 def test_stub_assess_returns_the_configured_assessment():
     fa = uniform_assessment(3)
-    out = StubSimulatorClient(assessment=fa).assess(
-        denial_text="d", clinical_context="c", appeal_letter="a")
+    out = StubSimulatorClient(assessment=fa).assess(denial_text="d", appeal_letter="a")
     assert out.features["credible_tone"].anchor == 3
 
 
 def test_stub_assess_defaults_to_weak():
-    out = StubSimulatorClient().assess(denial_text="d", clinical_context="c", appeal_letter="a")
+    out = StubSimulatorClient().assess(denial_text="d", appeal_letter="a")
     assert out.features["rebuts_specific_flaw"].anchor == 1

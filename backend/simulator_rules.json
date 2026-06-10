@@ -1,32 +1,56 @@
 {
-  "version": "v1",
+  "version": "v2_strict",
   "anchors": [1, 3, 5],
-  "approve_threshold": 0.70,
-  "must_have_min_anchor": 3,
+  "approve_threshold": 0.80,
+  "must_have_min_anchor": 5,
   "features": {
     "addresses_denial_rationale": {
-      "weight": 0.25, "must_have": false,
-      "description": "Directly engages the specific reason the denial states, not a generic appeal."
+      "weight": 0.0,
+      "hard_gate": true,
+      "must_have": false,
+      "description": "Hard gate: engages and rebuts each specific denial reason (anchor 5 required). Not weighted."
     },
     "cites_clinical_evidence": {
-      "weight": 0.20, "must_have": false,
-      "description": "Cites concrete clinical facts from the provider context supporting necessity."
+      "weight": 0.45,
+      "hard_gate": false,
+      "must_have": true,
+      "description": "Cites concrete patient-specific clinical facts in the appeal letter — not promises to attach records later."
+    },
+    "cites_applicable_authority": {
+      "weight": 0.0,
+      "hard_gate": true,
+      "must_have": false,
+      "description": "Hard gate (conditional): PASS if no authority cited in letter, or every named authority is real, fair, and applicable. Does not require citations. Not weighted."
     },
     "cites_binding_policy": {
-      "weight": 0.15, "must_have": false,
-      "description": "Invokes an applicable policy/plan/regulatory basis rather than hand-waving."
+      "weight": 0.15,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "When policy/regulation is invoked in the letter, it is accurately applied to this case (not generic padding). No invocation = neutral, not a penalty."
     },
     "rebuts_specific_flaw": {
-      "weight": 0.20, "must_have": true,
-      "description": "Actually rebuts the core defect the denial hinges on, not just restating facts."
+      "weight": 0.0,
+      "hard_gate": true,
+      "must_have": false,
+      "description": "Hard gate: factually rebuts every distinct denial hook with case-specific facts (anchor 5 required). Not weighted."
+    },
+    "medical_director_persuasion": {
+      "weight": 0.0,
+      "hard_gate": true,
+      "must_have": false,
+      "description": "Hard gate: clinical argument would convince a skeptical medical director to overturn (anchor 5 required). Not weighted."
     },
     "specific_requested_action": {
-      "weight": 0.10, "must_have": false,
-      "description": "Makes a clear, specific ask (overturn + reprocess + qualified reviewer), deadline-aware."
+      "weight": 0.25,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Clear overturn/reprocess ask, deadline-aware."
     },
     "credible_tone": {
-      "weight": 0.10, "must_have": false,
-      "description": "Professional, non-hyperbolic, internally consistent tone an adjuster takes seriously."
+      "weight": 0.15,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Professional, non-hyperbolic, internally consistent tone."
     }
   }
 }

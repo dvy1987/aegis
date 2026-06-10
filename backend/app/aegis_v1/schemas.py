@@ -64,6 +64,8 @@ class ParsedCase(BaseModel):
     missing_facts: list[str] = Field(default_factory=list)
     denial_text: str
     clinical_context: str = ""
+    patient_age: int | None = None
+    patient_gender: str = ""
 
     @field_validator("deadlines_mentioned", "missing_facts", mode="before")
     @classmethod
@@ -175,6 +177,9 @@ class FeatureAssessment(BaseModel):
 
     critique: str = ""
     features: dict[str, FeatureMark] = Field(default_factory=dict)
+    # Each entry = one denial reason from the denial letter still not rebutted with
+    # concrete facts in the appeal. Non-empty list triggers a hard DENY in scoring.
+    unrebutted_denial_points: list[str] = Field(default_factory=list)
 
 
 class FeatureScore(BaseModel):

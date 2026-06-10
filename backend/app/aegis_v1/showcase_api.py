@@ -429,6 +429,7 @@ def seed_smoke(req: JudgeSmokeRequest) -> SeedSmokeResponse:
         judge_client=judge_client,
         run_simulator=False,
         drafter_prompt_version="drafter_v1",
+        run_mode="gepa_seed",
     )
     host = os.environ.get("PHOENIX_HOST", "https://app.phoenix.arize.com").rstrip("/")
     return SeedSmokeResponse(

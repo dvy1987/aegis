@@ -37,7 +37,8 @@ from app.aegis_v1.tools import playbook_loader as _v1_playbook_loader
 # change (credit-map invariant: "map is versioned with the topology").
 AGENT_OWNED_DIMENSIONS: dict[str, list[str]] = {
     "drafter": ["grounding", "persuasive_coherence"],
-    "strategist": ["appeal_vector_capture", "evidence_completeness"],
+    "strategist": ["appeal_vector_capture"],
+    "question_agent": ["question_agent"],
     "medical_necessity": ["case_specific_clinical_rebuttal"],
 }
 

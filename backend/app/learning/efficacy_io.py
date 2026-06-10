@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from app.learning.models import DIMENSIONS, composite_score
+from app.learning.models import DIMENSIONS, composite_score, normalize_dimension_scores
 
 # Dimensions with no offline prompt lever (need retrieved corpus/citations) — excluded
 # when choosing a reflection target so the loop spends reflection where it can actually climb.
@@ -24,8 +24,21 @@ def score_split(run_dir: Path, version: str, case_ids: list[str]) -> dict[str, A
     judgments = {c: load_judgment(run_dir, version, c) for c in case_ids}
     per_case = {c: composite_score(j["dimension_scores"], j["hard_gate_pass"]) for c, j in judgments.items()}
     mean = round(sum(per_case.values()) / len(per_case), 4) if per_case else 0.0
-    dim_means = {d: round(sum(judgments[c]["dimension_scores"].get(d, 1) for c in case_ids) / len(case_ids), 3)
-                 for d in DIMENSIONS} if case_ids else {d: 0.0 for d in DIMENSIONS}
+    dim_means = (
+        {
+            d: round(
+                sum(
+                    normalize_dimension_scores(judgments[c]["dimension_scores"]).get(d, 1)
+                    for c in case_ids
+                )
+                / len(case_ids),
+                3,
+            )
+            for d in DIMENSIONS
+        }
+        if case_ids
+        else {d: 0.0 for d in DIMENSIONS}
+    )
     return {"composite": mean, "per_case": per_case, "dimension_means": dim_means,
             "hard_gate_pass": {c: judgments[c]["hard_gate_pass"] for c in case_ids}}
 

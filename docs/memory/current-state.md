@@ -1,7 +1,25 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-09 (session end — simulator fix committed; showcase GEPA failure diagnosed)
-**Phase:** **ADK Phases 0–5 largely on prod. Simulator bug fixed on `main` (`c1b1d97`) — needs redeploy. Quick showcase run failed at GEPA optimize (judge flake).**
+**Updated:** 2026-06-10 (session end — simulator/judge letter-only scoring; legal gate removed; uncommitted)
+**Phase:** **ADK Phases 0–5 largely on prod. Large dirty tree: simulator v2_strict (8 features), letter-only simulator/judge firewall, J2 faithfulness rewrite — not committed/deployed.**
+
+### 2026-06-10 - Simulator + judge letter-only; legal gate removed (uncommitted)
+- **Simulator:** denial + appeal letter **only**; hard-gate fail → score 0; **`legal_rebuttal_viability` removed**.
+- **Hard gates:** addresses denial, rebuts hooks, medical director persuasion, cites_applicable_authority (letter prose), unrebutted_denial_points.
+- **Judges:** ignore `citations_used` metadata; J2/J3 score letter body only.
+- **case_121:** denial-only DENY 0.0; full clinical APPROVE 1.0 (drafter may still write MHPAEA in letter).
+- **Next:** PM review → commit → deploy `aegis-v1-api`.
+
+### 2026-06-09 - Simulator hard gates + drafter input split (superseded partly)
+- Drafter: denial + clinical context plain text only; library/playbook/Phoenix internal.
+- Showcase Quick/Serious uses live `tools.simulator()`.
+
+### 2026-06-09 - GEPA judges + faithfulness rubric (uncommitted)
+- **GEPA paths** skip `safety_scope_gate` (`gepa_judge_modes.py`); benchmark judges unchanged.
+- **Faithfulness (J2):** sources must **exist and be truthfully represented** — not limited to corpus/retrieval. Fixes case_07 false negative on real ERISA § 1133 prose.
+- **Structural precheck:** fake corpus IDs + quote mismatch only; empty citations PASS structurally.
+- **Post-hackathon item 2:** future Phoenix PHI/PII leakage judge.
+- **Next:** commit dirty tree → deploy `aegis-v1-api` → re-run showcase / case_07 GEPA e2e.
 
 ### 2026-06-09 - Simulator fix + showcase failure diagnosis (committed `c1b1d97`)
 - **Bug:** ADK `simulator_agent` + `output_schema` → empty events → all measure scores **DENY 0.2** (fallback), not real insurer judgment.

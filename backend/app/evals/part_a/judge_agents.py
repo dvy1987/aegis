@@ -29,7 +29,6 @@ _JUDGE_SPECS: tuple[tuple[str, str, str], ...] = (
     ("j2_faithfulness_hallucination", "faithfulness_hallucination_gate", "faithfulness_hallucination_judge"),
     ("j3_grounding", "grounding", "grounding_judge"),
     ("j4_case_specific_rebuttal", "case_specific_clinical_rebuttal", "case_specific_clinical_rebuttal_judge"),
-    ("j5_evidence_completeness", "evidence_completeness", "evidence_completeness_judge"),
     ("j6_appeal_vector_capture", "appeal_vector_capture", "appeal_vector_capture_judge"),
     ("j7_persuasive_coherence", "persuasive_coherence", "persuasive_coherence_judge"),
 )
@@ -70,13 +69,20 @@ def _normalize_judge_payload(data: dict[str, Any], expected_dimension: str) -> d
         payload["evidence_quotes"] = [str(q) for q in quotes if q]
 
     score = payload.get("score")
-    if expected_dimension in {"faithfulness_hallucination_gate", "safety_scope_gate"}:
+    if expected_dimension == "faithfulness_hallucination_gate":
         normalized = str(score or "FAIL").strip().upper()
         payload["score"] = normalized if normalized in {"PASS", "FAIL"} else "FAIL"
     else:
         if isinstance(score, str) and score.strip().isdigit():
             score = int(score.strip())
-        if score not in (1, 3, 5):
+        if expected_dimension == "appeal_vector_capture":
+            if score not in (1, 2, 3, 4, 5):
+                if isinstance(score, (int, float)):
+                    numeric = int(score)
+                    score = max(1, min(5, numeric))
+                else:
+                    score = 3
+        elif score not in (1, 3, 5):
             if isinstance(score, (int, float)):
                 numeric = int(score)
                 score = 1 if numeric <= 1 else 3 if numeric <= 3 else 5

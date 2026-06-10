@@ -43,10 +43,10 @@ def run_measurement_case(
     receives the same sanitized Phoenix memory summary used by normal v1 drafting.
     """
 
+    from app.aegis_v1.patient_context import pipeline_inputs_from_case
+
     package = run_aegis_v1_pipeline(
-        denial_text=case_obj.get("denial_letter_text", ""),
-        clinical_context=case_obj.get("clinical_context", ""),
-        case_id=case_obj.get("case_id", "interactive_case"),
+        **pipeline_inputs_from_case(case_obj),
         dataset_split=case_obj.get("dataset_split", "showcase_measure"),
         run_mode="benchmark",
         phoenix_mode=PhoenixMode.HOLDOUT_READONLY,

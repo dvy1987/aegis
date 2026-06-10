@@ -15,6 +15,51 @@ def load_drafter_prompt(version: str = "drafter_v1") -> str:
     return (PROMPT_DIR / f"{version}.md").read_text(encoding="utf-8")
 
 
+def format_drafter_user_inputs(
+    *,
+    denial_text: str,
+    clinical_context: str = "",
+) -> str:
+    """Patient-supplied inputs — plain text, no JSON (matches student packet)."""
+    parts = [f"DENIAL LETTER:\n{denial_text.strip()}"]
+    if clinical_context.strip():
+        parts.append(f"\nCLINICAL CONTEXT:\n{clinical_context.strip()}")
+    return "\n".join(parts)
+
+
+def build_drafter_message(
+    *,
+    denial_text: str,
+    clinical_context: str = "",
+    citations: list[dict[str, Any]] | None = None,
+    playbook: dict[str, Any] | None = None,
+    phoenix_summary: dict[str, Any] | None = None,
+) -> str:
+    """Full drafter user message: patient plain text + internal pipeline context."""
+    sections = [
+        format_drafter_user_inputs(
+            denial_text=denial_text,
+            clinical_context=clinical_context,
+        )
+    ]
+    if citations:
+        sections.append(
+            "\nLIBRARY CITATIONS:\n"
+            + json.dumps(citations, indent=2, ensure_ascii=False, default=str)
+        )
+    if playbook:
+        sections.append(
+            "\nPLAYBOOK:\n"
+            + json.dumps(playbook, indent=2, ensure_ascii=False, default=str)
+        )
+    if phoenix_summary:
+        sections.append(
+            "\nPHOENIX MEMORY:\n"
+            + json.dumps(phoenix_summary, indent=2, ensure_ascii=False, default=str)
+        )
+    return "\n".join(sections)
+
+
 def get_active_drafter_prompt_version() -> str:
     configured = os.environ.get("AEGIS_DRAFTER_PROMPT_VERSION")
     if configured:
@@ -75,13 +120,14 @@ class StubDrafterClient:
 
 
 def _build_contents(prompt, parsed_case, citations, playbook, phoenix_summary) -> str:
-    context = {
-        "parsed_case": parsed_case,
-        "citations": citations,
-        "playbook": playbook,
-        "phoenix_summary": phoenix_summary,
-    }
-    return f"{prompt}\n\nCONTEXT JSON:\n{json.dumps(context, indent=2, default=str)}"
+    message = build_drafter_message(
+        denial_text=str(parsed_case.get("denial_text", "")),
+        clinical_context=str(parsed_case.get("clinical_context", "")),
+        citations=citations,
+        playbook=playbook,
+        phoenix_summary=phoenix_summary,
+    )
+    return f"{prompt}\n\n{message}"
 
 
 class GeminiDrafterClient:

@@ -14,10 +14,11 @@ from app.aegis_v1.schemas import (
 class SimulatorClient(Protocol):
     name: str
 
-    def assess(
-        self, denial_text: str, clinical_context: str, appeal_letter: str
-    ) -> FeatureAssessment:
-        """Return critique + per-feature 1/3/5 marks (no score, no verdict)."""
+    def assess(self, denial_text: str, appeal_letter: str) -> FeatureAssessment:
+        """Return critique + per-feature 1/3/5 marks (no score, no verdict).
+
+        Insurer-visible inputs only: the denial letter and appeal letter (INV-S4).
+        """
 
 
 def uniform_assessment(anchor: int, critique: str = "stub assessment") -> FeatureAssessment:
@@ -42,30 +43,54 @@ class StubSimulatorClient:
     def __init__(self, assessment: FeatureAssessment | None = None) -> None:
         self._assessment = assessment
 
-    def assess(self, denial_text: str, clinical_context: str, appeal_letter: str) -> FeatureAssessment:
+    def assess(self, denial_text: str, appeal_letter: str) -> FeatureAssessment:
         return self._assessment or uniform_assessment(1)
 
 
-def _build_assess_prompt(denial_text: str, clinical_context: str, appeal_letter: str) -> str:
+def _build_assess_prompt(denial_text: str, appeal_letter: str) -> str:
     return f"""
-    You are a strict Insurer Claims Adjuster. You can see ONLY the documents below
-    (no answer key). First CRITIQUE the appeal, then mark each feature on a 1/3/5
-    scale (1 = absent/poor, 3 = partial, 5 = strong) with a short evidence quote
-    taken verbatim from the appeal letter (empty string if absent).
+    You are a skeptical Utilization Management reviewer. Your job is to UPHOLD the
+    denial unless the appeal proves — with specific documented facts in the letter —
+    that the determination was wrong. Default stance: deny. Look for the slightest
+    gap, deferral, or hand-wave.
 
-    Features:
-    - addresses_denial_rationale: directly engages the specific denial reason.
-    - cites_clinical_evidence: cites concrete clinical facts supporting necessity.
-    - cites_binding_policy: invokes an applicable policy/plan/regulatory basis.
-    - rebuts_specific_flaw: actually rebuts the core defect the denial hinges on.
-    - specific_requested_action: makes a clear, specific ask.
-    - credible_tone: professional, non-hyperbolic, internally consistent.
+    You see ONLY the denial letter and appeal letter — what a Utilization Management
+    reviewer would see. No teacher packet, parsed case metadata, or backend citation
+    attachments. Credit clinical facts only when they appear in the appeal letter
+    itself — not from assumptions or unstated records.
+
+    Scoring discipline (1 = absent/poor, 3 = partial/generic, 5 = strong/specific):
+    - cites_clinical_evidence: 5 only for concrete patient-specific facts IN THE APPEAL
+      LETTER (symptoms, scores, failed treatments, diagnosis, age, protocol). Promises
+      that records "will be submitted" or "are attached" without summarizing facts = 1.
+    - cites_applicable_authority (HARD GATE — anchor 5 required, not weighted): 5 when
+      the letter cites NO external authority, OR when EVERY authority named in the
+      letter is real, fairly represented, and applicable to this insurer and denial.
+      Score below 5 only for false, invented, wrong-insurer, or misrepresented sources
+      actually invoked in the letter. Do not require citations to pass.
+    - addresses_denial_rationale (HARD GATE): 5 only if each denial reason is rebutted.
+    - rebuts_specific_flaw (HARD GATE): 5 only if every denial hook is factually rebutted.
+    - medical_director_persuasion (HARD GATE): 5 only if a skeptical medical director
+      would overturn based on the clinical argument IN THE LETTER — diagnosis-linked
+      necessity, severity, failed alternatives, duration, age/protocol fit, guideline
+      alignment. Score 1 for boilerplate necessity language, deferrals ("records
+      attached"), or arguments a UM director would dismiss as insufficient.
+    - cites_binding_policy: 5 when no binding policy is invoked, OR when invoked
+      policy/regulatory text is accurately applied to THIS case — not generic statute
+      padding without case tie-in.
+    - specific_requested_action: clear overturn/reprocess ask.
+    - credible_tone: professional and internally consistent.
+
+    Quote evidence verbatim from the appeal letter (empty string if absent).
+
+    After marking features, list "unrebutted_denial_points": an array of strings naming
+    EVERY specific denial reason from the denial letter that the appeal still fails to
+    rebut with concrete facts in the letter. Non-empty list = automatic DENY (hard
+    fail, not weighted). Use [] only when every distinct denial hook is factually
+    rebutted. Restating a denial reason without rebutting it counts as unrebutted.
 
     Denial letter you originally sent:
     {denial_text}
-
-    Clinical context provided by the provider:
-    {clinical_context}
 
     Appeal letter drafted by the patient's agent:
     {appeal_letter}
@@ -82,13 +107,12 @@ class AdkSimulatorClient:
     def __init__(self, model: Any | None = None) -> None:
         self._model = model
 
-    def assess(self, denial_text: str, clinical_context: str, appeal_letter: str) -> FeatureAssessment:
+    def assess(self, denial_text: str, appeal_letter: str) -> FeatureAssessment:
         from app.aegis_v1.simulator_agent import run_simulator_agent
 
         try:
             return run_simulator_agent(
                 denial_text=denial_text,
-                clinical_context=clinical_context,
                 appeal_letter=appeal_letter,
                 model=self._model,
             )
@@ -100,7 +124,6 @@ class AdkSimulatorClient:
             try:
                 return GeminiSimulatorClient().assess(
                     denial_text=denial_text,
-                    clinical_context=clinical_context,
                     appeal_letter=appeal_letter,
                 )
             except Exception:
@@ -131,10 +154,12 @@ class GeminiSimulatorClient:
         self.model = model or os.environ.get("AEGIS_SIMULATOR_MODEL", "gemini-3.1-pro-preview")
         self.location = location or os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
 
-    def assess(self, denial_text: str, clinical_context: str, appeal_letter: str) -> FeatureAssessment:
+    def assess(self, denial_text: str, appeal_letter: str) -> FeatureAssessment:
         from google import genai
         from google.genai import types
         from pydantic import BaseModel, Field
+
+        from app.aegis_v1.simulator_scoring import load_simulator_rules
 
         # google-genai + pydantic 2.13 require string enum values in JSON schemas.
         class _Mark(BaseModel):
@@ -145,16 +170,19 @@ class GeminiSimulatorClient:
             critique: str = Field(description="Critique the appeal as a strict adjuster BEFORE marking features.")
             addresses_denial_rationale: _Mark
             cites_clinical_evidence: _Mark
+            cites_applicable_authority: _Mark
             cites_binding_policy: _Mark
             rebuts_specific_flaw: _Mark
+            medical_director_persuasion: _Mark
             specific_requested_action: _Mark
             credible_tone: _Mark
+            unrebutted_denial_points: list[str] = Field(
+                default_factory=list,
+                description="Denial hooks from the denial letter still not rebutted with facts in the appeal.",
+            )
 
-        keys = [
-            "addresses_denial_rationale", "cites_clinical_evidence", "cites_binding_policy",
-            "rebuts_specific_flaw", "specific_requested_action", "credible_tone",
-        ]
-        prompt = _build_assess_prompt(denial_text, clinical_context, appeal_letter)
+        keys = list(load_simulator_rules().features.keys())
+        prompt = _build_assess_prompt(denial_text, appeal_letter)
         try:
             from app.gemini_retry import generate_content_with_fallback
 
@@ -184,6 +212,11 @@ class GeminiSimulatorClient:
                     )
                     for k in keys
                 },
+                unrebutted_denial_points=[
+                    str(point).strip()
+                    for point in data.get("unrebutted_denial_points", []) or []
+                    if str(point).strip()
+                ],
             )
         except Exception:
             logging.getLogger(__name__).warning(

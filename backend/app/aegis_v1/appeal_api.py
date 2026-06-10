@@ -4,9 +4,10 @@ from typing import Any
 
 from fastapi import APIRouter, Depends
 from fastapi import HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 
 from app.aegis_v1.appeal_orchestrator import run_appeal_with_outcome
+from app.aegis_v1.patient_context import compose_interactive_clinical_context, normalize_gender
 from app.aegis_v1.v1_config import build_v1_library_stack
 
 router = APIRouter(prefix="/v1", tags=["appeal"])
@@ -14,9 +15,28 @@ router = APIRouter(prefix="/v1", tags=["appeal"])
 
 class AppealRequest(BaseModel):
     denial_text: str
-    clinical_context: str = ""
     case_id: str = "interactive_case"
+    insurer: str
+    patient_age: int = Field(ge=1, le=120)
+    patient_gender: str
+    clinical_context: str = ""
     discovery_enabled: bool = False
+
+    @field_validator("insurer")
+    @classmethod
+    def _validate_insurer(cls, value: str) -> str:
+        allowed = {"Aetna", "Cigna", "UHC"}
+        if value not in allowed:
+            raise ValueError(f"insurer must be one of {sorted(allowed)}")
+        return value
+
+    @field_validator("patient_gender")
+    @classmethod
+    def _validate_gender(cls, value: str) -> str:
+        normalized = normalize_gender(value)
+        if normalized not in {"F", "M", "X"}:
+            raise ValueError("patient_gender must be F, M, or X")
+        return normalized
 
 
 class AppealResponse(BaseModel):
@@ -62,10 +82,18 @@ def create_appeal(
                 "and try again, or rerun with discovery_enabled=false."
             ),
         )
+    clinical_context = compose_interactive_clinical_context(
+        patient_age=req.patient_age,
+        patient_gender=req.patient_gender,
+        clinical_notes=req.clinical_context,
+    )
     result = run_appeal_with_outcome(
         denial_text=req.denial_text,
-        clinical_context=req.clinical_context,
+        clinical_context=clinical_context,
         case_id=req.case_id,
+        insurer=req.insurer,
+        patient_age=req.patient_age,
+        patient_gender=req.patient_gender,
         drafter_client=drafter_client,
         simulator_client=simulator_client,
         library_stack=library_stack,

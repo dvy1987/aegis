@@ -8,8 +8,10 @@ describe("demoSource", () => {
   it("drafts an appeal for a known case", async () => {
     const r = await demoSource.draftAppeal({
       denial_text: "x",
-      clinical_context: "",
       case_id: "case_13_cigna_mednec",
+      insurer: "Cigna",
+      patient_age: 49,
+      patient_gender: "F",
     });
     expect(r.outcome.verdict === "APPROVE" || r.outcome.verdict === "DENY").toBe(true);
     expect(r.appeal_letter.length).toBeGreaterThan(50);
@@ -17,8 +19,10 @@ describe("demoSource", () => {
   it("falls back for an unknown case id", async () => {
     const r = await demoSource.draftAppeal({
       denial_text: "x",
-      clinical_context: "",
       case_id: "nope",
+      insurer: "Aetna",
+      patient_age: 30,
+      patient_gender: "F",
     });
     expect(r.appeal_letter.length).toBeGreaterThan(50);
   });

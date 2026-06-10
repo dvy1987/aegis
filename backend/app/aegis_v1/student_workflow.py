@@ -56,6 +56,9 @@ class StudentWorkflowState(BaseModel):
     denial_text: str = ""
     clinical_context: str = ""
     case_id: str = "interactive_case"
+    insurer: str = ""
+    patient_age: int = -1
+    patient_gender: str = ""
     dataset_split: str = "interactive"
     run_mode: str = "interactive"
     phoenix_mode: str = PhoenixMode.APPEAL.value
@@ -124,6 +127,9 @@ def case_parser_node(
     denial_text: str = "",
     clinical_context: str = "",
     case_id: str = "interactive_case",
+    insurer: str = "",
+    patient_age: int = -1,
+    patient_gender: str = "",
 ) -> None:
     """Parse the denial into structured case fields."""
     from app.aegis_v1.tools import case_parser
@@ -133,11 +139,18 @@ def case_parser_node(
     ctx.state["denial_text"] = denial_text
     ctx.state["clinical_context"] = clinical_context
     ctx.state["case_id"] = case_id
+    ctx.state["insurer"] = insurer
+    ctx.state["patient_age"] = patient_age
+    ctx.state["patient_gender"] = patient_gender
 
+    structured = bool(insurer) and patient_age >= 1 and bool(patient_gender)
     result = case_parser(
         denial_text=denial_text,
         clinical_context=clinical_context,
         case_id=case_id,
+        insurer=insurer if structured else None,
+        patient_age=patient_age if structured else None,
+        patient_gender=patient_gender if structured else None,
     )
     ctx.state["parsed_case"] = result
 
@@ -333,15 +346,11 @@ def library_finalize_node(ctx: Any, node_input: Any = None) -> None:
 def drafter_prep_node(ctx: Any) -> str:
     """Resolve prompt + build drafter context message for v1_drafter_agent."""
     from app.aegis_v1.drafter_client import (
+        build_drafter_message,
         get_active_drafter_prompt_version,
         load_drafter_prompt,
     )
-    from app.aegis_v1.schemas import (
-        ParsedCase,
-        PhoenixSummary,
-        Playbook,
-        RetrievalResult,
-    )
+    from app.aegis_v1.schemas import Playbook, PhoenixSummary, RetrievalResult
 
     parsed = ctx.state.get("parsed_case", {})
     playbook_data = ctx.state.get("playbook", {})
@@ -354,22 +363,19 @@ def drafter_prep_node(ctx: Any) -> str:
     resolved_prompt = prompt_text if prompt_text else load_drafter_prompt(active_version)
     ctx.state["active_prompt_version"] = active_version
 
-    case_obj = ParsedCase.model_validate(parsed)
     retrieval_obj = RetrievalResult.model_validate(retrieval_data)
     playbook_obj = Playbook.model_validate(playbook_data)
     phoenix_obj = PhoenixSummary.model_validate(phoenix_data)
-    citations = retrieval_obj.hits[:3]
+    citations = [c.model_dump() for c in retrieval_obj.hits[:3]]
 
-    context_payload = {
-        "parsed_case": case_obj.model_dump(),
-        "citations": [c.model_dump() for c in citations],
-        "playbook": playbook_obj.model_dump(),
-        "phoenix_summary": phoenix_obj.model_dump(),
-    }
-    return (
-        f"{resolved_prompt}\n\nCONTEXT JSON:\n"
-        f"{json.dumps(context_payload, indent=2, default=str)}"
+    message = build_drafter_message(
+        denial_text=str(parsed.get("denial_text", "")),
+        clinical_context=str(parsed.get("clinical_context", "")),
+        citations=citations,
+        playbook=playbook_obj.model_dump(),
+        phoenix_summary=phoenix_obj.model_dump(),
     )
+    return f"{resolved_prompt}\n\n{message}"
 
 
 @node
