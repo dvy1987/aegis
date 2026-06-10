@@ -12,7 +12,8 @@ if TYPE_CHECKING:
     from app.aegis_v1.drafter_client import DrafterLLMClient
     from app.aegis_v1.simulator_client import SimulatorClient
 
-MAX_APPEAL_ATTEMPTS = 5
+MAX_APPEAL_ATTEMPTS = 2
+SHOWCASE_MEASUREMENT_MAX_ATTEMPTS = 1
 
 
 class AppealRunResult(BaseModel):
@@ -40,6 +41,11 @@ def run_appeal_with_outcome(
     drafter_client: "DrafterLLMClient | None" = None,
     simulator_client: "SimulatorClient | None" = None,
     library_stack: dict | None = None,
+    max_attempts: int | None = None,
+    phoenix_mode: PhoenixMode = PhoenixMode.APPEAL,
+    drafter_prompt_version: str | None = None,
+    drafter_prompt_text: str | None = None,
+    playbook_override: dict[str, Any] | None = None,
 ) -> AppealRunResult:
     """Run the Student, then the Outcome Simulator, and return both.
 
@@ -50,10 +56,14 @@ def run_appeal_with_outcome(
     from app.aegis_v1.drafter_client import is_offline_pipeline_client
     from app.aegis_v1.tools import simulator
 
+    attempts = max_attempts if max_attempts is not None else MAX_APPEAL_ATTEMPTS
+    if attempts < 1:
+        raise ValueError("max_attempts must be at least 1")
+
     best_package: dict[str, Any] | None = None
     best_outcome: dict[str, Any] | None = None
 
-    for attempt in range(1, MAX_APPEAL_ATTEMPTS + 1):
+    for attempt in range(1, attempts + 1):
         appeal_package = run_aegis_v1_pipeline(
             denial_text=denial_text,
             clinical_context=clinical_context,
@@ -63,11 +73,14 @@ def run_appeal_with_outcome(
             patient_gender=patient_gender,
             dataset_split=dataset_split,
             run_mode=run_mode,
-            phoenix_mode=PhoenixMode.APPEAL,
+            phoenix_mode=phoenix_mode,
             drafter_client=drafter_client,
             library_stack=library_stack,
+            drafter_prompt_version=drafter_prompt_version,
+            drafter_prompt_text=drafter_prompt_text,
+            playbook_override=playbook_override,
         )
-        if attempt == 1:
+        if attempt == 1 and phoenix_mode == PhoenixMode.APPEAL:
             write_appeal_phoenix_export(
                 appeal_package,
                 denial_text=denial_text,

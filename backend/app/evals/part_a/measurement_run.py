@@ -4,9 +4,12 @@ from typing import TYPE_CHECKING, Any, Literal
 
 from pydantic import BaseModel
 
+from app.aegis_v1.appeal_orchestrator import (
+    SHOWCASE_MEASUREMENT_MAX_ATTEMPTS,
+    run_appeal_with_outcome,
+)
 from app.aegis_v1.drafter_client import DrafterLLMClient
 from app.aegis_v1.phoenix_mode import PhoenixMode
-from app.aegis_v1.pipeline import run_aegis_v1_pipeline
 
 if TYPE_CHECKING:
     from app.aegis_v1.simulator_client import SimulatorClient
@@ -45,25 +48,20 @@ def run_measurement_case(
 
     from app.aegis_v1.patient_context import pipeline_inputs_from_case
 
-    package = run_aegis_v1_pipeline(
+    appeal = run_appeal_with_outcome(
         **pipeline_inputs_from_case(case_obj),
         dataset_split=case_obj.get("dataset_split", "showcase_measure"),
         run_mode="benchmark",
         phoenix_mode=PhoenixMode.HOLDOUT_READONLY,
         drafter_client=drafter_client,
+        simulator_client=simulator_client,
+        max_attempts=SHOWCASE_MEASUREMENT_MAX_ATTEMPTS,
         drafter_prompt_version=drafter_prompt_version,
         drafter_prompt_text=drafter_prompt_text,
         playbook_override=playbook_override,
     )
-
-    from app.aegis_v1.tools import simulator
-
-    sim = simulator(
-        parsed_case=package["parsed_case"],
-        appeal_draft=package["appeal_package_draft"],
-        self_check_result=package["self_check"],
-        client=simulator_client,
-    )
+    package = appeal.appeal_package
+    sim = appeal.outcome
     draft = package["appeal_package_draft"]
     metadata = package["trace_metadata"]
     return MeasurementResult(

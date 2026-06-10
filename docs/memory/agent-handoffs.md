@@ -3133,3 +3133,65 @@ AEGIS_LIBRARY_BUCKET=aegis-library-dm1oaz
 
 ### Working Tree
 - **Dirty, uncommitted** on `main`. Simulator rules v2_strict (8 features). No commit (PM did not request).
+
+## 2026-06-10 — Handoff (Cursor — judge weights + question_agent stub; session end)
+
+### Done
+- **Judge weights:** appeal_vector **35%**, grounding **25%**, clinical **20%**, coherence **10%** (`panel.py`, `learning/models.py`).
+- **Removed J5 evidence_completeness** from live judge panel (no LLM call). **Added `question_agent` dimension** at **10%** — **stub score 5** until Q&A probing agent ships (`panel.py` stub, `judge_workflow.py` graph trimmed to 5 quality LLM agents).
+- **Legacy judgments:** `evidence_completeness` → `question_agent: 5` via `normalize_dimension_scores()` for efficacy replay.
+- **case_121 judges re-run** (fresh drafts, new weights): denial-only **PASS** faithfulness, weighted **0.45** (J4=1, J6=2); full clinical **PASS**, weighted **0.82** (J4=5, J6=5). Saved `eval/runs/case-121-judges-20260610-030322.json`.
+- **Clarified for PM:** appeal path uses **`library_finder_agent`** (ADK `LlmAgent` + `search_library` tool) — not a separate “librarian” agent; `citations_used` is retrieval metadata judges ignore.
+
+### Debated
+- Evidence completeness importance — product-useful but not headline benchmark metric; removed in favor of future question agent.
+- PM confused **swarm** (Part B counterfactual test noise from agent diagnostics) vs **aegis-v1** (`/appeal` pipeline) — swarm mention was irrelevant to v1 debugging.
+
+### Deferred
+- **aegis-v1 “not working”** — PM reported at session end; **not diagnosed** (smoke test interrupted). Next agent: reproduce on `/appeal` or `run_aegis_v1_pipeline`, check Cloud Run logs, recent `appeal_orchestrator` / `measurement_run` dirty files.
+- **Commit + deploy** — PM has not requested.
+- **Real question agent** — appeal + showcase paths (up to 5 targeted questions); replace stub when built.
+
+### Next Agent Should Know
+- **Do not** discuss swarm counterfactual unless PM asks about Part B / learning loop.
+- **PASS/FAIL** = faithfulness (J2) only; weighted quality is informational.
+- Question agent stub inflates composite by **0.10** (always contributes 1.0 × 0.10).
+
+### Revisit Triggers
+- Question agent ships → replace stub with real judge + rubric; remove `STUBBED_QUALITY_DIMENSIONS`.
+- PM confirms v1 failure mode → fix before any swarm work.
+
+### Working Tree
+- Dirty (partial): `appeal_orchestrator.py`, `measurement_run.py`, related tests — verify vs prior large simulator/judge tree (may have been committed elsewhere).
+
+---
+
+## 2026-06-10 — Handoff (Cursor — appeal retry caps + library/orchestrator clarity)
+
+### Done
+- **Diagnosed “bad last run”** for PM: case_121 judge JSON (`eval/runs/case-121-judges-20260610-030322.json`) completed; denial-only **PASS** with weighted **0.45** (weak clinical/vectors, not a crash). Showcase measurement was already single-draft; confusion was vs `/appeal` best-of-N.
+- **Explained library_finder:** LLM formulates search query only; `search_library` is BM25/Vertex keyword search. Offline path uses deterministic `build_baseline_query` without library LLM.
+- **Appeal orchestrator retry caps (uncommitted):**
+  - `MAX_APPEAL_ATTEMPTS` **5 → 2** for `POST /v1/appeal` (first APPROVE wins; else best DENY of two).
+  - `SHOWCASE_MEASUREMENT_MAX_ATTEMPTS = 1` — showcase measure stages wire through `run_appeal_with_outcome(max_attempts=1)` via `measurement_run.py`.
+  - `max_attempts` + prompt/playbook/phoenix_mode params added to orchestrator for measurement parity.
+- **Tests:** `test_appeal_best_of_five.py` → best-of-two; `test_showcase_measurement_drafts_once_even_when_simulator_denies` added. **12 passed** on orchestrator/measurement slice.
+
+### Debated
+- Whether showcase used orchestrator retries — it did not before; now measurement explicitly uses orchestrator with `max_attempts=1` for a single code path.
+
+### Deferred
+- **Commit + deploy** — PM has not requested.
+- **Insurer-filtered library retrieval** — discussed as higher leverage than library LLM; not built.
+- **Showcase student packet** (age/gender only) may thin drafts — flagged in prior session, not changed here.
+
+### Next Agent Should Know
+- `/appeal` = up to **2** drafts; showcase measurement = **1** draft only.
+- Library LLM ≠ search; optional to replace with baseline query for cost/latency.
+
+### Revisit Triggers
+- PM wants more than 2 `/appeal` attempts → change `MAX_APPEAL_ATTEMPTS` only with PM approval.
+- Showcase should match `/appeal` retry policy → do not without explicit ask (measurement stays 1).
+
+### Working Tree
+- **Dirty, uncommitted** on `main`: `appeal_orchestrator.py`, `measurement_run.py`, `test_appeal_best_of_five.py`, `test_measurement_run.py`, memory docs. No commit this session.

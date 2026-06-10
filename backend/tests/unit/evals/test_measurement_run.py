@@ -111,6 +111,32 @@ def test_measurement_runner_can_use_candidate_prompt_text_without_promotion() ->
     assert result.prompt_version == "candidate_v3"
 
 
+def test_showcase_measurement_drafts_once_even_when_simulator_denies(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Showcase measure stages must not best-of-five retry the drafter."""
+    pipeline_calls = {"n": 0}
+    original = None
+
+    def counting_pipeline(*args, **kwargs):
+        pipeline_calls["n"] += 1
+        return original(*args, **kwargs)
+
+    import app.aegis_v1.appeal_orchestrator as orchestrator
+
+    original = orchestrator.run_aegis_v1_pipeline
+    monkeypatch.setattr(orchestrator, "run_aegis_v1_pipeline", counting_pipeline)
+
+    result = run_measurement_case(
+        CASE,
+        drafter_client=StubDrafterClient(),
+        simulator_client=StubSimulatorClient(uniform_assessment(1)),
+    )
+
+    assert pipeline_calls["n"] == 1
+    assert result.verdict == "DENY"
+
+
 def test_measurement_runner_can_use_candidate_playbook_without_promotion() -> None:
     result = run_measurement_case(
         CASE,

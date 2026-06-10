@@ -1,7 +1,18 @@
 # Current State — Aegis
 
-**Updated:** 2026-06-10 (session end — simulator/judge letter-only scoring; legal gate removed; uncommitted)
-**Phase:** **ADK Phases 0–5 largely on prod. Large dirty tree: simulator v2_strict (8 features), letter-only simulator/judge firewall, J2 faithfulness rewrite — not committed/deployed.**
+**Updated:** 2026-06-10 (session end — appeal retry caps; library/orchestrator clarity)
+**Phase:** **ADK Phases 0–5 largely on prod. `/appeal` best-of-2 + showcase measure single-draft wired in code (uncommitted). Large prior simulator/judge tree still may need commit/deploy.**
+
+### 2026-06-10 - Appeal retry caps (uncommitted)
+- **`/appeal`:** `MAX_APPEAL_ATTEMPTS = 2` (was 5).
+- **Showcase measurement:** `SHOWCASE_MEASUREMENT_MAX_ATTEMPTS = 1` via `run_measurement_case` → orchestrator.
+- **Next:** PM commit when ready; deploy `aegis-v1-api`.
+
+### 2026-06-10 - Judge weights + question_agent stub (uncommitted)
+- **Weights:** appeal_vector 35%, grounding 25%, clinical 20%, question_agent 10% (stub=5), coherence 10%.
+- **Removed** J5 evidence_completeness from panel; placeholder until question agent built.
+- **case_121 judges:** denial-only weighted 0.45; full clinical 0.82 (`eval/runs/case-121-judges-20260610-030322.json`).
+- **Next:** PM priority — **debug aegis-v1 `/appeal`** (not swarm); then commit/deploy if approved.
 
 ### 2026-06-10 - Simulator + judge letter-only; legal gate removed (uncommitted)
 - **Simulator:** denial + appeal letter **only**; hard-gate fail → score 0; **`legal_rebuttal_viability` removed**.
