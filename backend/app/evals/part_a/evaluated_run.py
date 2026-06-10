@@ -97,9 +97,22 @@ def run_evaluated_case(
     letter = appeal_package["appeal_package_draft"]["appeal_letter"]
     trace_meta = _trace_metadata_dict(appeal_package, trace_tags)
     parsed = appeal_package.get("parsed_case") or {}
+    from app.learning.slice_key import format_slice_key, sub_tactic_from_case
+
     trace_meta.setdefault("case_id", str(parsed.get("case_id") or case_obj.get("case_id") or ""))
     trace_meta.setdefault("insurer", str(parsed.get("insurer") or ""))
     trace_meta.setdefault("denial_type", str(parsed.get("denial_type") or ""))
+    sub_tactic = sub_tactic_from_case(case_obj)
+    trace_meta.setdefault("sub_tactic", sub_tactic)
+    if trace_meta.get("insurer") and trace_meta.get("denial_type"):
+        trace_meta.setdefault(
+            "slice",
+            format_slice_key(
+                str(trace_meta["insurer"]),
+                str(trace_meta["denial_type"]),
+                sub_tactic,
+            ),
+        )
     raw_tm = appeal_package.get("trace_metadata")
     if not trace_meta.get("prompt_version") and raw_tm is not None:
         trace_meta["prompt_version"] = str(

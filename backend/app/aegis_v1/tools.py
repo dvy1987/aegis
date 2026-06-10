@@ -261,13 +261,23 @@ def corpus_retrieval(query: str, top_k: int = 3) -> dict[str, Any]:
     return RetrievalResult(query=query, hits=hits).model_dump()
 
 
-def playbook_loader(insurer: str, denial_type: str) -> dict[str, Any]:
+def playbook_loader(
+    insurer: str,
+    denial_type: str,
+    *,
+    sub_tactic: str | None = None,
+) -> dict[str, Any]:
     """Load the current promoted playbook, or return a marked cold-start playbook."""
+
+    from app.learning.slice_key import playbook_filename
 
     normalized_type = _normalize_denial_type(denial_type.replace("_", " "))
     if normalized_type == "unknown":
         normalized_type = _slug(denial_type)
-    path = PLAYBOOK_DIR / f"{_slug(insurer)}__{normalized_type}.json"
+    tactic = (sub_tactic or "unknown").strip()
+    specific_path = PLAYBOOK_DIR / playbook_filename(insurer, normalized_type, tactic)
+    legacy_path = PLAYBOOK_DIR / f"{_slug(insurer)}__{normalized_type}.json"
+    path = specific_path if specific_path.exists() else legacy_path
 
     if path.exists():
         data = json.loads(path.read_text(encoding="utf-8"))

@@ -10,6 +10,7 @@ from app.learning.mutation import reflective_mutate
 from app.learning.reflection_client import ReflectionClient
 from app.learning.selection import pareto_select, select_component
 from app.learning.signal import acquire_signal
+from app.learning.slice_key import parse_slice_key, playbook_component_id
 from app.learning.store import PhoenixLearningStore
 
 JUDGE_CONFIG_VERSION = "frozen_v1"
@@ -38,6 +39,35 @@ class LearningCoordinator:
         self.max_merges = max_merges
         self.minibatch_size = minibatch_size
 
+    def _eligible_component_ids(self) -> frozenset[str]:
+        return frozenset(
+            {"drafter_system_prompt"}
+            | {playbook_component_id(slice_key) for slice_key in self.slice_filters}
+        )
+
+    def _load_playbook_component(self, slice_key: str) -> Component:
+        from app.aegis_v1.tools import playbook_loader
+
+        comp_id = playbook_component_id(slice_key)
+        versions = self.store.list_prompt_versions(comp_id)
+        if versions:
+            pb = self.store.read_prompt_version(comp_id)
+            if pb.playbook:
+                return Component(
+                    component_id=comp_id,
+                    kind="playbook",
+                    version=pb.version,
+                    playbook=pb.playbook,
+                )
+        insurer, denial_type, sub_tactic = parse_slice_key(slice_key)
+        raw = playbook_loader(insurer, denial_type, sub_tactic=sub_tactic)
+        return Component(
+            component_id=comp_id,
+            kind="playbook",
+            version=str(raw.get("version") or "cold-start"),
+            playbook=raw,
+        )
+
     def _seed(self) -> Candidate:
         prompt = self.store.read_prompt_version("drafter_system_prompt")
         components = {
@@ -45,13 +75,7 @@ class LearningCoordinator:
                                                version=prompt.version, text=prompt.text),
         }
         for slice_key in self.slice_filters:
-            pb = self.store.read_prompt_version(f"playbook:{slice_key}")
-            components[f"playbook:{slice_key}"] = Component(
-                component_id=f"playbook:{slice_key}",
-                kind="playbook",
-                version=pb.version,
-                playbook=pb.playbook,
-            )
+            components[playbook_component_id(slice_key)] = self._load_playbook_component(slice_key)
         return Candidate(candidate_id="seed", components=components, origin="seed")
 
     def _component_slice_filter(self, component_id: str) -> str | None:
@@ -90,9 +114,10 @@ class LearningCoordinator:
         merges = 0
         counter = 0
 
+        allowed = self._eligible_component_ids()
         for round_index in range(self.max_rounds):
             parent = pareto_select(pool, scores)
-            comp_id = select_component(parent, round_index)   # round-robin coverage (v2 §4.2)
+            comp_id = select_component(parent, round_index, allowed=allowed)
             signal = acquire_signal(self.store, component_id=comp_id,
                                     dataset_split=self.train_split,
                                     slice_filter=self._component_slice_filter(comp_id))
@@ -132,9 +157,18 @@ class LearningCoordinator:
     def promote(self, proposal: PromotionProposal, *, approver: str) -> None:
         """HITL promotion: register the new component versions + write the audit. Caller
         is responsible for only calling this on an approved, promotable proposal."""
+        active = set(self.slice_filters)
+        filtered_components = {}
+        for comp_id, comp in proposal.candidate.components.items():
+            if comp_id.startswith("playbook:"):
+                slice_key = comp_id.removeprefix("playbook:")
+                if slice_key not in active:
+                    continue
+            filtered_components[comp_id] = comp
+        candidate = proposal.candidate.model_copy(update={"components": filtered_components})
         audit = PromotionAudit(
-            candidate_id=proposal.candidate.candidate_id, experiment_id=proposal.after.experiment_id,
+            candidate_id=candidate.candidate_id, experiment_id=proposal.after.experiment_id,
             before_composite=proposal.before.composite, after_composite=proposal.after.composite,
-            per_dimension_deltas=proposal.per_dimension_deltas, diff_summary=proposal.candidate.diff_summary,
+            per_dimension_deltas=proposal.per_dimension_deltas, diff_summary=candidate.diff_summary,
             approver=approver, vetoes=proposal.vetoes)
-        self.store.register_promotion(proposal.candidate, audit)
+        self.store.register_promotion(candidate, audit)

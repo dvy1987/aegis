@@ -10,10 +10,10 @@
   },
   "quick_train": [
     "case_101_cigna_mednec",
-    "case_116_cigna_mednec",
-    "case_132_cigna_mednec",
     "case_145_cigna_mednec",
-    "case_184_cigna_mednec"
+    "case_184_cigna_mednec",
+    "case_192_cigna_mednec",
+    "case_195_cigna_mednec"
   ],
   "quick_holdout": [
     "case_126_cigna_mednec",

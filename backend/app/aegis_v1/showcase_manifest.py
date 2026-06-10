@@ -18,6 +18,7 @@ class ShowcaseCase(BaseModel):
     path: str
     insurer: str
     denial_type: str
+    sub_tactic: str = "unknown"
     denial_letter_text: str
     clinical_context: str = ""
     patient_age: int = 0
@@ -52,9 +53,11 @@ class ShowcaseManifest(BaseModel):
     @property
     def quick_slice(self) -> str:
         if not self.quick_train:
-            return "unknown:unknown"
+            return "unknown:unknown:unknown"
         first = self.quick_train[0]
-        return f"{first.insurer}:{first.denial_type}"
+        from app.learning.slice_key import format_slice_key
+
+        return format_slice_key(first.insurer, first.denial_type, first.sub_tactic)
 
 
 def _case_path(case_id: str) -> Path:
@@ -70,12 +73,15 @@ def _load_case(case_id: str) -> ShowcaseCase:
     if actual_id != case_id:
         raise ValueError(f"Manifest case id mismatch: {case_id} != {actual_id}")
     profile = data.get("patient_profile") or {}
+    matrix_cell = (data.get("synthetic_provenance") or {}).get("matrix_cell") or {}
+    sub_tactic = str(matrix_cell.get("sub_tactic") or "unknown")
     return ShowcaseCase(
         case_id=case_id,
         headline=case_id,
         path=str(path.relative_to(REPO_ROOT)),
         insurer=str(data.get("insurer") or "unknown"),
         denial_type=str(data.get("denial_type") or "unknown").replace(" ", "_").lower(),
+        sub_tactic=sub_tactic,
         denial_letter_text=str(data.get("denial_letter_text") or ""),
         clinical_context=str(data.get("clinical_context") or ""),
         patient_age=int(profile.get("age") or 0),

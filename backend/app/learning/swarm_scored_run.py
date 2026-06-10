@@ -9,9 +9,11 @@ from app.learning.models import ScoredRun, composite_score
 
 
 def _case_slice(case: dict[str, Any]) -> str:
+    from app.learning.slice_key import format_slice_key, sub_tactic_from_case
+
     insurer = case.get("insurer") or case.get("patient_profile", {}).get("insurer", "unknown")
     denial = case.get("denial_type") or "unknown"
-    return f"{insurer}:{denial}".replace(" ", "_")
+    return format_slice_key(str(insurer), str(denial), sub_tactic_from_case(case))
 
 
 def _launder_trace_signals(signals: list[dict[str, Any]]) -> list[dict[str, Any]]:

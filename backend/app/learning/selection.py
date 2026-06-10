@@ -46,9 +46,18 @@ def pareto_select(pool: list[Candidate], scores: Scores) -> Candidate:
     return max(front, key=lambda c: (coverage(c), mean(c), c.candidate_id))
 
 
-def select_component(parent: Candidate, round_index: int) -> str:
+def select_component(
+    parent: Candidate,
+    round_index: int,
+    *,
+    allowed: frozenset[str] | None = None,
+) -> str:
     """Round-robin across the candidate's components so every lever (global prompt and
     each per-slice playbook) receives updates over the run (GEPA module round-robin,
     v2 spec §4.2). Deterministic: sorted ids indexed by the round."""
     ids = sorted(parent.components)
+    if allowed is not None:
+        ids = [component_id for component_id in ids if component_id in allowed]
+    if not ids:
+        raise ValueError("no eligible components for mutation")
     return ids[round_index % len(ids)]

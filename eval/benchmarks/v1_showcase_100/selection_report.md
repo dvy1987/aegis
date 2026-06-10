@@ -8,29 +8,29 @@ The preview run uses a **separate** 7-case bundle from the Gumloop-reviewed `cas
 
 | Role | Insurer | Denial type | Cases |
 |---|---|---|---|
-| Training (5) | Cigna | Medical necessity | `case_101`, `case_116`, `case_132`, `case_145`, `case_184` |
+| Training (5) | Cigna | Medical necessity | `case_101`, `case_145`, `case_184`, `case_192`, `case_195` |
 | Holdout (2) | Cigna | Medical necessity | `case_126`, `case_131` |
 
 ### Selection rationale
 
 **Slice:** Cigna + medical necessity (28 cases available in 101–200).
 
-**Holdout pair (closest-to-medium in slice):**
+**Pairing rule:** each holdout shares `insurer + denial_type + sub_tactic` with ≥2 training cases.
 
-| Case | Treatment lane | Why holdout |
+| Holdout | Sub-tactic | Training partners |
 |---|---|---|
-| `case_126` | Gastroparesis — Enterra gastric electrical stimulation | Geriatric criteria misapplied to young patient; insurer's HDE/investigational defense is the main counter |
-| `case_131` | Oncology — post-treatment surveillance CT | Real guideline exists, procedurally clean; appeal hinges on rising CEA + age-mismatched criteria |
+| `case_126` | `not_evidence_based` | `case_101`, `case_145`, `case_184` (3) |
+| `case_131` | `frequency_excessive` | `case_192`, `case_195` (2) |
 
-**Training (diverse clinical lanes):**
-
-| Case | Treatment lane |
-|---|---|
-| `case_101` | Neurology — CGRP migraine preventive |
-| `case_116` | Rehab — supervised PT continuation |
-| `case_132` | Orthopedics — knee MRI |
-| `case_145` | Women's health — recurrent BV suppressive therapy |
-| `case_184` | Behavioral health — rTMS for TRD |
+| Case | Role | Sub-tactic | Treatment lane |
+|---|---|---|---|
+| `case_101` | Train | `not_evidence_based` | Neurology — CGRP migraine preventive |
+| `case_145` | Train | `not_evidence_based` | Women's health — recurrent BV suppressive therapy |
+| `case_184` | Train | `not_evidence_based` | Behavioral health — rTMS for TRD |
+| `case_192` | Train | `frequency_excessive` | Oncology — carfilzomib infusion frequency |
+| `case_195` | Train | `frequency_excessive` | Endocrine — Dexcom G7 CGM |
+| `case_126` | Holdout | `not_evidence_based` | Gastroparesis — Enterra gastric electrical stimulation |
+| `case_131` | Holdout | `frequency_excessive` | Oncology — post-treatment surveillance CT |
 
 All 28 Cigna med-nec cases in 101–200 score `appeal_difficulty` 5 (easy); no true medium holdouts exist in this batch.
 

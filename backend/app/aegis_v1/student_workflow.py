@@ -175,6 +175,7 @@ def playbook_loader_node(ctx: Any) -> None:
         playbook = playbook_loader(
             insurer=parsed.get("insurer", "unknown"),
             denial_type=parsed.get("denial_type", "unknown"),
+            sub_tactic=parsed.get("sub_tactic"),
         )
     ctx.state["playbook"] = playbook
 

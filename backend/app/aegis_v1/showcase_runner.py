@@ -23,6 +23,7 @@ from app.evals.part_a.llm_judges import GeminiJudgeClient
 from app.evals.part_a.measurement_run import run_measurement_case
 from app.evals.part_a.recorder import OtelPhoenixRecorder
 from app.learning.coordinator import LearningCoordinator
+from app.learning.slice_key import format_slice_key
 from app.learning.experiment import LiveExperimentRunner
 from app.learning.models import PromotionAudit, PromotionProposal
 from app.learning.phoenix_live import LivePhoenixLearningStore
@@ -52,8 +53,7 @@ def _case_obj(case: ShowcaseCase, *, dataset_split: str) -> dict:
 
 
 def _case_slice(case: ShowcaseCase) -> str:
-    insurer = "UnitedHealthcare" if case.insurer == "UHC" else case.insurer
-    return f"{insurer}:{case.denial_type}"
+    return format_slice_key(case.insurer, case.denial_type, case.sub_tactic)
 
 
 def _slice_filters(cases: list[ShowcaseCase]) -> list[str]:
@@ -75,7 +75,7 @@ def _dataset(cases: list[ShowcaseCase]) -> list[dict]:
         out.append(
             {
                 "case_id": case.case_id,
-                "slice": f"{parsed['insurer']}:{parsed['denial_type']}",
+                "slice": _case_slice(case),
                 "parsed_case": parsed,
                 "citations": [],
                 "phoenix_summary": phoenix_mcp_lookup(
@@ -290,7 +290,7 @@ def _write_training_checkpoint(
         patient_age=student_inputs["patient_age"],
         patient_gender=student_inputs["patient_gender"],
     )
-    slice_key = f"{parsed['insurer']}:{parsed['denial_type']}"
+    slice_key = _case_slice(case)
     prompt_version: str | None = None
     prompt_text: str | None = None
     playbook_override: dict | None = None
@@ -348,7 +348,7 @@ def _eval_post_gepa_candidate(
             patient_age=student_inputs["patient_age"],
             patient_gender=student_inputs["patient_gender"],
         )
-        slice_key = f"{parsed['insurer']}:{parsed['denial_type']}"
+        slice_key = _case_slice(case)
         try:
             run = run_evaluated_case(
                 case.judge_case(dataset_split=train_split),

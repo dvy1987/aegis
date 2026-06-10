@@ -132,11 +132,20 @@ def rows_to_scored_runs(
             or _aegis_attribute(span, "case_id")
             or "unknown"
         )
+        from app.learning.slice_key import format_slice_key
+
         insurer = _aegis_attribute(span, "insurer") or payload.get("insurer", "unknown")
         denial_type = _aegis_attribute(span, "denial_type") or payload.get(
             "denial_type", "unknown"
         )
-        slice_key = f"{insurer}:{denial_type}"
+        sub_tactic = (
+            _aegis_attribute(span, "sub_tactic")
+            or payload.get("sub_tactic")
+            or "unknown"
+        )
+        slice_key = _aegis_attribute(span, "slice") or format_slice_key(
+            insurer, denial_type, str(sub_tactic)
+        )
 
         verdict = (payload.get("verdict") or "").upper()
         hard_gate_pass = verdict == "PASS"

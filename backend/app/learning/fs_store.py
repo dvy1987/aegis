@@ -22,24 +22,15 @@ def _slug(value: str) -> str:
 
 
 def _playbook_path(playbooks_dir: Path, component_id: str) -> Path:
-    """Derive the on-disk filename from a component_id like 'playbook:Cigna:medical_necessity'.
+    """Derive the on-disk filename from a playbook component_id.
 
-    Mirrors playbook_loader's convention:
-        PLAYBOOK_DIR / f"{_slug(insurer)}__{normalized_type}.json"
-
-    component_id format:  "playbook:<insurer>:<denial_type>"
-                    e.g.  "playbook:Cigna:medical_necessity"
-                          "playbook:Aetna:prior_authorization"
+    component_id format: ``playbook:<insurer>:<denial_type>:<sub_tactic>``
     """
+    from app.learning.slice_key import parse_slice_key, playbook_filename
+
     without_prefix = component_id.removeprefix("playbook:")
-    parts = without_prefix.split(":", 1)
-    if len(parts) != 2:
-        raise ValueError(
-            f"Cannot derive playbook filename from component_id {component_id!r}. "
-            "Expected format: 'playbook:<insurer>:<denial_type>'"
-        )
-    insurer, denial_type = parts
-    filename = f"{_slug(insurer)}__{_slug(denial_type)}.json"
+    insurer, denial_type, sub_tactic = parse_slice_key(without_prefix)
+    filename = playbook_filename(insurer, denial_type, sub_tactic)
     return playbooks_dir / filename
 
 
@@ -51,13 +42,13 @@ def _playbook_json(comp: Component) -> dict[str, Any]:
     We write exactly those keys plus nothing else.
     """
     raw: dict[str, Any] = comp.playbook or {}
-    without_prefix = comp.component_id.removeprefix("playbook:")
-    parts = without_prefix.split(":", 1)
-    insurer = parts[0] if parts else "unknown"
-    denial_type = parts[1] if len(parts) > 1 else "unknown"
+    from app.learning.slice_key import parse_slice_key
+
+    insurer, denial_type, sub_tactic = parse_slice_key(comp.component_id.removeprefix("playbook:"))
     return {
         "insurer": raw.get("insurer", insurer),
         "denial_type": raw.get("denial_type", denial_type),
+        "sub_tactic": raw.get("sub_tactic", sub_tactic),
         "version": comp.version,
         "tactics": raw.get("tactics", []),
         "required_evidence": raw.get("required_evidence", []),
@@ -95,9 +86,13 @@ def _panel_result_to_scored_run(result: dict[str, Any]) -> ScoredRun | None:
         meta = pkg.get("trace_metadata", {})
 
         case_id: str = parsed.get("case_id", "") or result.get("case_path", "unknown")
+        from app.learning.slice_key import format_slice_key, sub_tactic_from_case
+
         insurer: str = parsed.get("insurer", "unknown")
         denial_type: str = parsed.get("denial_type", "unknown")
-        slice_key = f"{insurer}:{denial_type}"
+        teacher = pkg.get("teacher_case") or result.get("teacher_case") or {}
+        sub_tactic = sub_tactic_from_case(teacher if isinstance(teacher, dict) else {})
+        slice_key = format_slice_key(insurer, denial_type, sub_tactic)
 
         dimension_scores: dict[str, int] = {
             k: int(v) for k, v in (report.get("dimension_scores") or {}).items()
