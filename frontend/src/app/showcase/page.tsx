@@ -6,7 +6,7 @@ import {
   cancelRun,
   getRollbackTarget,
   getRunSession,
-  getShowcaseManifest,
+  resolveShowcaseManifest,
   rejectRun,
   resumeRun,
   rollbackRun,
@@ -34,10 +34,16 @@ export default function ShowcasePage() {
   const [runSession, setRunSession] = useState<ShowcaseRunSession | null>(null);
   const [rollbackTarget, setRollbackTarget] = useState<ShowcaseRollbackTarget | null>(null);
   const [runErr, setRunErr] = useState<string | null>(null);
+  const [manifestWarning, setManifestWarning] = useState<string | null>(null);
 
   useEffect(() => {
     ds.listCases().then(setCases);
-    getShowcaseManifest().then(setManifest).catch(() => undefined);
+    resolveShowcaseManifest()
+      .then(({ manifest: loaded, legacyApiWarning }) => {
+        setManifest(loaded);
+        setManifestWarning(legacyApiWarning);
+      })
+      .catch(() => undefined);
     getRollbackTarget().then(setRollbackTarget).catch(() => undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -150,6 +156,7 @@ export default function ShowcasePage() {
           setSel={setSel}
           bundle={bundle}
           manifest={manifest}
+          manifestWarning={manifestWarning}
           runSession={runSession}
           rollbackTarget={rollbackTarget}
           runErr={runErr}

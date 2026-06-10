@@ -9,6 +9,11 @@ import type {
   ShowcaseRollbackTarget,
   ShowcaseRunSession,
 } from "@/lib/types";
+import {
+  cohortMatchesCanonical,
+  isLegacyShowcaseManifest,
+  loadBundledShowcaseManifest,
+} from "@/lib/showcase/manifest";
 import { parseAppealResponse, parseQuestionTurn } from "@/lib/schema";
 import { getApiBase, getDiscoveryEnabled } from "@/lib/settings";
 import { demoSource } from "./demo";
@@ -93,9 +98,38 @@ async function jsonOrThrow<T>(res: Response, label: string): Promise<T> {
   return (await res.json()) as T;
 }
 
-export async function getShowcaseManifest(): Promise<ShowcaseManifest> {
+export type ShowcaseManifestLoad = {
+  manifest: ShowcaseManifest;
+  /** Shown when the API still serves the retired 8/80 draft cohort. */
+  legacyApiWarning: string | null;
+};
+
+export async function resolveShowcaseManifest(): Promise<ShowcaseManifestLoad> {
   const base = getApiBase();
-  return jsonOrThrow<ShowcaseManifest>(await fetch(`${base}/v1/showcase/manifest`), "showcase manifest");
+  const legacyWarning =
+    "Showcase API is on the legacy 8/80 cohort. The grid uses the bundled 5/50 manifest. Redeploy aegis-v1-api (or point NEXT_PUBLIC_AEGIS_API at a current backend) before starting a run.";
+
+  try {
+    const res = await fetch(`${base}/v1/showcase/manifest`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`showcase manifest failed: ${res.status}`);
+    const api = (await res.json()) as ShowcaseManifest;
+    if (cohortMatchesCanonical(api) && !isLegacyShowcaseManifest(api)) {
+      return { manifest: api, legacyApiWarning: null };
+    }
+    return {
+      manifest: await loadBundledShowcaseManifest(),
+      legacyApiWarning: legacyWarning,
+    };
+  } catch {
+    return {
+      manifest: await loadBundledShowcaseManifest(),
+      legacyApiWarning: null,
+    };
+  }
+}
+
+export async function getShowcaseManifest(): Promise<ShowcaseManifest> {
+  return (await resolveShowcaseManifest()).manifest;
 }
 
 export async function startQuickRun(): Promise<ShowcaseRunSession> {

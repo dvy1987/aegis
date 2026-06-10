@@ -24,6 +24,7 @@ export interface ShowcaseFilmProps {
   setSel: (id: string) => void;
   bundle: ShowcaseBundle | null;
   manifest: ShowcaseManifest | null;
+  manifestWarning?: string | null;
   runSession: ShowcaseRunSession | null;
   rollbackTarget: ShowcaseRollbackTarget | null;
   runErr: string | null;
@@ -83,6 +84,7 @@ function ShowcaseFilmBody(props: ShowcaseFilmProps) {
       <ActThesis />
       <ActInstrument
         manifest={props.manifest}
+        manifestWarning={props.manifestWarning}
         session={props.runSession}
         runErr={props.runErr}
         rollbackTarget={props.rollbackTarget}

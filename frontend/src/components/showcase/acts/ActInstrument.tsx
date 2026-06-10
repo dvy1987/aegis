@@ -33,6 +33,7 @@ const sectionClass =
  */
 export function ActInstrument({
   manifest,
+  manifestWarning,
   session,
   runErr,
   rollbackTarget,
@@ -46,6 +47,7 @@ export function ActInstrument({
   rollbackLatestRun,
 }: {
   manifest: ShowcaseManifest | null;
+  manifestWarning?: string | null;
   session: ShowcaseRunSession | null;
   runErr: string | null;
   rollbackTarget: ShowcaseRollbackTarget | null;
@@ -128,6 +130,21 @@ export function ActInstrument({
             <h2 className="sc-h2">{INSTRUMENT_HEADLINE}</h2>
             <InstrumentArc />
           </motion.div>
+
+          {manifestWarning && (
+            <div
+              className="rounded-md px-4 py-3 sc-body"
+              style={{
+                border: "1px solid var(--sc-warn)",
+                background: "color-mix(in oklch, var(--sc-warn) 12%, transparent)",
+                fontSize: "0.9rem",
+                color: "var(--sc-text)",
+              }}
+              role="status"
+            >
+              {manifestWarning}
+            </div>
+          )}
 
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-[0.85fr_1.15fr]">
             <RunControlDock
