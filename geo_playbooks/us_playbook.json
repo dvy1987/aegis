@@ -1,0 +1,28 @@
+{
+  "playbook_id": "us",
+  "display_name": "US-playbook",
+  "version": "day_zero",
+  "rules": [
+    {
+      "rule_id": "us_001",
+      "scope": "US federal",
+      "text": "When the denial letter states an appeal deadline, repeat that deadline explicitly in the appeal and request timely review.",
+      "status": "active",
+      "added_in_version": "day_zero"
+    },
+    {
+      "rule_id": "us_002",
+      "scope": "US federal",
+      "text": "Request the claim file and the specific clinical criteria applied, in writing, when the denial cites guidelines without enough detail to rebut.",
+      "status": "active",
+      "added_in_version": "day_zero"
+    },
+    {
+      "rule_id": "us_003",
+      "scope": "US federal",
+      "text": "Keep tone factual and person-centered. This is draft assistance only — not legal or medical advice.",
+      "status": "active",
+      "added_in_version": "day_zero"
+    }
+  ]
+}

@@ -19,7 +19,7 @@ def test_stub_swarm_runner_monotone_lift_on_strategist_mutation():
         failing_cases=[
             ScoredRun(
                 case_id="micro_t1",
-                slice="Cigna:medical_necessity",
+                slice="Cigna:medical_necessity:not_evidence_based",
                 dimension_scores={"appeal_vector_capture": 1},
                 hard_gate_pass=True,
                 weighted_quality=0.2,

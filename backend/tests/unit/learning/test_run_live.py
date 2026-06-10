@@ -35,5 +35,5 @@ def test_benchmark_dataset_filters_by_slice(monkeypatch) -> None:
         "_benchmark_dataset",
         lambda slice_filter: [{"slice": slice_filter, "case_id": "stub"}],
     )
-    rows = run_live._benchmark_dataset("Cigna:medical_necessity")
-    assert rows and rows[0]["slice"] == "Cigna:medical_necessity"
+    rows = run_live._benchmark_dataset("Cigna:medical_necessity:not_evidence_based")
+    assert rows and rows[0]["slice"] == "Cigna:medical_necessity:not_evidence_based"

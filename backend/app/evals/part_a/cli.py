@@ -69,8 +69,12 @@ def _run_learning(panel_report_path: Path, slice_filter: str, approver: str) -> 
     try:
         from app.aegis_v1.tools import CURRENT_PROMPT_VERSION, playbook_loader
         from app.learning.models import Component
-        pb = playbook_loader(*slice_filter.split(":", 1)) if ":" in slice_filter else {}
-        insurer, denial_type = (slice_filter.split(":", 1) + ["unknown"])[:2]
+        from app.learning.slice_key import parse_slice_key
+        if ":" in slice_filter:
+            insurer, denial_type, sub_tactic = parse_slice_key(slice_filter)
+            pb = playbook_loader(insurer, denial_type, sub_tactic=sub_tactic)
+        else:
+            pb = {}
         store.seed_component(Component(
             component_id=f"playbook:{slice_filter}",
             kind="playbook",
@@ -95,6 +99,7 @@ def _run_learning(panel_report_path: Path, slice_filter: str, approver: str) -> 
         runner=runner,
         reflection_client=ReflectionClient(),
         slice_filter=slice_filter,
+        slice_filters=[slice_filter],
     )
 
     proposal = coordinator.optimize()

@@ -89,6 +89,11 @@ export const STAGE_CAPTIONS: Record<string, string> = {
 };
 
 export const APPROVE_CTA = "Promote GEPA proposal";
+export const REVIEW_PROMOTION_CTA = "Review proposed changes";
+export const PROMOTION_REVIEW_EYEBROW = "GEPA PROPOSAL";
+export const PROMOTION_REVIEW_HEADLINE = "Review before you ship";
+export const PROMOTION_REVIEW_LEAD =
+  "Scroll through every proposed change. Nothing promotes until you approve here.";
 export const REJECT_CTA = "Discard proposal";
 export const CANCEL_CTA = "Cancel run";
 

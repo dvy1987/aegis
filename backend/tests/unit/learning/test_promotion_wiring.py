@@ -56,8 +56,8 @@ def test_playbook_promotion_writes_runtime_loadable_filename(tmp_path: Path) -> 
     candidate = Candidate(
         candidate_id="c1",
         components={
-            "playbook:Cigna:medical_necessity": Component(
-                component_id="playbook:Cigna:medical_necessity",
+            "playbook:Cigna:medical_necessity:not_evidence_based": Component(
+                component_id="playbook:Cigna:medical_necessity:not_evidence_based",
                 kind="playbook",
                 version="cigna_mednec_v2",
                 playbook={
@@ -72,7 +72,9 @@ def test_playbook_promotion_writes_runtime_loadable_filename(tmp_path: Path) -> 
 
     store.register_promotion(candidate, _audit())
 
-    payload = json.loads((playbooks_dir / "cigna__medical_necessity.json").read_text())
+    payload = json.loads(
+        (playbooks_dir / "cigna__medical_necessity__not_evidence_based.json").read_text()
+    )
     assert payload["version"] == "cigna_mednec_v2"
     assert payload["tactics"] == ["Quote the clinical criteria directly."]
 

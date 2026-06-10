@@ -1,11 +1,18 @@
 from app.learning.coordinator import LearningCoordinator
 from app.learning.experiment import StubExperimentRunner
-from app.learning.models import Component, ScoredRun, composite_score
+from app.learning.models import (
+    Candidate,
+    Component,
+    ExperimentResult,
+    PromotionProposal,
+    ScoredRun,
+    composite_score,
+)
 from app.learning.reflection_client import StubReflectionClient
 from app.learning.store import InMemoryPhoenixLearningStore
 
-SLICE = "Cigna:medical_necessity"
-SLICE_2 = "Aetna:prior_authorization"
+SLICE = "Cigna:medical_necessity:not_evidence_based"
+SLICE_2 = "Aetna:prior_authorization:visit_limit_exceeded"
 DATASET = [
     {"case_id": "h1", "slice": SLICE, "base": {"appeal_vector_capture": 1, "grounding": 3}},
     {"case_id": "h2", "slice": SLICE, "base": {"appeal_vector_capture": 1, "grounding": 3}},
@@ -120,3 +127,61 @@ def test_coordinator_can_seed_and_optimize_multiple_playbook_slices():
         f"playbook:{SLICE_2}",
     }
     assert proposal.after.composite > proposal.before.composite
+
+
+def test_promote_skips_playbooks_outside_active_slices():
+    store = InMemoryPhoenixLearningStore()
+    store.seed_component(Component(component_id="drafter_system_prompt", kind="prompt", version="v1", text="draft"))
+    for slice_key in (SLICE, SLICE_2):
+        store.seed_component(
+            Component(
+                component_id=f"playbook:{slice_key}",
+                kind="playbook",
+                version="v1",
+                playbook={"tactics": [], "dimension_targets": []},
+            )
+        )
+    coord = LearningCoordinator(
+        store=store,
+        runner=StubExperimentRunner(DATASET),
+        reflection_client=StubReflectionClient(),
+        slice_filter=SLICE,
+        slice_filters=[SLICE],
+        holdout_split="benchmark_holdout",
+        train_split="benchmark_train",
+        max_rounds=1,
+    )
+    candidate = Candidate(
+        candidate_id="c1",
+        components={
+            "drafter_system_prompt": Component(
+                component_id="drafter_system_prompt",
+                kind="prompt",
+                version="v2",
+                text="updated",
+            ),
+            f"playbook:{SLICE}": Component(
+                component_id=f"playbook:{SLICE}",
+                kind="playbook",
+                version="v2",
+                playbook={"tactics": ["active"], "dimension_targets": []},
+            ),
+            f"playbook:{SLICE_2}": Component(
+                component_id=f"playbook:{SLICE_2}",
+                kind="playbook",
+                version="v2",
+                playbook={"tactics": ["should not promote"], "dimension_targets": []},
+            ),
+        },
+        origin="reflect",
+    )
+    proposal = PromotionProposal(
+        candidate=candidate,
+        before=ExperimentResult(candidate_id="seed", dataset_split="pre", composite=0.2),
+        after=ExperimentResult(candidate_id="c1", dataset_split="post", composite=0.8),
+        per_dimension_deltas={"grounding": 0.2},
+        vetoes=[],
+    )
+    coord.promote(proposal, approver="pm")
+    assert store.read_prompt_version(f"playbook:{SLICE}").version == "v2"
+    assert store.read_prompt_version(f"playbook:{SLICE_2}").version == "v1"

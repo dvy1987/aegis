@@ -105,6 +105,7 @@ class ShowcaseSession(BaseModel):
     cancelled: bool = False
     approved_by: str | None = None
     proposal: dict | None = None
+    promotion_preview: dict | None = None
     pre_measure_results: list[dict] = Field(default_factory=list)
     training_pre_measure_results: list[dict] = Field(default_factory=list)
     training_post_measure_results: list[dict] = Field(default_factory=list)
@@ -185,11 +186,18 @@ class ShowcaseSessionManager:
         session.diagnostics.stage_finished_at = _now()
         return self._save(session)
 
-    def mark_needs_approval(self, session_id: str, *, proposal: dict | None) -> ShowcaseSession:
+    def mark_needs_approval(
+        self,
+        session_id: str,
+        *,
+        proposal: dict | None,
+        promotion_preview: dict | None = None,
+    ) -> ShowcaseSession:
         session = self.get(session_id)
         session.status = "needs_approval"
         session.updated_at = _now()
         session.proposal = proposal
+        session.promotion_preview = promotion_preview
         session.diagnostics.stage = "waiting_for_approval"
         session.diagnostics.stage_finished_at = _now()
         session.diagnostics.retryable = False

@@ -56,7 +56,7 @@ def _main() -> None:  # pragma: no cover - thin CLI wrapper
     from app.learning.reflection_client import StubReflectionClient
     from app.learning.store import InMemoryPhoenixLearningStore
 
-    slice_ = "Cigna:medical_necessity"
+    slice_ = "Cigna:medical_necessity:not_evidence_based"
     store = InMemoryPhoenixLearningStore()
     store.seed_component(Component(component_id="drafter_system_prompt", kind="prompt", version="v1", text="draft"))
     store.seed_component(Component(component_id=f"playbook:{slice_}", kind="playbook", version="v1",

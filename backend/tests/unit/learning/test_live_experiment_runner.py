@@ -55,7 +55,7 @@ def test_live_runner_persists_tier_b_metadata(monkeypatch) -> None:
     dataset = [
         {
             "case_id": "t1",
-            "slice": "Cigna:medical_necessity",
+            "slice": "Cigna:medical_necessity:not_evidence_based",
             "denial_letter_text": "denial",
             "clinical_context": "ctx",
             "parsed_case": {"case_id": "t1"},
@@ -70,8 +70,8 @@ def test_live_runner_persists_tier_b_metadata(monkeypatch) -> None:
                 version="v2",
                 text="prompt",
             ),
-            "playbook:Cigna:medical_necessity": Component(
-                component_id="playbook:Cigna:medical_necessity",
+            "playbook:Cigna:medical_necessity:not_evidence_based": Component(
+                component_id="playbook:Cigna:medical_necessity:not_evidence_based",
                 kind="playbook",
                 version="v2",
                 playbook={"tactics": []},

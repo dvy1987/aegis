@@ -16,7 +16,7 @@ def _run(case_id: str, dims: dict, signals: list | None = None) -> ScoredRun:
     full.update(dims)
     return ScoredRun(
         case_id=case_id,
-        slice="Cigna:medical_necessity",
+        slice="Cigna:medical_necessity:not_evidence_based",
         dimension_scores=full,
         hard_gate_pass=True,
         weighted_quality=0.4,

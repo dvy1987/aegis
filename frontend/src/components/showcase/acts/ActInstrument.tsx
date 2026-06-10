@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import type {
   ShowcaseManifest,
@@ -18,6 +18,8 @@ import {
   INSTRUMENT_STEPS,
 } from "@/components/showcase/copy";
 import { LearningMatrix } from "@/components/showcase/console/LearningMatrix";
+import { PromotionReviewModal } from "@/components/showcase/console/PromotionReviewModal";
+import { getPromotionPreview } from "@/lib/promotionPreview";
 
 const sectionClass =
   "mx-auto w-full scroll-mt-24 px-6 py-24 md:px-12 md:py-32";
@@ -54,6 +56,9 @@ export function ActInstrument({
   rejectCurrentRun: () => void;
   rollbackLatestRun: () => void;
 }) {
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [reviewBusy, setReviewBusy] = useState(false);
+  const promotionPreview = getPromotionPreview(session);
   const consoleRoot = useRef<HTMLElement>(null);
   const consolePin = useRef<HTMLDivElement>(null);
   const evidenceRoot = useRef<HTMLElement>(null);
@@ -137,11 +142,35 @@ export function ActInstrument({
               seriousUnlocked={seriousUnlocked}
               runErr={runErr}
               onCancel={cancelCurrentRun}
-              onApprove={approveCurrentRun}
+              onOpenReview={() => setReviewOpen(true)}
               onReject={rejectCurrentRun}
             />
           </div>
         </div>
+        <PromotionReviewModal
+          open={reviewOpen}
+          preview={promotionPreview}
+          busy={reviewBusy}
+          onClose={() => setReviewOpen(false)}
+          onReject={async () => {
+            setReviewBusy(true);
+            try {
+              await rejectCurrentRun();
+              setReviewOpen(false);
+            } finally {
+              setReviewBusy(false);
+            }
+          }}
+          onApprove={async () => {
+            setReviewBusy(true);
+            try {
+              await approveCurrentRun();
+              setReviewOpen(false);
+            } finally {
+              setReviewBusy(false);
+            }
+          }}
+        />
       </section>
 
       <section

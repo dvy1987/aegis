@@ -39,8 +39,8 @@ def test_promotion_stack_snapshots_and_restores_changed_files(tmp_path: Path) ->
                 version="drafter_v3",
                 text="candidate prompt",
             ),
-            "playbook:Cigna:medical_necessity": Component(
-                component_id="playbook:Cigna:medical_necessity",
+            "playbook:Cigna:medical_necessity:not_evidence_based": Component(
+                component_id="playbook:Cigna:medical_necessity:not_evidence_based",
                 kind="playbook",
                 version="cigna_mednec_v3",
                 playbook={"tactics": ["Use criteria."]},

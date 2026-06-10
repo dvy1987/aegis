@@ -23,9 +23,9 @@ def test_pareto_select_prefers_widest_coverage():
 def test_select_component_round_robins_for_coverage():
     parent = Candidate(candidate_id="p", components={
         "drafter_system_prompt": Component(component_id="drafter_system_prompt", kind="prompt", text="x"),
-        "playbook:Cigna:medical_necessity": Component(
-            component_id="playbook:Cigna:medical_necessity", kind="playbook",
+        "playbook:Cigna:medical_necessity:not_evidence_based": Component(
+            component_id="playbook:Cigna:medical_necessity:not_evidence_based", kind="playbook",
             playbook={"tactics": [], "dimension_targets": []})})
     picks = [select_component(parent, i) for i in range(4)]
-    assert picks == ["drafter_system_prompt", "playbook:Cigna:medical_necessity",
-                     "drafter_system_prompt", "playbook:Cigna:medical_necessity"]
+    assert picks == ["drafter_system_prompt", "playbook:Cigna:medical_necessity:not_evidence_based",
+                     "drafter_system_prompt", "playbook:Cigna:medical_necessity:not_evidence_based"]

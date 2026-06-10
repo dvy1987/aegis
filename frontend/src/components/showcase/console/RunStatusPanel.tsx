@@ -9,9 +9,9 @@ import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
 import { IgniteButton } from "@/components/showcase/fx/IgniteButton";
 import {
-  APPROVE_CTA,
   CANCEL_CTA,
   REJECT_CTA,
+  REVIEW_PROMOTION_CTA,
   STAGE_CAPTIONS,
   STATUS_AWAITING,
   STATUS_EYEBROW,
@@ -28,7 +28,7 @@ export function RunStatusPanel({
   seriousUnlocked,
   runErr,
   onCancel,
-  onApprove,
+  onOpenReview,
   onReject,
 }: {
   manifest: ShowcaseManifest | null;
@@ -36,7 +36,7 @@ export function RunStatusPanel({
   seriousUnlocked: boolean;
   runErr?: string | null;
   onCancel: () => void;
-  onApprove: () => void;
+  onOpenReview: () => void;
   onReject: () => void;
 }) {
   const preview = resolveStatusPreviewBatch(manifest, session, seriousUnlocked);
@@ -142,8 +142,8 @@ export function RunStatusPanel({
               transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
               className="flex flex-wrap gap-3"
             >
-              <IgniteButton variant="primary" onClick={onApprove}>
-                {APPROVE_CTA}
+              <IgniteButton variant="primary" onClick={onOpenReview}>
+                {REVIEW_PROMOTION_CTA}
               </IgniteButton>
               <IgniteButton variant="secondary" onClick={onReject}>
                 {REJECT_CTA}

@@ -5,12 +5,12 @@ from app.learning.reflection_client import (
 
 
 def _signal(dim="appeal_vector_capture"):
-    return DimensionSignal(component_id="playbook:Cigna:medical_necessity", weakest_dimension=dim,
+    return DimensionSignal(component_id="playbook:Cigna:medical_necessity:not_evidence_based", weakest_dimension=dim,
                            failing_cases=[], notes={dim: ["missed the specific denial flaw"]})
 
 
 def test_stub_reflects_playbook_by_tagging_target_dimension():
-    comp = Component(component_id="playbook:Cigna:medical_necessity", kind="playbook", version="v1",
+    comp = Component(component_id="playbook:Cigna:medical_necessity:not_evidence_based", kind="playbook", version="v1",
                      playbook={"tactics": [], "required_evidence": [], "dimension_targets": []})
     out = StubReflectionClient().reflect(component=comp, signal=_signal(), minibatch=[])
     assert "appeal_vector_capture" in out.playbook["dimension_targets"]

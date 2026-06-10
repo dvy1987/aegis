@@ -81,20 +81,24 @@ def _creds_available() -> bool:
 
 def _benchmark_dataset(slice_filter: str) -> list[dict[str, Any]]:
     """Build the per-case dataset that LiveExperimentRunner expects, filtered to
-    `slice_filter` (e.g. 'Cigna:medical_necessity'). Pulls cases from
-    `eval/cases/drafts/` and reads the Phoenix-memory summary live so the
-    drafter sees the same context the product surface gets."""
+    `slice_filter` (e.g. 'Cigna:medical_necessity:not_evidence_based'). Pulls
+    cases from `eval/cases/drafts/` and reads the Phoenix-memory summary live so
+    the drafter sees the same context the product surface gets."""
     from app.aegis_v1.tools import case_parser, phoenix_mcp_lookup
+    from app.learning.slice_key import format_slice_key, parse_slice_key, sub_tactic_from_case
 
     cases_dir = REPO_ROOT / "eval" / "cases" / "drafts"
-    insurer, denial = slice_filter.split(":", 1)
+    insurer, denial_type, sub_tactic = parse_slice_key(slice_filter)
     dataset: list[dict[str, Any]] = []
     for path in sorted(cases_dir.glob("case_*.json")):
         case = json.loads(path.read_text())
-        if (case.get("insurer") or "").lower() != insurer.lower():
-            continue
         denial_norm = (case.get("denial_type") or "").replace(" ", "_").lower()
-        if denial.lower() not in denial_norm:
+        case_slice = format_slice_key(
+            str(case.get("insurer") or "unknown"),
+            denial_norm,
+            sub_tactic_from_case(case),
+        )
+        if case_slice != slice_filter:
             continue
         parsed = case_parser(
             denial_text=case.get("denial_letter_text", ""),
@@ -103,7 +107,7 @@ def _benchmark_dataset(slice_filter: str) -> list[dict[str, Any]]:
         )
         dataset.append({
             "case_id": case["case_id"],
-            "slice": slice_filter,
+            "slice": case_slice,
             "parsed_case": parsed,
             "citations": [],
             "phoenix_summary": phoenix_mcp_lookup(
@@ -143,11 +147,13 @@ def build_live_coordinator(slice_filter: str, *, max_rounds: int = 1):
         drafter_client=GeminiDrafterClient(),
         judge_client=PanelJudgeAdapter(judge_client=GeminiJudgeClient()),
     )
+    slice_filters = list(dict.fromkeys(row["slice"] for row in dataset)) or [slice_filter]
     return LearningCoordinator(
         store=store,
         runner=runner,
         reflection_client=GeminiReflectionClient(),
-        slice_filter=slice_filter,
+        slice_filter=slice_filters[0],
+        slice_filters=slice_filters,
         max_rounds=max_rounds,
     )
 
@@ -169,11 +175,15 @@ def _record_only(slice_filter: str | None) -> None:
         case = json.loads(path.read_text())
         case["dataset_split"] = "benchmark_train"
         if slice_filter:
-            insurer, denial = slice_filter.split(":", 1)
-            if (case.get("insurer") or "").lower() != insurer.lower():
-                continue
+            from app.learning.slice_key import format_slice_key, parse_slice_key, sub_tactic_from_case
+
             denial_norm = (case.get("denial_type") or "").replace(" ", "_").lower()
-            if denial.lower() not in denial_norm:
+            case_slice = format_slice_key(
+                str(case.get("insurer") or "unknown"),
+                denial_norm,
+                sub_tactic_from_case(case),
+            )
+            if case_slice != slice_filter:
                 continue
         run_evaluated_case(case, recorder=recorder, drafter_client=drafter, run_simulator=False)
         seeded += 1

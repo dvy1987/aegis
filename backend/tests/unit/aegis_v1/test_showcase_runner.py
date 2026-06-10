@@ -5,6 +5,7 @@ from pathlib import Path
 from app.aegis_v1 import showcase_runner
 from app.aegis_v1.showcase_manifest import load_showcase_manifest
 from app.aegis_v1.showcase_runner import (
+    _slice_filters,
     approve_session,
     run_quick_session,
     run_serious_session,
@@ -28,8 +29,8 @@ def _proposal() -> PromotionProposal:
                 version="drafter_v3",
                 text="candidate prompt",
             ),
-            "playbook:Cigna:medical_necessity": Component(
-                component_id="playbook:Cigna:medical_necessity",
+            "playbook:Cigna:medical_necessity:not_evidence_based": Component(
+                component_id="playbook:Cigna:medical_necessity:not_evidence_based",
                 kind="playbook",
                 version="cigna_mednec_v3",
                 playbook={"tactics": ["Use the candidate playbook."]},
@@ -98,7 +99,7 @@ def test_quick_session_uses_holdout_and_training_rows_before_approval(
     assert calls[2]["phase"] == "training_post"
     assert calls[2]["prompt_text"] == "candidate prompt"
     assert calls[2]["playbook_overrides"]
-    assert optimize_kwargs["slice_filters"] == ["Cigna:medical_necessity"]
+    assert set(optimize_kwargs["slice_filters"]) == set(_slice_filters(manifest.quick_train))
     assert manager.get(session.session_id).status == "needs_approval"
 
 
@@ -338,14 +339,8 @@ def test_serious_session_uses_serious_train_and_holdout_with_multi_slice(
     assert calls[2]["phase"] == "training_post"
     assert len(calls[2]["case_ids"]) == 80
     assert calls[2]["prompt_text"] == "candidate prompt"
-    assert set(optimize_kwargs["slice_filters"]) == {
-        "Aetna:medical_necessity",
-        "Aetna:prior_authorization",
-        "Cigna:medical_necessity",
-        "Cigna:prior_authorization",
-        "UnitedHealthcare:medical_necessity",
-        "UnitedHealthcare:prior_authorization",
-    }
+    manifest = load_showcase_manifest()
+    assert set(optimize_kwargs["slice_filters"]) == set(_slice_filters(manifest.serious_train))
     assert manager.get(session.session_id).status == "needs_approval"
 
 

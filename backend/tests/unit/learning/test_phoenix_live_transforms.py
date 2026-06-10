@@ -69,7 +69,7 @@ def test_rows_to_scored_runs_parses_minimal_pair() -> None:
     assert len(runs) == 1
     run = runs[0]
     assert run.case_id == "case_01_cigna_mednec"
-    assert run.slice == "Cigna:medical_necessity"
+    assert run.slice == "Cigna:medical_necessity:unknown"
     assert run.hard_gate_pass is True
     assert run.weighted_quality == pytest.approx(0.78)
     assert run.prompt_version == "drafter_v2"

@@ -6,7 +6,7 @@ from app.learning.models import Component, ScoredRun, composite_score
 from app.learning.reflection_client import StubReflectionClient
 from app.learning.store import InMemoryPhoenixLearningStore
 
-SLICE = "Cigna:medical_necessity"
+SLICE = "Cigna:medical_necessity:not_evidence_based"
 HOLDOUT = [{"case_id": "h1", "slice": SLICE, "base": {"appeal_vector_capture": 1, "grounding": 3}}]
 
 

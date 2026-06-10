@@ -64,4 +64,33 @@ Today: `/appeal` redacts via `appeal_phoenix_export.py`; showcase/GEPA/eval path
 
 ---
 
+## 3. Evaluate agent swarm vs aegis-v1 — `later`
+
+**Logged:** 2026-06-10  
+**Status:** Hackathon ships **aegis-v1** (single pipeline: library → drafter → simulator → judges). Part B swarm code exists but is not the production path.
+
+### What
+
+After submission, run a structured comparison: keep aegis-v1 as the baseline and expand (or fully switch) to the **12-agent swarm** architecture to test whether quality improves and whether total cost per good appeal drops over time.
+
+Today aegis-v1 is the right bet for the demo — one traceable pipeline, fewer moving parts, faster iteration. The swarm was designed for parallel specialist roles (retrieval, clinical framing, insurer-specific tactics, etc.) but was not validated head-to-head against v1 on the same benchmark.
+
+### Why it matters
+
+- **Quality:** Swarm may beat v1 on hard slices (e.g. multi-hook denials, weak clinical packets) if specialization helps — or it may not, if coordination overhead and duplicate LLM calls hurt.
+- **Cost:** v1 is simpler per request; swarm may look more expensive per draft but could be **more cost-effective** if it reaches APPROVE in fewer retries, needs less human rework, or uses cheaper models on narrow sub-agents while reserving a strong model for the drafter only.
+- **Learning loop:** Slice playbooks and GEPA already assume per-slice improvement; swarm credit assignment (`swarm_scored_run`, coordinator) is built for Part B — we have not proven it beats v1 learning on the 100-case showcase.
+
+### Proposed exploration (when we pick it up)
+
+1. **Same benchmark, same rubric** — run v1 and swarm on held-out cases (e.g. showcase quick/serious splits); compare weighted quality, simulator APPROVE rate, faithfulness gate, and $/case (tokens + retries).
+2. **Cost model** — track attempts-to-APPROVE, wall time, and token spend per architecture; include “cost to first acceptable draft” not just single-shot.
+3. **Go/no-go** — promote swarm only if it wins on primary quality metrics without blowing cost guardrails; otherwise keep v1 and mine swarm ideas (e.g. optional specialist agents) incrementally.
+
+### PM note
+
+Not a commitment to build the full swarm in production — an experiment to see if the Part B design pays off after the hackathon safety net (v1) is shipped.
+
+---
+
 <!-- Append new items below with the next number. -->

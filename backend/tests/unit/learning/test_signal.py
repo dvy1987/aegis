@@ -6,7 +6,7 @@ from app.learning.store import InMemoryPhoenixLearningStore
 
 
 def _run(case_id, scores, notes):
-    return ScoredRun(case_id=case_id, slice="Cigna:medical_necessity", dimension_scores=scores,
+    return ScoredRun(case_id=case_id, slice="Cigna:medical_necessity:not_evidence_based", dimension_scores=scores,
                      hard_gate_pass=True, weighted_quality=composite_score(scores, True),
                      improvement_notes=notes)
 
@@ -21,8 +21,8 @@ def _store_with_runs():
 
 
 def test_signal_picks_weakest_dimension_and_collects_notes():
-    sig = acquire_signal(_store_with_runs(), component_id="playbook:Cigna:medical_necessity",
-                         dataset_split="benchmark_train", slice_filter="Cigna:medical_necessity")
+    sig = acquire_signal(_store_with_runs(), component_id="playbook:Cigna:medical_necessity:not_evidence_based",
+                         dataset_split="benchmark_train", slice_filter="Cigna:medical_necessity:not_evidence_based")
     assert sig is not None
     assert sig.weakest_dimension == "appeal_vector_capture"
     assert len(sig.notes["appeal_vector_capture"]) == 2
@@ -40,8 +40,8 @@ def test_signal_never_exposes_answer_key_fields():
     store = InMemoryPhoenixLearningStore()
     store.add_run("benchmark_train", _run("a", {"appeal_vector_capture": 1},
                   {"appeal_vector_capture": "fine", "exploitable_weaknesses": "LEAK", "appeal_difficulty": "hard"}))
-    sig = acquire_signal(store, component_id="playbook:Cigna:medical_necessity",
-                         dataset_split="benchmark_train", slice_filter="Cigna:medical_necessity")
+    sig = acquire_signal(store, component_id="playbook:Cigna:medical_necessity:not_evidence_based",
+                         dataset_split="benchmark_train", slice_filter="Cigna:medical_necessity:not_evidence_based")
     blob = sig.model_dump_json()
     for forbidden in FORBIDDEN_FIELDS:
         assert forbidden not in blob

@@ -9,7 +9,7 @@ from app.learning.swarm_experiment import StubSwarmExperimentRunner
 
 from app.learning.benchmark_dataset import micro_benchmark_fixture
 
-SLICE = "Cigna:medical_necessity"
+SLICE = "Cigna:medical_necessity:not_evidence_based"
 
 
 def _store_with_researcher_gap() -> InMemoryPhoenixLearningStore:

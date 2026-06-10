@@ -6,6 +6,7 @@ from typing import Literal
 from app.aegis_v1.appeal_phoenix_export import write_training_phoenix_checkpoint
 from app.aegis_v1.phoenix_mode import PhoenixMode
 from app.aegis_v1.pipeline import run_aegis_v1_pipeline
+from app.aegis_v1.promotion_preview import build_promotion_preview
 from app.aegis_v1.showcase_manifest import ShowcaseCase, load_showcase_manifest
 from app.aegis_v1.showcase_rollback import PromotionStack
 from app.aegis_v1.showcase_resilience import (
@@ -582,7 +583,11 @@ def _run_learning_session(
             )
             manager.save_checkpoint(session_id, training_post_done=True)
 
-        manager.mark_needs_approval(session_id, proposal=proposal.model_dump())
+        manager.mark_needs_approval(
+            session_id,
+            proposal=proposal.model_dump(),
+            promotion_preview=build_promotion_preview(proposal),
+        )
     except Exception as exc:
         manager.fail_stage(
             session_id,

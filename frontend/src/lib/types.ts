@@ -156,6 +156,7 @@ export interface ShowcaseRunSession {
   cancelled: boolean;
   approved_by?: string | null;
   proposal?: Record<string, unknown> | null;
+  promotion_preview?: Record<string, unknown> | null;
   pre_measure_results: Record<string, unknown>[];
   training_pre_measure_results: Record<string, unknown>[];
   training_post_measure_results: Record<string, unknown>[];

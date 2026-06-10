@@ -6,7 +6,7 @@ from app.learning.swarm_candidate import swarm_seed_candidate
 from app.learning.swarm_coordinator import SwarmLearningCoordinator
 from app.learning.swarm_experiment import StubSwarmExperimentRunner
 
-SLICE = "Cigna:medical_necessity"
+SLICE = "Cigna:medical_necessity:not_evidence_based"
 
 
 def _seed_store(*, dimension: str, component_hint: str | None = None) -> InMemoryPhoenixLearningStore:

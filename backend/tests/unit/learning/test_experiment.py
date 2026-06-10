@@ -3,22 +3,22 @@ from app.learning.experiment import StubExperimentRunner
 
 
 DATASET = [
-    {"case_id": "a", "slice": "Cigna:medical_necessity", "base": {"appeal_vector_capture": 1, "grounding": 3}},
-    {"case_id": "b", "slice": "Cigna:medical_necessity", "base": {"appeal_vector_capture": 1, "grounding": 3}},
+    {"case_id": "a", "slice": "Cigna:medical_necessity:not_evidence_based", "base": {"appeal_vector_capture": 1, "grounding": 3}},
+    {"case_id": "b", "slice": "Cigna:medical_necessity:not_evidence_based", "base": {"appeal_vector_capture": 1, "grounding": 3}},
 ]
 
 
 def _seed():
     return Candidate(candidate_id="seed", components={
         "drafter_system_prompt": Component(component_id="drafter_system_prompt", kind="prompt", text="draft"),
-        "playbook:Cigna:medical_necessity": Component(
-            component_id="playbook:Cigna:medical_necessity", kind="playbook",
+        "playbook:Cigna:medical_necessity:not_evidence_based": Component(
+            component_id="playbook:Cigna:medical_necessity:not_evidence_based", kind="playbook",
             playbook={"tactics": [], "dimension_targets": []})})
 
 
 def _improved():
     c = _seed()
-    c.components["playbook:Cigna:medical_necessity"].playbook["dimension_targets"] = ["appeal_vector_capture"]
+    c.components["playbook:Cigna:medical_necessity:not_evidence_based"].playbook["dimension_targets"] = ["appeal_vector_capture"]
     return c.model_copy(update={"candidate_id": "improved"})
 
 

@@ -22,7 +22,7 @@ def test_manifest_endpoint_returns_quick_slice(tmp_path, monkeypatch) -> None:
     assert res.status_code == 200
     body = res.json()
     assert body["benchmark_id"] == "v1_showcase_100"
-    assert body["quick_slice"] == "Cigna:medical_necessity"
+    assert body["quick_slice"] == "Cigna:medical_necessity:not_evidence_based"
     assert len(body["quick_train"]) == 5
     assert len(body["quick_holdout"]) == 2
     assert body["serious_train_count"] == 80

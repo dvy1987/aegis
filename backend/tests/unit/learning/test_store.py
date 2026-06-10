@@ -11,8 +11,8 @@ def _run(case_id, slice_, scores, gate=True, notes=None):
 
 def test_store_reads_runs_filtered_by_split():
     store = InMemoryPhoenixLearningStore()
-    store.add_run("benchmark_train", _run("a", "Cigna:medical_necessity", {"grounding": 1}))
-    store.add_run("benchmark_holdout", _run("b", "Cigna:medical_necessity", {"grounding": 5}))
+    store.add_run("benchmark_train", _run("a", "Cigna:medical_necessity:not_evidence_based", {"grounding": 1}))
+    store.add_run("benchmark_holdout", _run("b", "Cigna:medical_necessity:not_evidence_based", {"grounding": 5}))
     train = store.read_scored_runs(dataset_split="benchmark_train")
     assert [r.case_id for r in train] == ["a"]
 
