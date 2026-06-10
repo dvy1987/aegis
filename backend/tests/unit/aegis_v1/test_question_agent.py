@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from app.aegis_v1.patient_simulator import (
     PATIENT_REFUSAL,
+    PATIENT_UNSURE,
     StubPatientSimulatorClient,
     is_regulatory_question,
 )
@@ -131,7 +132,42 @@ def test_dont_know_is_not_substantive() -> None:
     assert is_substantive_answer("I don't know") is False
     assert is_substantive_answer("") is False
     assert is_substantive_answer("Not sure.") is False
+    assert is_substantive_answer(PATIENT_UNSURE) is False
     assert is_substantive_answer("Yes, I tried two SSRIs.") is True
+
+
+def test_patient_unsure_routes_to_gap_not_drafter_context() -> None:
+    symptom_q = "When did your symptoms start, and how do they affect your daily life?"
+    result = run_question_interview(
+        denial_text=DENIAL,
+        notes="Patient wants to appeal.",
+        playbook=PLAYBOOK,
+        responder=lambda question: (
+            PATIENT_UNSURE
+            if question == symptom_q
+            else "Yes, I tried two SSRIs without improvement."
+        ),
+        client=StubQuestionAgentClient(),
+    )
+
+    assert symptom_q in result.patient_gap_note
+    assert PATIENT_UNSURE not in result.enriched_context
+    assert "SSRI" in result.enriched_context
+
+
+def test_stub_decision_returns_agent_classification_fields() -> None:
+    symptom_q = "When did your symptoms start, and how do they affect your daily life?"
+    transcript = [QATurn(turn=1, question=symptom_q, answer="I don't know")]
+    decision = StubQuestionAgentClient().decide(
+        denial_text=DENIAL,
+        notes="",
+        playbook=PLAYBOOK,
+        phoenix_summary={},
+        transcript=transcript,
+    )
+
+    assert symptom_q in decision.gap_questions
+    assert symptom_q not in decision.substantive_questions
 
 
 # --- Simulator firewall ------------------------------------------------------

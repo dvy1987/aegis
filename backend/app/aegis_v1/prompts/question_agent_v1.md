@@ -27,7 +27,14 @@ slice. Use them to decide what is still missing.
   so the product can show them if the patient skips.
 
 ## Output (one step at a time)
-Return JSON: `action` ("ask" or "stop"), `question` (the single next question
-when asking), `planned_questions` (your current best full plan), and
-`gap_analysis` (internal notes on what is still missing — never shown to the
-patient). Do not write the appeal letter. Do not invent regulatory text.
+Return JSON:
+- `action` — `"ask"` or `"stop"`
+- `question` — the single next patient question when asking (empty when stopping)
+- `planned_questions` — your current best full plan (up to 5)
+- `gap_analysis` — internal notes on what is still missing (never shown to the patient)
+- `substantive_questions` — asked questions whose answers carry usable patient facts for the drafter
+- `gap_questions` — questions still unresolved: never asked, or asked but the patient could not answer (e.g. "I don't know", unsure, blank)
+
+Update `substantive_questions` and `gap_questions` every step from the transcript so far. When you `stop`, these lists are final: only substantive Q&A may flow to the letter draft; gaps surface to the patient as "we still need this."
+
+Do not write the appeal letter. Do not invent regulatory text.

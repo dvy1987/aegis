@@ -27,9 +27,7 @@ from app.aegis_v1.question_agent import (
     MAX_QUESTIONS,
     QuestionAgentClient,
     QuestionDecision,
-    build_enriched_context,
-    build_patient_gap_note,
-    is_substantive_answer,
+    finalize_interview_result,
 )
 from app.aegis_v1.schemas import QATurn, QuestionInterviewResult
 
@@ -188,32 +186,28 @@ class QuestionSessionStore:
 
     def _finalize(self, session: QuestionSession, *, skipped: bool) -> None:
         if skipped and not session.transcript:
-            # Mirrors run_question_interview's skip path: notes only, full plan
-            # surfaced as the draft-page gap list.
-            session.result = QuestionInterviewResult(
-                qa_transcript=[],
-                enriched_context=(session.notes or "").strip(),
+            session.result = finalize_interview_result(
+                notes=session.notes,
+                transcript=[],
                 planned_questions=session.planned_questions,
-                patient_gap_note=build_patient_gap_note(session.planned_questions),
-                internal_gap_analysis=session.gap_analysis,
+                decision=QuestionDecision(
+                    action="stop",
+                    planned_questions=session.planned_questions,
+                    gap_analysis=session.gap_analysis,
+                ),
                 skipped=True,
+                gap_analysis=session.gap_analysis,
             )
             return
-        answered = {turn.question for turn in session.transcript}
-        not_asked = [q for q in session.planned_questions if q not in answered]
-        dont_know = [
-            turn.question
-            for turn in session.transcript
-            if not is_substantive_answer(turn.answer)
-        ]
-        gap_questions = list(dict.fromkeys(not_asked + dont_know))
-        session.result = QuestionInterviewResult(
-            qa_transcript=list(session.transcript),
-            enriched_context=build_enriched_context(session.notes, session.transcript),
+        decision = self._decide(session)
+        session.gap_analysis = decision.gap_analysis or session.gap_analysis
+        session.result = finalize_interview_result(
+            notes=session.notes,
+            transcript=list(session.transcript),
             planned_questions=session.planned_questions,
-            patient_gap_note=build_patient_gap_note(gap_questions),
-            internal_gap_analysis=session.gap_analysis,
+            decision=decision,
             skipped=skipped,
+            gap_analysis=session.gap_analysis,
         )
 
 

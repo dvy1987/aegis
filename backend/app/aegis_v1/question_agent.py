@@ -67,24 +67,43 @@ def get_active_question_agent_prompt_version() -> str:
 
 
 def is_substantive_answer(answer: str) -> bool:
-    """True when the answer carries a usable patient fact (not blank / 'I don't know')."""
+    """Fallback heuristic when the agent omits classification (e.g. question judge)."""
+    return not _is_non_answer(answer)
+
+
+def _is_non_answer(answer: str) -> bool:
+    from app.aegis_v1.patient_simulator import PATIENT_UNSURE
+
     normalized = (answer or "").strip().lower().rstrip(".!")
+    if not normalized:
+        return True
+    if normalized == PATIENT_UNSURE.strip().lower().rstrip(".!"):
+        return True
     if normalized in _NON_ANSWERS:
-        return False
-    return "don't know" not in normalized and "not sure" not in normalized
+        return True
+    if "don't know" in normalized or "dont know" in normalized:
+        return True
+    if "not totally sure" in normalized or "not sure" in normalized:
+        return True
+    return False
 
 
 class QuestionDecision(BaseModel):
     """One step of the adaptive interview.
 
     ``planned_questions`` is the agent's current best full plan (used for the
-    skip / gap list); ``gap_analysis`` is internal-only (judges/Phoenix).
+    skip / gap list). On ``stop``, ``substantive_questions`` and
+    ``gap_questions`` are the agent's final routing: which asked questions feed
+    the drafter vs surface as patient-facing gaps. ``gap_analysis`` is
+    internal-only (judges/Phoenix).
     """
 
     action: Literal["ask", "stop"]
     question: str = ""
     planned_questions: list[str] = Field(default_factory=list)
     gap_analysis: str = ""
+    substantive_questions: list[str] = Field(default_factory=list)
+    gap_questions: list[str] = Field(default_factory=list)
 
 
 class QuestionAgentClient(Protocol):
@@ -211,10 +230,14 @@ class StubQuestionAgentClient:
         specs = candidate_specs(denial_text, notes, playbook)
         planned = [question for _, question in specs]
         asked = {turn.question for turn in transcript}
+        substantive, gaps = classify_interview(
+            planned_questions=planned,
+            transcript=transcript,
+        )
         answered_text = " ".join(
             turn.answer.lower()
             for turn in transcript
-            if is_substantive_answer(turn.answer)
+            if turn.question in substantive
         )
 
         remaining: list[str] = []
@@ -227,12 +250,20 @@ class StubQuestionAgentClient:
 
         gap = _gap_analysis(remaining)
         if not remaining or len(transcript) >= MAX_QUESTIONS:
-            return QuestionDecision(action="stop", planned_questions=planned, gap_analysis=gap)
+            return QuestionDecision(
+                action="stop",
+                planned_questions=planned,
+                gap_analysis=gap,
+                substantive_questions=substantive,
+                gap_questions=gaps,
+            )
         return QuestionDecision(
             action="ask",
             question=remaining[0],
             planned_questions=planned,
             gap_analysis=gap,
+            substantive_questions=substantive,
+            gap_questions=gaps,
         )
 
 
@@ -290,6 +321,8 @@ class GeminiQuestionAgentClient:
                 question: str = ""
                 planned_questions: list[str] = Field(default_factory=list)
                 gap_analysis: str = ""
+                substantive_questions: list[str] = Field(default_factory=list)
+                gap_questions: list[str] = Field(default_factory=list)
 
             contents = self._build_contents(
                 denial_text=denial_text,
@@ -312,6 +345,13 @@ class GeminiQuestionAgentClient:
             )
             data = json.loads(response.text)
             decision = QuestionDecision.model_validate(data)
+            decision = _with_resolved_classification(
+                decision,
+                planned_questions=decision.planned_questions or candidate_specs(
+                    denial_text, notes, playbook
+                )[:MAX_QUESTIONS],
+                transcript=transcript,
+            )
             # Firewall: never ask the patient a regulatory question.
             if decision.action == "ask" and is_regulatory_question(decision.question):
                 return StubQuestionAgentClient().decide(
@@ -384,18 +424,122 @@ def responder_from_simulator(
     return _respond
 
 
-def build_enriched_context(notes: str, transcript: list[QATurn]) -> str:
-    """Patient-knowable text for the drafter: notes + substantive Q&A answers only."""
+def classify_interview(
+    *,
+    planned_questions: list[str],
+    transcript: list[QATurn],
+    substantive_questions: list[str] | None = None,
+    gap_questions: list[str] | None = None,
+) -> tuple[list[str], list[str]]:
+    """Return (substantive_questions, gap_questions) for drafter vs gap-note routing."""
+    asked = {turn.question for turn in transcript}
+    if substantive_questions is not None or gap_questions is not None:
+        substantive = [q for q in (substantive_questions or []) if q in asked]
+        gaps = list(gap_questions or [])
+        if substantive or gaps:
+            not_asked = [question for question in planned_questions if question not in asked]
+            gaps = list(dict.fromkeys(gaps + not_asked))
+            gaps = [question for question in gaps if question not in substantive]
+            return substantive, gaps
+    return _derive_classification(planned_questions, transcript)
+
+
+def _derive_classification(
+    planned_questions: list[str],
+    transcript: list[QATurn],
+) -> tuple[list[str], list[str]]:
+    answered = {turn.question for turn in transcript}
+    substantive = [
+        turn.question for turn in transcript if not _is_non_answer(turn.answer)
+    ]
+    dont_know = [
+        turn.question for turn in transcript if _is_non_answer(turn.answer)
+    ]
+    not_asked = [question for question in planned_questions if question not in answered]
+    gaps = list(dict.fromkeys(not_asked + dont_know))
+    return substantive, gaps
+
+
+def _with_resolved_classification(
+    decision: QuestionDecision,
+    *,
+    planned_questions: list[str],
+    transcript: list[QATurn],
+) -> QuestionDecision:
+    """Use agent classification when present; derive when the model omits fields."""
+    planned = list(decision.planned_questions or planned_questions)[:MAX_QUESTIONS]
+    substantive, gaps = classify_interview(
+        planned_questions=planned,
+        transcript=transcript,
+        substantive_questions=decision.substantive_questions or None,
+        gap_questions=decision.gap_questions or None,
+    )
+    return decision.model_copy(
+        update={
+            "planned_questions": planned,
+            "substantive_questions": substantive,
+            "gap_questions": gaps,
+        }
+    )
+
+
+def build_enriched_context(
+    notes: str,
+    transcript: list[QATurn],
+    *,
+    substantive_questions: list[str] | None = None,
+) -> str:
+    """Patient-knowable text for the drafter: notes + agent-approved Q&A only."""
     base = (notes or "").strip()
+    substantive_set = set(substantive_questions or [])
     qa_lines = [
         f"Q: {turn.question}\nA: {turn.answer.strip()}"
         for turn in transcript
-        if is_substantive_answer(turn.answer)
+        if turn.question in substantive_set
     ]
     if not qa_lines:
         return base
     qa_block = "PATIENT Q&A:\n" + "\n".join(qa_lines)
     return f"{base}\n\n{qa_block}".strip()
+
+
+def finalize_interview_result(
+    *,
+    notes: str,
+    transcript: list[QATurn],
+    planned_questions: list[str],
+    decision: QuestionDecision,
+    skipped: bool,
+    gap_analysis: str,
+) -> QuestionInterviewResult:
+    """Build the interview artifact from the agent's final classification."""
+    planned = list(planned_questions)[:MAX_QUESTIONS]
+    if skipped and not transcript:
+        return QuestionInterviewResult(
+            qa_transcript=[],
+            enriched_context=(notes or "").strip(),
+            planned_questions=planned,
+            patient_gap_note=build_patient_gap_note(planned),
+            internal_gap_analysis=gap_analysis,
+            skipped=True,
+        )
+
+    substantive, gaps = classify_interview(
+        planned_questions=planned,
+        transcript=transcript,
+        substantive_questions=decision.substantive_questions,
+        gap_questions=decision.gap_questions,
+    )
+    return QuestionInterviewResult(
+        qa_transcript=list(transcript),
+        enriched_context=build_enriched_context(
+            notes, transcript, substantive_questions=substantive
+        ),
+        planned_questions=planned,
+        patient_gap_note=build_patient_gap_note(gaps),
+        internal_gap_analysis=gap_analysis,
+        skipped=skipped,
+    )
 
 
 def build_patient_gap_note(gap_questions: list[str]) -> str:
@@ -447,13 +591,13 @@ def run_question_interview(
     planned = list(first.planned_questions)[:max_questions]
 
     if skip or responder is None:
-        return QuestionInterviewResult(
-            qa_transcript=[],
-            enriched_context=(notes or "").strip(),
+        return finalize_interview_result(
+            notes=notes,
+            transcript=[],
             planned_questions=planned,
-            patient_gap_note=build_patient_gap_note(planned),
-            internal_gap_analysis=first.gap_analysis,
+            decision=first,
             skipped=True,
+            gap_analysis=first.gap_analysis,
         )
 
     decision = first
@@ -478,18 +622,16 @@ def run_question_interview(
             library_context=library_context,
         )
 
-    answered = {turn.question for turn in transcript}
-    not_asked = [question for question in planned if question not in answered]
-    dont_know = [
-        turn.question for turn in transcript if not is_substantive_answer(turn.answer)
-    ]
-    gap_questions = list(dict.fromkeys(not_asked + dont_know))
-
-    return QuestionInterviewResult(
-        qa_transcript=transcript,
-        enriched_context=build_enriched_context(notes, transcript),
+    decision = _with_resolved_classification(
+        decision,
         planned_questions=planned,
-        patient_gap_note=build_patient_gap_note(gap_questions),
-        internal_gap_analysis=decision.gap_analysis,
+        transcript=transcript,
+    )
+    return finalize_interview_result(
+        notes=notes,
+        transcript=transcript,
+        planned_questions=planned,
+        decision=decision,
         skipped=False,
+        gap_analysis=decision.gap_analysis,
     )
