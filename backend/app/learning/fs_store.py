@@ -263,14 +263,19 @@ class FileSystemPhoenixLearningStore:
             encoding="utf-8",
         )
 
+    _RUNTIME_PROMPT_POINTERS: dict[str, str] = {
+        "drafter_system_prompt": "active_drafter_prompt.txt",
+        "question_agent_system_prompt": "active_question_agent_prompt.txt",
+    }
+
     def _write_prompt(self, comp: Component) -> None:
         if self._prompts_dir is None:
             return
         safe_version = _slug(comp.version)
-        if comp.component_id == "drafter_system_prompt":
+        active_name = self._RUNTIME_PROMPT_POINTERS.get(comp.component_id)
+        if active_name is not None:
             path = self._prompts_dir / f"{safe_version}.md"
-            active_path = self._prompts_dir / "active_drafter_prompt.txt"
-            active_path.write_text(safe_version, encoding="utf-8")
+            (self._prompts_dir / active_name).write_text(safe_version, encoding="utf-8")
         else:
             safe_id = _slug(comp.component_id)
             path = self._prompts_dir / f"{safe_id}__{safe_version}.md"

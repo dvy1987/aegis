@@ -47,6 +47,40 @@ def test_prompt_promotion_writes_runtime_loadable_filename(tmp_path: Path) -> No
     assert not (prompts_dir / "drafter_system_prompt__drafter_v3.md").exists()
 
 
+def test_question_agent_prompt_promotion_writes_runtime_loadable_filename(
+    tmp_path: Path,
+) -> None:
+    prompts_dir = tmp_path / "prompts"
+    store = FileSystemPhoenixLearningStore(
+        playbooks_dir=tmp_path / "playbooks",
+        prompts_dir=prompts_dir,
+    )
+    candidate = Candidate(
+        candidate_id="c1",
+        components={
+            "question_agent_system_prompt": Component(
+                component_id="question_agent_system_prompt",
+                kind="prompt",
+                version="question_agent_v3",
+                text="New promoted question agent prompt.",
+            )
+        },
+        origin="reflect",
+    )
+
+    store.register_promotion(candidate, _audit())
+
+    assert (prompts_dir / "question_agent_v3.md").read_text() == (
+        "New promoted question agent prompt."
+    )
+    assert (prompts_dir / "active_question_agent_prompt.txt").read_text() == (
+        "question_agent_v3"
+    )
+    assert not (
+        prompts_dir / "question_agent_system_prompt__question_agent_v3.md"
+    ).exists()
+
+
 def test_playbook_promotion_writes_runtime_loadable_filename(tmp_path: Path) -> None:
     playbooks_dir = tmp_path / "playbooks"
     store = FileSystemPhoenixLearningStore(
