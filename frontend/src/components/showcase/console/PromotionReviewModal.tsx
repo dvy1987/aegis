@@ -183,7 +183,7 @@ function LiftSummary({ lift }: { lift: PromotionPreview["lift"] }) {
 }
 
 function SectionBlock({ section }: { section: PromotionPreviewSection }) {
-  if (section.kind === "drafter") {
+  if (section.kind === "drafter" || section.kind === "question_agent") {
     return (
       <article className="flex flex-col gap-3">
         <SectionHeader title={section.title} versions={`${section.before_version} → ${section.after_version}`} />

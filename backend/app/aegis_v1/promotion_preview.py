@@ -10,6 +10,7 @@ from app.learning.slice_key import parse_slice_key
 
 US_PLAYBOOK_TITLE = "US-playbook"
 US_PLAYBOOK_COMPONENT_ID = "geo_playbook:us"
+QUESTION_AGENT_COMPONENT_ID = "question_agent_system_prompt"
 
 
 def _rule_index(playbook: dict[str, Any] | None) -> dict[str, dict[str, Any]]:
@@ -103,6 +104,19 @@ def _load_baseline_component(component_id: str) -> Component:
             version=version,
             text=load_drafter_prompt(version),
         )
+    if component_id == QUESTION_AGENT_COMPONENT_ID:
+        from app.aegis_v1.question_agent import (
+            get_active_question_agent_prompt_version,
+            load_question_agent_prompt,
+        )
+
+        version = get_active_question_agent_prompt_version()
+        return Component(
+            component_id=component_id,
+            kind="prompt",
+            version=version,
+            text=load_question_agent_prompt(version),
+        )
     if component_id.startswith("playbook:"):
         slice_key = component_id.removeprefix("playbook:")
         insurer, denial_type, sub_tactic = parse_slice_key(slice_key)
@@ -156,6 +170,19 @@ def build_promotion_preview(proposal: PromotionProposal) -> dict[str, Any]:
                 {
                     "kind": "drafter",
                     "title": "Drafter prompt",
+                    "before_version": before.version,
+                    "after_version": after.version,
+                    "before_text": before.text or "",
+                    "after_text": after.text or "",
+                }
+            )
+            continue
+
+        if component_id == QUESTION_AGENT_COMPONENT_ID:
+            sections.append(
+                {
+                    "kind": "question_agent",
+                    "title": "Question agent prompt",
                     "before_version": before.version,
                     "after_version": after.version,
                     "before_text": before.text or "",

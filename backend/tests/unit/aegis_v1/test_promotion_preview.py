@@ -50,6 +50,35 @@ def test_build_promotion_preview_includes_changed_sections() -> None:
     assert drafter["after_text"].startswith("Revised drafter")
 
 
+def test_build_promotion_preview_includes_question_agent_section() -> None:
+    candidate = Candidate(
+        candidate_id="c2",
+        components={
+            "question_agent_system_prompt": Component(
+                component_id="question_agent_system_prompt",
+                kind="prompt",
+                version="question_agent_v_test",
+                text="Revised question agent prompt for showcase review.",
+            ),
+        },
+        origin="reflect",
+        diff_summary="Updated question agent prompt.",
+    )
+    proposal = PromotionProposal(
+        candidate=candidate,
+        before=ExperimentResult(candidate_id="seed", dataset_split="pre", composite=0.4),
+        after=ExperimentResult(candidate_id="c2", dataset_split="post", composite=0.55),
+        per_dimension_deltas={"question_agent": 0.2},
+        vetoes=[],
+    )
+
+    preview = build_promotion_preview(proposal)
+
+    question_agent = next(s for s in preview["sections"] if s["kind"] == "question_agent")
+    assert question_agent["title"] == "Question agent prompt"
+    assert question_agent["after_text"].startswith("Revised question agent")
+
+
 def test_us_playbook_rule_diff() -> None:
     from app.aegis_v1.promotion_preview import _us_playbook_rule_changes
 

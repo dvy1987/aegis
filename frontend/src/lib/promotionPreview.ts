@@ -21,6 +21,14 @@ export type PromotionPreviewSection =
       after_text: string;
     }
   | {
+      kind: "question_agent";
+      title: string;
+      before_version: string;
+      after_version: string;
+      before_text: string;
+      after_text: string;
+    }
+  | {
       kind: "slice_playbook";
       title: string;
       slice_key: string;
