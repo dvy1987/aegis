@@ -24,7 +24,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Aegis — Draft an appeal that reads like you mean it.",
   description:
-    "A denial is not a final answer. Aegis helps you draft a US health-insurance appeal letter, grounded in your story and the rules that protect you.",
+    "A denial is not the final answer. Aegis helps you draft a US health-insurance appeal letter, grounded in your story and the rules that protect you.",
   robots: { index: false, follow: false },
 };
 

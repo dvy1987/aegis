@@ -19,9 +19,35 @@ export default function Home() {
                 Draft assistance for US health-insurance appeals
               </p>
               <h1 className="font-display font-semibold text-display-lg md:text-display-xl lg:text-display-2xl leading-[1.05] tracking-tight text-text-primary">
-                A denial is not a final answer.
+                A denial is not the final answer.
               </h1>
-              <p className="mt-8 max-w-prose font-body text-lg md:text-xl leading-snug text-text-secondary">
+              <dl className="mt-10 grid grid-cols-3 gap-0 max-w-prose">
+                <div className="pr-4 sm:pr-6 text-center">
+                  <dt className="font-display text-display-sm md:text-display-md font-semibold tracking-tight text-text-primary leading-none">
+                    19%
+                  </dt>
+                  <dd className="mt-3 font-body text-sm leading-snug text-text-secondary">
+                    of in-network claims denied (≈73M/yr on ACA)
+                  </dd>
+                </div>
+                <div className="px-4 sm:px-6 border-l border-[color:var(--border-subtle)] text-center">
+                  <dt className="font-display text-display-sm md:text-display-md font-semibold tracking-tight text-text-primary leading-none">
+                    1 in 3
+                  </dt>
+                  <dd className="mt-3 font-body text-sm leading-snug text-text-secondary">
+                    appeals succeed when patients file
+                  </dd>
+                </div>
+                <div className="pl-4 sm:pl-6 border-l border-[color:var(--border-subtle)] text-center">
+                  <dt className="font-display text-display-sm md:text-display-md font-semibold tracking-tight text-text-primary leading-none">
+                    &lt;1%
+                  </dt>
+                  <dd className="mt-3 font-body text-sm leading-snug text-text-secondary">
+                    of denials are ever appealed
+                  </dd>
+                </div>
+              </dl>
+              <p className="mt-10 max-w-prose font-body text-lg md:text-xl leading-snug text-text-secondary">
                 Tell us what happened. We&apos;ll help you draft an appeal that reads like a person
                 wrote it — grounded in your story and the rules that protect you.
               </p>
