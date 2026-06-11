@@ -134,6 +134,10 @@ export const VERSUS_ILLUSTRATIVE =
 export const VERSUS_PENDING = "AWAITING MEASUREMENT";
 export const VERSUS_PHOENIX_LINK = "Open trace in Phoenix";
 export const VERSUS_RUN_SIMULATOR = "Run simulator";
+export const VERSUS_MEASURE_RUNNING =
+  "Drafting appeal and running the outcome simulator — typically 1–3 minutes. Do not close this tab.";
+export const VERSUS_BACKEND_REQUIRED =
+  "Measured lift needs the live API. Open Settings (gear) and confirm the backend URL; the status dot should be green.";
 export const VERSUS_VIEW_DRAFT = "View appeal draft";
 export const VERSUS_HELD_OUT_COMPOSITE = "Held-out composite";
 export const VERSUS_SIMULATOR_SCORE = "Simulator score";

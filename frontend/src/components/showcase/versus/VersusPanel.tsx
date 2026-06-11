@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { formatFetchError } from "@/lib/apiErrors";
 import { showcaseSource } from "@/lib/data";
 import { isAfterLearningUnlocked } from "@/lib/showcase/simulatorUnlock";
+import { checkBackendHealth, getApiBase } from "@/lib/settings";
 import type {
   CaseSummary,
   ShowcaseBundle,
@@ -34,6 +36,8 @@ import {
   VERSUS_SIMULATOR_APPROVED,
   VERSUS_SIMULATOR_REJECTED,
   VERSUS_SIMULATOR_SCORE,
+  VERSUS_MEASURE_RUNNING,
+  VERSUS_BACKEND_REQUIRED,
 } from "@/components/showcase/copy";
 import { ArrowUpRightIcon } from "@/icons";
 import { CaseDocumentModal } from "./CaseDocumentModal";
@@ -96,6 +100,7 @@ export function VersusPanel({
   const [error, setError] = useState<string | null>(null);
   const [draftModal, setDraftModal] = useState<ShowcaseMeasureVariant | null>(null);
   const [simModal, setSimModal] = useState<ShowcaseMeasureResult | null>(null);
+  const [backendOnline, setBackendOnline] = useState<boolean | null>(null);
 
   const cache = runs[bundle.case_id] ?? {};
   const measured = bundle.measured;
@@ -121,6 +126,16 @@ export function VersusPanel({
     setDraftModal(null);
     setSimModal(null);
   }, [bundle.case_id]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void checkBackendHealth(getApiBase()).then((status) => {
+      if (!cancelled) setBackendOnline(status === "connected");
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const sideFromBundle = (variant: ShowcaseMeasureVariant) =>
     variant === "baseline" ? bundle.v1 : bundle.v3;
@@ -176,7 +191,7 @@ export function VersusPanel({
       const result = await fetchMeasure(variant);
       setSimModal(result);
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
+      setError(formatFetchError(e, getApiBase(), "Measured-lift simulator"));
     } finally {
       setLoading(null);
     }
@@ -199,7 +214,7 @@ export function VersusPanel({
       await fetchMeasure(variant);
       setDraftModal(variant);
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
+      setError(formatFetchError(e, getApiBase(), "Appeal draft"));
     } finally {
       setLoading(null);
     }
@@ -366,12 +381,22 @@ export function VersusPanel({
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3">
-          {error && (
-            <p className="sc-mono" style={{ color: "var(--sc-deny)" }}>
+          {loading && (
+            <p className="sc-mono" style={{ color: "var(--sc-accent)", maxWidth: "42rem" }}>
+              {VERSUS_MEASURE_RUNNING}
+            </p>
+          )}
+          {!loading && backendOnline === false && (
+            <p className="sc-mono" style={{ color: "var(--sc-deny)", maxWidth: "42rem" }}>
+              {VERSUS_BACKEND_REQUIRED}
+            </p>
+          )}
+          {!loading && error && (
+            <p className="sc-mono" style={{ color: "var(--sc-deny)", maxWidth: "42rem" }}>
               {error}
             </p>
           )}
-          {!error && !measured && !baseline.hasResult && !candidate.hasResult && (
+          {!loading && !error && backendOnline !== false && !measured && !baseline.hasResult && !candidate.hasResult && (
             <p className="sc-mono" style={{ color: "var(--sc-text-3)" }}>
               {VERSUS_ILLUSTRATIVE}
             </p>

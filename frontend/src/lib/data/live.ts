@@ -18,7 +18,8 @@ import {
   loadBundledShowcaseManifest,
 } from "@/lib/showcase/manifest";
 import { parseAppealResponse, parseQuestionTurn, simulatorResultSchema } from "@/lib/schema";
-import { getApiBase, getDiscoveryEnabled } from "@/lib/settings";
+import { backendUnreachableMessage, formatFetchError } from "@/lib/apiErrors";
+import { checkBackendHealth, getApiBase, getDiscoveryEnabled } from "@/lib/settings";
 import { demoSource } from "./demo";
 
 export const liveSource: DataSource = {
@@ -99,24 +100,35 @@ export const liveSource: DataSource = {
     variant: ShowcaseMeasureVariant,
   ): Promise<ShowcaseMeasureResult> {
     const base = getApiBase();
-    const res = await fetch(`${base}/v1/showcase/measure-case`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        case_id: caseSummary.case_id,
-        denial_letter_text: caseSummary.denial_letter_text,
-        clinical_context: caseSummary.clinical_context ?? "",
-        insurer: caseSummary.insurer,
-        denial_type: caseSummary.denial_type,
-        patient_age: caseSummary.patient_age,
-        patient_gender: caseSummary.patient_gender,
-        variant,
-      }),
-    });
+    const health = await checkBackendHealth(base);
+    if (health !== "connected") {
+      throw new Error(backendUnreachableMessage(base, "Measured-lift simulator"));
+    }
+
+    let res: Response;
+    try {
+      res = await fetch(`${base}/v1/showcase/measure-case`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          case_id: caseSummary.case_id,
+          denial_letter_text: caseSummary.denial_letter_text,
+          clinical_context: caseSummary.clinical_context ?? "",
+          insurer: caseSummary.insurer,
+          denial_type: caseSummary.denial_type,
+          patient_age: caseSummary.patient_age,
+          patient_gender: caseSummary.patient_gender,
+          variant,
+        }),
+      });
+    } catch (error) {
+      throw new Error(formatFetchError(error, base, "Measured-lift simulator"));
+    }
+
     if (!res.ok) {
       const detail = await res.text().catch(() => "");
       throw new Error(
-        `showcase measure failed: ${res.status}${detail ? ` — ${detail.slice(0, 240)}` : ""}`,
+        `Measured-lift simulator failed (${res.status})${detail ? ` — ${detail.slice(0, 240)}` : ""}`,
       );
     }
     const data = (await res.json()) as ShowcaseMeasureResult;

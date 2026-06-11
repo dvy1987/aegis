@@ -10,12 +10,26 @@ import type {
 import { CASES } from "@/lib/fixtures/cases";
 import { parseAppealFixture } from "@/lib/schema";
 
-const FALLBACK = "case_12_aetna_priorauth";
+const DEMO_APPEAL_FIXTURE_IDS = new Set([
+  "case_11_uhc_mednec",
+  "case_12_aetna_priorauth",
+  "case_13_cigna_mednec",
+  "case_14_uhc_priorauth",
+  "case_15_aetna_mednec",
+  "case_16_cigna_priorauth",
+  "case_17_uhc_mednec",
+  "case_18_aetna_priorauth",
+  "case_19_cigna_mednec",
+  "case_20_uhc_priorauth",
+]);
+
+const FALLBACK_APPEAL = "case_12_aetna_priorauth";
+const DEFAULT_SHOWCASE_CASE = CASES[0]?.case_id ?? "case_168_aetna_priorauth";
 
 const SHOWCASE_CASE_IDS = new Set(CASES.map((c) => c.case_id));
 
 async function loadAppealFixture(caseId: string): Promise<AppealFixture> {
-  const id = CASES.some((c) => c.case_id === caseId) ? caseId : FALLBACK;
+  const id = DEMO_APPEAL_FIXTURE_IDS.has(caseId) ? caseId : FALLBACK_APPEAL;
   const mod = await import(`@/lib/fixtures/appeals/${id}.json`);
   return parseAppealFixture(mod.default);
 }
@@ -78,7 +92,7 @@ export const demoSource: DataSource = {
     };
   },
   async getShowcase(caseId: string): Promise<ShowcaseBundle> {
-    const id = CASES.some((c) => c.case_id === caseId) ? caseId : FALLBACK;
+    const id = CASES.find((c) => c.case_id === caseId)?.case_id ?? DEFAULT_SHOWCASE_CASE;
     const mod = await import(`@/lib/fixtures/showcase/${id}.json`);
     const data = mod.default;
     

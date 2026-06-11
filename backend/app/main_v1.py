@@ -36,9 +36,12 @@ from app.app_utils.telemetry import setup_telemetry
 
 setup_telemetry()
 
-allow_origins = (
-    os.getenv("ALLOW_ORIGINS", "").split(",") if os.getenv("ALLOW_ORIGINS") else None
-)
+_dev_origins = "http://localhost:3000,http://127.0.0.1:3000"
+allow_origins = [
+    origin.strip()
+    for origin in os.getenv("ALLOW_ORIGINS", _dev_origins).split(",")
+    if origin.strip()
+]
 
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
