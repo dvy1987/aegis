@@ -1,23 +1,12 @@
-/** Settings for the live consumer flow (`/appeal` only). */
+/** Live API calls (`/appeal`, showcase measured-lift simulator). */
 
 const DISCOVERY_KEY = "aegis_discovery_enabled";
-const API_BASE_KEY = "aegis_api_base";
 
-const DEFAULT_API = "http://localhost:8001";
+/** Fixed backend — aegis-v1-api on Cloud Run. Not configurable. */
+export const AEGIS_V1_API_URL = "https://aegis-v1-api-v6a3eydpoq-uc.a.run.app";
 
 export function getApiBase(): string {
-  if (typeof window !== "undefined") {
-    const stored = window.localStorage.getItem(API_BASE_KEY);
-    if (stored?.trim()) return stored.trim().replace(/\/$/, "");
-  }
-  const fromEnv = process.env.NEXT_PUBLIC_AEGIS_API?.trim();
-  if (fromEnv) return fromEnv.replace(/\/$/, "");
-  return DEFAULT_API;
-}
-
-export function setApiBase(url: string): void {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(API_BASE_KEY, url.trim().replace(/\/$/, ""));
+  return AEGIS_V1_API_URL;
 }
 
 export function getDiscoveryEnabled(): boolean {
@@ -41,7 +30,7 @@ export function notifySettingsChanged(): void {
   window.dispatchEvent(new Event(SETTINGS_CHANGED_EVENT));
 }
 
-export async function checkBackendHealth(apiBase: string): Promise<BackendStatus> {
+export async function checkBackendHealth(apiBase: string = AEGIS_V1_API_URL): Promise<BackendStatus> {
   try {
     const res = await fetch(`${apiBase.replace(/\/$/, "")}/health`, {
       method: "GET",
@@ -49,7 +38,7 @@ export async function checkBackendHealth(apiBase: string): Promise<BackendStatus
     });
     if (!res.ok) return "offline";
     const data = (await res.json()) as { ok?: boolean; status?: string };
-    return (data.ok || data.status === "ok") ? "connected" : "offline";
+    return data.ok || data.status === "ok" ? "connected" : "offline";
   } catch {
     return "offline";
   }

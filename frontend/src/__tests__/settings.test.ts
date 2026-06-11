@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import {
+  AEGIS_V1_API_URL,
   getDiscoveryEnabled,
   setDiscoveryEnabled,
-  setApiBase,
   getApiBase,
 } from "@/lib/settings";
 
@@ -20,8 +20,7 @@ describe("settings", () => {
     expect(getDiscoveryEnabled()).toBe(false);
   });
 
-  it("persists api base", () => {
-    setApiBase("http://localhost:8001");
-    expect(getApiBase()).toBe("http://localhost:8001");
+  it("always points at the fixed cloud v1 api", () => {
+    expect(getApiBase()).toBe(AEGIS_V1_API_URL);
   });
 });

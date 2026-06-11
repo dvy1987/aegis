@@ -4,10 +4,9 @@ import { useCallback, useEffect, useId, useState } from "react";
 import { Button } from "@/components/Button";
 import { StatusDot } from "@/components/ui/StatusDot";
 import {
+  AEGIS_V1_API_URL,
   checkBackendHealth,
-  getApiBase,
   getDiscoveryEnabled,
-  setApiBase,
   setDiscoveryEnabled,
   notifySettingsChanged,
   type BackendStatus,
@@ -56,7 +55,7 @@ function Switch({
 function statusLabel(status: BackendStatus): string {
   if (status === "checking") return "Checking connection to drafting service…";
   if (status === "connected") return "Connected — appeals run for real";
-  if (status === "offline") return "Not connected — start the backend or check the address";
+  if (status === "offline") return "Not connected — aegis-v1-api may be down";
   return "Check that the drafting service is running";
 }
 
@@ -68,24 +67,20 @@ export function SettingsPanel({
   onClose: () => void;
 }) {
   const discoveryId = useId();
-  const apiId = useId();
 
-  const [apiUrl, setApiUrl] = useState("http://localhost:8001");
   const [discovery, setDiscovery] = useState(true);
   const [status, setStatus] = useState<BackendStatus>("unknown");
 
-  const refreshStatus = useCallback(async (base: string) => {
+  const refreshStatus = useCallback(async () => {
     setStatus("checking");
-    setStatus(await checkBackendHealth(base));
+    setStatus(await checkBackendHealth());
   }, []);
 
   useEffect(() => {
     if (!open) return;
-    const base = getApiBase();
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setApiUrl(base);
     setDiscovery(getDiscoveryEnabled());
-    void refreshStatus(base);
+    void refreshStatus();
   }, [open, refreshStatus]);
 
   useEffect(() => {
@@ -102,7 +97,6 @@ export function SettingsPanel({
   const canUseDiscovery = status === "connected";
 
   function save() {
-    setApiBase(apiUrl);
     setDiscoveryEnabled(canUseDiscovery ? discovery : false);
     notifySettingsChanged();
     onClose();
@@ -138,29 +132,10 @@ export function SettingsPanel({
         </div>
 
         <div className="mt-8 flex flex-col gap-8">
-          <div className="flex flex-col gap-3">
-            <label htmlFor={apiId} className="font-body text-sm font-medium text-text-primary">
-              Drafting service address
-            </label>
-            <input
-              id={apiId}
-              type="url"
-              value={apiUrl}
-              onChange={(e) => setApiUrl(e.target.value)}
-              onBlur={() => void refreshStatus(apiUrl)}
-              className="w-full rounded-md border border-border-default bg-surface-primary px-3 py-2 font-body text-sm text-text-primary"
-              placeholder="http://localhost:8001"
-            />
-            <p className="font-body text-xs text-text-tertiary">
-              Local: run <span className="font-mono text-text-secondary">./scripts/dev.sh</span>.
-              Deployed: your Cloud Run URL.
-            </p>
-            <Button
-              type="button"
-              variant="secondary"
-              className="self-start"
-              onClick={() => void refreshStatus(apiUrl)}
-            >
+          <div className="flex flex-col gap-2">
+            <p className="font-body text-sm font-medium text-text-primary">Drafting service</p>
+            <p className="font-mono text-xs text-text-secondary break-all">{AEGIS_V1_API_URL}</p>
+            <Button type="button" variant="secondary" className="self-start" onClick={() => void refreshStatus()}>
               Check connection
             </Button>
           </div>

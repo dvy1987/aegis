@@ -18,8 +18,8 @@ import {
   loadBundledShowcaseManifest,
 } from "@/lib/showcase/manifest";
 import { parseAppealResponse, parseQuestionTurn, simulatorResultSchema } from "@/lib/schema";
-import { backendUnreachableMessage, formatFetchError } from "@/lib/apiErrors";
-import { checkBackendHealth, getApiBase, getDiscoveryEnabled } from "@/lib/settings";
+import { formatFetchError } from "@/lib/apiErrors";
+import { getApiBase, getDiscoveryEnabled } from "@/lib/settings";
 import { demoSource } from "./demo";
 
 export const liveSource: DataSource = {
@@ -100,10 +100,6 @@ export const liveSource: DataSource = {
     variant: ShowcaseMeasureVariant,
   ): Promise<ShowcaseMeasureResult> {
     const base = getApiBase();
-    const health = await checkBackendHealth(base);
-    if (health !== "connected") {
-      throw new Error(backendUnreachableMessage(base, "Measured-lift simulator"));
-    }
 
     let res: Response;
     try {

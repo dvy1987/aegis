@@ -1,14 +1,13 @@
 /** Plain-English fetch errors — Safari reports unreachable backends as "Load failed". */
 
-const NETWORK_ERROR_RE = /load failed|failed to fetch|networkerror|network error|fetch failed/i;
+import { AEGIS_V1_API_URL } from "@/lib/settings";
 
-export const BACKEND_START_HINT =
-  "cd backend && uv run uvicorn app.main_v1:app --host 0.0.0.0 --port 8001";
+const NETWORK_ERROR_RE = /load failed|failed to fetch|networkerror|network error|fetch failed/i;
 
 export function backendUnreachableMessage(apiBase: string, context = "Request"): string {
   return (
-    `${context}: cannot reach the API at ${apiBase}. ` +
-    `Confirm the backend is running (${BACKEND_START_HINT}) and the URL in Settings matches.`
+    `${context}: cannot reach ${apiBase}. ` +
+    `Confirm aegis-v1-api is up (${AEGIS_V1_API_URL}/health).`
   );
 }
 
