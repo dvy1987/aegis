@@ -9,10 +9,12 @@ from google.genai import types
 
 from app.aegis_v1.adk_runtime import make_retry_model
 from app.aegis_v1.schemas import FeatureAssessment, FeatureMark
+import os
+
 from app.aegis_v1.simulator_client import _build_assess_prompt
 from app.aegis_v1.simulator_scoring import load_simulator_rules
 
-_SIMULATOR_INSTRUCTION = """\
+_SIMULATOR_INSTRUCTION_STRICT = """\
 You are a skeptical Utilization Management reviewer upholding a denial unless the
 appeal letter proves the decision wrong with specific facts. Default stance: deny.
 
@@ -30,6 +32,21 @@ Return JSON with:
 Score 5 only for specific, case-grounded proof in the letter — not promises of
 future attachments. Do NOT output a score or verdict.
 """
+
+_SIMULATOR_INSTRUCTION_DEMO = """\
+You are a Utilization Management reviewer scoring a showcase demo appeal. Credit
+good-faith medical-necessity arguments with partial marks when directionally right.
+Use anchor 5 when the letter clearly engages denial hooks with patient-specific facts.
+Return critique, per-feature 1/3/5 marks, and unrebutted_denial_points ([] when the
+letter reasonably addresses the main hooks). Do NOT output a score or verdict.
+"""
+
+
+def _simulator_instruction() -> str:
+    if os.environ.get("AEGIS_SIMULATOR_PROFILE", "").strip().lower() == "demo":
+        return _SIMULATOR_INSTRUCTION_DEMO
+    return _SIMULATOR_INSTRUCTION_STRICT
+
 
 _JSON_FENCE_RE = re.compile(r"```(?:json)?\s*([\s\S]*?)\s*```", re.IGNORECASE)
 
@@ -78,7 +95,7 @@ def build_simulator_agent(*, model: Any | None = None) -> LlmAgent:
     return LlmAgent(
         name="simulator_agent",
         model=model or make_retry_model(),
-        instruction=_SIMULATOR_INSTRUCTION,
+        instruction=_simulator_instruction(),
         generate_content_config=types.GenerateContentConfig(
             response_mime_type="application/json",
             temperature=0.2,

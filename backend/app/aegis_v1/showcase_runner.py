@@ -104,6 +104,16 @@ def _dataset(cases: list[ShowcaseCase]) -> list[dict]:
     return out
 
 
+def _persist_measure_results(
+    manager: ShowcaseSessionManager,
+    session_id: str,
+    *,
+    phase: MeasurePhase,
+    results: list[dict],
+) -> None:
+    manager.set_measure_results(session_id, phase=phase, results=results)
+
+
 def _measure(
     manager: ShowcaseSessionManager,
     session_id: str,
@@ -120,19 +130,34 @@ def _measure(
     if _is_cancelled(manager, session_id):
         _log(session_id, stage, "showcase measurement skipped because session is cancelled")
         return []
-    manager.set_stage(session_id, stage=stage, total_cases=len(cases))
-    _log(session_id, stage, "showcase measurement started", total_cases=len(cases))
-    results: list[dict] = []
+    session = manager.get(session_id)
+    results = manager.measure_results_for(session, phase)
+    completed_ids = {str(row.get("case_id")) for row in results}
+    pending_cases = [case for case in cases if case.case_id not in completed_ids]
+    manager.set_stage(
+        session_id,
+        stage=stage,
+        completed_cases=len(results),
+        total_cases=len(cases),
+    )
+    _log(
+        session_id,
+        stage,
+        "showcase measurement started",
+        total_cases=len(cases),
+        resumed_cases=len(results),
+    )
     simulator = AdkSimulatorClient()
-    for index, case in enumerate(cases, start=1):
+    for case in pending_cases:
         if _is_cancelled(manager, session_id):
             _log(session_id, stage, "showcase measurement cancelled mid-loop")
+            _persist_measure_results(manager, session_id, phase=phase, results=results)
             return results
         manager.set_stage(
             session_id,
             stage=stage,
             current_case_id=case.case_id,
-            completed_cases=index - 1,
+            completed_cases=len(results),
             total_cases=len(cases),
         )
         # Per-case isolation: one bad case (LLM error, malformed response, etc.)
@@ -174,15 +199,15 @@ def _measure(
             )
             continue
         results.append(result.model_dump())
+        _persist_measure_results(manager, session_id, phase=phase, results=results)
         manager.set_stage(
             session_id,
             stage=stage,
             current_case_id=case.case_id,
-            completed_cases=index,
+            completed_cases=len(results),
             total_cases=len(cases),
         )
-    manager.set_measure_results(session_id, phase=phase, results=results)
-    _log(session_id, stage, "showcase measurement finished", completed_cases=len(cases))
+    _log(session_id, stage, "showcase measurement finished", completed_cases=len(results))
     return results
 
 
@@ -196,23 +221,36 @@ def _seed_training_signal(
     if _is_cancelled(manager, session_id):
         _log(session_id, "train_gepa", "showcase training skipped because session is cancelled")
         return []
-    manager.set_stage(session_id, stage="train_gepa", total_cases=len(cases))
+    checkpoint = _checkpoint(manager, session_id)
+    trace_ids = list(checkpoint.training_trace_ids)
+    completed_ids = set(checkpoint.training_completed_case_ids)
+    pending_cases = [case for case in cases if case.case_id not in completed_ids]
+    manager.set_stage(
+        session_id,
+        stage="train_gepa",
+        completed_cases=len(completed_ids),
+        total_cases=len(cases),
+    )
     from app import gemini_retry
 
     recorder = OtelPhoenixRecorder()
-    trace_ids: list[str] = []
-    for index, case in enumerate(cases, start=1):
+    for index, case in enumerate(pending_cases, start=len(completed_ids) + 1):
         if index > 1:
             gemini_retry.pace_gemini_call()
         judge = GeminiJudgeClient()
         if _is_cancelled(manager, session_id):
             _log(session_id, "train_gepa", "showcase training cancelled mid-loop")
+            manager.save_checkpoint(
+                session_id,
+                training_trace_ids=trace_ids,
+                training_completed_case_ids=sorted(completed_ids),
+            )
             return trace_ids
         manager.set_stage(
             session_id,
             stage="train_gepa",
             current_case_id=case.case_id,
-            completed_cases=index - 1,
+            completed_cases=len(completed_ids),
             total_cases=len(cases),
         )
         # Per-case isolation: a failed judge/draft on one case is recorded and
@@ -251,11 +289,17 @@ def _seed_training_signal(
             )
             continue
         trace_ids.append(run.trace_ref)
+        completed_ids.add(case.case_id)
+        manager.save_checkpoint(
+            session_id,
+            training_trace_ids=trace_ids,
+            training_completed_case_ids=sorted(completed_ids),
+        )
         manager.set_stage(
             session_id,
             stage="train_gepa",
             current_case_id=case.case_id,
-            completed_cases=index,
+            completed_cases=len(completed_ids),
             total_cases=len(cases),
         )
     return trace_ids
@@ -372,12 +416,25 @@ def _eval_post_gepa_candidate(
     playbooks = _candidate_playbooks(proposal)
     geo_playbook = _candidate_geo_playbook(proposal)
     question_agent_client = _candidate_question_agent_client(proposal)
-    trace_ids: list[str] = []
-    manager.set_stage(session_id, stage="train_gepa", total_cases=len(cases))
-    for index, case in enumerate(cases, start=1):
+    checkpoint = _checkpoint(manager, session_id)
+    trace_ids = list(checkpoint.train_gepa_candidate_trace_ids)
+    completed_ids = set(checkpoint.train_gepa_candidate_completed_case_ids)
+    pending_cases = [case for case in cases if case.case_id not in completed_ids]
+    manager.set_stage(
+        session_id,
+        stage="train_gepa",
+        completed_cases=len(completed_ids),
+        total_cases=len(cases),
+    )
+    for index, case in enumerate(pending_cases, start=len(completed_ids) + 1):
         if index > 1:
             gemini_retry.pace_gemini_call()
         if _is_cancelled(manager, session_id):
+            manager.save_checkpoint(
+                session_id,
+                train_gepa_candidate_trace_ids=trace_ids,
+                train_gepa_candidate_completed_case_ids=sorted(completed_ids),
+            )
             return trace_ids
         student_inputs = pipeline_inputs_from_case(
             case.student_case(dataset_split=train_split),
@@ -426,11 +483,17 @@ def _eval_post_gepa_candidate(
             )
             continue
         trace_ids.append(run.trace_ref)
+        completed_ids.add(case.case_id)
+        manager.save_checkpoint(
+            session_id,
+            train_gepa_candidate_trace_ids=trace_ids,
+            train_gepa_candidate_completed_case_ids=sorted(completed_ids),
+        )
         manager.set_stage(
             session_id,
             stage="train_gepa",
             current_case_id=case.case_id,
-            completed_cases=index,
+            completed_cases=len(completed_ids),
             total_cases=len(cases),
         )
     return trace_ids

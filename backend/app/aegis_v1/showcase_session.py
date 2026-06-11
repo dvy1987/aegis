@@ -78,6 +78,8 @@ class ShowcaseCheckpoint(BaseModel):
     post_measure_done: bool = False
     training_trace_ids: list[str] = Field(default_factory=list)
     training_completed_case_ids: list[str] = Field(default_factory=list)
+    train_gepa_candidate_completed_case_ids: list[str] = Field(default_factory=list)
+    train_gepa_candidate_trace_ids: list[str] = Field(default_factory=list)
     failed_cases: list[CaseFailure] = Field(default_factory=list)
 
 
@@ -212,6 +214,19 @@ class ShowcaseSessionManager:
         session.diagnostics.stage_finished_at = _now()
         session.diagnostics.retryable = False
         return self._save(session)
+
+    def measure_results_for(
+        self,
+        session: ShowcaseSession,
+        phase: Literal["pre", "training_pre", "training_post", "post"],
+    ) -> list[dict]:
+        if phase == "pre":
+            return list(session.pre_measure_results)
+        if phase == "training_pre":
+            return list(session.training_pre_measure_results)
+        if phase == "training_post":
+            return list(session.training_post_measure_results)
+        return list(session.post_measure_results)
 
     def set_measure_results(
         self,

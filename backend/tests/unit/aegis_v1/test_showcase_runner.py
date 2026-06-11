@@ -571,6 +571,53 @@ def test_measure_skips_failing_case_and_continues(
     assert len(seen) == len(holdout)
 
 
+def test_measure_persists_each_case_and_resumes_without_redo(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    manifest = load_showcase_manifest()
+    cases = manifest.quick_train[:2]
+
+    class FakeResult:
+        def __init__(self, case_id: str) -> None:
+            self._case_id = case_id
+
+        def model_dump(self) -> dict:
+            return {"case_id": self._case_id, "score": 0.5}
+
+    seen: list[str] = []
+
+    def track_measure(case_obj, **kwargs):
+        seen.append(case_obj["case_id"])
+        return FakeResult(case_obj["case_id"])
+
+    monkeypatch.setattr(showcase_runner, "AdkSimulatorClient", lambda: object())
+    monkeypatch.setattr(showcase_runner, "run_measurement_case", track_measure)
+
+    showcase_runner._measure(
+        manager,
+        session.session_id,
+        phase="training_pre",
+        cases=cases[:1],
+    )
+    after_first = manager.get(session.session_id)
+    assert len(after_first.training_pre_measure_results) == 1
+    assert seen == [cases[0].case_id]
+
+    showcase_runner._measure(
+        manager,
+        session.session_id,
+        phase="training_pre",
+        cases=cases,
+    )
+    after_second = manager.get(session.session_id)
+    assert len(after_second.training_pre_measure_results) == 2
+    assert seen == [cases[0].case_id, cases[1].case_id]
+
+
 def test_training_signal_skips_failing_case_and_continues(
     tmp_path: Path,
     monkeypatch,

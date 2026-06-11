@@ -201,3 +201,7 @@ my_env.tfvars
 
 # A2A Inspector
 tools/a2a-inspector/
+
+# Showcase session ledger (persisted run JSON; keep directory only)
+data/showcase_ledger/*
+!data/showcase_ledger/.gitkeep

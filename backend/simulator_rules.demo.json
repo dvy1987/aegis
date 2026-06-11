@@ -1,0 +1,56 @@
+{
+  "version": "v2_demo_showcase",
+  "anchors": [1, 3, 5],
+  "approve_threshold": 0.55,
+  "must_have_min_anchor": 3,
+  "features": {
+    "addresses_denial_rationale": {
+      "weight": 0.2,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Demo: engages denial reasons; partial credit allowed."
+    },
+    "cites_clinical_evidence": {
+      "weight": 0.25,
+      "hard_gate": false,
+      "must_have": true,
+      "description": "Demo: patient-specific clinical facts when present."
+    },
+    "cites_applicable_authority": {
+      "weight": 0.1,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Demo: no instant-fail on authority; weighted only."
+    },
+    "cites_binding_policy": {
+      "weight": 0.1,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Demo: policy tie-in when invoked."
+    },
+    "rebuts_specific_flaw": {
+      "weight": 0.15,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Demo: rebuttal hooks; partial credit."
+    },
+    "medical_director_persuasion": {
+      "weight": 0.1,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Demo: clinical persuasion; partial credit."
+    },
+    "specific_requested_action": {
+      "weight": 0.05,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Clear ask."
+    },
+    "credible_tone": {
+      "weight": 0.05,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Professional tone."
+    }
+  }
+}

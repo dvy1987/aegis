@@ -47,7 +47,33 @@ class StubSimulatorClient:
         return self._assessment or uniform_assessment(1)
 
 
+def _simulator_profile() -> str:
+    return os.environ.get("AEGIS_SIMULATOR_PROFILE", "").strip().lower()
+
+
+def _build_demo_assess_prompt(denial_text: str, appeal_letter: str) -> str:
+    return f"""
+    You are a Utilization Management reviewer scoring a draft appeal for a showcase demo.
+    Credit good-faith medical-necessity arguments when the letter engages the denial with
+    patient-specific facts, a clear overturn ask, and professional tone. Default to partial
+    credit (anchor 3) when work is directionally right but thin; use 5 when strong.
+
+    Score features 1/3/5. Leave unrebutted_denial_points empty when the letter makes a
+    reasonable attempt to address the main denial hooks (demo leniency).
+
+    Denial letter:
+    {denial_text}
+
+    Appeal letter:
+    {appeal_letter}
+
+    Critique first, then output features. Do NOT output a score or verdict.
+    """
+
+
 def _build_assess_prompt(denial_text: str, appeal_letter: str) -> str:
+    if _simulator_profile() == "demo":
+        return _build_demo_assess_prompt(denial_text, appeal_letter)
     return f"""
     You are a skeptical Utilization Management reviewer. Your job is to UPHOLD the
     denial unless the appeal proves — with specific documented facts in the letter —

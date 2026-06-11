@@ -48,7 +48,15 @@ class SimulatorRules(BaseModel):
 
 
 def load_simulator_rules(path: str | Path | None = None) -> SimulatorRules:
-    p = Path(path) if path else RULES_PATH
+    import os
+
+    if path is not None:
+        p = Path(path)
+    elif os.environ.get("AEGIS_SIMULATOR_PROFILE", "").strip().lower() == "demo":
+        demo_path = RULES_PATH.parent / "simulator_rules.demo.json"
+        p = demo_path if demo_path.is_file() else RULES_PATH
+    else:
+        p = RULES_PATH
     return SimulatorRules.model_validate_json(p.read_text(encoding="utf-8"))
 
 

@@ -8,6 +8,7 @@ import pytest
 from app.aegis_v1.showcase_ledger import (
     GcsLedgerStore,
     LocalLedgerStore,
+    MirroredLedgerStore,
     open_ledger_store,
     parse_gcs_uri,
 )
@@ -85,6 +86,15 @@ def test_session_manager_survives_store_reload(tmp_path: Path) -> None:
     session = manager.start_quick(case_ids=["case_1"])
     reloaded = ShowcaseSessionManager(ledger_dir=tmp_path).get(session.session_id)
     assert reloaded.session_id == session.session_id
+
+
+def test_mirrored_ledger_writes_primary_and_mirror(tmp_path: Path) -> None:
+    primary = LocalLedgerStore(tmp_path / "primary")
+    mirror = LocalLedgerStore(tmp_path / "mirror")
+    store = MirroredLedgerStore(primary, mirror)
+    store.write_text("quick_1.json", '{"ok": true}')
+    assert primary.read_text("quick_1.json") == '{"ok": true}'
+    assert mirror.read_text("quick_1.json") == '{"ok": true}'
 
 
 def test_promotion_stack_shares_ledger_with_sessions(tmp_path: Path) -> None:

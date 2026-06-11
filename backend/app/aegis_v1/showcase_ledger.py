@@ -6,8 +6,22 @@ from pathlib import Path
 from typing import Protocol
 
 
+def _repo_backend_root() -> Path:
+    return Path(__file__).resolve().parents[2]
+
+
 def default_ledger_dir() -> Path:
-    return Path(os.environ.get("AEGIS_SHOWCASE_LEDGER_DIR", "/tmp/aegis_showcase_sessions"))
+    configured = os.environ.get("AEGIS_SHOWCASE_LEDGER_DIR", "").strip()
+    if configured:
+        return Path(configured)
+    return _repo_backend_root() / "data" / "showcase_ledger"
+
+
+def default_mirror_dir() -> Path | None:
+    configured = os.environ.get("AEGIS_SHOWCASE_LEDGER_MIRROR_DIR", "").strip()
+    if configured:
+        return Path(configured)
+    return None
 
 
 def parse_gcs_uri(uri: str) -> tuple[str, str]:
@@ -63,6 +77,31 @@ class LocalLedgerStore:
         return sorted(out)
 
 
+class MirroredLedgerStore:
+    """Write-through mirror so cloud GCS and a local repo copy stay aligned."""
+
+    def __init__(self, primary: LedgerStore, mirror: LedgerStore) -> None:
+        self.primary = primary
+        self.mirror = mirror
+
+    def ensure_ready(self) -> None:
+        self.primary.ensure_ready()
+        self.mirror.ensure_ready()
+
+    def exists(self, key: str) -> bool:
+        return self.primary.exists(key)
+
+    def read_text(self, key: str) -> str:
+        return self.primary.read_text(key)
+
+    def write_text(self, key: str, content: str) -> None:
+        self.primary.write_text(key, content)
+        self.mirror.write_text(key, content)
+
+    def list_keys(self, prefix: str = "") -> list[str]:
+        return self.primary.list_keys(prefix)
+
+
 class GcsLedgerStore:
     """Persist showcase ledger objects under ``gs://bucket/prefix/``."""
 
@@ -110,7 +149,16 @@ class GcsLedgerStore:
 
 def open_ledger_store(*, ledger_dir: Path | None = None) -> LedgerStore:
     gcs_uri = os.environ.get("AEGIS_SHOWCASE_LEDGER_GCS_URI", "").strip()
+    primary: LedgerStore
     if gcs_uri:
         bucket, prefix = parse_gcs_uri(gcs_uri)
-        return GcsLedgerStore(bucket, prefix)
-    return LocalLedgerStore(ledger_dir or default_ledger_dir())
+        primary = GcsLedgerStore(bucket, prefix)
+    else:
+        primary = LocalLedgerStore(ledger_dir or default_ledger_dir())
+
+    mirror_path = default_mirror_dir()
+    if mirror_path is None:
+        return primary
+    if isinstance(primary, LocalLedgerStore) and primary.root.resolve() == mirror_path.resolve():
+        return primary
+    return MirroredLedgerStore(primary, LocalLedgerStore(mirror_path))
