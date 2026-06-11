@@ -10,8 +10,10 @@ import { RiveOrFallback } from "@/components/showcase/fx/RiveOrFallback";
 import {
   HERO_CTA,
   HERO_EYEBROW,
-  HERO_HEADLINE,
-  HERO_SUBHEAD,
+  HERO_HEADLINE_L1,
+  HERO_HEADLINE_L2,
+  HERO_SUBHEAD_P1,
+  HERO_SUBHEAD_P2,
   HERO_TELEMETRY,
 } from "@/components/showcase/copy";
 
@@ -85,22 +87,34 @@ export function ActHero() {
       className="relative mx-auto flex min-h-dvh w-full flex-col justify-center px-6 py-24 md:px-12"
       style={{ maxWidth: "var(--sc-container-max)" }}
     >
-      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.3fr_0.7fr]">
         <div className="flex flex-col gap-6">
           <div className="sc-hero-eyebrow">
             <MonoLabel>{HERO_EYEBROW}</MonoLabel>
           </div>
 
-          <h1 className="sc-display" style={{ maxWidth: "16ch" }}>
-            {HERO_HEADLINE.map((word, i) => (
-              <span key={i} className="sc-hero-word inline-block" style={{ marginRight: "0.25em" }}>
-                {word}
-              </span>
-            ))}
+          <h1 className="sc-display">
+            <span className="block">
+              {HERO_HEADLINE_L1.map((word, i) => (
+                <span key={i} className="sc-hero-word inline-block" style={{ marginRight: "0.25em" }}>
+                  {word}
+                </span>
+              ))}
+            </span>
+            <span className="block">
+              {HERO_HEADLINE_L2.map((word, i) => (
+                <span key={i} className="sc-hero-word inline-block" style={{ marginRight: "0.25em" }}>
+                  {word}
+                </span>
+              ))}
+            </span>
           </h1>
 
           <p className="sc-hero-sub max-w-prose sc-body" style={{ fontSize: "1.15rem" }}>
-            {HERO_SUBHEAD}
+            <span dangerouslySetInnerHTML={{ __html: HERO_SUBHEAD_P1 }} />
+          </p>
+          <p className="sc-hero-sub max-w-prose sc-body" style={{ fontSize: "1.15rem" }}>
+            {HERO_SUBHEAD_P2}
           </p>
 
           <div className="sc-hero-cta">
@@ -110,8 +124,8 @@ export function ActHero() {
           </div>
         </div>
 
-        <div className="sc-hero-glyph order-first lg:order-last">
-          <RiveOrFallback fallback={<LivingGlyph state={glyphState} className="mx-auto" />} />
+        <div className="sc-hero-glyph order-first lg:order-last" style={{ maxHeight: "360px", maxWidth: "360px" }}>
+          <RiveOrFallback fallback={<LivingGlyph state={glyphState} className="mx-auto max-h-full max-w-full" />} />
         </div>
       </div>
 

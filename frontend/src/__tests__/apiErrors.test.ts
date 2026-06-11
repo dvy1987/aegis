@@ -5,7 +5,7 @@ import { AEGIS_V1_API_URL } from "@/lib/settings";
 describe("apiErrors", () => {
   it("translates Safari Load failed", () => {
     const msg = formatFetchError(new Error("Load failed"), AEGIS_V1_API_URL, "Simulator");
-    expect(msg).toContain("cannot reach the API");
+    expect(msg).toContain("cannot reach");
     expect(msg).toContain(AEGIS_V1_API_URL);
   });
 

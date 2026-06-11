@@ -42,7 +42,7 @@
   --sc-r-cell: 3px;
 
   /* -------- Typography (inherits families from layout next/font) -------- */
-  --sc-hero-size: clamp(3rem, 6vw, 5.5rem);
+  --sc-hero-size: clamp(2rem, 4vw, 3.5rem);
   --sc-section-size: clamp(2rem, 3.5vw, 2.75rem);
   --sc-body-size: 1.0625rem;
   --sc-mono-label-size: 0.8125rem;
@@ -142,6 +142,10 @@
   font-size: var(--sc-body-size);
   line-height: 1.6;
   color: var(--sc-text-2);
+}
+.sc-body strong {
+  font-weight: 600;
+  color: var(--sc-text);
 }
 .sc-mono {
   font-family: var(--font-mono);

@@ -4,12 +4,16 @@
  */
 
 /** Hero word-by-word headline (GSAP reveal). */
-export const HERO_HEADLINE = ["Every", "score", "rewrites", "the", "next", "draft."] as const;
+export const HERO_HEADLINE_L1 = ["They", "have", "algorithms."] as const;
+export const HERO_HEADLINE_L2 = ["Now", "you", "do", "too."] as const;
 
 export const HERO_EYEBROW = "AEGIS · LIVE LEARNING OBSERVATORY";
 
-export const HERO_SUBHEAD =
-  "Synthetic denial cases on a held-out benchmark the model never trains on. GEPA turns judge feedback into prompt, question-agent, and playbook edits — then pauses for your approval before anything ships. Scroll to see measured lift — or start a preview run below.";
+export const HERO_SUBHEAD_P1 =
+  "US health insurers deny roughly 19% of in-network claims (about 73 million a year on ACA exchanges alone). When patients file appeals, 1 in 3 succeed — but <strong>fewer than 1% appeal</strong>.";
+
+export const HERO_SUBHEAD_P2 =
+  "The asymmetry is structural: insurers automate denial through AI-powered adjudication and prior authorization algorithms, while patients face a thirty-page policy document and a phone tree. Aegis helps solve this asymmetry.";
 
 export const HERO_CTA = "Start preview run";
 
@@ -23,10 +27,10 @@ export const HERO_TELEMETRY = [
 ] as const;
 
 export const THESIS_STATEMENT =
-  "Most appeal tools ship frozen — same prompt, same blind spots, appeal after appeal";
+  "Most appeal tools are frozen in time — same prompt, same blind spots.";
 
 export const THESIS_TURN =
-  "Aegis reads what it already scored, then drafts the next case with that history in hand.";
+  "Aegis learns from its Arize Phoenix traces and can be trained to improve its own prompts and insurer playbooks.";
 
 export const THESIS_STATIC_LABEL = "Fixed prompt";
 export const THESIS_STATIC_CAPTION = "One version. No feedback loop.";

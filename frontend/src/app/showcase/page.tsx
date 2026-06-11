@@ -27,17 +27,20 @@ import { Nav } from "@/components/Nav";
 import { ShowcaseFilm } from "@/components/showcase/ShowcaseFilm";
 
 const DEFAULT_CASE = "case_168_aetna_priorauth";
-const TERMINAL = new Set([
+
+/** Run is fully done — clear the active session id and stop treating it as live. */
+const FINAL_TERMINAL = new Set([
   "successful",
   "failed",
   "cancelled",
   "rejected",
-  "needs_approval",
   "rolled_back",
 ]);
 
-function isRunning(session: ShowcaseRunSession | null): boolean {
-  return Boolean(session && !TERMINAL.has(session.status));
+function shouldPoll(session: ShowcaseRunSession | null): boolean {
+  if (!session) return false;
+  if (session.status === "needs_approval") return false;
+  return !FINAL_TERMINAL.has(session.status);
 }
 
 export default function ShowcasePage() {
@@ -88,13 +91,13 @@ export default function ShowcasePage() {
   }, [sel]);
 
   useEffect(() => {
-    if (!activeSessionId || !isRunning(activeSession)) return;
+    if (!activeSessionId || !shouldPoll(activeSession)) return;
     const timer = window.setInterval(async () => {
       try {
         const next = await getRunSession(activeSessionId);
         if (next.run_type === "quick") setPreviewSession(next);
         else setProductionSession(next);
-        if (!isRunning(next)) setActiveSessionId(null);
+        if (FINAL_TERMINAL.has(next.status)) setActiveSessionId(null);
       } catch (e) {
         setRunErr(e instanceof Error ? e.message : String(e));
       }
@@ -112,8 +115,8 @@ export default function ShowcasePage() {
   function trackSession(session: ShowcaseRunSession) {
     if (session.run_type === "quick") setPreviewSession(session);
     else setProductionSession(session);
-    if (isRunning(session)) setActiveSessionId(session.session_id);
-    else setActiveSessionId(null);
+    if (FINAL_TERMINAL.has(session.status)) setActiveSessionId(null);
+    else setActiveSessionId(session.session_id);
   }
 
   async function startQuick() {

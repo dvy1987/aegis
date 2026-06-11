@@ -24,7 +24,7 @@ const manifest: ShowcaseManifest = {
   serious_holdout: [caseStub("s_h_0"), caseStub("s_h_1")],
 };
 
-function session(partial: Partial<ShowcaseRunSession> = {}): ShowcaseRunSession {
+function session(partial: any = {}): ShowcaseRunSession {
   const base: ShowcaseRunSession = {
     session_id: "sess",
     run_type: "quick",

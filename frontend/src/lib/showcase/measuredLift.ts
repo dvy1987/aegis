@@ -9,10 +9,10 @@ export function measuredLiftFromPersisted(
 ): MeasuredLiftCache {
   const out: MeasuredLiftCache = {};
   for (const [caseId, entry] of Object.entries(persisted)) {
-    const row: Partial<Record<ShowcaseMeasureVariant, (typeof entry)["baseline"]>> = {};
+    const row: NonNullable<MeasuredLiftCache[string]> = {};
     if (entry.baseline) row.baseline = entry.baseline;
     if (entry.candidate) row.candidate = entry.candidate;
-    if (row.baseline || row.candidate) out[caseId] = row;
+    if (row.baseline || row.candidate) out[caseId] = row as NonNullable<MeasuredLiftCache[string]>;
   }
   return out;
 }
