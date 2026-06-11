@@ -17,3 +17,16 @@ def setup_telemetry() -> None:
         verbose=True,
         protocol="http/protobuf",
     )
+
+
+def flush_phoenix_telemetry(*, timeout_millis: int = 30_000) -> None:
+    """Push batched OTEL spans to Phoenix before the learning loop reads them."""
+    try:
+        from opentelemetry import trace
+
+        provider = trace.get_tracer_provider()
+        force_flush = getattr(provider, "force_flush", None)
+        if callable(force_flush):
+            force_flush(timeout_millis=timeout_millis)
+    except Exception:
+        return

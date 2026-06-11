@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from app.evals.part_a.deterministic_gates import citation_precheck
+from app.evals.part_a.judge_context import grounding_judge_context
 from app.evals.part_a.judge_agents import AdkJudgeClient
 from app.evals.part_a.judge_workflow import run_judge_panel_workflow
 from app.evals.part_a.llm_judges import JudgeClient
@@ -11,16 +12,9 @@ from app.evals.part_a.question_judge import judge_question_interview
 from app.evals.part_a.schemas import JudgeResult
 from app.evals.part_a.schemas import PanelReport
 from app.evals.part_a.schemas import TeacherGradingPacket
+from app.learning.models import DIMENSION_WEIGHTS as QUALITY_WEIGHTS
 
 HARD_GATE_DIMENSIONS = ("faithfulness_hallucination_gate",)
-
-QUALITY_WEIGHTS = {
-    "grounding": 0.25,
-    "case_specific_clinical_rebuttal": 0.20,
-    "appeal_vector_capture": 0.35,
-    "question_agent": 0.10,
-    "persuasive_coherence": 0.10,
-}
 
 JUDGE_IDS = {
     "faithfulness_hallucination_gate": "j2_faithfulness_hallucination",
@@ -193,7 +187,12 @@ def _run_panel_offline(
     for dimension in QUALITY_WEIGHTS:
         if dimension == "question_agent":
             continue
-        judge_results[dimension] = client.judge(JUDGE_IDS[dimension], context)
+        judge_ctx = (
+            grounding_judge_context(context)
+            if dimension == "grounding"
+            else context
+        )
+        judge_results[dimension] = client.judge(JUDGE_IDS[dimension], judge_ctx)
     question = judge_question_interview(question_interview, teacher=teacher)
     judge_results["question_agent"] = question.result
 

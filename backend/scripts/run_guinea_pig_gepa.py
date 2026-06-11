@@ -5,6 +5,9 @@ Runs one GEPA round mutating drafter, question agent, insurer playbook, and US g
 playbook. On success, promotes the candidate to live prompt/playbook files so a
 follow-up ``run_guinea_pig_measure.py`` uses the optimized versions.
 
+Requires Phoenix telemetry (``setup_telemetry``) so judge traces reach project
+``default`` before GEPA reads them.
+
 Usage (from backend/):
     env UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_guinea_pig_gepa.py \\
         --case ../eval/cases/drafts/guinea-pigs/case_127_aetna_priorauth.json
@@ -15,41 +18,29 @@ import argparse
 import json
 import os
 import shutil
-import socket
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_ROOT = REPO_ROOT / "eval" / "GUINEA-PIG-RUNS"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from guinea_pig_common import (
+    OUTPUT_ROOT,
+    REPO_ROOT,
+    apply_ipv4_patch,
+    estimate_cost_usd,
+    install_token_tracker,
+    load_env,
+    ping_phoenix,
+    setup_phoenix_telemetry,
+)
+
+apply_ipv4_patch()
+
 DEFAULT_CASE = (
     REPO_ROOT / "eval/cases/drafts/guinea-pigs/case_127_aetna_priorauth.json"
 )
-
-_orig_getaddrinfo = socket.getaddrinfo
-
-
-def _ipv4_first_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
-    if family == 0:
-        return _orig_getaddrinfo(host, port, socket.AF_INET, type, proto, flags)
-    return _orig_getaddrinfo(host, port, family, type, proto, flags)
-
-
-socket.getaddrinfo = _ipv4_first_getaddrinfo
-
-
-def _load_env() -> None:
-    env_path = REPO_ROOT / ".env"
-    if env_path.exists():
-        for line in env_path.read_text().splitlines():
-            if "=" in line and not line.lstrip().startswith("#"):
-                k, v = line.split("=", 1)
-                os.environ.setdefault(k.strip(), v.strip())
-    os.environ.setdefault("PHOENIX_PROJECT_NAME", "default")
-    if os.environ.get("PHOENIX_API_KEY") and "PHOENIX_CLIENT_HEADERS" not in os.environ:
-        os.environ["PHOENIX_CLIENT_HEADERS"] = f"api_key={os.environ['PHOENIX_API_KEY']}"
-    os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "us-central1")
 
 
 def _clean_output_root() -> None:
@@ -105,8 +96,9 @@ def _summary_md(
     case_id: str,
     session_status: str,
     approved: bool,
-    out_dir: Path,
+    cost: dict[str, Any],
     proposal: dict[str, Any] | None,
+    phoenix_trace_ids: list[str],
 ) -> str:
     lift = ""
     if proposal:
@@ -117,11 +109,15 @@ def _summary_md(
             f"- Judge composite: {before:.3f} → {after:.3f}\n"
             f"- Vetoes: {vetoes or 'none'}\n"
         )
+    traces = ", ".join(phoenix_trace_ids) if phoenix_trace_ids else "(none recorded)"
     return f"""# Guinea pig GEPA run — {case_id}
 
 - **Status:** {session_status}
 - **Auto-approved:** {approved}
 - **GEPA rounds:** 1 (drafter + question agent + insurer playbook + US geo)
+- **Phoenix project:** default
+- **Phoenix trace ids:** {traces}
+- **Estimated Gemini cost:** ${cost['estimated_total_usd']} ({cost['total_tokens']} tokens, {cost['gemini_calls']} tracked calls)
 - **Post-promote holdout measure:** skipped (run `run_guinea_pig_measure.py` next)
 
 {lift}
@@ -131,6 +127,7 @@ def _summary_md(
 - `proposal.json` — GEPA promotion proposal
 - `promotion_preview.json` — human-readable diff preview
 - `measurement_pre.json` / `measurement_training_pre.json` / `measurement_training_post.json`
+- `cost_summary.json` — token + USD estimate (partial; ADK not tracked)
 - `promoted/` — candidate component snapshots
 
 Not legal or medical advice. Draft assistance only.
@@ -153,7 +150,13 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    _load_env()
+    load_env(require_phoenix=True)
+    # Must run before any evaluated_case / showcase imports (mirrors main_v1.py).
+    setup_phoenix_telemetry()
+    phoenix_ping = ping_phoenix()
+    print(json.dumps({"phoenix_preflight": phoenix_ping}, indent=2), flush=True)
+    token_records = install_token_tracker()
+
     try:
         import google.auth
 
@@ -164,6 +167,7 @@ def main() -> None:
     if not args.keep_prior_runs:
         _clean_output_root()
 
+    # App imports intentionally deferred until after setup_phoenix_telemetry().
     from app.aegis_v1.showcase_manifest import load_showcase_case_from_path
     from app.aegis_v1.showcase_runner import (
         approve_guinea_pig_session,
@@ -195,6 +199,9 @@ def main() -> None:
     elif session.status == "successful":
         approved = bool(session.approved_by)
 
+    cost = estimate_cost_usd(token_records)
+    trace_ids = list(session.diagnostics.phoenix_trace_ids or [])
+
     (out_dir / "session.json").write_text(
         json.dumps(session.model_dump(), indent=2, default=str),
         encoding="utf-8",
@@ -222,6 +229,10 @@ def main() -> None:
             encoding="utf-8",
         )
 
+    (out_dir / "cost_summary.json").write_text(
+        json.dumps(cost, indent=2),
+        encoding="utf-8",
+    )
     (out_dir / "run_meta.json").write_text(
         json.dumps(
             {
@@ -229,6 +240,9 @@ def main() -> None:
                 "case_id": case_id,
                 "run_type": "guinea_pig_gepa",
                 "gepa_rounds": 1,
+                "phoenix_preflight": phoenix_ping,
+                "phoenix_project": "default",
+                "phoenix_trace_ids": trace_ids,
                 "mutate_targets": [
                     "drafter_system_prompt",
                     "question_agent_system_prompt",
@@ -239,6 +253,7 @@ def main() -> None:
                 "approver": args.approver if approved else None,
                 "session_id": session.session_id,
                 "timestamp_utc": stamp,
+                "estimated_cost_usd": cost["estimated_total_usd"],
             },
             indent=2,
         ),
@@ -249,8 +264,9 @@ def main() -> None:
             case_id=case_id,
             session_status=session.status,
             approved=approved,
-            out_dir=out_dir,
+            cost=cost,
             proposal=session.proposal,
+            phoenix_trace_ids=trace_ids,
         ),
         encoding="utf-8",
     )
@@ -261,6 +277,8 @@ def main() -> None:
         "status": session.status,
         "approved": approved,
         "proposal_vetoes": (session.proposal or {}).get("vetoes"),
+        "phoenix_trace_ids": trace_ids,
+        "cost": cost,
     }
     print(json.dumps(result, indent=2))
 

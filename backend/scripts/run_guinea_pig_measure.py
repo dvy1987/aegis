@@ -12,113 +12,23 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
-import socket
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_ROOT = REPO_ROOT / "eval" / "GUINEA-PIG-RUNS"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-# Rough Vertex list prices (USD per 1M tokens) — estimates only; verify on your bill.
-_PRICE_PER_M = {
-    "gemini-3.1-pro-preview": {"input": 1.25, "output": 5.00},
-    "gemini-3.5-flash": {"input": 0.15, "output": 0.60},
-    "default": {"input": 1.25, "output": 5.00},
-}
+from guinea_pig_common import (
+    OUTPUT_ROOT,
+    REPO_ROOT,
+    apply_ipv4_patch,
+    estimate_cost_usd,
+    install_token_tracker,
+    load_env,
+)
 
-_orig_getaddrinfo = socket.getaddrinfo
-
-
-def _ipv4_first_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
-    if family == 0:
-        return _orig_getaddrinfo(host, port, socket.AF_INET, type, proto, flags)
-    return _orig_getaddrinfo(host, port, family, type, proto, flags)
-
-
-socket.getaddrinfo = _ipv4_first_getaddrinfo
-
-
-def _load_env() -> None:
-    env_path = REPO_ROOT / ".env"
-    if env_path.exists():
-        for line in env_path.read_text().splitlines():
-            if "=" in line and not line.lstrip().startswith("#"):
-                k, v = line.split("=", 1)
-                os.environ.setdefault(k.strip(), v.strip())
-    os.environ.setdefault("PHOENIX_PROJECT_NAME", "default")
-    if os.environ.get("PHOENIX_API_KEY") and "PHOENIX_CLIENT_HEADERS" not in os.environ:
-        os.environ["PHOENIX_CLIENT_HEADERS"] = f"api_key={os.environ['PHOENIX_API_KEY']}"
-    os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "us-central1")
-
-
-def _install_token_tracker() -> list[dict[str, Any]]:
-    """Patch Gemini calls to record usage_metadata from every response."""
-    import app.gemini_retry as gr
-
-    records: list[dict[str, Any]] = []
-    original = gr.generate_content_with_fallback
-
-    def tracking_fallback(generate_content, *, model: str, fallback_model=None, **kwargs):
-        response = original(
-            generate_content,
-            model=model,
-            fallback_model=fallback_model,
-            **kwargs,
-        )
-        usage = getattr(response, "usage_metadata", None)
-        prompt_t = int(getattr(usage, "prompt_token_count", 0) or 0)
-        output_t = int(getattr(usage, "candidates_token_count", 0) or 0)
-        total_t = int(getattr(usage, "total_token_count", 0) or 0) or (prompt_t + output_t)
-        records.append(
-            {
-                "model": model,
-                "prompt_tokens": prompt_t,
-                "output_tokens": output_t,
-                "total_tokens": total_t,
-            }
-        )
-        return response
-
-    gr.generate_content_with_fallback = tracking_fallback
-    return records
-
-
-def _estimate_cost_usd(records: list[dict[str, Any]]) -> dict[str, Any]:
-    by_model: dict[str, dict[str, int]] = {}
-    for row in records:
-        model = str(row.get("model") or "default")
-        bucket = by_model.setdefault(
-            model,
-            {"calls": 0, "prompt_tokens": 0, "output_tokens": 0, "total_tokens": 0},
-        )
-        bucket["calls"] += 1
-        bucket["prompt_tokens"] += int(row.get("prompt_tokens") or 0)
-        bucket["output_tokens"] += int(row.get("output_tokens") or 0)
-        bucket["total_tokens"] += int(row.get("total_tokens") or 0)
-
-    total_usd = 0.0
-    model_costs: dict[str, Any] = {}
-    for model, counts in by_model.items():
-        rates = _PRICE_PER_M.get(model) or _PRICE_PER_M["default"]
-        input_usd = counts["prompt_tokens"] / 1_000_000 * rates["input"]
-        output_usd = counts["output_tokens"] / 1_000_000 * rates["output"]
-        subtotal = round(input_usd + output_usd, 6)
-        total_usd += subtotal
-        model_costs[model] = {**counts, "estimated_usd": round(subtotal, 6)}
-
-    return {
-        "gemini_calls": len(records),
-        "per_model": model_costs,
-        "total_prompt_tokens": sum(r.get("prompt_tokens", 0) for r in records),
-        "total_output_tokens": sum(r.get("output_tokens", 0) for r in records),
-        "total_tokens": sum(r.get("total_tokens", 0) for r in records),
-        "estimated_total_usd": round(total_usd, 4),
-        "pricing_note": "Estimated from public list prices; verify against GCP billing.",
-        "per_call": records,
-    }
+apply_ipv4_patch()
 
 
 def _transcript_text(interview: dict[str, Any] | None) -> str:
@@ -162,7 +72,7 @@ def _summary_md(
 **Score:** {measurement['score']} (threshold {measurement['threshold']})  
 **Prompt version:** {measurement.get('prompt_version', '')}  
 **Question turns:** {turns}  
-**Estimated Gemini cost:** ${cost['estimated_total_usd']} ({cost['total_tokens']} tokens, {cost['gemini_calls']} calls)
+**Estimated Gemini cost:** ${cost['estimated_total_usd']} ({cost['total_tokens']} tokens, {cost['gemini_calls']} tracked calls)
 
 Artifacts in `{out_dir.relative_to(REPO_ROOT)}`:
 
@@ -190,7 +100,9 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    _load_env()
+    load_env()
+    token_records = install_token_tracker()
+
     try:
         import google.auth
 
@@ -206,8 +118,6 @@ def main() -> None:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     out_dir = OUTPUT_ROOT / f"{case_id}_{stamp}"
     out_dir.mkdir(parents=True, exist_ok=True)
-
-    token_records = _install_token_tracker()
 
     from app.aegis_v1.appeal_orchestrator import run_appeal_with_outcome
     from app.aegis_v1.patient_context import pipeline_inputs_from_case
@@ -245,7 +155,7 @@ def main() -> None:
         "risk_flags": list(package.get("risk_flags") or []),
         "letter_excerpt": excerpt,
     }
-    cost = _estimate_cost_usd(token_records)
+    cost = estimate_cost_usd(token_records)
 
     (out_dir / "measurement_result.json").write_text(
         json.dumps(measurement, indent=2), encoding="utf-8"
@@ -279,6 +189,7 @@ def main() -> None:
                 "judges": False,
                 "gepa": False,
                 "timestamp_utc": stamp,
+                "estimated_cost_usd": cost["estimated_total_usd"],
             },
             indent=2,
         ),

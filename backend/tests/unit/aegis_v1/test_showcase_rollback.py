@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from app.aegis_v1.geo_playbook import US_PLAYBOOK_COMPONENT_ID, US_PLAYBOOK_PATH
 from app.aegis_v1.showcase_rollback import PromotionStack
 from app.learning.fs_store import _playbook_path
 from app.learning.models import Candidate, Component
@@ -85,3 +86,28 @@ def test_promotion_stack_snapshots_and_restores_changed_files(tmp_path: Path) ->
     assert (prompts_dir / "drafter_v1.md").read_text(encoding="utf-8") == "day zero prompt"
     assert json.loads(playbook_path.read_text(encoding="utf-8"))["version"] == "day_zero"
     assert stack.rollback_target() is None
+
+
+def test_promotion_stack_handles_us_geo_playbook(tmp_path: Path) -> None:
+    ledger_dir = tmp_path / "ledger"
+    US_PLAYBOOK_PATH.parent.mkdir(parents=True, exist_ok=True)
+    US_PLAYBOOK_PATH.write_text(
+        json.dumps({"version": "day_zero", "rules": []}),
+        encoding="utf-8",
+    )
+    candidate = Candidate(
+        candidate_id="c_geo",
+        components={
+            US_PLAYBOOK_COMPONENT_ID: Component(
+                component_id=US_PLAYBOOK_COMPONENT_ID,
+                kind="playbook",
+                version="day_zero+1",
+                playbook={"version": "day_zero+1", "rules": [{"rule_id": "us_004"}]},
+            ),
+        },
+        origin="reflect",
+    )
+    stack = PromotionStack(ledger_dir=ledger_dir)
+    entry = stack.push_checkpoint(run_type="quick", session_id="gp1", candidate=candidate)
+    paths = {snapshot.path for snapshot in entry.files}
+    assert str(US_PLAYBOOK_PATH) in paths

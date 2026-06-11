@@ -1,11 +1,11 @@
 import type { ShowcaseManifest } from "@/lib/types";
 
-/** Canonical v1_showcase_100 cohort sizes (preview 5+2, production 50+20). */
+/** Canonical v1_showcase_100 cohort sizes (preview 3+1, production 5+2). */
 export const SHOWCASE_COHORT = {
-  quickTrain: 5,
-  quickHoldout: 2,
-  seriousTrain: 50,
-  seriousHoldout: 20,
+  quickTrain: 3,
+  quickHoldout: 1,
+  seriousTrain: 5,
+  seriousHoldout: 2,
 } as const;
 
 const LEGACY_QUICK_TRAIN = 8;

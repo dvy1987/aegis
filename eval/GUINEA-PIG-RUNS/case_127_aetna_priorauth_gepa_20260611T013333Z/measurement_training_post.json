@@ -1,0 +1,15 @@
+[
+  {
+    "case_id": "case_127_aetna_priorauth",
+    "verdict": "APPROVE",
+    "score": 1.0,
+    "threshold": 0.8,
+    "letter_excerpt": "Not legal or medical advice. Draft assistance only. This is a draft for review by a person before filing. [Patient Name] [Patient Address] [City, State, Zip] [Phone Number] [Email] [Date] Aetna Behavioral Health Utilization Management [Aetna Address/Appeals Department] [City, State, Zip] Re: Appeal of Prior Authorization Denial for Inpatient Medical Detoxification Patient: [Patient Name] Date of Birth: [Patient DOB] Member ID: [Member ID Number] Determination Date: May 19, 2026 Dear Aetna Appeals Department: I am w...",
+    "prompt_version": "drafter_v1+1",
+    "risk_flags": [
+      "library_thin_no_discovery",
+      "phoenix_mcp_live",
+      "prompt:drafter_v1+1"
+    ]
+  }
+]

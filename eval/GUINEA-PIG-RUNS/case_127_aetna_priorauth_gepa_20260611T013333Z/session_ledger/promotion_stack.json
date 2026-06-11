@@ -1,0 +1,34 @@
+[
+  {
+    "run_type": "quick",
+    "session_id": "quick_20260611_013333_8e53f9",
+    "promoted_at": "2026-06-11T01:58:54.855781+00:00",
+    "candidate_id": "c3",
+    "files": [
+      {
+        "path": "/Users/divya/Projects/Building-apps/aegis/backend/app/aegis_v1/prompts/active_drafter_prompt.txt",
+        "exists": false,
+        "content": null,
+        "sha256": null
+      },
+      {
+        "path": "/Users/divya/Projects/Building-apps/aegis/backend/app/aegis_v1/prompts/drafter_v1.md",
+        "exists": true,
+        "content": "# Drafter \u2014 v1 (weak baseline)\n\nYou write a US commercial health-insurance appeal letter. The patient supplies the\ndenial letter and clinical context. The system also attaches internal context:\nlibrary citations, the loaded playbook tactics, and Phoenix memory from prior runs. Based on these you write a single appeal letter. Use only the inputs provided. \n\nThis is the deliberately weak baseline. As a result: Do\nNOT invent or use advanced strategy. You are actually not very good at your job. You miss details all the time. You dance around the point and never actually rebut the key reasons for denial. You clients lose all the time. ",
+        "sha256": "529af530d190a21aef2eeb81dfbf26511a38f099b67a2ffe09d7ca8d1f963ee9"
+      },
+      {
+        "path": "/Users/divya/Projects/Building-apps/aegis/playbooks/aetna__prior_authorization__modality_substitution.json",
+        "exists": false,
+        "content": null,
+        "sha256": null
+      },
+      {
+        "path": "/Users/divya/Projects/Building-apps/aegis/geo_playbooks/us_playbook.json",
+        "exists": true,
+        "content": "{\"version\": \"day_zero\", \"rules\": []}",
+        "sha256": "0a02447e5dc925efc98adaf3cf5ac551879536379ab128586584707bb2632330"
+      }
+    ]
+  }
+]

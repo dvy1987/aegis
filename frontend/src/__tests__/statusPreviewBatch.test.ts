@@ -18,10 +18,10 @@ const manifest: ShowcaseManifest = {
   benchmark_id: "test",
   version: "1",
   quick_slice: "Cigna:medical_necessity",
-  quick_train: Array.from({ length: 5 }, (_, i) => caseStub(`q_train_${i}`)),
-  quick_holdout: [caseStub("q_h0"), caseStub("q_h1")],
-  serious_train_count: 50,
-  serious_holdout: Array.from({ length: 20 }, (_, i) => caseStub(`s_h_${i}`)),
+  quick_train: Array.from({ length: 3 }, (_, i) => caseStub(`q_train_${i}`)),
+  quick_holdout: [caseStub("q_h0")],
+  serious_train_count: 5,
+  serious_holdout: [caseStub("s_h_0"), caseStub("s_h_1")],
 };
 
 function session(partial: Partial<ShowcaseRunSession> = {}): ShowcaseRunSession {
@@ -59,36 +59,36 @@ function session(partial: Partial<ShowcaseRunSession> = {}): ShowcaseRunSession 
 
 describe("resolveStatusPreviewBatch", () => {
   it("shows holdout count before any preview run", () => {
-    expect(resolveStatusPreviewBatch(manifest, null, false)).toEqual({ count: 2, verdicts: [] });
+    expect(resolveStatusPreviewBatch(manifest, null, false)).toEqual({ count: 1, verdicts: [] });
   });
 
   it("falls back to preview holdout when manifest is not loaded yet", () => {
-    expect(resolveStatusPreviewBatch(null, null, false)).toEqual({ count: 2, verdicts: [] });
+    expect(resolveStatusPreviewBatch(null, null, false)).toEqual({ count: 1, verdicts: [] });
   });
 
   it("shows serious holdout after preview succeeds", () => {
     const done = session({ run_type: "quick", status: "successful" });
-    expect(resolveStatusPreviewBatch(manifest, done, true)).toEqual({ count: 20, verdicts: [] });
+    expect(resolveStatusPreviewBatch(manifest, done, true)).toEqual({ count: 2, verdicts: [] });
   });
 
   it("shows training count during GEPA", () => {
     const gepa = session({
-      diagnostics: { stage: "train_gepa", completed_cases: 0, total_cases: 5 },
+      diagnostics: { stage: "train_gepa", completed_cases: 0, total_cases: 3 },
     });
-    expect(resolveStatusPreviewBatch(manifest, gepa, false)).toEqual({ count: 5, verdicts: [] });
+    expect(resolveStatusPreviewBatch(manifest, gepa, false)).toEqual({ count: 3, verdicts: [] });
   });
 
   it("shows scored training post at approval", () => {
     const waiting = session({
       status: "needs_approval",
-      diagnostics: { stage: "waiting_for_approval", completed_cases: 5, total_cases: 5 },
+      diagnostics: { stage: "waiting_for_approval", completed_cases: 3, total_cases: 3 },
       training_post_measure_results: [
         { case_id: "a", verdict: "APPROVE" },
         { case_id: "b", verdict: "DENY" },
       ],
     });
     expect(resolveStatusPreviewBatch(manifest, waiting, false)).toEqual({
-      count: 5,
+      count: 3,
       verdicts: ["APPROVE", "DENY"],
     });
   });
@@ -99,7 +99,7 @@ describe("resolveStatusPreviewBatch", () => {
       post_measure_results: [{ case_id: "q_h0", verdict: "APPROVE" }],
     });
     expect(resolveStatusPreviewBatch(manifest, post, false)).toEqual({
-      count: 2,
+      count: 1,
       verdicts: ["APPROVE"],
     });
   });

@@ -20,7 +20,7 @@ def test_composite_hard_gate_fail_is_zero():
 
 def test_missing_dimension_defaults_to_anchor_one():
     assert composite_score({"grounding": 5}, hard_gate_pass=True) == round(
-        0.25 * 1.0 + (0.35 + 0.20 + 0.10 + 0.10) * 0.2, 4)
+        0.10 * 1.0 + (0.40 + 0.25 + 0.15 + 0.10) * 0.2, 4)
 
 
 def test_experiment_result_mean_and_dimension_means():

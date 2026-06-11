@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -153,14 +154,19 @@ def load_showcase_manifest(path: Path | None = None) -> ShowcaseManifest:
     serious_train = _load_cases(list(raw.get("serious_train") or []), cases_dir=serious_dir)
     serious_holdout = _load_cases(list(raw.get("serious_holdout") or []), cases_dir=serious_dir)
 
-    if len(quick) != 5:
-        raise ValueError("quick_train must contain exactly 5 cases")
-    if len(quick_holdout) != 2:
-        raise ValueError("quick_holdout must contain exactly 2 cases")
-    if len(serious_train) != 50:
-        raise ValueError("serious_train must contain exactly 50 cases")
-    if len(serious_holdout) != 20:
-        raise ValueError("serious_holdout must contain exactly 20 cases")
+    if len(quick) != 3:
+        raise ValueError("quick_train must contain exactly 3 cases")
+    if len(quick_holdout) != 1:
+        raise ValueError("quick_holdout must contain exactly 1 case")
+    if len(serious_train) != 5:
+        raise ValueError("serious_train must contain exactly 5 cases")
+    if len(serious_holdout) != 2:
+        raise ValueError("serious_holdout must contain exactly 2 cases")
+    quick_slices = {_case_slice(case) for case in quick}
+    if len(quick_slices) != 1:
+        raise ValueError("quick_train cases must share one insurer/denial_type/sub_tactic slice")
+    if _case_slice(quick_holdout[0]) not in quick_slices:
+        raise ValueError("quick_holdout must match the quick_train slice")
     quick_train_ids = {case.case_id for case in quick}
     quick_holdout_ids = {case.case_id for case in quick_holdout}
     train_ids = {case.case_id for case in serious_train}
@@ -169,11 +175,19 @@ def load_showcase_manifest(path: Path | None = None) -> ShowcaseManifest:
         raise ValueError("quick_train and quick_holdout must not overlap")
     if train_ids & holdout_ids:
         raise ValueError("serious_train and serious_holdout must not overlap")
-    train_slices = {_case_slice(case) for case in serious_train}
+    train_slice_counts = Counter(_case_slice(case) for case in serious_train)
+    holdout_insurers = {case.insurer for case in serious_holdout}
+    if len(holdout_insurers) != len(serious_holdout):
+        raise ValueError("serious_holdout cases must use distinct insurers")
+    quick_insurers = {case.insurer for case in quick} | {case.insurer for case in quick_holdout}
+    if holdout_insurers & quick_insurers:
+        raise ValueError("serious_holdout insurers must differ from the preview cohort")
     for case in serious_holdout:
-        if _case_slice(case) not in train_slices:
+        slice_key = _case_slice(case)
+        if train_slice_counts.get(slice_key, 0) < 2:
             raise ValueError(
-                f"serious_holdout case {case.case_id} has no same-slice sibling in serious_train"
+                f"serious_holdout case {case.case_id} needs at least 2 same-slice "
+                "representatives in serious_train"
             )
     serious_ids = train_ids | holdout_ids
     if quick_train_ids & serious_ids or quick_holdout_ids & serious_ids:

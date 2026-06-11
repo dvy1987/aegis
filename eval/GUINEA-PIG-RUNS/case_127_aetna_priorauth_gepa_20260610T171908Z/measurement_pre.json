@@ -1,0 +1,16 @@
+[
+  {
+    "case_id": "case_127_aetna_priorauth",
+    "verdict": "DENY",
+    "score": 0.0,
+    "threshold": 0.8,
+    "letter_excerpt": "Not legal or medical advice. Draft assistance only. This is a draft for review by a person before filing. To Whom It May Concern at Aetna Behavioral Health Utilization Management: I am writing to politely appeal the denial of the prior authorization request for a 3 to 5 day inpatient medical detoxification admission for alcohol use disorder on behalf of a 49-year-old male patient. The determination date of your denial was May 19, 2026. Please note that we are submitting this written request within 180 days of the d...",
+    "prompt_version": "drafter_v1",
+    "risk_flags": [
+      "case_id:case_127_aetna_priorauth",
+      "library_thin_no_discovery",
+      "phoenix_mcp_cold_start",
+      "weak_prompt_v1"
+    ]
+  }
+]

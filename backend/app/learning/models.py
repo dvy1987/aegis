@@ -12,10 +12,10 @@ DIMENSIONS = [
     "persuasive_coherence",
 ]
 DIMENSION_WEIGHTS = {
-    "grounding": 0.25,
-    "appeal_vector_capture": 0.35,
-    "case_specific_clinical_rebuttal": 0.20,
-    "question_agent": 0.10,
+    "grounding": 0.10,
+    "appeal_vector_capture": 0.40,
+    "case_specific_clinical_rebuttal": 0.25,
+    "question_agent": 0.15,
     "persuasive_coherence": 0.10,
 }
 
@@ -45,6 +45,8 @@ class Component(BaseModel):
     version: str = "v1"
     text: str | None = None                 # kind == "prompt"
     playbook: dict | None = None            # kind == "playbook"
+    # Reflection-only audit text (never written to active prompt files).
+    reflection_critique: str | None = None
 
 
 class Candidate(BaseModel):

@@ -7,10 +7,10 @@ export type StatusPreviewBatch = {
 
 /** Manifest API fallback — matches v1_showcase_100 quick/serious split. */
 const FALLBACK_COHORT = {
-  quickHoldout: 2,
-  quickTrain: 5,
-  seriousHoldout: 20,
-  seriousTrain: 50,
+  quickHoldout: 1,
+  quickTrain: 3,
+  seriousHoldout: 2,
+  seriousTrain: 5,
 } as const;
 
 function cohortSizes(manifest: ShowcaseManifest, runType: "quick" | "serious") {

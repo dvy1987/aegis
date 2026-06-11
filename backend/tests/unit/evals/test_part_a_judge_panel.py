@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from app.evals.part_a.llm_judges import OfflineHeuristicJudgeClient
+from app.evals.part_a.judge_context import grounding_judge_context
 from app.evals.part_a.panel import run_panel
 from app.evals.part_a.schemas import CANONICAL_DISCLAIMER
 from app.evals.part_a.teacher_packet import (
@@ -95,6 +96,22 @@ def test_teacher_packet_includes_answer_key() -> None:
     assert teacher.matrix_cell["sub_tactic"] == "level_of_care_too_high"
     assert teacher.denial_letter_references
     assert teacher.denial_letter_references[0]["title"]
+
+
+def test_grounding_judge_context_strips_teacher_answer_key() -> None:
+    teacher = build_teacher_grading_packet(_case_obj(), _appeal_package("x"))
+    context = {
+        "appeal_package": _appeal_package("letter"),
+        "teacher_packet": teacher.model_dump(),
+        "deterministic_results": {},
+    }
+
+    slim = grounding_judge_context(context)["teacher_packet"]
+
+    assert "denial_letter_text" in slim
+    assert "exploitable_weaknesses" not in slim
+    assert "expected_appeal_vectors" not in slim
+    assert "clinical_context" not in slim
 
 
 def test_teacher_packet_parses_pattern_id_prefixes() -> None:

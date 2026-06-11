@@ -34,7 +34,7 @@ import {
 import { VerdictCell } from "./VerdictCell";
 
 /**
- * Evidence grid — fixed slot counts from manifest (preview: 2 holdout + 5 train; production: 20 + 50).
+ * Evidence grid — fixed slot counts from manifest (preview: 1 holdout + 3 train; production: 2 + 5).
  * Cells stay grey until measured; APPROVE/DENY paint green/red when results land.
  */
 export function LearningMatrix({

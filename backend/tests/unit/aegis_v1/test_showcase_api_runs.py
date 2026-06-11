@@ -23,10 +23,10 @@ def test_manifest_endpoint_returns_quick_slice(tmp_path, monkeypatch) -> None:
     body = res.json()
     assert body["benchmark_id"] == "v1_showcase_100"
     assert body["quick_slice"] == "Cigna:medical_necessity:not_evidence_based"
-    assert len(body["quick_train"]) == 5
-    assert len(body["quick_holdout"]) == 2
-    assert body["serious_train_count"] == 50
-    assert len(body["serious_holdout"]) == 20
+    assert len(body["quick_train"]) == 3
+    assert len(body["quick_holdout"]) == 1
+    assert body["serious_train_count"] == 5
+    assert len(body["serious_holdout"]) == 2
 
 
 def test_quick_run_start_returns_pollable_session(tmp_path, monkeypatch) -> None:
@@ -37,7 +37,7 @@ def test_quick_run_start_returns_pollable_session(tmp_path, monkeypatch) -> None
     assert start.status_code == 200
     session_id = start.json()["session_id"]
     assert session_id.startswith("quick_")
-    assert len(start.json()["case_ids"]) == 7
+    assert len(start.json()["case_ids"]) == 4
 
     poll = client.get(f"/v1/showcase/runs/{session_id}")
     assert poll.status_code == 200
@@ -63,7 +63,7 @@ def test_serious_run_starts_after_successful_quick(tmp_path, monkeypatch) -> Non
 
     assert res.status_code == 200
     assert res.json()["session_id"].startswith("serious_")
-    assert len(res.json()["case_ids"]) == 70  # 50 train + 20 holdout (production cohort)
+    assert len(res.json()["case_ids"]) == 7  # 5 train + 2 holdout (production cohort)
 
 
 def test_cancel_run_persists_cancel_state(tmp_path, monkeypatch) -> None:

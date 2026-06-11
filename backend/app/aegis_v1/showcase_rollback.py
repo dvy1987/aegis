@@ -8,6 +8,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 
 from app.aegis_v1.drafter_client import PROMPT_DIR, get_active_drafter_prompt_version
+from app.aegis_v1.geo_playbook import US_PLAYBOOK_COMPONENT_ID, US_PLAYBOOK_PATH
 from app.aegis_v1.showcase_ledger import LedgerStore, default_ledger_dir, open_ledger_store
 from app.aegis_v1.tools import PLAYBOOK_DIR
 from app.learning.fs_store import _playbook_path
@@ -108,7 +109,10 @@ class PromotionStack:
                 files.append(self.prompts_dir / "active_drafter_prompt.txt")
                 files.append(self.prompts_dir / f"{active_version}.md")
             elif comp.kind == "playbook":
-                files.append(_playbook_path(self.playbooks_dir, comp.component_id))
+                if comp.component_id == US_PLAYBOOK_COMPONENT_ID:
+                    files.append(US_PLAYBOOK_PATH)
+                else:
+                    files.append(_playbook_path(self.playbooks_dir, comp.component_id))
         unique: list[Path] = []
         seen: set[Path] = set()
         for path in files:

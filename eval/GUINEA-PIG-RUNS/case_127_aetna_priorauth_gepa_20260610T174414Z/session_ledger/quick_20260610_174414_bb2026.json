@@ -1,0 +1,77 @@
+{
+  "session_id": "quick_20260610_174414_bb2026",
+  "run_type": "quick",
+  "status": "running",
+  "created_at": "2026-06-10T17:44:14.008169+00:00",
+  "updated_at": "2026-06-10T17:50:22.929833+00:00",
+  "case_ids": [
+    "case_127_aetna_priorauth"
+  ],
+  "diagnostics": {
+    "stage": "train_gepa",
+    "stage_started_at": "2026-06-10T17:50:22.929852+00:00",
+    "stage_finished_at": null,
+    "current_case_id": "case_127_aetna_priorauth",
+    "completed_cases": 0,
+    "total_cases": 1,
+    "retryable": false,
+    "last_error": null,
+    "phoenix_trace_ids": [],
+    "cloud_log_filter": "resource.type=\"cloud_run_revision\" AND resource.labels.service_name=\"aegis-v1-api\" AND jsonPayload.session_id=\"quick_20260610_174414_bb2026\""
+  },
+  "cancelled": false,
+  "approved_by": null,
+  "proposal": null,
+  "promotion_preview": null,
+  "pre_measure_results": [
+    {
+      "case_id": "case_127_aetna_priorauth",
+      "verdict": "DENY",
+      "score": 0.0,
+      "threshold": 0.8,
+      "letter_excerpt": "Not legal or medical advice. Draft assistance only. This is a draft for review by a person before filing. [Your Name] [Your Address] [City, State, Zip] [Date] Aetna Behavioral Health Utilization Management [Aetna Address] [City, State, Zip] Re: Appeal for Inpatient Medical Detoxification Patient Age: 49 Determination Date: May 19, 2026 Dear Aetna Appeals Department, I am writing this polite letter to appeal the denial of my prior authorization request for a 3 to 5 day inpatient medical detoxification for alcohol us...",
+      "prompt_version": "drafter_v1",
+      "risk_flags": [
+        "case_id:case_127_aetna_priorauth",
+        "library_thin_no_discovery",
+        "phoenix_mcp_cold_start",
+        "weak_prompt_v1"
+      ]
+    }
+  ],
+  "training_pre_measure_results": [
+    {
+      "case_id": "case_127_aetna_priorauth",
+      "verdict": "DENY",
+      "score": 0.0,
+      "threshold": 0.8,
+      "letter_excerpt": "Not legal or medical advice. Draft assistance only. This is a draft for review by a person before filing. To Whom It May Concern: I am writing to politely appeal the denial of my prior authorization request for a 3 to 5 day inpatient medical detoxification for alcohol use disorder. The determination date on your denial letter is May 19, 2026. Your letter stated that outpatient detoxification is the appropriate setting because it is a less costly modality. However, I went to the emergency room because I was shaking ...",
+      "prompt_version": "drafter_v1",
+      "risk_flags": [
+        "case_id:case_127_aetna_priorauth",
+        "library_thin_no_discovery",
+        "phoenix_mcp_cold_start",
+        "weak_prompt_v1"
+      ]
+    }
+  ],
+  "training_post_measure_results": [],
+  "post_measure_results": [],
+  "regression_detected": false,
+  "regression_summary": null,
+  "checkpoint": {
+    "pre_measure_done": true,
+    "training_pre_done": true,
+    "training_signal_done": false,
+    "training_checkpoint_a_done": true,
+    "optimize_done": false,
+    "train_gepa_candidate_done": false,
+    "training_checkpoint_b_done": false,
+    "training_post_done": false,
+    "promotion_done": false,
+    "post_measure_done": false,
+    "training_trace_ids": [],
+    "training_completed_case_ids": [],
+    "failed_cases": []
+  }
+}

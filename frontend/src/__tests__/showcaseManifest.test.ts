@@ -37,9 +37,9 @@ describe("showcase manifest helpers", () => {
     expect(cohortMatchesCanonical(legacy)).toBe(false);
   });
 
-  it("accepts canonical 5/2 + 50/20 cohort", () => {
+  it("accepts canonical 3/1 + 5/2 cohort", () => {
     const current = manifest({
-      quick_train: Array.from({ length: 5 }, (_, i) => ({
+      quick_train: Array.from({ length: 3 }, (_, i) => ({
         case_id: `case_${101 + i}_cigna_mednec`,
         insurer: "Cigna",
         denial_type: "medical_necessity",
@@ -48,24 +48,37 @@ describe("showcase manifest helpers", () => {
         patient_age: 40,
         patient_gender: "F",
       })),
-      quick_holdout: Array.from({ length: 2 }, (_, i) => ({
-        case_id: `case_${126 + i}_cigna_mednec`,
-        insurer: "Cigna",
-        denial_type: "medical_necessity",
-        headline: "h",
-        denial_letter_text: "d",
-        patient_age: 40,
-        patient_gender: "F",
-      })),
-      serious_holdout: Array.from({ length: 20 }, (_, i) => ({
-        case_id: `case_${200 + i}_cigna_mednec`,
-        insurer: "Cigna",
-        denial_type: "medical_necessity",
-        headline: "h",
-        denial_letter_text: "d",
-        patient_age: 40,
-        patient_gender: "F",
-      })),
+      quick_holdout: [
+        {
+          case_id: "case_126_cigna_mednec",
+          insurer: "Cigna",
+          denial_type: "medical_necessity",
+          headline: "h",
+          denial_letter_text: "d",
+          patient_age: 40,
+          patient_gender: "F",
+        },
+      ],
+      serious_holdout: [
+        {
+          case_id: "case_109_aetna_mednec",
+          insurer: "Aetna",
+          denial_type: "medical_necessity",
+          headline: "h",
+          denial_letter_text: "d",
+          patient_age: 40,
+          patient_gender: "F",
+        },
+        {
+          case_id: "case_106_uhc_priorauth",
+          insurer: "UHC",
+          denial_type: "prior_authorization",
+          headline: "h",
+          denial_letter_text: "d",
+          patient_age: 40,
+          patient_gender: "F",
+        },
+      ],
     });
     expect(isLegacyShowcaseManifest(current)).toBe(false);
     expect(cohortMatchesCanonical(current)).toBe(true);

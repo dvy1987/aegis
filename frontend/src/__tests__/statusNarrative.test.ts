@@ -7,16 +7,16 @@ const manifest: ShowcaseManifest = {
   version: "1",
   quick_slice: "Cigna:medical_necessity",
   quick_train: [],
-  quick_holdout: [{ case_id: "a" }, { case_id: "b" }] as ShowcaseManifest["quick_holdout"],
-  serious_train_count: 50,
-  serious_holdout: Array.from({ length: 20 }, (_, i) => ({ case_id: `s_${i}` })) as ShowcaseManifest["serious_holdout"],
+  quick_holdout: [{ case_id: "a" }] as ShowcaseManifest["quick_holdout"],
+  serious_train_count: 5,
+  serious_holdout: [{ case_id: "s_0" }, { case_id: "s_1" }] as ShowcaseManifest["serious_holdout"],
 };
 
 describe("resolveInactiveStatusNarrative", () => {
   it("describes the first preview beat before any run", () => {
     const narrative = resolveInactiveStatusNarrative(manifest, false);
     expect(narrative.justNow).toBeNull();
-    expect(narrative.upNext).toContain("2 cases");
+    expect(narrative.upNext).toContain("1 case");
     expect(narrative.upNext).toContain("Preview holdout");
     expect(narrative.upNext).toContain("baseline drafter agent");
   });
@@ -24,6 +24,6 @@ describe("resolveInactiveStatusNarrative", () => {
   it("points to production when preview already succeeded", () => {
     const narrative = resolveInactiveStatusNarrative(manifest, true);
     expect(narrative.justNow).toContain("Preview run completed");
-    expect(narrative.upNext).toContain("20 cases");
+    expect(narrative.upNext).toContain("2 cases");
   });
 });

@@ -107,7 +107,7 @@ export type ShowcaseManifestLoad = {
 export async function resolveShowcaseManifest(): Promise<ShowcaseManifestLoad> {
   const base = getApiBase();
   const legacyWarning =
-    "Showcase API is on the legacy 8/80 cohort. The grid uses the bundled 5/50 manifest. Redeploy aegis-v1-api (or point NEXT_PUBLIC_AEGIS_API at a current backend) before starting a run.";
+    "Showcase API is on the legacy 8/80 cohort. The grid uses the bundled 3/1 + 5/2 manifest. Redeploy aegis-v1-api (or point NEXT_PUBLIC_AEGIS_API at a current backend) before starting a run.";
 
   try {
     const res = await fetch(`${base}/v1/showcase/manifest`, { cache: "no-store" });

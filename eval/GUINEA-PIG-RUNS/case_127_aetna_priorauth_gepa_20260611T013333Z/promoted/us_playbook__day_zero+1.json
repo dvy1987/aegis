@@ -1,0 +1,42 @@
+{
+  "playbook_id": "us",
+  "display_name": "US-playbook",
+  "version": "day_zero+1",
+  "rules": [
+    {
+      "rule_id": "us_001",
+      "scope": "US federal",
+      "text": "When the denial letter states an appeal deadline, repeat that deadline explicitly in the appeal and request timely review.",
+      "status": "active",
+      "added_in_version": "day_zero"
+    },
+    {
+      "rule_id": "us_002",
+      "scope": "US federal",
+      "text": "Request the claim file and the specific clinical criteria applied, in writing, when the denial cites guidelines without enough detail to rebut.",
+      "status": "active",
+      "added_in_version": "day_zero"
+    },
+    {
+      "rule_id": "us_003",
+      "scope": "US federal",
+      "text": "Keep tone factual and person-centered. This is draft assistance only — not legal or medical advice.",
+      "status": "active",
+      "added_in_version": "day_zero"
+    },
+    {
+      "rule_id": "us_004",
+      "scope": "US federal",
+      "text": "Attack plan exclusions for substance-use-disorder withdrawal management by citing state parity mandates, which require fully-insured plans to provide these benefits at parity with medical care.",
+      "status": "active",
+      "added_in_version": "day_zero_v2"
+    },
+    {
+      "rule_id": "us_005",
+      "scope": "US federal",
+      "text": "Rebut outdated policies by citing current ASAM 4th edition criteria. Use specific clinical facts—such as prior complicated withdrawal, seizure history, high CIWA-Ar scores, and ER physician judgment—to prove outpatient withdrawal management is unsafe.",
+      "status": "active",
+      "added_in_version": "day_zero_v2"
+    }
+  ]
+}

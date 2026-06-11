@@ -14,8 +14,14 @@ def reflective_mutate(parent: Candidate, signal: DimensionSignal,
         component=parent.components[target], signal=signal, minibatch=minibatch)
     components = dict(parent.components)
     components[target] = revised
+    critique_note = ""
+    if revised.reflection_critique:
+        critique_note = f" | critique: {revised.reflection_critique[:120]}"
     return Candidate(
         candidate_id=next_id, parent_id=parent.candidate_id, components=components,
         origin="reflect", dimension_targets=[signal.weakest_dimension],
-        diff_summary=f"reflect {target} for {signal.weakest_dimension}: {parent.components[target].version}->{revised.version}",
+        diff_summary=(
+            f"reflect {target} for {signal.weakest_dimension}: "
+            f"{parent.components[target].version}->{revised.version}{critique_note}"
+        ),
     )

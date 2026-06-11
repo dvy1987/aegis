@@ -13,6 +13,7 @@ from google.adk.workflow import START, node
 from google.genai import types
 
 from app.evals.part_a.deterministic_gates import citation_precheck
+from app.evals.part_a.judge_context import grounding_judge_context
 from app.evals.part_a.judge_agents import (
     build_faithfulness_judge,
     build_quality_judge_agents,
@@ -76,6 +77,8 @@ def _store_judge_result(ctx, dimension: str, result: JudgeResult) -> None:
 
 
 def _judge_message(context: dict[str, Any], judge_id: str) -> types.Content:
+    if judge_id == "j3_grounding":
+        context = grounding_judge_context(context)
     prompt = judge_instruction(judge_id)
     payload = json.dumps(context, indent=2, default=str)
     text = f"{prompt}\n\nCONTEXT JSON:\n{payload}"
@@ -146,11 +149,13 @@ def faithfulness_finalize_node(ctx, node_input):
 
 @node
 def quality_judges_prep_node(ctx, node_input):
-    return _quality_prep_content(ctx)
+    return _quality_prep_content(ctx, for_dimension="grounding")
 
 
-def _quality_prep_content(ctx) -> types.Content:
+def _quality_prep_content(ctx, *, for_dimension: str | None = None) -> types.Content:
     context = _context_from_state(ctx)
+    if for_dimension == "grounding":
+        context = grounding_judge_context(context)
     payload = json.dumps(context, indent=2, default=str)
     return types.Content(
         role="user",

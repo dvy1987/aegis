@@ -5,8 +5,10 @@ from pathlib import Path
 from app.aegis_v1 import showcase_runner
 from app.aegis_v1.showcase_manifest import load_showcase_manifest
 from app.aegis_v1.showcase_runner import (
+    _cohorts_identical,
     _slice_filters,
     approve_session,
+    run_guinea_pig_session,
     run_quick_session,
     run_serious_session,
 )
@@ -47,6 +49,50 @@ def _proposal() -> PromotionProposal:
     )
 
 
+def test_cohorts_identical_detects_guinea_pig_shape() -> None:
+    manifest = load_showcase_manifest()
+    case = manifest.quick_train[0]
+    assert _cohorts_identical([case], [case]) is True
+    assert _cohorts_identical(manifest.quick_train, manifest.quick_holdout) is False
+
+
+def test_guinea_pig_session_skips_holdout_pre_measure(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    manager = ShowcaseSessionManager()
+    session = manager.start_quick()
+    calls: list[dict] = []
+
+    def fake_measure(manager, session_id, *, phase, cases, **kwargs):
+        calls.append(
+            {"phase": phase, "case_ids": [case.case_id for case in cases]},
+        )
+        manager.set_measure_results(
+            session_id,
+            phase=phase,
+            results=[{"case_id": case.case_id} for case in cases],
+        )
+        return []
+
+    monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
+    monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
+    monkeypatch.setattr(showcase_runner, "_seed_training_signal", lambda *a, **k: ["t1"])
+    monkeypatch.setattr(showcase_runner, "_optimize", lambda **k: None)
+    monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
+    monkeypatch.setattr(showcase_runner, "_eval_post_gepa_candidate", lambda *a, **k: [])
+
+    case = load_showcase_manifest().quick_train[0]
+    run_guinea_pig_session(session.session_id, case=case)
+
+    phases = [call["phase"] for call in calls]
+    assert "pre" not in phases
+    assert phases[0] == "training_pre"
+    assert manager.get(session.session_id).checkpoint.pre_measure_done is True
+    assert manager.get(session.session_id).pre_measure_results == []
+
+
 def test_quick_session_uses_holdout_and_training_rows_before_approval(
     tmp_path: Path,
     monkeypatch,
@@ -79,7 +125,7 @@ def test_quick_session_uses_holdout_and_training_rows_before_approval(
 
     monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
     monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
-    # 5 training cases → guard needs 3 successful traces (absolute floor).
+    # 3 training cases → guard needs 3 successful traces (absolute floor).
     monkeypatch.setattr(
         showcase_runner,
         "_seed_training_signal",
@@ -320,11 +366,11 @@ def test_serious_session_uses_serious_train_and_holdout_with_multi_slice(
 
     monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
     monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
-    # 50 training cases → guard needs 25 successful traces.
+    # 5 training cases → guard needs 3 successful traces.
     monkeypatch.setattr(
         showcase_runner,
         "_seed_training_signal",
-        lambda *args, **kwargs: [f"t{i}" for i in range(25)],
+        lambda *args, **kwargs: ["t1", "t2", "t3"],
     )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
     monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
@@ -333,11 +379,11 @@ def test_serious_session_uses_serious_train_and_holdout_with_multi_slice(
     run_serious_session(session.session_id)
 
     assert calls[0]["phase"] == "pre"
-    assert len(calls[0]["case_ids"]) == 20
+    assert len(calls[0]["case_ids"]) == 2
     assert calls[1]["phase"] == "training_pre"
-    assert len(calls[1]["case_ids"]) == 50
+    assert len(calls[1]["case_ids"]) == 5
     assert calls[2]["phase"] == "training_post"
-    assert len(calls[2]["case_ids"]) == 50
+    assert len(calls[2]["case_ids"]) == 5
     assert calls[2]["prompt_text"] == "candidate prompt"
     manifest = load_showcase_manifest()
     assert set(optimize_kwargs["slice_filters"]) == set(_slice_filters(manifest.serious_train))
@@ -392,9 +438,9 @@ def test_insufficient_training_data_blocks_optimize(
 
     monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
     monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
-    # Quick train has 5 cases → needs 3; only 1 produced a trace.
+    # Quick train has 3 cases → needs 3; only 2 produced a trace.
     monkeypatch.setattr(
-        showcase_runner, "_seed_training_signal", lambda *a, **k: ["only-one"]
+        showcase_runner, "_seed_training_signal", lambda *a, **k: ["t1", "t2"]
     )
     monkeypatch.setattr(showcase_runner, "_optimize", fake_optimize)
     monkeypatch.setattr(showcase_runner, "_write_training_checkpoint", lambda *a, **k: [])
@@ -406,7 +452,7 @@ def test_insufficient_training_data_blocks_optimize(
     assert reloaded.status == "failed"
     err = reloaded.diagnostics.last_error
     assert err is not None and err.code == "insufficient_training_data"
-    assert "1 of 5" in err.message
+    assert "2 of 3" in err.message
     assert reloaded.diagnostics.retryable is True
 
 
@@ -430,7 +476,7 @@ def test_sufficient_training_data_allows_optimize(
 
     monkeypatch.setattr(showcase_runner, "_creds_available", lambda: True)
     monkeypatch.setattr(showcase_runner, "_measure", fake_measure)
-    # 5 training cases → needs 3; provide 3 traces.
+    # 3 training cases → needs 3 traces.
     monkeypatch.setattr(
         showcase_runner, "_seed_training_signal", lambda *a, **k: ["t1", "t2", "t3"]
     )
@@ -495,9 +541,8 @@ def test_measure_skips_failing_case_and_continues(
             return {"case_id": self._case_id}
 
     manifest = load_showcase_manifest()
-    holdout = manifest.quick_holdout
+    holdout = manifest.quick_holdout + manifest.quick_train
     fail_id = holdout[1].case_id
-    good_id = holdout[0].case_id
     seen: list[str] = []
 
     def flaky_measure(case_obj, **kwargs):
@@ -517,12 +562,13 @@ def test_measure_skips_failing_case_and_continues(
         cases=holdout,
     )
 
-    # The good case is kept; the failing case is skipped, not fatal.
-    assert {r["case_id"] for r in results} == {good_id}
+    # Good cases are kept; the failing case is skipped, not fatal.
+    expected = {case.case_id for case in holdout if case.case_id != fail_id}
+    assert {r["case_id"] for r in results} == expected
     reloaded = manager.get(session.session_id)
     failed_ids = [f.case_id for f in reloaded.checkpoint.failed_cases]
     assert fail_id in failed_ids
-    assert len(seen) == 2
+    assert len(seen) == len(holdout)
 
 
 def test_training_signal_skips_failing_case_and_continues(
@@ -532,7 +578,8 @@ def test_training_signal_skips_failing_case_and_continues(
     monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
     manager = ShowcaseSessionManager()
     session = manager.start_quick()
-    cases = load_showcase_manifest().quick_train[:3]
+    manifest = load_showcase_manifest()
+    cases = manifest.quick_train + manifest.quick_holdout
     fail_id = cases[1].case_id
 
     class Run:
@@ -554,8 +601,8 @@ def test_training_signal_skips_failing_case_and_continues(
         dataset_split="train_split",
     )
 
-    # Two good cases produce traces; the failing one is recorded and skipped.
-    assert trace_ids == ["trace-ok", "trace-ok"]
+    # Good cases produce traces; the failing one is recorded and skipped.
+    assert trace_ids == ["trace-ok", "trace-ok", "trace-ok"]
     reloaded = manager.get(session.session_id)
     failed_ids = [f.case_id for f in reloaded.checkpoint.failed_cases]
     assert failed_ids == [fail_id]
@@ -575,7 +622,6 @@ def test_approval_marks_regression_when_holdout_score_drops(
         phase="pre",
         results=[
             {"case_id": holdout[0].case_id, "verdict": "APPROVE", "score": 0.9},
-            {"case_id": holdout[1].case_id, "verdict": "APPROVE", "score": 0.8},
         ],
     )
     manager.mark_needs_approval(session.session_id, proposal=_proposal().model_dump())
@@ -591,7 +637,6 @@ def test_approval_marks_regression_when_holdout_score_drops(
     def fake_measure(manager, session_id, *, phase, cases, **kwargs):
         results = [
             {"case_id": holdout[0].case_id, "verdict": "DENY", "score": 0.3},
-            {"case_id": holdout[1].case_id, "verdict": "APPROVE", "score": 0.75},
         ]
         manager.set_measure_results(session_id, phase=phase, results=results)
         return results

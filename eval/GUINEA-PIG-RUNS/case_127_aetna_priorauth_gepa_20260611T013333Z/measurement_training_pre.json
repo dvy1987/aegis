@@ -1,0 +1,16 @@
+[
+  {
+    "case_id": "case_127_aetna_priorauth",
+    "verdict": "DENY",
+    "score": 0.0,
+    "threshold": 0.8,
+    "letter_excerpt": "Not legal or medical advice. Draft assistance only. This is a draft for review by a person before filing. Dear Aetna Behavioral Health Utilization Management, I am writing a polite appeal letter to request that you overturn the denial of my prior authorization for inpatient medical detoxification for alcohol use disorder. The determination date on your letter was May 19, 2026. I am submitting this written request within the 180 days of the date of that letter, and I request a timely review of my case. I am a 49-yea...",
+    "prompt_version": "drafter_v1",
+    "risk_flags": [
+      "case_id:case_127_aetna_priorauth",
+      "library_thin_no_discovery",
+      "phoenix_mcp_cold_start",
+      "weak_prompt_v1"
+    ]
+  }
+]

@@ -44,6 +44,16 @@ def _log(session_id: str, stage: str, message: str, **extra) -> None:
     )
 
 
+def _cohorts_identical(
+    train_cases: list[ShowcaseCase],
+    holdout_cases: list[ShowcaseCase],
+) -> bool:
+    """True when train and holdout are the same case set (e.g. guinea pig)."""
+    return {case.case_id for case in train_cases} == {
+        case.case_id for case in holdout_cases
+    }
+
+
 def _is_cancelled(manager: ShowcaseSessionManager, session_id: str) -> bool:
     try:
         return manager.get(session_id).cancelled
@@ -533,8 +543,16 @@ def _run_learning_session(
         slice_filters = _slice_filters(train_cases)
 
         if not _checkpoint(manager, session_id).pre_measure_done:
-            _measure(manager, session_id, phase="pre", cases=holdout_cases)
-            manager.save_checkpoint(session_id, pre_measure_done=True)
+            if _cohorts_identical(train_cases, holdout_cases):
+                _log(
+                    session_id,
+                    "measure_before",
+                    "skipping holdout pre-measure (train and holdout cohorts are identical)",
+                )
+                manager.save_checkpoint(session_id, pre_measure_done=True)
+            else:
+                _measure(manager, session_id, phase="pre", cases=holdout_cases)
+                manager.save_checkpoint(session_id, pre_measure_done=True)
 
         if not _checkpoint(manager, session_id).training_pre_done:
             _measure(manager, session_id, phase="training_pre", cases=train_cases)
@@ -584,6 +602,9 @@ def _run_learning_session(
             return
 
         if not _checkpoint(manager, session_id).optimize_done:
+            from app.app_utils.telemetry import flush_phoenix_telemetry
+
+            flush_phoenix_telemetry()
             proposal = _optimize(
                 cases=train_cases,
                 slice_filters=slice_filters,

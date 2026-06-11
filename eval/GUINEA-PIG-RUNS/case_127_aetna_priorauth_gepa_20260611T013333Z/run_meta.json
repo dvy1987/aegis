@@ -1,0 +1,29 @@
+{
+  "case_path": "../eval/cases/drafts/guinea-pigs/case_127_aetna_priorauth.json",
+  "case_id": "case_127_aetna_priorauth",
+  "run_type": "guinea_pig_gepa",
+  "gepa_rounds": 1,
+  "phoenix_preflight": {
+    "ok": true,
+    "project": "default",
+    "phoenix_host": "https://app.phoenix.arize.com/s/iitk-divya",
+    "collector": "https://app.phoenix.arize.com/s/iitk-divya/v1/traces",
+    "recent_span_rows": 0
+  },
+  "phoenix_project": "default",
+  "phoenix_trace_ids": [
+    "f240b2fd0bb8f5b3",
+    "21d75c2d38914046"
+  ],
+  "mutate_targets": [
+    "drafter_system_prompt",
+    "question_agent_system_prompt",
+    "insurer_playbook",
+    "geo_playbook:us"
+  ],
+  "auto_approved": false,
+  "approver": null,
+  "session_id": "quick_20260611_013333_8e53f9",
+  "timestamp_utc": "20260611T013333Z",
+  "estimated_cost_usd": 0.1271
+}

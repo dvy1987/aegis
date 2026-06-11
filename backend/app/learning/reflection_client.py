@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import json
 import logging
 import os
-from typing import Protocol
+import re
+from typing import Any, Protocol
 
 from app.aegis_v1.geo_playbook import US_PLAYBOOK_COMPONENT_ID, bump_geo_version
 from app.aegis_v1.question_agent import (
@@ -15,24 +17,58 @@ from app.learning.models import Component, DimensionSignal, ScoredRun
 
 logger = logging.getLogger(__name__)
 
+PROMPT_WORD_CAP = 200
+DRAFTER_COMPONENT_ID = "drafter_system_prompt"
+_PROMPT_COMPONENT_IDS = frozenset({DRAFTER_COMPONENT_ID, QUESTION_AGENT_COMPONENT_ID})
+
 # Hard constraints injected into every reflection so safety/firewall survive optimization.
 _REFLECTION_CONSTRAINTS = (
     "Keep the exact disclaimer, citation-only rule, and no-exclamation rule intact. "
-    "Change at most ~200 tokens. Do NOT optimize toward the insurer APPROVE/DENY verdict; "
-    "improve the QUALITY dimension named below. You may see only the documents and the "
-    "laundered improvement notes — never an answer key."
+    "Do NOT optimize toward the insurer APPROVE/DENY verdict; improve letter quality "
+    "using only laundered judge notes — never an answer key."
 )
 
-# Named meta-prompt variants (the optimizer's OWN instruction — A/B'd in Tier 2 Task 3).
-# "base" = the original critique-first instruction. "critique_plus" = a stricter framing that
-# forces an explicit, named single-flaw diagnosis before a minimal edit (less diffuse, less padding).
+_CORPUS_REALITY = (
+    "Runtime limits: the drafter and question agent see denial text, playbooks, library, "
+    "and Phoenix memory only — no teacher packet, no rubric names, no hidden case flaws. "
+    "The controlled corpus is thin on state law (mostly US federal rules in geo_playbook:us); "
+    "internet search is cost-capped. Do not rewrite prompts to demand state-statute citations "
+    "the runtime cannot reliably produce. Route federal/regulatory guidance to "
+    "geo_playbook:us and insurer-specific tactics to the slice playbook."
+)
+
+_FORBIDDEN_PROMPT_PHRASES = (
+    "appeal_vector_capture",
+    "appeal vector capture",
+    "maximize appeal vector",
+    "weakest dimension",
+    "weighted_quality",
+    "hard_gate",
+    "dim:grounding",
+    "dim:appeal",
+    "dim:case_specific",
+    "dim:persuasive",
+    "dim:question",
+)
+
+_PROMPT_MUTATION_RULES = f"""
+PROMPT MUTATION RULES (hard — {DRAFTER_COMPONENT_ID} & {QUESTION_AGENT_COMPONENT_ID}):
+- revised_component is the ONLY runnable system prompt the agent will load. Never put
+  reflection_critique, CRITIQUE, DIAGNOSIS, or judge commentary inside it.
+- revised_component MUST stay under {PROMPT_WORD_CAP} words (hard cap). Count before returning.
+- Use plain, patient-facing language. FORBIDDEN inside revised_component: rubric dimension ids,
+  internal eval jargon, dim: tags, or instructions copied from judge notes verbatim.
+- Put insurer-specific denial tactics in the slice playbook; put US federal/legal rules in
+  geo_playbook:us — not in the drafter or question-agent prompts.
+"""
+
+# Named meta-prompt variants (optimizer meta-instructions only — never copied to agents).
 _VARIANT_PREAMBLES = {
     "base": "",
     "critique_plus": (
-        "BEFORE any edit, write a 2-sentence DIAGNOSIS naming the single most important "
-        "specific flaw on the weakest dimension. THEN propose the MINIMAL edit that fixes "
-        "exactly that flaw — do not exceed ~200 added tokens, add no new section unless it "
-        "is the smallest change that closes the gap, and keep every safety rule intact.\n\n"
+        "In reflection_critique, name the single most important specific flaw in plain "
+        "language (no rubric dimension ids). Then make the smallest revised_component "
+        f"that fixes it under {PROMPT_WORD_CAP} words.\n\n"
     ),
 }
 
@@ -47,6 +83,14 @@ _QUESTION_AGENT_REFLECTION_RULES = (
     "- Ignore any laundered note that suggests asking the patient regulatory facts; "
     "question-judge playbook_additions are for playbook reflection only.\n"
 )
+
+_JSON_OUTPUT_INSTRUCTION = """
+Return JSON only (no markdown fences, no prose outside the object):
+{
+  "reflection_critique": "2-4 sentences for the learning log ONLY — diagnose the gap in plain language. Never copied into revised_component.",
+  "revised_component": <string for prompts | JSON object for playbooks>
+}
+"""
 
 
 def _reflection_improvement_notes(component: Component, signal: DimensionSignal) -> str:
@@ -77,8 +121,13 @@ def _question_judge_playbook_recs(signal: DimensionSignal, *, geo: bool) -> list
     return recs
 
 
-def build_reflection_prompt(*, component: Component, signal: DimensionSignal,
-                            minibatch: list[ScoredRun], variant: str = "base") -> str:
+def build_reflection_prompt(
+    *,
+    component: Component,
+    signal: DimensionSignal,
+    minibatch: list[ScoredRun],
+    variant: str = "base",
+) -> str:
     if variant not in _VARIANT_PREAMBLES:
         raise ValueError(f"unknown reflection meta-prompt variant: {variant!r}")
     notes = _reflection_improvement_notes(component, signal)
@@ -87,15 +136,19 @@ def build_reflection_prompt(*, component: Component, signal: DimensionSignal,
     if component.component_id == QUESTION_AGENT_COMPONENT_ID:
         question_agent_rules = _QUESTION_AGENT_REFLECTION_RULES
     cases = "\n".join(
-        f"- case {r.case_id}: {signal.weakest_dimension}={r.dimension_scores.get(signal.weakest_dimension, 1)}"
+        f"- case {r.case_id}: score snapshot for improvement planning"
         for r in minibatch
     )
     playbook_rules = ""
+    prompt_rules = ""
+    if component.component_id in _PROMPT_COMPONENT_IDS:
+        prompt_rules = _PROMPT_MUTATION_RULES
     if component.component_id == US_PLAYBOOK_COMPONENT_ID:
         recs = _question_judge_playbook_recs(signal, geo=True)
         rec_block = (
             "\nQuestion-agent judge recommendations for US-playbook (append-first):\n"
-            + "\n".join(f"- {n}" for n in recs) + "\n"
+            + "\n".join(f"- {n}" for n in recs)
+            + "\n"
         ) if recs else ""
         playbook_rules = (
             "\nUS-PLAYBOOK RULES:\n"
@@ -113,7 +166,8 @@ def build_reflection_prompt(*, component: Component, signal: DimensionSignal,
         recs = _question_judge_playbook_recs(signal, geo=False)
         rec_block = (
             "\nQuestion-agent judge recommendations (append-first):\n"
-            + "\n".join(f"- {n}" for n in recs) + "\n"
+            + "\n".join(f"- {n}" for n in recs)
+            + "\n"
         ) if recs else ""
         playbook_rules = (
             "\nPLAYBOOK RULE — append-first: keep every existing tactic and "
@@ -123,30 +177,37 @@ def build_reflection_prompt(*, component: Component, signal: DimensionSignal,
         )
     return f"""You are improving one component of an appeal-drafting system.
 
-{_VARIANT_PREAMBLES[variant]}FIRST CRITIQUE, THEN EDIT. Diagnose why the component underperforms on the weakest
-quality dimension before proposing a change.
+{_VARIANT_PREAMBLES[variant]}Diagnose why the component underperforms, then propose a minimal fix.
+Put your diagnosis in reflection_critique only — never in revised_component.
 
-Weakest dimension to improve: {signal.weakest_dimension}
+Improvement focus (internal planning label — do not echo this id in revised_component):
+{signal.weakest_dimension}
+
 Current component ({component.kind}):
 {current}
 
 Minibatch (insurer-visible signal only):
 {cases}
 
-Laundered improvement notes for this dimension:
+Laundered improvement notes:
 {notes}
-{playbook_rules}{question_agent_rules}
+{_CORPUS_REALITY}
+{playbook_rules}{question_agent_rules}{prompt_rules}
 Constraints: {_REFLECTION_CONSTRAINTS}
-
-Return the full revised component text/JSON."""
+{_JSON_OUTPUT_INSTRUCTION}"""
 
 
 class ReflectionClient(Protocol):
     name: str
 
-    def reflect(self, *, component: Component, signal: DimensionSignal,
-                minibatch: list[ScoredRun]) -> Component:
-        """Return a revised component improving signal.weakest_dimension. Critique-first."""
+    def reflect(
+        self,
+        *,
+        component: Component,
+        signal: DimensionSignal,
+        minibatch: list[ScoredRun],
+    ) -> Component:
+        """Return a revised component improving signal.weakest_dimension."""
 
 
 def _tag_component(component: Component, dimension: str) -> Component:
@@ -162,7 +223,7 @@ def _tag_component(component: Component, dimension: str) -> Component:
         pb["tactics"] = list(pb.get("tactics", [])) + [f"Address {dimension} explicitly."]
         pb["dimension_targets"] = sorted(set(pb.get("dimension_targets", [])) | {dimension})
         return component.model_copy(update={"version": nxt, "playbook": pb})
-    text = (component.text or "") + f"\n- Strengthen dim:{dimension}."
+    text = (component.text or "") + f"\n- Strengthen appeal quality on this case type."
     return component.model_copy(update={"version": nxt, "text": text})
 
 
@@ -172,11 +233,72 @@ def _bump_version(version: str) -> str:
     return f"{version}+1"
 
 
+def _word_count(text: str) -> int:
+    return len(text.split())
+
+
+def _strip_fenced_json(raw: str) -> str:
+    text = raw.strip()
+    if text.startswith("```"):
+        text = re.sub(r"^```(?:json)?\s*", "", text)
+        text = re.sub(r"\s*```$", "", text)
+    return text.strip()
+
+
+def _strip_embedded_critique(text: str) -> str:
+    """Remove critique preamble if the model disobeyed and inlined it."""
+    cleaned = text.strip()
+    if re.match(r"(?is)^(?:critique|diagnosis)\s*:", cleaned):
+        parts = re.split(r"\n\s*#\s+", cleaned, maxsplit=1)
+        if len(parts) > 1:
+            cleaned = f"# {parts[1]}"
+        else:
+            cleaned = re.sub(r"(?is)^(?:critique|diagnosis)\s*:\s*", "", cleaned)
+    return cleaned.strip()
+
+
+def _contains_forbidden_jargon(text: str) -> bool:
+    low = text.lower()
+    return any(phrase in low for phrase in _FORBIDDEN_PROMPT_PHRASES)
+
+
+def _validate_prompt_text(text: str) -> tuple[str | None, str | None]:
+    if re.search(r"(?is)(?:^|\n)\s*(?:critique|diagnosis)\s*:", text):
+        return None, "critique_in_prompt_body"
+    cleaned = _strip_embedded_critique(text)
+    if _contains_forbidden_jargon(cleaned):
+        return None, "forbidden_jargon"
+    if _word_count(cleaned) > PROMPT_WORD_CAP:
+        return None, f"word_cap_exceeded:{_word_count(cleaned)}"
+    return cleaned, None
+
+
+def _parse_reflection_response(raw: str) -> tuple[str, Any]:
+    """Parse reflection JSON. Falls back to legacy plain body for playbooks only."""
+    text = _strip_fenced_json(raw)
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError:
+        return "", text
+    if not isinstance(payload, dict):
+        return "", text
+    critique = str(payload.get("reflection_critique") or "").strip()
+    body = payload.get("revised_component")
+    if body is None:
+        body = payload.get("revised_prompt") or payload.get("revised_text") or ""
+    return critique, body
+
+
 class StubReflectionClient:
     name = "stub_reflection"
 
-    def reflect(self, *, component: Component, signal: DimensionSignal,
-                minibatch: list[ScoredRun]) -> Component:
+    def reflect(
+        self,
+        *,
+        component: Component,
+        signal: DimensionSignal,
+        minibatch: list[ScoredRun],
+    ) -> Component:
         return _tag_component(component, signal.weakest_dimension)
 
 
@@ -196,17 +318,14 @@ class GeminiReflectionClient:
         prompt = build_reflection_prompt(component=component, signal=signal, minibatch=minibatch)
         try:
             client = genai.Client(vertexai=True, location=self.location)
-            # Same model-availability fallback as the drafter/simulator/judge so
-            # a missing preview model name doesn't silently stall learning.
             resp = generate_content_with_fallback(
                 client.models.generate_content,
-                model=self.model, contents=prompt,
-                config=types.GenerateContentConfig(temperature=0.7))
-            return _apply_text_edit(component, resp.text)
+                model=self.model,
+                contents=prompt,
+                config=types.GenerateContentConfig(temperature=0.7),
+            )
+            return _apply_text_edit(component, resp.text or "")
         except Exception:
-            # No-op edit on failure → the loop simply finds no improvement and
-            # halts cleanly instead of crashing. Logged so a stalled run is
-            # diagnosable (otherwise it looks like "no learning signal").
             logger.warning(
                 "reflection failed for component=%s; returning unchanged (no improvement)",
                 getattr(component, "component_id", "?"),
@@ -223,36 +342,88 @@ class AnthropicReflectionClient:
 
     def reflect(self, *, component, signal, minibatch) -> Component:
         import anthropic
+
         prompt = build_reflection_prompt(component=component, signal=signal, minibatch=minibatch)
         try:
-            client = anthropic.Anthropic()   # reads ANTHROPIC_API_KEY from env
+            client = anthropic.Anthropic()
             msg = client.messages.create(
-                model=self.model, max_tokens=2000, temperature=0.7,
-                messages=[{"role": "user", "content": prompt}])
+                model=self.model,
+                max_tokens=2000,
+                temperature=0.7,
+                messages=[{"role": "user", "content": prompt}],
+            )
             return _apply_text_edit(component, msg.content[0].text)
         except Exception:
             return component
 
 
 def _apply_text_edit(component: Component, revised: str) -> Component:
-    """Wrap an LLM's revised text back into a Component, bumping the version. For
-    playbooks the model returns JSON; tolerate non-JSON by keeping the old playbook."""
+    """Parse reflection JSON, validate prompts, bump version. Rejects invalid prompts."""
+    critique, body = _parse_reflection_response(revised)
+    if critique:
+        logger.info(
+            "reflection_critique",
+            extra={
+                "component_id": component.component_id,
+                "reflection_critique": critique,
+            },
+        )
+
     if component.kind == "prompt":
         nxt = _bump_version(component.version)
-        text = revised.strip()
+        text = str(body).strip()
+        valid, reason = _validate_prompt_text(text)
+        if valid is None:
+            logger.warning(
+                "reflection prompt rejected",
+                extra={"component_id": component.component_id, "reason": reason},
+            )
+            return component
         if component.component_id == QUESTION_AGENT_COMPONENT_ID:
-            text = ensure_question_agent_prompt_invariants(text)
-        return component.model_copy(update={"version": nxt, "text": text})
+            valid = ensure_question_agent_prompt_invariants(valid)
+            valid2, reason2 = _validate_prompt_text(valid)
+            if valid2 is None:
+                logger.warning(
+                    "reflection prompt rejected after invariant reinjection",
+                    extra={"component_id": component.component_id, "reason": reason2},
+                )
+                return component
+            valid = valid2
+        return component.model_copy(
+            update={
+                "version": nxt,
+                "text": valid,
+                "reflection_critique": critique or None,
+            }
+        )
+
     nxt = (
         bump_geo_version(component.version)
         if component.component_id == US_PLAYBOOK_COMPONENT_ID
         else _bump_version(component.version)
     )
-    import json
-    try:
-        parsed = json.loads(revised)
-        if component.component_id == US_PLAYBOOK_COMPONENT_ID and isinstance(parsed, dict):
-            parsed["version"] = nxt
-        return component.model_copy(update={"version": nxt, "playbook": parsed})
-    except Exception:
-        return component.model_copy(update={"version": nxt})
+    if isinstance(body, dict):
+        parsed = body
+    else:
+        try:
+            parsed = json.loads(str(body))
+        except Exception:
+            try:
+                parsed = json.loads(_strip_fenced_json(revised))
+            except Exception:
+                logger.warning(
+                    "reflection playbook JSON parse failed for component=%s",
+                    component.component_id,
+                )
+                return component
+    if not isinstance(parsed, dict):
+        return component
+    if component.component_id == US_PLAYBOOK_COMPONENT_ID:
+        parsed["version"] = nxt
+    return component.model_copy(
+        update={
+            "version": nxt,
+            "playbook": parsed,
+            "reflection_critique": critique or None,
+        }
+    )

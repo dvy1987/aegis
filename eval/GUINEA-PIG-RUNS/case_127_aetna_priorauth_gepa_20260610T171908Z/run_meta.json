@@ -1,0 +1,16 @@
+{
+  "case_path": "/Users/divya/Projects/Building-apps/aegis/eval/cases/drafts/guinea-pigs/case_127_aetna_priorauth.json",
+  "case_id": "case_127_aetna_priorauth",
+  "run_type": "guinea_pig_gepa",
+  "gepa_rounds": 1,
+  "mutate_targets": [
+    "drafter_system_prompt",
+    "question_agent_system_prompt",
+    "insurer_playbook",
+    "geo_playbook:us"
+  ],
+  "auto_approved": false,
+  "approver": null,
+  "session_id": "quick_20260610_171908_04cd29",
+  "timestamp_utc": "20260610T171908Z"
+}

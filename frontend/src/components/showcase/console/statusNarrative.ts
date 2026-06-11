@@ -6,7 +6,7 @@ export type InactiveStatusNarrative = {
   upNext: string;
 };
 
-const FALLBACK = { quickHoldout: 2, seriousHoldout: 20 } as const;
+const FALLBACK = { quickHoldout: 1, seriousHoldout: 2 } as const;
 
 /** Sparse copy for the idle session status panel (no active run). */
 export function resolveInactiveStatusNarrative(
