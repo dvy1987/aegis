@@ -118,9 +118,13 @@ export const MATRIX_WAIT_TRAIN = "Waiting for train-set measurements…";
 export const MATRIX_WAIT_POST = "Waiting for your approval…";
 
 export const BEFORE_AFTER_EYEBROW = "MEASURED LIFT";
-export const BEFORE_AFTER_HEADLINE = "Same denial. Sharper letter.";
+export const BEFORE_AFTER_HEADLINE = "Better appeals after learning.";
 
 export const CASE_CYCLER_LABEL = "Sample case";
+export const CASE_DENIAL_LETTER_PILL = "Denial letter";
+export const CASE_CLINICAL_CONTEXT_PILL = "Clinical context";
+export const CASE_DENIAL_LETTER_MODAL_EYEBROW = "DENIAL LETTER";
+export const CASE_CLINICAL_CONTEXT_MODAL_EYEBROW = "CLINICAL CONTEXT";
 
 export const VERSUS_LIFT_LABEL = "Held-out lift";
 export const VERSUS_DRAFT_BEFORE = "Before learning";

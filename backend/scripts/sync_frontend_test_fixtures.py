@@ -29,10 +29,8 @@ def _case_number(stem: str) -> int | None:
 
 
 def _headline(case: dict) -> str:
-    ins = case["insurer"]
-    tx = case["patient_profile"]["treatment_requested"].split("(")[0].strip()[:35]
-    dt = DENIAL_LABEL.get(case["denial_type"], case["denial_type"])
-    return f"{tx} — {dt.lower()} ({ins})"
+    """Treatment line only — insurer and denial type appear in the cycler heading above."""
+    return str(case["patient_profile"]["treatment_requested"]).strip()
 
 
 def _case_summary(case: dict) -> dict:
