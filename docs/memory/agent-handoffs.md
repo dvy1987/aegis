@@ -1,4 +1,4 @@
-# Agent Handoffs — Aegis
+# Agent Handoffs — Heuristics
 
 Append-only log of session handoffs. Newest at the bottom.
 
@@ -8,7 +8,7 @@ Append-only log of session handoffs. Newest at the bottom.
 
 ### Done
 - Explored 15+ hackathon ideas across 4 rounds; ranked & evaluated all in [docs/ideas.md](../ideas.md)
-- Locked target: **Aegis** (codename Reverse v2) — self-improving multi-agent system for US health-insurance appeals, Arize partner track, $5K prize
+- Locked target: **Heuristics** (codename Reverse v2) — self-improving multi-agent system for US health-insurance appeals, Arize partner track, $5K prize
 - Consulted oracle for strategic + technical sanity check; results baked into PRD
 - Wrote unified PRD with two nested parts in [docs/prd/PRD.md](../prd/PRD.md):
   - **Part A — MVP (Days 1–7):** single agent + 12-case benchmark, Day 7 shippable safety net
@@ -18,12 +18,12 @@ Append-only log of session handoffs. Newest at the bottom.
 
 ### Debated
 - **Narrow MVP vs grandiose 12-agent swarm:** Resolved as nested — MVP is Week 1 milestone within the Full Plan, not an alternative
-- **Codename:** Picked Aegis (PM choice)
+- **Codename:** Picked Heuristics (PM choice)
 - **Autonomy model:** Resolved as **3-stage competency ladder** (Apprentice → Journeyman → Master) gated on composite score + count of patches reviewed/promoted, with auto-demotion if competence drops. This needs to be baked into PRD + architecture properly
 - **Eval design:** Current PRD eval section violates **AlphaEval 2026** principles (single composite score, safety averaged in not gated, no chain-of-thought protocol, no per-step pipeline checkpoints). Needs full rebuild via `eval-output` → `eval-rubric-design` → `eval-judge` → `eval-pipeline` skill chain.
 
 ### Decisions
-- Project codename = **Aegis** (PM picked)
+- Project codename = **Heuristics** (PM picked)
 - Two-phase nested PRD structure (MVP Part A + Full Plan Part B)
 - License = Apache 2.0
 - Stack locked: Google ADK + Gemini 3 + Phoenix Cloud + Phoenix MCP + Streamlit + Cloud Run
@@ -157,7 +157,7 @@ Ordered by priority. Items marked 🔴 are BLOCKERS for build start.
 ### Done
 
 - Ran `memory-startup`, scaffolded memory layer ([MEMORY-ROUTING.md](MEMORY-ROUTING.md), [decision-log.md](decision-log.md), [session-log.md](session-log.md), [learnings.md](learnings.md), [deferred.md](deferred.md), [open-questions.md](open-questions.md), `archived/`).
-- Ran `deep-thinking` → `pre-mortem` on Aegis as a whole — top causes A, K, M, D, C identified.
+- Ran `deep-thinking` → `pre-mortem` on Heuristics as a whole — top causes A, K, M, D, C identified.
 - Re-read [docs/challenge.md](../challenge.md); confirmed Arize rubric has two co-equal pillars (tracing+MCP **and** self-improvement loop) plus design + impact criteria.
 - Strategic shift accepted by PM: **UX is now a first-class pillar**, co-equal with the self-improvement story and the impact narrative.
 - Framework decision: **Next.js + Python ADK backend** replaces Streamlit (overturns old AGENTS.md/PRD lock-in). See [decision-log.md](decision-log.md).
@@ -225,7 +225,7 @@ Recommend the PM commits before Session 3 starts so the next agent has a clean b
 - Ran `project-setup` skill end-to-end: 3 AGENTS.md files (root 145 lines + `frontend/AGENTS.md` 51 lines + `backend/AGENTS.md` 78 lines, all under 150-line skill rule). Multi-file mode, SDD mode on, autonomy boundaries codified (strict on product/architecture/copy; full autonomy on tests, internal refactors, tooling).
 - Preservation discipline applied: every valid rule from old AGENTS.md absorbed into new tree; stale rules (Streamlit lock, single-agent-only) explicitly reversed with provenance noted. Cross-check table presented to PM and approved.
 - Created empty `frontend/` and `backend/` directories with scoped AGENTS.md inside each, ready for when code lands.
-- Ran `agent-system-architecture` skill — produced [docs/architecture/2026-05-27-aegis-arch.md](../architecture/2026-05-27-aegis-arch.md). Replaces freehanded Session-1 `docs/architecture.md` (now a pointer file). Covers Part A (single agent) + Part B (composite swarm). Honest component count: 10 LLM agents + 1 judge panel + 1 mostly-deterministic simulator + 2 meta = 14 components. Mermaid wiring diagram, state/memory strategy, HITL checkpoints, observability strategy, repository layout, deployment.
+- Ran `agent-system-architecture` skill — produced [docs/architecture/2026-05-27-heuristics-arch.md](../architecture/2026-05-27-heuristics-arch.md). Replaces freehanded Session-1 `docs/architecture.md` (now a pointer file). Covers Part A (single agent) + Part B (composite swarm). Honest component count: 10 LLM agents + 1 judge panel + 1 mostly-deterministic simulator + 2 meta = 14 components. Mermaid wiring diagram, state/memory strategy, HITL checkpoints, observability strategy, repository layout, deployment.
 - Ran `architectural-decision-log` skill in mixed mode (some SYNTHESIS, some CONTEMPORANEOUS) — produced 5 ADRs:
   - [ADR-001](../adr/ADR-001-google-adk-agent-framework.md) Google ADK (SYNTHESIS, Session 1)
   - [ADR-002](../adr/ADR-002-phoenix-mcp-load-bearing.md) Arize Phoenix Cloud + MCP load-bearing (SYNTHESIS, Session 1)
@@ -261,7 +261,7 @@ See [decision-log.md](decision-log.md) — 2 new entries 2026-05-27. Plus 5 ADRs
 
 ### Next Agent Should Know
 
-- **Architecture is now skill-driven.** [docs/architecture/2026-05-27-aegis-arch.md](../architecture/2026-05-27-aegis-arch.md) is the canonical blueprint. `docs/architecture.md` is just a pointer file. Update the dated file first when anything changes; add an ADR if non-trivial.
+- **Architecture is now skill-driven.** [docs/architecture/2026-05-27-heuristics-arch.md](../architecture/2026-05-27-heuristics-arch.md) is the canonical blueprint. `docs/architecture.md` is just a pointer file. Update the dated file first when anything changes; add an ADR if non-trivial.
 - **The 12-agent decision is audacious-but-bounded.** ADR-004 documents 4 hard revisit triggers — Day 10 progress gate, A5 fail, demo-coherence test (Day 15), build slippage. The next agent must enforce these gates rigorously. If any fires, escalate to PM with options per the Code-Wall Escalation Protocol.
 - **`google-agents-cli` is the Day 1 install.** PM has approved adoption. Verify J1 (observability skill ↔ Phoenix MCP) and J2 (deploy ↔ 2-service) on Day 1 / Day 6–7 respectively.
 - **The "12" framing is preserved in pitch language, but architectural honesty is documented.** When writing public-facing content (PRD, README, Devpost), say "12-agent swarm" if it's the strategic story; when designing/building, refer to the honest 10+1+1+2 = 14 component breakdown in architecture spec §3.1.
@@ -285,7 +285,7 @@ See [decision-log.md](decision-log.md) — 2 new entries 2026-05-27. Plus 5 ADRs
 ### Working Tree
 
 Newly created or modified this session:
-- New: `AGENTS.md` (root, overwriting old) · `frontend/AGENTS.md` · `backend/AGENTS.md` · `frontend/` dir · `backend/` dir · `docs/architecture/2026-05-27-aegis-arch.md` · `docs/architecture/` dir · `docs/adr/` dir · `docs/adr/ADR-001..005-*.md` (5 files)
+- New: `AGENTS.md` (root, overwriting old) · `frontend/AGENTS.md` · `backend/AGENTS.md` · `frontend/` dir · `backend/` dir · `docs/architecture/2026-05-27-heuristics-arch.md` · `docs/architecture/` dir · `docs/adr/` dir · `docs/adr/ADR-001..005-*.md` (5 files)
 - Replaced: `docs/architecture.md` (now a thin pointer to the dated spec)
 - Modified: `docs/memory/decision-log.md` · `docs/memory/current-state.md` · `docs/memory/agent-handoffs.md` (this entry) · `docs/open-questions.md` · `docs/skill-outputs/SKILL-OUTPUTS.md`
 
@@ -298,7 +298,7 @@ Recommend PM commit before Session 4 starts so the architecture rebuild is prese
 - Swept `docs/open-questions.md`, resolving stale technical questions into the "decided" section.
 - Finished PRD v4 updates (UX pillar, Next.js, assumption tests, demo script updates, Arize Rubric alignment).
 - Generated `docs/product-soul.md` for strategic grounding.
-- Rebuilt eval design per AlphaEval 2026: created `docs/evals/2026-05-27-aegis-appeal-rubric.md`, `docs/evals/2026-05-27-aegis-judges.md`, `docs/evals/2026-05-27-aegis-eval-pipeline.md`, and `eval/simulator_rules.json`.
+- Rebuilt eval design per AlphaEval 2026: created `docs/evals/2026-05-27-heuristics-appeal-rubric.md`, `docs/evals/2026-05-27-heuristics-judges.md`, `docs/evals/2026-05-27-heuristics-eval-pipeline.md`, and `eval/simulator_rules.json`.
 - Generated 10 agent role prompts via `create-agent-prompt` skill and seeded them in `backend/src/prompts/`.
 - Updated `docs/memory/current-state.md` and `docs/skill-outputs/SKILL-OUTPUTS.md`.
 
@@ -341,7 +341,7 @@ Follow-up session closing Session 4 gaps. All 6 TODOs in the corrective plan are
 - ✅ **TODO 2 — Eval rubric v2.** Replaced rubric with v2 (all dims 1/3/5; 7-judge panel: J1/J2 hard gates + J3–J7 weighted; calibration anchors; $0.014/judge, $0.10/letter, $1.20/MVP, $300/20-day ceiling; κ ≥ 0.6 calibration gate; output schema + aggregation formula; anti-pattern checklist). Commit `9ee69da`.
 - ✅ **TODO 3 — PRD §8 reconciled.** Hard-gate vs weighted split; per-dimension regression-threshold gating; SC2/SC3 phrased as hard-gate PASS rates; §15.2 Safety Gates rebuilt as binary; §15.3 Rollback zero-tolerance on hard-gate FAIL. Commit `d65e13c`.
 - ✅ **TODO 4 — 10 agent prompts rewritten as LLM system prompts.** All include persona + objective, domain context (insurer tactics + ERISA/ACA/MHPAEA/NSA + clinical guidelines), tool-use protocol, CoT scaffold, output JSON schema, worked few-shot, guardrails. Interface-contract format kept as docstring section, not whole prompt. Commit `17e6c27`.
-- ✅ **TODO 5 — Day 1–20 implementation plan generated.** Via `implementation-plan` skill. Output: `docs/plans/2026-05-27-aegis-implementation-plan.md` (4 phases, 67 tasks, 11 risks, full PRD-ID traceability) + companion flat task list `docs/plans/2026-05-27-aegis-implementation-tasks.md`. A1–A5 + Day 10 + Day 14/15 gates explicitly scheduled. **Phase 0 (GCP + Phoenix + agents-cli setup) gated on PM sign-off.** Commit `079064d`.
+- ✅ **TODO 5 — Day 1–20 implementation plan generated.** Via `implementation-plan` skill. Output: `docs/plans/2026-05-27-heuristics-implementation-plan.md` (4 phases, 67 tasks, 11 risks, full PRD-ID traceability) + companion flat task list `docs/plans/2026-05-27-heuristics-implementation-tasks.md`. A1–A5 + Day 10 + Day 14/15 gates explicitly scheduled. **Phase 0 (GCP + Phoenix + agents-cli setup) gated on PM sign-off.** Commit `079064d`.
 - ✅ **TODO 6 — Memory updated.** This handoff closed; current-state refreshed to Session-5 reality; decision-log appended with 3 new Session 5 entries (rubric v2, prompts rewrite, implementation plan); skill-outputs ledger logged in TODO 5 commit. Commit forthcoming.
 
 ### Commits this session (5)
@@ -362,8 +362,8 @@ Follow-up session closing Session 4 gaps. All 6 TODOs in the corrective plan are
 - **Planning is complete. Project is ready for Phase 0 execution upon PM sign-off.** All planning artifacts (PRD v4, architecture, eval rubric v2, eval pipeline, agent prompts v1, implementation plan, task list) are aligned.
 - **Phase 0 = STOP-AND-ASK gate.** PM explicitly asked to be consulted before any GCP / Phoenix Cloud setup. Do NOT silently run `gcloud` or sign up for accounts without PM confirmation. See plan §4 Phase 0.
 - **The hard gates (A1–A5 + Day 10 + Day 14/15) are the safety nets.** Enforce them. Each carries a documented fallback — see plan §5 + tasks file gate index.
-- **`docs/plans/2026-05-27-aegis-implementation-tasks.md` is the agent-pickable execution surface.** Each task has DoD + traceability ID; pick one task per coding-agent session; commit with task ID in message.
-- **Source-of-truth files:** PRD (`docs/prd/PRD.md`), architecture (`docs/architecture/2026-05-27-aegis-arch.md`), rubric (`docs/evals/2026-05-27-aegis-appeal-rubric.md`), prompts (`backend/src/prompts/*_v1.md`), plan (`docs/plans/`).
+- **`docs/plans/2026-05-27-heuristics-implementation-tasks.md` is the agent-pickable execution surface.** Each task has DoD + traceability ID; pick one task per coding-agent session; commit with task ID in message.
+- **Source-of-truth files:** PRD (`docs/prd/PRD.md`), architecture (`docs/architecture/2026-05-27-heuristics-arch.md`), rubric (`docs/evals/2026-05-27-heuristics-appeal-rubric.md`), prompts (`backend/src/prompts/*_v1.md`), plan (`docs/plans/`).
 - **No application code yet.** `backend/src/` has only `prompts/`. `frontend/` has only an AGENTS.md. Phase 0 + Phase 1 Day 1 will produce the first running code.
 
 ### Carry-forward Revisit Triggers
@@ -414,7 +414,7 @@ Follow-up session closing Session 4 gaps. All 6 TODOs in the corrective plan are
 ## 2026-05-27 14:08 - Handoff
 
 ### Done
-- Conducted adversarial and constructive project evaluation for Aegis hackathon submission (saved in `aegis_evaluation.md`).
+- Conducted adversarial and constructive project evaluation for Heuristics hackathon submission (saved in `aegis_evaluation.md`).
 - Executed spike for A4 Assumption (Phoenix MCP + ADK integration). Built `test_mcp_standalone.py` showing `mcp.client.stdio_client` successfully connects to `npx -y @arizeai/phoenix-mcp` and lists all Phoenix tools.
 
 ### Debated
@@ -444,7 +444,7 @@ Follow-up session closing Session 4 gaps. All 6 TODOs in the corrective plan are
 ## 2026-05-28 14:48 - Session 17 Handoff (Antigravity)
 
 ### Done
-- Analyzed new project `SkillOpt` and its similarities/differences with Aegis, confirming the "Textual Gradient Descent" strategy and trace-based reflection model are highly aligned.
+- Analyzed new project `SkillOpt` and its similarities/differences with Heuristics, confirming the "Textual Gradient Descent" strategy and trace-based reflection model are highly aligned.
 - Formalized the "Anti-Cheating Firewall": The Appeal Agent (Student) and Learning Coordinator (Learner) must NEVER have access to the benchmark ground truth answers (flaws/denial types in `eval/`). Only the Quality Judges (Teachers) see the answer key. 
 - Logged the SkillOpt + Firewall decisions in PRD, Architecture, and Decision Log.
 - Re-architected the Backend into a 3-service logical topology to cleanly separate Phoenix tracing for the demo narrative:
@@ -458,7 +458,7 @@ Follow-up session closing Session 4 gaps. All 6 TODOs in the corrective plan are
 - Whether to physically duplicate the `backend/` folder vs logically launch two different FastAPIs. We chose logical split (two entrypoints: `main_v1.py` and `main_swarm.py`) to keep the codebase DRY and maintain shared dependencies while achieving trace isolation.
 
 ### Decisions
-- The Aegis generator pipeline runs as an offline Cloud Run Job / local CLI script using ADC.
+- The Heuristics generator pipeline runs as an offline Cloud Run Job / local CLI script using ADC.
 - Backend runs two distinct processes locally (`:8001` for v1, `:8002` for swarm) explicitly isolated for tracing purposes.
 
 ### Deferred
@@ -595,7 +595,7 @@ Follow-up session closing Session 4 gaps. All 6 TODOs in the corrective plan are
 - T1.4 (A4 spike pt.1) marked complete. The MCP query successfully round-tripped and fetched trace data.
 - T1.5 (agents-cli vs Phoenix MCP) marked complete. Already resolved in `decision-log.md` (Phoenix is primary).
 - T2.1 (A4 spike pt.2) completed. Executed 20 MCP queries to `list-traces`. Results: 20/20 successes, p50 latency = 1.24s, p95 latency = 2.52s. Logged GO DECISION for Phoenix MCP as a load-bearing dependency.
-- Updated `docs/plans/2026-05-27-aegis-implementation-tasks.md` to reflect T1.3, T1.4, T1.5, T2.1 as done.
+- Updated `docs/plans/2026-05-27-heuristics-implementation-tasks.md` to reflect T1.3, T1.4, T1.5, T2.1 as done.
 - Appended A4 go/no-go decision to `docs/memory/decision-log.md`.
 
 ### Debated
@@ -621,7 +621,7 @@ Follow-up session closing Session 4 gaps. All 6 TODOs in the corrective plan are
 - A1 (eval signal) Day 5 EOD.
 
 ### Working Tree
-- Modified: `docs/plans/2026-05-27-aegis-implementation-tasks.md`, `docs/memory/decision-log.md`, `docs/memory/agent-handoffs.md`.
+- Modified: `docs/plans/2026-05-27-heuristics-implementation-tasks.md`, `docs/memory/decision-log.md`, `docs/memory/agent-handoffs.md`.
 - New (untracked): `backend/spike_mcp_latency.py`.
 
 ---
@@ -631,7 +631,7 @@ Follow-up session closing Session 4 gaps. All 6 TODOs in the corrective plan are
 > Pre-emptive handoff written mid-session in case credits run out. Updated at session close — pipeline is built, smoke-tested, and produced its first valid case end-to-end.
 
 ### Task
-PM requested: build a **synthetic-case generation swarm** (a drafter pipeline, paired with the existing Gumloop *evaluator* swarm). Cases must be diverse, robust, and land in `eval/cases/drafts/`. Hard constraint: **no suicide cases**. Pipeline must be designed against **AlphaEval 2026** principles (per `docs/evals/2026-05-27-aegis-appeal-rubric.md` and `docs/plans/2026-05-27-alphaeval-alignment-plan.md`).
+PM requested: build a **synthetic-case generation swarm** (a drafter pipeline, paired with the existing Gumloop *evaluator* swarm). Cases must be diverse, robust, and land in `eval/cases/drafts/`. Hard constraint: **no suicide cases**. Pipeline must be designed against **AlphaEval 2026** principles (per `docs/evals/2026-05-27-heuristics-appeal-rubric.md` and `docs/plans/2026-05-27-alphaeval-alignment-plan.md`).
 
 ### Context already gathered
 - Existing case schema (see `eval/cases/drafts/part-a/train/case_01_cigna_mednec.json`):
@@ -676,7 +676,7 @@ PM correctly pointed out that AlphaEval mandates **independent critics at every 
   7. **FinalAssemblyMiniPanel** → full case. Three independent critics: `ContradictionHunter` (binary HARD GATE), `LLMTellDetector` (binary HARD GATE), `OverallToneCritic` (1/3/5). No merge prompt.
   8. **Writer** — emits to `eval/cases/drafts/part-a/{train|test}/`.
 - Gumloop swarm is the external grand-jury second opinion. Cases move `drafts/` → `approved/` only on Gumloop `APPROVE`.
-- Critic rules (lifted from `docs/evals/2026-05-27-aegis-appeal-rubric.md`):
+- Critic rules (lifted from `docs/evals/2026-05-27-heuristics-appeal-rubric.md`):
   - CoT BEFORE score (never after — no post-hoc rationalisation).
   - Forced 1/3/5 anchors, no 2s/4s.
   - Each critic sees only its own stage's artifact + its own rubric — no upstream visibility (prevents dimension bleed).
@@ -702,7 +702,7 @@ PM correctly pointed out that AlphaEval mandates **independent critics at every 
 
 ### Working Tree (at handoff write-time, unchanged from Session 9)
 - Untracked: `eval/cases/`, `gumloop/`, `backend/corpus/`, `backend/spike_bm25.py`, `backend/spike_mcp_latency.py`, `docs/demo/`, `docs/plans/2026-05-27-alphaeval-alignment-plan.md`.
-- Modified: `backend/app/fast_api_app.py`, `backend/pyproject.toml`, `backend/uv.lock`, `docs/memory/{agent-handoffs.md (this file), decision-log.md}`, `docs/open-questions.md`, `docs/plans/2026-05-27-aegis-implementation-tasks.md`.
+- Modified: `backend/app/fast_api_app.py`, `backend/pyproject.toml`, `backend/uv.lock`, `docs/memory/{agent-handoffs.md (this file), decision-log.md}`, `docs/open-questions.md`, `docs/plans/2026-05-27-heuristics-implementation-tasks.md`.
 
 ### Done at session close
 - Built `backend/app/case_generator/` swarm: 4 producers + 19 per-stage critics (16 LLM, 3 deterministic) + safety + schema validator + writer.
@@ -811,9 +811,9 @@ Estimated total effort 3–4 hours; full breakdown in the plan doc.
 
 ### Done (this session — demo capture planning)
 
-- ✅ **Rolling demo capture plan created** — `docs/demo/rolling-capture-checklist.md`. PM-friendly step-by-step guide explaining: what two windows to open (Aegis app left + Phoenix dashboard right), what to record at each capture point, when to hit record, what to narrate, and where to save the file. Written for a non-technical PM — no jargon, exact URLs, exact file names.
+- ✅ **Rolling demo capture plan created** — `docs/demo/rolling-capture-checklist.md`. PM-friendly step-by-step guide explaining: what two windows to open (Heuristics app left + Phoenix dashboard right), what to record at each capture point, when to hit record, what to narrate, and where to save the file. Written for a non-technical PM — no jargon, exact URLs, exact file names.
 - ✅ **Implementation plan updated** with capture tasks at Days 3, 5, 7, 10, 14, 17. Each capture point marked with 🔴 for critical (Day 3 and Day 7 cannot be recreated later). Executive summary updated with rolling-capture reference.
-- ✅ **PM question answered:** Yes, the UX shows the simulator outcome (APPROVE/DENY). Per FR8 and FR10, the Aegis frontend must display the simulator's verdict alongside eval scores. The flip from DENY (v1) to APPROVE (v3) is one of the demo's most visually compelling moments. Documented in the capture checklist.
+- ✅ **PM question answered:** Yes, the UX shows the simulator outcome (APPROVE/DENY). Per FR8 and FR10, the Heuristics frontend must display the simulator's verdict alongside eval scores. The flip from DENY (v1) to APPROVE (v3) is one of the demo's most visually compelling moments. Documented in the capture checklist.
 - ✅ **Current-state.md updated** with all concurrent session progress (Sessions 9, 10, 11) and rolling capture info.
 
 ### Combined state across all 3 sessions
@@ -831,12 +831,12 @@ Estimated total effort 3–4 hours; full breakdown in the plan doc.
 
 ### Decisions (this session)
 - Demo footage must be captured throughout the build at key milestones, not just at the end. The "v1 is weak" footage only exists on the day the weak agent first runs (Day 3). Cannot be recreated after patches.
-- The Aegis frontend MUST show the simulator outcome (APPROVE/DENY) — this is a core demo element per PRD FR8 and FR10, not a nice-to-have.
+- The Heuristics frontend MUST show the simulator outcome (APPROVE/DENY) — this is a core demo element per PRD FR8 and FR10, not a nice-to-have.
 - Days 18-19 are for editing and voiceover only. All raw footage captured by Day 17 at the latest.
 
 ### Key PM clarifications from this session
-1. **"Where do I record?"** — In your browser. Two windows side-by-side: Aegis app (left) at localhost:3000 or Cloud Run URL, Phoenix Cloud dashboard (right) at app.arize.com. Hit screen record (Mac: Cmd+Shift+5).
-2. **"What do I record?"** — At each capture point, the checklist tells you exactly which screens to show and what to narrate. The two things you show are: (a) the Aegis app showing the appeal output, eval scores, and simulator outcome, and (b) Phoenix dashboard showing traces, experiments, and prompt versions.
+1. **"Where do I record?"** — In your browser. Two windows side-by-side: Heuristics app (left) at localhost:3000 or Cloud Run URL, Phoenix Cloud dashboard (right) at app.arize.com. Hit screen record (Mac: Cmd+Shift+5).
+2. **"What do I record?"** — At each capture point, the checklist tells you exactly which screens to show and what to narrate. The two things you show are: (a) the Heuristics app showing the appeal output, eval scores, and simulator outcome, and (b) Phoenix dashboard showing traces, experiments, and prompt versions.
 3. **"Does the UX show the appeal outcome?"** — Yes. The simulator's APPROVE/DENY verdict is displayed in the frontend. The flip from DENY to APPROVE across versions is a core demo moment.
 
 ### Deferred
@@ -869,7 +869,7 @@ Estimated total effort 3–4 hours; full breakdown in the plan doc.
 
 ### Working Tree (changes from this session)
 - New: `docs/demo/rolling-capture-checklist.md`
-- Modified: `docs/plans/2026-05-27-aegis-implementation-plan.md` (rolling capture tasks added at Days 3, 5, 7, 10, 14, 17; executive summary updated)
+- Modified: `docs/plans/2026-05-27-heuristics-implementation-plan.md` (rolling capture tasks added at Days 3, 5, 7, 10, 14, 17; executive summary updated)
 - Modified: `docs/memory/current-state.md` (Sessions 9-11 progress merged; A4 PASSED noted; rolling capture info added; source-of-truth table expanded)
 - Modified: `docs/memory/agent-handoffs.md` (this combined entry)
 
@@ -907,7 +907,7 @@ Estimated total effort 3–4 hours; full breakdown in the plan doc.
 ### Working Tree
 - New: `backend/app/aegis_v1/{__init__,schemas,tools,pipeline}.py`
 - New: `backend/tests/unit/agent/test_aegis_v1_{tools,agent}.py`
-- Modified: `backend/app/agent.py`, backend integration test prompts, `docs/plans/2026-05-27-aegis-implementation-tasks.md`, memory docs, skill-output ledger.
+- Modified: `backend/app/agent.py`, backend integration test prompts, `docs/plans/2026-05-27-heuristics-implementation-tasks.md`, memory docs, skill-output ledger.
 
 ---
 
@@ -1026,7 +1026,7 @@ Estimated total effort 3–4 hours; full breakdown in the plan doc.
 
 ### Done
 - Codified the "Weak-v1" Demo Rule into the PRD (Section 15.5) — enforcing that initial agent prompts must be deliberately weak to ensure a failing baseline for the demo arc.
-- Updated `docs/architecture/2026-05-27-aegis-arch.md` with Section 8 "Case Generation Pipeline (Offline Tooling)", formally documenting: Realistic Imperfection ("Authentic Shoddiness"), Analysis-First Evaluator Rules, Split Scoring/Score Hiding (Difficulty score hidden), Gumloop Arbiter Logic (REVISE over DISCARD to save API cost), and the Diversity Matrix constraints (banning Medicare, unapproved drugs, etc.).
+- Updated `docs/architecture/2026-05-27-heuristics-arch.md` with Section 8 "Case Generation Pipeline (Offline Tooling)", formally documenting: Realistic Imperfection ("Authentic Shoddiness"), Analysis-First Evaluator Rules, Split Scoring/Score Hiding (Difficulty score hidden), Gumloop Arbiter Logic (REVISE over DISCARD to save API cost), and the Diversity Matrix constraints (banning Medicare, unapproved drugs, etc.).
 - Reconciled PRD and Architecture docs with all outstanding strategic choices regarding the Learning Coordinator, Anti-Cheating Firewall, and AlphaEval standards.
 
 ### Debated
@@ -1052,7 +1052,7 @@ Estimated total effort 3–4 hours; full breakdown in the plan doc.
 - A1 (eval signal) Day 5 EOD.
 
 ### Working Tree
-- Modified `docs/prd/PRD.md` and `docs/architecture/2026-05-27-aegis-arch.md`.
+- Modified `docs/prd/PRD.md` and `docs/architecture/2026-05-27-heuristics-arch.md`.
 - Uncommitted edits exist from prior session in `backend/app/case_generator/`.
 
 ---
@@ -1097,13 +1097,13 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 | 5 | MEDIUM | `scripts/dev.ps1` | Still uses single-backend architecture: `$BackendPort = 8000`, `app.fast_api_app:app`. Doesn't match dev.sh's 3-service topology. | Rewrite to match dev.sh: two backend processes on 8001/8002 with `app.main_v1:app` and `app.main_swarm:app`. | [ ] |
 | 6 | MEDIUM | `backend/WINDOWS_SETUP.md` Section 5 | Says `uv run uvicorn app.fast_api_app:app --host 127.0.0.1 --port 8000`. | Update to `app.main_v1:app --port 8001` and add instructions for the swarm service on 8002. | [ ] |
 | 7 | MEDIUM | `backend/README.md` | Lists `fast_api_app.py` in directory structure — file no longer exists. | Update tree to show `main_v1.py`, `main_swarm.py`, `aegis_v1/`, `aegis_swarm/`. | [ ] |
-| 8 | MEDIUM | `docs/plans/2026-05-27-aegis-implementation-tasks.md` T1.1 | DoD says `curl localhost:8000/health` → `{"ok":true}`. | Update DoD to `curl localhost:8001/health` for v1 + `curl localhost:8002/health` for swarm. Also update implementation-plan.md T1.1. | [ ] |
-| 9 | MEDIUM | `docs/plans/2026-05-27-aegis-implementation-plan.md` T1.1 | Same port 8000 reference. | Same fix as #8. | [ ] |
+| 8 | MEDIUM | `docs/plans/2026-05-27-heuristics-implementation-tasks.md` T1.1 | DoD says `curl localhost:8000/health` → `{"ok":true}`. | Update DoD to `curl localhost:8001/health` for v1 + `curl localhost:8002/health` for swarm. Also update implementation-plan.md T1.1. | [ ] |
+| 9 | MEDIUM | `docs/plans/2026-05-27-heuristics-implementation-plan.md` T1.1 | Same port 8000 reference. | Same fix as #8. | [ ] |
 | 10 | MEDIUM | `backend/AGENTS.md` Phoenix config section | Says "Project name: `aegis-swarm`". Contradicts ADR-006 and dev.sh which use `aegis-baseline` / `aegis-swarm`. | Update to document the two-project split per ADR-006. Decide whether `aegis-swarm` is retired or kept as a legacy alias. | [ ] |
 | 11 | MEDIUM | `backend/app/app_utils/telemetry.py` | Default `PHOENIX_PROJECT_NAME` = `aegis-swarm`. Dev.sh overrides this per-process, but running backend directly uses stale default. | Change default to `aegis-baseline` (the v1 project). Swarm dev.sh overrides to `aegis-swarm` already. | [ ] |
 | 12 | MEDIUM | `backend/app/aegis_v1/tools.py` `phoenix_mcp_lookup` | Hardcodes query `project='aegis-swarm'`. When MCP goes live, this will query the wrong project. | Change to `aegis-baseline` (or read from env var). | [ ] |
 | 13 | LOW | `docs/memory/agent-handoffs.md` Session 8 handoff | Says "Backend on :8000" — stale. | Append correction or rely on this session's handoff to supersede. | [ ] |
-| 14 | LOW | `docs/architecture/2026-05-27-aegis-arch.md` | New section 8 (Case Generation Pipeline) inserted, old sections 8–12 renumbered to 9–13. Internal cross-references may point to old section numbers. | Verify all internal `§` references still resolve correctly (e.g. "see §6.2" is still valid). | [ ] |
+| 14 | LOW | `docs/architecture/2026-05-27-heuristics-arch.md` | New section 8 (Case Generation Pipeline) inserted, old sections 8–12 renumbered to 9–13. Internal cross-references may point to old section numbers. | Verify all internal `§` references still resolve correctly (e.g. "see §6.2" is still valid). | [ ] |
 | 15 | LOW | `docs/demo/rolling-capture-checklist.md` + `phoenix-shotlist.md` | Reference `aegis-swarm` project name for Phoenix UI. | Update to reflect dual-project view or confirm demo shows both projects. | [ ] |
 | 16 | DEFERRED | `backend/app/case_generator/config.py` line 17 | `CRITIC_MODEL` = same as `DEFAULT_MODEL` (Gemini). AlphaEval self-enhancement bias. Comment in code admits this. | Already tracked in `docs/plans/2026-05-28-case-generator-harness-claude-plan.md` G1. Not a new finding, just confirming it's still open. | [ ] |
 
@@ -1165,7 +1165,7 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 
 ### Debated
 - PM confirmed Gemini 3.1 Pro is the only viable model for both drafting and judging. Same-model judge bias is accepted and mitigated with deterministic gates, single-dimension prompts, evidence-first scoring, quote validation, calibration, and human spot checks.
-- Clarified that Aegis v1 sees only student-visible case data while judges see all generated-case provenance.
+- Clarified that Heuristics v1 sees only student-visible case data while judges see all generated-case provenance.
 
 ### Decisions
 - J6 is now `Appeal-Vector Capture`, not generic playbook alignment. It grades whether the appeal attacks the generator's embedded flaw.
@@ -1347,9 +1347,9 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 - Key PM decisions baked in: (1) learning feedback must route to the **right agent** -> credit-assignment seams built now; (2) corpus moves to **GCP (GCS + Vertex AI Search)** with **trust-gated autonomous-with-audit literature discovery** (ADR-007); (3) **$30/mo GCP budget cap**, only $100 free credits -> discovery rate-limited + OFF by default; (4) one agent gets a deliberately **weak v1** (Phase 3) for demo lift.
 
 ### Done (Phase 0 — foundation, all tests green)
-- **Spec-first:** updated [Part B feature-spec](../specs/2026-05-27-aegis-part-b-swarm-feature-spec.md) (added FR-5 credit assignment, FR-6 GCP corpus, FR-7 trust-gated discovery, Build-scope note, resolved CL-1 = manual demo trigger).
+- **Spec-first:** updated [Part B feature-spec](../specs/2026-05-27-heuristics-part-b-swarm-feature-spec.md) (added FR-5 credit assignment, FR-6 GCP corpus, FR-7 trust-gated discovery, Build-scope note, resolved CL-1 = manual demo trigger).
 - **ADR:** wrote [ADR-007](../adr/ADR-007-gcp-corpus-vertex-discovery.md) (GCS + Vertex AI Search + trust-gated discovery, budget cap, safety gates).
-- **Arch:** added section 5.6 to [architecture spec](../architecture/2026-05-27-aegis-arch.md) (CorpusStore seam + discovery + corpus as 2nd learning surface).
+- **Arch:** added section 5.6 to [architecture spec](../architecture/2026-05-27-heuristics-arch.md) (CorpusStore seam + discovery + corpus as 2nd learning surface).
 - **Schemas:** `backend/app/aegis_swarm/schemas.py` (RoutingManifest, ResearchBrief + InsurerBrief subtype, AppealStrategy + submodels, AdversarialCritique, SwarmRunArtifacts). Terminal output REUSES Part A `aegis_v1.AppealPackage`. Briefs are one unified shape (per-researcher behavior specializes in Phase 2, not schema).
 - **Prompt registry:** `backend/app/aegis_swarm/prompts/registry.py` — every agent prompt is an individually-loadable versioned `component_id` (= the credit-assignment unit). 10 roles, all v1 on disk.
 - **CorpusStore:** `backend/app/aegis_swarm/corpus_store.py` — `CorpusStore` Protocol + `LocalCorpusStore` (BM25 over `corpus/<domain>/**.md`) + `CorpusProvenance` + trust-tier allow-list `classify_trust_tier()`. `VertexSearchCorpusStore` is Phase 4.
@@ -1366,7 +1366,7 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 - Run tests: `cd backend && uv run pytest tests/unit/aegis_swarm -q`. Shell cwd note: a prior `cd backend/corpus` persists across calls — use absolute paths.
 
 ### Working Tree
-- New/changed (uncommitted, on `main`): `backend/app/aegis_swarm/{schemas.py,corpus_store.py,prompts/registry.py}`, `backend/tests/unit/aegis_swarm/*`, `backend/app/aegis_v1/tools.py` (rglob), `backend/corpus/**` (re-homed + 2 seed docs + provenance.json + README.md), `docs/adr/ADR-007-*.md`, `docs/architecture/credit-assignment-map.md`, `docs/architecture/2026-05-27-aegis-arch.md`, `docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md`.
+- New/changed (uncommitted, on `main`): `backend/app/aegis_swarm/{schemas.py,corpus_store.py,prompts/registry.py}`, `backend/tests/unit/aegis_swarm/*`, `backend/app/aegis_v1/tools.py` (rglob), `backend/corpus/**` (re-homed + 2 seed docs + provenance.json + README.md), `docs/adr/ADR-007-*.md`, `docs/architecture/credit-assignment-map.md`, `docs/architecture/2026-05-27-heuristics-arch.md`, `docs/specs/2026-05-27-heuristics-part-b-swarm-feature-spec.md`.
 - No commit made (PM has not requested one).
 
 ---
@@ -1458,7 +1458,7 @@ The PM wants to review each one individually with the next agent. Do NOT fix the
 
 ### Working Tree
 - New (uncommitted, on `main`): `backend/app/aegis_swarm/prompts/{drafter,strategist,medical_necessity}_v1_weak.md`, `backend/tests/unit/aegis_swarm/test_swarm_trace_signal.py`.
-- Modified (uncommitted): `backend/app/aegis_swarm/{prompts/registry.py,tools.py,schemas.py,swarm_pipeline.py}`, `backend/tests/unit/aegis_swarm/test_swarm_registry.py`, `docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md`, `docs/architecture/credit-assignment-map.md`, `docs/memory/{current-state.md,agent-handoffs.md}`. Plus all Phase 0–2 files from the prior entries.
+- Modified (uncommitted): `backend/app/aegis_swarm/{prompts/registry.py,tools.py,schemas.py,swarm_pipeline.py}`, `backend/tests/unit/aegis_swarm/test_swarm_registry.py`, `docs/specs/2026-05-27-heuristics-part-b-swarm-feature-spec.md`, `docs/architecture/credit-assignment-map.md`, `docs/memory/{current-state.md,agent-handoffs.md}`. Plus all Phase 0–2 files from the prior entries.
 - No commit made (PM has not requested one).
 
 ### ADDENDUM — Phase 3 evolution-integrity hardening (same session, supersedes the `target_version` notes above)
@@ -1504,7 +1504,7 @@ PM flagged two ways the self-improvement claim could be "game-able". Fixed all t
 ### Working Tree (uncommitted, on `main`)
 - New: `backend/app/aegis_swarm/{tools,client,swarm_pipeline,swarm_orchestrator,schemas,corpus_store,literature_discovery}.py`, `prompts/{registry.py, WEAK_BASELINES.md, drafter_v1_weak.md, strategist_v1_weak.md, medical_necessity_v1_weak.md}`, `backend/tests/unit/aegis_swarm/*`, `docs/adr/ADR-007-*`, `docs/architecture/credit-assignment-map.md`.
 - Renamed (git): 3 strong prompts → `prompts/targets/`; corpus docs into domain subtrees.
-- Modified: `docs/memory/{current-state,agent-handoffs,project-index}.md`, `docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md`, `docs/skill-outputs/SKILL-OUTPUTS.md`.
+- Modified: `docs/memory/{current-state,agent-handoffs,project-index}.md`, `docs/specs/2026-05-27-heuristics-part-b-swarm-feature-spec.md`, `docs/skill-outputs/SKILL-OUTPUTS.md`.
 
 ---
 
@@ -1775,7 +1775,7 @@ cd backend && uv run python -m app.case_generator.cli --count 1 --dry-run
 ### Done
 - **Spec (Approved):** `docs/specs/2026-06-01-aegis-v1-cloud-corpus-surgical-discovery-feature-spec.md` — GCS/Vertex library, per-case surgical discovery (max **5** fetches), **Library Search Planner** (Layers 1–3), CL-1 junk hits = thin. Coordinator does **not** gate discovery.
 - **Backend (v1, uncommitted):** `search_planner.py`, `library_context.py`, `corpus_bridge.py`, `v1_config.py`, `planner_refinement_client.py`, `retrieval_context.py`; pipeline + `appeal_api` wire `discovery_enabled` per request; **37** new/updated v1 unit tests green.
-- **Frontend (uncommitted):** Settings panel (connection check, discovery toggle); then **PM scope change:** `/appeal` → `consumerSource` **always live**; `/showcase` → `showcaseSource` **recorded evidence only**; removed “practice mode” / “Use live Aegis” toggle. `docs/demo-cheatsheet-pm.md` rewritten for PM’s two-surface model.
+- **Frontend (uncommitted):** Settings panel (connection check, discovery toggle); then **PM scope change:** `/appeal` → `consumerSource` **always live**; `/showcase` → `showcaseSource` **recorded evidence only**; removed “practice mode” / “Use live Heuristics” toggle. `docs/demo-cheatsheet-pm.md` rewritten for PM’s two-surface model.
 
 ### Debated / resolved
 - **Practice mode did not match the product model.** It was builder convenience (offline fixtures on appeal path), not the customer-facing flow. **Consumer UI = real customer every time.** **Showcase = judges’ behind-the-scenes** (recorded v1/v3). Devpost video = screen-record that flow, not “run practice mode.”
@@ -1789,7 +1789,7 @@ cd backend && uv run python -m app.case_generator.cli --count 1 --dry-run
 - Commit (PM did not request). Wire ADK playground to same pre-flight as `/v1/appeal` if needed. Default `deploy` frontend to live API URL. Layer 2 planner promotion via Learning Coordinator.
 
 ### Next Agent Should Know
-- **Demo script:** backend up → Settings → Connected → **Draft an appeal** (real) → **How Aegis learns** (recorded) → record video.
+- **Demo script:** backend up → Settings → Connected → **Draft an appeal** (real) → **How Heuristics learns** (recorded) → record video.
 - Run v1 tests: `cd backend && uv run pytest tests/unit/aegis_v1 -q`
 - Swarm + 500-case corpus dirty tree may still be present — check `git status` before commit.
 
@@ -1807,7 +1807,7 @@ cd backend && uv run python -m app.case_generator.cli --count 1 --dry-run
 - **Frontend product model corrected (PM intent):**
   - `/appeal` is the **real customer experience** and now **always runs live** (calls backend every time; no “practice mode” fallback).
   - `/showcase` is the **judges’ view** and stays **recorded evidence** (fixtures), so the improvement story is stable and replayable.
-- **Settings simplified for demos:** Settings now only covers (a) backend address + connection check and (b) trusted source lookup. The earlier “Use live Aegis” toggle was removed because `/appeal` is always live.
+- **Settings simplified for demos:** Settings now only covers (a) backend address + connection check and (b) trusted source lookup. The earlier “Use live Heuristics” toggle was removed because `/appeal` is always live.
 - **Discovery toggle behavior (demo-focused):** trusted source lookup is **on by default** when connected; it can be turned off in Settings for a faster run. The toggle is sent per request (`discovery_enabled`) to `POST /v1/appeal`.
 - **Docs updated:** `docs/demo-cheatsheet-pm.md` rewritten to match the two-surface model.
 
@@ -1821,7 +1821,7 @@ cd backend && uv run python -m app.case_generator.cli --count 1 --dry-run
 - **Large unrelated dirty tree** also exists (500+ eval case JSON). Verify commit scope carefully.
 
 ### Next agent should know
-- The PM’s desired demo flow is now literally: **Draft an appeal** (real run) → **How Aegis learns** (recorded). No “practice mode” in the consumer path.
+- The PM’s desired demo flow is now literally: **Draft an appeal** (real run) → **How Heuristics learns** (recorded). No “practice mode” in the consumer path.
 - Before any commit, run:
 ```bash
 cd backend && uv run pytest tests/unit/aegis_v1 -q

@@ -35,7 +35,7 @@ export function Nav() {
     <>
       <header className="w-full">
         <div className="mx-auto flex max-w-(--container-wide) items-center justify-between px-6 pt-8 md:px-12 md:pt-12">
-          <Link href="/" aria-label="Aegis home">
+          <Link href="/" aria-label="Heuristics home">
             <Wordmark />
           </Link>
           <nav
@@ -46,7 +46,7 @@ export function Nav() {
               Draft an appeal
             </Link>
             <Link href="/showcase" className="transition-colors hover:text-text-primary">
-              How Aegis learns
+              How Heuristics learns
             </Link>
             <button
               type="button"

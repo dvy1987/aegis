@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deploy the Aegis frontend (Next.js) to Google Cloud Run.
+# Deploy the Heuristics frontend (Next.js) to Google Cloud Run.
 #
 # Two modes:
 #   demo (default) — bundled fixtures, no backend, safest for the hackathon demo

@@ -48,7 +48,7 @@ New paid GCP service (PM-approved with a cap). Hackathon-scale estimate: index s
 ## References
 
 - Root `AGENTS.md` (controlled-corpus rule) - [AGENTS.md](../../AGENTS.md)
-- Architecture spec section 5.3/5.4 (corpus + retrieval) - [docs/architecture/2026-05-27-aegis-arch.md](../architecture/2026-05-27-aegis-arch.md)
-- Part B feature spec - [docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md](../specs/2026-05-27-aegis-part-b-swarm-feature-spec.md)
+- Architecture spec section 5.3/5.4 (corpus + retrieval) - [docs/architecture/2026-05-27-heuristics-arch.md](../architecture/2026-05-27-heuristics-arch.md)
+- Part B feature spec - [docs/specs/2026-05-27-heuristics-part-b-swarm-feature-spec.md](../specs/2026-05-27-heuristics-part-b-swarm-feature-spec.md)
 - Plan: aegis swarm runtime (Session 27)
 - `secure-skill-*` skills (sanitization pipeline)

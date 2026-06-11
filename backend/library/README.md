@@ -1,4 +1,4 @@
-# Aegis cloud library (seed catalog)
+# Heuristics cloud library (seed catalog)
 
 Curated, **redistributable-safe** sources for the Vertex AI Search corpus. Not stored in git as document blobs — only this catalog and tooling.
 

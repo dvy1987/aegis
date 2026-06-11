@@ -1,14 +1,14 @@
-# Aegis frontend
+# Heuristics frontend
 
 Two surfaces, one design language:
 
 - **`/` + `/appeal`** — the calm consumer flow (intake → working → mirror → draft → decide).
   Never names the AI.
-- **`/showcase`** — "How Aegis learns": the judge-facing proof of the self-improvement loop
+- **`/showcase`** — "How Heuristics learns": the judge-facing proof of the self-improvement loop
   (v1 vs v3, what changed, the memory-off counterfactual).
 
-Design spec: `docs/superpowers/specs/2026-06-01-aegis-frontend-design.md`
-Implementation plan: `docs/superpowers/plans/2026-06-01-aegis-frontend.md`
+Design spec: `docs/superpowers/specs/2026-06-01-heuristics-frontend-design.md`
+Implementation plan: `docs/superpowers/plans/2026-06-01-heuristics-frontend.md`
 
 ## Run
 

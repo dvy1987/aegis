@@ -30,7 +30,7 @@
 
 ### Real-world problem + agent that accomplishes tasks (not just chat)
 
-**Met.** Aegis drafts US commercial health-insurance appeal letters from denial text — a concrete real-world problem. The student pipeline uses six tools in fixed order (`case_parser`, `corpus_retrieval`, `phoenix_mcp_lookup`, `playbook_loader`, `drafter`, `self_check`) plus an Outcome Simulator and a 7-judge eval panel. Product endpoints: `/v1/appeal` (live drafting) and `/v1/showcase` (self-improvement demo).
+**Met.** Heuristics drafts US commercial health-insurance appeal letters from denial text — a concrete real-world problem. The student pipeline uses six tools in fixed order (`case_parser`, `corpus_retrieval`, `phoenix_mcp_lookup`, `playbook_loader`, `drafter`, `self_check`) plus an Outcome Simulator and a 7-judge eval panel. Product endpoints: `/v1/appeal` (live drafting) and `/v1/showcase` (self-improvement demo).
 
 ### Multi-step mission with human oversight
 

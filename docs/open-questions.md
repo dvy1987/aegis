@@ -1,4 +1,4 @@
-# Open Questions — Aegis
+# Open Questions — Heuristics
 
 These must be answered (or consciously deferred) before code begins. Items marked **🔴 BLOCKER** prevent any build work.
 
@@ -7,7 +7,7 @@ These must be answered (or consciously deferred) before code begins. Items marke
 ## A. Strategic & Scoping
 
 ### A4. Strategic narrative line — final wording
-**Question:** Approve the one-sentence pitch: *"Phoenix isn't just monitoring Aegis — it's how Aegis improves."*
+**Question:** Approve the one-sentence pitch: *"Phoenix isn't just monitoring Heuristics — it's how Heuristics improves."*
 Or: *"An agent that learns insurer-specific appeal tactics from its own Phoenix traces."*
 **Default if not answered:** First option (more memorable).
 

@@ -1,7 +1,7 @@
-# LLM Judges Specification: Aegis
+# LLM Judges Specification: Heuristics
 
 ## Judge Overview
-Aegis relies on a 7-judge panel in Phoenix to score appeal letters against the AlphaEval 2026 rubric. 
+Heuristics relies on a 7-judge panel in Phoenix to score appeal letters against the AlphaEval 2026 rubric. 
 To mitigate self-enhancement bias, the judge model must be different from the drafting model (e.g., if Gemini 3 drafts, use Claude 4 or GPT-5 as the primary judge if available, or a differently-tuned Gemini variant).
 
 ## Judge Modes

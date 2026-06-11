@@ -104,4 +104,4 @@ route a fix to the responsible agent. Live wiring to Phoenix spans is Phase 4.
 - `backend/app/learning/models.py` (DIMENSIONS, DIMENSION_WEIGHTS, ScoredRun, DimensionSignal)
 - `backend/app/aegis_swarm/prompts/registry.py` (component_ids = agent roles)
 - ADR-007 (corpus as a second learning surface) - [ADR-007](../adr/ADR-007-gcp-corpus-vertex-discovery.md)
-- Architecture spec section 5.5 (anti-cheating firewall) - [arch](2026-05-27-aegis-arch.md)
+- Architecture spec section 5.5 (anti-cheating firewall) - [arch](2026-05-27-heuristics-arch.md)

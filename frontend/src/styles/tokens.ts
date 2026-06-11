@@ -1,5 +1,5 @@
 /**
- * Aegis design tokens — typed exports for JS-side consumption.
+ * Heuristics design tokens — typed exports for JS-side consumption.
  *
  * Source of truth is `tokens.css`. These constants are for cases where
  * tokens must be referenced from JS (framer-motion timings, dynamic

@@ -1,4 +1,4 @@
-# Assumption Map — Aegis PRD + Plan
+# Assumption Map — Heuristics PRD + Plan
 
 **Compiled:** 2026-05-25 (Session 2)
 **Source plan:** [docs/prd/PRD.md](../prd/PRD.md) + Session 1 architecture + Session 2 decisions
@@ -23,7 +23,7 @@ LOW IMPORTANCE    [MONITOR]             [DEPRIORITISE]
 ### A1. Demonstrable improvement at the magnitudes the PRD promises
 
 **Claim (falsifiable):**
-> The Aegis learning loop will produce (a) v1 → v3 composite eval score improvement ≥ +20% on a 6-case held-out set by Day 7 (PRD SC1), AND (b) v1 → v8 composite lift from ~0.30 to ~0.75+ on a 40-case held-out set by Day 20 (PRD §16 demo claim), AND (c) the lift is statistically distinguishable from rubric/judge noise.
+> The Heuristics learning loop will produce (a) v1 → v3 composite eval score improvement ≥ +20% on a 6-case held-out set by Day 7 (PRD SC1), AND (b) v1 → v8 composite lift from ~0.30 to ~0.75+ on a 40-case held-out set by Day 20 (PRD §16 demo claim), AND (c) the lift is statistically distinguishable from rubric/judge noise.
 
 **Evidence we have:** None. No agent built, no eval rubric finalized (still using a violates-AlphaEval design), no cases written, no judge calibration done. PRD lift numbers (0.31 → 0.78) are aspirational placeholders.
 
@@ -150,7 +150,7 @@ LOW IMPORTANCE    [MONITOR]             [DEPRIORITISE]
 - **M1. PM can sustain 160 hours of focused build over 20 days alongside day job without burnout collapse.** Plausible-but-fragile; Session 1's skills-skipping pattern hints at risk. Mitigation: weekly retro on Day 7, 14; if energy < 50%, escalate to PM (per Code-Wall Escalation Protocol). Do not test in advance — just monitor.
 - **M2. Phoenix Cloud free tier covers ~200 runs × 12 agents × 100 cases × 8 versions of trace volume.** Estimate trace count by end of Week 1; if projection > 80% of free quota, upgrade ($50 ceiling).
 - **M3. Gemini 3 ships in build window.** Open question; fallback path (Gemini 2.5) already exists in code. Watch news + Google Cloud release notes.
-- **M4. Aegis differentiation from Counterforce Health / Sheer Health / Cofactor.** Newly surfaced from impact-stats research. The 4-point differentiation thesis (self-improvement loop + UX quality + transparent autonomy ladder + open source Apache 2.0) is reasonable but untested. Add competitive section to PRD; watch Devpost for similar Arize-track submissions Day 14.
+- **M4. Heuristics differentiation from Counterforce Health / Sheer Health / Cofactor.** Newly surfaced from impact-stats research. The 4-point differentiation thesis (self-improvement loop + UX quality + transparent autonomy ladder + open source Apache 2.0) is reasonable but untested. Add competitive section to PRD; watch Devpost for similar Arize-track submissions Day 14.
 - **M5. Cloud Run cold start is acceptable for demo.** Mitigation already in PRD R9 (min-instance=1 during demo). Low risk.
 - **M6. PRD's "12-agent swarm coordination buildable Days 8–14" schedule is realistic.** Aggressive but defensible; ADK sub-agent patterns documented. Real test happens at Day 8. If Day 14 milestone slips, escalate to PM.
 - **M7. Consumer-grade Next.js UX shippable in 20 days by non-technical PM + Amp.** Newly inverted decision. Mitigation: start frontend Day 1 in parallel with agent spike; treat as a co-equal pillar in scheduling. Watch for the first "this looks vibecoded" tell and run [`design-review`](../../.agents/skills/design-review/SKILL.md).
@@ -176,9 +176,9 @@ LOW IMPORTANCE    [MONITOR]             [DEPRIORITISE]
 
 ---
 
-## Synthesis: what this assumption map says about Aegis's readiness
+## Synthesis: what this assumption map says about Heuristics' readiness
 
-**Aegis is more credibly positioned than Session 1 suggested.** Rubric validation (V1) confirms self-improvement is rewarded; problem-scale (V2) is well-evidenced; runtime stack (V3) is on the safe list. The strategic frame is sound.
+**Heuristics is more credibly positioned than Session 1 suggested.** Rubric validation (V1) confirms self-improvement is rewarded; problem-scale (V2) is well-evidenced; runtime stack (V3) is on the safe list. The strategic frame is sound.
 
 **But the pitch claims out-pace the evidence by a wide margin.** The PRD already promises specific numbers (v1=0.31, v8=0.78, +151%, "disable Phoenix → 0.42"). These are *designed-in pitch beats with no engineering backing*. Five of the most important PRD claims are essentially untested assumptions — and three of them (A1, A4, A5) are testable in the first 10 days. We should test them, in that order, and let the test results discipline the pitch.
 

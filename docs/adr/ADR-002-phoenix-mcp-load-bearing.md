@@ -6,14 +6,14 @@
 
 ## Context
 
-Aegis is submitted to the Arize partner track of the Google Cloud Rapid Agent Hackathon. The track's judging rubric ([docs/challenge.md](../challenge.md)) has four co-equal sub-criteria + a bonus:
+Heuristics is submitted to the Arize partner track of the Google Cloud Rapid Agent Hackathon. The track's judging rubric ([docs/challenge.md](../challenge.md)) has four co-equal sub-criteria + a bonus:
 1. Technical implementation
 2. **Meaningful use of tracing and MCP** ← co-equal pillar
 3. **Quality of the self-improvement loop** ← co-equal pillar
 4. Overall impact
 5. Bonus: agents that use observability data to improve over time
 
-The strategic thesis Aegis bets on is making the self-improvement loop **structurally dependent** on Arize Phoenix Cloud + the Phoenix MCP server — so that the demo can run a counterfactual where disabling Phoenix MCP visibly degrades agent quality. This isn't decorative observability; it's load-bearing infrastructure.
+The strategic thesis Heuristics bets on is making the self-improvement loop **structurally dependent** on Arize Phoenix Cloud + the Phoenix MCP server — so that the demo can run a counterfactual where disabling Phoenix MCP visibly degrades agent quality. This isn't decorative observability; it's load-bearing infrastructure.
 
 ## Decision
 
@@ -42,7 +42,7 @@ Specifically:
 - ⚠ **Single point of failure for the demo.** If Phoenix Cloud has an outage during the demo recording window, the counterfactual beat fails. Mitigation: pre-record the counterfactual on a stable day; have backup screenshots ready.
 - ⚠ **Free tier limits.** Estimated trace volume across Days 1–20 is high. Mitigation: monitor quota usage from Day 3; upgrade if approaching 80%.
 - ⚠ **Phoenix MCP + ADK integration immaturity** — flagged as critical assumption A4 in [assumption-map.md](../research/assumption-map.md). Day 1–2 spike must verify latency < 5s and structured-output reliability. Open question [J1](../open-questions.md) — observability skill from `google-agents-cli` may conflict; sanity check needed.
-- ⚠ **Vendor lock-in.** Switching observability post-hackathon would require re-instrumenting all agents and porting trace history. Acceptable for hackathon; revisit if Aegis becomes a long-term product.
+- ⚠ **Vendor lock-in.** Switching observability post-hackathon would require re-instrumenting all agents and porting trace history. Acceptable for hackathon; revisit if Heuristics becomes a long-term product.
 
 ## Revisit triggers
 

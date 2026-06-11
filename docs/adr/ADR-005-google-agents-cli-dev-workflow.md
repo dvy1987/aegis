@@ -8,7 +8,7 @@
 
 `google-agents-cli` was released by Google in April 2026 as the unified developer-lifecycle CLI for the ADK ecosystem. It is **built on top of Google ADK**, not a replacement for it — agents are still built with ADK Python API; `agents-cli` handles project scaffolding, evaluation harnesses, deployment to Cloud Run / Agent Runtime / GKE, observability wiring, and Gemini Enterprise publishing. It ships as a `uvx`-installable package that also bundles 7 skills that drop into any coding agent with skills support (Gemini CLI, Claude Code, Codex, Antigravity, etc.).
 
-Aegis is built by a non-technical PM in a 20-day window, using Amp + Cursor + the existing repo skill library. Day 1 setup time is precious: signing up for Phoenix Cloud, configuring Google Cloud, scaffolding the ADK project, wiring instrumentation, and verifying the Phoenix-MCP-load-bearing integration spike (assumption A4) all need to happen the same day. Hand-built scaffolding and deployment scripts would consume disproportionate time.
+Heuristics is built by a non-technical PM in a 20-day window, using Amp + Cursor + the existing repo skill library. Day 1 setup time is precious: signing up for Phoenix Cloud, configuring Google Cloud, scaffolding the ADK project, wiring instrumentation, and verifying the Phoenix-MCP-load-bearing integration spike (assumption A4) all need to happen the same day. Hand-built scaffolding and deployment scripts would consume disproportionate time.
 
 The 7 bundled skills cover real gaps in the existing skill library:
 - `google-agents-cli-workflow` (development lifecycle, code preservation, model selection)

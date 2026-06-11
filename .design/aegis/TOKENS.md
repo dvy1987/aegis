@@ -1,4 +1,4 @@
-# Tokens for Aegis
+# Tokens for Heuristics
 
 **Archetype:** premium-consumer (health-shaded)
 **Recipe basis:** premium-consumer (warm-paper variant) + Headspace/Calm motion budget
@@ -10,7 +10,7 @@ These tokens will be copied into `frontend/src/styles/tokens.css` and `frontend/
 
 ## Color rationale
 
-The neutral scale is **warm parchment**, not cool grey. Pure white is reserved only for raised cards (`--surface-secondary`); the page background is `#F8F5EE`-equivalent (`oklch(96% 0.015 85)`). This is the move that immediately separates Aegis from generic SaaS — Tailwind's `slate`/`zinc`/`gray` are dead-giveaway tells, and pure white reads as cheap on a phone screen in a hospital lobby.
+The neutral scale is **warm parchment**, not cool grey. Pure white is reserved only for raised cards (`--surface-secondary`); the page background is `#F8F5EE`-equivalent (`oklch(96% 0.015 85)`). This is the move that immediately separates Heuristics from generic SaaS — Tailwind's `slate`/`zinc`/`gray` are dead-giveaway tells, and pure white reads as cheap on a phone screen in a hospital lobby.
 
 The accent system is **one** functional accent (`--accent-sage`, ~`#3F6A55`) and **one** warning (`--accent-clay`, ~`#A65A3F`). No brand palette of three. Sage carries authority without being clinical-blue or AI-purple. Clay shows up only on hard-deadline warnings — never decoratively. Status colors deliberately reuse the accent scale (success = sage, warning = clay) so the surface never feels like a Bootstrap admin.
 

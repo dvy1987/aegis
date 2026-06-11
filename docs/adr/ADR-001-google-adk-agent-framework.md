@@ -6,7 +6,7 @@
 
 ## Context
 
-Aegis is a hackathon submission for the Google Cloud Rapid Agent Hackathon — Arize partner track. The hackathon brief ([docs/challenge.md](../challenge.md)) explicitly requires a "code-owned agent runtime" for Arize-track submissions: Gemini CLI, Gemini Enterprise Agent Platform SDK, Google ADK, Agent Runtime, or Cloud Run. **The visual Agent Builder is not supported.** We need to instrument code directly with `openinference-instrumentation-google-adk` for the Phoenix-MCP-load-bearing thesis to work.
+Heuristics is a hackathon submission for the Google Cloud Rapid Agent Hackathon — Arize partner track. The hackathon brief ([docs/challenge.md](../challenge.md)) explicitly requires a "code-owned agent runtime" for Arize-track submissions: Gemini CLI, Gemini Enterprise Agent Platform SDK, Google ADK, Agent Runtime, or Cloud Run. **The visual Agent Builder is not supported.** We need to instrument code directly with `openinference-instrumentation-google-adk` for the Phoenix-MCP-load-bearing thesis to work.
 
 The system must support:
 - Multi-tool single-agent execution (Part A — MVP)
@@ -32,14 +32,14 @@ Use **Google ADK** (Agent Development Kit, Python) as the agent framework for bo
 - ✓ Native compatibility with Phoenix MCP server as a tool source — load-bearing MCP claim is supported by first-party plumbing.
 - ✓ Native compatibility with `google-agents-cli` (see [ADR-005](ADR-005-google-agents-cli-dev-workflow.md)) — scaffold/eval/deploy/observability all work with zero adaptation.
 - ✓ First-party Google support; documentation maturing rapidly through 2025–2026; multi-agent patterns guide officially published Dec 2025.
-- ⚠ **Vendor lock-in.** Switching frameworks post-hackathon would require porting all agents, tools, and instrumentation. Acceptable for a hackathon submission; revisit only if Aegis becomes a longer-lived product.
+- ⚠ **Vendor lock-in.** Switching frameworks post-hackathon would require porting all agents, tools, and instrumentation. Acceptable for a hackathon submission; revisit only if Heuristics becomes a longer-lived product.
 - ⚠ ADK API is still maturing — minor version bumps may require code changes. Mitigation: pin the ADK version in `pyproject.toml`; bump deliberately.
 - ⚠ Python-only — locks the backend to Python 3.11+. Acceptable.
 
 ## Revisit triggers
 
 - If ADK introduces breaking changes that affect Phoenix instrumentation in our build window, freeze on the last-working version and re-evaluate.
-- Post-hackathon: if Aegis becomes a long-term product and a different framework offers materially better DX or features, plan a porting cycle.
+- Post-hackathon: if Heuristics becomes a long-term product and a different framework offers materially better DX or features, plan a porting cycle.
 
 ## References
 

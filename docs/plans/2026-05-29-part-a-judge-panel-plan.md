@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-Build a local, testable Part A judge panel that grades Aegis v1 appeal drafts
+Build a local, testable Part A judge panel that grades Heuristics v1 appeal drafts
 against the synthetic-case generator's hidden test design. The panel separates
 student-visible case data from teacher-only grading data, runs hard gates before
 quality scoring, and supports both an offline heuristic client for this machine
@@ -21,10 +21,10 @@ and a Gemini 3.1 Pro client for the configured cloud environment.
 
 ```
 Generated Case JSON
-  ├─ StudentCasePacket ──> Aegis v1 runtime
+  ├─ StudentCasePacket ──> Heuristics v1 runtime
   └─ TeacherGradingPacket ──> Judge Panel
 
-Aegis v1 AppealPackage
+Heuristics v1 AppealPackage
   └─ Part A Judge Panel
        ├─ J1 Safety & Scope gate
        ├─ J2 Faithfulness & Hallucination gate
@@ -108,7 +108,7 @@ Aegis v1 AppealPackage
 | Risk | Mitigation |
 |---|---|
 | Gemini judges reward Gemini writing style | Deterministic gates, single-dimension prompts, evidence quotes, PM calibration |
-| Teacher packet leaks into Aegis v1 trace | Packet-boundary tests and explicit API separation |
+| Teacher packet leaks into Heuristics v1 trace | Packet-boundary tests and explicit API separation |
 | Legacy cases have weak provenance | Mark reports with `weak_teacher_packet`; later regenerate/backfill |
 | Offline heuristic is mistaken for official score | Name it diagnostic-only in code, docs, and CLI output |
 

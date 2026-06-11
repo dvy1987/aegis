@@ -1,7 +1,7 @@
-# Eval Pipeline: Aegis
+# Eval Pipeline: Heuristics
 
 ## System Overview
-Aegis is a 12-agent self-improving swarm designed to draft health insurance appeal letters. 
+Heuristics is a 12-agent self-improving swarm designed to draft health insurance appeal letters. 
 Maturity Stage: 4 (Continuous eval with autonomous self-improvement loops).
 Critical Outputs: Drafted appeal letters, intermediate agent research summaries, and evidence gap lists.
 
@@ -20,7 +20,7 @@ Critical Outputs: Drafted appeal letters, intermediate agent research summaries,
 - **Bleu/Rouge vs. Templates:** Alerts if the generated letter is identical to standard templates without specific adaptation.
 
 ### Layer 3: LLM-as-Judge Evaluators (Nuanced/Expensive)
-- **Rubric:** `docs/evals/2026-05-27-aegis-appeal-rubric.md`
+- **Rubric:** `docs/evals/2026-05-27-heuristics-appeal-rubric.md`
 - **Judge Model:** GPT-5 or Claude 4 (Different from drafting model).
 - **Sampling Rate:** 
   - 100% on nightly benchmark run (12-case MVP or 100-case Full Plan).
@@ -29,7 +29,7 @@ Critical Outputs: Drafted appeal letters, intermediate agent research summaries,
 - **Cost Estimate:** ~$0.15 per eval call given CoT prompts.
 
 ## Checkpoints (Multi-Step Validators)
-Because Aegis uses a 12-agent swarm, cascade dependency is a critical failure mode.
+Because Heuristics uses a 12-agent swarm, cascade dependency is a critical failure mode.
 1. **Medical Record Intake Gate:** Validates that the parsed context contains a patient condition and an insurer name before passing to strategy agents.
 2. **Policy Retrieval Gate:** Validates that at least one relevant corpus document was successfully retrieved. If zero results, halt before drafting.
 3. **Drafting Gate:** Validates internal consistency before passing to the final polishing/formatting agent.

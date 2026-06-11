@@ -1,4 +1,4 @@
-# Aegis Cloud Library — Metadata Schema
+# Heuristics Cloud Library — Metadata Schema
 
 **Status:** Active (2026-06-02)  
 **Audience:** Engineers indexing GCS → Vertex AI Search; PM review of corpus coverage  

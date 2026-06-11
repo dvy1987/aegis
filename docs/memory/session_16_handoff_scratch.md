@@ -5,7 +5,7 @@
 
 ### Done
 - Codified the "Weak-v1" Demo Rule into the PRD (Section 15.5) — enforcing that initial agent prompts must be deliberately weak to ensure a failing baseline for the demo arc.
-- Updated `docs/architecture/2026-05-27-aegis-arch.md` with Section 8 "Case Generation Pipeline (Offline Tooling)", formally documenting: Realistic Imperfection ("Authentic Shoddiness"), Analysis-First Evaluator Rules, Split Scoring/Score Hiding (Difficulty score hidden), Gumloop Arbiter Logic (REVISE over DISCARD to save API cost), and the Diversity Matrix constraints (banning Medicare, unapproved drugs, etc.).
+- Updated `docs/architecture/2026-05-27-heuristics-arch.md` with Section 8 "Case Generation Pipeline (Offline Tooling)", formally documenting: Realistic Imperfection ("Authentic Shoddiness"), Analysis-First Evaluator Rules, Split Scoring/Score Hiding (Difficulty score hidden), Gumloop Arbiter Logic (REVISE over DISCARD to save API cost), and the Diversity Matrix constraints (banning Medicare, unapproved drugs, etc.).
 - Reconciled PRD and Architecture docs with all outstanding strategic choices regarding the Learning Coordinator, Anti-Cheating Firewall, and AlphaEval standards.
 
 ### Debated
@@ -31,5 +31,5 @@
 - A1 (eval signal) Day 5 EOD.
 
 ### Working Tree
-- Modified `docs/prd/PRD.md` and `docs/architecture/2026-05-27-aegis-arch.md`.
+- Modified `docs/prd/PRD.md` and `docs/architecture/2026-05-27-heuristics-arch.md`.
 - Uncommitted edits exist from prior session in `backend/app/case_generator/`.

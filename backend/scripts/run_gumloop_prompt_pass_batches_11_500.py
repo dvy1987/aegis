@@ -257,7 +257,7 @@ def critic_scope(case: dict[str, Any]) -> dict[str, Any]:
         return {
             "dimension": "scope_guard",
             "verdict": "FAIL",
-            "verdict_meaning": {"PASS": "Case is within scope", "FAIL": "Case is out of scope for Aegis MVP"},
+            "verdict_meaning": {"PASS": "Case is within scope", "FAIL": "Case is out of scope for Heuristics MVP"},
             "analysis": "Mentions Medicare/Medicaid which is out of scope.",
             "confidence": 0.9,
             "evidence_quotes": ["medicare/medicaid mention"],
@@ -266,7 +266,7 @@ def critic_scope(case: dict[str, Any]) -> dict[str, Any]:
     return {
         "dimension": "scope_guard",
         "verdict": "PASS",
-        "verdict_meaning": {"PASS": "Case is within scope", "FAIL": "Case is out of scope for Aegis MVP"},
+        "verdict_meaning": {"PASS": "Case is within scope", "FAIL": "Case is out of scope for Heuristics MVP"},
         "analysis": "Case stays within commercial plan scope.",
         "confidence": 0.8,
         "evidence_quotes": [],

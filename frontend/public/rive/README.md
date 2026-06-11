@@ -1,6 +1,6 @@
 # Showcase Rive placeholders
 
-Temporary `.riv` assets for wiring the `/showcase` cinematic redesign. **Replace with custom Aegis art from the [Rive editor](https://rive.app) before the final demo.**
+Temporary `.riv` assets for wiring the `/showcase` cinematic redesign. **Replace with custom Heuristics art from the [Rive editor](https://rive.app) before the final demo.**
 
 ## Source
 
@@ -10,7 +10,7 @@ Copied from the official open-source examples in [rive-app/rive-wasm](https://gi
 
 | Repo file | Upstream sample | Planned use | Match quality |
 |---|---|---|---|
-| `glyph.riv` | `hero-v6.riv` | Act I hero living glyph | Decent placeholder — not Aegis-branded |
+| `glyph.riv` | `hero-v6.riv` | Act I hero living glyph | Decent placeholder — not Heuristics-branded |
 | `memory-toggle.riv` | `switch_event_example.riv` | Act V memory on/off toggle | **Good** — switch + state machine |
 | `lift-gauge.riv` | `rating_animation.riv` | Act IV lift counter / gauge | **Good** — value-driven fill |
 | `status-orb.riv` | `look.riv` | Act III run status orb | Weak — avatar idle, not multi-state orb |

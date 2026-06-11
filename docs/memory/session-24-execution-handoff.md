@@ -60,7 +60,7 @@ reused; only the LLM steps are filled by you.
 ### The data
 - **Train slice** (reflection reads its laundered notes): `eval/cases/drafts/case_*.json`.
 - **Held-out slice** (where lift is measured — V2-INV-3, never reflect on these): `eval/cases/drafts/test_case_*.json`.
-- Judge panel + rubric: `backend/app/evals/part_a/` — `run_panel` (panel.py), `OfflineHeuristicJudgeClient` (llm_judges.py), `build_teacher_grading_packet` (teacher_packet.py), `deterministic_gates.py`; rubric anchors in `docs/evals/2026-05-27-aegis-appeal-rubric.md`; judge prompts in `eval/judges/part_a/`.
+- Judge panel + rubric: `backend/app/evals/part_a/` — `run_panel` (panel.py), `OfflineHeuristicJudgeClient` (llm_judges.py), `build_teacher_grading_packet` (teacher_packet.py), `deterministic_gates.py`; rubric anchors in `docs/evals/2026-05-27-heuristics-appeal-rubric.md`; judge prompts in `eval/judges/part_a/`.
 
 ### The three roles, played by subagents (with the firewall intact)
 | Role | Subagent gets | Subagent must NOT get | Returns |

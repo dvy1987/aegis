@@ -10,11 +10,11 @@ approved_on: 2026-05-29
 
 ## Summary
 
-Part A needs a judge panel that grades Aegis v1 appeal drafts against the
+Part A needs a judge panel that grades Heuristics v1 appeal drafts against the
 synthetic-case generator's hidden test design. The runtime agent is the
 student: it sees only the denial letter, clinical context, and ordinary parsed
 fields. The judge panel is the teacher: it sees the full synthetic provenance,
-expected appeal vectors, and corpus context needed to grade whether Aegis found
+expected appeal vectors, and corpus context needed to grade whether Heuristics found
 the real flaw in the denial.
 
 Gemini 3.1 Pro is the only available model family for both drafting and

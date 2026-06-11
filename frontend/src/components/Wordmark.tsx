@@ -9,7 +9,7 @@ export function Wordmark({ className }: { className?: string }) {
       )}
     >
       <span aria-hidden="true" className="signature-dot" />
-      Aegis
+      Heuristics
     </span>
   );
 }

@@ -1,4 +1,4 @@
-# Aegis — Design Brief
+# Heuristics — Design Brief
 
 **Purpose:** the single source of truth for design, copy, and UX decisions. Read this before opening Figma, writing a component, or drafting any copy that a user will see.
 
@@ -6,13 +6,13 @@
 
 ---
 
-## 1. Why design matters for Aegis (the non-negotiable framing)
+## 1. Why design matters for Heuristics (the non-negotiable framing)
 
 UX is a **first-class citizen** of this product — not a wrapper around the agent, not a hackathon afterthought. Three reasons:
 
-1. **The hackathon Design criterion** is 1 of 4 top-line judging categories (alongside Technical Implementation, Potential Impact, Quality of Idea). A polished consumer-product UI separates Aegis from the inevitable wall of dev-tool demos.
+1. **The hackathon Design criterion** is 1 of 4 top-line judging categories (alongside Technical Implementation, Potential Impact, Quality of Idea). A polished consumer-product UI separates Heuristics from the inevitable wall of dev-tool demos.
 2. **The user is stressed.** They just received a denial — for themselves, a parent, a child. They are scared, confused, often financially squeezed. **An AI-shaped product that adds friction or feels cold makes that worse, not better.** Trust collapses on the first screen.
-3. **Portfolio.** Aegis is a portfolio piece. A clickable demo URL will outlive the hackathon. Visitors who scroll past the README and click the link should land on something that looks like a real consumer product, not a prototype.
+3. **Portfolio.** Heuristics is a portfolio piece. A clickable demo URL will outlive the hackathon. Visitors who scroll past the README and click the link should land on something that looks like a real consumer product, not a prototype.
 
 **Operational implication:** any time a design choice trades polish for speed, the default is *polish*. We push back schedule, not quality. (Per PM directive 2026-05-25.)
 
@@ -76,7 +76,7 @@ This product talks to a person who is scared, confused, and possibly furious at 
 - **Use "person" instead of "human"** when referring to a reviewer or reader. "Human" reads slightly clinical/AI-ish; "person" reads warmer. (PM directive 2026-05-25.)
 - **Use second person ("you", "your")**, not third ("the user", "your patient"). Direct address respects the reader.
 - **Don't promise what we can't deliver.** Never say "we'll win your appeal" or "your appeal is guaranteed". Half of all appeals lose. Be honest.
-- **Don't manufacture urgency.** No "File now! Time is running out!". The denial deadline is real and on a date the user already knows; if Aegis surfaces it, surface the date factually, not as pressure.
+- **Don't manufacture urgency.** No "File now! Time is running out!". The denial deadline is real and on a date the user already knows; if Heuristics surfaces it, surface the date factually, not as pressure.
 
 ### Anti-examples (do NOT write these)
 
@@ -122,7 +122,7 @@ The user shouldn't think about steps. They should feel a single forward motion. 
 2. **Begin — small.** Ask one question at a time. Each question is short and doable. Show progress without making it feel like a form.
 3. **Understand — clarified.** As the user shares the denial, the product mirrors back what it heard in plain English. Reduces the swirl in their head.
 4. **Draft — produced.** A real, readable appeal letter appears. Written like a person, not a template. They can see and edit every sentence.
-5. **Decide — in-control.** The user chooses to download, edit, share with a doctor, or come back later. No pressure to file inside the product. (Crucially: Aegis does NOT file with insurers — that's a scope hard rule and also a trust feature.)
+5. **Decide — in-control.** The user chooses to download, edit, share with a doctor, or come back later. No pressure to file inside the product. (Crucially: Heuristics does NOT file with insurers — that's a scope hard rule and also a trust feature.)
 6. **Leave — better.** Even if they don't file today, they leave with: a draft, a deadline, a sense that this is possible.
 
 ---
@@ -134,7 +134,7 @@ The user shouldn't think about steps. They should feel a single forward motion. 
 **The plan:**
 - Use Lucide as the base set (good coverage, reasonable defaults).
 - **Tune the entire used subset**: standardize on a single optical size, a single stroke weight that matches our typography weight, a single corner-radius rule.
-- Replace ~6–10 critical icons with custom SVGs designed specifically for Aegis (denial, appeal, draft letter, deadline, evidence, doctor, insurer, win, lose). These appear in the hero, the workflow steps, and the empty/success states — the highest-trust surfaces.
+- Replace ~6–10 critical icons with custom SVGs designed specifically for Heuristics (denial, appeal, draft letter, deadline, evidence, doctor, insurer, win, lose). These appear in the hero, the workflow steps, and the empty/success states — the highest-trust surfaces.
 - Never use the Lucide raw on a hero or call-to-action.
 
 Defer detailed icon-system spec to a `frontend-design` → `icon-craft` skill run.

@@ -8,7 +8,7 @@
 
 ## 1. Problem statement
 
-Aegis needs **three learnable layers**, not two:
+Heuristics needs **three learnable layers**, not two:
 
 | Layer | Scope | Evolves how |
 |---|---|---|

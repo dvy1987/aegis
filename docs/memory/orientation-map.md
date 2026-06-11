@@ -1,11 +1,11 @@
-# Orientation Map — Aegis
+# Orientation Map — Heuristics
 
 **Created:** 2026-05-30 (Claude, via `/graphify` structural analysis of the full repo)
 **Status:** Active · derived snapshot
-**Purpose:** A one-read orientation for any agent picking up Aegis cold — what it is, what's
+**Purpose:** A one-read orientation for any agent picking up Heuristics cold — what it is, what's
 *actually built* vs. *only designed*, and where the real gaps are. This is a derived synthesis,
 not a source of truth: when it disagrees with [current-state.md](current-state.md),
-[PRD.md](../prd/PRD.md), or the [architecture spec](../architecture/2026-05-27-aegis-arch.md),
+[PRD.md](../prd/PRD.md), or the [architecture spec](../architecture/2026-05-27-heuristics-arch.md),
 those win. Re-derive with `/graphify --update` after significant code changes.
 
 > A queryable knowledge graph of the whole repo lives in `graphify-out/`
@@ -23,9 +23,9 @@ those win. Re-derive with `/graphify --update` after significant code changes.
 
 ---
 
-## 1. What Aegis is (in one paragraph)
+## 1. What Heuristics is (in one paragraph)
 
-A submission for the **Google Cloud Rapid Agent Hackathon — Arize partner track**. Aegis drafts
+A submission for the **Google Cloud Rapid Agent Hackathon — Arize partner track**. Heuristics drafts
 US health-insurance **appeal letters** and is meant to **measurably improve** at the task by
 introspecting its own **Arize Phoenix** traces via the **Phoenix MCP** server. The single
 differentiating thesis: **Phoenix MCP is "structurally load-bearing"** — disabling it in the demo

@@ -1,12 +1,12 @@
-# Implementation Plan — Aegis (Day 1 – Day 20)
+# Implementation Plan — Heuristics (Day 1 – Day 20)
 
 | | |
 |---|---|
-| **Project** | Aegis — self-improving multi-agent system for US health-insurance appeal drafting |
+| **Project** | Heuristics — self-improving multi-agent system for US health-insurance appeal drafting |
 | **Plan version** | v1.0 (2026-05-27, Session 5) |
 | **Author** | Droid (skill: `implementation-plan`) |
-| **Source artifacts** | [PRD v4 §14](../prd/PRD.md) · [Architecture spec](../architecture/2026-05-27-aegis-arch.md) · [Eval pipeline](../evals/2026-05-27-aegis-eval-pipeline.md) · [Eval rubric v2](../evals/2026-05-27-aegis-appeal-rubric.md) · [Assumption map](../research/assumption-map.md) · [Product soul](../product-soul.md) · [ADR-001..005](../adr/) |
-| **Companion** | [`2026-05-27-aegis-implementation-tasks.md`](2026-05-27-aegis-implementation-tasks.md) — flat agent-pickable task list |
+| **Source artifacts** | [PRD v4 §14](../prd/PRD.md) · [Architecture spec](../architecture/2026-05-27-heuristics-arch.md) · [Eval pipeline](../evals/2026-05-27-heuristics-eval-pipeline.md) · [Eval rubric v2](../evals/2026-05-27-heuristics-appeal-rubric.md) · [Assumption map](../research/assumption-map.md) · [Product soul](../product-soul.md) · [ADR-001..005](../adr/) |
+| **Companion** | [`2026-05-27-heuristics-implementation-tasks.md`](2026-05-27-heuristics-implementation-tasks.md) — flat agent-pickable task list |
 | **Constitution** | None yet (see Open Item below). PRD FR/NFR/G/SC IDs used for traceability. |
 | **Status** | Draft — pending PM sign-off on Phase 0 (GCP + Phoenix setup) |
 
@@ -14,7 +14,7 @@
 
 ## 1. Executive Summary
 
-Build Aegis in two nested phases over 20 days:
+Build Heuristics in two nested phases over 20 days:
 
 - **Part A (Days 1–7)** — single ADK agent + 7 tools + 12-case benchmark + Phoenix MCP load-bearing. Shippable as a credible Arize-track submission on Day 7 (safety net).
 - **Part B (Days 8–20)** — decompose into 12-agent swarm, expand to 100-case benchmark, ship the autonomous Learning Coordinator with hard safety gates + auto-rollback. This is the win-condition.
@@ -55,7 +55,7 @@ Two-service Cloud Run deployment:
 ```
 
 - **Part A:** one ADK Orchestrator with 7 tools (case_parser, corpus_retrieval, phoenix_mcp_lookup, playbook_loader, drafter, self_check, simulator).
-- **Part B:** 14 components total — 10 LLM agents (Triage, Orchestrator, 5 Researchers, Strategist, Drafter, Adversarial Reviewer) + 1 Quality Judge Panel (7 LLM judges) + 1 Outcome Simulator + 2 meta-agents (Learning Coordinator, Pattern Synthesizer). See [architecture spec §3](../architecture/2026-05-27-aegis-arch.md).
+- **Part B:** 14 components total — 10 LLM agents (Triage, Orchestrator, 5 Researchers, Strategist, Drafter, Adversarial Reviewer) + 1 Quality Judge Panel (7 LLM judges) + 1 Outcome Simulator + 2 meta-agents (Learning Coordinator, Pattern Synthesizer). See [architecture spec §3](../architecture/2026-05-27-heuristics-arch.md).
 
 ---
 
@@ -80,7 +80,7 @@ Two-service Cloud Run deployment:
 
 ### Phase 1 — MVP (Days 1–7) — Single Agent + Benchmark + Phoenix MCP Loop
 
-> **Goal:** Day 7 = Aegis MVP is fully submittable as a standalone Arize-track entry.
+> **Goal:** Day 7 = Heuristics MVP is fully submittable as a standalone Arize-track entry.
 > **Hard gates this phase:** A2 (Day 2), A4 (Day 2 EOD), A3 (Day 3), A1 (Day 5).
 
 #### Day 1 — Scaffold + A4 Integration Spike
@@ -118,7 +118,7 @@ Two-service Cloud Run deployment:
 
 **Hard gate (EOD Day 3):** A3 PASS → continue. A3 FAIL → swap cases or move to real-anonymised public denial letters.
 
-**🔴 Demo capture (rolling — CRITICAL, cannot be recreated later):** Record the first v1 agent run. Open two browser windows: Aegis app (left) + Phoenix dashboard (right). Load a calibration case, run the agent, capture the weak v1 appeal output + low eval scores + simulator DENY. Switch to Phoenix, show the trace. Save as `docs/demo/raw/day3-v1-first-run.mp4`. See [rolling-capture-checklist.md](../demo/rolling-capture-checklist.md) for step-by-step instructions.
+**🔴 Demo capture (rolling — CRITICAL, cannot be recreated later):** Record the first v1 agent run. Open two browser windows: Heuristics app (left) + Phoenix dashboard (right). Load a calibration case, run the agent, capture the weak v1 appeal output + low eval scores + simulator DENY. Switch to Phoenix, show the trace. Save as `docs/demo/raw/day3-v1-first-run.mp4`. See [rolling-capture-checklist.md](../demo/rolling-capture-checklist.md) for step-by-step instructions.
 
 #### Day 4 — Phoenix MCP Wired Load-Bearing
 | Task | Description | DoD | Traces to |
@@ -131,14 +131,14 @@ Two-service Cloud Run deployment:
 #### Day 5 — Judges + A1 Eval Signal Gate
 | Task | Description | DoD | Traces to |
 |---|---|---|---|
-| T5.1 | Implement Layer 1 deterministic checks per [eval pipeline](../evals/2026-05-27-aegis-eval-pipeline.md): regex PHI, disclaimer string-match, length, tool-call JSON validity | All 4 checks pass on the v1 output; fail-injected outputs are correctly rejected | NFR2, FR7 |
+| T5.1 | Implement Layer 1 deterministic checks per [eval pipeline](../evals/2026-05-27-heuristics-eval-pipeline.md): regex PHI, disclaimer string-match, length, tool-call JSON validity | All 4 checks pass on the v1 output; fail-injected outputs are correctly rejected | NFR2, FR7 |
 | T5.2 | Implement 5 of 7 LLM judges as Phoenix Evals: J1 Safety (gate), J2 Hallucination & Internal Consistency (gate), J3 Grounding, J4 Case Specificity, J5 Evidence Completeness — judge model = Claude 4 or GPT-5 (cross-model) | Eval call returns rubric-shaped JSON; Phoenix UI shows the eval run | FR7 |
 | T5.3 | Calibration: hand-score 2 calibration cases on each judge dimension; compute Cohen's κ; reject any judge with κ < 0.6 (advisory only until fixed) | `eval/calibration_log.md` records κ per judge; only κ≥0.6 judges count toward promotion gates | rubric §calibration |
 | T5.4 | **A1 Eval Signal Gate:** run v1 (weak prompt) vs v2 (hand-tuned insurer-specific prompt) on 2 held-out cases. If `weighted_quality` lift < +15% on 2 cases OR judge re-run std-dev > ±0.08 → escalate to PM (kill or recalibrate). | A1 PASS or FAIL recorded in `eval/calibration_log.md` | A1, SC1 |
 
 **Hard gate (EOD Day 5):** A1 PASS → continue MVP build. A1 FAIL → PM call: recalibrate eval, kill learning-loop pitch, or both.
 
-**Demo capture (rolling):** Record the v1 vs v2 eval comparison. Open Aegis app (left) + Phoenix Experiments (right). Show score delta between v1 (weak) and v2 (hand-tuned). Show the v2 appeal citing plan language. Show simulator outcome improvement. Save as `docs/demo/raw/day5-v1-vs-v2-eval.mp4`.
+**Demo capture (rolling):** Record the v1 vs v2 eval comparison. Open Heuristics app (left) + Phoenix Experiments (right). Show score delta between v1 (weak) and v2 (hand-tuned). Show the v2 appeal citing plan language. Show simulator outcome improvement. Save as `docs/demo/raw/day5-v1-vs-v2-eval.mp4`.
 
 #### Day 6 — Frontend Workbench + 2 Remaining Judges
 | Task | Description | DoD | Traces to |
@@ -157,9 +157,9 @@ Two-service Cloud Run deployment:
 | T7.4 | **MVP eval run:** full 12-case benchmark, v1 vs v3. Record `weighted_quality`, hard-gate PASS rates, latency p95. Save Phoenix experiment URL. | SC1 +20% lift achieved? SC2/SC3 100% PASS? SC5 trace completeness 100%? — yes/no logged | SC1, SC2, SC3, SC5 |
 | T7.5 | MVP-only Devpost draft ready (safety-net submission text + 3-min demo script per PRD §9) | `docs/demo/mvp-script.md` reviewed by PM | G5, G7 |
 
-**🎯 Milestone 1 (Day 7):** Aegis MVP is shippable as a complete Arize-track submission. If anything from Day 8+ fails, this is the safety-net submission.
+**🎯 Milestone 1 (Day 7):** Heuristics MVP is shippable as a complete Arize-track submission. If anything from Day 8+ fails, this is the safety-net submission.
 
-**🔴 Demo capture (rolling — SAFETY-NET DEMO):** Record a full v1→v3 walkthrough on the hero case. This footage can be edited into a complete 3-minute MVP demo if Days 8+ fail. Open Aegis app (left) + Phoenix (right). Walk through: v1 weak appeal → Phoenix MCP failure summary → approved patch → v3 strong appeal → score jump → simulator flip from DENY to APPROVE → benchmark chart. Save as `docs/demo/raw/day7-mvp-full-walkthrough.mp4`.
+**🔴 Demo capture (rolling — SAFETY-NET DEMO):** Record a full v1→v3 walkthrough on the hero case. This footage can be edited into a complete 3-minute MVP demo if Days 8+ fail. Open Heuristics app (left) + Phoenix (right). Walk through: v1 weak appeal → Phoenix MCP failure summary → approved patch → v3 strong appeal → score jump → simulator flip from DENY to APPROVE → benchmark chart. Save as `docs/demo/raw/day7-mvp-full-walkthrough.mp4`.
 
 ---
 
@@ -190,7 +190,7 @@ Two-service Cloud Run deployment:
 
 **Hard gate (EOD Day 10):** Day 10 + A5 both PASS → continue Part B as designed. Either FAIL → PM escalation with options per Code-Wall Protocol.
 
-**Demo capture (rolling):** Record the swarm first run. Open Aegis app (left) + Phoenix Traces (right). Show the 9-agent fan-out, parallel researcher briefs, and the trace waterfall. If Learning Coordinator has proposed its first patch, capture that in Phoenix. Save as `docs/demo/raw/day10-swarm-first-run.mp4`.
+**Demo capture (rolling):** Record the swarm first run. Open Heuristics app (left) + Phoenix Traces (right). Show the 9-agent fan-out, parallel researcher briefs, and the trace waterfall. If Learning Coordinator has proposed its first patch, capture that in Phoenix. Save as `docs/demo/raw/day10-swarm-first-run.mp4`.
 
 #### Day 11 — Precedent Miner + Benchmark to 60
 | Task | Description | DoD | Traces to |
@@ -220,7 +220,7 @@ Two-service Cloud Run deployment:
 
 **🎯 Milestone 2 (Day 14):** 9-agent swarm + 60-case benchmark shippable. If Days 15–20 fail, this submits.
 
-**Demo capture (rolling):** Record the benchmark improvement arc. Open Aegis app (left) + Phoenix Experiments + Prompts (right). Show the prompt version timeline (v1→v_current), click a diff (e.g., added MHPAEA citation rule), show the experiment score climbing version by version, show the benchmark chart. Capture the "learning loop is protagonist" beat. Save as `docs/demo/raw/day14-benchmark-arc.mp4`.
+**Demo capture (rolling):** Record the benchmark improvement arc. Open Heuristics app (left) + Phoenix Experiments + Prompts (right). Show the prompt version timeline (v1→v_current), click a diff (e.g., added MHPAEA citation rule), show the experiment score climbing version by version, show the benchmark chart. Capture the "learning loop is protagonist" beat. Save as `docs/demo/raw/day14-benchmark-arc.mp4`.
 
 ---
 
@@ -247,7 +247,7 @@ Two-service Cloud Run deployment:
 | T17.1 | Pattern Synthesizer post-run agent: summarises meta-patterns across insurers; output writes to inherited meta-playbook | Meta-playbook updates visible across multiple slices; trace shows synthesis step | PRD §12.2 +Pattern |
 | T17.2 | Expand benchmark to 100 cases (60 train + 40 held-out) | All 100 cases in `eval/cases/`; dataset_card complete | PRD §13.5 |
 | T17.3 | Learning iterations 5–8 | 4 more iterations promoted/archived | PRD §14 Day 17 |
-| T17.4 | **Counterfactual recording:** Run with `PHOENIX_MCP_ENABLED=false`, capture quality collapse. Open Aegis app (left), run same hero case with Phoenix off, show generic appeal + low score + simulator DENY. Save as `docs/demo/raw/day17-counterfactual.mp4` | Clip shows quality collapsing when Phoenix MCP is disabled | PRD §16, FR5 |
+| T17.4 | **Counterfactual recording:** Run with `PHOENIX_MCP_ENABLED=false`, capture quality collapse. Open Heuristics app (left), run same hero case with Phoenix off, show generic appeal + low score + simulator DENY. Save as `docs/demo/raw/day17-counterfactual.mp4` | Clip shows quality collapsing when Phoenix MCP is disabled | PRD §16, FR5 |
 
 #### Day 18 — Polish + v1→v8 Comparison Chart
 | Task | Description | DoD | Traces to |
@@ -362,7 +362,7 @@ Subset showing the high-value links — every task above carries explicit IDs. (
 ## Impact Report
 
 ```
-Plan complete: Aegis Day 1–20 implementation
+Plan complete: Heuristics Day 1–20 implementation
 Phases defined: 4 (0 setup + 3 build)
 Total tasks: 67 (Phase 0: 6, Phase 1: 28, Phase 2: 16, Phase 3: 17)
 Critical risks identified: 11 (R-PLAN-1..11)

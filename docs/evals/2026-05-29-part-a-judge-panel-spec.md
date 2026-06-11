@@ -7,14 +7,14 @@
 
 ## Design Principle
 
-The generated benchmark case is the test. Aegis v1 is the student and receives
+The generated benchmark case is the test. Heuristics v1 is the student and receives
 only the denial letter, clinical context, and ordinary runtime fields. The
 judge panel is the teacher and receives the answer key: synthetic provenance,
 denial pattern sources, appeal difficulty, exploitable weaknesses, plan funding
 type, timestamps, and corpus context.
 
 This preserves the anti-cheating firewall while letting the judges grade the
-actual exam: did Aegis identify and use the flaw that the generator embedded?
+actual exam: did Heuristics identify and use the flaw that the generator embedded?
 
 ## Inputs
 

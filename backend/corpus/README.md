@@ -1,4 +1,4 @@
-# Aegis research corpus
+# Heuristics research corpus
 
 Controlled, citable knowledge base for the appeal agents. **Citations come only
 from documents in this corpus** (root `AGENTS.md`). No invented statutes, case

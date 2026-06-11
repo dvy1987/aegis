@@ -7,13 +7,13 @@
 export const HERO_HEADLINE_L1 = ["They", "have", "algorithms."] as const;
 export const HERO_HEADLINE_L2 = ["Now", "you", "do", "too."] as const;
 
-export const HERO_EYEBROW = "AEGIS · LIVE LEARNING OBSERVATORY";
+export const HERO_EYEBROW = "HEURISTICS · LIVE LEARNING OBSERVATORY";
 
 export const HERO_SUBHEAD_P1 =
   "US health insurers deny roughly 19% of in-network claims (about 73 million a year on ACA exchanges alone). When patients file appeals, 1 in 3 succeed — but <strong>fewer than 1% appeal</strong>.";
 
 export const HERO_SUBHEAD_P2 =
-  "The asymmetry is structural: insurers automate denial through AI-powered adjudication and prior authorization algorithms, while patients face a thirty-page policy document and a phone tree. Aegis helps solve this asymmetry.";
+  "The asymmetry is structural: insurers automate denial through AI-powered adjudication and prior authorization algorithms, while patients face a thirty-page policy document and a phone tree. Heuristics helps solve this asymmetry.";
 
 export const HERO_CTA = "Start preview run";
 
@@ -30,16 +30,16 @@ export const THESIS_STATEMENT =
   "Most appeal tools are frozen in time — same prompt, same blind spots.";
 
 export const THESIS_TURN =
-  "Aegis learns from its Arize Phoenix traces and can be trained to improve its own prompts and insurer playbooks.";
+  "Heuristics learns from its Arize Phoenix traces and can be trained to improve its own prompts and insurer playbooks.";
 
 export const THESIS_STATIC_LABEL = "Fixed prompt";
 export const THESIS_STATIC_CAPTION = "One version. No feedback loop.";
 
-export const THESIS_AEGIS_LABEL = "Aegis";
-export const THESIS_AEGIS_CAPTION = "GEPA evolves the prompt from past judge scores.";
+export const THESIS_HEURISTICS_LABEL = "Heuristics";
+export const THESIS_HEURISTICS_CAPTION = "GEPA evolves the prompt from past judge scores.";
 
 export const THESIS_FORESHADOW =
-  "Phoenix MCP is structurally load-bearing in Aegis — training signal and runtime memory flow through Phoenix";
+  "Phoenix MCP is structurally load-bearing in Heuristics — training signal and runtime memory flow through Phoenix";
 
 export const INSTRUMENT_EYEBROW = "LIVE LEARNING CONSOLE";
 export const INSTRUMENT_HEADLINE = "Watch the learning unfold live.";
@@ -171,7 +171,7 @@ export const INTELLIGENCE_BODY =
 export const GEPA_SPOTLIGHT_EYEBROW = "GEPA · REFLECTIVE PROMPT EVOLUTION";
 export const GEPA_SPOTLIGHT_HEADLINE = "Judge feedback becomes the next prompt.";
 export const GEPA_SPOTLIGHT_BODY =
-  "GEPA (Reflective Prompt Evolution) is the learning engine under the hood — an evolutionary optimizer that reads natural-language judge notes and proposes targeted edits. It is a way to retrain Aegis for new insurers, even geography without losing previous learning.";
+  "GEPA (Reflective Prompt Evolution) is the learning engine under the hood — an evolutionary optimizer that reads natural-language judge notes and proposes targeted edits. It is a way to retrain Heuristics for new insurers, even geography without losing previous learning.";
 export const GEPA_SPOTLIGHT_FOOTNOTE =
   "ICLR 2026 · sample-efficient vs RL · held-out generalization built in";
 

@@ -1,4 +1,4 @@
-# Aegis Frontend — Design Spec
+# Heuristics Frontend — Design Spec
 
 **Date:** 2026-06-01
 **Author:** Session 26 (Claude) + PM
@@ -16,7 +16,7 @@ one design language**:
 
 - **`/` + `/appeal` — The Product.** The calm consumer flow a stressed person uses to
   turn a denial letter into a drafted appeal. Never names the AI.
-- **`/showcase` — "How Aegis learns".** The judge-facing proof that the agent improves
+- **`/showcase` — "How Heuristics learns".** The judge-facing proof that the agent improves
   from its own observability (the Arize thesis). Names the mechanism openly.
 
 Both read data through **one `DataSource` abstraction**: a bundled **demo mode**
@@ -34,7 +34,7 @@ Both read data through **one `DataSource` abstraction**: a bundled **demo mode**
    fixtures for any test case lacking a recorded run, in the exact `AppealResponse`
    shape. Every one of the 10 test cases must be selectable and look complete, because
    **the PM will pick one or more test cases live for the demo.**
-5. **Showcase name:** **"How Aegis learns"** at route `/showcase`.
+5. **Showcase name:** **"How Heuristics learns"** at route `/showcase`.
 
 ---
 
@@ -42,7 +42,7 @@ Both read data through **one `DataSource` abstraction**: a bundled **demo mode**
 
 The product serves two audiences whose needs conflict:
 
-| | `/` + `/appeal` — The Product | `/showcase` — How Aegis learns |
+| | `/` + `/appeal` — The Product | `/showcase` — How Heuristics learns |
 |---|---|---|
 | **For** | A stressed person at 11pm | Hackathon judges |
 | **Job (function)** | Reduce anxiety; produce a readable draft | Prove Phoenix is structurally load-bearing |
@@ -123,7 +123,7 @@ odds. No manufactured urgency. Safety disclaimer present on the Draft and Decide
 
 ---
 
-## 3. Surface B — `/showcase` ("How Aegis learns")
+## 3. Surface B — `/showcase` ("How Heuristics learns")
 
 The judge-facing proof, in the same calm language (deliberately not a busy dashboard).
 
@@ -164,7 +164,7 @@ frontend/src/
   app/
     page.tsx              landing (kept; "Start a draft" → /appeal; adds /showcase nav link)
     appeal/page.tsx       consumer flow — client state machine intake→working→mirror→draft→decide
-    showcase/page.tsx     "How Aegis learns"
+    showcase/page.tsx     "How Heuristics learns"
     layout.tsx            (exists) fonts + globals
   lib/
     data/

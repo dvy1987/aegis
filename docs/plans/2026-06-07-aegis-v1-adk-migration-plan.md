@@ -216,7 +216,7 @@ Each phase is independently shippable: code + tests + green suite + a working co
 - Demote raw-genai clients to offline/fallback role (do not delete; keep as fallback + test fakes).
 - Live credentialed rehearsal: one `/appeal` call and one quick showcase run.
 - Confirm in Phoenix that traces now show genuine ADK agent + tool spans (not only the app-level `OtelPhoenixRecorder` spans), and that the firewall holds (simulator/judges never under the student).
-- Update docs: [docs/architecture/2026-05-27-aegis-arch.md](../architecture/2026-05-27-aegis-arch.md), a new ADR under [docs/adr/](../adr/), [docs/memory/decision-log.md](../memory/decision-log.md), [docs/memory/current-state.md](../memory/current-state.md), and [backend/AGENTS.md](../../backend/AGENTS.md) (note the ADK-native flows + content-capture policy).
+- Update docs: [docs/architecture/2026-05-27-heuristics-arch.md](../architecture/2026-05-27-heuristics-arch.md), a new ADR under [docs/adr/](../adr/), [docs/memory/decision-log.md](../memory/decision-log.md), [docs/memory/current-state.md](../memory/current-state.md), and [backend/AGENTS.md](../../backend/AGENTS.md) (note the ADK-native flows + content-capture policy).
 
 ---
 

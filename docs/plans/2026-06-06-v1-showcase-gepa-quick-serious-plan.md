@@ -8,7 +8,7 @@
 - `docs/plans/2026-06-05-showcase-live-eval-3stage-amp-spec.md`
 - `docs/plans/2026-06-05-showcase-live-training-feature-codex-spec.md`
 
-This is the current source-of-truth planning draft for making `/showcase` run the real Aegis v1 GEPA learning loop from the frontend.
+This is the current source-of-truth planning draft for making `/showcase` run the real Heuristics v1 GEPA learning loop from the frontend.
 
 ## Executive Summary
 
@@ -21,7 +21,7 @@ The frontend should let the PM trigger two v1 learning runs:
 
 The core demo claim becomes:
 
-> Aegis v1 can run a live human-approved learning loop from the UX, promote a writing/playbook update, and show before/after simulator outcomes on clean measurement cases.
+> Heuristics v1 can run a live human-approved learning loop from the UX, promote a writing/playbook update, and show before/after simulator outcomes on clean measurement cases.
 
 ## Current Decision Model
 
@@ -96,7 +96,7 @@ Why single-slice is preferred:
 
 - v1 playbook learning is slice-specific.
 - A same-insurer/same-denial cohort gives GEPA a cleaner signal.
-- The UX story is easier: "Aegis learned how to handle this kind of denial."
+- The UX story is easier: "Heuristics learned how to handle this kind of denial."
 - It reduces the risk that the quick run creates a broad but weak update.
 
 ## Serious Run Case Selection
@@ -529,7 +529,7 @@ Use:
 - "Quick learning check"
 - "Serious learning pass"
 - "Measure before"
-- "Train Aegis"
+- "Train Heuristics"
 - "Review update"
 - "Approve update"
 - "Measure after"

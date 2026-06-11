@@ -1,7 +1,7 @@
 # Archetype: premium-consumer (health-shaded)
 
 **Feels like:** One Medical × Headspace, with Calm's motion budget and Apple Health's typographic restraint.
-**Why this archetype:** Aegis talks to a person in distress about a stressful, jargon-heavy event. Premium-consumer is the only archetype that buys both authority and warmth without slipping into clinical/enterprise coldness or chatbot delight. Health-shaded means cooler-leaning paper neutrals, a single grounded accent, and motion that breathes rather than performs.
+**Why this archetype:** Heuristics talks to a person in distress about a stressful, jargon-heavy event. Premium-consumer is the only archetype that buys both authority and warmth without slipping into clinical/enterprise coldness or chatbot delight. Health-shaded means cooler-leaning paper neutrals, a single grounded accent, and motion that breathes rather than performs.
 
 ## Typography
 - Display: **Source Serif 4** (or Tiempos / GT Sectra fallback), 600 weight, 32 / 44 / 56 / 72 px. Tight tracking on display sizes (-0.02em). The serif carries authority — this is the "we know what we're doing" voice.
@@ -35,7 +35,7 @@
 - Stroke weight: 1.5px on 24px optical size; 1.25px on 16px.
 - Corner radius: 1.5px on stroke caps and joins.
 - Color: never the accent — icons are `--ink-7` until interactive.
-- The bespoke set lives on the hero, the workflow stepper, empty/success states, and is the Aegis "signature recurring element" (per design-brief).
+- The bespoke set lives on the hero, the workflow stepper, empty/success states, and is the Heuristics "signature recurring element" (per design-brief).
 
 ## Layout signatures
 - **Type-only hero.** No illustration, no product video. A single calm sentence in serif display, a one-line subhead in body sans, one quiet primary CTA. Asymmetric — text aligned at the optical-left of a 12-col grid, breathing top.
@@ -51,9 +51,9 @@
 4. **apple.com/health** — type-only hero, typography hierarchy as primary information design tool.
 5. **maven.com** (Maven Clinic) — warm health authority, photography-meets-illustration restraint.
 
-## Adaptations for Aegis (specific to this product)
+## Adaptations for Heuristics (specific to this product)
 - **Stress-aware density.** Slightly tighter than pure premium-consumer — a person on a phone in a hospital lobby needs to see content sooner. Hero remains generous; downstream surfaces (appeal-drafting flow) trade some whitespace for legible information.
-- **Dignified, not delightful.** Premium-consumer often shades into "joy". Aegis cannot. No celebratory micro-animations on success. Acknowledgement, not confetti.
+- **Dignified, not delightful.** Premium-consumer often shades into "joy". Heuristics cannot. No celebratory micro-animations on success. Acknowledgement, not confetti.
 - **Authority via typography, not chrome.** No "trust badges", no insurer logos as social proof, no rating stars. The serif display + paper background do the credibility work.
 - **Mobile-first.** Most users land on a phone after a doctor's visit. All layouts are designed mobile-first; desktop is the second pass.
 - **Accessibility floor is the design floor.** WCAG 2.2 AA minimum on all token combinations — verified at token-generation time, not retroactively.

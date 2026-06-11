@@ -1,4 +1,4 @@
-"""Part A judge panel for Aegis MVP appeal drafts."""
+"""Part A judge panel for Heuristics MVP appeal drafts."""
 
 from app.evals.part_a.panel import run_panel
 from app.evals.part_a.schemas import PanelReport

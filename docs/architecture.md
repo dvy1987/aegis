@@ -2,7 +2,7 @@
 
 The Session-1 freehanded architecture has been replaced by the skill-driven specification at:
 
-→ **[docs/architecture/2026-05-27-aegis-arch.md](architecture/2026-05-27-aegis-arch.md)**
+→ **[docs/architecture/2026-05-27-heuristics-arch.md](architecture/2026-05-27-heuristics-arch.md)**
 
 That file is the canonical source-of-truth blueprint. It was produced via the `agent-system-architecture` skill on 2026-05-27 (Session 3) and supersedes the previous freehanded version (which described Part A only, used the old "Reverse" codename, and locked in Streamlit + single-agent assumptions that are no longer current).
 

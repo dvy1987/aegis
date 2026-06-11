@@ -1,8 +1,8 @@
-# Eval Pipeline: Aegis Case Generator (LLM swarm)
+# Eval Pipeline: Heuristics Case Generator (LLM swarm)
 
 System: `backend/app/case_generator/llm_pipeline.py` (Gemini producer→critic swarm).
 Maturity stage: 4. Critical outputs: synthetic denial cases (letter + clinical context +
-metadata) used to train/benchmark the Aegis appeal agent and judges.
+metadata) used to train/benchmark the Heuristics appeal agent and judges.
 
 Aligns the **generation** pipeline to AlphaEval 2026 + the `eval-pipeline` skill: three
 evaluator types, forced 1/3/5 anchors, binary hard gates that short-circuit, independent

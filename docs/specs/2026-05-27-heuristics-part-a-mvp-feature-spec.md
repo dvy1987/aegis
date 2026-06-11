@@ -1,7 +1,7 @@
 ---
 status: Draft
 constitution: docs/constitution.md@1
-slug: aegis-part-a-mvp
+slug: heuristics-part-a-mvp
 ---
 
 # Feature Spec: Part A (MVP) — Single Agent & Core Workbench

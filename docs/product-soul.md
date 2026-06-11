@@ -1,4 +1,4 @@
-# Product Soul: Aegis
+# Product Soul: Heuristics
 Version: 1.2 | Date: 2026-06-10 | Status: Hackathon submission (Part A shipped; Part B swarm deferred)
 
 ## The User
@@ -62,7 +62,7 @@ When faced with a decision, we trade off in this order:
 
 | Shipped (hackathon) | Deferred (post-hackathon) |
 |---|---|
-| v1 ADK Student workflow | 12-agent Aegis swarm runtime |
+| v1 ADK Student workflow | 12-agent Heuristics swarm runtime |
 | Question agent (pre-draft interview) | Autonomous Journeyman / Master promotion |
 | Slice playbooks + US-playbook | 7 denial types × 10 insurers |
 | Showcase GEPA + approval modal | ~200 autonomous learning iterations |

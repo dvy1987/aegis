@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
-**Goal:** Make the Aegis self-improvement loop physically possible and observable — give the appeal agent an evolvable LLM drafter, move the insurer simulator out of the agent, capture all eval signal onto Phoenix, and join the pipeline + judge panel into one evaluated-run entrypoint — so a later Learning Coordinator (Plan 2) has a surface to evolve and a Phoenix signal to learn from.
+**Goal:** Make the Heuristics self-improvement loop physically possible and observable — give the appeal agent an evolvable LLM drafter, move the insurer simulator out of the agent, capture all eval signal onto Phoenix, and join the pipeline + judge panel into one evaluated-run entrypoint — so a later Learning Coordinator (Plan 2) has a surface to evolve and a Phoenix signal to learn from.
 
 **Architecture:** Introduce small dependency-injected **client protocols** (`DrafterLLMClient`, `PhoenixRecorder`) each with an **offline fake** + a **Gemini/Phoenix real impl**, so the whole loop is unit-testable with no GCP. The Student pipeline shrinks to 6 tools (simulator relocated to the eval layer). A new `run_evaluated_case()` runs Student → records the trace → runs the eval layer (judges + simulator) → annotates the trace with a **laundered** signal that never carries answer-key fields.
 

@@ -1,4 +1,4 @@
-# Current State — Aegis
+# Current State — Heuristics
 
 **Updated:** 2026-06-10 (session end — GEPA multi-mutate)
 **Phase:** **GEPA showcase optimize chains drafter + question agent + all training slice playbooks + US geo per round (`992fb7b`). `main` 1 commit ahead of origin (+ memory commit pending).**
@@ -320,7 +320,7 @@ No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main
 - ⏭️ Per ADR-006 there are two backend services; only v1 deploy script was built this session (PM-directed). Swarm script (`deploy-swarm.sh`) will mirror it when the swarm is ready.
 
 ### Session 26 (Frontend two-surface reimagining — built)
-- ✅ **Reimagined the frontend** (was a lone landing page) into **two surfaces, one locked design language**: `/` + `/appeal` = the calm consumer flow (intake → working → mirror → draft → decide, never names the AI); `/showcase` = "How Aegis learns" (judge-facing v1/v3 + diff + memory-off counterfactual). Spec `docs/superpowers/specs/2026-06-01-aegis-frontend-design.md`, plan `docs/superpowers/plans/2026-06-01-aegis-frontend.md`.
+- ✅ **Reimagined the frontend** (was a lone landing page) into **two surfaces, one locked design language**: `/` + `/appeal` = the calm consumer flow (intake → working → mirror → draft → decide, never names the AI); `/showcase` = "How Heuristics learns" (judge-facing v1/v3 + diff + memory-off counterfactual). Spec `docs/superpowers/specs/2026-06-01-heuristics-frontend-design.md`, plan `docs/superpowers/plans/2026-06-01-heuristics-frontend.md`.
 - ✅ **One `DataSource` seam** (`frontend/src/lib/data/`): **demo default** (bundled fixtures from the real 10 test cases + recorded efficacy run — fully clickable offline, no creds), flips to **live `/v1/appeal`** via `NEXT_PUBLIC_AEGIS_MODE=live` (+ `NEXT_PUBLIC_AEGIS_API`). Types mirror `appeal_api.py`/`schemas.py`; Zod validates fixtures at author time.
 - ✅ **Firewall (INV-2) extended to the frontend**: consumer fixtures carry only student-visible fields; `frontend/src/__tests__/firewall.test.ts` asserts no teacher answer-key keys leak. All 10 test cases selectable (PM picks live for the demo); cases 01–04 show **measured** v1/v3 numbers from `eval/efficacy_runs/2026-05-31`, 05–10 labeled illustrative.
 - ✅ **Quality:** 17 vitest tests green; `tsc`/`eslint` clean; `pnpm build` prerenders all 4 routes; copy audit clean (no AI/Phoenix/Gemini/ADK or exclamation marks on consumer surfaces); a11y + reduced-motion pass. Branch `feat/frontend-two-surface` (14 commits `d287666..fcdedfd`), **not merged to main, not pushed**.
@@ -331,18 +331,18 @@ No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main
 ## What's done (planning + corrections complete)
 
 ### Sessions 1–4
-- Strategic ideation, codename Aegis, two-phase nested PRD (Part A MVP / Part B Full Plan)
+- Strategic ideation, codename Heuristics, two-phase nested PRD (Part A MVP / Part B Full Plan)
 - AGENTS.md (root + frontend + backend) via `project-setup` skill
-- Architecture spec via `agent-system-architecture` — `docs/architecture/2026-05-27-aegis-arch.md`
+- Architecture spec via `agent-system-architecture` — `docs/architecture/2026-05-27-heuristics-arch.md`
 - 5 ADRs backfilled (ADK choice, Phoenix+MCP load-bearing, Next.js+Python overturn, 12-agent swarm with revisit triggers, agents-cli adoption)
 - Open questions catalogued; product-soul written; design-brief written; impact-stats compiled; assumption map (5 critical: A1–A5) compiled
 - 10 v1 agent role prompts seeded in `backend/src/prompts/`
 
 ### Session 5 (corrections)
-- ✅ **Eval rubric v2** at [`docs/evals/2026-05-27-aegis-appeal-rubric.md`](../evals/2026-05-27-aegis-appeal-rubric.md) — AlphaEval-compliant: 2 binary hard gates (J1 Safety, J2 Hallucination & Internal Consistency) + 5 weighted dimensions normalised to 1/3/5 (J3 Grounding 35%, J4 Case Specificity 25%, J5 Evidence Completeness 15%, J6 Insurer Tactic 15%, J7 Persuasive Coherence 10%). Calibration anchors, cost model ($0.014/call, $0.10/letter, $300/20-day ceiling), κ ≥ 0.6 gate, anti-pattern checklist included.
+- ✅ **Eval rubric v2** at [`docs/evals/2026-05-27-heuristics-appeal-rubric.md`](../evals/2026-05-27-heuristics-appeal-rubric.md) — AlphaEval-compliant: 2 binary hard gates (J1 Safety, J2 Hallucination & Internal Consistency) + 5 weighted dimensions normalised to 1/3/5 (J3 Grounding 35%, J4 Case Specificity 25%, J5 Evidence Completeness 15%, J6 Insurer Tactic 15%, J7 Persuasive Coherence 10%). Calibration anchors, cost model ($0.014/call, $0.10/letter, $300/20-day ceiling), κ ≥ 0.6 gate, anti-pattern checklist included.
 - ✅ **PRD §7 / §8 / §15.2 / §15.3 reconciled** with rubric v2 (hard-gate PASS rates as SC2/SC3, per-dimension regression gating, zero-tolerance auto-rollback on hard-gate FAIL).
 - ✅ **10 agent prompts rewritten** as full LLM system prompts (persona + domain context + tool-use + CoT + output schema + few-shot + guardrails). Interface contract preserved as docstring section.
-- ✅ **Day 1–20 implementation plan** generated via `implementation-plan` skill — [`docs/plans/2026-05-27-aegis-implementation-plan.md`](../plans/2026-05-27-aegis-implementation-plan.md) + companion flat task list. 4 phases, 67 tasks, 11 risks, full PRD-ID traceability. A1–A5 + Day 10 + Day 14/15 gates explicitly scheduled.
+- ✅ **Day 1–20 implementation plan** generated via `implementation-plan` skill — [`docs/plans/2026-05-27-heuristics-implementation-plan.md`](../plans/2026-05-27-heuristics-implementation-plan.md) + companion flat task list. 4 phases, 67 tasks, 11 risks, full PRD-ID traceability. A1–A5 + Day 10 + Day 14/15 gates explicitly scheduled.
 - ✅ **Autonomy Ladder thresholds finalized** via `brainstorming` skill (Moderate Scale + Aggressive Master), logged in `decision-log.md`.
 - ✅ **Product Soul rewritten** via `product-soul` skill with anti-positioning, values hierarchy, and specific hypotheses.
 - ✅ **Project Constitution established** via `project-constitution` skill — `docs/constitution.md` (v1) sets 7 non-negotiable engineering invariants (testing, security, performance, etc.).
@@ -440,12 +440,12 @@ No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main
 - **Arize Cloud Auth** — A4 MCP connection works, but Arize auth (`PHOENIX_CLIENT_HEADERS` or API key permissions) blocks actual trace retrieval from the MCP server. Workaround: direct Phoenix SDK calls work; MCP is functional for ADK tool integration (T2.1 proved this with 20/20 successes).
 
 ## Active decisions (top items)
-- Codename: **Aegis**
+- Codename: **Heuristics**
 - Stack: Google ADK + Gemini 3.1 Pro (Vertex AI / Agent Platform, via ADC) + Phoenix Cloud + Phoenix MCP + Next.js + Python FastAPI + Cloud Run + `google-agents-cli`
 - License: Apache 2.0
 - Autonomy ladder: 3-stage (Apprentice → Journeyman → Master) — thresholds TBD on Day 5 after judge calibration κ measured
 - 12-agent Part B with 4 hard revisit triggers ([ADR-004](../adr/))
-- Eval: 7-judge panel, 2 hard gates + 5 weighted, κ ≥ 0.6, per-dim regression gating ([rubric v2](../evals/2026-05-27-aegis-appeal-rubric.md))
+- Eval: 7-judge panel, 2 hard gates + 5 weighted, κ ≥ 0.6, per-dim regression gating ([rubric v2](../evals/2026-05-27-heuristics-appeal-rubric.md))
 - Phase 0 PM-gated; Phase 1 starts Day 1 once PM approves setup
 - MVP Day 7 = safety net; Full Plan Day 20 = win condition
 
@@ -461,21 +461,21 @@ No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main
 | Artifact | File |
 |---|---|
 | Product spec | [`docs/prd/PRD.md`](../prd/PRD.md) (v4) |
-| Architecture | [`docs/architecture/2026-05-27-aegis-arch.md`](../architecture/2026-05-27-aegis-arch.md) |
-| Eval rubric | [`docs/evals/2026-05-27-aegis-appeal-rubric.md`](../evals/2026-05-27-aegis-appeal-rubric.md) (v2) |
-| Eval pipeline | [`docs/evals/2026-05-27-aegis-eval-pipeline.md`](../evals/2026-05-27-aegis-eval-pipeline.md) |
-| Judges spec | [`docs/evals/2026-05-27-aegis-judges.md`](../evals/2026-05-27-aegis-judges.md) |
+| Architecture | [`docs/architecture/2026-05-27-heuristics-arch.md`](../architecture/2026-05-27-heuristics-arch.md) |
+| Eval rubric | [`docs/evals/2026-05-27-heuristics-appeal-rubric.md`](../evals/2026-05-27-heuristics-appeal-rubric.md) (v2) |
+| Eval pipeline | [`docs/evals/2026-05-27-heuristics-eval-pipeline.md`](../evals/2026-05-27-heuristics-eval-pipeline.md) |
+| Judges spec | [`docs/evals/2026-05-27-heuristics-judges.md`](../evals/2026-05-27-heuristics-judges.md) |
 | Agent prompts (v1) | Part A: [`backend/app/aegis_v1/prompts/`](../../backend/app/aegis_v1/prompts/) · Part B swarm: [`backend/app/aegis_swarm/prompts/`](../../backend/app/aegis_swarm/prompts/) (legacy `backend/src/prompts/` retired in Session 22) |
-| Implementation plan | [`docs/plans/2026-05-27-aegis-implementation-plan.md`](../plans/2026-05-27-aegis-implementation-plan.md) |
-| Agent-pickable tasks | [`docs/plans/2026-05-27-aegis-implementation-tasks.md`](../plans/2026-05-27-aegis-implementation-tasks.md) |
+| Implementation plan | [`docs/plans/2026-05-27-heuristics-implementation-plan.md`](../plans/2026-05-27-heuristics-implementation-plan.md) |
+| Agent-pickable tasks | [`docs/plans/2026-05-27-heuristics-implementation-tasks.md`](../plans/2026-05-27-heuristics-implementation-tasks.md) |
 | ADRs | [`docs/adr/ADR-001..005`](../adr/) |
 | Assumption map | [`docs/research/assumption-map.md`](../research/assumption-map.md) |
 | Design brief | [`docs/design-brief.md`](../design-brief.md) |
 | Impact stats | [`docs/research/impact-stats.md`](../research/impact-stats.md) |
 | Product soul | [`docs/product-soul.md`](../product-soul.md) |
 | Constitution | [`docs/constitution.md`](../constitution.md) |
-| Feature Spec: Part A | [`docs/specs/2026-05-27-aegis-part-a-mvp-feature-spec.md`](../specs/2026-05-27-aegis-part-a-mvp-feature-spec.md) |
-| Feature Spec: Part B | [`docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md`](../specs/2026-05-27-aegis-part-b-swarm-feature-spec.md) |
+| Feature Spec: Part A | [`docs/specs/2026-05-27-heuristics-part-a-mvp-feature-spec.md`](../specs/2026-05-27-heuristics-part-a-mvp-feature-spec.md) |
+| Feature Spec: Part B | [`docs/specs/2026-05-27-heuristics-part-b-swarm-feature-spec.md`](../specs/2026-05-27-heuristics-part-b-swarm-feature-spec.md) |
 | Autonomy Ladder Design | [`docs/specs/2026-05-27-autonomy-ladder-design.md`](../specs/2026-05-27-autonomy-ladder-design.md) |
 | Frontend archetype | [`.design/aegis/ARCHETYPE.md`](../../.design/aegis/ARCHETYPE.md) |
 | Frontend tokens (rationale) | [`.design/aegis/TOKENS.md`](../../.design/aegis/TOKENS.md) |
@@ -505,9 +505,9 @@ No project named `aegis-swarm` exists. v1 pinned in `main_v1.py`; swarm in `main
 - ✅ **Phoenix project split documented (2026-06-07)** — v1 → `default` (`OtelPhoenixRecorder`); swarm → `aegis-swarm` (`OtelSwarmTraceRecorder`). `main_swarm.py` stale `aegis-swarm` default fixed. See decision log §2026-06-07.
 
 ### Session 19 (Part A Judge Panel)
-- ✅ Approved and documented the Part A judge panel firewall: Aegis v1 gets a `StudentCasePacket`; judges get a teacher-only grading packet with provenance, expected appeal vectors, and exploitable weaknesses.
+- ✅ Approved and documented the Part A judge panel firewall: Heuristics v1 gets a `StudentCasePacket`; judges get a teacher-only grading packet with provenance, expected appeal vectors, and exploitable weaknesses.
 - ✅ Implemented local judge-panel package at `backend/app/evals/part_a/` with Pydantic schemas, teacher-packet builder, deterministic gates, offline heuristic judge client, Gemini-swappable client, aggregator, and CLI.
-- ✅ Added seven judge prompt templates under `eval/judges/part_a/`, including J6 `Appeal-Vector Capture` to grade whether Aegis finds the synthetic case's embedded flaw.
+- ✅ Added seven judge prompt templates under `eval/judges/part_a/`, including J6 `Appeal-Vector Capture` to grade whether Heuristics finds the synthetic case's embedded flaw.
 - ✅ Added focused unit tests: `env UV_CACHE_DIR=/tmp/uv-cache uv run pytest tests/unit/evals/test_part_a_judge_panel.py -q` → 6 passed.
 - ⚠️ Same-model judging is accepted: Gemini 3.1 Pro will judge Gemini 3.1 Pro drafts; mitigations are deterministic gates, single-dimension prompts, evidence-first scoring, quote validation, calibration, and human spot checks.
 - ⚠️ Broad `tests/unit` remains blocked by pre-existing stale import `from app.agent` in `tests/unit/agent/test_aegis_v1_agent.py` (Session 18 issue family).

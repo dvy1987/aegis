@@ -7,7 +7,7 @@ const NETWORK_ERROR_RE = /load failed|failed to fetch|networkerror|network error
 export function backendUnreachableMessage(apiBase: string, context = "Request"): string {
   return (
     `${context}: cannot reach ${apiBase}. ` +
-    `Confirm aegis-v1-api is up (${AEGIS_V1_API_URL}/health).`
+    `Confirm the drafting service is up (${AEGIS_V1_API_URL}/health).`
   );
 }
 

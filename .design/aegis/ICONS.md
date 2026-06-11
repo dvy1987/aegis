@@ -1,4 +1,4 @@
-# Icons for Aegis
+# Icons for Heuristics
 
 **Strategy:** mixed — **tuned Lucide subset (functional)** + **bespoke SVGs (signature surfaces)**
 **Source:** Lucide React (heavily tuned) + ~8 hand-drawn SVGs designed at the size used
@@ -44,7 +44,7 @@ Drawn at the size they're used. SVG source committed to `public/icons/` at scaff
 | `evidence` | 24 | citations panel | Stacked sheets with one peeking out, a hairline rule on each |
 | `doctor` | 24 | "ask your doctor" CTA | A paper with a stethoscope curve — abstract, no human figure |
 | `insurer` | 24 | "filed with" surface | Building shape with a hairline-rule horizon, no logo grid |
-| `signature-dot` | 6 / 8 | active step / status / section markers | The `--accent-sage` 6 px dot — Aegis's recurring signature element |
+| `signature-dot` | 6 / 8 | active step / status / section markers | The `--accent-sage` 6 px dot — Heuristics' recurring signature element |
 
 ### Bespoke SVGs to NOT draw (banned)
 

@@ -40,7 +40,7 @@ app: FastAPI = get_fast_api_app(
     otel_to_cloud=True,
 )
 app.title = "aegis-swarm"
-app.description = "Aegis Swarm Agent API"
+app.description = "Heuristics Swarm Agent API"
 app.include_router(swarm_appeal_router)
 
 if __name__ == "__main__":

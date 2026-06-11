@@ -50,7 +50,7 @@ BaseNode, DEFAULT_ROUTE, Edge, FunctionNode, JoinNode, Node,
 NodeTimeoutError, RetryConfig, START, Workflow, node
 ```
 
-## Workflow usage (Aegis v1 — D24)
+## Workflow usage (Heuristics v1 — D24)
 
 ```python
 from google.adk import Workflow
@@ -126,11 +126,11 @@ final = session_service.get_session_sync(
 |---|---|
 | `LlmAgent` | `google.adk.agents.llm_agent.LlmAgent` — use as workflow nodes or single-shot |
 | `Agent` | Alias for `LlmAgent` in 2.2.0 |
-| `LangGraphAgent` | Experimental — **not** used in Aegis v1 |
+| `LangGraphAgent` | Experimental — **not** used in Heuristics v1 |
 
 Single-shot agents outside any `Workflow` graph: `run_llm_agent_sync` in `adk_runtime.py` (simulator, reflector, redaction scrubber).
 
-## Aegis v1 Workflow surfaces
+## Heuristics v1 Workflow surfaces
 
 | Surface | Planned module | Pattern |
 |---|---|---|

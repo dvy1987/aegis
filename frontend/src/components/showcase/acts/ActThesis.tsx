@@ -3,8 +3,8 @@
 import { useRef, type ReactNode } from "react";
 import { gsap, useGsapContext } from "@/lib/motion";
 import {
-  THESIS_AEGIS_CAPTION,
-  THESIS_AEGIS_LABEL,
+  THESIS_HEURISTICS_CAPTION,
+  THESIS_HEURISTICS_LABEL,
   THESIS_FORESHADOW,
   THESIS_STATIC_CAPTION,
   THESIS_STATIC_LABEL,
@@ -78,7 +78,7 @@ export function ActThesis() {
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-12">
             <ThesisNode label={THESIS_STATIC_LABEL} inert caption={THESIS_STATIC_CAPTION} />
-            <ThesisNode label={THESIS_AEGIS_LABEL} caption={THESIS_AEGIS_CAPTION}>
+            <ThesisNode label={THESIS_HEURISTICS_LABEL} caption={THESIS_HEURISTICS_CAPTION}>
               <div className="sc-th-learns mt-3 flex flex-col gap-1.5">
                 <span
                   className="block h-px w-24"

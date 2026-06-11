@@ -18,7 +18,7 @@ Assess **before** resuming Part B swarm or autonomous promotion:
 
 | Shipped | Deferred |
 |---------|----------|
-| v1 ADK Student workflow | 12-agent Aegis swarm (`aegis_swarm/`) |
+| v1 ADK Student workflow | 12-agent Heuristics swarm (`aegis_swarm/`) |
 | Question agent (appeal + showcase) | Autonomous Journeyman / Master promotion |
 | Slice playbooks + US-playbook + GEPA | Full 100-case × 7-denial matrix |
 | Showcase preview 5+2 · production 50+20 | State-scoped US rules (no `us_state` on cases yet) |

@@ -59,7 +59,7 @@ Deployment: two independent Cloud Run services in `us-central1`.
 
 - If Day 7 MVP is more than 3 days behind because frontend complexity is the bottleneck, escalate to PM with options (per Code-Wall Escalation Protocol). Do NOT unilaterally fall back to Streamlit.
 - If a Next.js-on-Cloud-Run blocker persists >2 days, reopen.
-- Post-hackathon: if Aegis becomes a long-term product and SSR cost / framework choice becomes critical, re-evaluate.
+- Post-hackathon: if Heuristics becomes a long-term product and SSR cost / framework choice becomes critical, re-evaluate.
 
 ## References
 

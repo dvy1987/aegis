@@ -1,4 +1,4 @@
-# Evaluation Rubric — Aegis Appeal Letter
+# Evaluation Rubric — Heuristics Appeal Letter
 
 **Version:** v2 (corrected) · **Date:** 2026-05-27 · **Owner:** PM via `eval-rubric-design`
 **Supersedes:** rubric v1 (skeleton produced earlier in Session 4 — inconsistent scales, undefined "7-judge panel", no calibration anchors, no cost model)
@@ -6,8 +6,8 @@
 
 ## Purpose
 
-Score every drafted appeal letter from Aegis (Part A single agent and Part B 12-agent swarm) on independent dimensions plus binary hard gates. Drives three downstream consumers:
-1. CI pre-merge gate (`docs/evals/2026-05-27-aegis-eval-pipeline.md`).
+Score every drafted appeal letter from Heuristics (Part A single agent and Part B 12-agent swarm) on independent dimensions plus binary hard gates. Drives three downstream consumers:
+1. CI pre-merge gate (`docs/evals/2026-05-27-heuristics-eval-pipeline.md`).
 2. Autonomous promotion gate (Part B Learning Coordinator).
 3. Demo benchmark display (v1 vs v3 lift chart at Day 7 + Day 20).
 
@@ -136,7 +136,7 @@ All dimensions use the same 1/3/5 scale. No 2s or 4s — forced anchor scoring p
 
 ## 3. The 7-Judge Panel — Concrete Definition
 
-The "7-judge panel" is **7 separate LLM calls**, one per judge, each with a tightly scoped prompt covering exactly one rubric concern. This is per AlphaEval (independent dimensions → independent judges → no cross-dimension contamination). Each judge specification lives in `docs/evals/2026-05-27-aegis-judges.md`.
+The "7-judge panel" is **7 separate LLM calls**, one per judge, each with a tightly scoped prompt covering exactly one rubric concern. This is per AlphaEval (independent dimensions → independent judges → no cross-dimension contamination). Each judge specification lives in `docs/evals/2026-05-27-heuristics-judges.md`.
 
 | # | Judge | Type | Determinism | Returns | Latency budget |
 |---|---|---|---|---|---|

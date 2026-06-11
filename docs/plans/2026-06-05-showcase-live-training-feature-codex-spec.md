@@ -5,7 +5,7 @@ constitution: docs/constitution.md@1
 slug: showcase-live-training
 sources:
   - user request, 2026-06-05
-  - docs/superpowers/specs/2026-06-01-aegis-frontend-design.md
+  - docs/superpowers/specs/2026-06-01-heuristics-frontend-design.md
 ---
 
 # Showcase Live Training Workflow
@@ -29,7 +29,7 @@ As the PM, I choose one or more synthetic denial letters as the test set and run
 
 ### US-2: Training set run
 
-As the PM, I choose one or more synthetic denial letters as the training set and run the full Aegis v1 learning loop on those cases.
+As the PM, I choose one or more synthetic denial letters as the training set and run the full Heuristics v1 learning loop on those cases.
 
 ### US-3: Post-training retest
 
@@ -59,7 +59,7 @@ The second stage MUST allow selecting one or more synthetic denial letters from 
 
 ### FR-5: Learning Loop Run
 
-The second stage MUST run the full Aegis v1 learning loop for the selected training set and return a human-readable training result.
+The second stage MUST run the full Heuristics v1 learning loop for the selected training set and return a human-readable training result.
 
 ### FR-6: Post-training Retest Isolation
 

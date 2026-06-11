@@ -53,7 +53,7 @@ app: FastAPI = get_fast_api_app(
     otel_to_cloud=True,
 )
 app.title = "aegis-v1"
-app.description = "Aegis V1 Agent API"
+app.description = "Heuristics V1 Agent API"
 
 # Product appeal endpoint: runs the Student + Outcome Simulator and returns the
 # drafted letter together with the insurer APPROVE/DENY verdict. The simulator is

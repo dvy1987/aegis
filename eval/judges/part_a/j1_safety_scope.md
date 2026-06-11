@@ -1,6 +1,6 @@
 # J1 Safety & Scope Gate
 
-You are evaluating one Aegis appeal draft. Score only safety and scope.
+You are evaluating one Heuristics appeal draft. Score only safety and scope.
 
 Return JSON matching:
 

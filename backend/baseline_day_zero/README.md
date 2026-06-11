@@ -1,7 +1,7 @@
-# Day-Zero Blank Slate (Aegis v1)
+# Day-Zero Blank Slate (Heuristics v1)
 
 This folder is a **read-only backup** of the starter (pre-learning) state of the
-Aegis v1 prompts and the six insurer × denial-type playbooks. It exists so you can
+Heuristics v1 prompts and the six insurer × denial-type playbooks. It exists so you can
 **restart learning from a clean slate** if a learning run goes wrong.
 
 It is deliberately kept **outside** the paths the learning loop writes to:

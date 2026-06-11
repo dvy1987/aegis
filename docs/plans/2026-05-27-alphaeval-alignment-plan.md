@@ -1,6 +1,6 @@
 # Goal: Align Case Evaluation with AlphaEval 2026 Principles
 
-You are entirely correct. While the Gumloop swarm is for evaluating *synthetic cases* (not the final appeal letters), the underlying architectural principles from **AlphaEval 2026** (which we rigorously defined in `docs/evals/2026-05-27-aegis-appeal-rubric.md`) absolutely apply here. 
+You are entirely correct. While the Gumloop swarm is for evaluating *synthetic cases* (not the final appeal letters), the underlying architectural principles from **AlphaEval 2026** (which we rigorously defined in `docs/evals/2026-05-27-heuristics-appeal-rubric.md`) absolutely apply here. 
 
 I drifted into AI-defaults and violated several core AlphaEval principles. Here is the audit of where we failed, and the plan to fix it.
 

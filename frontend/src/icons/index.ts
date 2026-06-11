@@ -1,5 +1,5 @@
 /**
- * Tuned icon set for Aegis.
+ * Tuned icon set for Heuristics.
  *
  * Functional icons go through `tuneLucide` so stroke / linecap / size
  * follow the design system. Bespoke SVGs (denial, appeal, deadline,

@@ -34,7 +34,7 @@ DEFAULT_STAGING = Path("/tmp/aegis-library-staging")
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Ingest Aegis library seed catalog")
+    parser = argparse.ArgumentParser(description="Ingest Heuristics library seed catalog")
     parser.add_argument(
         "--catalog",
         type=Path,

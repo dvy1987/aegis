@@ -26,11 +26,11 @@ benchmark.
 
 ---
 
-## 1. Why GEPA, mapped to Aegis
+## 1. Why GEPA, mapped to Heuristics
 
 GEPA's four mechanisms map almost 1:1 onto what the substrate already produces:
 
-| GEPA mechanism | Aegis realization |
+| GEPA mechanism | Heuristics realization |
 |---|---|
 | **Reflective mutation** — an LLM reads execution traces + *natural-language feedback* `feedback_text` and proposes a new instruction for one module | The judge panel already emits per-dimension **laundered `improvement` notes** (INV-2) on each trace. The reflection LM reads {current component text, failing cases, those notes} and proposes an edited component. |
 | **Instance-wise Pareto frontier** — track best score *per training instance*; sample next candidate from the non-dominated front, weighted by how many instances it wins | We keep a candidate pool keyed by **per-case composite** on the held-out-train slice; sample the parent to mutate from the Pareto front (anti-stagnation). |

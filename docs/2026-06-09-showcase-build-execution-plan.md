@@ -219,7 +219,7 @@ In `frontend/src/app/showcase/page.tsx`, these must keep identical behavior; onl
 
 ## PHASE 5 — Act II: Thesis
 - **Files:** `acts/ActThesis.tsx`.
-- **Do:** design doc §11.2 / §6 Act II. Short scroll-pinned editorial beat (pin ≥lg via `ScrollTrigger.matchMedia`); serif statement + the static-node-vs-Aegis-node contrast (the Aegis node ignites; `AccentLine` writes "learns"); mono foreshadow caption about the memory-off test. 90% negative space. Reduced-motion → static end. 
+- **Do:** design doc §11.2 / §6 Act II. Short scroll-pinned editorial beat (pin ≥lg via `ScrollTrigger.matchMedia`); serif statement + the static-node-vs-Heuristics-node contrast (the Heuristics node ignites; `AccentLine` writes "learns"); mono foreshadow caption about the memory-off test. 90% negative space. Reduced-motion → static end. 
 - **Verify:** pin engages/releases cleanly ≥lg, disabled <lg; no scroll jank; build green.
 - **Commit:** `feat(showcase): ActThesis pinned beat`
 
@@ -244,7 +244,7 @@ In `frontend/src/app/showcase/page.tsx`, these must keep identical behavior; onl
 
 ## PHASE 8 — Act VI: Impact / Close
 - **Files:** `acts/ActImpact.tsx`.
-- **Do:** design doc §11.6 / §6 Act VI. Spare layout; serif statement; three mono `MetricCounter`s count up in sequence on enter (only doc-backed numbers; mark targets honestly — e.g. `BENCHMARK QUALITY 0.40 → 0.75`, `JUDGE DIMENSIONS 7`, `HUMAN-APPROVED ALWAYS`); `LivingGlyph` returns brighter/"settled" and exhales once; finale GSAP timeline (counters → glyph brighten → footer `AccentLine` draw → stillness). Mono end-card `AEGIS · built on Google ADK + Gemini · observability by Arize Phoenix`. Optional "Replay the run" control. Reduced-motion → final values instantly.
+- **Do:** design doc §11.6 / §6 Act VI. Spare layout; serif statement; three mono `MetricCounter`s count up in sequence on enter (only doc-backed numbers; mark targets honestly — e.g. `BENCHMARK QUALITY 0.40 → 0.75`, `JUDGE DIMENSIONS 7`, `HUMAN-APPROVED ALWAYS`); `LivingGlyph` returns brighter/"settled" and exhales once; finale GSAP timeline (counters → glyph brighten → footer `AccentLine` draw → stillness). Mono end-card `HEURISTICS · built on Google ADK + Gemini · observability by Arize Phoenix`. Optional "Replay the run" control. Reduced-motion → final values instantly.
 - **Verify:** ends on a clean still frame; counters accurate; build green.
 - **Commit:** `feat(showcase): ActImpact finale`
 

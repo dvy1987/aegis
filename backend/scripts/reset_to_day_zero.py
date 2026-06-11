@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Restore Aegis v1 day-zero prompts + playbooks to their blank slate.
+"""Restore Heuristics v1 day-zero prompts + playbooks to their blank slate.
 
 This copies the read-only snapshot in ``backend/baseline_day_zero/`` back over the
 live files the learning loop writes to:
@@ -94,7 +94,7 @@ def _backup_live(pairs: list[tuple[Path, Path]]) -> Path:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Reset Aegis v1 learning to day zero.")
+    parser = argparse.ArgumentParser(description="Reset Heuristics v1 learning to day zero.")
     parser.add_argument("--yes", action="store_true", help="skip confirmation prompt")
     parser.add_argument("--dry-run", action="store_true", help="show plan, change nothing")
     args = parser.parse_args()
@@ -102,7 +102,7 @@ def main() -> None:
     pairs = _planned_copies()
     _verify_snapshot(pairs)
 
-    print("Reset Aegis v1 to day-zero blank slate")
+    print("Reset Heuristics v1 to day-zero blank slate")
     print(f"  Snapshot : {SNAPSHOT}")
     print("  Will restore:")
     for src, dest in pairs:

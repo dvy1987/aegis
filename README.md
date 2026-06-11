@@ -1,4 +1,4 @@
-# Aegis
+# Heuristics
 
 > **A self-improving appeal-drafting system that helps patients respond to US health-insurance denials — and gets measurably better by learning from Arize Phoenix traces via MCP.**
 
@@ -15,7 +15,7 @@
 **Why is it important?** Of the appeals that *are* filed, more than a third are overturned. That means roughly 99 of every 100 denied patients walk away from money or care that an appeal could have recovered. 
 
 **What is our solution?** 
-Aegis exists to close that gap. It is a calm, free tool that helps any patient understand a denial and draft an appeal in plain language, in under thirty minutes. We don't promise to win the appeal—half of all appeals lose. We promise to make filing one feel possible. Every appeal Aegis helps with becomes a learning signal that makes the next one better, transparently, with the receipts visible in Phoenix Cloud.
+Heuristics exists to close that gap. It is a calm, free tool that helps any patient understand a denial and draft an appeal in plain language, in under thirty minutes. We don't promise to win the appeal—half of all appeals lose. We promise to make filing one feel possible. Every appeal Heuristics helps with becomes a learning signal that makes the next one better, transparently, with the receipts visible in Phoenix Cloud.
 
 ---
 
@@ -25,10 +25,10 @@ The Arize partner track judges submissions on:
 1. Technological implementation
 2. Design
 3. Potential impact
-4. **Quality of the agent's self-improvement loop** ← Aegis's core mechanic
+4. **Quality of the agent's self-improvement loop** ← Heuristics' core mechanic
 5. Bonus: agents that use observability data to improve over time
 
-Most submissions will be single-agent chatbots with Phoenix bolted on. Aegis makes Phoenix MCP **structurally load-bearing** — training signal and runtime memory flow through Phoenix; the showcase demo runs a GEPA-style learning loop that proposes prompt and playbook changes you approve before they ship.
+Most submissions will be single-agent chatbots with Phoenix bolted on. Heuristics makes Phoenix MCP **structurally load-bearing** — training signal and runtime memory flow through Phoenix; the showcase demo runs a GEPA-style learning loop that proposes prompt and playbook changes you approve before they ship.
 
 ---
 
@@ -73,7 +73,7 @@ For architecture detail, see [docs/architecture.md](docs/architecture.md).
 
 ## The self-improvement loop
 
-Aegis learns in three graduating stages — a **competency-gated autonomy ladder**:
+Heuristics learns in three graduating stages — a **competency-gated autonomy ladder**:
 
 | Stage | Mode (hackathon) | Post-hackathon (Part B, deferred) |
 |---|---|---|
@@ -89,7 +89,7 @@ Appeal runs never promote — only the showcase training path can change prompts
 
 | Dimension | Shipped (June 2026) | Deferred post-hackathon |
 |---|---|---|
-| Runtime | v1 Student (ADK) + question agent + library finder | 12-agent **Aegis swarm** (`aegis_swarm/`) |
+| Runtime | v1 Student (ADK) + question agent + library finder | 12-agent **Heuristics swarm** (`aegis_swarm/`) |
 | Insurers | 3 (Aetna, Cigna, UHC) in benchmark / showcase | 10 insurers |
 | Denial types | 2 (medical necessity, prior auth) | 5 additional types |
 | Showcase cohort | Preview 5+2 · Production 50+20 (cases 101–200) | Full 100-case matrix |
@@ -135,7 +135,7 @@ Tracked in [docs/open-questions.md](docs/open-questions.md) §G.
 
 ## Status
 
-**Phase:** Hackathon submission build. v1 Student, question agent, US-playbook, showcase GEPA, and promotion UI are implemented. **Aegis swarm (Part B) deferred post-hackathon.** 446 backend unit tests passing.
+**Phase:** Hackathon submission build. v1 Student, question agent, US-playbook, showcase GEPA, and promotion UI are implemented. **Heuristics swarm (Part B) deferred post-hackathon.** 446 backend unit tests passing.
 
 **Latest handoff:** [docs/memory/agent-handoffs.md](docs/memory/agent-handoffs.md)  
 **Current state:** [docs/memory/current-state.md](docs/memory/current-state.md)  
@@ -207,6 +207,6 @@ This project is a hackathon demo.
 
 ## Acknowledgements
 
-Built by a Product Manager who, twenty days before submission, had never read a US insurance denial letter. Aegis didn't either — it learned from outcomes.
+Built by a Product Manager who, twenty days before submission, had never read a US insurance denial letter. Heuristics didn't either — it learned from outcomes.
 
 That's the whole point.

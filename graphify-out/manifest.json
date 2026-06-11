@@ -583,7 +583,7 @@
     "mtime": 1780019084.9476192,
     "hash": "a8e7c8d33aa8f5e7d8ad1b869f8e30ec"
   },
-  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/plans/2026-05-27-aegis-implementation-tasks.md": {
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/plans/2026-05-27-heuristics-implementation-tasks.md": {
     "mtime": 1780019084.9476192,
     "hash": "28a0e34b8cc2d90e80d388f1a67e4d9b"
   },
@@ -591,7 +591,7 @@
     "mtime": 1780025661.0519304,
     "hash": "7ae4bbcb1c5e3d33cc1bb7cfbac0e419"
   },
-  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/plans/2026-05-27-aegis-implementation-plan.md": {
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/plans/2026-05-27-heuristics-implementation-plan.md": {
     "mtime": 1780019084.9476192,
     "hash": "9d47d8fbdc9286c12e56d55ff92cadc6"
   },
@@ -599,7 +599,7 @@
     "mtime": 1780019084.9476192,
     "hash": "ab378b62bf4a9c25449acf4435e3f08b"
   },
-  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/architecture/2026-05-27-aegis-arch.md": {
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/architecture/2026-05-27-heuristics-arch.md": {
     "mtime": 1780019084.355621,
     "hash": "5985fb30c54447a0c6c03a9630415af6"
   },
@@ -667,15 +667,15 @@
     "mtime": 1780025660.4799323,
     "hash": "60cbac191fd0bd5e5ad0964d4b1698ec"
   },
-  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/evals/2026-05-27-aegis-judges.md": {
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/evals/2026-05-27-heuristics-judges.md": {
     "mtime": 1780019084.4756207,
     "hash": "80cb616319778a54a8119e909b37fe73"
   },
-  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/evals/2026-05-27-aegis-appeal-rubric.md": {
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/evals/2026-05-27-heuristics-appeal-rubric.md": {
     "mtime": 1780019084.4756207,
     "hash": "e8693a889324c55e24fef346269b4c1a"
   },
-  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/evals/2026-05-27-aegis-eval-pipeline.md": {
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/evals/2026-05-27-heuristics-eval-pipeline.md": {
     "mtime": 1780019084.4756207,
     "hash": "e2991f1696a283d571806cbdea21a353"
   },
@@ -683,11 +683,11 @@
     "mtime": 1780025866.7352853,
     "hash": "96f07841c0408ae1f241921d4c9790ba"
   },
-  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md": {
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/specs/2026-05-27-heuristics-part-b-swarm-feature-spec.md": {
     "mtime": 1780019084.9476192,
     "hash": "b1c55ee6669f6ddb6462541b864a71a3"
   },
-  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/specs/2026-05-27-aegis-part-a-mvp-feature-spec.md": {
+  "/bv3/aimbot/divya/buildmind-misc/aegis/docs/specs/2026-05-27-heuristics-part-a-mvp-feature-spec.md": {
     "mtime": 1780019084.9476192,
     "hash": "49c3d20587b95a5286c9b5f90992211a"
   },

@@ -1,4 +1,4 @@
-# Decision Log — Aegis
+# Decision Log — Heuristics
 
 Append-only log of project decisions. Newest at the bottom. Each entry: date, decision, rationale, alternatives considered, status, revisit triggers.
 
@@ -8,7 +8,7 @@ Append-only log of project decisions. Newest at the bottom. Each entry: date, de
 
 **Decision.** Build the user-facing product as a Next.js (App Router) frontend backed by a Python FastAPI service that hosts the Google ADK agent. Two services on Google Cloud Run. Frontend uses Tailwind CSS + shadcn/ui (copied + customized, not imported) + framer-motion + Lucide React (custom-tuned subset + ~6–10 bespoke icons).
 
-**Rationale.** Aegis serves a stressed, scared user (patient navigating an insurance denial). UX quality is one of three co-equal product pillars alongside (1) self-improvement loop quality and (2) visible Phoenix MCP + tracing integration — per Arize judging rubric and PM portfolio criteria. Streamlit cannot deliver consumer-grade UX, mobile responsiveness, or motion control at the level required. Pre-mortem identified Cause M (UX too dev-toolish) at impact×blindness score 25 — tied for top concern. PM 2026-05-25: "UX is a first class citizen of this product."
+**Rationale.** Heuristics serves a stressed, scared user (patient navigating an insurance denial). UX quality is one of three co-equal product pillars alongside (1) self-improvement loop quality and (2) visible Phoenix MCP + tracing integration — per Arize judging rubric and PM portfolio criteria. Streamlit cannot deliver consumer-grade UX, mobile responsiveness, or motion control at the level required. Pre-mortem identified Cause M (UX too dev-toolish) at impact×blindness score 25 — tied for top concern. PM 2026-05-25: "UX is a first class citizen of this product."
 
 **Alternatives considered.**
 - **(A) Streamlit + heavy theming + static landing page** — rejected. Streamlit ceiling is real; visitors who go deeper than the landing page feel the seam. Mobile experience is weak.
@@ -38,7 +38,7 @@ Append-only log of project decisions. Newest at the bottom. Each entry: date, de
 
 Any time a design choice trades polish for speed, the default is *polish*. Push schedule, not quality.
 
-**Rationale.** Hackathon Design criterion is 1 of 4 hackathon-wide judging categories. Aegis is also serving PM's portfolio — "this will be a part of my PM portfolio and I don't want shoddy UX to be there" (PM 2026-05-25). User-trust framing: insurance denials are emotionally charged; AI-feeling copy will destroy trust on the first screen.
+**Rationale.** Hackathon Design criterion is 1 of 4 hackathon-wide judging categories. Heuristics is also serving PM's portfolio — "this will be a part of my PM portfolio and I don't want shoddy UX to be there" (PM 2026-05-25). User-trust framing: insurance denials are emotionally charged; AI-feeling copy will destroy trust on the first screen.
 
 **Alternatives.** (A) Treat UX as supporting actor (the original AGENTS.md framing) — REJECTED by PM directive. (B) Outsource design — not feasible for solo PM in hackathon window.
 
@@ -167,7 +167,7 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 
 ## 2026-05-25 — Impact statistics sourced and documented
 
-**Decision.** Aegis's Potential Impact narrative is now grounded in [docs/research/impact-stats.md](../research/impact-stats.md) — verified primary sources (KFF, CMS, Commonwealth Fund, JAMA, Health Affairs, Senate report, Stanford).
+**Decision.** Heuristics' Potential Impact narrative is now grounded in [docs/research/impact-stats.md](../research/impact-stats.md) — verified primary sources (KFF, CMS, Commonwealth Fund, JAMA, Health Affairs, Senate report, Stanford).
 
 **Rationale.** Pre-mortem Cause N (Potential Impact under-articulated) was scoring 16; needed a credible factual base. Hackathon-wide Potential Impact criterion is 1 of 4. Also feeds copy/landing page hero, demo voiceover, and Devpost form.
 
@@ -186,17 +186,17 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 
 ## 2026-05-27 — Eval rubric v2 (AlphaEval 2026 compliant) + PRD §8 reconciled
 
-**Decision.** Replace the v1 rubric skeleton with v2 in [docs/evals/2026-05-27-aegis-appeal-rubric.md](../evals/2026-05-27-aegis-appeal-rubric.md). All weighted dimensions normalised to 1/3/5; **Safety (J1) and Hallucination & Internal Consistency (J2) are binary hard gates** — never weighted, never averaged in. Weighted dimensions (J3–J7) sum to 100% (Grounding 35%, Case Specificity 25%, Evidence Completeness 15%, Insurer Tactic 15%, Persuasive Coherence 10%). 7-judge panel concretely defined. Calibration anchors per dimension. Cost model: $0.014/judge call, $0.10/letter, $1.20/MVP benchmark, $300/20-day ceiling. Cohen's κ ≥ 0.6 calibration gate before any judge counts for promotion. PRD §7, §8, §15.2, §15.3 reconciled to match (hard-gate FAIL = zero-tolerance auto-rollback; promotion uses per-dimension regression thresholds, not single-composite).
+**Decision.** Replace the v1 rubric skeleton with v2 in [docs/evals/2026-05-27-heuristics-appeal-rubric.md](../evals/2026-05-27-heuristics-appeal-rubric.md). All weighted dimensions normalised to 1/3/5; **Safety (J1) and Hallucination & Internal Consistency (J2) are binary hard gates** — never weighted, never averaged in. Weighted dimensions (J3–J7) sum to 100% (Grounding 35%, Case Specificity 25%, Evidence Completeness 15%, Insurer Tactic 15%, Persuasive Coherence 10%). 7-judge panel concretely defined. Calibration anchors per dimension. Cost model: $0.014/judge call, $0.10/letter, $1.20/MVP benchmark, $300/20-day ceiling. Cohen's κ ≥ 0.6 calibration gate before any judge counts for promotion. PRD §7, §8, §15.2, §15.3 reconciled to match (hard-gate FAIL = zero-tolerance auto-rollback; promotion uses per-dimension regression thresholds, not single-composite).
 
 **Rationale.** Session 1 PRD eval section violated AlphaEval 2026 on 6 specific principles (single composite, safety averaged, no chain-of-thought protocol, no per-step gates, etc.). Session 4 generated a skeleton but with inconsistent scales and an undefined panel. Session 5 PM gap-call flagged it. This corrects all of it.
 
-**Status.** Accepted. Source of truth = `docs/evals/2026-05-27-aegis-appeal-rubric.md`.
+**Status.** Accepted. Source of truth = `docs/evals/2026-05-27-heuristics-appeal-rubric.md`.
 
 **Revisit triggers.**
 - If any judge fails κ ≥ 0.6 calibration on Day 5, that judge becomes advisory (not promotion-gating) until re-tuned.
 - If cost model overruns 1.5× at Day 7 MVP benchmark, drop weighted-judge sampling rate on live inferences from 30% → 15%.
 
-**Artifacts produced.** `docs/evals/2026-05-27-aegis-appeal-rubric.md` (v2), updated PRD §7 §8 §15.2 §15.3. Commits `9ee69da`, `d65e13c`.
+**Artifacts produced.** `docs/evals/2026-05-27-heuristics-appeal-rubric.md` (v2), updated PRD §7 §8 §15.2 §15.3. Commits `9ee69da`, `d65e13c`.
 
 ---
 
@@ -216,7 +216,7 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 
 ## 2026-05-27 — Day 1–20 implementation plan produced (skill-driven, gates woven in)
 
-**Decision.** The Day-by-Day build plan is now formalised in [`docs/plans/2026-05-27-aegis-implementation-plan.md`](../plans/2026-05-27-aegis-implementation-plan.md) + companion flat task list. 4 phases (Phase 0 setup + Phase 1 MVP + Phase 2 Swarm + Phase 3 Learning/Polish), 67 tasks, 11 risks, full PRD-ID traceability matrix. Assumption gates A1–A5 + Day 10 progress gate + Day 14/15 demo-coherence gates explicitly scheduled as hard escalation points.
+**Decision.** The Day-by-Day build plan is now formalised in [`docs/plans/2026-05-27-heuristics-implementation-plan.md`](../plans/2026-05-27-heuristics-implementation-plan.md) + companion flat task list. 4 phases (Phase 0 setup + Phase 1 MVP + Phase 2 Swarm + Phase 3 Learning/Polish), 67 tasks, 11 risks, full PRD-ID traceability matrix. Assumption gates A1–A5 + Day 10 progress gate + Day 14/15 demo-coherence gates explicitly scheduled as hard escalation points.
 
 **Rationale.** PRD §14 contained single-bullet days ("Day 3: Build single ADK agent with 7 tools") that were unworkable for execution. Session 5 PM gap-call. Plan now expands each day into 3–6 concrete tasks with DoD, satisfying `implementation-plan` skill output schema.
 
@@ -227,7 +227,7 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 - If Day 10 progress gate fires → ADR-004 fallback (lean topology) updates the plan from Day 11 forward.
 - If a `feature-spec` is later written for a Part B agent, the plan re-traces against that spec (currently traces against PRD FR/NFR/G/SC IDs).
 
-**Artifacts produced.** `docs/plans/2026-05-27-aegis-implementation-plan.md`, `docs/plans/2026-05-27-aegis-implementation-tasks.md`. Commit `079064d`.
+**Artifacts produced.** `docs/plans/2026-05-27-heuristics-implementation-plan.md`, `docs/plans/2026-05-27-heuristics-implementation-tasks.md`. Commit `079064d`.
 
 ---
 
@@ -319,7 +319,7 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 
 **Decision.** The generation pipeline and Gumloop swarm will explicitly inject "authentic shoddiness" to mimic real-world insurer flaws (using `eval/denial_patterns.json`). The evaluators are split into separate `Realism` and `Appeal Difficulty` dimensions. The `Appeal Difficulty` score will be hidden from Phoenix traces and the appeal agent. Furthermore, all evaluators (both generator-side and Gumloop-side) are refactored to follow an `Analysis-First` structure (critical evaluation must be written *before* the score is given) to prevent anchoring bias.
 
-**Rationale.** A core thesis of Aegis is that real-world insurance denials are shoddy and illogical. "Foolproof" synthetic denials are unrealistic. The generator must mimic these real flaws. To properly score them, evaluators must separate realism (does it look like a real shoddy letter?) from difficulty (how hard is it to appeal?). Hiding the difficulty score prevents the appealing agent from cheating. The analysis-first rule enforces AlphaEval compliance for LLM-as-a-judge.
+**Rationale.** A core thesis of Heuristics is that real-world insurance denials are shoddy and illogical. "Foolproof" synthetic denials are unrealistic. The generator must mimic these real flaws. To properly score them, evaluators must separate realism (does it look like a real shoddy letter?) from difficulty (how hard is it to appeal?). Hiding the difficulty score prevents the appealing agent from cheating. The analysis-first rule enforces AlphaEval compliance for LLM-as-a-judge.
 
 **Status.** Accepted. Implemented in Gumloop prompts and `gumloop/architecture.md`.
 
@@ -347,7 +347,7 @@ If any of these fail, the pitch is updated downward BEFORE we commit further to 
 - If instrumentation inadvertently leaks `synthetic_provenance` onto the trace payload passed to the Orchestrator, break the build until plugged.
 
 **Artifacts produced.**
-- Updated `docs/architecture/2026-05-27-aegis-arch.md`
+- Updated `docs/architecture/2026-05-27-heuristics-arch.md`
 - Updated `docs/prd/PRD.md`
 
 ---

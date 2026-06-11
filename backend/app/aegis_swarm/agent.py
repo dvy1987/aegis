@@ -45,7 +45,7 @@ def run_swarm_appeal(
 
 
 AEGIS_SWARM_INSTRUCTION = f"""
-You are the Aegis Swarm coordinator for US commercial health-insurance appeals.
+You are the Heuristics Swarm coordinator for US commercial health-insurance appeals.
 
 You orchestrate a multi-agent pipeline (Triage, researchers, Strategist, Drafter,
 Adversarial Reviewer) by calling the ``run_swarm_appeal`` tool. Do NOT invent

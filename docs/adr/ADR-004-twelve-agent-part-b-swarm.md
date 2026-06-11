@@ -27,7 +27,7 @@ The PM made an informed call to **keep 12 agents** as the audacious strategic be
 
 ## Decision
 
-**Part B architecture stays at the 12-agent composite swarm + 2 meta-agents (14 total components) as specified in PRD §12.** Honest architectural component breakdown documented in [docs/architecture/2026-05-27-aegis-arch.md §3.1](../architecture/2026-05-27-aegis-arch.md): 10 LLM agents + 1 LLM-as-judge panel + 1 mostly-deterministic evaluator + 2 background meta-agents.
+**Part B architecture stays at the 12-agent composite swarm + 2 meta-agents (14 total components) as specified in PRD §12.** Honest architectural component breakdown documented in [docs/architecture/2026-05-27-heuristics-arch.md §3.1](../architecture/2026-05-27-heuristics-arch.md): 10 LLM agents + 1 LLM-as-judge panel + 1 mostly-deterministic evaluator + 2 background meta-agents.
 
 Topology: **Composite Pattern** combining 6 of Google's 8 ADK multi-agent patterns — Coordinator/Dispatcher, Parallel Fan-Out/Gather, Sequential Pipeline, Generator + Critic, Iterative Refinement, Human-in-the-Loop.
 
@@ -46,7 +46,7 @@ Topology: **Composite Pattern** combining 6 of Google's 8 ADK multi-agent patter
 - ⚠ **Build-time risk is high.** Days 8–14 = 7 days to scaffold + prompt + test 9 additional agents (beyond the MVP single agent). At <1 day per agent for solo non-technical PM, prompt quality risks being shallow across the swarm. Mitigation: `google-agents-cli scaffold` accelerates structural work; `create-agent-prompt` skill produces role prompts before Day 8; Day 10 progress gate forces re-evaluation if <50% have credible prompts.
 - ⚠ **Demo coherence risk.** 3 minutes to show 10+ agents is genuinely hard. PRD §16 demo script handles this by showing the swarm via animated architecture diagram only for ~25 seconds; the rest of the demo focuses on the learning loop + Phoenix UI. If the demo doesn't read clearly by Day 15, compress demo-visible subset to 3–4 of the 12 — keep all 10+ in repo, demo selectively.
 - ⚠ **Pre-mortem Cause M (UX too dev-toolish)** and **assumption-map R6 (judges think 12 agents is overkill)** both flagged this risk. Both stand as "monitor + revisit"; neither was a blocker per PM decision.
-- ⚠ **Coordination cost** — ADK `session.state` as shared blackboard works for this scale, but namespaced keys per agent must be enforced to prevent silent overwrites. See `docs/architecture/2026-05-27-aegis-arch.md` §5.1.
+- ⚠ **Coordination cost** — ADK `session.state` as shared blackboard works for this scale, but namespaced keys per agent must be enforced to prevent silent overwrites. See `docs/architecture/2026-05-27-heuristics-arch.md` §5.1.
 
 ## Revisit triggers (CRITICAL — these are the safety nets on the audacious bet)
 
@@ -63,4 +63,4 @@ These are mirrored in [AGENTS.md → Build Discipline](../../AGENTS.md) and [dec
 - [Google's developer guide to multi-agent patterns in ADK, Dec 2025](https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/)
 - Pre-mortem Session 2 (Cause M); Assumption Map A5 + R6 — both flagged this risk
 - Session 3 decision in [docs/memory/decision-log.md](../memory/decision-log.md)
-- Architecture spec — [docs/architecture/2026-05-27-aegis-arch.md](../architecture/2026-05-27-aegis-arch.md)
+- Architecture spec — [docs/architecture/2026-05-27-heuristics-arch.md](../architecture/2026-05-27-heuristics-arch.md)

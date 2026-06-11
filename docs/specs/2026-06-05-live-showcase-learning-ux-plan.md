@@ -11,9 +11,9 @@ Status: Superseded working draft
 
 This document captures the current shared plan for turning `/showcase` into a live, demo-friendly learning workflow. It is not an approved implementation spec yet.
 
-The goal is to show a clean before/after learning story: Aegis is measured on held-out denial letters, trains on separate training letters, shows exactly what changed, requires a person to approve the update, then measures again on the same held-out letters.
+The goal is to show a clean before/after learning story: Heuristics is measured on held-out denial letters, trains on separate training letters, shows exactly what changed, requires a person to approve the update, then measures again on the same held-out letters.
 
-The current `/showcase` button should evolve into this guided modal/wizard. The UX should keep the existing Aegis visual language from `docs/design-brief.md`: calm, restrained, premium consumer-health, no technical helper copy, no AI-marketing voice, no exclamation marks.
+The current `/showcase` button should evolve into this guided modal/wizard. The UX should keep the existing Heuristics visual language from `docs/design-brief.md`: calm, restrained, premium consumer-health, no technical helper copy, no AI-marketing voice, no exclamation marks.
 
 ## Core Product Model
 
@@ -40,7 +40,7 @@ The page should avoid repo and implementation language. Use terms such as:
 - "Learned rules"
 - "Approved update"
 - "Measure before"
-- "Train Aegis"
+- "Train Heuristics"
 - "Measure after"
 
 Avoid default UX terms such as:
@@ -77,9 +77,9 @@ Hard isolation rules:
 
 This stage should be labeled in the UX as a held-out measurement with Phoenix and judges off.
 
-The "Where Aegis started" baseline should also record the active writing approach and learned rules at the moment the pre-test starts. If no learned playbook exists yet for a slice, the UX should show that plainly as "no learned rules yet" rather than exposing implementation details.
+The "Where Heuristics started" baseline should also record the active writing approach and learned rules at the moment the pre-test starts. If no learned playbook exists yet for a slice, the UX should show that plainly as "no learned rules yet" rather than exposing implementation details.
 
-### 2. Train Aegis
+### 2. Train Heuristics
 
 The user selects exactly one available training set from the eight curated training sets.
 
@@ -104,7 +104,7 @@ The update should be explained in accessible language:
 
 - "Writing approach" means the drafter instructions changed.
 - "Learned rules" means the playbook changed for the relevant insurer and denial type.
-- "Why Aegis changed this" should summarize laundered learning signal, not expose hidden answer keys.
+- "Why Heuristics changed this" should summarize laundered learning signal, not expose hidden answer keys.
 
 The person must explicitly approve the update before promotion.
 
@@ -137,15 +137,15 @@ The UX compares before and after:
 
 The page should show a bold half-and-half split:
 
-Left side: "Where Aegis started"
+Left side: "Where Heuristics started"
 
 - selected held-out set results before training
 - approval rate, e.g. `2 / 5 approved`
 - average simulator score
-- expandable "What Aegis knew then"
+- expandable "What Heuristics knew then"
 - label: `Phoenix off | judges off | held-out measurement`
 
-Right side: "Where Aegis is now"
+Right side: "Where Heuristics is now"
 
 - same held-out set results after promotion
 - approval rate, e.g. `4 / 5 approved`
@@ -222,7 +222,7 @@ The modal should feel like a guided operational workflow, not a technical consol
 Recommended stages:
 
 1. Measure before
-2. Train Aegis
+2. Train Heuristics
 3. Review update
 4. Measure after
 5. Results

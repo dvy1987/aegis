@@ -1,10 +1,10 @@
-# Aegis — Agent Rules
+# Heuristics — Agent Rules
 
 Read this first. Then in order: `docs/memory/MEMORY-ROUTING.md` → `docs/prd/PRD.md` → `docs/design-brief.md` → `docs/open-questions.md`.
 
 ## What this project is
 
-**Aegis** is a self-improving multi-agent system that helps people draft US health-insurance appeal letters. Hackathon submission for the Google Cloud Rapid Agent Hackathon — Arize partner track ($5K prize). Built over 20 days by a solo PM (non-technical) using Amp + skills.
+**Heuristics** is a self-improving multi-agent system that helps people draft US health-insurance appeal letters. Hackathon submission for the Google Cloud Rapid Agent Hackathon — Arize partner track ($5K prize). Built over 20 days by a solo PM (non-technical) using Amp + skills.
 
 The PRD has two nested parts: **Part A MVP (Days 1–7)** = single agent + 12-case benchmark, shippable as a safety-net submission; **Part B Full Plan (Days 8–20)** = 12-agent swarm + autonomous learning loop + 100-case benchmark, the win-condition. Build MVP first; layer Full Plan on top.
 

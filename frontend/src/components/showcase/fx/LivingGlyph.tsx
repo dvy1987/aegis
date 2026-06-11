@@ -8,7 +8,7 @@ import { EASE_OUT_EXPO } from "@/lib/motion";
 type GlyphState = "idle" | "ignite" | "settled";
 
 /**
- * Fallback "living glyph" — an abstract aegis eye/shield built from concentric
+ * Fallback "living glyph" — an abstract brand mark built from concentric
  * arcs of evidence around a luminous iris. Breathes when idle, draws itself in
  * on `ignite`, brightens on `settled`. Cursor parallax ≤6px. SVG + framer only.
  */

@@ -1,4 +1,4 @@
-"""Synthetic case generator for Aegis.
+"""Synthetic case generator for Heuristics.
 
 Canonical path: LLM Gemini producer→critic swarm (``llm_pipeline.py`` / ``llm_agents.py``),
 grounded on the clinical KB and gated by the flaw-injection verifier (J6 contract).

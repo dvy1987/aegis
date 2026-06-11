@@ -1,7 +1,7 @@
 ---
 status: Draft
 constitution: docs/constitution.md@1
-slug: aegis-part-b-swarm
+slug: heuristics-part-b-swarm
 ---
 
 # Feature Spec: Part B (Full Plan) — 12-Agent Swarm & Auto-Learning

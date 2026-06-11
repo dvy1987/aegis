@@ -1,8 +1,8 @@
-# Product Requirements Document — Aegis (Reverse v2)
+# Product Requirements Document — Heuristics (Reverse v2)
 
 | | |
 |---|---|
-| **Project** | Aegis — A calm, learning agent that helps people draft US health-insurance appeals |
+| **Project** | Heuristics — A calm, learning agent that helps people draft US health-insurance appeals |
 | **Author** | PM (with Amp orchestration) |
 | **Date** | 2026-05-27 |
 | **Status** | **v5 — June 2026 delivery snapshot.** Part A shipped for hackathon submission. **Part B (12-agent swarm) deferred post-hackathon.** See [§0.1 Current delivery](#01-current-delivery-june-2026). |
@@ -37,7 +37,7 @@ Each part was designed to be independently shippable. **The hackathon submission
 | Judge panel (5 dimensions + question judge on training runs) | ✅ Shipped |
 | Showcase: preview 5+2 · production 50+20 cohorts | ✅ Shipped |
 | Showcase GEPA + promotion review modal (human approve) | ✅ Shipped (Apprentice only) |
-| 12-agent Aegis swarm | ⏸ **Deferred post-hackathon** |
+| 12-agent Heuristics swarm | ⏸ **Deferred post-hackathon** |
 | Autonomous Journeyman / Master promotion ladder | ⏸ Deferred |
 | 100-case × 7-denial-type full matrix | ⏸ Deferred |
 
@@ -77,7 +77,7 @@ See [open-questions.md §G](../open-questions.md).
 |---|---|---|
 | End of MVP (Day 7) | Complete single-agent submission with Phoenix MCP | Top 3 plausible |
 | End of Week 2 swarm (Day 14) | 9-agent system + 60-case benchmark | **Deferred post-hackathon** |
-| End of Full Plan (Day 20) | Full Aegis swarm + autonomous learning + 100-case benchmark | **Deferred** — submission = evolved Part A |
+| End of Full Plan (Day 20) | Full Heuristics swarm + autonomous learning + 100-case benchmark | **Deferred** — submission = evolved Part A |
 
 ---
 
@@ -85,9 +85,9 @@ See [open-questions.md §G](../open-questions.md).
 
 ## 1. Executive Summary (MVP)
 
-**Aegis MVP** is a calm, consumer-grade web tool that helps a person turn a US health-insurance denial letter into a drafted first-level internal appeal in under thirty minutes, written in plain language and grounded in the person's plan documents and public statutory text.
+**Heuristics MVP** is a calm, consumer-grade web tool that helps a person turn a US health-insurance denial letter into a drafted first-level internal appeal in under thirty minutes, written in plain language and grounded in the person's plan documents and public statutory text.
 
-Behind the interface, a single Google ADK agent does the work — and that agent measurably improves at drafting appeals by introspecting its own Arize Phoenix traces and eval scores via the Phoenix MCP server at runtime. Aegis is not trying to be a generalist US healthcare expert; it learns *insurer-specific appeal tactics* from observed evaluation outcomes, and the improvement is visible on a held-out benchmark.
+Behind the interface, a single Google ADK agent does the work — and that agent measurably improves at drafting appeals by introspecting its own Arize Phoenix traces and eval scores via the Phoenix MCP server at runtime. Heuristics is not trying to be a generalist US healthcare expert; it learns *insurer-specific appeal tactics* from observed evaluation outcomes, and the improvement is visible on a held-out benchmark.
 
 **The product anchors on three things at once, none of which can be dropped:**
 
@@ -102,13 +102,13 @@ Behind the interface, a single Google ADK agent does the work — and that agent
 
 US health insurers deny roughly 19% of in-network claims — about 85 million claims a year on the ACA exchanges alone ([KFF, Mar 2026](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/)). Fewer than 1% of those denials are ever appealed ([KFF](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/)). Of the ones that are, more than a third are overturned. That arithmetic means roughly **99 of every 100 denied patients walk away from money or care that an appeal might have recovered.** The asymmetry is structural: insurers automate denial — 84% use AI in operations ([NAIC, 2024](https://content.naic.org/sites/default/files/inline-files/Health%20Survey%20Report%20-%20FINAL%205.9.25.pdf)) — while patients face a thirty-page policy document and a phone tree.
 
-Aegis exists to close that gap. It does not promise to win the appeal. It promises to make filing one feel possible.
+Heuristics exists to close that gap. It does not promise to win the appeal. It promises to make filing one feel possible.
 
 ## 2. Problem Statement
 
 ### Real-world problem (grounded in primary research — full set in [impact-stats.md](../research/impact-stats.md))
 
-Three facts together describe the problem Aegis exists to address:
+Three facts together describe the problem Heuristics exists to address:
 
 1. **Denials are common and getting more common.** Roughly 19% of in-network ACA claims were denied in 2024 — about 85 million claims, with insurer-level rates ranging from 3% to 36% ([KFF, Mar 2026](https://www.kff.org/patient-consumer-protections/claims-denials-and-appeals-in-aca-marketplace-plans-in-2024/)). 33% of insured adults say their insurer denied a doctor-prescribed service in the last two years ([KFF, Jan 2026](https://www.kff.org/public-opinion/kff-health-tracking-poll-prior-authorizations-rank-as-publics-biggest-burden-when-getting-health-care/)). 73% of insured adults call denials and delays a "major problem" ([KFF, 2025](https://www.kff.org/patient-consumer-protections/kff-health-tracking-poll-public-finds-prior-authorization-process-difficult-to-manage/)).
 
@@ -120,7 +120,7 @@ The arithmetic: for every 100 denied claims, roughly 34 would be overturned if a
 
 The asymmetry is structural and AI-mediated. 84% of insurers use AI/ML in operations, including for prior-auth determinations ([NAIC, 2024](https://content.naic.org/sites/default/files/inline-files/Health%20Survey%20Report%20-%20FINAL%205.9.25.pdf)). 61% of physicians say AI is increasing prior-auth denials ([AMA, 2024](https://www.ama-assn.org/)). On the patient side: a thirty-page policy document, a phone tree, and a 180-day deadline.
 
-This is the gap Aegis is built to close — for the individual person filing one appeal, not for the system.
+This is the gap Heuristics is built to close — for the individual person filing one appeal, not for the system.
 
 ### Hackathon-relevant problem
 
@@ -134,13 +134,13 @@ The Arize track judges submissions on four co-equal sub-criteria, plus a bonus:
 
 Plus four hackathon-wide criteria (Technical Implementation, Design, Potential Impact, Quality of Idea) — see [docs/challenge.md](../challenge.md).
 
-Aegis's strategic bet is that a submission visibly winning on **all** of these — observability/MCP load-bearing, self-improvement demonstrable, real consumer-grade design, real impact narrative grounded in primary research — wins the bucket. See [§18 Arize Rubric Alignment](#18-arize-rubric-alignment) for the explicit mapping.
+Heuristics' strategic bet is that a submission visibly winning on **all** of these — observability/MCP load-bearing, self-improvement demonstrable, real consumer-grade design, real impact narrative grounded in primary research — wins the bucket. See [§18 Arize Rubric Alignment](#18-arize-rubric-alignment) for the explicit mapping.
 
 ## 2.1 Competitive Landscape & Differentiation
 
-This is a genuinely emerging space. Aegis is **not** the first patient-side AI appeal tool, and the pitch must acknowledge prior art credibly. Sources: [North Carolina Health News, Nov 2025](https://www.northcarolinahealthnews.org/2025/11/22/ai-vs-ai-patients-deploy-bots-to-battle-health-insurers-that-deny-care/), [Stateline, Nov 2025](https://stateline.org/2025/11/20/patients-deploy-bots-to-battle-health-insurers-that-deny-care/), full table in [impact-stats.md §6](../research/impact-stats.md#6-competitive-landscape--patient-side-ai-for-appeals-critical-for-positioning).
+This is a genuinely emerging space. Heuristics is **not** the first patient-side AI appeal tool, and the pitch must acknowledge prior art credibly. Sources: [North Carolina Health News, Nov 2025](https://www.northcarolinahealthnews.org/2025/11/22/ai-vs-ai-patients-deploy-bots-to-battle-health-insurers-that-deny-care/), [Stateline, Nov 2025](https://stateline.org/2025/11/20/patients-deploy-bots-to-battle-health-insurers-that-deny-care/), full table in [impact-stats.md §6](../research/impact-stats.md#6-competitive-landscape--patient-side-ai-for-appeals-critical-for-positioning).
 
-| Player | Type | What they do | Differentiation gap vs Aegis |
+| Player | Type | What they do | Differentiation gap vs Heuristics |
 |---|---|---|---|
 | **Counterforce Health** | Nonprofit, free | AI assistant: denial letter + policy + research → drafts appeal letter | Closest direct competitor. Static prompt — no self-improvement loop |
 | **Sheer Health** | For-profit | Connect insurance account, upload bills; freemium with paid full handling | Provider/billing as much as patient; not loop-based |
@@ -148,12 +148,12 @@ This is a genuinely emerging space. Aegis is **not** the first patient-side AI a
 | **Waystar AltitudeCreate** | Enterprise | Enterprise GenAI for provider appeal workflows | Different market |
 | **OpenHand Health** | For-profit | Parses medical jargon for patients | Adjacent; not appeal-focused |
 
-**Aegis's four-point differentiation thesis (must be explicit in pitch and product):**
+**Heuristics' four-point differentiation thesis (must be explicit in pitch and product):**
 
-1. **Self-improvement from outcomes.** Phoenix-driven loop means Aegis measurably gets better at the job over time, transparently. Counterforce ships a static prompt; Aegis ships a learning system. (This is also the Arize judging hook.)
-2. **UX quality as a first-class pillar.** Calm, human, premium consumer-health design — not a tech demo wrapped in a form. (See [docs/design-brief.md](../design-brief.md).) Most competitor experiences feel like utilities; Aegis aims for a feel comparable to Headspace / One Medical / Maven.
+1. **Self-improvement from outcomes.** Phoenix-driven loop means Heuristics measurably gets better at the job over time, transparently. Counterforce ships a static prompt; Heuristics ships a learning system. (This is also the Arize judging hook.)
+2. **UX quality as a first-class pillar.** Calm, human, premium consumer-health design — not a tech demo wrapped in a form. (See [docs/design-brief.md](../design-brief.md).) Most competitor experiences feel like utilities; Heuristics aims for a feel comparable to Headspace / One Medical / Maven.
 3. **Transparent autonomy ladder with visible humility.** Apprentice → Journeyman → Master autonomy stages with public competency scores per slice. Trust is earned by showing what the agent does *not* know.
-4. **Open source under Apache 2.0.** Anyone can audit, fork, or self-host. Counterforce is free; Aegis is also auditable and forkable.
+4. **Open source under Apache 2.0.** Anyone can audit, fork, or self-host. Counterforce is free; Heuristics is also auditable and forkable.
 
 **Tone guardrail for any pitch material about competition or the insurance industry:** *We earn trust by being constructive, not by riding cultural anger. The product never invokes acts of violence, vigilantism, or polarizing public events around the insurance industry.* (Mirrored in [AGENTS.md](../../AGENTS.md) and [design-brief.md §8](../design-brief.md#8-what-must-not-be-in-the-product).)
 
@@ -255,7 +255,7 @@ See docs/design-brief.md. The UI must feel calm, dignified, and trustworthy. No 
 
 ## 8. MVP Evaluation & Testing
 
-> **Source of truth:** [docs/evals/2026-05-27-aegis-appeal-rubric.md](../evals/2026-05-27-aegis-appeal-rubric.md) (v2 — AlphaEval 2026 compliant). [docs/evals/2026-05-27-aegis-judges.md](../evals/2026-05-27-aegis-judges.md) defines the 7-judge panel. [docs/evals/2026-05-27-aegis-eval-pipeline.md](../evals/2026-05-27-aegis-eval-pipeline.md) defines the CI + nightly + promotion-gate pipelines. This section summarises; the rubric file is canonical.
+> **Source of truth:** [docs/evals/2026-05-27-heuristics-appeal-rubric.md](../evals/2026-05-27-heuristics-appeal-rubric.md) (v2 — AlphaEval 2026 compliant). [docs/evals/2026-05-27-heuristics-judges.md](../evals/2026-05-27-heuristics-judges.md) defines the 7-judge panel. [docs/evals/2026-05-27-heuristics-eval-pipeline.md](../evals/2026-05-27-heuristics-eval-pipeline.md) defines the CI + nightly + promotion-gate pipelines. This section summarises; the rubric file is canonical.
 
 ### Benchmark
 12 synthetic composite cases (6 calibration + 6 held-out) = 3 insurers × 2 denial types × 2 cases each. Dataset provenance in `eval/dataset_card.md`. Splits in `eval/cases/{train,holdout}/`.
@@ -326,7 +326,7 @@ Judges will see:
 - Submission 1: "Customer support agent with Phoenix tracing" (most common)
 - Submission 2: "Code-review agent with Phoenix evals"
 - Submission 3: "Phoenix dashboard improver" (safe meta-play)
-- **Submission X: Aegis — a 12-agent swarm that learns US insurance appeals from 200+ Phoenix traces, demonstrating measurable composite-quality lift from ~0.40 → ~0.75 (design target) across 8 prompt versions on a 100-case benchmark, with the entire learning loop visible in the Phoenix UI**
+- **Submission X: Heuristics — a 12-agent swarm that learns US insurance appeals from 200+ Phoenix traces, demonstrating measurable composite-quality lift from ~0.40 → ~0.75 (design target) across 8 prompt versions on a 100-case benchmark, with the entire learning loop visible in the Phoenix UI**
 
 This is a highly differentiated approach.
 
@@ -549,7 +549,7 @@ No other Arize-track submission will have this data wall.
 | 1:10–1:50 | Learning loop is protagonist | Phoenix UI: timeline of 8 prompt versions over 20 days. Click v1 vs v8 prompt diff. Learning Coordinator audit log: *"Patch promoted day 12: Cigna mental-health, added MHPAEA parity citation rule. Composite lift +14%. Auto-promoted."* |
 | 1:50–2:20 | The benchmark | Chart: composite on 40-case held-out across 8 versions. ~0.40 → ~0.75. Per-insurer breakdown. Safety stable. Hallucination 0 |
 | **2:20–2:50** | **Counterfactual (mic drop)** | **Disable Phoenix MCP. Composite collapses to 0.42.** *"Without Phoenix, the swarm forgets everything it learned. Phoenix isn't a sidecar. It's the swarm's nervous system."* |
-| 2:50–3:00 | Close | *"This is what self-improving agents actually look like. Aegis. Built in 20 days. Open source. Apache 2.0."* |
+| 2:50–3:00 | Close | *"This is what self-improving agents actually look like. Heuristics. Built in 20 days. Open source. Apache 2.0."* |
 
 ## 17. Full-Plan Risks & Mitigations
 
@@ -601,7 +601,7 @@ These are locked-in regardless of phase:
 
 ## 21. Required Disclaimers (Verbatim)
 
-> **Aegis is a hackathon demonstration. It is not legal or medical advice. Outputs are intended as drafting assistance for human review. No real patient data (PHI) is used. The simulator is a transparent rule-based proxy, not a prediction of insurer behaviour.**
+> **Heuristics is a hackathon demonstration. It is not legal or medical advice. Outputs are intended as drafting assistance for human review. No real patient data (PHI) is used. The simulator is a transparent rule-based proxy, not a prediction of insurer behaviour.**
 
 ## 22. What Stays vs Changes Between Phases
 
@@ -665,7 +665,7 @@ Implementation notes:
 ## 25a. Out-of-Scope Ideas (Post-Hackathon Backlog)
 
 - External / IRO appeals automation
-- **12-agent Aegis swarm** (Part B — after G1/G2 assessments)
+- **12-agent Heuristics swarm** (Part B — after G1/G2 assessments)
 - Medicare appeals (different stack, ALJ hearings)
 - Mobile / WhatsApp interface
 - Multi-language (Spanish first, given US Hispanic patient population)
@@ -682,4 +682,4 @@ Implementation notes:
 
 **Post-hackathon:** Part B swarm and autonomous promotion **only if** library-quality (G1) and GEPA economics (G2) assessments justify the complexity and cost.
 
-Aegis is still a manifesto: *agents should improve from their own observability data, with safety gates and human oversight.* The hackathon proves the loop on a single disciplined Student; the swarm is chapter two, not chapter one.
+Heuristics is still a manifesto: *agents should improve from their own observability data, with safety gates and human oversight.* The hackathon proves the loop on a single disciplined Student; the swarm is chapter two, not chapter one.

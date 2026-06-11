@@ -1,4 +1,4 @@
-# Aegis Backend
+# Heuristics Backend
 
 Multi-service Python backend hosting ADK agents for health-insurance appeal drafting.
 

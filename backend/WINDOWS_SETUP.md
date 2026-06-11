@@ -1,6 +1,6 @@
 # Windows Machine Setup Guide
 
-This guide provides the exact commands needed to get the Aegis backend running on a Windows machine in perfect sync with your Mac environment.
+This guide provides the exact commands needed to get the Heuristics backend running on a Windows machine in perfect sync with your Mac environment.
 
 ## 1. Install the Core Tools
 

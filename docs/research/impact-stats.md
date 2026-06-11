@@ -54,7 +54,7 @@ Source: [Becker's Payer / KFF, Mar 2026](https://www.beckerspayer.com/research-a
 | New York: overturn rate by category (e.g. home healthcare) | 78%+ | 2025 | (same study) |
 | Medicare Advantage appeals overturned | >80% | (per KFF) | [KFF](https://www.kff.org/medicare/medicare-advantage-insurers-made-nearly-53-million-prior-authorization-determinations-in-2024/) |
 
-### The arithmetic of the silence (Aegis's headline framing)
+### The arithmetic of the silence (Heuristics' headline framing)
 
 If denial rate ≈ 19%, appeal rate ≈ <1%, and overturn-on-appeal rate ≈ 34% (low end) → for every **100 denied claims**, roughly **34 would be overturned if appealed**, but only **<1 actually is**.
 
@@ -77,7 +77,7 @@ Said differently: **~99 of every 100 denied patients walk away from money or car
 
 Lower-income patients and Black, Hispanic, and Asian patients are disproportionately denied AND less likely to have denials successfully contested. Lowest-income patients have **43% higher odds** of experiencing a denial than highest-income patients ([Hoagland et al., JAMA Network Open, 2024](https://pmc.ncbi.nlm.nih.gov/articles/PMC11411384/)). Burden falls "heaviest on lower-income and racial minority patients" ([Health Affairs, 2025](https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2024.01277)).
 
-**Implication for Aegis copy:** the product must be free at the point of use, written for plain English, and designed so a stressed parent in a financial pinch can use it on a phone at 11pm — not a system that further selects for already-resourced patients.
+**Implication for Heuristics copy:** the product must be free at the point of use, written for plain English, and designed so a stressed parent in a financial pinch can use it on a phone at 11pm — not a system that further selects for already-resourced patients.
 
 ---
 
@@ -121,11 +121,11 @@ Lower-income patients and Black, Hispanic, and Asian patients are disproportiona
 
 ## 6. Competitive landscape — patient-side AI for appeals (CRITICAL FOR POSITIONING)
 
-This is a genuinely emerging space. Aegis is NOT the first idea here, and any pitch must acknowledge prior art credibly.
+This is a genuinely emerging space. Heuristics is NOT the first idea here, and any pitch must acknowledge prior art credibly.
 
-| Player | Type | What they do | Differentiation gap vs Aegis |
+| Player | Type | What they do | Differentiation gap vs Heuristics |
 |---|---|---|---|
-| **Counterforce Health** | Nonprofit, NC, free | AI assistant reads denial letter + policy + outside medical research → drafts customized appeal letter | **Closest direct competitor.** Static model — no self-improvement loop. Aegis's differentiation: learning from outcomes + transparent autonomy ladder + UX investment |
+| **Counterforce Health** | Nonprofit, NC, free | AI assistant reads denial letter + policy + outside medical research → drafts customized appeal letter | **Closest direct competitor.** Static model — no self-improvement loop. Heuristics' differentiation: learning from outcomes + transparent autonomy ladder + UX investment |
 | **Sheer Health** | For-profit app | Connect insurance account, upload bills, AI + human answers; paid premium for full appeal handling | Provider/billing-side as much as patient-side; not loop-based; freemium model |
 | **Cofactor AI Denial Suite** | For-profit | Provider-side appeal generation, EHR-integrated | Provider audience, not patient — different market |
 | **Waystar AltitudeCreate** | Enterprise | Genai for provider appeal workflows | Enterprise/provider — different market |
@@ -133,34 +133,34 @@ This is a genuinely emerging space. Aegis is NOT the first idea here, and any pi
 
 Source: [North Carolina Health News, Nov 2025](https://www.northcarolinahealthnews.org/2025/11/22/ai-vs-ai-patients-deploy-bots-to-battle-health-insurers-that-deny-care/), [Stateline](https://stateline.org/2025/11/20/patients-deploy-bots-to-battle-health-insurers-that-deny-care/).
 
-**Aegis's differentiation thesis (must be explicit in PRD §5 and pitch):**
-1. **Self-improvement from outcomes** — Phoenix-driven loop means Aegis gets better at the job over time, transparently. Counterforce ships a static prompt; Aegis ships a learning system.
+**Heuristics' differentiation thesis (must be explicit in PRD §5 and pitch):**
+1. **Self-improvement from outcomes** — Phoenix-driven loop means Heuristics gets better at the job over time, transparently. Counterforce ships a static prompt; Heuristics ships a learning system.
 2. **UX quality as a first-class product pillar** — calm, human, premium consumer health design. Not a tech demo.
 3. **Transparent autonomy ladder** — apprentice → journeyman → master with public competency scores. Trust through visible humility.
 4. **Open-source + Apache 2.0** — anyone can audit, fork, or self-host.
 
 ---
 
-## 7. The Aegis impact paragraph (drop into PRD §1 Vision and Devpost form)
+## 7. The Heuristics impact paragraph (drop into PRD §1 Vision and Devpost form)
 
 > US health insurers deny roughly 19% of in-network claims — about 85 million claims a year on the ACA exchanges alone. Fewer than 1% of those denials are ever appealed. Of the ones that are, more than a third are overturned — meaning roughly 99 of every 100 denied patients walk away from money or care that an appeal could have recovered. The asymmetry is structural: insurers automate denial with AI and entire third-party "denial-management" companies, while patients face a thirty-page policy document and a phone tree.
 >
-> Aegis exists to close that gap. It is a calm, free tool that helps any patient understand a denial and draft an appeal in plain language, in under thirty minutes. We don't promise to win the appeal — half of all appeals lose. We promise to make filing one feel possible. Every appeal Aegis helps with becomes a learning signal that makes the next one better, transparently, with the receipts visible in Phoenix Cloud.
+> Heuristics exists to close that gap. It is a calm, free tool that helps any patient understand a denial and draft an appeal in plain language, in under thirty minutes. We don't promise to win the appeal — half of all appeals lose. We promise to make filing one feel possible. Every appeal Heuristics helps with becomes a learning signal that makes the next one better, transparently, with the receipts visible in Phoenix Cloud.
 
 ### Compressed version for pitch / video voiceover (~15 sec)
 
-> "Insurers deny 1 in 5 health insurance claims. Fewer than 1% are appealed. Of the ones that are, a third get overturned. The patients who don't appeal aren't wrong — the process is built for them to give up. Aegis is built so they don't have to."
+> "Insurers deny 1 in 5 health insurance claims. Fewer than 1% are appealed. Of the ones that are, a third get overturned. The patients who don't appeal aren't wrong — the process is built for them to give up. Heuristics is built so they don't have to."
 
 ---
 
 ## 8. Things deliberately NOT claimed (guardrails for honesty)
 
-- ❌ "Aegis wins appeals" — we draft. Patients file. Insurers decide.
+- ❌ "Heuristics wins appeals" — we draft. Patients file. Insurers decide.
 - ❌ "Replaces a lawyer" — we don't.
 - ❌ "Medical or legal advice" — we don't and won't.
 - ❌ Specific overturn-rate guarantees — too variable by case type / insurer / state.
 - ❌ PHI-bearing claims about real patients — synthetic composite cases only in any demo.
-- ❌ "$X billions saved" projections — no Fermi estimate on aggregate Aegis impact will be claimed without a real cohort behind it. Defer until we have one.
+- ❌ "$X billions saved" projections — no Fermi estimate on aggregate Heuristics impact will be claimed without a real cohort behind it. Defer until we have one.
 
 ---
 

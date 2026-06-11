@@ -54,7 +54,7 @@ The pill row (`<CasePicker>` rendered at `page.tsx:156`, defined in `components/
 
 ### 1.2 Chosen direction (2–3 sentences)
 
-**I'm building "Obsidian Observatory" as the spine, with C's cinematic restraint for pacing and one B-style self-drawing schematic reserved for the architecture beat.** A dark, near-black instrument where the product's data *is* the light — one disciplined luminous accent (a cooled, electrified evolution of Aegis's sage), telemetry mono, and serif display headlines — so the dry backend reads as a living system the judge watches breathe, ignite, and improve. This records beautifully because high-contrast dark + a single accent + light-as-data compresses cleanly on video, hides screen noise, and makes each "wow" moment (verdict cells flipping red→green, the memory-off dimming, the lift counter ticking) land without any post editing.
+**I'm building "Obsidian Observatory" as the spine, with C's cinematic restraint for pacing and one B-style self-drawing schematic reserved for the architecture beat.** A dark, near-black instrument where the product's data *is* the light — one disciplined luminous accent (a cooled, electrified evolution of Heuristics' sage), telemetry mono, and serif display headlines — so the dry backend reads as a living system the judge watches breathe, ignite, and improve. This records beautifully because high-contrast dark + a single accent + light-as-data compresses cleanly on video, hides screen noise, and makes each "wow" moment (verdict cells flipping red→green, the memory-off dimming, the lift counter ticking) land without any post editing.
 
 ### 1.3 The one-sentence concept
 
@@ -213,9 +213,9 @@ This maps to the live demo script in `docs/demo-cheatsheet-pm.md`: the presenter
 - **Purpose:** Establish in 3 seconds that this is a real, ambitious, self-improving system. Hook.
 - **Layout:** Full-viewport, asymmetric. Left: eyebrow + serif headline + one-line subhead + a single quiet primary CTA ("Begin a live run" → smooth-scrolls/pins to Act III). Right/offset: the **living glyph** (Rive) — a slowly breathing form suggesting an eye/aegis/shield made of moving evidence. Bottom-left: a thin live telemetry strip (mono) that looks like a heartbeat readout.
 - **Copy style:** Cinematic, declarative, confident.
-  - Eyebrow (mono): `AEGIS · SELF-IMPROVING APPEAL ENGINE`
+  - Eyebrow (mono): `HEURISTICS · SELF-IMPROVING APPEAL ENGINE`
   - Headline (serif): **"Watch a system teach itself."**
-  - Subhead (Inter): "Aegis drafts insurance-denial appeals, grades its own work against a held-out benchmark, and rewrites its own playbook from what it learns. No hand-tuning. Below, it does it live."
+  - Subhead (Inter): "Heuristics drafts insurance-denial appeals, grades its own work against a held-out benchmark, and rewrites its own playbook from what it learns. No hand-tuning. Below, it does it live."
 - **Motion:** Tier 3 ignition on load — glyph assembles, headline resolves word-by-word (blur-in), telemetry strip starts streaming. Then settles to Tier 1 breathing.
 - **Interaction:** CTA has a Rive ignite state on hover. Glyph subtly tracks cursor (parallax, ≤6px).
 - **Register:** Theatrical → settles to quiet.
@@ -224,12 +224,12 @@ This maps to the live demo script in `docs/demo-cheatsheet-pm.md`: the presenter
 ### ACT II — The Thesis ("Most agents are frozen")
 
 - **Purpose:** Frame why self-improvement is the hard, valuable thing — without a dry "problem" slide.
-- **Layout:** Pinned editorial beat. A large serif statement center-stage; on scroll, a contrast pair resolves: **"Static-prompt agents"** (a dim, motionless node) vs **"Aegis"** (a node that pulses and rewrites itself). Minimal — two ideas, lots of black.
+- **Layout:** Pinned editorial beat. A large serif statement center-stage; on scroll, a contrast pair resolves: **"Static-prompt agents"** (a dim, motionless node) vs **"Heuristics"** (a node that pulses and rewrites itself). Minimal — two ideas, lots of black.
 - **Copy:**
   - Statement (serif): **"Most AI agents never improve. They answer the same way on day one and day one thousand."**
-  - Turn (serif, accent): **"Aegis reads its own past evaluations before it drafts — and gets measurably better."**
+  - Turn (serif, accent): **"Heuristics reads its own past evaluations before it drafts — and gets measurably better."**
   - Support (mono caption): `THESIS — if turning memory off doesn't degrade quality, the idea has failed. So we'll turn it off later and show you.`
-- **Motion:** Tier 2. Scroll-driven: the static node stays grey/inert; the Aegis node ignites and a thin accent line writes the word "learns." Foreshadows the memory-off proof.
+- **Motion:** Tier 2. Scroll-driven: the static node stays grey/inert; the Heuristics node ignites and a thin accent line writes the word "learns." Foreshadows the memory-off proof.
 - **Interaction:** None required (a held beat). Optional hover on the two nodes shows a one-line tooltip.
 - **Register:** Immersive, quiet tension.
 - **Feel:** "Okay — the claim is bold and falsifiable. Show me."
@@ -282,7 +282,7 @@ This is the existing functional core — **all preserved logic lives here.** It 
   - **V-b — The counterfactual (memory on/off):** built from existing `CounterfactualCard` (`on_composite` / `off_composite`). Two gauges — **Memory on** vs **Memory off** — with a real, tactile **toggle (Rive)**. Flipping to "off" triggers Tier-3 decay: the accent light drains, color desaturates, the score bar retreats to the lower value. This *visually proves* the thesis from Act II.
 - **Copy:**
   - Section (serif): **"How it gets better."**
-  - Loop caption (Inter): "Aegis grades every draft against a held-out benchmark, writes the result to its own memory, and an optimizer rewrites its playbook from the pattern of its past failures. A person approves before anything ships."
+  - Loop caption (Inter): "Heuristics grades every draft against a held-out benchmark, writes the result to its own memory, and an optimizer rewrites its playbook from the pattern of its past failures. A person approves before anything ships."
   - Counterfactual (serif): **"Switch off its memory, and quality drops."**
   - Support (Inter): "The agent reads its own past evaluations before it drafts. Take that memory away and the same case scores lower — the memory is doing real work, not decorating the system."
 - **Motion:** V-a Tier 2 self-draw on scroll (GSAP). V-b Tier 3 decay on toggle (Rive state + framer for the bar). Never run both at once.
@@ -295,9 +295,9 @@ This is the existing functional core — **all preserved logic lives here.** It 
 - **Purpose:** Land the "why this wins" and leave a memorable final frame.
 - **Layout:** Return to hero-like spareness. One big serif statement, a tight row of three anchored metrics (mono, count-up), the glyph returns (now "settled"/brighter), and a quiet end-card.
 - **Copy:**
-  - Statement (serif): **"99% of denied claims are never appealed. Aegis is the part of the system that keeps getting better at the fight."**
+  - Statement (serif): **"99% of denied claims are never appealed. Heuristics is the part of the system that keeps getting better at the fight."**
   - Metrics (mono, count-up): e.g. `BENCHMARK QUALITY  0.40 → 0.75` · `JUDGE DIMENSIONS  7` · `HUMAN-APPROVED  ALWAYS`. (Use only numbers backed by the docs/runs; mark targets honestly.)
-  - End-card (mono): `AEGIS · built on Google ADK + Gemini · observability by Arize Phoenix`
+  - End-card (mono): `HEURISTICS · built on Google ADK + Gemini · observability by Arize Phoenix`
 - **Motion:** Tier 3 finale — metrics count up in sequence, the glyph brightens and exhales once, a final accent hairline draws across the footer. Then full stillness (good final frame to end the recording on).
 - **Interaction:** Minimal. Maybe the glyph responds once to hover. A quiet "Replay the run" affordance for second takes.
 - **Register:** Theatrical resolve → stillness.
@@ -329,7 +329,7 @@ A coherent kit. Build the primitives once; reuse everywhere.
 
 For each: why Rive beats native framer/SVG here.
 
-1. **Hero living glyph (the Aegis "eye/shield").** Continuous breathing loop + cursor-reactive state + an "ignite" entrance + a "settled/brighter" finale state. *Why Rive:* one artboard with state-machine inputs (`breath`, `ignite`, `settle`) and cursor input — crisp vector at any size, tiny payload, smoother than orchestrating dozens of SVG keyframes in JS.
+1. **Hero living glyph (the Heuristics "eye/shield").** Continuous breathing loop + cursor-reactive state + an "ignite" entrance + a "settled/brighter" finale state. *Why Rive:* one artboard with state-machine inputs (`breath`, `ignite`, `settle`) and cursor input — crisp vector at any size, tiny payload, smoother than orchestrating dozens of SVG keyframes in JS.
 2. **System status orb / pulse.** Single input `runStatus` (idle | running | needs_approval | success | error) drives color, pulse rate, and shape. *Why Rive:* state-driven looping animation is exactly Rive's model; mapping one React state value to a rich animated loop is trivial and buttery vs. hand-rolled.
 3. **Memory on/off toggle (Act V centerpiece).** A mechanical switch whose "off" state visibly drains light. *Why Rive:* tactile, weighty, state-perfect interaction with a single boolean input; the "decay" can be authored as a state transition, not coded.
 4. **Primary button ignite state.** Accent sweep across the label on press. *Why Rive:* reusable, consistent, GPU-light micro-feedback that reads as "premium hardware" — more refined than a CSS pseudo-element.
@@ -439,11 +439,11 @@ styles/showcase.css                    // [data-theme="showcase-dark"] token blo
 
 ### 11.1 Hero (Act I)
 
-> Build `ActHero.tsx` — a full-viewport, asymmetric hero on `--sc-bg` with a faint single radial key-light (accent, ~6%) behind the headline. Left column (~58% width): a mono eyebrow `AEGIS · SELF-IMPROVING APPEAL ENGINE`, a Source-Serif-4 headline `clamp(3rem,6vw,5.5rem)` weight 600 reading "Watch a system teach itself.", an Inter subhead (see §6), and one primary CTA "Begin a live run" that smooth-scrolls to Act III. Right/offset column: mount `RiveGlyph` (breathing loop, cursor-reactive ≤6px parallax). Bottom-left: a thin JetBrains-Mono telemetry strip that streams faux-live readout lines. On mount, run a GSAP timeline (via `useGsapContext`): glyph `ignite` input fires, headline resolves word-by-word with `filter: blur(8px)→0` + 12px rise staggered 70ms, telemetry strip begins, then glyph settles to `breath`. Honor reduced-motion (show end state instantly). All motion uses `EASE_OUT_EXPO`. No layout shift; CTA hover triggers Rive ignite. Mobile: single column, glyph above, no parallax.
+> Build `ActHero.tsx` — a full-viewport, asymmetric hero on `--sc-bg` with a faint single radial key-light (accent, ~6%) behind the headline. Left column (~58% width): a mono eyebrow `HEURISTICS · SELF-IMPROVING APPEAL ENGINE`, a Source-Serif-4 headline `clamp(3rem,6vw,5.5rem)` weight 600 reading "Watch a system teach itself.", an Inter subhead (see §6), and one primary CTA "Begin a live run" that smooth-scrolls to Act III. Right/offset column: mount `RiveGlyph` (breathing loop, cursor-reactive ≤6px parallax). Bottom-left: a thin JetBrains-Mono telemetry strip that streams faux-live readout lines. On mount, run a GSAP timeline (via `useGsapContext`): glyph `ignite` input fires, headline resolves word-by-word with `filter: blur(8px)→0` + 12px rise staggered 70ms, telemetry strip begins, then glyph settles to `breath`. Honor reduced-motion (show end state instantly). All motion uses `EASE_OUT_EXPO`. No layout shift; CTA hover triggers Rive ignite. Mobile: single column, glyph above, no parallax.
 
 ### 11.2 Thesis (Act II)
 
-> Build `ActThesis.tsx` — a short scroll-pinned editorial beat (pin only ≥lg via `ScrollTrigger.matchMedia`). Center a serif statement "Most AI agents never improve…" then, on scroll progress, resolve a contrast pair: a dim grey inert node labeled "Static-prompt agents" and an accent node labeled "Aegis" that ignites (Rive or CSS pulse) while a thin accent line writes the word "learns". Add the mono caption foreshadowing the memory-off test (see §6). Keep it 90% black/negative space — two ideas only. Tier-2 motion, `EASE_OUT_EXPO`, reduced-motion → static end state. No interaction required beyond optional hover tooltips.
+> Build `ActThesis.tsx` — a short scroll-pinned editorial beat (pin only ≥lg via `ScrollTrigger.matchMedia`). Center a serif statement "Most AI agents never improve…" then, on scroll progress, resolve a contrast pair: a dim grey inert node labeled "Static-prompt agents" and an accent node labeled "Heuristics" that ignites (Rive or CSS pulse) while a thin accent line writes the word "learns". Add the mono caption foreshadowing the memory-off test (see §6). Keep it 90% black/negative space — two ideas only. Tier-2 motion, `EASE_OUT_EXPO`, reduced-motion → static end state. No interaction required beyond optional hover tooltips.
 
 ### 11.3 Dashboard / Live Instrument (Act III)
 
@@ -459,7 +459,7 @@ styles/showcase.css                    // [data-theme="showcase-dark"] token blo
 
 ### 11.6 Impact / Close (Act VI)
 
-> Build `ActImpact.tsx` — return to hero-like spareness on `--sc-bg`. One serif statement ("99% of denied claims are never appealed…"), a tight row of three mono `MetricCounter`s that count up in sequence on enter (e.g. `BENCHMARK QUALITY 0.40 → 0.75`, `JUDGE DIMENSIONS 7`, `HUMAN-APPROVED ALWAYS` — only doc-backed numbers; mark targets honestly), and the `RiveGlyph` returning in a brighter "settled" state that exhales once. Finale GSAP timeline: counters sequence, glyph brightens, a footer accent hairline draws across, then full stillness (a clean final frame to stop recording on). Mono end-card `AEGIS · built on Google ADK + Gemini · observability by Arize Phoenix`. Optional quiet "Replay the run" control. Reduced-motion → show final values immediately.
+> Build `ActImpact.tsx` — return to hero-like spareness on `--sc-bg`. One serif statement ("99% of denied claims are never appealed…"), a tight row of three mono `MetricCounter`s that count up in sequence on enter (e.g. `BENCHMARK QUALITY 0.40 → 0.75`, `JUDGE DIMENSIONS 7`, `HUMAN-APPROVED ALWAYS` — only doc-backed numbers; mark targets honestly), and the `RiveGlyph` returning in a brighter "settled" state that exhales once. Finale GSAP timeline: counters sequence, glyph brightens, a footer accent hairline draws across, then full stillness (a clean final frame to stop recording on). Mono end-card `HEURISTICS · built on Google ADK + Gemini · observability by Arize Phoenix`. Optional quiet "Replay the run" control. Reduced-motion → show final values immediately.
 
 ---
 
@@ -516,7 +516,7 @@ styles/showcase.css                    // [data-theme="showcase-dark"] token blo
 
 ## Appendix — product facts to keep copy honest (from the docs)
 
-- **What Aegis is:** drafts insurance-denial appeals; self-improves by reading its own Phoenix evaluation traces and rewriting its playbook (GEPA), with a human approval gate. (`docs/product-soul.md`.)
+- **What Heuristics is:** drafts insurance-denial appeals; self-improves by reading its own Phoenix evaluation traces and rewriting its playbook (GEPA), with a human approval gate. (`docs/product-soul.md`.)
 - **Thesis (falsifiable, and we prove it):** if turning Phoenix memory off does *not* degrade quality, the core idea failed — so the counterfactual is the centerpiece. (`product-soul.md` §PMF.)
 - **Quick vs serious run:** quick = small cohort (`quick_train`+`quick_holdout`, slice-scoped); serious = full pool, **locked until quick succeeds**. (`current-state.md`, `demo-cheatsheet-pm.md`.)
 - **Run stages:** `queued → measure_before → train_gepa → waiting_for_approval(needs_approval) → promote → measure_after → successful`; can `fail/cancel/reject`; rollback restores the previous promoted prompt/playbook. (`demo-cheatsheet-pm.md`.)

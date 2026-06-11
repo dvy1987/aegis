@@ -1,4 +1,4 @@
-# Backend Reliability Review — Aegis v1 (showcase quick/serious + /appeal)
+# Backend Reliability Review — Heuristics v1 (showcase quick/serious + /appeal)
 
 **Date:** 2026-06-07
 **Reviewer:** Amp (analysis only — no code changes made)

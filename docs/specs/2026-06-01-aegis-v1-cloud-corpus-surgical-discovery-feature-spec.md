@@ -16,8 +16,8 @@ sources:
 
 **What changes for you**
 
-- The appeal **reference library** moves to **Google Cloud** and is searched with **Google’s managed search** when Aegis is deployed (not only files on a laptop).
-- For **this one appeal**, if the library search comes back **empty or too thin**, Aegis may do **up to 5** extra lookups on **approved trusted websites** (one trusted source per fetch), add what passes safety checks to the library, re-search after each add, then draft the letter.
+- The appeal **reference library** moves to **Google Cloud** and is searched with **Google’s managed search** when Heuristics is deployed (not only files on a laptop).
+- For **this one appeal**, if the library search comes back **empty or too thin**, Heuristics may do **up to 5** extra lookups on **approved trusted websites** (one trusted source per fetch), add what passes safety checks to the library, re-search after each add, then draft the letter.
 - A separate **Library Search Planner** (“librarian”) decides **what to search for** — not the agent that writes the appeal letter (“author”).
 - **During this appeal (Phase 3 polish):** if fetch 1–4 still leave the library too thin, a **small AI step** rewrites the **next** search phrase for this case only (still narrow, still allow-listed sites).
 - **Between appeals (learning):** when judged runs show bad search outcomes, the **planner instructions** can be promoted to a new version (like drafter v2), with human approval.
@@ -59,9 +59,9 @@ Today, aegis-v1 only searches a small **local folder**. If the right guideline o
 
 ### US-1 — Deployed appeal with a thin library (happy path with discovery on)
 
-**Persona:** A person using Aegis on the hosted demo (Track B).
+**Persona:** A person using Heuristics on the hosted demo (Track B).
 
-**Scenario:** They submit one synthetic Cigna medical-necessity case. The cloud library has no matching clinical guideline. The **Search Planner** builds the first search phrase; with discovery **enabled**, Aegis fetches trusted sources (up to five), re-searches between fetches, and if fetch 1 still leaves the library thin, **Layer 3** narrows the phrase for fetch 2 (e.g. adds “clinical guideline” + procedure). Each add passes safety checks. The **author** agent then drafts citing only library items. The response shows discovery ran, planner version, and fetch count (no PHI).
+**Scenario:** They submit one synthetic Cigna medical-necessity case. The cloud library has no matching clinical guideline. The **Search Planner** builds the first search phrase; with discovery **enabled**, Heuristics fetches trusted sources (up to five), re-searches between fetches, and if fetch 1 still leaves the library thin, **Layer 3** narrows the phrase for fetch 2 (e.g. adds “clinical guideline” + procedure). Each add passes safety checks. The **author** agent then drafts citing only library items. The response shows discovery ran, planner version, and fetch count (no PHI).
 
 ### US-5 — Layer 3 polish mid-appeal
 
@@ -73,19 +73,19 @@ Today, aegis-v1 only searches a small **local folder**. If the right guideline o
 
 **Persona:** Same person, different case.
 
-**Scenario:** The cloud library already contains usable sources for this denial. Aegis searches, finds enough, drafts immediately. **No** extra web lookup runs. Cost and latency stay low.
+**Scenario:** The cloud library already contains usable sources for this denial. Heuristics searches, finds enough, drafts immediately. **No** extra web lookup runs. Cost and latency stay low.
 
 ### US-3 — Offline / local development (no cloud)
 
 **Persona:** Developer or demo in “no credentials” mode.
 
-**Scenario:** Aegis uses the **local folder** copy of the library (same safety rules). Surgical discovery **does not** run without cloud credentials. Thin library → draft with `missing evidence` / `no_corpus_citations` flags, same as today.
+**Scenario:** Heuristics uses the **local folder** copy of the library (same safety rules). Surgical discovery **does not** run without cloud credentials. Thin library → draft with `missing evidence` / `no_corpus_citations` flags, same as today.
 
 ### US-4 — Discovery off (default)
 
 **Persona:** PM running cost-controlled demos.
 
-**Scenario:** Discovery switch is **off**. Even if the library is thin, Aegis **never** fetches from the web; it drafts conservatively and surfaces risk flags. Cloud search over **existing** library content still works when deployed.
+**Scenario:** Discovery switch is **off**. Even if the library is thin, Heuristics **never** fetches from the web; it drafts conservatively and surfaces risk flags. Cloud search over **existing** library content still works when deployed.
 
 ## Functional Requirements
 

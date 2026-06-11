@@ -18,7 +18,7 @@
 Execute **Plan 1 (substrate F1–F7)** end-to-end, **subagent-driven**:
 [`docs/plans/2026-05-30-learning-loop-substrate-plan.md`](../plans/2026-05-30-learning-loop-substrate-plan.md).
 
-This makes the Aegis self-improvement loop physically possible and observable: an evolvable
+This makes the Heuristics self-improvement loop physically possible and observable: an evolvable
 LLM drafter, the insurer simulator moved out of the agent, all judge/sim signal captured onto
 Phoenix as a **laundered** (firewall-safe) annotation, and one `run_evaluated_case()` entrypoint that
 closes the eval loop. The Learning Coordinator algorithm itself is **Plan 2 — do not build it now.**

@@ -1,4 +1,4 @@
-# Skill Outputs Ledger — Aegis
+# Skill Outputs Ledger — Heuristics
 
 Append-only log of every skill invocation + output file. Newest at the bottom.
 
@@ -11,7 +11,7 @@ Append-only log of every skill invocation + output file. Newest at the bottom.
 | 2026-05-27 — Session 3 | memory-startup | (read-only) | Session 3 cold start; bounded context load |
 | 2026-05-27 — Session 3 | project-setup | AGENTS.md (root, 145 lines) + frontend/AGENTS.md (51 lines) + backend/AGENTS.md (78 lines) | Rebuild AGENTS.md with full preservation discipline + Session 2 decisions; multi-file scaffold; SDD mode on; agents-cli adopted |
 | 2026-05-27 — Session 3 | memory-decision (implicit via edit) | docs/memory/decision-log.md — 2 new entries (adopt google-agents-cli; keep 12-agent Part B) | Capture Session 3 architectural decisions with rationale + revisit triggers |
-| 2026-05-27 — Session 3 | agent-system-architecture | docs/architecture/2026-05-27-aegis-arch.md + docs/architecture.md (pointer) | Formalize 12-agent Part B composite topology; honest component count (10 LLM agents + 1 judge panel + 1 simulator + 2 meta = 14); Mermaid wiring; state/memory strategy; HITL + observability; revisit triggers from ADR-004 |
+| 2026-05-27 — Session 3 | agent-system-architecture | docs/architecture/2026-05-27-heuristics-arch.md + docs/architecture.md (pointer) | Formalize 12-agent Part B composite topology; honest component count (10 LLM agents + 1 judge panel + 1 simulator + 2 meta = 14); Mermaid wiring; state/memory strategy; HITL + observability; revisit triggers from ADR-004 |
 | 2026-05-27 — Session 3 | architectural-decision-log SYNTHESIS=true | docs/adr/ADR-001..005 | 5 ADRs: ADK choice, Phoenix+MCP load-bearing, Next.js+Python overturn, 12-agent swarm, agents-cli adoption. ADR-001/002 SYNTHESIS (retrospective); ADR-003/004/005 CONTEMPORANEOUS |
 
 ---
@@ -34,8 +34,8 @@ These are tracked here so the next session can backfill via `retroactive-project
 | `problem-to-plan` | TODO.md with agent-pickable tasks | This file partially, in handoff TODO |
 | `feature-spec` | Given/When/Then acceptance criteria | Not done |
 | `cross-link-skills` | Verified internal cross-references | Not done |
-| 2026-05-27 05:42 | eval-pipeline | docs/evals/2026-05-27-aegis-eval-pipeline.md | Created multi-layer eval pipeline design |
-| 2026-05-27 05:42 | eval-judge | docs/evals/2026-05-27-aegis-judges.md | Created LLM judge specification and prompts |
+| 2026-05-27 05:42 | eval-pipeline | docs/evals/2026-05-27-heuristics-eval-pipeline.md | Created multi-layer eval pipeline design |
+| 2026-05-27 05:42 | eval-judge | docs/evals/2026-05-27-heuristics-judges.md | Created LLM judge specification and prompts |
 | 2026-05-27 05:44 | create-agent-prompt | backend/src/prompts/orchestrator_v1.md | Created role prompt |
 | 2026-05-27 05:44 | create-agent-prompt | backend/src/prompts/triage_v1.md | Created role prompt |
 | 2026-05-27 05:44 | create-agent-prompt | backend/src/prompts/insurer_intelligence_v1.md | Created role prompt |
@@ -46,13 +46,13 @@ These are tracked here so the next session can backfill via `retroactive-project
 | 2026-05-27 05:44 | create-agent-prompt | backend/src/prompts/strategist_v1.md | Created role prompt |
 | 2026-05-27 05:44 | create-agent-prompt | backend/src/prompts/drafter_v1.md | Created role prompt |
 | 2026-05-27 05:44 | create-agent-prompt | backend/src/prompts/adversarial_reviewer_v1.md | Created role prompt |
-| 2026-05-27 — Session 5 | implementation-plan | docs/plans/2026-05-27-aegis-implementation-plan.md | Day 1–20 plan with 4 phases, 67 tasks, 11 risks, full PRD-ID traceability, A1–A5 gates woven in |
-| 2026-05-27 — Session 5 | implementation-plan (tasks mode) | docs/plans/2026-05-27-aegis-implementation-tasks.md | Flat agent-pickable task list + gate index |
+| 2026-05-27 — Session 5 | implementation-plan | docs/plans/2026-05-27-heuristics-implementation-plan.md | Day 1–20 plan with 4 phases, 67 tasks, 11 risks, full PRD-ID traceability, A1–A5 gates woven in |
+| 2026-05-27 — Session 5 | implementation-plan (tasks mode) | docs/plans/2026-05-27-heuristics-implementation-tasks.md | Flat agent-pickable task list + gate index |
 | 2026-05-27 — Session 5 | brainstorming | docs/specs/2026-05-27-autonomy-ladder-design.md | Designed autonomy ladder thresholds and Master-stage privileges |
 | 2026-05-27 — Session 5 | product-soul | docs/product-soul.md | Rewrote product soul doc (v1.1) adding anti-positioning, values hierarchy, and expanded hypotheses |
 | 2026-05-27 — Session 5 | project-constitution | docs/constitution.md | Constitution v1 with 7 core invariants |
-| 2026-05-27 — Session 5 | feature-spec | docs/specs/2026-05-27-aegis-part-a-mvp-feature-spec.md | Spec: Part A MVP (Draft) |
-| 2026-05-27 — Session 5 | feature-spec | docs/specs/2026-05-27-aegis-part-b-swarm-feature-spec.md | Spec: Part B Swarm (Draft) |
+| 2026-05-27 — Session 5 | feature-spec | docs/specs/2026-05-27-heuristics-part-a-mvp-feature-spec.md | Spec: Part A MVP (Draft) |
+| 2026-05-27 — Session 5 | feature-spec | docs/specs/2026-05-27-heuristics-part-b-swarm-feature-spec.md | Spec: Part B Swarm (Draft) |
 
 | 2026-05-27 14:08 | memory-handoff | docs/memory/agent-handoffs.md | Appended session handoff summary |
 | 2026-05-27 — Session 7 | memory-startup | (read-only) | Session 7 cold start; bounded context load |

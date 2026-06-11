@@ -1,9 +1,9 @@
-# Design Spec — Aegis Learning Coordinator & Closed Self-Improvement Loop
+# Design Spec — Heuristics Learning Coordinator & Closed Self-Improvement Loop
 
 **Date:** 2026-05-30 · **Status:** Draft (brainstorming output, pending PM review)
 **Author:** Claude (brainstorming session) · **Skill:** `superpowers:brainstorming`
-**Companion docs:** [architecture spec](../architecture/2026-05-27-aegis-arch.md) ·
-[eval rubric v2](../evals/2026-05-27-aegis-appeal-rubric.md) ·
+**Companion docs:** [architecture spec](../architecture/2026-05-27-heuristics-arch.md) ·
+[eval rubric v2](../evals/2026-05-27-heuristics-appeal-rubric.md) ·
 [orientation-map](../memory/orientation-map.md) · [PRD](../prd/PRD.md)
 
 > This is a **design spec**, not an implementation plan. It defines *what* to build and *why*.
@@ -13,7 +13,7 @@
 
 ## 1. Context & problem
 
-Aegis's entire Arize-track thesis is a **self-improvement loop**: the appeal agent gets
+Heuristics' entire Arize-track thesis is a **self-improvement loop**: the appeal agent gets
 *measurably better* by learning from its own Phoenix traces. As of 2026-05-30 that loop does not
 exist, and three structural facts block it (verified against code):
 

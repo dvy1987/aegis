@@ -1,6 +1,6 @@
-# Aegis Dataset Card (eval/cases/)
+# Heuristics Dataset Card (eval/cases/)
 
-**Description:** Synthetic denial cases for evaluating the Aegis multi-agent system.
+**Description:** Synthetic denial cases for evaluating the Heuristics multi-agent system.
 
 ## Strict PHI Policy
 

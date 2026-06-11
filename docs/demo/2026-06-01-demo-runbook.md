@@ -1,4 +1,4 @@
-# Aegis Demo Runbook
+# Heuristics Demo Runbook
 
 **Date:** 2026-06-01 · **Status:** working doc for the PM
 **Purpose:** Step-by-step, from where we are now to a demo you can show live and record for submission.
@@ -46,7 +46,7 @@ The rest of this doc is sequenced: **Part 1 gets you a clickable demo today (Tra
 - [ ] **1.3 Sanity check the three routes** in a browser:
   - `http://localhost:3000/` — landing
   - `http://localhost:3000/appeal` — the consumer flow
-  - `http://localhost:3000/showcase` — "How Aegis learns"
+  - `http://localhost:3000/showcase` — "How Heuristics learns"
 - [ ] **1.4 Pick your demo cases** (see Part 6 for selection guidance). All 10 test cases are selectable; cases `test_case_01..04` have **measured** v1/v3 numbers on `/showcase`.
 - [ ] **1.5 Walk it once end-to-end** before recording (the scripts are in Parts 2–3).
 

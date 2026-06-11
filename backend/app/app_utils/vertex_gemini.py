@@ -1,7 +1,7 @@
 """ADK Gemini model wired for Vertex AI (ADC), not the Gemini API key path.
 
 Google ADK 2.x defaults to the Gemini API unless the model name starts with
-``projects/``. Aegis runs on Vertex in dev and Cloud Run, so agents must use
+``projects/``. Heuristics runs on Vertex in dev and Cloud Run, so agents must use
 this subclass.
 """
 

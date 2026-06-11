@@ -1,14 +1,14 @@
-# Aegis Frontend Implementation Plan
+# Heuristics Frontend Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the two-surface Aegis frontend — a calm consumer appeal-drafting flow (`/appeal`) and a judge-facing self-improvement showcase (`/showcase`) — behind one `DataSource` seam (demo default, live `/v1/appeal` via env flag), fully clickable offline.
+**Goal:** Build the two-surface Heuristics frontend — a calm consumer appeal-drafting flow (`/appeal`) and a judge-facing self-improvement showcase (`/showcase`) — behind one `DataSource` seam (demo default, live `/v1/appeal` via env flag), fully clickable offline.
 
 **Architecture:** Next.js 16 App Router + Tailwind v4 (existing locked design tokens). A single `DataSource` interface has two implementations: `demo` (bundled fixtures from real recorded artifacts) and `live` (FastAPI). The consumer flow is a client-side state machine; the showcase renders recorded efficacy artifacts. The teacher answer key (`synthetic_provenance`) is never bundled into consumer fixtures — a firewall test enforces this.
 
 **Tech Stack:** Next.js 16.2.6, React 19, TypeScript (strict), Tailwind v4, framer-motion, Zod (new — runtime fixture validation), Vitest (new — logic unit tests).
 
-**Spec:** `docs/superpowers/specs/2026-06-01-aegis-frontend-design.md`
+**Spec:** `docs/superpowers/specs/2026-06-01-heuristics-frontend-design.md`
 
 ---
 
@@ -54,7 +54,7 @@ frontend/
     app/
       page.tsx                          (modify) landing: link to /appeal + /showcase
       appeal/page.tsx                   (new) consumer flow host
-      showcase/page.tsx                 (new) "How Aegis learns"
+      showcase/page.tsx                 (new) "How Heuristics learns"
     __tests__/
       schema.test.ts                    (new)
       demo.test.ts                      (new)
@@ -950,7 +950,7 @@ cd /bv3/aimbot/divya/buildmind-misc/aegis && git add frontend/src/components/sho
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```
 
-### Task 13: `/showcase` page ("How Aegis learns")
+### Task 13: `/showcase` page ("How Heuristics learns")
 
 **Files:**
 - Create: `frontend/src/app/showcase/page.tsx`
@@ -991,7 +991,7 @@ export default function ShowcasePage() {
 
 - [ ] **Step 3: Commit**
 ```bash
-cd /bv3/aimbot/divya/buildmind-misc/aegis && git add frontend/src/app/showcase/page.tsx && git commit -m "feat(frontend): /showcase 'How Aegis learns' page
+cd /bv3/aimbot/divya/buildmind-misc/aegis && git add frontend/src/app/showcase/page.tsx && git commit -m "feat(frontend): /showcase 'How Heuristics learns' page
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```
@@ -1006,7 +1006,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 - Create: `frontend/src/components/Nav.tsx`
 - Modify: `frontend/src/app/page.tsx`
 
-- [ ] **Step 1: `Nav.tsx`** — `Wordmark` left; right links "Draft an appeal" (`/appeal`) and "How Aegis learns" (`/showcase`). `<nav aria-label="Primary">`. Reuse landing header styling.
+- [ ] **Step 1: `Nav.tsx`** — `Wordmark` left; right links "Draft an appeal" (`/appeal`) and "How Heuristics learns" (`/showcase`). `<nav aria-label="Primary">`. Reuse landing header styling.
 
 - [ ] **Step 2: Modify `page.tsx`** — replace the inline header with `<Nav />`; point the hero "Start a draft" `Button` at `/appeal` (wrap in `<Link>`); add a quiet footer link to `/showcase` labeled "How this gets better over time". Keep all existing copy/hero — no exclamation marks.
 

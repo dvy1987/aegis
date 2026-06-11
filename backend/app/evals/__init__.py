@@ -1,1 +1,1 @@
-"""Evaluation utilities for Aegis."""
+"""Evaluation utilities for Heuristics."""

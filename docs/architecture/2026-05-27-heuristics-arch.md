@@ -1,4 +1,4 @@
-# Aegis — System Architecture
+# Heuristics — System Architecture
 
 **Date:** 2026-05-27 · **Status:** Active · **Skill:** `agent-system-architecture`
 **Companion docs:** [PRD](../prd/PRD.md) · [Design Brief](../design-brief.md) · [ADRs](../adr/) · [Decision Log](../memory/decision-log.md) · [Assumption Map](../research/assumption-map.md)
@@ -11,7 +11,7 @@ This document is the source-of-truth technical blueprint. It replaces the freeha
 
 ### 1.1 Objective
 
-Aegis helps people draft US health-insurance appeal letters that are factually grounded, plan-language-specific, and tactically informed by per-insurer learning. The system **demonstrably improves** at this job over time by introspecting its own Arize Phoenix traces via the Phoenix MCP server at runtime, and by promoting better prompts / playbooks through a Learning Coordinator with hard safety gates.
+Heuristics helps people draft US health-insurance appeal letters that are factually grounded, plan-language-specific, and tactically informed by per-insurer learning. The system **demonstrably improves** at this job over time by introspecting its own Arize Phoenix traces via the Phoenix MCP server at runtime, and by promoting better prompts / playbooks through a Learning Coordinator with hard safety gates.
 
 Two co-existing phases:
 - **Part A — MVP (Days 1–7).** Single ADK agent + one offline learning job. 12-case benchmark, 3 insurers × 2 denial types. Human-approval gate for every promotion. Shippable as a complete Arize-track submission on Day 7.
@@ -40,7 +40,7 @@ Two co-existing phases:
 ### Part B (Full Plan)
 **Composite Pattern** combining 6 of Google's 8 [official ADK multi-agent patterns](https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/):
 
-| Sub-pattern | Where it appears in Aegis |
+| Sub-pattern | Where it appears in Heuristics |
 |---|---|
 | **Coordinator / Dispatcher** | Orchestrator + Triage Agent route the incoming case |
 | **Parallel Fan-Out / Gather** | 4 specialist researchers run concurrently after Triage |
@@ -294,7 +294,7 @@ ADK registers the MCP server as a tool source, exposing trace-query capabilities
 
 ## 8. Case Generation Pipeline (Offline Tooling)
 
-While Aegis evaluates and appeals denial letters, it relies on a robust offline generator pipeline (`backend/app/case_generator`) to create the 100-case synthetic benchmark. This pipeline enforces several strict architectural rules to ensure the benchmark is valid, realistic, and fair:
+While Heuristics evaluates and appeals denial letters, it relies on a robust offline generator pipeline (`backend/app/case_generator`) to create the 100-case synthetic benchmark. This pipeline enforces several strict architectural rules to ensure the benchmark is valid, realistic, and fair:
 
 ### 8.1 Realistic Imperfection ("Authentic Shoddiness")
 Real-world denial letters are rarely pristine legal documents. They are often vague, missing required phone numbers, citing wrong CPT codes, or using contradictory logic. The generation pipeline is explicitly prompted to inject "authentic shoddiness" into the synthetic cases. The Appeal Agent must learn to handle this messiness.
@@ -395,7 +395,7 @@ aegis/
 │   ├── prd/PRD.md
 │   ├── architecture.md                    # pointer to this file
 │   ├── architecture/
-│   │   └── 2026-05-27-aegis-arch.md       # ← THIS FILE
+│   │   └── 2026-05-27-heuristics-arch.md       # ← THIS FILE
 │   ├── adr/                               # numbered ADRs
 │   ├── design-brief.md
 │   ├── research/                          # impact-stats, assumption-map
@@ -468,7 +468,7 @@ Two Cloud Run services, deployed independently. Both region `us-central1` (close
 ## Impact Report
 
 ```
-Architecture designed: Aegis (Parts A + B)
+Architecture designed: Heuristics (Parts A + B)
 Pattern chosen: Composite (Coordinator + Parallel + Sequential + Generator-Critic + Iterative + HITL)
 Number of agents: Part A — 1 runtime + 1 offline (manual). Part B — 10 LLM agents + 1 eval panel + 1 simulator + 2 background meta = 14 components.
 Coordination complexity: Medium-High (justified by self-improvement thesis, mitigated by background-only meta-agents and partial-failure tolerance)

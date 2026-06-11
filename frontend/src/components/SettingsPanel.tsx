@@ -55,7 +55,7 @@ function Switch({
 function statusLabel(status: BackendStatus): string {
   if (status === "checking") return "Checking connection to drafting service…";
   if (status === "connected") return "Connected — appeals run for real";
-  if (status === "offline") return "Not connected — aegis-v1-api may be down";
+  if (status === "offline") return "Not connected — the drafting service may be down";
   return "Check that the drafting service is running";
 }
 
@@ -119,7 +119,7 @@ export function SettingsPanel({
           Settings
         </h2>
         <p className="mt-2 font-body text-sm text-text-secondary leading-relaxed">
-          Draft an appeal always uses the live service. How Aegis learns uses recorded
+          Draft an appeal always uses the live service. How Heuristics learns uses recorded
           evidence on its own page.
         </p>
 
@@ -146,7 +146,7 @@ export function SettingsPanel({
                 Trusted source lookup
               </label>
               <p className="mt-2 font-body text-sm text-text-secondary leading-relaxed">
-                If the library is thin, Aegis may add up to five vetted public sources before
+                If the library is thin, Heuristics may add up to five vetted public sources before
                 drafting. On by default when connected.
               </p>
               {status !== "connected" && (
