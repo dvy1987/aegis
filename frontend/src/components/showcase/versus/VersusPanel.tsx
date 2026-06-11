@@ -11,6 +11,7 @@ import {
   VERSUS_DRAFT_BEFORE,
   VERSUS_ILLUSTRATIVE,
   VERSUS_LIFT_LABEL,
+  VERSUS_PENDING,
   VERSUS_PHOENIX_LINK,
 } from "@/components/showcase/copy";
 import { ArrowUpRightIcon } from "@/icons";
@@ -28,16 +29,12 @@ function setLiftDial(arc: SVGPathElement, needle: SVGGElement, liftRelativePct: 
 
   const point = arc.getPointAtLength(len * t);
   const angle = (Math.atan2(point.y - GAUGE_CY, point.x - GAUGE_CX) * 180) / Math.PI;
-  // Default needle points up (−90°); rotate to sit on the arc radius.
   needle.setAttribute("transform", `rotate(${angle + 90} ${GAUGE_CX} ${GAUGE_CY})`);
 }
 
 /**
  * The page's one symmetric moment — v1 vs v3, with the lift in the middle.
- * A single GSAP timeline fires once on scroll-enter and runs the whole shot in
- * lockstep: left gauge fills, right gauge overtakes, APPROVE lamp blooms, the
- * lift arc draws, the needle springs, and the counters spin — tuned to demo
- * pace. Elements render at their final state so reduced-motion shows the result.
+ * When `bundle.measured` is false, panels stay greyed out and lift reads 0%.
  */
 export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
   const root = useRef<HTMLDivElement>(null);
@@ -47,32 +44,27 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
   const { acquire, release } = useTheatrical();
   const theatrical = useRef({ acquire, release });
 
+  const measured = bundle.measured;
+  const v1 = measured ? bundle.v1.composite : 0;
+  const v3 = measured ? bundle.v3.composite : 0;
+  const lift = measured ? bundle.lift_relative_pct : 0;
+  const liftDecimals = lift % 1 === 0 ? 0 : 1;
+
   useEffect(() => {
     theatrical.current = { acquire, release };
   });
 
-  const v1 = bundle.v1.composite;
-  const v3 = bundle.v3.composite;
-  const lift = bundle.lift_relative_pct;
-  const liftDecimals = lift % 1 === 0 ? 0 : 1;
-
   useLayoutEffect(() => {
-    const arc = arcRef.current;
-    const needle = needleRef.current;
-    if (!arc || !needle) return;
-    setLiftDial(arc, needle, 0);
-  }, [bundle.case_id]);
-
-  useLayoutEffect(() => {
-    if (!reduce) return;
     const arc = arcRef.current;
     const needle = needleRef.current;
     if (!arc || !needle) return;
     setLiftDial(arc, needle, lift);
-  }, [reduce, lift, bundle.case_id]);
+  }, [bundle.case_id, lift]);
 
   useGsapContext(
     () => {
+      if (!measured) return;
+
       const r = root.current;
       const needle = needleRef.current;
       const arc = arcRef.current;
@@ -133,7 +125,7 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
         },
       });
     },
-    { scope: root, dependencies: [bundle.case_id] },
+    { scope: root, dependencies: [bundle.case_id, measured] },
   );
 
   return (
@@ -145,9 +137,13 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
           composite={v1}
           verdict={bundle.v1.verdict}
           excerpt={bundle.v1.letter_excerpt}
+          inactive={!measured}
         />
 
-        <div className="flex flex-col items-center justify-center gap-2 px-2 py-4">
+        <div
+          className="flex flex-col items-center justify-center gap-2 px-2 py-4"
+          style={!measured ? { opacity: 0.55 } : undefined}
+        >
           <MonoLabel>{VERSUS_LIFT_LABEL}</MonoLabel>
           <svg viewBox="0 0 200 116" className="w-full max-w-[220px]" aria-hidden role="img">
             <path d={ARC_PATH} fill="none" stroke="var(--sc-bg-sunken)" strokeWidth={10} strokeLinecap="round" />
@@ -156,10 +152,10 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
               className="sc-vs-arc"
               d={ARC_PATH}
               fill="none"
-              stroke="var(--sc-accent)"
+              stroke={measured ? "var(--sc-accent)" : "var(--sc-text-3)"}
               strokeWidth={10}
               strokeLinecap="round"
-              style={{ filter: "drop-shadow(0 0 8px var(--sc-accent-glow))" }}
+              style={measured ? { filter: "drop-shadow(0 0 8px var(--sc-accent-glow))" } : undefined}
             />
             <g ref={needleRef} className="sc-vs-needle">
               <line
@@ -167,18 +163,23 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
                 y1={GAUGE_CY}
                 x2={GAUGE_CX}
                 y2={32}
-                stroke="var(--sc-text)"
+                stroke={measured ? "var(--sc-text)" : "var(--sc-text-3)"}
                 strokeWidth={2.5}
                 strokeLinecap="round"
               />
             </g>
-            <circle cx={GAUGE_CX} cy={GAUGE_CY} r={6} fill="var(--sc-text)" />
+            <circle cx={GAUGE_CX} cy={GAUGE_CY} r={6} fill={measured ? "var(--sc-text)" : "var(--sc-text-3)"} />
           </svg>
           <span
-            className="sc-vs-lift sc-c-accent"
-            style={{ fontFamily: "var(--font-mono)", fontSize: "2rem", fontWeight: 600 }}
+            className={measured ? "sc-vs-lift sc-c-accent" : "sc-vs-lift"}
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "2rem",
+              fontWeight: 600,
+              color: measured ? undefined : "var(--sc-text-3)",
+            }}
           >
-            +{lift.toFixed(liftDecimals)}%
+            {measured ? `+${lift.toFixed(liftDecimals)}%` : "0%"}
           </span>
         </div>
 
@@ -189,11 +190,12 @@ export function VersusPanel({ bundle }: { bundle: ShowcaseBundle }) {
           verdict={bundle.v3.verdict}
           excerpt={bundle.v3.letter_excerpt}
           improved
+          inactive={!measured}
         />
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        {!bundle.measured && (
+        {!measured && (
           <p className="sc-mono" style={{ color: "var(--sc-text-3)" }}>
             {VERSUS_ILLUSTRATIVE}
           </p>
@@ -222,6 +224,7 @@ function DraftColumn({
   verdict,
   excerpt,
   improved = false,
+  inactive = false,
 }: {
   title: string;
   version: string;
@@ -229,25 +232,53 @@ function DraftColumn({
   verdict: Verdict;
   excerpt: string;
   improved?: boolean;
+  inactive?: boolean;
 }) {
   const side = improved ? "right" : "left";
-  const tone = improved ? "var(--sc-accent)" : "var(--sc-deny)";
+  const tone = inactive ? "var(--sc-text-3)" : improved ? "var(--sc-accent)" : "var(--sc-deny)";
+  const verdictLabel = inactive ? VERSUS_PENDING : verdict === "APPROVE" ? "SIMULATOR · APPROVE" : "SIMULATOR · DENY";
+
   return (
-    <GlassPanel variant={improved ? "active" : "default"} className="flex flex-col gap-4 p-6">
+    <GlassPanel
+      variant={inactive ? "default" : improved ? "active" : "default"}
+      className="flex flex-col gap-4 p-6 transition-[opacity,filter]"
+      style={
+        inactive
+          ? {
+              opacity: 0.52,
+              filter: "saturate(0.25)",
+              borderColor: "var(--sc-hairline)",
+            }
+          : undefined
+      }
+    >
       <div className="flex items-center justify-between gap-3">
         <div className="flex flex-col">
           <MonoLabel>{version}</MonoLabel>
-          <span className="sc-serif" style={{ color: "var(--sc-text)", fontSize: "1.15rem" }}>
+          <span
+            className="sc-serif"
+            style={{ color: inactive ? "var(--sc-text-3)" : "var(--sc-text)", fontSize: "1.15rem" }}
+          >
             {title}
           </span>
         </div>
         <span
-          className={improved ? "sc-vs-approve-lamp inline-flex items-center gap-2 rounded-full px-3 py-1" : "inline-flex items-center gap-2 rounded-full px-3 py-1"}
+          className={
+            improved && !inactive
+              ? "sc-vs-approve-lamp inline-flex items-center gap-2 rounded-full px-3 py-1"
+              : "inline-flex items-center gap-2 rounded-full px-3 py-1"
+          }
           style={{ border: `1px solid ${tone}`, color: tone }}
         >
-          <span className="h-2 w-2 rounded-full" style={{ background: tone, boxShadow: `0 0 8px ${tone}` }} />
-          <span className="sc-mono" style={{ color: tone }}>
-            {verdict === "APPROVE" ? "SIMULATOR · APPROVE" : "SIMULATOR · DENY"}
+          <span
+            className="h-2 w-2 rounded-full"
+            style={{
+              background: tone,
+              boxShadow: inactive ? "none" : `0 0 8px ${tone}`,
+            }}
+          />
+          <span className="sc-mono" style={{ color: tone, fontSize: inactive ? "0.7rem" : undefined }}>
+            {verdictLabel}
           </span>
         </span>
       </div>
@@ -257,19 +288,32 @@ function DraftColumn({
         <div className="relative h-2 w-full overflow-hidden rounded-full" style={{ background: "var(--sc-bg-sunken)" }}>
           <div
             className={side === "right" ? "sc-vs-fill-right h-full rounded-full" : "sc-vs-fill-left h-full rounded-full"}
-            style={{ width: `${composite * 100}%`, background: tone, boxShadow: `0 0 12px ${tone}` }}
+            style={{
+              width: inactive ? "0%" : `${composite * 100}%`,
+              background: tone,
+              boxShadow: inactive ? "none" : `0 0 12px ${tone}`,
+            }}
           />
         </div>
-        <span className={side === "right" ? "sc-vs-num-right sc-mono" : "sc-vs-num-left sc-mono"} style={{ color: "var(--sc-text-3)" }}>
-          {composite.toFixed(2)}
+        <span
+          className={side === "right" ? "sc-vs-num-right sc-mono" : "sc-vs-num-left sc-mono"}
+          style={{ color: "var(--sc-text-3)" }}
+        >
+          {inactive ? "—" : composite.toFixed(2)}
         </span>
       </div>
 
       <p
         className="sc-body rounded-md p-4"
-        style={{ fontSize: "0.9rem", color: "var(--sc-text-2)", background: "var(--sc-bg-sunken)", border: "1px solid var(--sc-hairline)" }}
+        style={{
+          fontSize: "0.9rem",
+          color: inactive ? "var(--sc-text-3)" : "var(--sc-text-2)",
+          background: "var(--sc-bg-sunken)",
+          border: "1px solid var(--sc-hairline)",
+          fontStyle: inactive ? "italic" : undefined,
+        }}
       >
-        {excerpt}
+        {inactive ? "Letter excerpt will appear after a recorded before/after eval run." : excerpt}
       </p>
     </GlassPanel>
   );

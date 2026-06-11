@@ -6,11 +6,21 @@ import { DIFF_EYEBROW, DIFF_HEADLINE } from "@/components/showcase/copy";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 
 /** "What changed, and why." — reflection notes that stagger in on enter. */
-export function DiffCard({ whatChanged }: { whatChanged: string[] }) {
+export function DiffCard({
+  whatChanged,
+  inactive = false,
+}: {
+  whatChanged: string[];
+  inactive?: boolean;
+}) {
   const reduce = useReducedMotion();
   if (!whatChanged.length) return null;
   return (
-    <section className="flex flex-col gap-5">
+    <section
+      className="flex flex-col gap-5"
+      style={inactive ? { opacity: 0.45, filter: "saturate(0.35)" } : undefined}
+      aria-disabled={inactive}
+    >
       <div className="flex flex-col gap-1">
         <MonoLabel>{DIFF_EYEBROW}</MonoLabel>
         <h3 className="sc-h2" style={{ fontSize: "1.6rem" }}>
@@ -31,7 +41,10 @@ export function DiffCard({ whatChanged }: { whatChanged: string[] }) {
             <span
               aria-hidden
               className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
-              style={{ background: "var(--sc-accent)", boxShadow: "0 0 6px var(--sc-accent-glow)" }}
+              style={{
+                background: inactive ? "var(--sc-text-3)" : "var(--sc-accent)",
+                boxShadow: inactive ? "none" : "0 0 6px var(--sc-accent-glow)",
+              }}
             />
             {line}
           </motion.li>

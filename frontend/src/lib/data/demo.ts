@@ -8,7 +8,7 @@ import type {
 import { CASES } from "@/lib/fixtures/cases";
 import { parseAppealFixture } from "@/lib/schema";
 
-const FALLBACK = "case_13_cigna_mednec";
+const FALLBACK = "case_168_aetna_priorauth";
 
 // Canned offline interview: two questions, then done. Keeps the questions
 // step demoable without the backend.
@@ -69,11 +69,11 @@ export const demoSource: DataSource = {
       return {
         case_id: id,
         measured: false,
-        v1: { composite: 0.5, verdict: "DENY", letter_excerpt: "Missing data" },
-        v3: { composite: 0.9, verdict: "APPROVE", letter_excerpt: "Missing data" },
-        lift_relative_pct: 80,
-        what_changed: ["Missing data - click Run Live to generate"],
-        counterfactual: { on_composite: 0.9, off_composite: 0.5 },
+        v1: { composite: 0, verdict: "DENY", letter_excerpt: "" },
+        v3: { composite: 0, verdict: "DENY", letter_excerpt: "" },
+        lift_relative_pct: 0,
+        what_changed: [],
+        counterfactual: { on_composite: 0, off_composite: 0 },
       };
     }
     

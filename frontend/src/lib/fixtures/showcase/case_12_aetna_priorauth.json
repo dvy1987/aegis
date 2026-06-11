@@ -4,5 +4,22 @@
   "denial_type": "Prior authorization",
   "headline": "Diagnostic mammogram plus targeted  \u2014 prior authorization (Aetna)",
   "denial_letter_text": "Dear Member,\n\nThis letter advises you of our determination regarding your provider's request on 03/17/2026 for Diagnostic mammogram plus targeted ultrasound related to Breast lump, BI-RADS 0 (N63.0). After review, we cannot approve this request.\n\nOur review applied Aetna Clinical Policy Bulletin (CPB) criteria and InterQual review standards. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Diagnostic mammogram plus targeted ultrasound with an out-of-network provider is not covered without a gap exception. In-network alternatives are available.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with out of network no authorization. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination through our internal appeals process. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nAetna Medical Management\n\nStandard criteria apply regardless of information previously sent to the plan.",
-  "clinical_context": "The 19-year-old member has Breast lump, BI-RADS 0 (N63.0). He has been treated under commercial coverage with Diagnostic mammogram plus targeted ultrasound recommended as the next appropriate step. Palpable 1.2 cm mass; age 44; family history breast cancer. This directly contradicts the insurer's position that out of network no authorization bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further."
+  "clinical_context": "The 19-year-old member has Breast lump, BI-RADS 0 (N63.0). He has been treated under commercial coverage with Diagnostic mammogram plus targeted ultrasound recommended as the next appropriate step. Palpable 1.2 cm mass; age 44; family history breast cancer. This directly contradicts the insurer's position that out of network no authorization bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request submitted in Q1 2026 but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if his care is delayed further.",
+  "measured": false,
+  "lift_relative_pct": 0,
+  "v1": {
+    "composite": 0,
+    "verdict": "DENY",
+    "letter_excerpt": ""
+  },
+  "v3": {
+    "composite": 0,
+    "verdict": "DENY",
+    "letter_excerpt": ""
+  },
+  "what_changed": [],
+  "counterfactual": {
+    "on_composite": 0,
+    "off_composite": 0
+  }
 }

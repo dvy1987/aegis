@@ -4,5 +4,22 @@
   "denial_type": "Prior authorization",
   "headline": "Letrozole ovulation induction \u2014 prior authorization (Aetna)",
   "denial_letter_text": "Dear Member,\n\nWe received your provider's request on 09/23/2026 for Letrozole ovulation induction related to Polycystic ovary syndrome with infertility (E28.2). After review, we cannot approve this request.\n\nOur review applied Aetna Clinical Policy Bulletin (CPB) criteria and InterQual review standards. The documentation submitted does not demonstrate that the service is medically necessary for this member at this time. Prior authorization for Letrozole ovulation induction is denied because a required peer-to-peer review was not completed in the allowed window. Clinical information may be discussed during appeal submission.\n\nSpecifically, the information provided does not satisfy the utilization-management requirements associated with missing peer to peer. The clinical notes reviewed did not include sufficient detail to confirm that plan criteria were met. The requesting provider may submit additional records, but the current file does not support approval.\n\nIf your provider wishes to discuss this determination, they may contact our physician review line. Any discussion must occur within the timeframe described in your plan materials.\n\nYou have the right to appeal this determination. To file a standard appeal, send a written request and supporting medical records within 180 days of the date of this letter. Include your member identification number and the service reference shown on your explanation of benefits.\n\nSincerely,\n\nAetna Medical Management",
-  "clinical_context": "The 42-year-old member has Polycystic ovary syndrome with infertility (E28.2). She has been treated under commercial coverage with Letrozole ovulation induction recommended as the next appropriate step. Anovulatory cycles; failed clomiphene 100 mg \u00d73 cycles. This directly contradicts the insurer's position that missing peer to peer bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further."
+  "clinical_context": "The 42-year-old member has Polycystic ovary syndrome with infertility (E28.2). She has been treated under commercial coverage with Letrozole ovulation induction recommended as the next appropriate step. Anovulatory cycles; failed clomiphene 100 mg \u00d73 cycles. This directly contradicts the insurer's position that missing peer to peer bars coverage: the chart documents dates, doses, and objective findings that were submitted with the original request but are not reflected in the denial letter's rationale. Treating clinicians note ongoing functional impairment and avoidable harm if her care is delayed further.",
+  "measured": false,
+  "lift_relative_pct": 0,
+  "v1": {
+    "composite": 0,
+    "verdict": "DENY",
+    "letter_excerpt": ""
+  },
+  "v3": {
+    "composite": 0,
+    "verdict": "DENY",
+    "letter_excerpt": ""
+  },
+  "what_changed": [],
+  "counterfactual": {
+    "on_composite": 0,
+    "off_composite": 0
+  }
 }

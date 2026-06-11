@@ -1,0 +1,20 @@
+{
+  "case_id": "case_180_cigna_mednec",
+  "measured": false,
+  "v1": {
+    "composite": 0,
+    "verdict": "DENY",
+    "letter_excerpt": ""
+  },
+  "v3": {
+    "composite": 0,
+    "verdict": "DENY",
+    "letter_excerpt": ""
+  },
+  "lift_relative_pct": 0,
+  "what_changed": [],
+  "counterfactual": {
+    "on_composite": 0,
+    "off_composite": 0
+  }
+}

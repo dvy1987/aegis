@@ -126,7 +126,8 @@ export const VERSUS_LIFT_LABEL = "Held-out lift";
 export const VERSUS_DRAFT_BEFORE = "Before learning";
 export const VERSUS_DRAFT_AFTER = "After learning";
 export const VERSUS_ILLUSTRATIVE =
-  "Illustrative for this case. Measured numbers appear where a live run is recorded.";
+  "No recorded before/after run for this case yet. Held-out lift stays at 0% until a credentialed eval is captured.";
+export const VERSUS_PENDING = "AWAITING MEASUREMENT";
 export const VERSUS_PHOENIX_LINK = "Open trace in Phoenix";
 
 export const DIFF_EYEBROW = "GEPA · REFLECTIVE MUTATION";

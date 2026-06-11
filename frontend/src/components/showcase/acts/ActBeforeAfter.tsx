@@ -47,7 +47,9 @@ export function ActBeforeAfter({
       {bundle && (
         <>
           <VersusPanel key={`versus-${bundle.case_id}`} bundle={bundle} />
-          <DiffCard key={`diff-${bundle.case_id}`} whatChanged={bundle.what_changed} />
+          {bundle.measured && (
+            <DiffCard key={`diff-${bundle.case_id}`} whatChanged={bundle.what_changed} />
+          )}
         </>
       )}
     </section>

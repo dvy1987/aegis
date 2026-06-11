@@ -3,9 +3,9 @@ import { CASES } from "@/lib/fixtures/cases";
 import { parseAppealFixture, FORBIDDEN_FIXTURE_KEYS } from "@/lib/schema";
 
 describe("firewall: consumer fixtures carry no teacher answer key", () => {
-  it("has all 10 test cases", () => {
-    expect(CASES).toHaveLength(10);
-    expect(new Set(CASES.map((c) => c.case_id)).size).toBe(10);
+  it("has all 3 measured-lift sample cases", () => {
+    expect(CASES).toHaveLength(3);
+    expect(new Set(CASES.map((c) => c.case_id)).size).toBe(3);
   });
   it("contains no forbidden answer-key keys anywhere", () => {
     const blob = JSON.stringify(CASES);
