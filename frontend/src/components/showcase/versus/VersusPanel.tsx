@@ -107,7 +107,7 @@ export function VersusPanel({
 
   const unlockSession = productionSession ?? previewSession;
   const afterUnlocked = isAfterLearningUnlocked(unlockSession, rollbackTarget);
-  const [runs, setRuns] = useState<Record<string, RunCache>>(() => measuredLift);
+  const [runs, setRuns] = useState<Record<string, RunCache>>(() => measuredLift as Record<string, RunCache>);
   const [loading, setLoading] = useState<ShowcaseMeasureVariant | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [draftModal, setDraftModal] = useState<ShowcaseMeasureVariant | null>(null);
@@ -134,7 +134,7 @@ export function VersusPanel({
   });
 
   useEffect(() => {
-    setRuns((prev) => ({ ...measuredLift, ...prev }));
+    setRuns((prev) => ({ ...(measuredLift as Record<string, RunCache>), ...prev }));
   }, [measuredLift]);
 
   useEffect(() => {
