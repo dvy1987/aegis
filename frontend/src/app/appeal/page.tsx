@@ -13,6 +13,7 @@ import { WorkingProgress } from "@/components/flow/WorkingProgress";
 import { MirrorCard } from "@/components/flow/MirrorCard";
 import { DraftEditor } from "@/components/flow/DraftEditor";
 import { DecideBar } from "@/components/flow/DecideBar";
+import { cn } from "@/lib/cn";
 
 const STEP_RATIO: Record<FlowStep, number> = {
   intake: 0.1,
@@ -65,7 +66,12 @@ export default function AppealPage() {
       <div className="mt-8">
         <ProgressHairline ratio={STEP_RATIO[state.step]} />
       </div>
-      <main className="mx-auto w-full max-w-(--container-prose) flex-1 px-6 py-16 md:px-12 md:py-24">
+      <main
+        className={cn(
+          "mx-auto w-full flex-1 px-6 py-16 md:px-12 md:py-24",
+          state.step === "intake" ? "max-w-(--container-wide)" : "max-w-(--container-prose)",
+        )}
+      >
         {state.error && (
           <p className="mb-6 font-body text-sm text-status-error">{state.error}</p>
         )}

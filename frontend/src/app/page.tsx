@@ -127,8 +127,8 @@ export default function Home() {
                 Tell us what happened
               </h3>
               <p className="mt-3 font-body text-base leading-base text-text-secondary">
-                Paste the denial letter, some surrounding clinical context and answer a few short questions. In
-                your words and your doctor notes, if available
+                Copy the denial letter, some surrounding clinical context and answer a few short questions. In
+                your words and your doctor&apos;s notes, if available
               </p>
             </li>
             <li className="col-span-12 md:col-span-4">
@@ -140,8 +140,8 @@ export default function Home() {
                 We mirror it back
               </h3>
               <p className="mt-3 font-body text-base leading-base text-text-secondary">
-                A short summary of what we heard, the rules that apply, and the strongest case we can make on
-                your behalf — before any letter is drafted.
+                A short summary of what we heard — what was denied, why they said no, and the strongest angle
+                we see. Read it back before you open the full draft.
               </p>
             </li>
             <li className="col-span-12 md:col-span-4">

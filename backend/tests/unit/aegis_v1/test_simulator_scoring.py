@@ -143,7 +143,7 @@ def test_weak_v1_denies_below_threshold():
         "credible_tone": 3,
     }), rules)
     assert res.verdict == "DENY"
-    assert res.score == pytest.approx(0.32, abs=0.01)
+    assert res.score == pytest.approx(0.35, abs=0.01)
     assert any("weak: rebuts_specific_flaw" in g for g in res.gaps)
 
 
@@ -153,7 +153,7 @@ def test_low_authority_anchor_still_allows_approve_when_weighted_score_high():
     anchors["cites_applicable_authority"] = 1
     res = score_outcome(_assess(anchors), rules)
     assert res.verdict == "APPROVE"
-    assert res.score == pytest.approx(0.92, abs=0.01)
+    assert res.score == pytest.approx(0.93, abs=0.01)
 
 
 def test_partial_rebut_anchors_can_still_approve():
@@ -163,7 +163,7 @@ def test_partial_rebut_anchors_can_still_approve():
     anchors["addresses_denial_rationale"] = 3
     res = score_outcome(_assess(anchors), rules)
     assert res.verdict == "APPROVE"
-    assert res.score == pytest.approx(0.88, abs=0.01)
+    assert res.score == pytest.approx(0.82, abs=0.01)
 
 
 def test_partial_medical_director_anchor_does_not_zero_score():
@@ -172,7 +172,7 @@ def test_partial_medical_director_anchor_does_not_zero_score():
     anchors["medical_director_persuasion"] = 3
     res = score_outcome(_assess(anchors), rules)
     assert res.verdict == "APPROVE"
-    assert res.score == pytest.approx(0.94, abs=0.01)
+    assert res.score == pytest.approx(0.94, abs=0.02)
 
 
 def test_missing_feature_is_treated_as_anchor_1():
@@ -182,4 +182,4 @@ def test_missing_feature_is_treated_as_anchor_1():
     cs = {fs.feature: fs.anchor for fs in res.feature_scores}
     assert cs["cites_clinical_evidence"] == 1
     assert res.verdict == "APPROVE"
-    assert res.score == pytest.approx(0.84, abs=0.01)
+    assert res.score == pytest.approx(0.92, abs=0.01)

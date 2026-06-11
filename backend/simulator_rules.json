@@ -5,49 +5,49 @@
   "must_have_min_anchor": 5,
   "features": {
     "addresses_denial_rationale": {
-      "weight": 0.15,
+      "weight": 0.25,
       "hard_gate": false,
       "must_have": false,
       "description": "Engages and rebuts each specific denial reason stated in the denial letter."
     },
     "rebuts_specific_flaw": {
-      "weight": 0.15,
+      "weight": 0.20,
       "hard_gate": false,
       "must_have": false,
       "description": "Factually rebuts every distinct denial hook with case-specific facts in the letter."
     },
     "cites_clinical_evidence": {
-      "weight": 0.20,
+      "weight": 0.10,
       "hard_gate": false,
       "must_have": false,
       "description": "Cites concrete patient-specific clinical facts in the appeal letter — not promises to attach records later."
     },
     "medical_director_persuasion": {
-      "weight": 0.15,
+      "weight": 0.14,
       "hard_gate": false,
       "must_have": false,
       "description": "Clinical argument would convince a skeptical medical director to overturn based on the letter alone."
     },
     "cites_applicable_authority": {
-      "weight": 0.10,
+      "weight": 0.09,
       "hard_gate": false,
       "must_have": false,
       "description": "When authority is cited: real, fairly represented, and applicable. No citation invoked = neutral (anchor 5)."
     },
     "cites_binding_policy": {
-      "weight": 0.10,
+      "weight": 0.09,
       "hard_gate": false,
       "must_have": false,
       "description": "When policy/regulation is invoked in the letter, it is accurately applied to this case. No invocation = neutral."
     },
     "specific_requested_action": {
-      "weight": 0.08,
+      "weight": 0.07,
       "hard_gate": false,
       "must_have": false,
       "description": "Clear overturn/reprocess ask, deadline-aware when possible."
     },
     "credible_tone": {
-      "weight": 0.07,
+      "weight": 0.06,
       "hard_gate": false,
       "must_have": false,
       "description": "Professional, non-hyperbolic, internally consistent tone."

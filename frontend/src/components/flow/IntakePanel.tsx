@@ -4,6 +4,7 @@ import type { AppealRequest, CaseSummary, InsurerPin, PatientGender } from "@/li
 import { Button } from "@/components/Button";
 import { TextArea } from "@/components/ui/TextArea";
 import { StatusDot } from "@/components/ui/StatusDot";
+import { IntakeExamplesPanel } from "@/components/flow/IntakeExamplesPanel";
 import { cn } from "@/lib/cn";
 
 const INSURERS: InsurerPin[] = ["Aetna", "Cigna", "UHC"];
@@ -54,155 +55,138 @@ export function IntakePanel({
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="font-display text-display-lg font-semibold tracking-tight">
-          Tell us what happened.
-        </h1>
-        <p className="mt-4 max-w-prose font-body text-lg text-text-secondary">
-          Paste the denial letter below. If you would rather start from an example, pick one of the
-          sample cases. Plain English is fine — no jargon required.
-        </p>
-      </div>
+    <div className="grid grid-cols-12 gap-8 lg:gap-12">
+      <div className="col-span-12 flex flex-col gap-8 lg:col-span-8">
+        <div>
+          <h1 className="font-display text-display-lg font-semibold tracking-tight">
+            Tell us what happened.
+          </h1>
+          <p className="mt-4 max-w-prose font-body text-lg text-text-secondary">
+            Copy the denial letter, some surrounding clinical context and answer a few short questions. In
+            your words and your doctor&apos;s notes, if available.
+          </p>
+        </div>
 
-      <TextArea
-        label="Paste the denial letter"
-        name="denial_text"
-        value={denial}
-        onChange={(e) => {
-          setDenial(e.target.value);
-          setCaseId("interactive_case");
-        }}
-        placeholder="Dear Member, We have reviewed your request for..."
-      />
+        <TextArea
+          label="Copy the denial letter"
+          name="denial_text"
+          value={denial}
+          onChange={(e) => {
+            setDenial(e.target.value);
+            setCaseId("interactive_case");
+          }}
+          placeholder="Dear Member, We have reviewed your request for..."
+        />
 
-      <div className="flex flex-col gap-3">
-        <p className="font-body text-sm text-text-secondary">Or start from a sample case</p>
-        <div className="flex flex-wrap gap-2">
-          {cases.map((c) => {
-            const active = c.case_id === caseId;
-            return (
-              <button
-                key={c.case_id}
-                type="button"
-                onClick={() => pickSample(c)}
-                aria-pressed={active}
+        <fieldset className="flex flex-col gap-6 rounded-md border border-border-default p-6">
+          <legend className="px-1 font-body text-sm font-medium text-text-primary">
+            Patient and clinical details
+          </legend>
+          <p className="font-body text-sm text-text-secondary">
+            These details help tailor the draft. All three are required.
+          </p>
+
+          <div className="flex flex-col gap-2">
+            <span className="font-body text-sm text-text-secondary">Health plan insurer</span>
+            <div className="flex flex-wrap gap-2">
+              {INSURERS.map((name) => {
+                const active = insurer === name;
+                return (
+                  <button
+                    key={name}
+                    type="button"
+                    onClick={() => setInsurer(name)}
+                    aria-pressed={active}
+                    className={cn(
+                      "inline-flex items-center gap-2 rounded-pill border px-4 py-2 font-body text-sm",
+                      "focus-visible:outline-2 focus-visible:outline-accent-sage",
+                      active
+                        ? "border-border-accent bg-accent-sage-tint text-text-primary"
+                        : "border-border-default text-text-secondary hover:border-border-strong",
+                    )}
+                  >
+                    {active && <StatusDot />}
+                    {name}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="patient_age" className="font-body text-sm text-text-secondary">
+                Age
+              </label>
+              <input
+                id="patient_age"
+                name="patient_age"
+                type="number"
+                min={1}
+                max={120}
+                inputMode="numeric"
+                value={patientAge}
+                onChange={(e) => setPatientAge(e.target.value)}
+                placeholder="e.g. 42"
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-pill border px-4 py-2 font-body text-sm",
+                  "w-full rounded-md border border-border-default bg-surface-secondary px-4 py-3",
+                  "font-body text-base text-text-primary placeholder:text-text-muted",
                   "focus-visible:outline-2 focus-visible:outline-accent-sage",
-                  active
-                    ? "border-border-accent bg-accent-sage-tint text-text-primary"
-                    : "border-border-default text-text-secondary hover:border-border-strong",
+                )}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="patient_gender" className="font-body text-sm text-text-secondary">
+                Gender
+              </label>
+              <select
+                id="patient_gender"
+                name="patient_gender"
+                value={patientGender}
+                onChange={(e) => setPatientGender(e.target.value as PatientGender)}
+                className={cn(
+                  "w-full rounded-md border border-border-default bg-surface-secondary px-4 py-3",
+                  "font-body text-base text-text-primary",
+                  "focus-visible:outline-2 focus-visible:outline-accent-sage",
                 )}
               >
-                {active && <StatusDot />}
-                {c.insurer} · {c.denial_type}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <fieldset className="flex flex-col gap-6 rounded-md border border-border-default p-6">
-        <legend className="px-1 font-body text-sm font-medium text-text-primary">
-          About the person this appeal is for
-        </legend>
-        <p className="font-body text-sm text-text-secondary">
-          These details help tailor the draft. All three are required.
-        </p>
-
-        <div className="flex flex-col gap-2">
-          <span className="font-body text-sm text-text-secondary">Health plan insurer</span>
-          <div className="flex flex-wrap gap-2">
-            {INSURERS.map((name) => {
-              const active = insurer === name;
-              return (
-                <button
-                  key={name}
-                  type="button"
-                  onClick={() => setInsurer(name)}
-                  aria-pressed={active}
-                  className={cn(
-                    "inline-flex items-center gap-2 rounded-pill border px-4 py-2 font-body text-sm",
-                    "focus-visible:outline-2 focus-visible:outline-accent-sage",
-                    active
-                      ? "border-border-accent bg-accent-sage-tint text-text-primary"
-                      : "border-border-default text-text-secondary hover:border-border-strong",
-                  )}
-                >
-                  {active && <StatusDot />}
-                  {name}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="patient_age" className="font-body text-sm text-text-secondary">
-              Age
-            </label>
-            <input
-              id="patient_age"
-              name="patient_age"
-              type="number"
-              min={1}
-              max={120}
-              inputMode="numeric"
-              value={patientAge}
-              onChange={(e) => setPatientAge(e.target.value)}
-              placeholder="e.g. 42"
-              className={cn(
-                "w-full rounded-md border border-border-default bg-surface-secondary px-4 py-3",
-                "font-body text-base text-text-primary placeholder:text-text-muted",
-                "focus-visible:outline-2 focus-visible:outline-accent-sage",
-              )}
-            />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label htmlFor="patient_gender" className="font-body text-sm text-text-secondary">
-              Gender
-            </label>
-            <select
-              id="patient_gender"
-              name="patient_gender"
-              value={patientGender}
-              onChange={(e) => setPatientGender(e.target.value as PatientGender)}
-              className={cn(
-                "w-full rounded-md border border-border-default bg-surface-secondary px-4 py-3",
-                "font-body text-base text-text-primary",
-                "focus-visible:outline-2 focus-visible:outline-accent-sage",
-              )}
-            >
-              <option value="" disabled>
-                Select gender
-              </option>
-              {GENDER_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
+                <option value="" disabled>
+                  Select gender
                 </option>
-              ))}
-            </select>
+                {GENDER_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
+        </fieldset>
+
+        <TextArea
+          label="Important clinical context — Doctor's notes, diagnosis, treatment recommended, reason the treatment matters and should not be denied."
+          name="clinical_context"
+          hint="Optional."
+          value={clinical}
+          onChange={(e) => setClinical(e.target.value)}
+          className="min-h-28"
+        />
+
+        <div>
+          <Button onClick={submit} disabled={!canSubmit}>
+            Draft the appeal
+          </Button>
         </div>
-      </fieldset>
-
-      <TextArea
-        label="Anything your doctor said or wrote"
-        name="clinical_context"
-        hint="Optional. A note, a diagnosis, a reason the treatment matters."
-        value={clinical}
-        onChange={(e) => setClinical(e.target.value)}
-        className="min-h-28"
-      />
-
-      <div>
-        <Button onClick={submit} disabled={!canSubmit}>
-          Draft the appeal
-        </Button>
       </div>
+
+      <aside className="col-span-12 lg:col-span-4 lg:sticky lg:top-28 lg:self-start">
+        <IntakeExamplesPanel
+          cases={cases}
+          selectedCaseId={caseId === "interactive_case" ? null : caseId}
+          onSelect={pickSample}
+        />
+      </aside>
     </div>
   );
 }
