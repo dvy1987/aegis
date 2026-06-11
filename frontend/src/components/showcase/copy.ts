@@ -227,16 +227,3 @@ export const PIPELINE_NODES = [
     callout: "Approved changes replace the active production playbook set.",
   },
 ] as const;
-
-export const COUNTERFACTUAL_EYEBROW = "MEMORY PROOF";
-export const COUNTERFACTUAL_HEADLINE = "Cut the memory. Watch the score fall.";
-export const COUNTERFACTUAL_BODY =
-  "With Phoenix MCP on, Aegis pulls patterns from its own eval history. Off, it drafts blind — and the composite drops. That gap is the proof memory is load-bearing.";
-export const COUNTERFACTUAL_MEMORY_ON = "MEMORY ON";
-export const COUNTERFACTUAL_MEMORY_OFF = "MEMORY OFF · DEGRADED";
-export const COUNTERFACTUAL_GAUGE_ON = "Composite · memory on";
-export const COUNTERFACTUAL_GAUGE_OFF = "Composite · memory off";
-export const COUNTERFACTUAL_FOOTNOTE =
-  "Memory-off figure is a design target until a measured counterfactual run is recorded.";
-
-export const MEMORY_TOGGLE_LABEL = "Phoenix memory";

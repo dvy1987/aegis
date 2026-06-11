@@ -99,7 +99,6 @@ export function VersusPanel({
     result: ShowcaseMeasureResult,
   ) => void;
   rollbackTarget: ShowcaseRollbackTarget | null;
-  /** Parent act section — used as the scroll trigger while the act is pinned. */
   sectionRef?: RefObject<HTMLElement | null>;
 }) {
   const root = useRef<HTMLDivElement>(null);

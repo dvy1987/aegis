@@ -19,7 +19,6 @@ import { ActLearningLoop } from "@/components/showcase/acts/ActLearningLoop";
 import { ActPipeline } from "@/components/showcase/acts/ActPipeline";
 import { ActInstrument } from "@/components/showcase/acts/ActInstrument";
 import { ActBeforeAfter } from "@/components/showcase/acts/ActBeforeAfter";
-import { ActIntelligence } from "@/components/showcase/acts/ActIntelligence";
 import { StatusHUD } from "@/components/showcase/console/StatusHUD";
 
 export interface ShowcaseFilmProps {
@@ -125,10 +124,6 @@ function ShowcaseFilmBody(props: ShowcaseFilmProps) {
         measuredLift={props.measuredLift}
         onMeasuredLiftUpdate={props.onMeasuredLiftUpdate}
         rollbackTarget={props.rollbackTarget}
-      />
-      <ActIntelligence
-        on={props.bundle?.counterfactual.on_composite ?? 0}
-        off={props.bundle?.counterfactual.off_composite ?? 0}
       />
     </div>
   );
