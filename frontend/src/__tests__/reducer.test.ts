@@ -52,4 +52,12 @@ describe("flowReducer", () => {
   it("reset returns to intake", () => {
     expect(flowReducer({ ...initialFlow, step: "decide" }, { type: "RESET" }).step).toBe("intake");
   });
+  it("stores additional details on the mirror step", () => {
+    const s = flowReducer(
+      { ...initialFlow, step: "mirror", result: fix },
+      { type: "ADD_DETAILS", text: "My oncologist sent labs on June 1." },
+    );
+    expect(s.additionalDetails).toBe("My oncologist sent labs on June 1.");
+    expect(s.step).toBe("mirror");
+  });
 });

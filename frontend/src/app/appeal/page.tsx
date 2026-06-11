@@ -2,6 +2,12 @@
 import { useEffect, useReducer, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { flowReducer, initialFlow, type FlowStep } from "@/lib/flow/reducer";
+import {
+  clearAppealSession,
+  loadAppealSession,
+  saveAppealSession,
+  type PersistedAppealSession,
+} from "@/lib/flow/persistAppealSession";
 import { consumerSource } from "@/lib/data";
 import type { AppealRequest, CaseSummary } from "@/lib/types";
 import { getDiscoveryEnabled, SETTINGS_CHANGED_EVENT } from "@/lib/settings";
@@ -11,9 +17,19 @@ import { IntakePanel } from "@/components/flow/IntakePanel";
 import { QuestionChat } from "@/components/flow/QuestionChat";
 import { WorkingProgress } from "@/components/flow/WorkingProgress";
 import { MirrorCard } from "@/components/flow/MirrorCard";
+import { ResumeAppealBanner } from "@/components/flow/ResumeAppealBanner";
 import { DraftEditor } from "@/components/flow/DraftEditor";
 import { DecideBar } from "@/components/flow/DecideBar";
 import { cn } from "@/lib/cn";
+
+const STEP_LABELS: Record<FlowStep, string> = {
+  intake: "start",
+  questions: "questions",
+  working: "drafting",
+  mirror: "summary",
+  draft: "draft review",
+  decide: "finish",
+};
 
 const STEP_RATIO: Record<FlowStep, number> = {
   intake: 0.1,
@@ -93,11 +109,18 @@ export default function AppealPage() {
             )}
             {state.step === "working" && <WorkingProgress />}
             {state.step === "mirror" && state.result && (
-              <MirrorCard mirror={state.result.mirror} onContinue={() => dispatch({ type: "ADVANCE" })} />
+              <MirrorCard
+                mirror={state.result.mirror}
+                additionalDetails={state.additionalDetails ?? ""}
+                onSaveDetails={(text) => dispatch({ type: "ADD_DETAILS", text })}
+                onContinue={() => dispatch({ type: "ADVANCE" })}
+              />
             )}
-            {state.step === "draft" && state.result && (
+            {state.step === "draft" && state.result && state.req && (
               <DraftEditor
+                req={state.req}
                 result={state.result}
+                additionalDetails={state.additionalDetails}
                 onEdit={(l) => dispatch({ type: "EDIT_LETTER", letter: l })}
                 onContinue={() => dispatch({ type: "ADVANCE" })}
               />

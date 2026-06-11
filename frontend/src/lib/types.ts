@@ -99,7 +99,14 @@ export interface MirrorBlock {
   what_was_denied: string;
   why_they_said_no: string;
   deadline_note: string;       // factual, no urgency
-  strongest_angle: string;
+  /** Paraphrased strengths from Q&A — never raw answer paste. */
+  what_helps_note?: string;
+  /** Patient-actionable gaps — never simulator critique. */
+  gaps_note: string;
+  /** @deprecated Removed from live mirror UI. */
+  what_you_shared?: string;
+  /** @deprecated Demo fixtures only; live path uses gaps_note. */
+  strongest_angle?: string;
 }
 
 // Demo fixtures add the side-rail material the live API doesn't return yet.

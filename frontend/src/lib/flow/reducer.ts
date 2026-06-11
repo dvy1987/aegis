@@ -6,6 +6,8 @@ export interface FlowState {
   step: FlowStep;
   req?: AppealRequest;
   result?: AppealFixture;
+  /** Free-form notes added on the mirror step after Q&A. */
+  additionalDetails?: string;
   error?: string;
 }
 
@@ -19,6 +21,8 @@ export type FlowAction =
   | { type: "RESULT"; result: AppealFixture }
   | { type: "ERROR"; error: string }
   | { type: "EDIT_LETTER"; letter: string }
+  | { type: "ADD_DETAILS"; text: string }
+  | { type: "RESTORE"; state: FlowState }
   | { type: "ADVANCE" }
   | { type: "RESET" };
 
@@ -36,6 +40,10 @@ export function flowReducer(state: FlowState, action: FlowAction): FlowState {
       return state.result
         ? { ...state, result: { ...state.result, appeal_letter: action.letter } }
         : state;
+    case "ADD_DETAILS":
+      return { ...state, additionalDetails: action.text || undefined };
+    case "RESTORE":
+      return { ...action.state, error: undefined };
     case "ADVANCE": {
       const i = ORDER.indexOf(state.step);
       return { ...state, step: ORDER[Math.min(i + 1, ORDER.length - 1)] };

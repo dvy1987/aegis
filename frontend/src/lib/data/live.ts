@@ -18,6 +18,7 @@ import {
   isLegacyShowcaseManifest,
   loadBundledShowcaseManifest,
 } from "@/lib/showcase/manifest";
+import { buildAppealMirror } from "@/lib/flow/buildAppealMirror";
 import { parseAppealResponse, parseQuestionTurn, simulatorResultSchema } from "@/lib/schema";
 import { formatFetchError } from "@/lib/apiErrors";
 import { getApiBase, getDiscoveryEnabled } from "@/lib/settings";
@@ -57,13 +58,7 @@ export const liveSource: DataSource = {
     const data = parseAppealResponse(await res.json());
     return {
       ...data,
-      mirror: {
-        insurer: data.trace_metadata.insurer,
-        what_was_denied: "See the denial letter you provided.",
-        why_they_said_no: "Summarized from your letter.",
-        deadline_note: "Check your letter for the appeal deadline and file before that date.",
-        strongest_angle: data.outcome.critique || "Review the draft below.",
-      },
+      mirror: buildAppealMirror(req, data),
       citations_used: [],
       missing_evidence_checklist: [],
     };

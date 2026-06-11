@@ -1,10 +1,9 @@
 "use client";
-import type { AppealFixture } from "@/lib/types";
+import { collectPatientGapItems } from "@/lib/flow/buildAppealMirror";
+import type { AppealFixture, AppealRequest } from "@/lib/types";
 import { Button } from "@/components/Button";
 import { Callout } from "@/components/ui/Callout";
 import { Disclaimer } from "@/components/ui/Disclaimer";
-import { ScoreMeter } from "@/components/ui/ScoreMeter";
-import { StatusDot } from "@/components/ui/StatusDot";
 
 function RailSection({ title, items }: { title: string; items: string[] }) {
   if (!items.length) return null;
@@ -23,17 +22,19 @@ function RailSection({ title, items }: { title: string; items: string[] }) {
 }
 
 export function DraftEditor({
+  req,
   result,
+  additionalDetails,
   onEdit,
   onContinue,
 }: {
+  req: AppealRequest;
   result: AppealFixture;
+  additionalDetails?: string;
   onEdit: (letter: string) => void;
   onContinue: () => void;
 }) {
-  const { outcome } = result;
-  const approved = outcome.verdict === "APPROVE";
-
+  const gapItems = collectPatientGapItems(req, result.question_interview);
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -57,18 +58,15 @@ export function DraftEditor({
         </div>
 
         <aside className="col-span-12 flex flex-col gap-6 lg:col-span-4">
-          <div className="flex flex-col gap-2">
-            <p className="inline-flex items-center gap-2 font-body text-sm text-text-secondary">
-              <StatusDot tone={approved ? "sage" : "clay"} />
-              {approved ? "Likely to clear the proxy review" : "May not clear the proxy review yet"}
-            </p>
-            <ScoreMeter score={outcome.score} threshold={outcome.threshold} />
-            <p className="font-body text-sm text-text-tertiary">
-              A transparent rule-based proxy — not a prediction of what your insurer will do.
-            </p>
-          </div>
-
-          <RailSection title="What would make this stronger" items={outcome.gaps} />
+          {additionalDetails ? (
+            <div className="flex flex-col gap-2">
+              <p className="font-body text-sm text-text-secondary">Details you added</p>
+              <p className="font-body text-sm whitespace-pre-line text-text-tertiary">
+                {additionalDetails}
+              </p>
+            </div>
+          ) : null}
+          <RailSection title="Worth gathering before you file" items={gapItems} />
           <RailSection
             title="Sources referenced"
             items={result.citations_used.map((c) => `${c.title}: ${c.quote}`)}

@@ -52,9 +52,19 @@ export const appealResponseSchema = z.object({
 });
 
 export const mirrorBlockSchema = z.object({
-  insurer: z.string(), what_was_denied: z.string(), why_they_said_no: z.string(),
-  deadline_note: z.string(), strongest_angle: z.string(),
-});
+  insurer: z.string(),
+  what_was_denied: z.string(),
+  why_they_said_no: z.string(),
+  deadline_note: z.string(),
+  what_helps_note: z.string().optional(),
+  what_you_shared: z.string().optional(),
+  gaps_note: z.string().optional(),
+  strongest_angle: z.string().optional(),
+}).transform((m) => ({
+  ...m,
+  what_helps_note: m.what_helps_note ?? m.what_you_shared ?? m.strongest_angle ?? "",
+  gaps_note: m.gaps_note ?? "",
+}));
 
 export const appealFixtureSchema = appealResponseSchema.extend({
   mirror: mirrorBlockSchema,
