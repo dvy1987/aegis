@@ -31,29 +31,26 @@ export function DecideBar({
           Your appeal is saved as a draft.
         </h2>
         <p className="mt-4 max-w-prose font-body text-lg text-text-secondary">
-          Take it from here. Copy it, download it, or share it with your doctor. We don&apos;t file
-          anything for you, and the draft lives only on this device.
+          Take it from here. Copy it or download it and share it with your doctor or legal advisor.
         </p>
       </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <Button onClick={() => navigator.clipboard?.writeText(letter)}>
-          <CopyIcon size={16} />
-          Copy the letter
+      <div className="grid max-w-md grid-cols-1 gap-3 sm:grid-cols-2">
+        <Button className="w-full" onClick={() => navigator.clipboard?.writeText(letter)}>
+          <CopyIcon size={20} aria-hidden />
+          <span>Copy the letter</span>
         </Button>
-        <Button variant="secondary" onClick={() => download(`${base}.txt`, letter, "text/plain")}>
-          <DownloadIcon size={16} />
-          Download .txt
-        </Button>
-        <Button variant="secondary" onClick={() => download(`${base}.md`, letter, "text/markdown")}>
-          <DownloadIcon size={16} />
-          Download .md
+        <Button
+          className="w-full"
+          variant="secondary"
+          onClick={() => download(`${base}.txt`, letter, "text/plain")}
+        >
+          <DownloadIcon size={20} aria-hidden />
+          <span>Download as text</span>
         </Button>
       </div>
 
-      <p className="font-body text-base text-text-secondary">
-        {result.mirror.deadline_note} A person should read this before you file.
-      </p>
+      <p className="font-body text-base text-text-secondary">{result.mirror.deadline_note}</p>
 
       <Disclaimer />
 

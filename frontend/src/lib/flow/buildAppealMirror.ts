@@ -1,3 +1,4 @@
+import { consolidateGapItems } from "@/lib/flow/consolidateGapItems";
 import { formatMirrorBullets, paraphraseInterview } from "@/lib/flow/paraphraseInterview";
 import type { AppealRequest, AppealResponse, MirrorBlock, QuestionInterview } from "@/lib/types";
 
@@ -154,9 +155,6 @@ export function collectPatientGapItems(
     add(
       "Ask your doctor which medication the plan considers the preferred alternative, and whether they can send a letter explaining why it is not appropriate for you.",
     );
-    add(
-      "If your doctor already sent clinical records to the insurer, ask for a copy to keep with your appeal.",
-    );
   }
   if (/prescriber|provider.*statement|formulary exception|letter explaining/i.test(denial)) {
     add(
@@ -166,9 +164,13 @@ export function collectPatientGapItems(
   if (/prior auth|prior authorization/i.test(denial) && /expired|not obtained|not received/i.test(denial)) {
     add("Confirm with your doctor's office whether a new prior-authorization request has been submitted.");
   }
-  if (/records available|submitted records|documentation|do not establish/i.test(denial)) {
+  if (
+    /records available|submitted records|documentation|do not establish|formulary|preferred alternative/i.test(
+      denial,
+    )
+  ) {
     add(
-      "Gather office notes, lab results, or imaging your doctor has that show why you need this treatment now.",
+      "Gather office notes, lab results, or imaging your doctor has that show why you need this treatment now, and copies of anything already sent to the insurer.",
     );
   }
   if (/medical necessity|not medically necessary|experimental|investigational/i.test(denial)) {
@@ -193,7 +195,9 @@ function formatGapNote(items: string[]): string {
 export function buildAppealMirror(req: AppealRequest, response: AppealResponse): MirrorBlock {
   const interview = response.question_interview;
   const { helps, gaps: interviewGaps } = paraphraseInterview(interview);
-  const gapItems = mergeUniqueLines(interviewGaps, collectPatientGapItems(req, interview));
+  const gapItems = consolidateGapItems(
+    mergeUniqueLines(interviewGaps, collectPatientGapItems(req, interview)),
+  );
 
   return {
     insurer: req.insurer,

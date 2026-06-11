@@ -40,4 +40,9 @@ Return JSON:
 
 Update `substantive_questions` and `gap_questions` every step from the transcript so far. When you `stop`, these lists are final: only substantive Q&A may flow to the letter draft; gaps surface to the patient as "we still need this."
 
+## Gap list discipline (no repetition)
+- Each `gap_questions` entry must target a **different** missing patient fact. Never list two gaps about the same theme (e.g. two doctor-letter asks, two preferred-drug asks, two records asks).
+- If the patient could not answer whether a doctor letter was sent, include **one** gap about confirming with their doctor — do not also add a separate gap about formulary-exception letters or preferred alternatives; those are the same theme for the patient.
+- Before `stop`, review `gap_questions` and `planned_questions` and remove near-duplicates. Prefer the single clearest gap per theme.
+
 Do not write the appeal letter. Do not invent regulatory text.

@@ -8,8 +8,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-md font-body text-base font-medium " +
-  "px-6 h-12 active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none aegis-button";
+  "inline-flex items-center justify-center gap-2.5 rounded-md font-body text-base font-medium leading-none " +
+  "px-6 h-12 text-center whitespace-nowrap " +
+  "[&_svg]:block [&_svg]:shrink-0 " +
+  "active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none aegis-button";
 
 const variants: Record<Variant, string> = {
   primary:

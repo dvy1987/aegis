@@ -532,7 +532,10 @@ def refresh_interview_artifact(
 ) -> dict[str, Any]:
     """Re-derive routing + drafter context from ``qa_transcript`` (ignores stale labels)."""
     transcript = _transcript_turns(question_interview)
+    from app.aegis_v1.gap_dedupe import dedupe_gap_questions
+
     substantive, gaps = classify_transcript_routing(question_interview)
+    gaps = dedupe_gap_questions(gaps)
     enriched = build_enriched_context(notes, transcript)
     refreshed = dict(question_interview)
     refreshed["substantive_questions"] = substantive
@@ -555,7 +558,9 @@ def _derive_classification(
         turn.question for turn in transcript if _is_non_answer(turn.answer)
     ]
     not_asked = [question for question in planned_questions if question not in answered]
-    gaps = list(dict.fromkeys(not_asked + dont_know))
+    from app.aegis_v1.gap_dedupe import dedupe_gap_questions
+
+    gaps = dedupe_gap_questions(list(dict.fromkeys(not_asked + dont_know)))
     return substantive, gaps
 
 
@@ -596,22 +601,28 @@ def finalize_interview_result(
     """Build the interview artifact from the agent's final classification."""
     planned = list(planned_questions)[:MAX_QUESTIONS]
     if skipped and not transcript:
+        from app.aegis_v1.gap_dedupe import dedupe_gap_questions
+
+        skipped_gaps = dedupe_gap_questions(planned)
         return QuestionInterviewResult(
             qa_transcript=[],
             enriched_context=(notes or "").strip(),
             planned_questions=planned,
             substantive_questions=[],
-            gap_questions=planned,
-            patient_gap_note=build_patient_gap_note(planned),
+            gap_questions=skipped_gaps,
+            patient_gap_note=build_patient_gap_note(skipped_gaps),
             internal_gap_analysis=gap_analysis,
             skipped=True,
         )
+
+    from app.aegis_v1.gap_dedupe import dedupe_gap_questions
 
     substantive, gaps = classify_interview(
         planned_questions=planned,
         transcript=transcript,
         on_stop=True,
     )
+    gaps = dedupe_gap_questions(gaps)
     return QuestionInterviewResult(
         qa_transcript=list(transcript),
         enriched_context=build_enriched_context(
@@ -628,13 +639,16 @@ def finalize_interview_result(
 
 def build_patient_gap_note(gap_questions: list[str]) -> str:
     """Plain-English draft-page copy. Never goes into the appeal letter."""
-    if not gap_questions:
+    from app.aegis_v1.gap_dedupe import dedupe_gap_questions
+
+    gaps = dedupe_gap_questions(gap_questions)
+    if not gaps:
         return ""
     lines = [
         "We drafted your appeal with the information available. "
         "Answers to these questions could make it stronger:"
     ]
-    lines.extend(f"- {question}" for question in gap_questions)
+    lines.extend(f"- {question}" for question in gaps)
     return "\n".join(lines)
 
 
