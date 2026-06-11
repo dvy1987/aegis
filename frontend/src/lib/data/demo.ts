@@ -28,6 +28,11 @@ function demoMeasureResult(
   fixture: AppealFixture,
   variant: ShowcaseMeasureVariant,
 ): ShowcaseMeasureResult {
+  const baselineOutcome = {
+    ...fixture.outcome,
+    score: Math.max(0, fixture.outcome.score - 0.08),
+    verdict: "DENY" as const,
+  };
   const boosted =
     variant === "candidate"
       ? {
@@ -38,7 +43,7 @@ function demoMeasureResult(
               ? ("APPROVE" as const)
               : fixture.outcome.verdict,
         }
-      : fixture.outcome;
+      : baselineOutcome;
 
   return {
     case_id: fixture.trace_metadata.case_id,
@@ -49,8 +54,11 @@ function demoMeasureResult(
     letter_excerpt: excerpt(fixture.appeal_letter),
     appeal_letter: fixture.appeal_letter,
     outcome: boosted,
-    prompt_version: variant === "baseline" ? "drafter_v1" : "drafter_v2",
-    risk_flags: fixture.risk_flags,
+    prompt_version: variant === "baseline" ? "drafter_v1 · day_zero" : "promoted · phoenix on",
+    risk_flags:
+      variant === "baseline"
+        ? [...fixture.risk_flags, "phoenix_mcp_request_disabled", "playbook:day_zero"]
+        : [...fixture.risk_flags, "phoenix_mcp_live"],
   };
 }
 

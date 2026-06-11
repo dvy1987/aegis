@@ -76,8 +76,8 @@ export function VersusPanel({
 
   const cache = runs[bundle.case_id] ?? {};
   const measured = bundle.measured;
-  const v1 = measured ? bundle.v1.composite : (cache.baseline?.score ?? 0);
-  const v3 = measured ? bundle.v3.composite : (cache.candidate?.score ?? 0);
+  const v1 = measured ? bundle.v1.composite : 0;
+  const v3 = measured ? bundle.v3.composite : 0;
   const lift = measured ? bundle.lift_relative_pct : 0;
   const liftDecimals = lift % 1 === 0 ? 0 : 1;
 
@@ -98,8 +98,8 @@ export function VersusPanel({
     const run = cache[variant];
     const side = sideFromBundle(variant);
     return {
-      composite: run?.score ?? (measured ? side.composite : 0),
-      verdict: (run?.verdict ?? side.verdict) as Verdict,
+      composite: measured ? (run?.score ?? side.composite) : 0,
+      verdict: (measured ? (run?.verdict ?? side.verdict) : "DENY") as Verdict,
       excerpt: run?.letter_excerpt || side.letter_excerpt,
       letter: run?.appeal_letter ?? "",
     };
@@ -244,8 +244,7 @@ export function VersusPanel({
             version="v1"
             composite={baseline.composite}
             verdict={baseline.verdict}
-            excerpt={baseline.excerpt}
-            inactive={!measured && !cache.baseline}
+            inactive={!measured}
             actionsLocked={false}
             loading={loading === "baseline"}
             onRunSimulator={() => void runSimulator("baseline")}
@@ -300,9 +299,8 @@ export function VersusPanel({
             version="v3"
             composite={candidate.composite}
             verdict={candidate.verdict}
-            excerpt={candidate.excerpt}
             improved
-            inactive={!measured && !cache.candidate}
+            inactive={!measured}
             actionsLocked={!afterUnlocked}
             lockedHint={VERSUS_AFTER_LOCKED}
             loading={loading === "candidate"}
@@ -360,7 +358,6 @@ function DraftColumn({
   version,
   composite,
   verdict,
-  excerpt,
   improved = false,
   inactive = false,
   actionsLocked = false,
@@ -373,7 +370,6 @@ function DraftColumn({
   version: string;
   composite: number;
   verdict: Verdict;
-  excerpt: string;
   improved?: boolean;
   inactive?: boolean;
   actionsLocked?: boolean;
@@ -385,7 +381,7 @@ function DraftColumn({
   const side = improved ? "right" : "left";
   const tone = inactive ? "var(--sc-text-3)" : improved ? "var(--sc-accent)" : "var(--sc-deny)";
   const verdictLabel = inactive ? VERSUS_PENDING : verdict === "APPROVE" ? "SIMULATOR · APPROVE" : "SIMULATOR · DENY";
-  const hasLiveData = !inactive || composite > 0 || excerpt.length > 0;
+  const hasLiveData = !inactive;
 
   return (
     <GlassPanel
@@ -451,21 +447,6 @@ function DraftColumn({
           {inactive && composite === 0 ? "—" : composite.toFixed(2)}
         </span>
       </div>
-
-      <p
-        className="sc-body rounded-md p-4"
-        style={{
-          fontSize: "0.9rem",
-          color: inactive ? "var(--sc-text-3)" : "var(--sc-text-2)",
-          background: "var(--sc-bg-sunken)",
-          border: "1px solid var(--sc-hairline)",
-          fontStyle: inactive && !excerpt ? "italic" : undefined,
-        }}
-      >
-        {inactive && !excerpt
-          ? "Letter excerpt will appear after a recorded before/after eval run."
-          : excerpt || "Run simulator to draft and score this case."}
-      </p>
 
       <div className="flex flex-col gap-2">
         <div className="flex flex-wrap gap-2">

@@ -107,6 +107,7 @@ export const liveSource: DataSource = {
         denial_letter_text: caseSummary.denial_letter_text,
         clinical_context: caseSummary.clinical_context ?? "",
         insurer: caseSummary.insurer,
+        denial_type: caseSummary.denial_type,
         patient_age: caseSummary.patient_age,
         patient_gender: caseSummary.patient_gender,
         variant,

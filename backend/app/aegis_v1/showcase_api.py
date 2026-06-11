@@ -284,6 +284,7 @@ class ShowcaseMeasureRequest(BaseModel):
     denial_letter_text: str
     clinical_context: str = ""
     insurer: str
+    denial_type: str = ""
     patient_age: int = 0
     patient_gender: str = "X"
     variant: Literal["baseline", "candidate"] = "baseline"
@@ -310,20 +311,53 @@ def measure_showcase_case(req: ShowcaseMeasureRequest) -> ShowcaseMeasureRespons
         SHOWCASE_MEASUREMENT_MAX_ATTEMPTS,
         run_appeal_with_outcome,
     )
+    from app.aegis_v1.day_zero_snapshot import (
+        load_day_zero_drafter_prompt,
+        load_day_zero_geo_playbook,
+        load_day_zero_playbook,
+    )
     from app.aegis_v1.drafter_client import get_active_drafter_prompt_version
     from app.aegis_v1.patient_context import compose_interactive_clinical_context, normalize_gender
     from app.aegis_v1.phoenix_mode import PhoenixMode
     from app.aegis_v1.simulator_client import AdkSimulatorClient
+    from app.aegis_v1.tools import case_parser
 
     gender = normalize_gender(req.patient_gender)
     if gender not in {"F", "M", "X"}:
         raise HTTPException(status_code=422, detail="patient_gender must be F, M, or X")
 
-    prompt_version = (
-        req.baseline_prompt_version
-        if req.variant == "baseline"
-        else get_active_drafter_prompt_version()
+    parsed = case_parser(
+        denial_text=req.denial_letter_text,
+        clinical_context=req.clinical_context,
+        case_id=req.case_id,
+        insurer=req.insurer,
+        patient_age=req.patient_age,
+        patient_gender=gender,
     )
+    denial_type = str(parsed.get("denial_type") or "unknown")
+    if denial_type == "unknown" and req.denial_type.strip():
+        from app.learning.slice_key import normalize_denial_type_for_slice
+
+        denial_type = normalize_denial_type_for_slice(req.denial_type)
+
+    if req.variant == "baseline":
+        prompt_version, prompt_text = load_day_zero_drafter_prompt()
+        playbook_override = load_day_zero_playbook(
+            parsed["insurer"],
+            denial_type,
+            sub_tactic=str(parsed.get("sub_tactic") or "unknown"),
+        )
+        geo_playbook_override = load_day_zero_geo_playbook()
+        use_phoenix_memory = False
+        phoenix_mode = PhoenixMode.HOLDOUT_READONLY
+    else:
+        prompt_version = get_active_drafter_prompt_version()
+        prompt_text = None
+        playbook_override = None
+        geo_playbook_override = None
+        use_phoenix_memory = True
+        phoenix_mode = PhoenixMode.APPEAL
+
     clinical_context = compose_interactive_clinical_context(
         patient_age=req.patient_age,
         patient_gender=gender,
@@ -338,11 +372,15 @@ def measure_showcase_case(req: ShowcaseMeasureRequest) -> ShowcaseMeasureRespons
         patient_gender=gender,
         dataset_split="showcase_interactive_measure",
         run_mode="benchmark",
-        phoenix_mode=PhoenixMode.HOLDOUT_READONLY,
+        phoenix_mode=phoenix_mode,
         drafter_client=None,
         simulator_client=AdkSimulatorClient(),
         max_attempts=SHOWCASE_MEASUREMENT_MAX_ATTEMPTS,
         drafter_prompt_version=prompt_version,
+        drafter_prompt_text=prompt_text,
+        playbook_override=playbook_override,
+        geo_playbook_override=geo_playbook_override,
+        use_phoenix_memory=use_phoenix_memory,
         run_question_agent=True,
         teacher_clinical_context=req.clinical_context,
     )
