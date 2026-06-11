@@ -133,6 +133,17 @@ export const VERSUS_ILLUSTRATIVE =
   "No recorded before/after run for this case yet. Held-out lift stays at 0% until a credentialed eval is captured.";
 export const VERSUS_PENDING = "AWAITING MEASUREMENT";
 export const VERSUS_PHOENIX_LINK = "Open trace in Phoenix";
+export const VERSUS_RUN_SIMULATOR = "Run simulator";
+export const VERSUS_VIEW_DRAFT = "View appeal draft";
+export const VERSUS_AFTER_LOCKED =
+  "Unlocks after you approve a GEPA proposal from a preview or production run.";
+export const VERSUS_DRAFT_MODAL_EYEBROW = "APPEAL DRAFT";
+export const SIMULATOR_MODAL_EYEBROW = "OUTCOME SIMULATOR";
+export const SIMULATOR_MODAL_SCORE = "Simulator score";
+export const SIMULATOR_MODAL_PROXY =
+  "A transparent rule-based proxy — not a prediction of what the insurer will do.";
+export const SIMULATOR_MODAL_GAPS = "What would make this stronger";
+export const SIMULATOR_MODAL_CRITIQUE = "Summary";
 
 export const DIFF_EYEBROW = "GEPA · REFLECTIVE MUTATION";
 export const DIFF_HEADLINE = "What GEPA changed in the proposal";

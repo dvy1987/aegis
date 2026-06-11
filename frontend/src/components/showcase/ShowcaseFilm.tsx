@@ -102,6 +102,8 @@ function ShowcaseFilmBody(props: ShowcaseFilmProps) {
         cases={props.cases}
         selected={props.sel}
         onSelect={props.setSel}
+        runSession={props.runSession}
+        rollbackTarget={props.rollbackTarget}
       />
       <ActIntelligence
         on={props.bundle?.counterfactual.on_composite ?? 0}

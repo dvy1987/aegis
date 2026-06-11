@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { CaseSummary, ShowcaseBundle } from "@/lib/types";
+import type { CaseSummary, ShowcaseBundle, ShowcaseRollbackTarget, ShowcaseRunSession } from "@/lib/types";
 import { EASE_OUT_EXPO } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { CaseCycler } from "@/components/showcase/versus/CaseCycler";
@@ -19,12 +19,17 @@ export function ActBeforeAfter({
   cases,
   selected,
   onSelect,
+  runSession,
+  rollbackTarget,
 }: {
   bundle: ShowcaseBundle | null;
   cases: CaseSummary[];
   selected: string;
   onSelect: (id: string) => void;
+  runSession: ShowcaseRunSession | null;
+  rollbackTarget: ShowcaseRollbackTarget | null;
 }) {
+  const currentCase = cases.find((c) => c.case_id === selected) ?? cases[0];
   return (
     <section
       id="before-after"
@@ -44,9 +49,15 @@ export function ActBeforeAfter({
 
       <CaseCycler cases={cases} selected={selected} onSelect={onSelect} />
 
-      {bundle && (
+      {bundle && currentCase && (
         <>
-          <VersusPanel key={`versus-${bundle.case_id}`} bundle={bundle} />
+          <VersusPanel
+            key={`versus-${bundle.case_id}`}
+            bundle={bundle}
+            caseSummary={currentCase}
+            runSession={runSession}
+            rollbackTarget={rollbackTarget}
+          />
           {bundle.measured && (
             <DiffCard key={`diff-${bundle.case_id}`} whatChanged={bundle.what_changed} />
           )}

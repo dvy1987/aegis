@@ -122,6 +122,22 @@ export interface CaseSummary {
   clinical_context?: string;
 }
 
+export type ShowcaseMeasureVariant = "baseline" | "candidate";
+
+/** Drafter + simulator only — one before/after learning column. */
+export interface ShowcaseMeasureResult {
+  case_id: string;
+  variant: ShowcaseMeasureVariant;
+  verdict: Verdict;
+  score: number;
+  threshold: number;
+  letter_excerpt: string;
+  appeal_letter: string;
+  outcome: SimulatorResult;
+  prompt_version: string;
+  risk_flags: string[];
+}
+
 // Showcase bundle for one case.
 export interface ShowcaseBundle {
   case_id: string;

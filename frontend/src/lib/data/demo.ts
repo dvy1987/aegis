@@ -2,13 +2,57 @@ import type { DataSource } from "./source";
 import type {
   AppealRequest,
   AppealFixture,
+  CaseSummary,
   QuestionTurn,
   ShowcaseBundle,
+  ShowcaseMeasureResult,
+  ShowcaseMeasureVariant,
 } from "@/lib/types";
 import { CASES } from "@/lib/fixtures/cases";
 import { parseAppealFixture } from "@/lib/schema";
 
 const FALLBACK = "case_168_aetna_priorauth";
+
+function excerpt(text: string, limit = 520): string {
+  const compact = text.replace(/\s+/g, " ").trim();
+  return compact.length > limit ? `${compact.slice(0, limit)}...` : compact;
+}
+
+async function loadAppealFixture(caseId: string): Promise<AppealFixture> {
+  const id = CASES.some((c) => c.case_id === caseId) ? caseId : FALLBACK;
+  const mod = await import(`@/lib/fixtures/appeals/${id}.json`);
+  return parseAppealFixture(mod.default);
+}
+
+function demoMeasureResult(
+  fixture: AppealFixture,
+  variant: ShowcaseMeasureVariant,
+): ShowcaseMeasureResult {
+  const boosted =
+    variant === "candidate"
+      ? {
+          ...fixture.outcome,
+          score: Math.min(1, fixture.outcome.score + 0.09),
+          verdict:
+            fixture.outcome.score + 0.09 >= fixture.outcome.threshold
+              ? ("APPROVE" as const)
+              : fixture.outcome.verdict,
+        }
+      : fixture.outcome;
+
+  return {
+    case_id: fixture.trace_metadata.case_id,
+    variant,
+    verdict: boosted.verdict,
+    score: boosted.score,
+    threshold: boosted.threshold,
+    letter_excerpt: excerpt(fixture.appeal_letter),
+    appeal_letter: fixture.appeal_letter,
+    outcome: boosted,
+    prompt_version: variant === "baseline" ? "drafter_v1" : "drafter_v2",
+    risk_flags: fixture.risk_flags,
+  };
+}
 
 // Canned offline interview: two questions, then done. Keeps the questions
 // step demoable without the backend.
@@ -35,9 +79,14 @@ export const demoSource: DataSource = {
     return CASES;
   },
   async draftAppeal(req: AppealRequest): Promise<AppealFixture> {
-    const id = CASES.some((c) => c.case_id === req.case_id) ? req.case_id : FALLBACK;
-    const mod = await import(`@/lib/fixtures/appeals/${id}.json`);
-    return parseAppealFixture(mod.default);
+    return loadAppealFixture(req.case_id);
+  },
+  async runShowcaseMeasure(
+    caseSummary: CaseSummary,
+    variant: ShowcaseMeasureVariant,
+  ): Promise<ShowcaseMeasureResult> {
+    const fixture = await loadAppealFixture(caseSummary.case_id);
+    return demoMeasureResult(fixture, variant);
   },
   async startQuestions(): Promise<QuestionTurn> {
     const id = `demo-${Date.now()}`;

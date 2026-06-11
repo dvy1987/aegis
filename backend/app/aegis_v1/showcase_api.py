@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 import threading
 from contextlib import contextmanager
-from typing import Literal
+from typing import Any, Literal
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
@@ -277,6 +277,92 @@ class ShowcaseBundle(BaseModel):
     what_changed: list[str] = Field(default_factory=list)
     counterfactual: ShowcaseCounterfactual
     phoenix_url: str | None = None
+
+
+class ShowcaseMeasureRequest(BaseModel):
+    case_id: str
+    denial_letter_text: str
+    clinical_context: str = ""
+    insurer: str
+    patient_age: int = 0
+    patient_gender: str = "X"
+    variant: Literal["baseline", "candidate"] = "baseline"
+    baseline_prompt_version: str = "drafter_v1"
+
+
+class ShowcaseMeasureResponse(BaseModel):
+    case_id: str
+    variant: str
+    verdict: Literal["APPROVE", "DENY"]
+    score: float
+    threshold: float
+    letter_excerpt: str
+    appeal_letter: str
+    outcome: dict[str, Any]
+    prompt_version: str
+    risk_flags: list[str] = Field(default_factory=list)
+
+
+@router.post("/measure-case", response_model=ShowcaseMeasureResponse)
+def measure_showcase_case(req: ShowcaseMeasureRequest) -> ShowcaseMeasureResponse:
+    """Drafter + Outcome Simulator only — no judges, no Phoenix writes."""
+    from app.aegis_v1.appeal_orchestrator import (
+        SHOWCASE_MEASUREMENT_MAX_ATTEMPTS,
+        run_appeal_with_outcome,
+    )
+    from app.aegis_v1.drafter_client import get_active_drafter_prompt_version
+    from app.aegis_v1.patient_context import compose_interactive_clinical_context, normalize_gender
+    from app.aegis_v1.phoenix_mode import PhoenixMode
+    from app.aegis_v1.simulator_client import AdkSimulatorClient
+
+    gender = normalize_gender(req.patient_gender)
+    if gender not in {"F", "M", "X"}:
+        raise HTTPException(status_code=422, detail="patient_gender must be F, M, or X")
+
+    prompt_version = (
+        req.baseline_prompt_version
+        if req.variant == "baseline"
+        else get_active_drafter_prompt_version()
+    )
+    clinical_context = compose_interactive_clinical_context(
+        patient_age=req.patient_age,
+        patient_gender=gender,
+        clinical_notes=req.clinical_context,
+    )
+    appeal = run_appeal_with_outcome(
+        denial_text=req.denial_letter_text,
+        clinical_context=clinical_context,
+        case_id=req.case_id,
+        insurer=req.insurer,
+        patient_age=req.patient_age,
+        patient_gender=gender,
+        dataset_split="showcase_interactive_measure",
+        run_mode="benchmark",
+        phoenix_mode=PhoenixMode.HOLDOUT_READONLY,
+        drafter_client=None,
+        simulator_client=AdkSimulatorClient(),
+        max_attempts=SHOWCASE_MEASUREMENT_MAX_ATTEMPTS,
+        drafter_prompt_version=prompt_version,
+        run_question_agent=True,
+        teacher_clinical_context=req.clinical_context,
+    )
+    package = appeal.appeal_package
+    draft = package["appeal_package_draft"]
+    letter = str(draft.get("appeal_letter") or "")
+    metadata = package.get("trace_metadata") or {}
+    sim = appeal.outcome
+    return ShowcaseMeasureResponse(
+        case_id=req.case_id,
+        variant=req.variant,
+        verdict=sim["verdict"],
+        score=float(sim["score"]),
+        threshold=float(sim["threshold"]),
+        letter_excerpt=_excerpt(letter),
+        appeal_letter=letter,
+        outcome=sim,
+        prompt_version=str(metadata.get("prompt_version") or prompt_version),
+        risk_flags=list(package.get("risk_flags") or []),
+    )
 
 
 @contextmanager

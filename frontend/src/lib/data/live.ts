@@ -2,10 +2,13 @@ import type { DataSource } from "./source";
 import type {
   AppealRequest,
   AppealFixture,
+  CaseSummary,
   QuestionStartRequest,
   QuestionTurn,
   ShowcaseBundle,
   ShowcaseManifest,
+  ShowcaseMeasureResult,
+  ShowcaseMeasureVariant,
   ShowcaseRollbackTarget,
   ShowcaseRunSession,
 } from "@/lib/types";
@@ -14,7 +17,7 @@ import {
   isLegacyShowcaseManifest,
   loadBundledShowcaseManifest,
 } from "@/lib/showcase/manifest";
-import { parseAppealResponse, parseQuestionTurn } from "@/lib/schema";
+import { parseAppealResponse, parseQuestionTurn, simulatorResultSchema } from "@/lib/schema";
 import { getApiBase, getDiscoveryEnabled } from "@/lib/settings";
 import { demoSource } from "./demo";
 
@@ -90,6 +93,31 @@ export const liveSource: DataSource = {
     });
     if (!res.ok) throw new Error(`questions skip failed: ${res.status}`);
     return parseQuestionTurn(await res.json());
+  },
+  async runShowcaseMeasure(
+    caseSummary: CaseSummary,
+    variant: ShowcaseMeasureVariant,
+  ): Promise<ShowcaseMeasureResult> {
+    const base = getApiBase();
+    const res = await fetch(`${base}/v1/showcase/measure-case`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        case_id: caseSummary.case_id,
+        denial_letter_text: caseSummary.denial_letter_text,
+        clinical_context: caseSummary.clinical_context ?? "",
+        insurer: caseSummary.insurer,
+        patient_age: caseSummary.patient_age,
+        patient_gender: caseSummary.patient_gender,
+        variant,
+      }),
+    });
+    if (!res.ok) throw new Error(`showcase measure failed: ${res.status}`);
+    const data = (await res.json()) as ShowcaseMeasureResult;
+    return {
+      ...data,
+      outcome: simulatorResultSchema.parse(data.outcome),
+    };
   },
 };
 
