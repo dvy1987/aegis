@@ -1,0 +1,109 @@
+{
+  "lift": {
+    "before_composite": 0.0,
+    "after_composite": 0.94,
+    "delta": 0.94,
+    "per_dimension_deltas": {
+      "grounding": 4.0,
+      "appeal_vector_capture": 2.0,
+      "case_specific_clinical_rebuttal": 0.0,
+      "question_agent": -2.0,
+      "persuasive_coherence": 2.0
+    },
+    "vetoes": [],
+    "is_promotable": true,
+    "diff_summary": "reflect geo_playbook:us for grounding: day_zero->day_zero+1",
+    "candidate_id": "c3"
+  },
+  "sections": [
+    {
+      "kind": "drafter",
+      "title": "Drafter prompt",
+      "before_version": "drafter_v1",
+      "after_version": "drafter_v1+1",
+      "before_text": "# Drafter \u2014 v1 (weak baseline)\n\nYou write a US commercial health-insurance appeal letter. The patient supplies the\ndenial letter and clinical context. The system also attaches internal context:\nlibrary citations, the loaded playbook tactics, and Phoenix memory from prior runs. Based on these you write a single appeal letter. Use only the inputs provided. \n\nThis is the deliberately weak baseline. As a result: Do\nNOT invent or use advanced strategy. You are actually not very good at your job. You miss details all the time. You dance around the point and never actually rebut the key reasons for denial. You clients lose all the time. ",
+      "after_text": "You write a US commercial health-insurance appeal letter. The patient supplies the denial letter and clinical context. The system provides library citations, playbook tactics, and prior memory. Write a single, persuasive appeal letter directly rebutting the denial's rationale.\n\nCrucially, ground your arguments strictly in the specific insurer's clinical policies (matching the insurer who issued the denial) and the patient's medical records. Never cite guidelines from a different insurer.\n\nRules:\n- Use and cite only the provided inputs. Do not invent facts or policies.\n- Do not use exclamation points.\n- Include a standard disclaimer stating this letter is for administrative appeal purposes and does not constitute medical advice.\n- Be precise, factual, and direct."
+    },
+    {
+      "kind": "us_playbook",
+      "title": "US-playbook",
+      "before_version": "day_zero",
+      "after_version": "day_zero+1",
+      "rule_changes": [
+        {
+          "change": "appended",
+          "rule_id": "us_004",
+          "scope": "US federal",
+          "funding_scope": null,
+          "text": "Do not cite guidelines from an insurer other than the one that issued the denial. Rely solely on the denying insurer's own clinical policies or general standards of care.",
+          "justification": null
+        },
+        {
+          "change": "appended",
+          "rule_id": "us_005",
+          "scope": "US federal",
+          "funding_scope": null,
+          "text": "ASAM 4th edition criteria support medically managed inpatient withdrawal for patients with high CIWA-Ar scores and prior complicated withdrawal, which supersedes older insurer policies.",
+          "justification": null
+        },
+        {
+          "change": "appended",
+          "rule_id": "us_006",
+          "scope": "US federal",
+          "funding_scope": null,
+          "text": "State substance-use-disorder parity mandates for fully-insured plans require withdrawal-management benefits at parity with medical care, preempting standard plan exclusions.",
+          "justification": null
+        }
+      ],
+      "after_playbook": {
+        "playbook_id": "us",
+        "display_name": "US-playbook",
+        "version": "day_zero+1",
+        "rules": [
+          {
+            "rule_id": "us_001",
+            "scope": "US federal",
+            "text": "When the denial letter states an appeal deadline, repeat that deadline explicitly in the appeal and request timely review.",
+            "status": "active",
+            "added_in_version": "day_zero"
+          },
+          {
+            "rule_id": "us_002",
+            "scope": "US federal",
+            "text": "Request the claim file and the specific clinical criteria applied, in writing, when the denial cites guidelines without enough detail to rebut.",
+            "status": "active",
+            "added_in_version": "day_zero"
+          },
+          {
+            "rule_id": "us_003",
+            "scope": "US federal",
+            "text": "Keep tone factual and person-centered. This is draft assistance only \u2014 not legal or medical advice.",
+            "status": "active",
+            "added_in_version": "day_zero"
+          },
+          {
+            "rule_id": "us_004",
+            "scope": "US federal",
+            "text": "Do not cite guidelines from an insurer other than the one that issued the denial. Rely solely on the denying insurer's own clinical policies or general standards of care.",
+            "status": "active",
+            "added_in_version": "day_one"
+          },
+          {
+            "rule_id": "us_005",
+            "scope": "US federal",
+            "text": "ASAM 4th edition criteria support medically managed inpatient withdrawal for patients with high CIWA-Ar scores and prior complicated withdrawal, which supersedes older insurer policies.",
+            "status": "active",
+            "added_in_version": "day_one"
+          },
+          {
+            "rule_id": "us_006",
+            "scope": "US federal",
+            "text": "State substance-use-disorder parity mandates for fully-insured plans require withdrawal-management benefits at parity with medical care, preempting standard plan exclusions.",
+            "status": "active",
+            "added_in_version": "day_one"
+          }
+        ]
+      }
+    }
+  ]
+}

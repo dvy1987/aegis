@@ -1,0 +1,271 @@
+{
+  "gemini_calls": 42,
+  "per_model": {
+    "gemini-3.1-pro-preview": {
+      "calls": 42,
+      "prompt_tokens": 65509,
+      "output_tokens": 9894,
+      "total_tokens": 117463,
+      "estimated_usd": 0.131356
+    }
+  },
+  "total_prompt_tokens": 65509,
+  "total_output_tokens": 9894,
+  "total_tokens": 117463,
+  "estimated_total_usd": 0.1314,
+  "pricing_note": "Partial estimate: tracks generate_content_with_fallback only; ADK agent calls are not included. Verify against GCP billing.",
+  "per_call": [
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2115,
+      "output_tokens": 388,
+      "total_tokens": 3615
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 525,
+      "output_tokens": 50,
+      "total_tokens": 1269
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2057,
+      "output_tokens": 407,
+      "total_tokens": 3711
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 516,
+      "output_tokens": 76,
+      "total_tokens": 1645
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2167,
+      "output_tokens": 281,
+      "total_tokens": 3884
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 513,
+      "output_tokens": 55,
+      "total_tokens": 1421
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2396,
+      "output_tokens": 211,
+      "total_tokens": 4019
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2115,
+      "output_tokens": 394,
+      "total_tokens": 3518
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 602,
+      "output_tokens": 87,
+      "total_tokens": 1501
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2251,
+      "output_tokens": 358,
+      "total_tokens": 3872
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 593,
+      "output_tokens": 83,
+      "total_tokens": 1529
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2381,
+      "output_tokens": 365,
+      "total_tokens": 4478
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 596,
+      "output_tokens": 68,
+      "total_tokens": 1414
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2498,
+      "output_tokens": 359,
+      "total_tokens": 4208
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 590,
+      "output_tokens": 74,
+      "total_tokens": 1840
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2472,
+      "output_tokens": 406,
+      "total_tokens": 4444
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 588,
+      "output_tokens": 72,
+      "total_tokens": 1435
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2586,
+      "output_tokens": 356,
+      "total_tokens": 3900
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 1746,
+      "output_tokens": 422,
+      "total_tokens": 3436
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2336,
+      "output_tokens": 364,
+      "total_tokens": 3891
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 578,
+      "output_tokens": 40,
+      "total_tokens": 1242
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2257,
+      "output_tokens": 268,
+      "total_tokens": 3662
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 576,
+      "output_tokens": 76,
+      "total_tokens": 1352
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2505,
+      "output_tokens": 324,
+      "total_tokens": 3872
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 587,
+      "output_tokens": 67,
+      "total_tokens": 1477
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2469,
+      "output_tokens": 308,
+      "total_tokens": 3347
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 1396,
+      "output_tokens": 329,
+      "total_tokens": 2846
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2347,
+      "output_tokens": 411,
+      "total_tokens": 3818
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 586,
+      "output_tokens": 52,
+      "total_tokens": 1221
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2431,
+      "output_tokens": 352,
+      "total_tokens": 3821
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 588,
+      "output_tokens": 72,
+      "total_tokens": 1537
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2401,
+      "output_tokens": 427,
+      "total_tokens": 3496
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 592,
+      "output_tokens": 73,
+      "total_tokens": 1637
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2520,
+      "output_tokens": 261,
+      "total_tokens": 3815
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 1319,
+      "output_tokens": 282,
+      "total_tokens": 2603
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2202,
+      "output_tokens": 473,
+      "total_tokens": 3854
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 522,
+      "output_tokens": 49,
+      "total_tokens": 1143
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2140,
+      "output_tokens": 343,
+      "total_tokens": 3387
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 529,
+      "output_tokens": 80,
+      "total_tokens": 1504
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2409,
+      "output_tokens": 384,
+      "total_tokens": 3566
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 522,
+      "output_tokens": 84,
+      "total_tokens": 1475
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "prompt_tokens": 2390,
+      "output_tokens": 263,
+      "total_tokens": 3758
+    }
+  ]
+}

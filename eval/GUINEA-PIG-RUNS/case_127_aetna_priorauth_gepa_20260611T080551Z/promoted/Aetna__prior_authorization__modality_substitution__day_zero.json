@@ -1,0 +1,11 @@
+{
+  "insurer": "Aetna",
+  "denial_type": "prior_authorization",
+  "version": "day_zero",
+  "status": "loaded",
+  "tactics": [
+    "Write a polite appeal letter."
+  ],
+  "required_evidence": [],
+  "risk_flags": []
+}

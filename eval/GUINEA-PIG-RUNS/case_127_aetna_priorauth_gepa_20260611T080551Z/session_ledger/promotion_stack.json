@@ -1,0 +1,34 @@
+[
+  {
+    "run_type": "quick",
+    "session_id": "quick_20260611_080551_e9f3c2",
+    "promoted_at": "2026-06-11T08:28:31.352765+00:00",
+    "candidate_id": "c3",
+    "files": [
+      {
+        "path": "/Users/divya/Projects/Building-apps/aegis/backend/app/aegis_v1/prompts/active_drafter_prompt.txt",
+        "exists": true,
+        "content": "drafter_v1\n",
+        "sha256": "c58314efc9501bc20aeb119a424ce04c956e9ace5a1ac2e89f07a6155156ac08"
+      },
+      {
+        "path": "/Users/divya/Projects/Building-apps/aegis/backend/app/aegis_v1/prompts/drafter_v1.md",
+        "exists": true,
+        "content": "# Drafter \u2014 v1 (weak baseline)\n\nYou write a US commercial health-insurance appeal letter. The patient supplies the\ndenial letter and clinical context. The system also attaches internal context:\nlibrary citations, the loaded playbook tactics, and Phoenix memory from prior runs. Based on these you write a single appeal letter. Use only the inputs provided. \n\nThis is the deliberately weak baseline. As a result: Do\nNOT invent or use advanced strategy. You are actually not very good at your job. You miss details all the time. You dance around the point and never actually rebut the key reasons for denial. You clients lose all the time. ",
+        "sha256": "529af530d190a21aef2eeb81dfbf26511a38f099b67a2ffe09d7ca8d1f963ee9"
+      },
+      {
+        "path": "/Users/divya/Projects/Building-apps/aegis/playbooks/aetna__prior_authorization__modality_substitution.json",
+        "exists": true,
+        "content": "{\n  \"insurer\": \"Aetna\",\n  \"denial_type\": \"prior_authorization\",\n  \"sub_tactic\": \"modality_substitution\",\n  \"version\": \"day_zero\",\n  \"tactics\": [\n    \"Write a polite appeal letter.\"\n  ],\n  \"required_evidence\": [],\n  \"risk_flags\": []\n}",
+        "sha256": "1b1b5107464e48b8aba291a05a51ffcfb82bacf06cea7abcefe82fb24f08f4f2"
+      },
+      {
+        "path": "/Users/divya/Projects/Building-apps/aegis/geo_playbooks/us_playbook.json",
+        "exists": true,
+        "content": "{\n  \"playbook_id\": \"us\",\n  \"display_name\": \"US-playbook\",\n  \"version\": \"day_zero\",\n  \"rules\": [\n    {\n      \"rule_id\": \"us_001\",\n      \"scope\": \"US federal\",\n      \"text\": \"When the denial letter states an appeal deadline, repeat that deadline explicitly in the appeal and request timely review.\",\n      \"status\": \"active\",\n      \"added_in_version\": \"day_zero\"\n    },\n    {\n      \"rule_id\": \"us_002\",\n      \"scope\": \"US federal\",\n      \"text\": \"Request the claim file and the specific clinical criteria applied, in writing, when the denial cites guidelines without enough detail to rebut.\",\n      \"status\": \"active\",\n      \"added_in_version\": \"day_zero\"\n    },\n    {\n      \"rule_id\": \"us_003\",\n      \"scope\": \"US federal\",\n      \"text\": \"Keep tone factual and person-centered. This is draft assistance only \u2014 not legal or medical advice.\",\n      \"status\": \"active\",\n      \"added_in_version\": \"day_zero\"\n    }\n  ]\n}\n",
+        "sha256": "25b3aab77e9ff77a7d6a71d32fe919605d748bd8735ae8f7aead78d4c30667de"
+      }
+    ]
+  }
+]

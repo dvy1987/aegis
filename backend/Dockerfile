@@ -26,6 +26,7 @@ COPY ./pyproject.toml ./README.md ./uv.lock* ./simulator_rules.json ./
 COPY ./app ./app
 COPY ./eval ./eval
 COPY ./playbooks ./playbooks
+COPY ./baseline_day_zero ./baseline_day_zero
 
 RUN uv sync --frozen
 

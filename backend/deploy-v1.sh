@@ -65,6 +65,7 @@ prepare_build_context() {
     cp "${REPO_ROOT}/eval/denial_patterns.json" "${BUILD_CONTEXT}/eval/"
   fi
   cp -R "${REPO_ROOT}/playbooks" "${BUILD_CONTEXT}/playbooks"
+  cp -R "${REPO_ROOT}/backend/baseline_day_zero" "${BUILD_CONTEXT}/baseline_day_zero"
 }
 
 PROJECT_ID="${PROJECT_ID:-${GOOGLE_CLOUD_PROJECT:-$(gcloud config get-value project 2>/dev/null || true)}}"

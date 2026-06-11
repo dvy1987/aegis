@@ -35,7 +35,7 @@ export const THESIS_AEGIS_LABEL = "Aegis";
 export const THESIS_AEGIS_CAPTION = "GEPA evolves the prompt from past judge scores.";
 
 export const THESIS_FORESHADOW =
-  "Proof ahead — we cut Phoenix memory off and show the score drop. If it does not fall, the thesis fails.";
+  "Phoenix MCP is structurally load-bearing in Aegis — training signal and runtime memory flow through Phoenix";
 
 export const INSTRUMENT_EYEBROW = "LIVE LEARNING CONSOLE";
 export const INSTRUMENT_HEADLINE = "Watch the learning unfold live.";
