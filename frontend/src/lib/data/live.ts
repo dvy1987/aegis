@@ -6,6 +6,7 @@ import type {
   QuestionStartRequest,
   QuestionTurn,
   ShowcaseBundle,
+  ShowcaseDemoState,
   ShowcaseManifest,
   ShowcaseMeasureResult,
   ShowcaseMeasureVariant,
@@ -172,6 +173,14 @@ export async function resolveShowcaseManifest(): Promise<ShowcaseManifestLoad> {
 
 export async function getShowcaseManifest(): Promise<ShowcaseManifest> {
   return (await resolveShowcaseManifest()).manifest;
+}
+
+export async function getDemoState(): Promise<ShowcaseDemoState> {
+  const base = getApiBase();
+  return jsonOrThrow<ShowcaseDemoState>(
+    await fetch(`${base}/v1/showcase/demo-state`, { cache: "no-store" }),
+    "demo state",
+  );
 }
 
 export async function startQuickRun(): Promise<ShowcaseRunSession> {

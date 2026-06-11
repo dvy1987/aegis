@@ -8,6 +8,7 @@ from typing import Any, Literal
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
+from app.aegis_v1.showcase_demo_state import MeasuredLiftStore, ShowcaseDemoState, build_demo_state
 from app.aegis_v1.showcase_manifest import ShowcaseManifest, load_showcase_manifest
 from app.aegis_v1.showcase_session import (
     SessionBusyError,
@@ -84,6 +85,12 @@ def _launch_approve(session_id: str, approver: str) -> None:
         daemon=True,
     )
     thread.start()
+
+
+@router.get("/demo-state", response_model=ShowcaseDemoState)
+def get_demo_state() -> ShowcaseDemoState:
+    """Latest successful preview/production runs + persisted measured-lift simulator results."""
+    return build_demo_state()
 
 
 @router.get("/manifest", response_model=ShowcaseManifestResponse)
@@ -389,7 +396,7 @@ def measure_showcase_case(req: ShowcaseMeasureRequest) -> ShowcaseMeasureRespons
     letter = str(draft.get("appeal_letter") or "")
     metadata = package.get("trace_metadata") or {}
     sim = appeal.outcome
-    return ShowcaseMeasureResponse(
+    response = ShowcaseMeasureResponse(
         case_id=req.case_id,
         variant=req.variant,
         verdict=sim["verdict"],
@@ -401,6 +408,8 @@ def measure_showcase_case(req: ShowcaseMeasureRequest) -> ShowcaseMeasureRespons
         prompt_version=str(metadata.get("prompt_version") or prompt_version),
         risk_flags=list(package.get("risk_flags") or []),
     )
+    MeasuredLiftStore().save_variant(req.case_id, req.variant, response.model_dump())
+    return response
 
 
 @contextmanager

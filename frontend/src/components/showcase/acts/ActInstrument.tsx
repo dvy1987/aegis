@@ -34,7 +34,10 @@ const sectionClass =
 export function ActInstrument({
   manifest,
   manifestWarning,
-  session,
+  previewSession,
+  productionSession,
+  displaySession,
+  activeSession,
   runErr,
   rollbackTarget,
   seriousUnlocked,
@@ -48,7 +51,10 @@ export function ActInstrument({
 }: {
   manifest: ShowcaseManifest | null;
   manifestWarning?: string | null;
-  session: ShowcaseRunSession | null;
+  previewSession: ShowcaseRunSession | null;
+  productionSession: ShowcaseRunSession | null;
+  displaySession: ShowcaseRunSession | null;
+  activeSession: ShowcaseRunSession | null;
   runErr: string | null;
   rollbackTarget: ShowcaseRollbackTarget | null;
   seriousUnlocked: boolean;
@@ -62,7 +68,7 @@ export function ActInstrument({
 }) {
   const [reviewOpen, setReviewOpen] = useState(false);
   const [reviewBusy, setReviewBusy] = useState(false);
-  const promotionPreview = getPromotionPreview(session);
+  const promotionPreview = getPromotionPreview(activeSession ?? displaySession);
   const consoleRoot = useRef<HTMLElement>(null);
   const consolePin = useRef<HTMLDivElement>(null);
   const evidenceRoot = useRef<HTMLElement>(null);
@@ -157,7 +163,7 @@ export function ActInstrument({
             />
             <RunStatusPanel
               manifest={manifest}
-              session={session}
+              session={displaySession}
               seriousUnlocked={seriousUnlocked}
               runErr={runErr}
               onCancel={cancelCurrentRun}
@@ -200,7 +206,10 @@ export function ActInstrument({
         style={{ maxWidth: "var(--sc-container-max)" }}
       >
         <div ref={evidencePin} className="min-h-[70dvh] lg:min-h-[85dvh]">
-          <LearningMatrix manifest={manifest} session={session} />
+          <LearningMatrix
+            manifest={manifest}
+            sessions={{ quick: previewSession, serious: productionSession }}
+          />
         </div>
       </section>
     </>

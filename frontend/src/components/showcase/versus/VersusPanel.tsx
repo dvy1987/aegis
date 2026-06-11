@@ -7,6 +7,7 @@ import { isAfterLearningUnlocked } from "@/lib/showcase/simulatorUnlock";
 import { checkBackendHealth, getApiBase } from "@/lib/settings";
 import type {
   CaseSummary,
+  MeasuredLiftCache,
   ShowcaseBundle,
   ShowcaseMeasureResult,
   ShowcaseMeasureVariant,
@@ -80,12 +81,22 @@ function setLiftDial(arc: SVGPathElement, needle: SVGGElement, liftRelativePct: 
 export function VersusPanel({
   bundle,
   caseSummary,
-  runSession,
+  previewSession,
+  productionSession,
+  measuredLift,
+  onMeasuredLiftUpdate,
   rollbackTarget,
 }: {
   bundle: ShowcaseBundle;
   caseSummary: CaseSummary;
-  runSession: ShowcaseRunSession | null;
+  previewSession: ShowcaseRunSession | null;
+  productionSession: ShowcaseRunSession | null;
+  measuredLift: MeasuredLiftCache;
+  onMeasuredLiftUpdate: (
+    caseId: string,
+    variant: ShowcaseMeasureVariant,
+    result: ShowcaseMeasureResult,
+  ) => void;
   rollbackTarget: ShowcaseRollbackTarget | null;
 }) {
   const root = useRef<HTMLDivElement>(null);
@@ -94,8 +105,9 @@ export function VersusPanel({
   const { acquire, release } = useTheatrical();
   const theatrical = useRef({ acquire, release });
 
-  const afterUnlocked = isAfterLearningUnlocked(runSession, rollbackTarget);
-  const [runs, setRuns] = useState<Record<string, RunCache>>({});
+  const unlockSession = productionSession ?? previewSession;
+  const afterUnlocked = isAfterLearningUnlocked(unlockSession, rollbackTarget);
+  const [runs, setRuns] = useState<Record<string, RunCache>>(() => measuredLift);
   const [loading, setLoading] = useState<ShowcaseMeasureVariant | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [draftModal, setDraftModal] = useState<ShowcaseMeasureVariant | null>(null);
@@ -120,6 +132,10 @@ export function VersusPanel({
   useEffect(() => {
     theatrical.current = { acquire, release };
   });
+
+  useEffect(() => {
+    setRuns((prev) => ({ ...measuredLift, ...prev }));
+  }, [measuredLift]);
 
   useEffect(() => {
     setError(null);
@@ -181,6 +197,7 @@ export function VersusPanel({
       ...prev,
       [bundle.case_id]: { ...prev[bundle.case_id], [variant]: result },
     }));
+    onMeasuredLiftUpdate(bundle.case_id, variant, result);
     return result;
   }
 

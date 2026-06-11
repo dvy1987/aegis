@@ -4,14 +4,18 @@ import { useEffect } from "react";
 import { MotionConfig, motion, useReducedMotion, useScroll } from "framer-motion";
 import type {
   CaseSummary,
+  MeasuredLiftCache,
   ShowcaseBundle,
   ShowcaseManifest,
+  ShowcaseMeasureResult,
+  ShowcaseMeasureVariant,
   ShowcaseRollbackTarget,
   ShowcaseRunSession,
 } from "@/lib/types";
 import { ScrollTrigger, TheatricalProvider, useTheatrical } from "@/lib/motion";
 import { ActHero } from "@/components/showcase/acts/ActHero";
 import { ActThesis } from "@/components/showcase/acts/ActThesis";
+import { ActLearningLoop } from "@/components/showcase/acts/ActLearningLoop";
 import { ActInstrument } from "@/components/showcase/acts/ActInstrument";
 import { ActBeforeAfter } from "@/components/showcase/acts/ActBeforeAfter";
 import { ActIntelligence } from "@/components/showcase/acts/ActIntelligence";
@@ -25,7 +29,16 @@ export interface ShowcaseFilmProps {
   bundle: ShowcaseBundle | null;
   manifest: ShowcaseManifest | null;
   manifestWarning?: string | null;
-  runSession: ShowcaseRunSession | null;
+  previewSession: ShowcaseRunSession | null;
+  productionSession: ShowcaseRunSession | null;
+  displaySession: ShowcaseRunSession | null;
+  activeSession: ShowcaseRunSession | null;
+  measuredLift: MeasuredLiftCache;
+  onMeasuredLiftUpdate: (
+    caseId: string,
+    variant: ShowcaseMeasureVariant,
+    result: ShowcaseMeasureResult,
+  ) => void;
   rollbackTarget: ShowcaseRollbackTarget | null;
   runErr: string | null;
   seriousUnlocked: boolean;
@@ -78,14 +91,18 @@ function ShowcaseFilmBody(props: ShowcaseFilmProps) {
           aria-hidden
         />
       )}
-      <StatusHUD session={props.runSession} />
+      <StatusHUD session={props.activeSession ?? props.displaySession} />
 
       <ActHero />
       <ActThesis />
+      <ActLearningLoop />
       <ActInstrument
         manifest={props.manifest}
         manifestWarning={props.manifestWarning}
-        session={props.runSession}
+        previewSession={props.previewSession}
+        productionSession={props.productionSession}
+        displaySession={props.displaySession}
+        activeSession={props.activeSession}
         runErr={props.runErr}
         rollbackTarget={props.rollbackTarget}
         seriousUnlocked={props.seriousUnlocked}
@@ -102,7 +119,10 @@ function ShowcaseFilmBody(props: ShowcaseFilmProps) {
         cases={props.cases}
         selected={props.sel}
         onSelect={props.setSel}
-        runSession={props.runSession}
+        previewSession={props.previewSession}
+        productionSession={props.productionSession}
+        measuredLift={props.measuredLift}
+        onMeasuredLiftUpdate={props.onMeasuredLiftUpdate}
         rollbackTarget={props.rollbackTarget}
       />
       <ActIntelligence

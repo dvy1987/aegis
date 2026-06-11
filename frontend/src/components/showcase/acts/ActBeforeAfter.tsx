@@ -1,7 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { CaseSummary, ShowcaseBundle, ShowcaseRollbackTarget, ShowcaseRunSession } from "@/lib/types";
+import type {
+  CaseSummary,
+  MeasuredLiftCache,
+  ShowcaseBundle,
+  ShowcaseMeasureResult,
+  ShowcaseMeasureVariant,
+  ShowcaseRollbackTarget,
+  ShowcaseRunSession,
+} from "@/lib/types";
 import { EASE_OUT_EXPO } from "@/lib/motion";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
 import { CaseCycler } from "@/components/showcase/versus/CaseCycler";
@@ -19,14 +27,24 @@ export function ActBeforeAfter({
   cases,
   selected,
   onSelect,
-  runSession,
+  previewSession,
+  productionSession,
+  measuredLift,
+  onMeasuredLiftUpdate,
   rollbackTarget,
 }: {
   bundle: ShowcaseBundle | null;
   cases: CaseSummary[];
   selected: string;
   onSelect: (id: string) => void;
-  runSession: ShowcaseRunSession | null;
+  previewSession: ShowcaseRunSession | null;
+  productionSession: ShowcaseRunSession | null;
+  measuredLift: MeasuredLiftCache;
+  onMeasuredLiftUpdate: (
+    caseId: string,
+    variant: ShowcaseMeasureVariant,
+    result: ShowcaseMeasureResult,
+  ) => void;
   rollbackTarget: ShowcaseRollbackTarget | null;
 }) {
   const currentCase = cases.find((c) => c.case_id === selected) ?? cases[0];
@@ -55,7 +73,10 @@ export function ActBeforeAfter({
             key={`versus-${bundle.case_id}`}
             bundle={bundle}
             caseSummary={currentCase}
-            runSession={runSession}
+            previewSession={previewSession}
+            productionSession={productionSession}
+            measuredLift={measuredLift}
+            onMeasuredLiftUpdate={onMeasuredLiftUpdate}
             rollbackTarget={rollbackTarget}
           />
           {bundle.measured && (

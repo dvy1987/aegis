@@ -39,32 +39,32 @@ import { VerdictCell } from "./VerdictCell";
  */
 export function LearningMatrix({
   manifest,
-  session,
+  sessions,
 }: {
   manifest: ShowcaseManifest | null;
-  session: ShowcaseRunSession | null;
+  sessions: { quick: ShowcaseRunSession | null; serious: ShowcaseRunSession | null };
 }) {
   const reduce = useReducedMotion();
   const { runMoment } = useTheatrical();
   const ignitedSession = useRef<string | null>(null);
   const [matrixIgnite, setMatrixIgnite] = useState(false);
-  const sessionTab: MatrixTab | null = session?.run_type ?? null;
-  const [tab, setTab] = useState<MatrixTab>(sessionTab ?? "quick");
-  const [seenSessionTab, setSeenSessionTab] = useState<MatrixTab | null>(sessionTab);
-  if (sessionTab !== seenSessionTab) {
-    setSeenSessionTab(sessionTab);
-    if (sessionTab) setTab(sessionTab);
+  const activeTab: MatrixTab | null = sessions.quick ? "quick" : sessions.serious ? "serious" : null;
+  const [tab, setTab] = useState<MatrixTab>(activeTab ?? "quick");
+  const [seenActiveTab, setSeenActiveTab] = useState<MatrixTab | null>(activeTab);
+  if (activeTab !== seenActiveTab) {
+    setSeenActiveTab(activeTab);
+    if (activeTab) setTab(activeTab);
   }
-  const tabSession = session?.run_type === tab ? session : null;
+  const tabSession = sessions[tab];
 
   useEffect(() => {
-    if (reduce || !session?.session_id) return;
-    if (ignitedSession.current === session.session_id) return;
-    ignitedSession.current = session.session_id;
+    if (reduce || !tabSession?.session_id) return;
+    if (ignitedSession.current === tabSession.session_id) return;
+    ignitedSession.current = tabSession.session_id;
     runMoment("run-ignite", () => setMatrixIgnite(true), BEAT_MS);
     const off = window.setTimeout(() => setMatrixIgnite(false), BEAT_MS + 200);
     return () => window.clearTimeout(off);
-  }, [reduce, runMoment, session?.session_id]);
+  }, [reduce, runMoment, tabSession?.session_id]);
 
   const tabs: { key: MatrixTab; label: string; subtitle: string; locked: string }[] = [
     {

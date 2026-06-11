@@ -14,6 +14,29 @@ def _client(tmp_path, monkeypatch) -> TestClient:
     return TestClient(app)
 
 
+def test_demo_state_endpoint_returns_persisted_assets(tmp_path, monkeypatch) -> None:
+    client = _client(tmp_path, monkeypatch)
+    from app.aegis_v1.showcase_demo_state import MeasuredLiftStore
+    from app.aegis_v1.showcase_session import ShowcaseSessionManager
+
+    manager = ShowcaseSessionManager(ledger_dir=tmp_path)
+    quick = manager.start_quick(case_ids=["case_1"])
+    manager.mark_success(quick.session_id)
+    MeasuredLiftStore(store=manager.store).save_variant(
+        "case_168_aetna_priorauth",
+        "baseline",
+        {"case_id": "case_168_aetna_priorauth", "variant": "baseline", "score": 0.3, "verdict": "DENY"},
+    )
+
+    res = client.get("/v1/showcase/demo-state")
+
+    assert res.status_code == 200
+    body = res.json()
+    assert body["preview_session"]["session_id"] == quick.session_id
+    assert body["production_session"] is None
+    assert "case_168_aetna_priorauth" in body["measured_lift"]
+
+
 def test_manifest_endpoint_returns_quick_slice(tmp_path, monkeypatch) -> None:
     client = _client(tmp_path, monkeypatch)
 

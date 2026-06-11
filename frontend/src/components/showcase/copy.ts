@@ -23,7 +23,7 @@ export const HERO_TELEMETRY = [
 ] as const;
 
 export const THESIS_STATEMENT =
-  "Most appeal tools ship frozen — same prompt, same blind spots, year after year.";
+  "Most appeal tools ship frozen — same prompt, same blind spots, appeal after appeal";
 
 export const THESIS_TURN =
   "Aegis reads what it already scored, then drafts the next case with that history in hand.";

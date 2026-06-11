@@ -231,3 +231,20 @@ export interface ShowcaseRollbackTarget {
   candidate_id: string;
   files: ShowcaseRollbackFileSnapshot[];
 }
+
+/** Persisted measured-lift simulator results (one column per variant). */
+export type MeasuredLiftCache = Partial<
+  Record<string, Partial<Record<ShowcaseMeasureVariant, ShowcaseMeasureResult>>>
+>;
+
+export interface MeasuredLiftCasePersisted {
+  baseline?: ShowcaseMeasureResult | null;
+  candidate?: ShowcaseMeasureResult | null;
+}
+
+/** Restored hackathon demo assets from GCS on page load. */
+export interface ShowcaseDemoState {
+  preview_session: ShowcaseRunSession | null;
+  production_session: ShowcaseRunSession | null;
+  measured_lift: Record<string, MeasuredLiftCasePersisted>;
+}

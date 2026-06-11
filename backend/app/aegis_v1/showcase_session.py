@@ -318,17 +318,32 @@ class ShowcaseSessionManager:
         """Local filesystem path (tests / legacy); prefer ``store`` in production."""
         return self.ledger_dir / self._key(session_id)
 
-    def _has_successful_quick(self) -> bool:
-        for key in self.store.list_keys("quick_"):
-            if not key.endswith(".json"):
+    def list_sessions(self, *, run_type: Literal["quick", "serious"] | None = None) -> list[ShowcaseSession]:
+        prefix = f"{run_type}_" if run_type else ""
+        sessions: list[ShowcaseSession] = []
+        for key in self.store.list_keys(prefix):
+            if not key.endswith(".json") or key in {"promotion_stack.json", "measured_lift.json"}:
                 continue
             try:
-                session = ShowcaseSession.model_validate_json(self.store.read_text(key))
+                sessions.append(ShowcaseSession.model_validate_json(self.store.read_text(key)))
             except Exception:
                 continue
-            if session.status == "successful":
-                return True
-        return False
+        return sorted(sessions, key=lambda s: s.updated_at, reverse=True)
+
+    def latest_session(
+        self,
+        run_type: Literal["quick", "serious"],
+        *,
+        statuses: frozenset[str] | None = None,
+    ) -> ShowcaseSession | None:
+        allowed = statuses or frozenset({"successful"})
+        for session in self.list_sessions(run_type=run_type):
+            if session.status in allowed:
+                return session
+        return None
+
+    def _has_successful_quick(self) -> bool:
+        return self.latest_session("quick") is not None
 
 
 def cloud_log_filter(session_id: str) -> str:

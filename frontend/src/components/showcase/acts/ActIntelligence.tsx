@@ -1,18 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { EASE_OUT_EXPO, ScrollTrigger, useGsapContext } from "@/lib/motion";
-import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
+import { useReducedMotion } from "framer-motion";
+import { ScrollTrigger, useGsapContext } from "@/lib/motion";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
-import { GepaSpotlight } from "@/components/showcase/acts/GepaSpotlight";
 import { CounterfactualCard } from "@/components/showcase/versus/CounterfactualCard";
-import {
-  INTELLIGENCE_BODY,
-  INTELLIGENCE_EYEBROW,
-  INTELLIGENCE_HEADLINE,
-  PIPELINE_NODES,
-} from "@/components/showcase/copy";
+import { PIPELINE_NODES } from "@/components/showcase/copy";
 import { PipelineIcon, type PipelineKind } from "@/components/showcase/fx/PipelineIcon";
 
 const NODES: { kind: PipelineKind; label: string; callout?: string }[] = [...PIPELINE_NODES];
@@ -24,20 +17,6 @@ export function ActIntelligence({ on, off }: { on: number; off: number }) {
       className="mx-auto flex w-full flex-col gap-14 px-6 py-24 md:px-12 md:py-32"
       style={{ maxWidth: "var(--sc-container-max)" }}
     >
-      <motion.div
-        className="flex flex-col gap-2"
-        initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
-      >
-        <MonoLabel>{INTELLIGENCE_EYEBROW}</MonoLabel>
-        <h2 className="sc-h2">{INTELLIGENCE_HEADLINE}</h2>
-        <p className="max-w-prose sc-body">{INTELLIGENCE_BODY}</p>
-      </motion.div>
-
-      <GepaSpotlight />
-
       <Pipeline />
 
       <CounterfactualCard on={on} off={off} />
