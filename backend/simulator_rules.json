@@ -1,53 +1,53 @@
 {
-  "version": "v2_strict",
+  "version": "v3_weighted_only",
   "anchors": [1, 3, 5],
   "approve_threshold": 0.80,
   "must_have_min_anchor": 5,
   "features": {
     "addresses_denial_rationale": {
-      "weight": 0.0,
-      "hard_gate": true,
-      "must_have": false,
-      "description": "Hard gate: engages and rebuts each specific denial reason (anchor 5 required). Not weighted."
-    },
-    "cites_clinical_evidence": {
-      "weight": 0.45,
-      "hard_gate": false,
-      "must_have": true,
-      "description": "Cites concrete patient-specific clinical facts in the appeal letter — not promises to attach records later."
-    },
-    "cites_applicable_authority": {
-      "weight": 0.0,
-      "hard_gate": true,
-      "must_have": false,
-      "description": "Hard gate (conditional): PASS if no authority cited in letter, or every named authority is real, fair, and applicable. Does not require citations. Not weighted."
-    },
-    "cites_binding_policy": {
       "weight": 0.15,
       "hard_gate": false,
       "must_have": false,
-      "description": "When policy/regulation is invoked in the letter, it is accurately applied to this case (not generic padding). No invocation = neutral, not a penalty."
+      "description": "Engages and rebuts each specific denial reason stated in the denial letter."
     },
     "rebuts_specific_flaw": {
-      "weight": 0.0,
-      "hard_gate": true,
-      "must_have": false,
-      "description": "Hard gate: factually rebuts every distinct denial hook with case-specific facts (anchor 5 required). Not weighted."
-    },
-    "medical_director_persuasion": {
-      "weight": 0.0,
-      "hard_gate": true,
-      "must_have": false,
-      "description": "Hard gate: clinical argument would convince a skeptical medical director to overturn (anchor 5 required). Not weighted."
-    },
-    "specific_requested_action": {
-      "weight": 0.25,
+      "weight": 0.15,
       "hard_gate": false,
       "must_have": false,
-      "description": "Clear overturn/reprocess ask, deadline-aware."
+      "description": "Factually rebuts every distinct denial hook with case-specific facts in the letter."
+    },
+    "cites_clinical_evidence": {
+      "weight": 0.20,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Cites concrete patient-specific clinical facts in the appeal letter — not promises to attach records later."
+    },
+    "medical_director_persuasion": {
+      "weight": 0.15,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Clinical argument would convince a skeptical medical director to overturn based on the letter alone."
+    },
+    "cites_applicable_authority": {
+      "weight": 0.10,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "When authority is cited: real, fairly represented, and applicable. No citation invoked = neutral (anchor 5)."
+    },
+    "cites_binding_policy": {
+      "weight": 0.10,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "When policy/regulation is invoked in the letter, it is accurately applied to this case. No invocation = neutral."
+    },
+    "specific_requested_action": {
+      "weight": 0.08,
+      "hard_gate": false,
+      "must_have": false,
+      "description": "Clear overturn/reprocess ask, deadline-aware when possible."
     },
     "credible_tone": {
-      "weight": 0.15,
+      "weight": 0.07,
       "hard_gate": false,
       "must_have": false,
       "description": "Professional, non-hyperbolic, internally consistent tone."

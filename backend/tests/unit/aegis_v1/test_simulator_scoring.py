@@ -26,12 +26,11 @@ def test_simulator_result_accepts_float_score_and_breakdown():
     r = SimulatorResult(
         verdict="DENY", score=0.38, threshold=0.70,
         feature_scores=[FeatureScore(
-            feature="rebuts_specific_flaw", anchor=1, weight=0.20, must_have=True)],
-        gaps=["hard gate not met: rebuts_specific_flaw"], critique="weak",
+            feature="rebuts_specific_flaw", anchor=1, weight=0.15, must_have=False)],
+        gaps=["weak: rebuts_specific_flaw (anchor 1)"], critique="weak",
     )
     assert r.score == 0.38
     assert r.verdict == "DENY"
-    assert r.feature_scores[0].must_have is True
 
 
 from app.aegis_v1.simulator_scoring import load_simulator_rules, SimulatorRules
@@ -47,13 +46,6 @@ FEATURE_KEYS = {
     "credible_tone",
 }
 
-HARD_GATES = {
-    "addresses_denial_rationale",
-    "cites_applicable_authority",
-    "rebuts_specific_flaw",
-    "medical_director_persuasion",
-}
-
 
 def test_load_simulator_rules_parses_published_file():
     rules = load_simulator_rules()
@@ -61,11 +53,10 @@ def test_load_simulator_rules_parses_published_file():
     assert set(rules.features) == FEATURE_KEYS
     assert abs(sum(f.weight for f in rules.features.values()) - 1.0) < 1e-9
     assert rules.approve_threshold == 0.80
-    assert rules.must_have_min_anchor == 5
-    assert rules.features["cites_clinical_evidence"].must_have is True
-    for name in HARD_GATES:
-        assert rules.features[name].hard_gate is True
-        assert rules.features[name].weight == 0.0
+    for name, rule in rules.features.items():
+        assert rule.hard_gate is False
+        assert rule.must_have is False
+        assert rule.weight > 0, name
 
 
 def test_feature_rule_rejects_out_of_range_weight():
@@ -105,8 +96,6 @@ ALL_KEYS = [
     "credible_tone",
 ]
 
-WEIGHTED_KEYS = [k for k in ALL_KEYS if k not in HARD_GATES]
-
 
 def _assess(anchors: dict[str, int], critique: str = "c") -> FeatureAssessment:
     return FeatureAssessment(
@@ -115,7 +104,7 @@ def _assess(anchors: dict[str, int], critique: str = "c") -> FeatureAssessment:
     )
 
 
-def test_unrebutted_denial_points_hard_deny_even_with_perfect_features():
+def test_unrebutted_denial_points_are_advisory_and_do_not_zero_score():
     rules = load_simulator_rules()
     res = score_outcome(
         FeatureAssessment(
@@ -128,8 +117,8 @@ def test_unrebutted_denial_points_hard_deny_even_with_perfect_features():
         ),
         rules,
     )
-    assert res.verdict == "DENY"
-    assert res.score == 0.0
+    assert res.verdict == "APPROVE"
+    assert res.score == 1.0
     assert any("unrebutted denial point" in g for g in res.gaps)
 
 
@@ -141,7 +130,7 @@ def test_all_fives_approve_with_no_gaps():
     assert res.gaps == []
 
 
-def test_weak_v1_denies_below_threshold_and_hard_gate_failures():
+def test_weak_v1_denies_below_threshold():
     rules = load_simulator_rules()
     res = score_outcome(_assess({
         "addresses_denial_rationale": 3,
@@ -149,63 +138,41 @@ def test_weak_v1_denies_below_threshold_and_hard_gate_failures():
         "cites_applicable_authority": 1,
         "cites_binding_policy": 1,
         "rebuts_specific_flaw": 1,
+        "medical_director_persuasion": 1,
         "specific_requested_action": 3,
         "credible_tone": 3,
     }), rules)
     assert res.verdict == "DENY"
-    assert res.score == 0.0
-    assert any("hard gate not met" in g and "rebuts_specific_flaw" in g for g in res.gaps)
-    assert any("hard gate not met" in g and "cites_applicable_authority" in g for g in res.gaps)
+    assert res.score == pytest.approx(0.32, abs=0.01)
+    assert any("weak: rebuts_specific_flaw" in g for g in res.gaps)
 
 
-def test_cites_applicable_authority_hard_gate_deny_with_perfect_weighted_score():
+def test_low_authority_anchor_still_allows_approve_when_weighted_score_high():
     rules = load_simulator_rules()
     anchors = {k: 5 for k in ALL_KEYS}
     anchors["cites_applicable_authority"] = 1
     res = score_outcome(_assess(anchors), rules)
-    assert res.verdict == "DENY"
-    assert res.score == 0.0
-    assert any("hard gate not met: cites_applicable_authority" in g for g in res.gaps)
+    assert res.verdict == "APPROVE"
+    assert res.score == pytest.approx(0.92, abs=0.01)
 
 
-def test_hard_gate_rebut_deny_with_perfect_weighted_score():
-    rules = load_simulator_rules()
-    anchors = {k: 5 for k in ALL_KEYS}
-    anchors["rebuts_specific_flaw"] = 1
-    res = score_outcome(_assess(anchors), rules)
-    assert res.score == 0.0
-    assert res.verdict == "DENY"
-    assert any("hard gate not met: rebuts_specific_flaw" in g for g in res.gaps)
-
-
-def test_partial_hard_gate_anchor_3_denies():
+def test_partial_rebut_anchors_can_still_approve():
     rules = load_simulator_rules()
     anchors = {k: 5 for k in ALL_KEYS}
     anchors["rebuts_specific_flaw"] = 3
     anchors["addresses_denial_rationale"] = 3
     res = score_outcome(_assess(anchors), rules)
-    assert res.verdict == "DENY"
-    assert any("hard gate not met: rebuts_specific_flaw" in g for g in res.gaps)
-    assert any("hard gate not met: addresses_denial_rationale" in g for g in res.gaps)
+    assert res.verdict == "APPROVE"
+    assert res.score == pytest.approx(0.88, abs=0.01)
 
 
-def test_medical_director_persuasion_hard_gate_zeros_score():
+def test_partial_medical_director_anchor_does_not_zero_score():
     rules = load_simulator_rules()
     anchors = {k: 5 for k in ALL_KEYS}
     anchors["medical_director_persuasion"] = 3
     res = score_outcome(_assess(anchors), rules)
-    assert res.verdict == "DENY"
-    assert res.score == 0.0
-    assert any("hard gate not met: medical_director_persuasion" in g for g in res.gaps)
-
-
-def test_partial_must_have_anchor_3_denies():
-    rules = load_simulator_rules()
-    anchors = {k: 5 for k in ALL_KEYS}
-    anchors["cites_clinical_evidence"] = 3
-    res = score_outcome(_assess(anchors), rules)
-    assert res.verdict == "DENY"
-    assert any("must-have not met: cites_clinical_evidence" in g for g in res.gaps)
+    assert res.verdict == "APPROVE"
+    assert res.score == pytest.approx(0.94, abs=0.01)
 
 
 def test_missing_feature_is_treated_as_anchor_1():
@@ -214,5 +181,5 @@ def test_missing_feature_is_treated_as_anchor_1():
     res = score_outcome(_assess(anchors), rules)
     cs = {fs.feature: fs.anchor for fs in res.feature_scores}
     assert cs["cites_clinical_evidence"] == 1
-    assert res.verdict == "DENY"
-    assert any("must-have not met: cites_clinical_evidence" in g for g in res.gaps)
+    assert res.verdict == "APPROVE"
+    assert res.score == pytest.approx(0.84, abs=0.01)

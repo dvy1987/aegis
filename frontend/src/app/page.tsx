@@ -48,8 +48,8 @@ export default function Home() {
                 </div>
               </dl>
               <p className="mt-10 max-w-prose font-body text-lg md:text-xl leading-snug text-text-secondary">
-                Tell us what happened. We&apos;ll help you draft an appeal that reads like a person
-                wrote it — grounded in your story and the rules that protect you.
+                Tell us what happened. We&apos;ll help you draft an appeal grounded in your story
+                and the rules that protect you.
               </p>
               <div className="mt-12 flex flex-col sm:flex-row gap-3">
                 <Link href="/appeal">
@@ -83,7 +83,7 @@ export default function Home() {
               </h2>
               <p className="mt-6 font-body text-base leading-base text-text-secondary">
                 A draft assistant. You share what happened — what was denied, why the insurer said no, what your
-                doctor recommended. We turn it into a letter you can read, edit, and file.
+                doctor recommended. We turn it into an appeal draft you can read, edit, and file.
               </p>
             </div>
             <div className="col-span-12 md:col-span-4">
@@ -91,8 +91,8 @@ export default function Home() {
                 What this is not
               </h2>
               <p className="mt-6 font-body text-base leading-base text-text-secondary">
-                Not legal counsel. Not medical advice. Not a service that files anything for you. A person — you,
-                your doctor, an advocate — should read every draft before it goes anywhere.
+                Not legal counsel. Not medical advice. Not a service that files anything for you. You, your doctor,
+                an advocate — should read and fully understand every draft before it is filed.
               </p>
             </div>
             <div className="col-span-12 md:col-span-4">
@@ -100,8 +100,8 @@ export default function Home() {
                 What we don&apos;t do
               </h2>
               <p className="mt-6 font-body text-base leading-base text-text-secondary">
-                We don&apos;t store your medical records. We don&apos;t talk to your insurer. We don&apos;t promise
-                you&apos;ll win — about half of all appeals do, and the rest don&apos;t.
+                We don&apos;t store your medical records. We don&apos;t talk to your insurer. And though about half
+                of all appeals win, we cannot promise yours will.
               </p>
             </div>
           </div>
@@ -127,7 +127,8 @@ export default function Home() {
                 Tell us what happened
               </h3>
               <p className="mt-3 font-body text-base leading-base text-text-secondary">
-                Paste the denial letter, or answer a few short questions. Plain English — no jargon required.
+                Paste the denial letter, some surrounding clinical context and answer a few short questions. In
+                your words and your doctor notes, if available
               </p>
             </li>
             <li className="col-span-12 md:col-span-4">

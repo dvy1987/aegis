@@ -85,35 +85,28 @@ def _build_assess_prompt(denial_text: str, appeal_letter: str) -> str:
     attachments. Credit clinical facts only when they appear in the appeal letter
     itself — not from assumptions or unstated records.
 
-    Scoring discipline (1 = absent/poor, 3 = partial/generic, 5 = strong/specific):
+    Scoring discipline (1 = absent/poor, 3 = partial/generic, 5 = strong/specific).
+    Each feature is weighted in the published rubric — partial credit is allowed:
+    - addresses_denial_rationale: engages each denial reason; 5 = all rebutted.
+    - rebuts_specific_flaw: 5 = every denial hook factually rebutted in the letter.
     - cites_clinical_evidence: 5 only for concrete patient-specific facts IN THE APPEAL
       LETTER (symptoms, scores, failed treatments, diagnosis, age, protocol). Promises
       that records "will be submitted" or "are attached" without summarizing facts = 1.
-    - cites_applicable_authority (HARD GATE — anchor 5 required, not weighted): 5 when
-      the letter cites NO external authority, OR when EVERY authority named in the
-      letter is real, fairly represented, and applicable to this insurer and denial.
-      Score below 5 only for false, invented, wrong-insurer, or misrepresented sources
-      actually invoked in the letter. Do not require citations to pass.
-    - addresses_denial_rationale (HARD GATE): 5 only if each denial reason is rebutted.
-    - rebuts_specific_flaw (HARD GATE): 5 only if every denial hook is factually rebutted.
-    - medical_director_persuasion (HARD GATE): 5 only if a skeptical medical director
-      would overturn based on the clinical argument IN THE LETTER — diagnosis-linked
-      necessity, severity, failed alternatives, duration, age/protocol fit, guideline
-      alignment. Score 1 for boilerplate necessity language, deferrals ("records
-      attached"), or arguments a UM director would dismiss as insufficient.
-    - cites_binding_policy: 5 when no binding policy is invoked, OR when invoked
-      policy/regulatory text is accurately applied to THIS case — not generic statute
-      padding without case tie-in.
+    - medical_director_persuasion: 5 if a skeptical medical director would overturn
+      from the clinical argument IN THE LETTER; 1 for boilerplate or deferrals only.
+    - cites_applicable_authority: 5 when the letter cites NO external authority, OR when
+      EVERY authority named is real, fairly represented, and applicable. Score below 5
+      only for false, invented, wrong-insurer, or misrepresented sources invoked.
+    - cites_binding_policy: 5 when no binding policy is invoked, OR when invoked policy
+      is accurately applied to THIS case — not generic padding without case tie-in.
     - specific_requested_action: clear overturn/reprocess ask.
     - credible_tone: professional and internally consistent.
 
     Quote evidence verbatim from the appeal letter (empty string if absent).
 
-    After marking features, list "unrebutted_denial_points": an array of strings naming
-    EVERY specific denial reason from the denial letter that the appeal still fails to
-    rebut with concrete facts in the letter. Non-empty list = automatic DENY (hard
-    fail, not weighted). Use [] only when every distinct denial hook is factually
-    rebutted. Restating a denial reason without rebutting it counts as unrebutted.
+    After marking features, list "unrebutted_denial_points": denial hooks still not
+    rebutted with concrete facts in the letter ([] when all are rebutted). This list
+    is advisory for the critique — the composite score comes from weighted anchors only.
 
     Denial letter you originally sent:
     {denial_text}

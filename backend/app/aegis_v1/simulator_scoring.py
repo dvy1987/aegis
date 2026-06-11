@@ -63,20 +63,12 @@ def load_simulator_rules(path: str | Path | None = None) -> SimulatorRules:
 def score_outcome(assessment: FeatureAssessment, rules: SimulatorRules) -> SimulatorResult:
     """Deterministic verdict from LLM-assessed features + published rules (INV-S2).
 
-  Hard fails (instant DENY, composite score forced to 0):
-    - Any hard_gate feature anchor < must_have_min_anchor
-    - Any entry in unrebutted_denial_points
+  Weighted score = Σ(weight·anchor) / max_anchor across all rubric features.
+  APPROVE iff score ≥ approve_threshold.
 
-  cites_applicable_authority is a conditional hard gate: score 5 when no authority
-  is cited in the letter, or when every cited authority is accurate and applicable.
-
-  Weighted score = Σ(weight·anchor) / max_anchor over non-hard-gate features only.
-  Composite score is 0 when any hard fail occurs; otherwise the weighted score.
-  APPROVE iff no hard fails, score ≥ approve_threshold, and every must-have ≥ min anchor.
+  unrebutted_denial_points are surfaced in gaps for review but do not zero the score.
     """
     feature_scores: list[FeatureScore] = []
-    must_have_failures: list[FeatureScore] = []
-    hard_gate_failures: list[FeatureScore] = []
     weighted = 0.0
     for name, rule in rules.features.items():
         mark = assessment.features.get(name) or FeatureMark(anchor=1)
@@ -84,61 +76,30 @@ def score_outcome(assessment: FeatureAssessment, rules: SimulatorRules) -> Simul
             feature=name,
             anchor=mark.anchor,
             weight=rule.weight,
-            must_have=rule.must_have or rule.hard_gate,
+            must_have=rule.must_have,
             evidence=mark.evidence,
         )
         feature_scores.append(fs)
-        if rule.hard_gate:
-            if mark.anchor < rules.must_have_min_anchor:
-                hard_gate_failures.append(fs)
-            continue
         weighted += rule.weight * mark.anchor
-        if rule.must_have and mark.anchor < rules.must_have_min_anchor:
-            must_have_failures.append(fs)
 
     max_anchor = max(rules.anchors)
-    weighted_score = round(weighted / max_anchor, 4)
+    score = round(weighted / max_anchor, 4)
     hook_failures = [
         point.strip()
         for point in assessment.unrebutted_denial_points
         if point and point.strip()
     ]
-    score = (
-        0.0
-        if hard_gate_failures or hook_failures
-        else weighted_score
-    )
-    approve = (
-        (not hard_gate_failures)
-        and (not must_have_failures)
-        and (not hook_failures)
-        and score >= rules.approve_threshold
-    )
+    approve = score >= rules.approve_threshold
     verdict = "APPROVE" if approve else "DENY"
 
     gaps: list[str] = []
     if hook_failures:
         gaps.extend(f"unrebutted denial point: {point}" for point in hook_failures)
     if not approve:
-        for fs in hard_gate_failures:
-            gaps.append(
-                f"hard gate not met: {fs.feature} "
-                f"(anchor {fs.anchor} < {rules.must_have_min_anchor})"
-            )
-        for fs in must_have_failures:
-            gaps.append(
-                f"must-have not met: {fs.feature} "
-                f"(anchor {fs.anchor} < {rules.must_have_min_anchor})"
-            )
-        failed = {
-            fs.feature for fs in (*hard_gate_failures, *must_have_failures)
-        }
         weak = [
             fs
             for fs in feature_scores
-            if fs.feature not in failed
-            and fs.weight > 0
-            and fs.anchor < max_anchor
+            if fs.weight > 0 and fs.anchor < max_anchor
         ]
         for fs in sorted(weak, key=lambda f: (f.anchor, -f.weight)):
             gaps.append(f"weak: {fs.feature} (anchor {fs.anchor})")

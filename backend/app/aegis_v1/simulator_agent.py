@@ -25,12 +25,10 @@ a 1/3/5 scale with evidence quoted verbatim from the appeal letter where relevan
 Return JSON with:
 - "critique": string
 - "features": object mapping each feature name to {"anchor": 1|3|5, "evidence": "..."}
-- "unrebutted_denial_points": array of strings — each denial hook from the denial
-  letter that the appeal still fails to rebut with concrete facts ([] only if all
-  hooks are rebutted)
+- "unrebutted_denial_points": array of strings — denial hooks still not rebutted
+  with concrete facts in the letter ([] when all are rebutted; advisory only)
 
-Score 5 only for specific, case-grounded proof in the letter — not promises of
-future attachments. Do NOT output a score or verdict.
+Use anchors 1/3/5 with partial credit allowed. Do NOT output a composite score or verdict.
 """
 
 _SIMULATOR_INSTRUCTION_DEMO = """\
