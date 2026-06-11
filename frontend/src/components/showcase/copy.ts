@@ -135,11 +135,18 @@ export const VERSUS_PENDING = "AWAITING MEASUREMENT";
 export const VERSUS_PHOENIX_LINK = "Open trace in Phoenix";
 export const VERSUS_RUN_SIMULATOR = "Run simulator";
 export const VERSUS_VIEW_DRAFT = "View appeal draft";
+export const VERSUS_HELD_OUT_COMPOSITE = "Held-out composite";
+export const VERSUS_SIMULATOR_SCORE = "Simulator score";
+export const VERSUS_HELD_OUT_VERDICT_APPROVE = "HELD-OUT · APPROVE";
+export const VERSUS_HELD_OUT_VERDICT_DENY = "HELD-OUT · DENY";
+export const VERSUS_SIMULATOR_APPROVED = "APPROVED";
+export const VERSUS_SIMULATOR_REJECTED = "REJECTED";
 export const VERSUS_AFTER_LOCKED =
   "Unlocks after you approve a GEPA proposal from a preview or production run.";
 export const VERSUS_DRAFT_MODAL_EYEBROW = "APPEAL DRAFT";
 export const SIMULATOR_MODAL_EYEBROW = "OUTCOME SIMULATOR";
-export const SIMULATOR_MODAL_SCORE = "Simulator score";
+export const SIMULATOR_MODAL_SCORE = "Simulator score (v2 strict)";
+export const SIMULATOR_MODAL_FEATURES = "Feature anchors";
 export const SIMULATOR_MODAL_PROXY =
   "A transparent rule-based proxy — not a prediction of what the insurer will do.";
 export const SIMULATOR_MODAL_GAPS = "What would make this stronger";

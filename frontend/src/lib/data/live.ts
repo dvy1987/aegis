@@ -113,7 +113,12 @@ export const liveSource: DataSource = {
         variant,
       }),
     });
-    if (!res.ok) throw new Error(`showcase measure failed: ${res.status}`);
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      throw new Error(
+        `showcase measure failed: ${res.status}${detail ? ` — ${detail.slice(0, 240)}` : ""}`,
+      );
+    }
     const data = (await res.json()) as ShowcaseMeasureResult;
     return {
       ...data,

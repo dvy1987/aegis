@@ -11,6 +11,7 @@ import {
   SIMULATOR_MODAL_EYEBROW,
   SIMULATOR_MODAL_GAPS,
   SIMULATOR_MODAL_PROXY,
+  SIMULATOR_MODAL_FEATURES,
   SIMULATOR_MODAL_SCORE,
 } from "@/components/showcase/copy";
 
@@ -132,6 +133,29 @@ export function SimulatorResultModal({
                     {SIMULATOR_MODAL_PROXY}
                   </p>
                 </div>
+
+                {outcome.feature_scores.length > 0 && (
+                  <div className="flex flex-col gap-2">
+                    <MonoLabel>{SIMULATOR_MODAL_FEATURES}</MonoLabel>
+                    <ul className="flex flex-col gap-1.5">
+                      {outcome.feature_scores.map((feature) => (
+                        <li
+                          key={feature.feature}
+                          className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 sc-mono"
+                          style={{ fontSize: "0.78rem", color: "var(--sc-text-2)" }}
+                        >
+                          <span>
+                            {feature.feature.replace(/_/g, " ")}
+                            {feature.must_have ? " · must-have" : ""}
+                          </span>
+                          <span style={{ color: feature.anchor >= 5 ? "var(--sc-accent)" : "var(--sc-deny)" }}>
+                            anchor {feature.anchor}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {outcome.gaps.length > 0 && (
                   <div className="flex flex-col gap-2">

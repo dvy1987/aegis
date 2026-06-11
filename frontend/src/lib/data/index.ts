@@ -15,13 +15,7 @@ export const consumerSource: DataSource = liveSource;
 export const showcaseSource: DataSource = {
   listCases: demoSource.listCases,
   getShowcase: demoSource.getShowcase,
-  async runShowcaseMeasure(caseSummary, variant) {
-    try {
-      return await liveSource.runShowcaseMeasure(caseSummary, variant);
-    } catch {
-      return demoSource.runShowcaseMeasure(caseSummary, variant);
-    }
-  },
+  runShowcaseMeasure: liveSource.runShowcaseMeasure,
   draftAppeal: liveSource.draftAppeal,
   startQuestions: liveSource.startQuestions,
   answerQuestion: liveSource.answerQuestion,

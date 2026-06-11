@@ -28,6 +28,12 @@ import {
   VERSUS_PHOENIX_LINK,
   VERSUS_RUN_SIMULATOR,
   VERSUS_VIEW_DRAFT,
+  VERSUS_HELD_OUT_COMPOSITE,
+  VERSUS_HELD_OUT_VERDICT_APPROVE,
+  VERSUS_HELD_OUT_VERDICT_DENY,
+  VERSUS_SIMULATOR_APPROVED,
+  VERSUS_SIMULATOR_REJECTED,
+  VERSUS_SIMULATOR_SCORE,
 } from "@/components/showcase/copy";
 import { ArrowUpRightIcon } from "@/icons";
 import { CaseDocumentModal } from "./CaseDocumentModal";
@@ -38,6 +44,23 @@ const GAUGE_CX = 100;
 const GAUGE_CY = 100;
 
 type RunCache = Partial<Record<ShowcaseMeasureVariant, ShowcaseMeasureResult>>;
+
+type SideScoreSource = "pending" | "simulator" | "held-out";
+
+type ResolvedSide = {
+  composite: number;
+  verdict: Verdict;
+  hasResult: boolean;
+  scoreSource: SideScoreSource;
+  excerpt: string;
+  letter: string;
+};
+
+function relativeLiftPct(before: number, after: number): number {
+  if (before > 0) return ((after - before) / before) * 100;
+  if (after > before) return 100;
+  return 0;
+}
 
 function setLiftDial(arc: SVGPathElement, needle: SVGGElement, liftRelativePct: number) {
   const t = Math.max(0, Math.min(1, liftRelativePct / 100));
@@ -76,10 +99,18 @@ export function VersusPanel({
 
   const cache = runs[bundle.case_id] ?? {};
   const measured = bundle.measured;
-  const v1 = measured ? bundle.v1.composite : 0;
-  const v3 = measured ? bundle.v3.composite : 0;
-  const lift = measured ? bundle.lift_relative_pct : 0;
+  const baselineRun = cache.baseline;
+  const candidateRun = cache.candidate;
+
+  const v1 = measured ? bundle.v1.composite : (baselineRun?.score ?? 0);
+  const v3 = measured ? bundle.v3.composite : (candidateRun?.score ?? 0);
+  const lift = measured
+    ? bundle.lift_relative_pct
+    : baselineRun && candidateRun
+      ? relativeLiftPct(baselineRun.score, candidateRun.score)
+      : 0;
   const liftDecimals = lift % 1 === 0 ? 0 : 1;
+  const liftActive = measured || Boolean(baselineRun && candidateRun);
 
   useEffect(() => {
     theatrical.current = { acquire, release };
@@ -94,14 +125,36 @@ export function VersusPanel({
   const sideFromBundle = (variant: ShowcaseMeasureVariant) =>
     variant === "baseline" ? bundle.v1 : bundle.v3;
 
-  const resolveSide = (variant: ShowcaseMeasureVariant) => {
+  const resolveSide = (variant: ShowcaseMeasureVariant): ResolvedSide => {
     const run = cache[variant];
     const side = sideFromBundle(variant);
+    if (measured) {
+      return {
+        composite: side.composite,
+        verdict: side.verdict,
+        hasResult: true,
+        scoreSource: "held-out",
+        excerpt: run?.letter_excerpt || side.letter_excerpt,
+        letter: run?.appeal_letter ?? "",
+      };
+    }
+    if (run) {
+      return {
+        composite: run.score,
+        verdict: run.verdict,
+        hasResult: true,
+        scoreSource: "simulator",
+        excerpt: run.letter_excerpt,
+        letter: run.appeal_letter,
+      };
+    }
     return {
-      composite: measured ? (run?.score ?? side.composite) : 0,
-      verdict: (measured ? (run?.verdict ?? side.verdict) : "DENY") as Verdict,
-      excerpt: run?.letter_excerpt || side.letter_excerpt,
-      letter: run?.appeal_letter ?? "",
+      composite: 0,
+      verdict: "DENY",
+      hasResult: false,
+      scoreSource: "pending",
+      excerpt: side.letter_excerpt,
+      letter: "",
     };
   };
 
@@ -165,8 +218,8 @@ export function VersusPanel({
     const arc = arcRef.current;
     const needle = needleRef.current;
     if (!arc || !needle) return;
-    setLiftDial(arc, needle, lift);
-  }, [bundle.case_id, lift]);
+    setLiftDial(arc, needle, liftActive ? lift : 0);
+  }, [bundle.case_id, lift, liftActive]);
 
   useGsapContext(
     () => {
@@ -244,7 +297,9 @@ export function VersusPanel({
             version="v1"
             composite={baseline.composite}
             verdict={baseline.verdict}
-            inactive={!measured}
+            hasResult={baseline.hasResult}
+            scoreSource={baseline.scoreSource}
+            improved={false}
             actionsLocked={false}
             loading={loading === "baseline"}
             onRunSimulator={() => void runSimulator("baseline")}
@@ -253,7 +308,7 @@ export function VersusPanel({
 
           <div
             className="flex flex-col items-center justify-center gap-2 px-2 py-4"
-            style={!measured ? { opacity: 0.55 } : undefined}
+            style={!liftActive ? { opacity: 0.55 } : undefined}
           >
             <MonoLabel>{VERSUS_LIFT_LABEL}</MonoLabel>
             <svg viewBox="0 0 200 116" className="w-full max-w-[220px]" aria-hidden role="img">
@@ -263,10 +318,10 @@ export function VersusPanel({
                 className="sc-vs-arc"
                 d={ARC_PATH}
                 fill="none"
-                stroke={measured ? "var(--sc-accent)" : "var(--sc-text-3)"}
+                stroke={liftActive ? "var(--sc-accent)" : "var(--sc-text-3)"}
                 strokeWidth={10}
                 strokeLinecap="round"
-                style={measured ? { filter: "drop-shadow(0 0 8px var(--sc-accent-glow))" } : undefined}
+                style={liftActive ? { filter: "drop-shadow(0 0 8px var(--sc-accent-glow))" } : undefined}
               />
               <g ref={needleRef} className="sc-vs-needle">
                 <line
@@ -274,23 +329,23 @@ export function VersusPanel({
                   y1={GAUGE_CY}
                   x2={GAUGE_CX}
                   y2={32}
-                  stroke={measured ? "var(--sc-text)" : "var(--sc-text-3)"}
+                  stroke={liftActive ? "var(--sc-text)" : "var(--sc-text-3)"}
                   strokeWidth={2.5}
                   strokeLinecap="round"
                 />
               </g>
-              <circle cx={GAUGE_CX} cy={GAUGE_CY} r={6} fill={measured ? "var(--sc-text)" : "var(--sc-text-3)"} />
+              <circle cx={GAUGE_CX} cy={GAUGE_CY} r={6} fill={liftActive ? "var(--sc-text)" : "var(--sc-text-3)"} />
             </svg>
             <span
-              className={measured ? "sc-vs-lift sc-c-accent" : "sc-vs-lift"}
+              className={liftActive ? "sc-vs-lift sc-c-accent" : "sc-vs-lift"}
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: "2rem",
                 fontWeight: 600,
-                color: measured ? undefined : "var(--sc-text-3)",
+                color: liftActive ? undefined : "var(--sc-text-3)",
               }}
             >
-              {measured ? `+${lift.toFixed(liftDecimals)}%` : "0%"}
+              {liftActive ? `${lift >= 0 ? "+" : ""}${lift.toFixed(liftDecimals)}%` : "0%"}
             </span>
           </div>
 
@@ -299,8 +354,9 @@ export function VersusPanel({
             version="v3"
             composite={candidate.composite}
             verdict={candidate.verdict}
+            hasResult={candidate.hasResult}
+            scoreSource={candidate.scoreSource}
             improved
-            inactive={!measured}
             actionsLocked={!afterUnlocked}
             lockedHint={VERSUS_AFTER_LOCKED}
             loading={loading === "candidate"}
@@ -315,7 +371,7 @@ export function VersusPanel({
               {error}
             </p>
           )}
-          {!error && !measured && (
+          {!error && !measured && !baseline.hasResult && !candidate.hasResult && (
             <p className="sc-mono" style={{ color: "var(--sc-text-3)" }}>
               {VERSUS_ILLUSTRATIVE}
             </p>
@@ -358,8 +414,9 @@ function DraftColumn({
   version,
   composite,
   verdict,
+  hasResult,
+  scoreSource,
   improved = false,
-  inactive = false,
   actionsLocked = false,
   lockedHint,
   loading = false,
@@ -370,8 +427,9 @@ function DraftColumn({
   version: string;
   composite: number;
   verdict: Verdict;
+  hasResult: boolean;
+  scoreSource: SideScoreSource;
   improved?: boolean;
-  inactive?: boolean;
   actionsLocked?: boolean;
   lockedHint?: string;
   loading?: boolean;
@@ -379,14 +437,29 @@ function DraftColumn({
   onViewDraft: () => void;
 }) {
   const side = improved ? "right" : "left";
-  const tone = inactive ? "var(--sc-text-3)" : improved ? "var(--sc-accent)" : "var(--sc-deny)";
-  const verdictLabel = inactive ? VERSUS_PENDING : verdict === "APPROVE" ? "SIMULATOR · APPROVE" : "SIMULATOR · DENY";
-  const hasLiveData = !inactive;
+  const inactive = !hasResult;
+  const approved = verdict === "APPROVE";
+  const tone = inactive
+    ? "var(--sc-text-3)"
+    : approved
+      ? "var(--sc-accent)"
+      : "var(--sc-deny)";
+  const verdictLabel = inactive
+    ? VERSUS_PENDING
+    : scoreSource === "held-out"
+      ? approved
+        ? VERSUS_HELD_OUT_VERDICT_APPROVE
+        : VERSUS_HELD_OUT_VERDICT_DENY
+      : approved
+        ? VERSUS_SIMULATOR_APPROVED
+        : VERSUS_SIMULATOR_REJECTED;
+  const metricLabel = scoreSource === "held-out" ? VERSUS_HELD_OUT_COMPOSITE : VERSUS_SIMULATOR_SCORE;
+  const showApproveLamp = hasResult && approved && (improved || scoreSource === "simulator");
 
   return (
     <GlassPanel
-      variant={inactive ? "default" : improved ? "active" : "default"}
-      className="flex flex-col gap-4 p-6 transition-[opacity,filter]"
+      variant={inactive ? "default" : improved && approved ? "active" : "default"}
+      className="flex flex-col gap-4 p-6 transition-[opacity,filter,border-color]"
       style={
         inactive
           ? {
@@ -409,7 +482,7 @@ function DraftColumn({
         </div>
         <span
           className={
-            improved && !inactive
+            showApproveLamp
               ? "sc-vs-approve-lamp inline-flex items-center gap-2 rounded-full px-3 py-1"
               : "inline-flex items-center gap-2 rounded-full px-3 py-1"
           }
@@ -429,7 +502,7 @@ function DraftColumn({
       </div>
 
       <div className="flex flex-col gap-2">
-        <MonoLabel>Composite quality</MonoLabel>
+        <MonoLabel>{metricLabel}</MonoLabel>
         <div className="relative h-2 w-full overflow-hidden rounded-full" style={{ background: "var(--sc-bg-sunken)" }}>
           <div
             className={side === "right" ? "sc-vs-fill-right h-full rounded-full" : "sc-vs-fill-left h-full rounded-full"}
@@ -469,9 +542,19 @@ function DraftColumn({
             {lockedHint}
           </p>
         )}
-        {hasLiveData && !actionsLocked && (
+        {hasResult && scoreSource === "held-out" && !actionsLocked && (
           <p className="sc-mono" style={{ color: "var(--sc-text-3)", fontSize: "0.72rem" }}>
-            {SIMULATOR_MODAL_EYEBROW} · live drafter + proxy review
+            {SIMULATOR_MODAL_EYEBROW} · on-demand re-run (separate from held-out composite)
+          </p>
+        )}
+        {!hasResult && !actionsLocked && (
+          <p className="sc-mono" style={{ color: "var(--sc-text-3)", fontSize: "0.72rem" }}>
+            {SIMULATOR_MODAL_EYEBROW} · v2 strict · live drafter + proxy review
+          </p>
+        )}
+        {hasResult && scoreSource === "simulator" && !actionsLocked && (
+          <p className="sc-mono" style={{ color: "var(--sc-text-3)", fontSize: "0.72rem" }}>
+            {SIMULATOR_MODAL_EYEBROW} · v2 strict · re-run anytime
           </p>
         )}
       </div>

@@ -20,14 +20,20 @@ describe("firewall: consumer fixtures carry no teacher answer key", () => {
   });
 });
 
+/** Demo `/appeal` fixtures only — measured-lift showcase cases draft live via the backend. */
+const DEMO_APPEAL_FIXTURE_IDS = ["case_12_aetna_priorauth"] as const;
+
 describe("appeal fixtures", () => {
-  it("one valid fixture per case, no answer key", async () => {
-    for (const c of CASES) {
-      const mod = await import(`@/lib/fixtures/appeals/${c.case_id}.json`);
+  it("valid demo fixtures without answer key", async () => {
+    for (const caseId of DEMO_APPEAL_FIXTURE_IDS) {
+      const mod = await import(`@/lib/fixtures/appeals/${caseId}.json`);
       const fix = parseAppealFixture(mod.default);
-      expect(fix.trace_metadata.case_id).toBe(c.case_id);
+      expect(fix.trace_metadata.case_id).toBe(caseId);
       const blob = JSON.stringify(mod.default);
       for (const k of FORBIDDEN_FIXTURE_KEYS) expect(blob).not.toContain(k);
     }
+  });
+  it("measured-lift showcase cases do not ship static appeal stubs", () => {
+    expect(DEMO_APPEAL_FIXTURE_IDS).not.toContain(CASES[0].case_id);
   });
 });

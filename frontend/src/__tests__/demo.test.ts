@@ -8,7 +8,7 @@ describe("demoSource", () => {
   it("drafts an appeal for a known case", async () => {
     const r = await demoSource.draftAppeal({
       denial_text: "x",
-      case_id: "case_168_aetna_priorauth",
+      case_id: "case_12_aetna_priorauth",
       insurer: "Aetna",
       patient_age: 53,
       patient_gender: "F",
@@ -25,6 +25,10 @@ describe("demoSource", () => {
       patient_gender: "F",
     });
     expect(r.appeal_letter.length).toBeGreaterThan(50);
+  });
+  it("rejects showcase measure without live backend", async () => {
+    const cases = await demoSource.listCases();
+    await expect(demoSource.runShowcaseMeasure(cases[0], "baseline")).rejects.toThrow(/live backend/i);
   });
   it("returns an unmeasured showcase bundle with zero lift", async () => {
     const s = await demoSource.getShowcase("case_168_aetna_priorauth");
