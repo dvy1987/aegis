@@ -13,6 +13,17 @@ function hasSubstance(text: string): boolean {
   return text.split(/\s+/).filter((w) => w.length > 2).length >= 4;
 }
 
+function mentionsSubmission(answer: string): boolean {
+  if (
+    /don'?t know if .*(sent|submitted)|not sure if .*(sent|submitted)|whether .*(sent|submitted)/i.test(
+      answer,
+    )
+  ) {
+    return false;
+  }
+  return /\b(sent|submitted|provided|faxed|uploaded)\b/i.test(answer);
+}
+
 function paraphraseSymptoms(body: string): string {
   const lower = body.toLowerCase();
   const parts: string[] = [];
@@ -28,7 +39,7 @@ function paraphraseSymptoms(body: string): string {
 
 function paraphraseTreatmentHistory(body: string): string | null {
   const lower = body.toLowerCase();
-  if (/first time|first treatment|haven'?t been treated|not tried|no other (?:med|treatment)/i.test(lower)) {
+  if (/first time|first treatment|my first treatment|haven'?t been treated|not tried|no other (?:med|treatment)/i.test(lower)) {
     return "This would be your first treatment for this condition — you have not tried other medications for it yet.";
   }
   if (/tried .+ (?:didn'?t|failed|not work|ineffective)/i.test(lower)) {
@@ -47,21 +58,22 @@ function paraphraseTurn(question: string, answer: string): { helps: string[]; ga
   const q = question.toLowerCase();
 
   if (/oncologist|letter|statement|prescriber|doctor submit/i.test(q)) {
-    const mentionsSent = /\b(sent|submitted|provided|faxed|uploaded)\b/i.test(body);
-    const onlyUncertain = tentative && !mentionsSent && /don'?t know|not sure|unsure/i.test(answer);
-    if (onlyUncertain || (!mentionsSent && !hasSubstance(body))) {
+    const submitted = mentionsSubmission(answer);
+    const onlyUncertain =
+      (tentative && !submitted) || (/don'?t know|not sure|unsure/i.test(answer) && !submitted);
+    if (onlyUncertain) {
       gaps.push(
         "Confirm with your oncologist whether they sent the insurer a letter explaining why this treatment is needed.",
       );
-    } else if (mentionsSent) {
+    } else if (submitted) {
       helps.push("Your doctor's office may have already sent supporting information to the insurer.");
     } else if (hasSubstance(body)) {
-      helps.push("You noted information about your doctor's support for this treatment.");
+      helps.push("Your oncologist is supporting this specific treatment for your condition.");
     }
     return { helps, gaps };
   }
 
-  if (/tried any other|first time|prior treatment|medications for|starting treatment/i.test(q)) {
+  if (/tried any other|other medications|first time|prior treatment|medications for|starting treatment/i.test(q)) {
     const line = paraphraseTreatmentHistory(body || answer);
     if (line) helps.push(line);
     if (/symptoms|blood counts|need to begin|start (?:me |now|treatment)/i.test(body || answer)) {

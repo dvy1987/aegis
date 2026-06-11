@@ -62,7 +62,9 @@ describe("buildAppealMirror", () => {
     expect(mirror.what_was_denied).not.toMatch(/see the denial|you provided/i);
     expect(mirror.why_they_said_no).toMatch(/non-preferred|preferred alternative/i);
     expect(mirror.why_they_said_no).not.toMatch(/summarized from/i);
-    expect(mirror.what_you_shared).toMatch(/first treatment/i);
+    expect(mirror.what_helps_note).toMatch(/first treatment/i);
+    expect(mirror.what_helps_note).not.toMatch(/I'm not sure/i);
+    expect(mirror.gaps_note).toMatch(/oncologist.*letter/i);
     expect(mirror.gaps_note).toMatch(/preferred alternative/i);
     expect(mirror.gaps_note).toMatch(/oncologist send a letter/i);
   });

@@ -16,10 +16,10 @@ import { ScrollTrigger, TheatricalProvider, useTheatrical } from "@/lib/motion";
 import { ActHero } from "@/components/showcase/acts/ActHero";
 import { ActThesis } from "@/components/showcase/acts/ActThesis";
 import { ActLearningLoop } from "@/components/showcase/acts/ActLearningLoop";
+import { ActPipeline } from "@/components/showcase/acts/ActPipeline";
 import { ActInstrument } from "@/components/showcase/acts/ActInstrument";
 import { ActBeforeAfter } from "@/components/showcase/acts/ActBeforeAfter";
 import { ActIntelligence } from "@/components/showcase/acts/ActIntelligence";
-import { ActImpact } from "@/components/showcase/acts/ActImpact";
 import { StatusHUD } from "@/components/showcase/console/StatusHUD";
 
 export interface ShowcaseFilmProps {
@@ -96,6 +96,7 @@ function ShowcaseFilmBody(props: ShowcaseFilmProps) {
       <ActHero />
       <ActThesis />
       <ActLearningLoop />
+      <ActPipeline />
       <ActInstrument
         manifest={props.manifest}
         manifestWarning={props.manifestWarning}
@@ -129,7 +130,6 @@ function ShowcaseFilmBody(props: ShowcaseFilmProps) {
         on={props.bundle?.counterfactual.on_composite ?? 0}
         off={props.bundle?.counterfactual.off_composite ?? 0}
       />
-      <ActImpact />
     </div>
   );
 }

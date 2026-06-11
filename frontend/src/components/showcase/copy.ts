@@ -164,14 +164,14 @@ export const DIFF_EYEBROW = "GEPA · REFLECTIVE MUTATION";
 export const DIFF_HEADLINE = "What GEPA changed in the proposal";
 
 export const INTELLIGENCE_EYEBROW = "GEPA · THE LEARNING LOOP";
-export const INTELLIGENCE_HEADLINE = "Score, remember, evolve — then you approve.";
+export const INTELLIGENCE_HEADLINE = "Train, evolve, remember.";
 export const INTELLIGENCE_BODY =
-  "Every draft is graded on six dimensions — one faithfulness hard gate plus five weighted scores. Scores land in Phoenix. GEPA reads that feedback and mutates the drafter prompt, question-agent prompt, slice playbooks, and US federal rules — sample-efficient reflective evolution, not gradient descent. You approve before anything reaches production.";
+  "During Training every appeal draft is graded on six dimensions — one faithfulness hard gate plus five weighted scores. When scores land in Phoenix, GEPA reads that feedback and mutates the drafter prompt, question-agent prompt, insurer playbooks, and US federal rulebook. The result is a sample-efficient, reflective evolution, not gradient descent.";
 
 export const GEPA_SPOTLIGHT_EYEBROW = "GEPA · REFLECTIVE PROMPT EVOLUTION";
 export const GEPA_SPOTLIGHT_HEADLINE = "Judge feedback becomes the next prompt.";
 export const GEPA_SPOTLIGHT_BODY =
-  "GEPA (Reflective Prompt Evolution) is the learning engine under the hood — an evolutionary optimizer that reads natural-language judge notes and proposes targeted edits. It is what makes Aegis self-improving without retraining the model.";
+  "GEPA (Reflective Prompt Evolution) is the learning engine under the hood — an evolutionary optimizer that reads natural-language judge notes and proposes targeted edits. It is a way to retrain Aegis for new insurers, even geography without losing previous learning.";
 export const GEPA_SPOTLIGHT_FOOTNOTE =
   "ICLR 2026 · sample-efficient vs RL · held-out generalization built in";
 
@@ -195,25 +195,37 @@ export const GEPA_PILLARS = [
 ] as const;
 
 export const PIPELINE_NODES = [
-  { kind: "draft" as const, label: "Draft" },
+  {
+    kind: "draft" as const,
+    label: "Draft",
+    callout: "The drafter agent turns denial context into a first-pass appeal letter.",
+  },
   {
     kind: "judge" as const,
     label: "Judge panel",
-    callout: "Six dimensions — one faithfulness hard gate, five weighted scores. Five run as ADK judge agents.",
+    callout: "Six dimensions — one faithfulness hard gate, five weighted scores.",
   },
   {
     kind: "memory" as const,
     label: "Phoenix memory",
-    callout: "Past eval traces inform the next draft before the letter is written.",
+    callout: "Judge scores and notes land here — the reflection agent reads them to propose the next edit.",
   },
   {
     kind: "optimize" as const,
     label: "GEPA",
     callout:
-      "Reflective mutation on judge feedback — evolves drafter, question agent, slice playbooks, and US rules, scored on held-out cases before promote.",
+      "Reflective edits to prompts and playbooks from judge feedback — GEPA held-out cases must lift first.",
   },
-  { kind: "approve" as const, label: "Your approval" },
-  { kind: "promote" as const, label: "Promote" },
+  {
+    kind: "approve" as const,
+    label: "Your approval",
+    callout: "Nothing ships until you approve the proposed prompt and playbook changes.",
+  },
+  {
+    kind: "promote" as const,
+    label: "Promote",
+    callout: "Approved changes replace the active production playbook set.",
+  },
 ] as const;
 
 export const COUNTERFACTUAL_EYEBROW = "MEMORY PROOF";
@@ -228,14 +240,3 @@ export const COUNTERFACTUAL_FOOTNOTE =
   "Memory-off figure is a design target until a measured counterfactual run is recorded.";
 
 export const MEMORY_TOGGLE_LABEL = "Phoenix memory";
-
-export const IMPACT_EYEBROW = "WHY IT MATTERS";
-export const IMPACT_HEADLINE =
-  "Most denied claims are never appealed. Aegis keeps getting better at the drafting fight.";
-export const IMPACT_METRIC_QUALITY = "Held-out composite · target";
-export const IMPACT_METRIC_JUDGES = "Judge dimensions";
-export const IMPACT_METRIC_APPROVAL = "Promotion gate";
-export const IMPACT_METRIC_APPROVAL_VALUE = "REQUIRED";
-export const IMPACT_ENDCARD =
-  "AEGIS · Google ADK + Gemini · GEPA reflective evolution · observability by Arize Phoenix";
-export const IMPACT_REPLAY = "Run again";

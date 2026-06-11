@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { formatFetchError } from "@/lib/apiErrors";
 import { showcaseSource } from "@/lib/data";
 import { isAfterLearningUnlocked } from "@/lib/showcase/simulatorUnlock";
@@ -86,6 +86,7 @@ export function VersusPanel({
   measuredLift,
   onMeasuredLiftUpdate,
   rollbackTarget,
+  sectionRef,
 }: {
   bundle: ShowcaseBundle;
   caseSummary: CaseSummary;
@@ -98,6 +99,8 @@ export function VersusPanel({
     result: ShowcaseMeasureResult,
   ) => void;
   rollbackTarget: ShowcaseRollbackTarget | null;
+  /** Parent act section — used as the scroll trigger while the act is pinned. */
+  sectionRef?: RefObject<HTMLElement | null>;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const needleRef = useRef<SVGGElement>(null);
@@ -313,10 +316,11 @@ export function VersusPanel({
           0.9,
         );
 
+      const trigger = sectionRef?.current ?? r;
       gsap.timeline({
         scrollTrigger: {
-          trigger: r,
-          start: "top 78%",
+          trigger,
+          start: sectionRef?.current ? "top 5rem" : "top 78%",
           once: true,
           onEnter: () => {
             void theatrical.current.acquire("money-shot").then(() => tl.play());
@@ -324,7 +328,7 @@ export function VersusPanel({
         },
       });
     },
-    { scope: root, dependencies: [bundle.case_id, measured] },
+    { scope: root, dependencies: [bundle.case_id, measured, sectionRef] },
   );
 
   return (

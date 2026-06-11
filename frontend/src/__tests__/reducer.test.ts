@@ -52,6 +52,12 @@ describe("flowReducer", () => {
   it("reset returns to intake", () => {
     expect(flowReducer({ ...initialFlow, step: "decide" }, { type: "RESET" }).step).toBe("intake");
   });
+  it("restores a saved flow state", () => {
+    const saved = { step: "draft" as const, result: fix, additionalDetails: "note" };
+    const s = flowReducer(initialFlow, { type: "RESTORE", state: saved });
+    expect(s.step).toBe("draft");
+    expect(s.additionalDetails).toBe("note");
+  });
   it("stores additional details on the mirror step", () => {
     const s = flowReducer(
       { ...initialFlow, step: "mirror", result: fix },

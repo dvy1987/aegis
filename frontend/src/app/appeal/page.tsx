@@ -44,8 +44,13 @@ export default function AppealPage() {
   const [state, dispatch] = useReducer(flowReducer, initialFlow);
   const [cases, setCases] = useState<CaseSummary[]>([]);
   const [settingsTick, setSettingsTick] = useState(0);
+  const [resumeOffer, setResumeOffer] = useState<PersistedAppealSession | null>(null);
   const reduced = useReducedMotion();
   const ds = consumerSource;
+
+  useEffect(() => {
+    setResumeOffer(loadAppealSession());
+  }, []);
 
   useEffect(() => {
     ds.listCases().then(setCases);
@@ -71,10 +76,26 @@ export default function AppealPage() {
     dispatch({ type: "SUBMIT", req });
     try {
       dispatch({ type: "RESULT", result: await ds.draftAppeal(req) });
+      setResumeOffer(null);
     } catch {
       dispatch({ type: "ERROR", error: "Something's not working on our side. Try again, or come back later." });
     }
   }
+
+  function saveProgress() {
+    const ok = saveAppealSession(state);
+    if (ok) setResumeOffer(loadAppealSession());
+    return ok;
+  }
+
+  function handleReset() {
+    clearAppealSession();
+    setResumeOffer(null);
+    dispatch({ type: "RESET" });
+  }
+
+  const showResumeBanner =
+    resumeOffer && state.step === "intake" && !state.result && !state.error;
 
   return (
     <div className="flex min-h-dvh flex-col bg-surface-primary text-text-primary">
@@ -85,11 +106,27 @@ export default function AppealPage() {
       <main
         className={cn(
           "mx-auto w-full flex-1 px-6 py-16 md:px-12 md:py-24",
-          state.step === "intake" ? "max-w-(--container-wide)" : "max-w-(--container-prose)",
+          state.step === "intake" || state.step === "draft"
+            ? "max-w-(--container-wide)"
+            : "max-w-(--container-prose)",
         )}
       >
         {state.error && (
           <p className="mb-6 font-body text-sm text-status-error">{state.error}</p>
+        )}
+        {showResumeBanner && (
+          <ResumeAppealBanner
+            savedAt={resumeOffer.savedAt}
+            stepLabel={STEP_LABELS[resumeOffer.state.step]}
+            onResume={() => {
+              dispatch({ type: "RESTORE", state: resumeOffer.state });
+              setResumeOffer(null);
+            }}
+            onDismiss={() => {
+              clearAppealSession();
+              setResumeOffer(null);
+            }}
+          />
         )}
         <AnimatePresence mode="wait">
           <motion.div
@@ -113,12 +150,12 @@ export default function AppealPage() {
                 mirror={state.result.mirror}
                 additionalDetails={state.additionalDetails ?? ""}
                 onSaveDetails={(text) => dispatch({ type: "ADD_DETAILS", text })}
+                onSaveProgress={saveProgress}
                 onContinue={() => dispatch({ type: "ADVANCE" })}
               />
             )}
-            {state.step === "draft" && state.result && state.req && (
+            {state.step === "draft" && state.result && (
               <DraftEditor
-                req={state.req}
                 result={state.result}
                 additionalDetails={state.additionalDetails}
                 onEdit={(l) => dispatch({ type: "EDIT_LETTER", letter: l })}
@@ -126,7 +163,7 @@ export default function AppealPage() {
               />
             )}
             {state.step === "decide" && state.result && (
-              <DecideBar result={state.result} onRestart={() => dispatch({ type: "RESET" })} />
+              <DecideBar result={state.result} onRestart={handleReset} />
             )}
           </motion.div>
         </AnimatePresence>
