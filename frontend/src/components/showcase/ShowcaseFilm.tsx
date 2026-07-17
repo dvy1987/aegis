@@ -41,6 +41,7 @@ export interface ShowcaseFilmProps {
   rollbackTarget: ShowcaseRollbackTarget | null;
   runErr: string | null;
   seriousUnlocked: boolean;
+  runsEnabled?: boolean;
   startQuick: () => void;
   startSerious: () => void;
   cancelCurrentRun: () => void;
@@ -106,6 +107,7 @@ function ShowcaseFilmBody(props: ShowcaseFilmProps) {
         runErr={props.runErr}
         rollbackTarget={props.rollbackTarget}
         seriousUnlocked={props.seriousUnlocked}
+        runsEnabled={props.runsEnabled}
         startQuick={props.startQuick}
         startSerious={props.startSerious}
         cancelCurrentRun={props.cancelCurrentRun}

@@ -8,6 +8,7 @@ from app.aegis_v1.showcase_api import router
 
 def _client(tmp_path, monkeypatch) -> TestClient:
     monkeypatch.setenv("AEGIS_SHOWCASE_LEDGER_DIR", str(tmp_path))
+    monkeypatch.delenv("AEGIS_SHOWCASE_LEDGER_GCS_URI", raising=False)
     monkeypatch.setenv("AEGIS_SHOWCASE_AUTORUN", "false")
     app = FastAPI()
     app.include_router(router)
@@ -50,6 +51,24 @@ def test_manifest_endpoint_returns_quick_slice(tmp_path, monkeypatch) -> None:
     assert len(body["quick_holdout"]) == 1
     assert body["serious_train_count"] == 5
     assert len(body["serious_holdout"]) == 2
+
+
+def test_showcase_runs_disabled_returns_403(tmp_path, monkeypatch) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_RUNS_DISABLED", "true")
+    client = _client(tmp_path, monkeypatch)
+
+    assert client.post("/v1/showcase/runs/quick").status_code == 403
+    assert client.post("/v1/showcase/runs/serious").status_code == 403
+
+
+def test_demo_state_reports_runs_disabled(tmp_path, monkeypatch) -> None:
+    monkeypatch.setenv("AEGIS_SHOWCASE_RUNS_DISABLED", "true")
+    client = _client(tmp_path, monkeypatch)
+
+    res = client.get("/v1/showcase/demo-state")
+
+    assert res.status_code == 200
+    assert res.json()["runs_enabled"] is False
 
 
 def test_quick_run_start_returns_pollable_session(tmp_path, monkeypatch) -> None:

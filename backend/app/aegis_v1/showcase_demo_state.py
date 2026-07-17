@@ -7,10 +7,38 @@ from typing import Any, Literal
 from pydantic import BaseModel, Field
 
 from app.aegis_v1.showcase_ledger import LedgerStore, open_ledger_store
+from app.aegis_v1.showcase_run_policy import showcase_runs_enabled
 from app.aegis_v1.showcase_session import ShowcaseSession, ShowcaseSessionManager
 
 MEASURED_LIFT_KEY = "measured_lift.json"
 RESTORABLE_RUN_STATUSES = frozenset({"successful"})
+
+
+def _matrix_score(session: ShowcaseSession) -> int:
+    """More scored cases → better demo restore (ignores empty successful shells)."""
+    return (
+        len(session.pre_measure_results)
+        + len(session.training_pre_measure_results)
+        + len(session.training_post_measure_results)
+        + len(session.post_measure_results)
+    )
+
+
+def _latest_demo_session(
+    manager: ShowcaseSessionManager,
+    run_type: Literal["quick", "serious"],
+) -> ShowcaseSession | None:
+    """Pick the successful run with the richest measurement grid (ties → newest)."""
+    best: ShowcaseSession | None = None
+    best_score = 0
+    for session in manager.list_sessions(run_type=run_type):
+        if session.status not in RESTORABLE_RUN_STATUSES:
+            continue
+        score = _matrix_score(session)
+        if score > best_score:
+            best_score = score
+            best = session
+    return best
 
 
 class MeasuredLiftCase(BaseModel):
@@ -22,6 +50,7 @@ class ShowcaseDemoState(BaseModel):
     preview_session: ShowcaseSession | None = None
     production_session: ShowcaseSession | None = None
     measured_lift: dict[str, MeasuredLiftCase] = Field(default_factory=dict)
+    runs_enabled: bool = True
 
 
 class MeasuredLiftStore:
@@ -53,7 +82,8 @@ def build_demo_state(*, manager: ShowcaseSessionManager | None = None) -> Showca
         for case_id, entry in raw_lift.items()
     }
     return ShowcaseDemoState(
-        preview_session=sessions.latest_session("quick", statuses=RESTORABLE_RUN_STATUSES),
-        production_session=sessions.latest_session("serious", statuses=RESTORABLE_RUN_STATUSES),
+        preview_session=_latest_demo_session(sessions, "quick"),
+        production_session=_latest_demo_session(sessions, "serious"),
         measured_lift=measured_lift,
+        runs_enabled=showcase_runs_enabled(),
     )

@@ -108,3 +108,49 @@ def test_measure_case_candidate_uses_live_prompt_and_phoenix(monkeypatch) -> Non
     assert captured["use_phoenix_memory"] is True
     assert captured["playbook_override"] is None
     assert captured["drafter_prompt_text"] is None
+
+
+def test_measure_case_simulator_only_skips_drafter(monkeypatch) -> None:
+    captured: dict = {}
+
+    def fake_simulator(**kwargs):
+        captured.update(kwargs)
+        return {
+            "verdict": "APPROVE",
+            "score": 0.91,
+            "threshold": 0.8,
+            "feature_scores": [],
+            "gaps": [],
+            "critique": "Strong rebuttal.",
+            "rationale": ["Strong rebuttal."],
+        }
+
+    monkeypatch.setattr("app.aegis_v1.tools.simulator", fake_simulator)
+    monkeypatch.setattr(
+        "app.aegis_v1.showcase_demo_state.MeasuredLiftStore.save_variant",
+        lambda *a, **k: None,
+    )
+
+    client = _client()
+    res = client.post(
+        "/v1/showcase/measure-case",
+        json={
+            "case_id": "case_168_aetna_priorauth",
+            "denial_letter_text": "Denied for step therapy.",
+            "clinical_context": "Notes.",
+            "insurer": "Aetna",
+            "denial_type": "Prior authorization",
+            "patient_age": 53,
+            "patient_gender": "F",
+            "variant": "candidate",
+            "appeal_letter": "Not legal or medical advice. Draft assistance only.\n\nDear Aetna, please approve.",
+            "prompt_version": "drafter_v1_1",
+        },
+    )
+
+    assert res.status_code == 200
+    body = res.json()
+    assert body["verdict"] == "APPROVE"
+    assert body["score"] == 0.91
+    assert body["prompt_version"] == "drafter_v1_1"
+    assert "appeal_draft" in captured or "parsed_case" in captured

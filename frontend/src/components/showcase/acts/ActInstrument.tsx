@@ -41,6 +41,7 @@ export function ActInstrument({
   runErr,
   rollbackTarget,
   seriousUnlocked,
+  runsEnabled = true,
   startQuick,
   startSerious,
   cancelCurrentRun,
@@ -58,6 +59,7 @@ export function ActInstrument({
   runErr: string | null;
   rollbackTarget: ShowcaseRollbackTarget | null;
   seriousUnlocked: boolean;
+  runsEnabled?: boolean;
   startQuick: () => void;
   startSerious: () => void;
   cancelCurrentRun: () => void;
@@ -157,6 +159,7 @@ export function ActInstrument({
               manifest={manifest}
               seriousUnlocked={seriousUnlocked}
               rollbackTarget={rollbackTarget}
+              runsEnabled={runsEnabled}
               startQuick={startQuick}
               startSerious={startSerious}
               rollbackLatestRun={rollbackLatestRun}
@@ -166,6 +169,7 @@ export function ActInstrument({
               session={displaySession}
               seriousUnlocked={seriousUnlocked}
               runErr={runErr}
+              runsEnabled={runsEnabled}
               onCancel={cancelCurrentRun}
               onResume={resumeCurrentRun}
               onOpenReview={() => setReviewOpen(true)}
@@ -177,6 +181,7 @@ export function ActInstrument({
           open={reviewOpen}
           preview={promotionPreview}
           busy={reviewBusy}
+          runsEnabled={runsEnabled}
           onClose={() => setReviewOpen(false)}
           onReject={async () => {
             setReviewBusy(true);

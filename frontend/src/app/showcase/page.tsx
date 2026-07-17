@@ -15,6 +15,7 @@ import {
   startSeriousRun,
 } from "@/lib/data/live";
 import { measuredLiftFromPersisted } from "@/lib/showcase/measuredLift";
+import { showcaseRunsEnabledOnHost } from "@/lib/showcase/runsPolicy";
 import type {
   CaseSummary,
   MeasuredLiftCache,
@@ -56,6 +57,7 @@ export default function ShowcasePage() {
   const [rollbackTarget, setRollbackTarget] = useState<ShowcaseRollbackTarget | null>(null);
   const [runErr, setRunErr] = useState<string | null>(null);
   const [manifestWarning, setManifestWarning] = useState<string | null>(null);
+  const [runsEnabled, setRunsEnabled] = useState(true);
 
   const activeSession = useMemo(() => {
     if (!activeSessionId) return null;
@@ -65,6 +67,10 @@ export default function ShowcasePage() {
   }, [activeSessionId, previewSession, productionSession]);
 
   const displaySession = activeSession ?? previewSession ?? productionSession;
+
+  useEffect(() => {
+    setRunsEnabled(showcaseRunsEnabledOnHost());
+  }, []);
 
   useEffect(() => {
     ds.listCases().then(setCases);
@@ -77,6 +83,7 @@ export default function ShowcasePage() {
     getRollbackTarget().then(setRollbackTarget).catch(() => undefined);
     getDemoState()
       .then((state) => {
+        setRunsEnabled(showcaseRunsEnabledOnHost() && state.runs_enabled !== false);
         if (state.preview_session) setPreviewSession(state.preview_session);
         if (state.production_session) setProductionSession(state.production_session);
         setMeasuredLift(measuredLiftFromPersisted(state.measured_lift));
@@ -216,6 +223,7 @@ export default function ShowcasePage() {
           rollbackTarget={rollbackTarget}
           runErr={runErr}
           seriousUnlocked={seriousUnlocked}
+          runsEnabled={runsEnabled}
           startQuick={startQuick}
           startSerious={startSerious}
           cancelCurrentRun={cancelCurrentRun}

@@ -30,6 +30,9 @@ function paraphraseSymptoms(body: string): string {
   if (/tired|fatigue|worn out|exhausted|run-down|drained/i.test(lower)) parts.push("ongoing fatigue");
   if (/lymph node|lumps? in (?:my )?(?:neck|arms)/i.test(lower)) parts.push("swollen lymph nodes");
   if (/night sweat/i.test(lower)) parts.push("night sweats");
+  if (/catching|mechanical|knee pain|squatting/i.test(lower)) {
+    parts.push("knee pain and mechanical catching that limit activity");
+  }
   if (/work|daily life|everyday|stairs|errands/i.test(lower)) {
     parts.push("difficulty keeping up with work and daily life");
   }
@@ -57,18 +60,24 @@ function paraphraseTurn(question: string, answer: string): { helps: string[]; ga
   const { tentative, body } = stripUncertaintyLead(answer);
   const q = question.toLowerCase();
 
-  if (/oncologist|letter|statement|prescriber|doctor submit/i.test(q)) {
+  if (/oncologist|orthopedic|surgeon|letter|statement|prescriber|doctor submit|medical necessity/i.test(q)) {
     const submitted = mentionsSubmission(answer);
     const onlyUncertain =
       (tentative && !submitted) || (/don'?t know|not sure|unsure/i.test(answer) && !submitted);
+    const clinician =
+      /orthopedic|surgeon|knee|maci|procedure|surgery/i.test(q) || /orthopedic|surgeon|maci|surgery/i.test(body)
+        ? "your surgeon"
+        : /oncologist|leukemia|cll|rituximab|venetoclax/i.test(q) || /oncologist|leukemia|cll/i.test(body)
+          ? "your oncologist"
+          : "your doctor";
     if (onlyUncertain) {
       gaps.push(
-        "Confirm with your oncologist whether they sent the insurer a letter explaining why this treatment is needed.",
+        `Confirm with ${clinician} whether they sent the insurer a letter explaining why this treatment is needed.`,
       );
     } else if (submitted) {
       helps.push("Your doctor's office may have already sent supporting information to the insurer.");
     } else if (hasSubstance(body)) {
-      helps.push("Your oncologist is supporting this specific treatment for your condition.");
+      helps.push(`${clinician.charAt(0).toUpperCase() + clinician.slice(1)} is supporting this specific treatment for your condition.`);
     }
     return { helps, gaps };
   }

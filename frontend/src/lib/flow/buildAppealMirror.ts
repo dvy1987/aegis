@@ -107,6 +107,24 @@ function summarizeDeadline(denial: string): string {
   return "Check your plan materials for the appeal deadline, and file before that date.";
 }
 
+function normalizeGapKey(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/^if you can answer this:\s*/i, "")
+    .replace(/^[-•]\s*/, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function isSimilarGap(a: string, b: string): boolean {
+  const ka = normalizeGapKey(a);
+  const kb = normalizeGapKey(b);
+  if (!ka || !kb) return false;
+  if (ka === kb) return true;
+  if (ka.length > 24 && kb.length > 24 && (ka.includes(kb) || kb.includes(ka))) return true;
+  return false;
+}
+
 function mergeUniqueLines(...groups: string[][]): string[] {
   const out: string[] = [];
   const seen = new Set<string>();
@@ -132,7 +150,8 @@ export function collectPatientGapItems(
   const seen = new Set<string>();
 
   const add = (line: string) => {
-    const key = line.toLowerCase();
+    if (items.some((existing) => isSimilarGap(existing, line))) return;
+    const key = normalizeGapKey(line);
     if (!seen.has(key)) {
       seen.add(key);
       items.push(line);
@@ -146,9 +165,12 @@ export function collectPatientGapItems(
     }
   }
 
-  const answered = new Set(interview?.qa_transcript?.map((t) => t.question) ?? []);
+  const answered = new Set(
+    interview?.qa_transcript?.map((t) => normalizeGapKey(t.question)) ?? [],
+  );
   for (const q of interview?.planned_questions ?? []) {
-    if (!answered.has(q)) add(`If you can answer this: ${q}`);
+    if (answered.has(normalizeGapKey(q))) continue;
+    add(`If you can answer this: ${q}`);
   }
 
   if (/formulary|preferred alternative|non-preferred tier|step therapy/i.test(denial)) {

@@ -1,5 +1,23 @@
 /** Collapse overlapping patient-gap bullets into a short, non-repetitive list. */
 
+function normalizeGapKey(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/^if you can answer this:\s*/i, "")
+    .replace(/^[-•]\s*/, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function isSimilarGap(a: string, b: string): boolean {
+  const ka = normalizeGapKey(a);
+  const kb = normalizeGapKey(b);
+  if (!ka || !kb) return false;
+  if (ka === kb) return true;
+  if (ka.length > 24 && kb.length > 24 && (ka.includes(kb) || kb.includes(ka))) return true;
+  return false;
+}
+
 type GapTheme =
   | "doctor_letter"
   | "preferred_alt"
@@ -55,7 +73,10 @@ function themeOf(line: string): GapTheme {
 }
 
 function mergedFormularyGap(themes: Set<GapTheme>): string | null {
-  if (!themes.has("doctor_letter") && !themes.has("preferred_alt")) return null;
+  // Medication/formulary merge only when both themes appear (e.g. Aetna step-therapy drugs).
+  // Surgeon-letter gaps alone (e.g. MACI knee) must not inject "preferred medication" copy.
+  if (!themes.has("preferred_alt")) return null;
+  if (!themes.has("doctor_letter")) return null;
   return (
     "Ask your doctor which medication the plan prefers, why it may not be right for you, " +
     "and whether they already sent the insurer a supporting or formulary-exception letter (request a copy if they did)."
@@ -82,7 +103,7 @@ export function consolidateGapItems(items: string[]): string[] {
   }
 
   for (const line of others) {
-    if (!out.some((existing) => existing.toLowerCase() === line.toLowerCase())) {
+    if (!out.some((existing) => isSimilarGap(existing, line))) {
       out.push(line);
     }
   }

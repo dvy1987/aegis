@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import type { ShowcaseManifest, ShowcaseRollbackTarget } from "@/lib/types";
 import { GlassPanel } from "@/components/showcase/primitives/GlassPanel";
 import { MonoLabel } from "@/components/showcase/primitives/MonoLabel";
@@ -10,10 +11,22 @@ import {
   DOCK_QUICK_TITLE,
   DOCK_ROLLBACK,
   DOCK_SERIOUS_CTA,
+  DOCK_RUNS_DISABLED,
+  DOCK_RUNS_DISABLED_TOOLTIP,
   DOCK_SERIOUS_LOCKED,
   DOCK_SERIOUS_TITLE,
 } from "@/components/showcase/copy";
 import { IgniteButton } from "@/components/showcase/fx/IgniteButton";
+
+/** Native title on a wrapper — disabled buttons do not emit hover events themselves. */
+function BlockedActionTooltip({ show, children }: { show: boolean; children: ReactNode }) {
+  if (!show) return <>{children}</>;
+  return (
+    <span className="block w-full" title={DOCK_RUNS_DISABLED_TOOLTIP}>
+      {children}
+    </span>
+  );
+}
 
 /**
  * The floating run dock — the one element with a real drop-shadow. Quick / Serious
@@ -25,6 +38,7 @@ export function RunControlDock({
   seriousUnlocked,
   rollbackTarget,
   starting,
+  runsEnabled = true,
   startQuick,
   startSerious,
   rollbackLatestRun,
@@ -33,6 +47,7 @@ export function RunControlDock({
   seriousUnlocked: boolean;
   rollbackTarget: ShowcaseRollbackTarget | null;
   starting?: boolean;
+  runsEnabled?: boolean;
   startQuick: () => void;
   startSerious: () => void;
   rollbackLatestRun: () => void;
@@ -57,6 +72,12 @@ export function RunControlDock({
         </h2>
       </div>
 
+      {!runsEnabled && (
+        <p className="sc-body" style={{ fontSize: "0.9rem", color: "var(--sc-text-2)" }} role="status">
+          {DOCK_RUNS_DISABLED}
+        </p>
+      )}
+
       <div className="flex flex-col gap-3">
         <div className="sc-panel-sunken flex flex-col gap-3 p-4">
           <div className="flex flex-col gap-1">
@@ -65,9 +86,16 @@ export function RunControlDock({
             </span>
             <MonoLabel style={{ letterSpacing: "0.08em" }}>{quickSub}</MonoLabel>
           </div>
-          <IgniteButton variant="primary" onClick={startQuick} disabled={starting}>
-            {starting ? "Starting…" : DOCK_QUICK_CTA}
-          </IgniteButton>
+          <BlockedActionTooltip show={!runsEnabled}>
+            <IgniteButton
+              variant="primary"
+              onClick={startQuick}
+              disabled={!runsEnabled || starting}
+              className="w-full"
+            >
+              {starting ? "Starting…" : DOCK_QUICK_CTA}
+            </IgniteButton>
+          </BlockedActionTooltip>
         </div>
 
         <div className="sc-panel-sunken flex flex-col gap-3 p-4">
@@ -79,13 +107,27 @@ export function RunControlDock({
               {seriousUnlocked ? seriousSub : DOCK_SERIOUS_LOCKED}
             </MonoLabel>
           </div>
-          <IgniteButton variant="secondary" onClick={startSerious} disabled={!seriousUnlocked}>
-            {DOCK_SERIOUS_CTA}
-          </IgniteButton>
-          {rollbackTarget && (
-            <IgniteButton variant="ghost" onClick={rollbackLatestRun}>
-              {DOCK_ROLLBACK}
+          <BlockedActionTooltip show={!runsEnabled}>
+            <IgniteButton
+              variant="secondary"
+              onClick={startSerious}
+              disabled={!runsEnabled || !seriousUnlocked}
+              className="w-full"
+            >
+              {DOCK_SERIOUS_CTA}
             </IgniteButton>
+          </BlockedActionTooltip>
+          {rollbackTarget && (
+            <BlockedActionTooltip show={!runsEnabled}>
+              <IgniteButton
+                variant="ghost"
+                onClick={rollbackLatestRun}
+                disabled={!runsEnabled}
+                className="w-full"
+              >
+                {DOCK_ROLLBACK}
+              </IgniteButton>
+            </BlockedActionTooltip>
           )}
         </div>
       </div>

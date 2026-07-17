@@ -77,6 +77,9 @@ BUILD_ARGS=(
 )
 if [[ "${MODE}" == "live" ]]; then
   BUILD_ARGS+=("--set-build-env-vars=NEXT_PUBLIC_AEGIS_API=${AEGIS_API_URL}")
+  BUILD_ARGS+=(
+    "--set-build-env-vars=NEXT_PUBLIC_AEGIS_SHOWCASE_RUNS_DISABLED=${NEXT_PUBLIC_AEGIS_SHOWCASE_RUNS_DISABLED:-true}"
+  )
 fi
 
 gcloud run deploy "${SERVICE_NAME}" \

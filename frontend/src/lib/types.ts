@@ -254,4 +254,6 @@ export interface ShowcaseDemoState {
   preview_session: ShowcaseRunSession | null;
   production_session: ShowcaseRunSession | null;
   measured_lift: Record<string, MeasuredLiftCasePersisted>;
+  /** False when the backend blocks costly preview/production runs. */
+  runs_enabled?: boolean;
 }

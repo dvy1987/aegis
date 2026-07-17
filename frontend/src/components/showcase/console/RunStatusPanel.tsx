@@ -28,6 +28,7 @@ export function RunStatusPanel({
   session,
   seriousUnlocked,
   runErr,
+  runsEnabled = true,
   onCancel,
   onResume,
   onOpenReview,
@@ -37,6 +38,7 @@ export function RunStatusPanel({
   session: ShowcaseRunSession | null;
   seriousUnlocked: boolean;
   runErr?: string | null;
+  runsEnabled?: boolean;
   onCancel: () => void;
   onResume: () => void;
   onOpenReview: () => void;
@@ -146,7 +148,7 @@ export function RunStatusPanel({
               transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
               className="flex flex-wrap gap-3"
             >
-              <IgniteButton variant="primary" onClick={onOpenReview}>
+              <IgniteButton variant="primary" onClick={onOpenReview} disabled={!runsEnabled}>
                 {REVIEW_PROMOTION_CTA}
               </IgniteButton>
               <IgniteButton variant="secondary" onClick={onReject}>
@@ -156,7 +158,7 @@ export function RunStatusPanel({
           )}
         </AnimatePresence>
         {canResume && (
-          <IgniteButton variant="primary" onClick={onResume}>
+          <IgniteButton variant="primary" onClick={onResume} disabled={!runsEnabled}>
             {RESUME_CTA}
           </IgniteButton>
         )}

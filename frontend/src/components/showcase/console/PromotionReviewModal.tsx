@@ -27,6 +27,7 @@ export function PromotionReviewModal({
   onApprove,
   onReject,
   busy,
+  runsEnabled = true,
 }: {
   open: boolean;
   preview: PromotionPreview | null;
@@ -34,6 +35,7 @@ export function PromotionReviewModal({
   onApprove: () => void;
   onReject: () => void;
   busy?: boolean;
+  runsEnabled?: boolean;
 }) {
   const reduce = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
@@ -130,7 +132,11 @@ export function PromotionReviewModal({
                   <IgniteButton variant="secondary" onClick={onReject} disabled={busy}>
                     {REJECT_CTA}
                   </IgniteButton>
-                  <IgniteButton variant="primary" onClick={onApprove} disabled={busy || !lift.is_promotable}>
+                  <IgniteButton
+                    variant="primary"
+                    onClick={onApprove}
+                    disabled={busy || !runsEnabled || !lift.is_promotable}
+                  >
                     {APPROVE_CTA}
                   </IgniteButton>
                 </div>

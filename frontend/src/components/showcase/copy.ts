@@ -72,6 +72,9 @@ export const DOCK_QUICK_CTA = "Start preview run";
 export const DOCK_SERIOUS_CTA = "Start production run";
 export const DOCK_SERIOUS_LOCKED = "UNLOCKS AFTER PREVIEW RUN SUCCEEDS";
 export const DOCK_ROLLBACK = "Rollback last promotion";
+export const DOCK_RUNS_DISABLED =
+  "Preview and production runs are turned off on this public deployment. Recorded results still load below.";
+export const DOCK_RUNS_DISABLED_TOOLTIP = "Not allowed anymore";
 
 export const STATUS_EYEBROW = "SESSION STATUS";
 export const STATUS_AWAITING = "Yet to start";

@@ -9,6 +9,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from app.aegis_v1.showcase_demo_state import MeasuredLiftStore, ShowcaseDemoState, build_demo_state
+from app.aegis_v1.showcase_run_policy import showcase_runs_enabled
 from app.aegis_v1.showcase_manifest import ShowcaseManifest, load_showcase_manifest
 from app.aegis_v1.showcase_session import (
     SessionBusyError,
@@ -53,6 +54,17 @@ def _autorun_enabled() -> bool:
         "false",
         "no",
     }
+
+
+def _require_showcase_runs_enabled() -> None:
+    if not showcase_runs_enabled():
+        raise HTTPException(
+            status_code=403,
+            detail=(
+                "Showcase preview and production runs are disabled on this deployment "
+                "to prevent Gemini spend. View recorded results only."
+            ),
+        )
 
 
 def _launch_quick(session_id: str) -> None:
@@ -109,6 +121,7 @@ def get_manifest() -> ShowcaseManifestResponse:
 
 @router.post("/runs/quick", response_model=ShowcaseSession)
 def start_quick_run() -> ShowcaseSession:
+    _require_showcase_runs_enabled()
     manifest = load_showcase_manifest()
     session = _manager().start_quick(
         case_ids=[case.case_id for case in manifest.quick_train + manifest.quick_holdout]
@@ -119,6 +132,7 @@ def start_quick_run() -> ShowcaseSession:
 
 @router.post("/runs/serious", response_model=ShowcaseSession)
 def start_serious_run() -> ShowcaseSession:
+    _require_showcase_runs_enabled()
     manifest = load_showcase_manifest()
     try:
         session = _manager().start_serious(
@@ -150,6 +164,7 @@ def cancel_run(session_id: str) -> ShowcaseSession:
 def resume_run(session_id: str) -> ShowcaseSession:
     """Resume a failed-but-retryable run from its last checkpoint. Completed
     stages (measurements, training signal, optimization) are reused, not redone."""
+    _require_showcase_runs_enabled()
     manager = _manager()
     try:
         session = manager.get(session_id)
@@ -172,6 +187,7 @@ def resume_run(session_id: str) -> ShowcaseSession:
 
 @router.post("/runs/{session_id}/approve", response_model=ShowcaseSession)
 def approve_run(session_id: str, req: ApprovalRequest) -> ShowcaseSession:
+    _require_showcase_runs_enabled()
     manager = _manager()
     try:
         session = manager.get(session_id)
@@ -296,6 +312,8 @@ class ShowcaseMeasureRequest(BaseModel):
     patient_gender: str = "X"
     variant: Literal["baseline", "candidate"] = "baseline"
     baseline_prompt_version: str = "drafter_v1"
+    appeal_letter: str | None = None
+    prompt_version: str | None = None
 
 
 class ShowcaseMeasureResponse(BaseModel):
@@ -311,9 +329,77 @@ class ShowcaseMeasureResponse(BaseModel):
     risk_flags: list[str] = Field(default_factory=list)
 
 
+def _measure_simulator_only(req: ShowcaseMeasureRequest) -> ShowcaseMeasureResponse:
+    """Re-score an existing appeal letter with the Outcome Simulator (no drafter)."""
+    from app.aegis_v1.drafter_client import get_active_drafter_prompt_version
+    from app.aegis_v1.day_zero_snapshot import load_day_zero_drafter_prompt
+    from app.aegis_v1.patient_context import normalize_gender
+    from app.aegis_v1.simulator_client import AdkSimulatorClient
+    from app.aegis_v1.tools import case_parser, self_check, simulator
+    from app.evals.part_a.schemas import CANONICAL_DISCLAIMER
+
+    letter = (req.appeal_letter or "").strip()
+    if not letter:
+        raise HTTPException(status_code=422, detail="appeal_letter is required for simulator-only rescore")
+
+    gender = normalize_gender(req.patient_gender)
+    if gender not in {"F", "M", "X"}:
+        raise HTTPException(status_code=422, detail="patient_gender must be F, M, or X")
+
+    parsed = case_parser(
+        denial_text=req.denial_letter_text,
+        clinical_context=req.clinical_context,
+        case_id=req.case_id,
+        insurer=req.insurer,
+        patient_age=req.patient_age,
+        patient_gender=gender,
+    )
+    appeal_draft = {
+        "case_summary": f"{parsed.get('insurer', req.insurer)} appeal rescore",
+        "denial_grounds_interpreted": str(parsed.get("cited_denial_reason") or ""),
+        "appeal_strategy": "simulator-only rescore",
+        "appeal_letter": letter,
+        "citations_used": [],
+        "missing_evidence_checklist": [],
+        "risk_flags": ["simulator_only_rescore"],
+        "safety_disclaimer": CANONICAL_DISCLAIMER,
+    }
+    check = self_check(parsed, appeal_draft, {"query": "", "hits": []})
+    sim = simulator(
+        parsed_case=parsed,
+        appeal_draft=appeal_draft,
+        self_check_result=check,
+        client=AdkSimulatorClient(),
+    )
+    if req.prompt_version:
+        prompt_version = req.prompt_version
+    elif req.variant == "baseline":
+        prompt_version, _ = load_day_zero_drafter_prompt()
+    else:
+        prompt_version = get_active_drafter_prompt_version()
+
+    response = ShowcaseMeasureResponse(
+        case_id=req.case_id,
+        variant=req.variant,
+        verdict=sim["verdict"],
+        score=float(sim["score"]),
+        threshold=float(sim["threshold"]),
+        letter_excerpt=_excerpt(letter),
+        appeal_letter=letter,
+        outcome=sim,
+        prompt_version=prompt_version,
+        risk_flags=list(appeal_draft["risk_flags"]),
+    )
+    MeasuredLiftStore().save_variant(req.case_id, req.variant, response.model_dump())
+    return response
+
+
 @router.post("/measure-case", response_model=ShowcaseMeasureResponse)
 def measure_showcase_case(req: ShowcaseMeasureRequest) -> ShowcaseMeasureResponse:
-    """Drafter + Outcome Simulator only — no judges, no Phoenix writes."""
+    """Drafter + Outcome Simulator, or simulator-only when ``appeal_letter`` is set."""
+    if req.appeal_letter:
+        return _measure_simulator_only(req)
+
     from app.aegis_v1.appeal_orchestrator import (
         SHOWCASE_MEASUREMENT_MAX_ATTEMPTS,
         run_appeal_with_outcome,

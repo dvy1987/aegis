@@ -4,6 +4,7 @@ import { buildAppealMirror, collectPatientGapItems } from "@/lib/flow/buildAppea
 import type { AppealRequest, AppealResponse } from "@/lib/types";
 
 const case168 = CASES[0];
+const case180 = CASES[1];
 
 function baseResponse(): AppealResponse {
   return {
@@ -66,6 +67,42 @@ describe("buildAppealMirror", () => {
     expect(mirror.what_helps_note).not.toMatch(/I'm not sure/i);
     expect(mirror.gaps_note).toMatch(/preferred|letter/i);
     expect(mirror.gaps_note.split("•").length).toBeLessThanOrEqual(4);
+  });
+
+  it("avoids formulary medication gaps and duplicate symptom questions for MACI knee case", () => {
+    const kneeQuestion =
+      "How exactly does the knee pain and mechanical catching affect your daily life, work, or ability to function?";
+    const req: AppealRequest = {
+      denial_text: case180.denial_letter_text,
+      case_id: case180.case_id,
+      insurer: case180.insurer,
+      patient_age: case180.patient_age,
+      patient_gender: case180.patient_gender,
+      clinical_context: case180.clinical_context,
+    };
+    const mirror = buildAppealMirror(req, {
+      ...baseResponse(),
+      question_interview: {
+        qa_transcript: [
+          {
+            turn: 1,
+            question:
+              "Can your orthopedic surgeon provide clinic notes documenting that debridement and microfracture failed?",
+            answer:
+              "Yes — Valley Orthopedics has the operative notes and MRI reports, and they can send a letter of medical necessity.",
+          },
+        ],
+        planned_questions: [kneeQuestion],
+        patient_gap_note:
+          `We drafted your appeal with the information available. Answers to these questions could make it stronger:\n- ${kneeQuestion}`,
+        skipped: false,
+      },
+    });
+    expect(mirror.gaps_note).not.toMatch(/preferred medication|formulary-exception|which medication the plan prefers/i);
+    expect(mirror.gaps_note).not.toMatch(/oncologist/i);
+    expect(mirror.what_helps_note).toMatch(/surgeon is supporting/i);
+    const kneeMentions = (mirror.gaps_note.match(/knee pain and mechanical catching/gi) ?? []).length;
+    expect(kneeMentions).toBeLessThanOrEqual(1);
   });
 
   it("collects patient gaps without simulator strings", () => {
